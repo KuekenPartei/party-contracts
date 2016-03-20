@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Contracts="http:///schemas/Contracts/_mMyBwK-8EeWyf-Y9sdI4kw/19" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http:///schemas/Contracts/_mMyBwK-8EeWyf-Y9sdI4kw/19 pathmap://UML_PROFILE/solidity_profiles.uml#_mMyo0K-8EeWyf-Y9sdI4kw">
+  <uml:Model xmi:id="_Te7JIM2EEeWqGaV8xrZGjQ" name="party-dao">
+    <packagedElement xmi:type="uml:Package" xmi:id="_exlJIM2EEeWqGaV8xrZGjQ" name="uses-cases">
+      <packagedElement xmi:type="uml:Package" xmi:id="_L7qJ4O7fEeWFFtOMC9We2w" name="manageable">
+        <packagedElement xmi:type="uml:Actor" xmi:id="_XMp9AO7fEeWFFtOMC9We2w" name="manager"/>
+        <packagedElement xmi:type="uml:UseCase" xmi:id="_akjF4O7fEeWFFtOMC9We2w" name="addManager"/>
+        <packagedElement xmi:type="uml:Usage" xmi:id="_fK93YO7fEeWFFtOMC9We2w" client="_XMp9AO7fEeWFFtOMC9We2w" supplier="_akjF4O7fEeWFFtOMC9We2w"/>
+        <packagedElement xmi:type="uml:UseCase" xmi:id="_gQD3MO7fEeWFFtOMC9We2w" name="removeManager"/>
+        <packagedElement xmi:type="uml:Usage" xmi:id="_kI1fkO7fEeWFFtOMC9We2w" client="_XMp9AO7fEeWFFtOMC9We2w" supplier="_gQD3MO7fEeWFFtOMC9We2w"/>
+        <packagedElement xmi:type="uml:Actor" xmi:id="_ma96QO7fEeWFFtOMC9We2w" name="contract"/>
+        <packagedElement xmi:type="uml:UseCase" xmi:id="_oBLDEO7fEeWFFtOMC9We2w" name="canAccess"/>
+        <packagedElement xmi:type="uml:Usage" xmi:id="_rhK_EO7fEeWFFtOMC9We2w" client="_ma96QO7fEeWFFtOMC9We2w" supplier="_oBLDEO7fEeWFFtOMC9We2w"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_WHZvsO7gEeWFFtOMC9We2w" name="memberRegistry">
+        <packagedElement xmi:type="uml:Actor" xmi:id="_jtWoAO7gEeWFFtOMC9We2w" name="memberManager"/>
+        <packagedElement xmi:type="uml:UseCase" xmi:id="_n4kEMO7gEeWFFtOMC9We2w" name="addMember" subject="_OhUKQ82FEeWqGaV8xrZGjQ"/>
+        <packagedElement xmi:type="uml:Usage" xmi:id="_qPSD8O7gEeWFFtOMC9We2w" client="_jtWoAO7gEeWFFtOMC9We2w" supplier="_n4kEMO7gEeWFFtOMC9We2w"/>
+        <packagedElement xmi:type="uml:UseCase" xmi:id="_roU6gO7gEeWFFtOMC9We2w" name="unregisterMember" subject="_OhUKQ82FEeWqGaV8xrZGjQ"/>
+        <packagedElement xmi:type="uml:Usage" xmi:id="_1TVAMO7gEeWFFtOMC9We2w" client="_jtWoAO7gEeWFFtOMC9We2w" supplier="_roU6gO7gEeWFFtOMC9We2w"/>
+        <packagedElement xmi:type="uml:UseCase" xmi:id="_58arMO7gEeWFFtOMC9We2w" name="changeMemberAddress" subject="_OhUKQ82FEeWqGaV8xrZGjQ"/>
+        <packagedElement xmi:type="uml:Usage" xmi:id="_-ZX-sO7gEeWFFtOMC9We2w" client="_jtWoAO7gEeWFFtOMC9We2w" supplier="_58arMO7gEeWFFtOMC9We2w"/>
+        <packagedElement xmi:type="uml:Actor" xmi:id="_RqXHMO7hEeWFFtOMC9We2w" name="contact"/>
+        <packagedElement xmi:type="uml:UseCase" xmi:id="_TvckYO7hEeWFFtOMC9We2w" name="isActiveMember"/>
+        <packagedElement xmi:type="uml:Usage" xmi:id="_WmC-EO7hEeWFFtOMC9We2w" client="_RqXHMO7hEeWFFtOMC9We2w" supplier="_TvckYO7hEeWFFtOMC9We2w"/>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_h0h8wM2EEeWqGaV8xrZGjQ" name="members">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_nowYgOn8EeWOi9aiZLczlg" annotatedElement="_h0h8wM2EEeWqGaV8xrZGjQ">
+        <body>(c) Urs Zeidler 2016
+
+Contains the member contracts.</body>
+      </ownedComment>
+      <packageImport xmi:type="uml:PackageImport" xmi:id="_aeJ04On7EeWOi9aiZLczlg" importedPackage="_qaoxoOn5EeWOi9aiZLczlg"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_OhUKMM2FEeWqGaV8xrZGjQ" name="MemberRegistry">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_OhUKMc2FEeWqGaV8xrZGjQ">
+          <body>Holds the members and their states.
+Also the contract to manage these member states.
+The registry is a Manageable contract so the writing methods can only accessed by a registered manager.</body>
+        </ownedComment>
+        <generalization xmi:type="uml:Generalization" xmi:id="_1i-A0M2FEeWqGaV8xrZGjQ" general="_gzuKkM2FEeWqGaV8xrZGjQ"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_OhUKMs2FEeWqGaV8xrZGjQ" name="partyMembers">
+          <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_OhUKM82FEeWqGaV8xrZGjQ" name="partyMemberCount">
+          <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_OhUKNM2FEeWqGaV8xrZGjQ" name="activeMemberCount">
+          <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_UsY-MO23EeWFLeq4Kivuhw" name="memberAddress" visibility="public">
+          <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+        </ownedAttribute>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_OhUKNc2FEeWqGaV8xrZGjQ" name="addMember">
+          <ownedComment xmi:type="uml:Comment" xmi:id="_r6vh4O28EeWFLeq4Kivuhw">
+            <body>Add a member.</body>
+          </ownedComment>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_OhUKNs2FEeWqGaV8xrZGjQ" name="name">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_OhUKN82FEeWqGaV8xrZGjQ" name="_memberAddress">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_OhUKOM2FEeWqGaV8xrZGjQ" name="unregisterMember">
+          <ownedComment xmi:type="uml:Comment" xmi:id="_w5U7wO28EeWFLeq4Kivuhw">
+            <body>set the memberstate to inactive
+</body>
+          </ownedComment>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_OhUKOc2FEeWqGaV8xrZGjQ" name="id">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_OhUKOs2FEeWqGaV8xrZGjQ" name="getMemberCount">
+          <ownedComment xmi:type="uml:Comment" xmi:id="_TGcjUO7kEeWFFtOMC9We2w">
+            <body>get the number of active members</body>
+          </ownedComment>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_OhUKO82FEeWqGaV8xrZGjQ" direction="return">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_OhUKPM2FEeWqGaV8xrZGjQ" name="isActiveMember">
+          <ownedComment xmi:type="uml:Comment" xmi:id="_ZdlrkO7kEeWFFtOMC9We2w">
+            <body>Check if the given adress is a registed active member.</body>
+          </ownedComment>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_OhUKPc2FEeWqGaV8xrZGjQ" name="_memberAdress">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_OhUKPs2FEeWqGaV8xrZGjQ" direction="return">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_LedxoKKuEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_O67joO28EeWFLeq4Kivuhw" name="changeMemberAddress">
+          <ownedComment xmi:type="uml:Comment" xmi:id="_6Q-AkO28EeWFLeq4Kivuhw">
+            <body>Changes the address of the member.</body>
+          </ownedComment>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_UvGhsO28EeWFLeq4Kivuhw" name="id">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_YOBfoO28EeWFLeq4Kivuhw" name="_newMemberAddress">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
+        <nestedClassifier xmi:type="uml:Enumeration" xmi:id="_OhUKP82FEeWqGaV8xrZGjQ" name="MemberState">
+          <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_OhUKQs2FEeWqGaV8xrZGjQ" name="deleted"/>
+          <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_OhUKQc2FEeWqGaV8xrZGjQ" name="inactive"/>
+          <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_OhUKQM2FEeWqGaV8xrZGjQ" name="active"/>
+        </nestedClassifier>
+        <nestedClassifier xmi:type="uml:Class" xmi:id="_OhUKQ82FEeWqGaV8xrZGjQ" name="Member" useCase="_roU6gO7gEeWFFtOMC9We2w _n4kEMO7gEeWFFtOMC9We2w _58arMO7gEeWFFtOMC9We2w">
+          <ownedComment xmi:type="uml:Comment" xmi:id="_OEGM0O29EeWFLeq4Kivuhw">
+            <body>A member can be active, inactive or deleted.
+It has an id assigned to it and a changeable address.</body>
+          </ownedComment>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_OhUKRM2FEeWqGaV8xrZGjQ" name="name">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_OhUKRc2FEeWqGaV8xrZGjQ" name="id">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_OhUKRs2FEeWqGaV8xrZGjQ" name="member">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_OhUKR82FEeWqGaV8xrZGjQ" name="state" type="_OhUKP82FEeWqGaV8xrZGjQ"/>
+        </nestedClassifier>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_HcFXcM2GEeWqGaV8xrZGjQ" name="MemberAware">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_n04hQO7kEeWFFtOMC9We2w">
+          <body>The basic class to provide access to the member registry.</body>
+        </ownedComment>
+        <ownedRule xmi:type="uml:Constraint" xmi:id="_tNlYUM2HEeWqGaV8xrZGjQ" name="onlyMember">
+          <specification xmi:type="uml:LiteralString" xmi:id="_tNl_YM2HEeWqGaV8xrZGjQ" name="constraintSpec" value="if(!isMember(msg.sender)) throw;"/>
+        </ownedRule>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_VLDo4M2GEeWqGaV8xrZGjQ" name="memberRegistry" type="_OhUKMM2FEeWqGaV8xrZGjQ"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_qopL0M2GEeWqGaV8xrZGjQ" name="isMember" visibility="protected">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_uW0GsM2GEeWqGaV8xrZGjQ" direction="return">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_LedxoKKuEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_79n6MO29EeWFLeq4Kivuhw" name="_address">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_qaoxoOn5EeWOi9aiZLczlg" name="basics">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_VVkQ0O7lEeWFFtOMC9We2w">
+        <body>Collection of basic functionalities.</body>
+      </ownedComment>
+      <packagedElement xmi:type="uml:Class" xmi:id="_gzuKkM2FEeWqGaV8xrZGjQ" name="Manageable">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_J0PZ0O3AEeWFLeq4Kivuhw">
+          <body>A basic class to introduce an access control.
+All registered manager can access.
+A registered manager is an address mapped with true.</body>
+        </ownedComment>
+        <ownedRule xmi:type="uml:Constraint" xmi:id="_8DcOwM2GEeWqGaV8xrZGjQ" name="onlyManager" constrainedElement="_R11V4O25EeWFLeq4Kivuhw _ftqBUO25EeWFLeq4Kivuhw">
+          <specification xmi:type="uml:LiteralString" xmi:id="_8DeD8M2GEeWqGaV8xrZGjQ" name="constraintSpec" value="if (!canAccess()) throw;"/>
+        </ownedRule>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_GGeLwO25EeWFLeq4Kivuhw" name="managers">
+          <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+        </ownedAttribute>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_nkPcIM2FEeWqGaV8xrZGjQ" name="canAccess" visibility="protected">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_yPFOMM2FEeWqGaV8xrZGjQ" direction="return">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_LedxoKKuEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_R11V4O25EeWFLeq4Kivuhw" name="addManager">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_YnGOUO25EeWFLeq4Kivuhw" name="_newManagerAddress">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_ftqBUO25EeWFLeq4Kivuhw" name="removeManager">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_j8W2YO25EeWFLeq4Kivuhw" name="_managerAddress">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
+      </packagedElement>
+    </packagedElement>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_TmqI0M2EEeWqGaV8xrZGjQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_TmyrsM2EEeWqGaV8xrZGjQ" source="PapyrusVersion">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Tmyrsc2EEeWqGaV8xrZGjQ" key="Version" value="0.0.20"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Tmyrss2EEeWqGaV8xrZGjQ" key="Comment" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Tmyrs82EEeWqGaV8xrZGjQ" key="Copyright" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_TmyrtM2EEeWqGaV8xrZGjQ" key="Date" value="2015-12-31"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Tmyrtc2EEeWqGaV8xrZGjQ" key="Author" value=""/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_TmtMIM2EEeWqGaV8xrZGjQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://UML_PROFILE/solidity_profiles.uml#_mMyo0K-8EeWyf-Y9sdI4kw"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://UML_PROFILE/solidity_profiles.uml#_uCE5EKHREeWjOZ0I8ilEXA"/>
+    </profileApplication>
+  </uml:Model>
+  <Contracts:Contract xmi:id="_OhV_YM2FEeWqGaV8xrZGjQ" base_Class="_OhUKMM2FEeWqGaV8xrZGjQ"/>
+  <Contracts:Mapping xmi:id="_OhnsMM2FEeWqGaV8xrZGjQ" base_Property="_OhUKMs2FEeWqGaV8xrZGjQ" value="_OhUKQ82FEeWqGaV8xrZGjQ"/>
+  <Contracts:Function xmi:id="_OhoTQM2FEeWqGaV8xrZGjQ" functionCode="if(memberAddress[_memberAddress].id != 0) throw;&#xA;&#xA;partyMembers[partyMemberCount].id=partyMemberCount;&#xA;partyMembers[partyMemberCount].member= _memberAddress;&#xA;partyMembers[partyMemberCount].state = MemberState.active;&#xA;partyMembers[partyMemberCount].name = name;&#xA;memberAddress[_memberAddress] = partyMembers[partyMemberCount];&#xA;partyMemberCount++;&#xA;activeMemberCount++;&#x9;&#x9;&#x9;&#xA;" base_Operation="_OhUKNc2FEeWqGaV8xrZGjQ" modifier="_8DcOwM2GEeWqGaV8xrZGjQ"/>
+  <Contracts:Function xmi:id="_Oho6UM2FEeWqGaV8xrZGjQ" functionCode="if(id>partyMemberCount) throw;&#xA;MemberState ms = partyMembers[id].state;&#xA;if(ms==MemberState.active){&#xA;&#x9;partyMembers[id].state = MemberState.inactive;&#xA;&#x9;activeMemberCount--;&#xA;}&#xA;" base_Operation="_OhUKOM2FEeWqGaV8xrZGjQ" modifier="_8DcOwM2GEeWqGaV8xrZGjQ"/>
+  <Contracts:Function xmi:id="_OhphYM2FEeWqGaV8xrZGjQ" base_Operation="_OhUKOs2FEeWqGaV8xrZGjQ" returnType="constant"/>
+  <Contracts:Function xmi:id="_OhqIcM2FEeWqGaV8xrZGjQ" functionCode="return memberAddress[_memberAdress].state == MemberState.active;" base_Operation="_OhUKPM2FEeWqGaV8xrZGjQ" returnType="constant"/>
+  <Contracts:Struct xmi:id="_OhqvgM2FEeWqGaV8xrZGjQ" base_Class="_OhUKQ82FEeWqGaV8xrZGjQ"/>
+  <Contracts:Contract xmi:id="_j_Aa0M2FEeWqGaV8xrZGjQ" base_Class="_gzuKkM2FEeWqGaV8xrZGjQ" ConstructorCode="managers[msg.sender] = true;"/>
+  <Contracts:Function xmi:id="_t9grUM2FEeWqGaV8xrZGjQ" functionCode="return managers[msg.sender];" base_Operation="_nkPcIM2FEeWqGaV8xrZGjQ"/>
+  <Contracts:Contract xmi:id="_UDIXgM2GEeWqGaV8xrZGjQ" base_Class="_HcFXcM2GEeWqGaV8xrZGjQ"/>
+  <Contracts:GetterSetter xmi:id="_afsLQM2GEeWqGaV8xrZGjQ" getter="false" base_Property="_VLDo4M2GEeWqGaV8xrZGjQ"/>
+  <Contracts:Import xmi:id="_dAKCIOn8EeWOi9aiZLczlg" base_PackageImport="_aeJ04On7EeWOi9aiZLczlg"/>
+  <Contracts:Function xmi:id="_Q4HHMO2qEeWs5ucczjuLlQ" functionCode="return memberRegistry.isActiveMember(_address);" base_Operation="_qopL0M2GEeWqGaV8xrZGjQ" returnType="constant"/>
+  <Contracts:Mapping xmi:id="_nfXVAO23EeWFLeq4Kivuhw" base_Property="_UsY-MO23EeWFLeq4Kivuhw" value="_OhUKQ82FEeWqGaV8xrZGjQ"/>
+  <Contracts:Mapping xmi:id="_Nxn5kO25EeWFLeq4Kivuhw" base_Property="_GGeLwO25EeWFLeq4Kivuhw">
+    <value xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_LedxoKKuEeWvY9GWZZMftw"/>
+  </Contracts:Mapping>
+  <Contracts:Function xmi:id="_alYf8O25EeWFLeq4Kivuhw" functionCode="managers[_newManagerAddress] = true;" base_Operation="_R11V4O25EeWFLeq4Kivuhw"/>
+  <Contracts:Function xmi:id="_iH3Z8O25EeWFLeq4Kivuhw" functionCode="managers[_managerAddress] = true;" base_Operation="_ftqBUO25EeWFLeq4Kivuhw"/>
+  <Contracts:Function xmi:id="_RchWoO28EeWFLeq4Kivuhw" functionCode="if(id>partyMemberCount) throw;&#xA;if(partyMembers[id].state == MemberState.active){&#xA;&#x9;partyMembers[id].member = _newMemberAddress;&#xA;&#x9;memberAddress[_newMemberAddress] = partyMembers[id];&#xA;}&#xA;" base_Operation="_O67joO28EeWFLeq4Kivuhw" modifier="_8DcOwM2GEeWqGaV8xrZGjQ"/>
+</xmi:XMI>
