@@ -1,0 +1,179 @@
+<!doctype>
+<html>
+<head>
+<script type='text/javascript'>
+// script for ShortBlog
+function ShortBlog_updateAttributes() {
+// update attributes
+var messageCount_res = contracts['ShortBlog'].contract.messageCount();
+	if(messageCount_res!=null)
+		document.getElementById('ShortBlog_messageCount_value').innerText = messageCount_res;
+var lastMessageDate_res = contracts['ShortBlog'].contract.lastMessageDate();
+	if(lastMessageDate_res!=null)
+		document.getElementById('ShortBlog_lastMessageDate_value').innerText = lastMessageDate_res;
+}
+//call functions
+//function ShortBlog_kill
+function Owned_kill() {
+	var res = contracts['ShortBlog'].contract.kill();
+}
+//function ShortBlog_getMessage
+function ShortBlog_getMessage_uint() {
+	var param_id = document.getElementById('ShortBlog_getMessage_uint_id').value;
+	var res = contracts['ShortBlog'].contract.getMessage(param_id);
+	if(res!=null)
+		document.getElementById('ShortBlog_getMessage_uint_res').innerText = res;
+}
+//function ShortBlog_getMessageDate
+function ShortBlog_getMessageDate_uint() {
+	var param_id = document.getElementById('ShortBlog_getMessageDate_uint_id').value;
+	var res = contracts['ShortBlog'].contract.getMessageDate(param_id);
+	if(res!=null)
+		document.getElementById('ShortBlog_getMessageDate_uint_res').innerText = res;
+}
+//function ShortBlog_sendMessage
+function ShortBlog_sendMessage_string_string_string() {
+	var param_message = document.getElementById('ShortBlog_sendMessage_string_string_string_message').value;
+	var param_hash = document.getElementById('ShortBlog_sendMessage_string_string_string_hash').value;
+	var param_er = document.getElementById('ShortBlog_sendMessage_string_string_string_er').value;
+	var res = contracts['ShortBlog'].contract.sendMessage(param_message, param_hash, param_er);
+}
+//function ShortBlog_getMessageCount
+function ShortBlog_getMessageCount() {
+	var res = contracts['ShortBlog'].contract.getMessageCount();
+	if(res!=null)
+		document.getElementById('ShortBlog_getMessageCount_res').innerText = res;
+}
+//function ShortBlog_changeOwner
+function Owned_changeOwner_address() {
+	var param_newOwner = document.getElementById('Owned_changeOwner_address_newOwner').value;
+	var res = contracts['ShortBlog'].contract.changeOwner(param_newOwner);
+}
+//function ShortBlog_getMessageBlock
+function ShortBlog_getMessageBlock_uint() {
+	var param_id = document.getElementById('ShortBlog_getMessageBlock_uint_id').value;
+	var res = contracts['ShortBlog'].contract.getMessageBlock(param_id);
+	if(res!=null)
+		document.getElementById('ShortBlog_getMessageBlock_uint_res').innerText = res;
+}
+//function ShortBlog_getOwner
+function Owned_getOwner() {
+	var res = contracts['ShortBlog'].contract.getOwner();
+	if(res!=null)
+		document.getElementById('Owned_getOwner_res').innerText = res;
+}
+
+//delegated calls
+// script for BlogRegistry
+function BlogRegistry_updateAttributes() {
+// update attributes
+var blogCount_res = contracts['BlogRegistry'].contract.blogCount();
+	if(blogCount_res!=null)
+		document.getElementById('BlogRegistry_blogCount_value').innerText = blogCount_res;
+}
+//call functions
+//function BlogRegistry_registerBlog
+function BlogRegistry_registerBlog_bytes32() {
+	var param_name = document.getElementById('BlogRegistry_registerBlog_bytes32_name').value;
+	var res = contracts['BlogRegistry'].contract.registerBlog(param_name);
+	if(res!=null)
+		document.getElementById('BlogRegistry_registerBlog_bytes32_res').innerText = res;
+}
+
+//delegated calls
+
+</script>
+<style>
+.contract {
+	border-style: solid;
+	border-width: 1px;
+	} 
+.contract_attributes{
+	border-style: solid;
+	border-width: 1px;
+	} 
+</style>
+</head>
+<body bgcolor='#E6E6FA'>
+	<h1>Sample Interface for publishing</h1>
+<div class="contract">
+ShortBlog:
+  <div class="contract_attributes"> attributes:
+    <div class="contract_attribute"> messageCount:
+      <div class="contract_attribute_value" id="ShortBlog_messageCount_value"> </div>
+    </div>
+    <div class="contract_attribute"> lastMessageDate:
+      <div class="contract_attribute_value" id="ShortBlog_lastMessageDate_value"> </div>
+    </div>
+    <button onclick='ShortBlog_updateAttributes()'>update ShortBlog attributes</button>
+  </div>
+
+  <div class="function_execution">
+ShortBlog_kill:
+	<button onclick='Owned_kill()'>execute ShortBlog_kill</button>
+	<div class="function_result" id="Owned_kill_res"></div>
+  </div>
+  <div class="function_execution">
+ShortBlog_getMessage:
+	<input type='text' id='ShortBlog_getMessage_uint_id'>
+	<button onclick='ShortBlog_getMessage_uint()'>execute ShortBlog_getMessage</button>
+	<div class="function_result" id="ShortBlog_getMessage_uint_res"></div>
+  </div>
+  <div class="function_execution">
+ShortBlog_getMessageDate:
+	<input type='text' id='ShortBlog_getMessageDate_uint_id'>
+	<button onclick='ShortBlog_getMessageDate_uint()'>execute ShortBlog_getMessageDate</button>
+	<div class="function_result" id="ShortBlog_getMessageDate_uint_res"></div>
+  </div>
+  <div class="function_execution">
+ShortBlog_sendMessage:
+	<input type='text' id='ShortBlog_sendMessage_string_string_string_message'>
+	<input type='text' id='ShortBlog_sendMessage_string_string_string_hash'>
+	<input type='text' id='ShortBlog_sendMessage_string_string_string_er'>
+	<button onclick='ShortBlog_sendMessage_string_string_string()'>execute ShortBlog_sendMessage</button>
+	<div class="function_result" id="ShortBlog_sendMessage_string_string_string_res"></div>
+  </div>
+  <div class="function_execution">
+ShortBlog_getMessageCount:
+	<button onclick='ShortBlog_getMessageCount()'>execute ShortBlog_getMessageCount</button>
+	<div class="function_result" id="ShortBlog_getMessageCount_res"></div>
+  </div>
+  <div class="function_execution">
+ShortBlog_changeOwner:
+	<input type='text' id='Owned_changeOwner_address_newOwner'>
+	<button onclick='Owned_changeOwner_address()'>execute ShortBlog_changeOwner</button>
+	<div class="function_result" id="Owned_changeOwner_address_res"></div>
+  </div>
+  <div class="function_execution">
+ShortBlog_getMessageBlock:
+	<input type='text' id='ShortBlog_getMessageBlock_uint_id'>
+	<button onclick='ShortBlog_getMessageBlock_uint()'>execute ShortBlog_getMessageBlock</button>
+	<div class="function_result" id="ShortBlog_getMessageBlock_uint_res"></div>
+  </div>
+  <div class="function_execution">
+ShortBlog_getOwner:
+	<button onclick='Owned_getOwner()'>execute ShortBlog_getOwner</button>
+	<div class="function_result" id="Owned_getOwner_res"></div>
+  </div>
+
+</div>
+<div class="contract">
+BlogRegistry:
+  <div class="contract_attributes"> attributes:
+    <div class="contract_attribute"> blogCount:
+      <div class="contract_attribute_value" id="BlogRegistry_blogCount_value"> </div>
+    </div>
+    <button onclick='BlogRegistry_updateAttributes()'>update BlogRegistry attributes</button>
+  </div>
+
+  <div class="function_execution">
+BlogRegistry_registerBlog:
+	<input type='text' id='BlogRegistry_registerBlog_bytes32_name'>
+	<button onclick='BlogRegistry_registerBlog_bytes32()'>execute BlogRegistry_registerBlog</button>
+	<div class="function_result" id="BlogRegistry_registerBlog_bytes32_res"></div>
+  </div>
+
+</div>
+
+</body>
+</html>

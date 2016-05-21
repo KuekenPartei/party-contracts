@@ -1,0 +1,126 @@
+# publishing
+
+
+* [ShortBlog](#contract-shortblog)
+* [BlogRegistry](#contract-blogregistry)
+
+## contract: ShortBlog
+
+    overview:
+	function sendMessage(string message,string hash,string er) public  onlyOwner() 
+	function getMessage(uint id) public   constant returns (string )
+	function getMessageDate(uint id) public   constant returns (uint )
+	function getMessageCount() public   constant returns (uint )
+	function getMessageBlock(uint id) public   constant returns (uint )
+
+inherites: [Owned](#contract-owned)
+
+
+
+### structs:
+
+Message
+
+
+#### Message properties
+
+name|type|visiblity|delegate|doc
+----|----|----|----|----
+message|string|public||
+date|uint|public||
+id|uint|public||
+sender|address|public||
+blockNumber|uint|public||
+hashValue|string|public||
+externalResource|string|public||
+
+
+
+#### ShortBlog properties
+
+name|type|visiblity|delegate|doc
+----|----|----|----|----
+messageCount|uint|public||
+lastMessageDate|uint|public||
+
+#### ShortBlog mappings
+
+name|type|mapsTo|visiblity|doc
+----|----|----|----|----
+messages|uint|Message|public|-
+
+#### ShortBlog.sendMessage(string message,string hash,string er) public  onlyOwner() 
+
+
+name|type|direction|doc
+----|----|----|----
+message|string|in|
+hash|string|in|
+er|string|in|
+
+#### ShortBlog.getMessage(uint id) public   constant returns (string )
+
+
+name|type|direction|doc
+----|----|----|----
+|string|return|
+id|uint|in|
+
+#### ShortBlog.getMessageDate(uint id) public   constant returns (uint )
+
+
+name|type|direction|doc
+----|----|----|----
+id|uint|in|
+|uint|return|
+
+#### ShortBlog.getMessageCount() public   constant returns (uint )
+
+
+name|type|direction|doc
+----|----|----|----
+|uint|return|
+
+#### ShortBlog.getMessageBlock(uint id) public   constant returns (uint )
+
+
+name|type|direction|doc
+----|----|----|----
+id|uint|in|
+|uint|return|
+
+
+## contract: BlogRegistry
+
+    overview:
+	function registerBlog(bytes32 name) public   constant returns (int )
+
+
+
+
+
+
+#### BlogRegistry properties
+
+name|type|visiblity|delegate|doc
+----|----|----|----|----
+blogCount|uint|public||
+
+#### BlogRegistry mappings
+
+name|type|mapsTo|visiblity|doc
+----|----|----|----|----
+blogs|uint|ShortBlog|public|names|bytes32|uint|public|-
+
+#### BlogRegistry.registerBlog(bytes32 name) public   constant returns (int )
+
+Register a blog under a name.
+returns 0 for ok and 1 else.
+
+
+name|type|direction|doc
+----|----|----|----
+name|bytes32|in|
+|int|return|
+
+

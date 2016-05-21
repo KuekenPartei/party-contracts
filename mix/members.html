@@ -1,0 +1,177 @@
+<!doctype>
+<html>
+<head>
+<script type='text/javascript'>
+// script for MemberRegistry
+function MemberRegistry_updateAttributes() {
+// update attributes
+var partyMemberCount_res = contracts['MemberRegistry'].contract.partyMemberCount();
+	if(partyMemberCount_res!=null)
+		document.getElementById('MemberRegistry_partyMemberCount_value').innerText = partyMemberCount_res;
+var activeMemberCount_res = contracts['MemberRegistry'].contract.activeMemberCount();
+	if(activeMemberCount_res!=null)
+		document.getElementById('MemberRegistry_activeMemberCount_value').innerText = activeMemberCount_res;
+}
+//call functions
+//function MemberRegistry_canAccess
+function Manageable_canAccess() {
+	var res = contracts['MemberRegistry'].contract.canAccess();
+	if(res!=null)
+		document.getElementById('Manageable_canAccess_res').innerText = res;
+}
+//function MemberRegistry_removeManager
+function Manageable_removeManager_address() {
+	var param__managerAddress = document.getElementById('Manageable_removeManager_address__managerAddress').value;
+	var res = contracts['MemberRegistry'].contract.removeManager(param__managerAddress);
+}
+//function MemberRegistry_addManager
+function Manageable_addManager_address() {
+	var param__newManagerAddress = document.getElementById('Manageable_addManager_address__newManagerAddress').value;
+	var res = contracts['MemberRegistry'].contract.addManager(param__newManagerAddress);
+}
+//function MemberRegistry_addMember
+function MemberRegistry_addMember_string_address() {
+	var param_name = document.getElementById('MemberRegistry_addMember_string_address_name').value;
+	var param__memberAddress = document.getElementById('MemberRegistry_addMember_string_address__memberAddress').value;
+	var res = contracts['MemberRegistry'].contract.addMember(param_name, param__memberAddress);
+}
+//function MemberRegistry_isActiveMember
+function MemberRegistry_isActiveMember_address() {
+	var param__memberAdress = document.getElementById('MemberRegistry_isActiveMember_address__memberAdress').value;
+	var res = contracts['MemberRegistry'].contract.isActiveMember(param__memberAdress);
+	if(res!=null)
+		document.getElementById('MemberRegistry_isActiveMember_address_res').innerText = res;
+}
+//function MemberRegistry_getMemberCount
+function MemberRegistry_getMemberCount() {
+	var res = contracts['MemberRegistry'].contract.getMemberCount();
+	if(res!=null)
+		document.getElementById('MemberRegistry_getMemberCount_res').innerText = res;
+}
+//function MemberRegistry_unregisterMember
+function MemberRegistry_unregisterMember_uint() {
+	var param_id = document.getElementById('MemberRegistry_unregisterMember_uint_id').value;
+	var res = contracts['MemberRegistry'].contract.unregisterMember(param_id);
+}
+//function MemberRegistry_changeMemberAddress
+function MemberRegistry_changeMemberAddress_uint_address() {
+	var param_id = document.getElementById('MemberRegistry_changeMemberAddress_uint_address_id').value;
+	var param__newMemberAddress = document.getElementById('MemberRegistry_changeMemberAddress_uint_address__newMemberAddress').value;
+	var res = contracts['MemberRegistry'].contract.changeMemberAddress(param_id, param__newMemberAddress);
+}
+
+//delegated calls
+// script for MemberAware
+function MemberAware_updateAttributes() {
+// update attributes
+var memberRegistry_res = contracts['MemberAware'].contract.memberRegistry();
+	if(memberRegistry_res!=null)
+		document.getElementById('MemberAware_memberRegistry_value').innerText = memberRegistry_res;
+}
+//call functions
+//function MemberAware_isMember
+function MemberAware_isMember_address() {
+	var param__address = document.getElementById('MemberAware_isMember_address__address').value;
+	var res = contracts['MemberAware'].contract.isMember(param__address);
+	if(res!=null)
+		document.getElementById('MemberAware_isMember_address_res').innerText = res;
+}
+
+//delegated calls
+
+</script>
+<style>
+.contract {
+	border-style: solid;
+	border-width: 1px;
+	} 
+.contract_attributes{
+	border-style: solid;
+	border-width: 1px;
+	} 
+</style>
+</head>
+<body bgcolor='#E6E6FA'>
+	<h1>Sample Interface for members</h1>
+<div class="contract">
+MemberRegistry:
+  <div class="contract_attributes"> attributes:
+    <div class="contract_attribute"> partyMemberCount:
+      <div class="contract_attribute_value" id="MemberRegistry_partyMemberCount_value"> </div>
+    </div>
+    <div class="contract_attribute"> activeMemberCount:
+      <div class="contract_attribute_value" id="MemberRegistry_activeMemberCount_value"> </div>
+    </div>
+    <button onclick='MemberRegistry_updateAttributes()'>update MemberRegistry attributes</button>
+  </div>
+
+  <div class="function_execution">
+MemberRegistry_canAccess:
+	<button onclick='Manageable_canAccess()'>execute MemberRegistry_canAccess</button>
+	<div class="function_result" id="Manageable_canAccess_res"></div>
+  </div>
+  <div class="function_execution">
+MemberRegistry_removeManager:
+	<input type='text' id='Manageable_removeManager_address__managerAddress'>
+	<button onclick='Manageable_removeManager_address()'>execute MemberRegistry_removeManager</button>
+	<div class="function_result" id="Manageable_removeManager_address_res"></div>
+  </div>
+  <div class="function_execution">
+MemberRegistry_addManager:
+	<input type='text' id='Manageable_addManager_address__newManagerAddress'>
+	<button onclick='Manageable_addManager_address()'>execute MemberRegistry_addManager</button>
+	<div class="function_result" id="Manageable_addManager_address_res"></div>
+  </div>
+  <div class="function_execution">
+MemberRegistry_addMember:
+	<input type='text' id='MemberRegistry_addMember_string_address_name'>
+	<input type='text' id='MemberRegistry_addMember_string_address__memberAddress'>
+	<button onclick='MemberRegistry_addMember_string_address()'>execute MemberRegistry_addMember</button>
+	<div class="function_result" id="MemberRegistry_addMember_string_address_res"></div>
+  </div>
+  <div class="function_execution">
+MemberRegistry_isActiveMember:
+	<input type='text' id='MemberRegistry_isActiveMember_address__memberAdress'>
+	<button onclick='MemberRegistry_isActiveMember_address()'>execute MemberRegistry_isActiveMember</button>
+	<div class="function_result" id="MemberRegistry_isActiveMember_address_res"></div>
+  </div>
+  <div class="function_execution">
+MemberRegistry_getMemberCount:
+	<button onclick='MemberRegistry_getMemberCount()'>execute MemberRegistry_getMemberCount</button>
+	<div class="function_result" id="MemberRegistry_getMemberCount_res"></div>
+  </div>
+  <div class="function_execution">
+MemberRegistry_unregisterMember:
+	<input type='text' id='MemberRegistry_unregisterMember_uint_id'>
+	<button onclick='MemberRegistry_unregisterMember_uint()'>execute MemberRegistry_unregisterMember</button>
+	<div class="function_result" id="MemberRegistry_unregisterMember_uint_res"></div>
+  </div>
+  <div class="function_execution">
+MemberRegistry_changeMemberAddress:
+	<input type='text' id='MemberRegistry_changeMemberAddress_uint_address_id'>
+	<input type='text' id='MemberRegistry_changeMemberAddress_uint_address__newMemberAddress'>
+	<button onclick='MemberRegistry_changeMemberAddress_uint_address()'>execute MemberRegistry_changeMemberAddress</button>
+	<div class="function_result" id="MemberRegistry_changeMemberAddress_uint_address_res"></div>
+  </div>
+
+</div>
+<div class="contract">
+MemberAware:
+  <div class="contract_attributes"> attributes:
+    <div class="contract_attribute"> memberRegistry:
+      <div class="contract_attribute_value" id="MemberAware_memberRegistry_value"> </div>
+    </div>
+    <button onclick='MemberAware_updateAttributes()'>update MemberAware attributes</button>
+  </div>
+
+  <div class="function_execution">
+MemberAware_isMember:
+	<input type='text' id='MemberAware_isMember_address__address'>
+	<button onclick='MemberAware_isMember_address()'>execute MemberAware_isMember</button>
+	<div class="function_result" id="MemberAware_isMember_address_res"></div>
+  </div>
+
+</div>
+
+</body>
+</html>

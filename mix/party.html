@@ -1,0 +1,272 @@
+<!doctype>
+<html>
+<head>
+<script type='text/javascript'>
+// script for Organ
+function Organ_updateAttributes() {
+// update attributes
+var organName_res = contracts['Organ'].contract.organName();
+	if(organName_res!=null)
+		document.getElementById('Organ_organName_value').innerText = organName_res;
+var lastFunctionId_res = contracts['Organ'].contract.lastFunctionId();
+	if(lastFunctionId_res!=null)
+		document.getElementById('Organ_lastFunctionId_value').innerText = lastFunctionId_res;
+var memberRegistry_res = contracts['Organ'].contract.memberRegistry();
+	if(memberRegistry_res!=null)
+		document.getElementById('Organ_memberRegistry_value').innerText = memberRegistry_res;
+}
+//call functions
+//function Organ_isMember
+function MemberAware_isMember_address() {
+	var param__address = document.getElementById('MemberAware_isMember_address__address').value;
+	var res = contracts['Organ'].contract.isMember(param__address);
+	if(res!=null)
+		document.getElementById('MemberAware_isMember_address_res').innerText = res;
+}
+//function Organ_canAccess
+function Manageable_canAccess() {
+	var res = contracts['Organ'].contract.canAccess();
+	if(res!=null)
+		document.getElementById('Manageable_canAccess_res').innerText = res;
+}
+//function Organ_removeManager
+function Manageable_removeManager_address() {
+	var param__managerAddress = document.getElementById('Manageable_removeManager_address__managerAddress').value;
+	var res = contracts['Organ'].contract.removeManager(param__managerAddress);
+}
+//function Organ_addManager
+function Manageable_addManager_address() {
+	var param__newManagerAddress = document.getElementById('Manageable_addManager_address__newManagerAddress').value;
+	var res = contracts['Organ'].contract.addManager(param__newManagerAddress);
+}
+//function Organ_createFunction
+function Organ_createFunction_string() {
+	var param__functionName = document.getElementById('Organ_createFunction_string__functionName').value;
+	var res = contracts['Organ'].contract.createFunction(param__functionName);
+}
+//function Organ_changeMember
+function Organ_changeMember_uint_address() {
+	var param__id = document.getElementById('Organ_changeMember_uint_address__id').value;
+	var param__address = document.getElementById('Organ_changeMember_uint_address__address').value;
+	var res = contracts['Organ'].contract.changeMember(param__id, param__address);
+}
+
+//delegated calls
+// script for Party
+function Party_updateAttributes() {
+// update attributes
+var organ_res = contracts['Party'].contract.organ();
+	if(organ_res!=null)
+		document.getElementById('Party_organ_value').innerText = organ_res;
+var memberRegistry_res = contracts['Party'].contract.memberRegistry();
+	if(memberRegistry_res!=null)
+		document.getElementById('Party_memberRegistry_value').innerText = memberRegistry_res;
+}
+//call functions
+//function Party_canAccess
+function Manageable_canAccess() {
+	var res = contracts['Party'].contract.canAccess();
+	if(res!=null)
+		document.getElementById('Manageable_canAccess_res').innerText = res;
+}
+//function Party_Party
+function Party_Party() {
+	var res = contracts['Party'].contract.Party();
+}
+//function Party_removeManager
+function Manageable_removeManager_address() {
+	var param__managerAddress = document.getElementById('Manageable_removeManager_address__managerAddress').value;
+	var res = contracts['Party'].contract.removeManager(param__managerAddress);
+}
+//function Party_addManager
+function Manageable_addManager_address() {
+	var param__newManagerAddress = document.getElementById('Manageable_addManager_address__newManagerAddress').value;
+	var res = contracts['Party'].contract.addManager(param__newManagerAddress);
+}
+
+//delegated calls
+// script for KUEKeNParty
+function KUEKeNParty_updateAttributes() {
+// update attributes
+var organ_res = contracts['KUEKeNParty'].contract.organ();
+	if(organ_res!=null)
+		document.getElementById('KUEKeNParty_organ_value').innerText = organ_res;
+var memberRegistry_res = contracts['KUEKeNParty'].contract.memberRegistry();
+	if(memberRegistry_res!=null)
+		document.getElementById('KUEKeNParty_memberRegistry_value').innerText = memberRegistry_res;
+}
+//call functions
+//function KUEKeNParty_canAccess
+function Manageable_canAccess() {
+	var res = contracts['KUEKeNParty'].contract.canAccess();
+	if(res!=null)
+		document.getElementById('Manageable_canAccess_res').innerText = res;
+}
+//function KUEKeNParty_Party
+function Party_Party() {
+	var res = contracts['KUEKeNParty'].contract.Party();
+}
+//function KUEKeNParty_removeManager
+function Manageable_removeManager_address() {
+	var param__managerAddress = document.getElementById('Manageable_removeManager_address__managerAddress').value;
+	var res = contracts['KUEKeNParty'].contract.removeManager(param__managerAddress);
+}
+//function KUEKeNParty_addManager
+function Manageable_addManager_address() {
+	var param__newManagerAddress = document.getElementById('Manageable_addManager_address__newManagerAddress').value;
+	var res = contracts['KUEKeNParty'].contract.addManager(param__newManagerAddress);
+}
+//function KUEKeNParty_KUEKeNParty
+function KUEKeNParty_KUEKeNParty() {
+	var res = contracts['KUEKeNParty'].contract.KUEKeNParty();
+}
+
+//delegated calls
+
+</script>
+<style>
+.contract {
+	border-style: solid;
+	border-width: 1px;
+	} 
+.contract_attributes{
+	border-style: solid;
+	border-width: 1px;
+	} 
+</style>
+</head>
+<body bgcolor='#E6E6FA'>
+	<h1>Sample Interface for party</h1>
+<div class="contract">
+Organ:
+  <div class="contract_attributes"> attributes:
+    <div class="contract_attribute"> organName:
+      <div class="contract_attribute_value" id="Organ_organName_value"> </div>
+    </div>
+    <div class="contract_attribute"> lastFunctionId:
+      <div class="contract_attribute_value" id="Organ_lastFunctionId_value"> </div>
+    </div>
+    <div class="contract_attribute"> memberRegistry:
+      <div class="contract_attribute_value" id="Organ_memberRegistry_value"> </div>
+    </div>
+    <button onclick='Organ_updateAttributes()'>update Organ attributes</button>
+  </div>
+
+  <div class="function_execution">
+Organ_isMember:
+	<input type='text' id='MemberAware_isMember_address__address'>
+	<button onclick='MemberAware_isMember_address()'>execute Organ_isMember</button>
+	<div class="function_result" id="MemberAware_isMember_address_res"></div>
+  </div>
+  <div class="function_execution">
+Organ_canAccess:
+	<button onclick='Manageable_canAccess()'>execute Organ_canAccess</button>
+	<div class="function_result" id="Manageable_canAccess_res"></div>
+  </div>
+  <div class="function_execution">
+Organ_removeManager:
+	<input type='text' id='Manageable_removeManager_address__managerAddress'>
+	<button onclick='Manageable_removeManager_address()'>execute Organ_removeManager</button>
+	<div class="function_result" id="Manageable_removeManager_address_res"></div>
+  </div>
+  <div class="function_execution">
+Organ_addManager:
+	<input type='text' id='Manageable_addManager_address__newManagerAddress'>
+	<button onclick='Manageable_addManager_address()'>execute Organ_addManager</button>
+	<div class="function_result" id="Manageable_addManager_address_res"></div>
+  </div>
+  <div class="function_execution">
+Organ_createFunction:
+	<input type='text' id='Organ_createFunction_string__functionName'>
+	<button onclick='Organ_createFunction_string()'>execute Organ_createFunction</button>
+	<div class="function_result" id="Organ_createFunction_string_res"></div>
+  </div>
+  <div class="function_execution">
+Organ_changeMember:
+	<input type='text' id='Organ_changeMember_uint_address__id'>
+	<input type='text' id='Organ_changeMember_uint_address__address'>
+	<button onclick='Organ_changeMember_uint_address()'>execute Organ_changeMember</button>
+	<div class="function_result" id="Organ_changeMember_uint_address_res"></div>
+  </div>
+
+</div>
+<div class="contract">
+Party:
+  <div class="contract_attributes"> attributes:
+    <div class="contract_attribute"> organ:
+      <div class="contract_attribute_value" id="Party_organ_value"> </div>
+    </div>
+    <div class="contract_attribute"> memberRegistry:
+      <div class="contract_attribute_value" id="Party_memberRegistry_value"> </div>
+    </div>
+    <button onclick='Party_updateAttributes()'>update Party attributes</button>
+  </div>
+
+  <div class="function_execution">
+Party_canAccess:
+	<button onclick='Manageable_canAccess()'>execute Party_canAccess</button>
+	<div class="function_result" id="Manageable_canAccess_res"></div>
+  </div>
+  <div class="function_execution">
+Party_Party:
+	<button onclick='Party_Party()'>execute Party_Party</button>
+	<div class="function_result" id="Party_Party_res"></div>
+  </div>
+  <div class="function_execution">
+Party_removeManager:
+	<input type='text' id='Manageable_removeManager_address__managerAddress'>
+	<button onclick='Manageable_removeManager_address()'>execute Party_removeManager</button>
+	<div class="function_result" id="Manageable_removeManager_address_res"></div>
+  </div>
+  <div class="function_execution">
+Party_addManager:
+	<input type='text' id='Manageable_addManager_address__newManagerAddress'>
+	<button onclick='Manageable_addManager_address()'>execute Party_addManager</button>
+	<div class="function_result" id="Manageable_addManager_address_res"></div>
+  </div>
+
+</div>
+<div class="contract">
+KUEKeNParty:
+  <div class="contract_attributes"> attributes:
+    <div class="contract_attribute"> organ:
+      <div class="contract_attribute_value" id="KUEKeNParty_organ_value"> </div>
+    </div>
+    <div class="contract_attribute"> memberRegistry:
+      <div class="contract_attribute_value" id="KUEKeNParty_memberRegistry_value"> </div>
+    </div>
+    <button onclick='KUEKeNParty_updateAttributes()'>update KUEKeNParty attributes</button>
+  </div>
+
+  <div class="function_execution">
+KUEKeNParty_canAccess:
+	<button onclick='Manageable_canAccess()'>execute KUEKeNParty_canAccess</button>
+	<div class="function_result" id="Manageable_canAccess_res"></div>
+  </div>
+  <div class="function_execution">
+KUEKeNParty_Party:
+	<button onclick='Party_Party()'>execute KUEKeNParty_Party</button>
+	<div class="function_result" id="Party_Party_res"></div>
+  </div>
+  <div class="function_execution">
+KUEKeNParty_removeManager:
+	<input type='text' id='Manageable_removeManager_address__managerAddress'>
+	<button onclick='Manageable_removeManager_address()'>execute KUEKeNParty_removeManager</button>
+	<div class="function_result" id="Manageable_removeManager_address_res"></div>
+  </div>
+  <div class="function_execution">
+KUEKeNParty_addManager:
+	<input type='text' id='Manageable_addManager_address__newManagerAddress'>
+	<button onclick='Manageable_addManager_address()'>execute KUEKeNParty_addManager</button>
+	<div class="function_result" id="Manageable_addManager_address_res"></div>
+  </div>
+  <div class="function_execution">
+KUEKeNParty_KUEKeNParty:
+	<button onclick='KUEKeNParty_KUEKeNParty()'>execute KUEKeNParty_KUEKeNParty</button>
+	<div class="function_result" id="KUEKeNParty_KUEKeNParty_res"></div>
+  </div>
+
+</div>
+
+</body>
+</html>
