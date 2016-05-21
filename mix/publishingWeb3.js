@@ -48,9 +48,16 @@ var ShortBlogContract = web3.eth.contract([
 var BlogRegistryContract = web3.eth.contract([
   {
     "constant": true,
-    "inputs": [{"name": "name","type": "bytes32"}],    
+    "inputs": [{"name": "name","type": "string"}],    
     "name": "registerBlog",
     "outputs": [{"name": "","type": "int"}],
+    "type": "function"
+  }
+,  {
+    "constant": true,
+    "inputs": [{"name": "name","type": "string"}],    
+    "name": "getShortBlog",
+    "outputs": [{"name": "","type": "address"}],
     "type": "function"
   }
  

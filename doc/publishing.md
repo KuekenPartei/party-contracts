@@ -93,7 +93,8 @@ id|uint|in|
 ## contract: BlogRegistry
 
     overview:
-	function registerBlog(bytes32 name) public   constant returns (int )
+	function registerBlog(string name) public   constant returns (int )
+	function getShortBlog(string name) public   constant returns (address )
 
 
 
@@ -112,7 +113,7 @@ name|type|mapsTo|visiblity|doc
 ----|----|----|----|----
 blogs|uint|ShortBlog|public|names|bytes32|uint|public|-
 
-#### BlogRegistry.registerBlog(bytes32 name) public   constant returns (int )
+#### BlogRegistry.registerBlog(string name) public   constant returns (int )
 
 Register a blog under a name.
 returns 0 for ok and 1 else.
@@ -120,7 +121,15 @@ returns 0 for ok and 1 else.
 
 name|type|direction|doc
 ----|----|----|----
-name|bytes32|in|
+name|string|in|
 |int|return|
+
+#### BlogRegistry.getShortBlog(string name) public   constant returns (address )
+
+
+name|type|direction|doc
+----|----|----|----
+name|string|in|
+|address|return|
 
 

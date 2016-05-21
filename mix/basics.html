@@ -7,14 +7,14 @@ function Owned_updateAttributes() {
 // update attributes
 }
 //call functions
-//function Owned_kill
-function Owned_kill() {
-	var res = contracts['Owned'].contract.kill();
-}
 //function Owned_changeOwner
 function Owned_changeOwner_address() {
 	var param_newOwner = document.getElementById('Owned_changeOwner_address_newOwner').value;
 	var res = contracts['Owned'].contract.changeOwner(param_newOwner);
+}
+//function Owned_kill
+function Owned_kill() {
+	var res = contracts['Owned'].contract.kill();
 }
 //function Owned_getOwner
 function Owned_getOwner() {
@@ -29,12 +29,6 @@ function Manageable_updateAttributes() {
 // update attributes
 }
 //call functions
-//function Manageable_canAccess
-function Manageable_canAccess() {
-	var res = contracts['Manageable'].contract.canAccess();
-	if(res!=null)
-		document.getElementById('Manageable_canAccess_res').innerText = res;
-}
 //function Manageable_removeManager
 function Manageable_removeManager_address() {
 	var param__managerAddress = document.getElementById('Manageable_removeManager_address__managerAddress').value;
@@ -44,6 +38,12 @@ function Manageable_removeManager_address() {
 function Manageable_addManager_address() {
 	var param__newManagerAddress = document.getElementById('Manageable_addManager_address__newManagerAddress').value;
 	var res = contracts['Manageable'].contract.addManager(param__newManagerAddress);
+}
+//function Manageable_canAccess
+function Manageable_canAccess() {
+	var res = contracts['Manageable'].contract.canAccess();
+	if(res!=null)
+		document.getElementById('Manageable_canAccess_res').innerText = res;
 }
 
 //delegated calls
@@ -69,15 +69,15 @@ Owned:
   </div>
 
   <div class="function_execution">
-Owned_kill:
-	<button onclick='Owned_kill()'>execute Owned_kill</button>
-	<div class="function_result" id="Owned_kill_res"></div>
-  </div>
-  <div class="function_execution">
 Owned_changeOwner:
 	<input type='text' id='Owned_changeOwner_address_newOwner'>
 	<button onclick='Owned_changeOwner_address()'>execute Owned_changeOwner</button>
 	<div class="function_result" id="Owned_changeOwner_address_res"></div>
+  </div>
+  <div class="function_execution">
+Owned_kill:
+	<button onclick='Owned_kill()'>execute Owned_kill</button>
+	<div class="function_result" id="Owned_kill_res"></div>
   </div>
   <div class="function_execution">
 Owned_getOwner:
@@ -93,11 +93,6 @@ Manageable:
   </div>
 
   <div class="function_execution">
-Manageable_canAccess:
-	<button onclick='Manageable_canAccess()'>execute Manageable_canAccess</button>
-	<div class="function_result" id="Manageable_canAccess_res"></div>
-  </div>
-  <div class="function_execution">
 Manageable_removeManager:
 	<input type='text' id='Manageable_removeManager_address__managerAddress'>
 	<button onclick='Manageable_removeManager_address()'>execute Manageable_removeManager</button>
@@ -108,6 +103,11 @@ Manageable_addManager:
 	<input type='text' id='Manageable_addManager_address__newManagerAddress'>
 	<button onclick='Manageable_addManager_address()'>execute Manageable_addManager</button>
 	<div class="function_result" id="Manageable_addManager_address_res"></div>
+  </div>
+  <div class="function_execution">
+Manageable_canAccess:
+	<button onclick='Manageable_canAccess()'>execute Manageable_canAccess</button>
+	<div class="function_result" id="Manageable_canAccess_res"></div>
   </div>
 
 </div>

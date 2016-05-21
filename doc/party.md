@@ -4,20 +4,27 @@
 * [Organ](#contract-organ)
 * [Party](#contract-party)
 * [KUEKeNParty](#contract-kuekenparty)
+* [FoundationConference](#contract-foundationconference)
 
 ## contract: Organ
 
     overview:
 	function changeMember(uint _id,address _address) public  onlyManager() 
-	function createFunction(string _functionName) public  onlyManager() 
+	function createFunction(string _functionName,string _constittiutionHash) public  onlyManager() 
 
-inherites: [Manageable](#contract-manageable),[MemberAware](#contract-memberaware)
+inherites: [Manageable](basic#contract-manageable),[MemberAware](members#contract-memberaware)
+
+An organ is part of the party, defined in the constitution.
+It is populated by functions party members.
 
 
 
 ### structs:
 
 OrganFunction
+The function definition.
+A function is defined in the constitution of the party.
+
 
 
 #### OrganFunction properties
@@ -27,6 +34,10 @@ name|type|visiblity|delegate|doc
 currentMember|address|public||
 functionName|string|public||
 id|uint|public||
+constitutionHash|string|public||
+lastMemberChanged|uint|public||
+lastConstitutionHashChanged|uint|public||
+publisher|ShortBlog|public||
 
 
 
@@ -36,14 +47,19 @@ name|type|visiblity|delegate|doc
 ----|----|----|----|----
 organName|string|public||
 lastFunctionId|uint|public||
+blogRegistry|BlogRegistry|public||
+isActive|bool|public||
+organBlog|ShortBlog|public||
 
 #### Organ mappings
 
 name|type|mapsTo|visiblity|doc
 ----|----|----|----|----
-organMembers|uint|OrganFunction|public|-
+organFunctions|uint|OrganFunction|public|-
 
 #### Organ.changeMember(uint _id,address _address) public  onlyManager() 
+
+Change the member of the function.
 
 
 name|type|direction|doc
@@ -51,12 +67,15 @@ name|type|direction|doc
 _id|uint|in|
 _address|address|in|
 
-#### Organ.createFunction(string _functionName) public  onlyManager() 
+#### Organ.createFunction(string _functionName,string _constittiutionHash) public  onlyManager() 
+
+Create a function of this organ.
 
 
 name|type|direction|doc
 ----|----|----|----
 _functionName|string|in|The name of the organ function.
+_constittiutionHash|string|in|
 
 
 ## contract: Party
@@ -64,7 +83,9 @@ _functionName|string|in|The name of the organ function.
     overview:
 	function Party() public  
 
-inherites: [Manageable](#contract-manageable)
+inherites: [Manageable](basic#contract-manageable)
+
+A basic party contract.
 
 
 
@@ -73,8 +94,9 @@ inherites: [Manageable](#contract-manageable)
 
 name|type|visiblity|delegate|doc
 ----|----|----|----|----
-organ|Organ|public||
+organs|Organ|public||
 memberRegistry|MemberRegistry|public||
+constitutionHash|string|public||
 -
 
 #### Party.Party() public  
@@ -89,6 +111,9 @@ memberRegistry|MemberRegistry|public||
 
 inherites: [Party](#contract-party)
 
+An actual party.
+The KUEKen party.
+
 
 
 -
@@ -96,5 +121,16 @@ inherites: [Party](#contract-party)
 #### KUEKeNParty.KUEKeNParty() public  
 
 
+
+
+## contract: FoundationConference
+
+    overview:
+
+inherites: [Organ](#contract-organ)
+
+
+
+-
 
 

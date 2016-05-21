@@ -195,10 +195,19 @@ A registered manager is an address mapped with true.</body>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_DHGt8O81EeWU3MNrGPvZNA" name="party">
       <packageImport xmi:type="uml:PackageImport" xmi:id="_GHsxIO81EeWU3MNrGPvZNA" importedPackage="_qaoxoOn5EeWOi9aiZLczlg"/>
+      <packageImport xmi:type="uml:PackageImport" xmi:id="_WDCzkB9FEea0ndjKa8R1Fg" importedPackage="_h0h8wM2EEeWqGaV8xrZGjQ"/>
+      <packageImport xmi:type="uml:PackageImport" xmi:id="_Q-_HAB9JEea0ndjKa8R1Fg" importedPackage="_t3eckO82EeWU3MNrGPvZNA"/>
       <packagedElement xmi:type="uml:Class" xmi:id="_YVNoUB82Eea0ndjKa8R1Fg" name="Organ">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_GlGUUB9EEea0ndjKa8R1Fg">
+          <body>An organ is part of the party, defined in the constitution.
+It is populated by functions party members.</body>
+        </ownedComment>
+        <ownedRule xmi:type="uml:Constraint" xmi:id="_O5dGcB9gEea0ndjKa8R1Fg" name="onlyIsFunction">
+          <specification xmi:type="uml:LiteralString" xmi:id="_O5fisB9gEea0ndjKa8R1Fg" name="constraintSpec" value="&#xA;"/>
+        </ownedRule>
         <generalization xmi:type="uml:Generalization" xmi:id="_gIYCoB82Eea0ndjKa8R1Fg" general="_HcFXcM2GEeWqGaV8xrZGjQ"/>
         <generalization xmi:type="uml:Generalization" xmi:id="_qCALcB88Eea0ndjKa8R1Fg" general="_gzuKkM2FEeWqGaV8xrZGjQ"/>
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_0-PBwB83Eea0ndjKa8R1Fg" name="organMembers">
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_0-PBwB83Eea0ndjKa8R1Fg" name="organFunctions">
           <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
         </ownedAttribute>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_1UPmoB86Eea0ndjKa8R1Fg" name="organName">
@@ -206,9 +215,16 @@ A registered manager is an address mapped with true.</body>
         </ownedAttribute>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_LYCtoB8-Eea0ndjKa8R1Fg" name="lastFunctionId">
           <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
-          <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_Rm41gB8-Eea0ndjKa8R1Fg"/>
         </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_3eXXAB9JEea0ndjKa8R1Fg" name="blogRegistry" type="_4pQkIO82EeWU3MNrGPvZNA" aggregation="composite" association="_3eWv8B9JEea0ndjKa8R1Fg"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_89mk4B9fEea0ndjKa8R1Fg" name="isActive">
+          <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_LedxoKKuEeWvY9GWZZMftw"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_pnh2IB9hEea0ndjKa8R1Fg" name="organBlog" type="_4pPWAO82EeWU3MNrGPvZNA"/>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_fkDl4B88Eea0ndjKa8R1Fg" name="changeMember">
+          <ownedComment xmi:type="uml:Comment" xmi:id="_vEBXAB9AEea0ndjKa8R1Fg">
+            <body>Change the member of the function.</body>
+          </ownedComment>
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_VXPXIB89Eea0ndjKa8R1Fg" name="_id">
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
           </ownedParameter>
@@ -217,14 +233,35 @@ A registered manager is an address mapped with true.</body>
           </ownedParameter>
         </ownedOperation>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_2fY5MB88Eea0ndjKa8R1Fg" name="createFunction">
+          <ownedComment xmi:type="uml:Comment" xmi:id="_1KQ8gB9AEea0ndjKa8R1Fg">
+            <body>Create a function of this organ.</body>
+          </ownedComment>
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_HUXSQB89Eea0ndjKa8R1Fg" name="_functionName">
             <ownedComment xmi:type="uml:Comment" xmi:id="_OXYCAB89Eea0ndjKa8R1Fg">
               <body>The name of the organ function.</body>
             </ownedComment>
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
           </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_HZDBIB9BEea0ndjKa8R1Fg" name="_constittiutionHash">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_SqQPoB9BEea0ndjKa8R1Fg" name="FunctionMemberChange">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_QIytkB9DEea0ndjKa8R1Fg" name="oldMember">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_TM5XwB9DEea0ndjKa8R1Fg" name="functionId">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_YXdYIB9DEea0ndjKa8R1Fg" name="newMember">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
         </ownedOperation>
         <nestedClassifier xmi:type="uml:Class" xmi:id="_CiX8MB84Eea0ndjKa8R1Fg" name="OrganFunction">
+          <ownedComment xmi:type="uml:Comment" xmi:id="_dCOlgB9AEea0ndjKa8R1Fg">
+            <body>The function definition.
+A function is defined in the constitution of the party.</body>
+          </ownedComment>
           <ownedAttribute xmi:type="uml:Property" xmi:id="_3SXVoB85Eea0ndjKa8R1Fg" name="currentMember">
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
           </ownedAttribute>
@@ -234,16 +271,33 @@ A registered manager is an address mapped with true.</body>
           <ownedAttribute xmi:type="uml:Property" xmi:id="_xd1D0B88Eea0ndjKa8R1Fg" name="id">
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
           </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_70c8kB9AEea0ndjKa8R1Fg" name="constitutionHash">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_sJgmUB9DEea0ndjKa8R1Fg" name="lastMemberChanged">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_w3aqcB9EEea0ndjKa8R1Fg" name="lastConstitutionHashChanged">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_1HgIIB9bEea0ndjKa8R1Fg" name="publisher" type="_4pPWAO82EeWU3MNrGPvZNA"/>
         </nestedClassifier>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_kqDeEB82Eea0ndjKa8R1Fg" name="Party">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_Uztr8B9AEea0ndjKa8R1Fg">
+          <body>A basic party contract.</body>
+        </ownedComment>
         <generalization xmi:type="uml:Generalization" xmi:id="_F8tfoB85Eea0ndjKa8R1Fg" general="_gzuKkM2FEeWqGaV8xrZGjQ"/>
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_oJTzMB82Eea0ndjKa8R1Fg" name="organ" type="_YVNoUB82Eea0ndjKa8R1Fg" aggregation="composite" association="_oJRW8B82Eea0ndjKa8R1Fg">
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_oJTzMB82Eea0ndjKa8R1Fg" name="organs" type="_YVNoUB82Eea0ndjKa8R1Fg" aggregation="composite" association="_oJRW8B82Eea0ndjKa8R1Fg">
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_HGk8oB83Eea0ndjKa8R1Fg" value="1"/>
           <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_HGonAB83Eea0ndjKa8R1Fg" value="*"/>
         </ownedAttribute>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_UYWNUh86Eea0ndjKa8R1Fg" name="memberRegistry" type="_OhUKMM2FEeWqGaV8xrZGjQ" aggregation="composite" association="_UYVmQB86Eea0ndjKa8R1Fg"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_kvWN8B9bEea0ndjKa8R1Fg" name="constitutionHash">
+          <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+        </ownedAttribute>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_JMKBsB86Eea0ndjKa8R1Fg" name="Party"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_LqoLEB9BEea0ndjKa8R1Fg" name="ConstiutionChange"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Association" xmi:id="_oJRW8B82Eea0ndjKa8R1Fg" memberEnd="_oJTzMB82Eea0ndjKa8R1Fg _oJWPcB82Eea0ndjKa8R1Fg">
         <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_oJSlEB82Eea0ndjKa8R1Fg" source="org.eclipse.papyrus">
@@ -261,8 +315,21 @@ A registered manager is an address mapped with true.</body>
         <ownedEnd xmi:type="uml:Property" xmi:id="_UYWNUx86Eea0ndjKa8R1Fg" name="party" type="_kqDeEB82Eea0ndjKa8R1Fg" association="_UYVmQB86Eea0ndjKa8R1Fg"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_dEfeEB86Eea0ndjKa8R1Fg" name="KUEKeNParty">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_YHctkB9AEea0ndjKa8R1Fg">
+          <body>An actual party.
+The KUEKen party.</body>
+        </ownedComment>
         <generalization xmi:type="uml:Generalization" xmi:id="_hT-9UB86Eea0ndjKa8R1Fg" general="_kqDeEB82Eea0ndjKa8R1Fg"/>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_j6IgMB86Eea0ndjKa8R1Fg" name="KUEKeNParty"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_3eWv8B9JEea0ndjKa8R1Fg" memberEnd="_3eXXAB9JEea0ndjKa8R1Fg _3eXXAR9JEea0ndjKa8R1Fg">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_3eWv8R9JEea0ndjKa8R1Fg" source="org.eclipse.papyrus">
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_3eWv8h9JEea0ndjKa8R1Fg" key="nature" value="UML_Nature"/>
+        </eAnnotations>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_3eXXAR9JEea0ndjKa8R1Fg" name="organ" type="_YVNoUB82Eea0ndjKa8R1Fg" association="_3eWv8B9JEea0ndjKa8R1Fg"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_xPL18B9fEea0ndjKa8R1Fg" name="FoundationConference">
+        <generalization xmi:type="uml:Generalization" xmi:id="_7159AB9fEea0ndjKa8R1Fg" general="_YVNoUB82Eea0ndjKa8R1Fg"/>
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_t3eckO82EeWU3MNrGPvZNA" name="publishing">
@@ -366,10 +433,18 @@ A registered manager is an address mapped with true.</body>
 returns 0 for ok and 1 else.</body>
           </ownedComment>
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_4pQkJe82EeWU3MNrGPvZNA" name="name">
-            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_x7cwUKMvEeWyXvjE6XZ9yw"/>
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
           </ownedParameter>
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_4pQkJu82EeWU3MNrGPvZNA" direction="return">
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Ym7uoKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_foUfMB9aEea0ndjKa8R1Fg" name="getShortBlog">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_oaQO4B9aEea0ndjKa8R1Fg" name="name">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_sYNSMB9aEea0ndjKa8R1Fg" direction="return">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
           </ownedParameter>
         </ownedOperation>
       </packagedElement>
@@ -436,7 +511,7 @@ returns 0 for ok and 1 else.</body>
   <Contracts:Mapping xmi:id="_4pWqwO82EeWU3MNrGPvZNA" base_Property="_4pQkIu82EeWU3MNrGPvZNA">
     <value xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
   </Contracts:Mapping>
-  <Contracts:Function xmi:id="_4pWqwe82EeWU3MNrGPvZNA" functionCode="if(names[name]&lt;0){&#xD;&#xA;&#x9;blogs[blogCount] = new ShortBlog();&#xD;&#xA;&#x9;names[name] = blogCount;&#xD;&#xA;&#x9;blogCount++;&#xD;&#xA;&#x9;return 0;&#xD;&#xA;}&#xD;&#xA;return 1;&#xD;&#xA;" base_Operation="_4pQkJO82EeWU3MNrGPvZNA" returnType="constant"/>
+  <Contracts:Function xmi:id="_4pWqwe82EeWU3MNrGPvZNA" functionCode="bytes32 hash = sha3(name);&#xA;if(names[hash]&lt;0){&#xD;&#xA;&#x9;blogs[blogCount] = new ShortBlog();&#xD;&#xA;&#x9;names[hash] = blogCount;&#xD;&#xA;&#x9;blogCount++;&#xD;&#xA;&#x9;return 0;&#xD;&#xA;}&#xD;&#xA;return 1;&#xD;&#xA;" base_Operation="_4pQkJO82EeWU3MNrGPvZNA" returnType="constant"/>
   <Contracts:Import xmi:id="_jycdoPXWEeW3toBIpTL0QQ" base_PackageImport="_GHsxIO81EeWU3MNrGPvZNA"/>
   <Contracts:Import xmi:id="_qmgycPXWEeW3toBIpTL0QQ" base_PackageImport="_aeJ04On7EeWOi9aiZLczlg"/>
   <Contracts:GetterSetter xmi:id="_1dvTIB81Eea0ndjKa8R1Fg" base_Property="_OhUKNM2FEeWqGaV8xrZGjQ"/>
@@ -453,4 +528,10 @@ returns 0 for ok and 1 else.</body>
   <Contracts:Function xmi:id="_9pQe4B88Eea0ndjKa8R1Fg" base_Operation="_2fY5MB88Eea0ndjKa8R1Fg">
     <modifiers xmi:type="Contracts:Modifier" xmi:id="_-egE0B88Eea0ndjKa8R1Fg" parameter="" modifier="_8DcOwM2GEeWqGaV8xrZGjQ"/>
   </Contracts:Function>
+  <Contracts:Event xmi:id="_P-WDAB9BEea0ndjKa8R1Fg" base_Operation="_LqoLEB9BEea0ndjKa8R1Fg"/>
+  <Contracts:Event xmi:id="_TjVzwB9BEea0ndjKa8R1Fg" base_Operation="_SqQPoB9BEea0ndjKa8R1Fg"/>
+  <Contracts:Import xmi:id="_Zfr5kB9FEea0ndjKa8R1Fg" base_PackageImport="_WDCzkB9FEea0ndjKa8R1Fg"/>
+  <Contracts:Import xmi:id="_TB6oEB9JEea0ndjKa8R1Fg" base_PackageImport="_Q-_HAB9JEea0ndjKa8R1Fg"/>
+  <Contracts:Function xmi:id="_gpEKgB9aEea0ndjKa8R1Fg" base_Operation="_foUfMB9aEea0ndjKa8R1Fg" returnType="constant"/>
+  <Contracts:Contract xmi:id="_YC4eMB9iEea0ndjKa8R1Fg" base_Class="_xPL18B9fEea0ndjKa8R1Fg"/>
 </xmi:XMI>
