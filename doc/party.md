@@ -11,8 +11,9 @@
     overview:
 	function changeMember(uint _id,address _address) public  onlyManager() 
 	function createFunction(string _functionName,string _constittiutionHash) public  onlyManager() 
+	function initalizeOrgan() public  
 
-inherites: [Manageable](basic#contract-manageable),[MemberAware](members#contract-memberaware)
+inherites: [MemberAware](#contract-memberaware),[Manageable](#contract-manageable)
 
 An organ is part of the party, defined in the constitution.
 It is populated by functions party members.
@@ -77,13 +78,18 @@ name|type|direction|doc
 _functionName|string|in|The name of the organ function.
 _constittiutionHash|string|in|
 
+#### Organ.initalizeOrgan() public  
+
+
+
 
 ## contract: Party
 
     overview:
 	function Party() public  
+	function createOrgan(string organName) public  
 
-inherites: [Manageable](basic#contract-manageable)
+inherites: [Manageable](#contract-manageable)
 
 A basic party contract.
 
@@ -94,20 +100,29 @@ A basic party contract.
 
 name|type|visiblity|delegate|doc
 ----|----|----|----|----
-organs|Organ|public||
 memberRegistry|MemberRegistry|public||
 constitutionHash|string|public||
+organCount|uint|public||
+blogregistry|BlogRegistry|public||
 -
 
 #### Party.Party() public  
 
 
 
+#### Party.createOrgan(string organName) public  
+
+
+name|type|direction|doc
+----|----|----|----
+organName|string|in|
+
 
 ## contract: KUEKeNParty
 
     overview:
 	function KUEKeNParty() public  
+	function boostrapParty(address fc,address mr) external  onlyManager() 
 
 inherites: [Party](#contract-party)
 
@@ -121,6 +136,14 @@ The KUEKen party.
 #### KUEKeNParty.KUEKeNParty() public  
 
 
+
+#### KUEKeNParty.boostrapParty(address fc,address mr) external  onlyManager() 
+
+
+name|type|direction|doc
+----|----|----|----
+fc|address|in|
+mr|address|in|
 
 
 ## contract: FoundationConference

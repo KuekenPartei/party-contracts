@@ -7,6 +7,12 @@ function Owned_updateAttributes() {
 // update attributes
 }
 //call functions
+//function Owned_getOwner
+function Owned_getOwner() {
+	var res = contracts['Owned'].contract.getOwner();
+	if(res!=null)
+		document.getElementById('Owned_getOwner_res').innerText = res;
+}
 //function Owned_changeOwner
 function Owned_changeOwner_address() {
 	var param_newOwner = document.getElementById('Owned_changeOwner_address_newOwner').value;
@@ -16,12 +22,6 @@ function Owned_changeOwner_address() {
 function Owned_kill() {
 	var res = contracts['Owned'].contract.kill();
 }
-//function Owned_getOwner
-function Owned_getOwner() {
-	var res = contracts['Owned'].contract.getOwner();
-	if(res!=null)
-		document.getElementById('Owned_getOwner_res').innerText = res;
-}
 
 //delegated calls
 // script for Manageable
@@ -29,21 +29,21 @@ function Manageable_updateAttributes() {
 // update attributes
 }
 //call functions
-//function Manageable_removeManager
-function Manageable_removeManager_address() {
-	var param__managerAddress = document.getElementById('Manageable_removeManager_address__managerAddress').value;
-	var res = contracts['Manageable'].contract.removeManager(param__managerAddress);
+//function Manageable_canAccess
+function Manageable_canAccess() {
+	var res = contracts['Manageable'].contract.canAccess();
+	if(res!=null)
+		document.getElementById('Manageable_canAccess_res').innerText = res;
 }
 //function Manageable_addManager
 function Manageable_addManager_address() {
 	var param__newManagerAddress = document.getElementById('Manageable_addManager_address__newManagerAddress').value;
 	var res = contracts['Manageable'].contract.addManager(param__newManagerAddress);
 }
-//function Manageable_canAccess
-function Manageable_canAccess() {
-	var res = contracts['Manageable'].contract.canAccess();
-	if(res!=null)
-		document.getElementById('Manageable_canAccess_res').innerText = res;
+//function Manageable_removeManager
+function Manageable_removeManager_address() {
+	var param__managerAddress = document.getElementById('Manageable_removeManager_address__managerAddress').value;
+	var res = contracts['Manageable'].contract.removeManager(param__managerAddress);
 }
 
 //delegated calls
@@ -69,6 +69,11 @@ Owned:
   </div>
 
   <div class="function_execution">
+Owned_getOwner:
+	<button onclick='Owned_getOwner()'>execute Owned_getOwner</button>
+	<div class="function_result" id="Owned_getOwner_res"></div>
+  </div>
+  <div class="function_execution">
 Owned_changeOwner:
 	<input type='text' id='Owned_changeOwner_address_newOwner'>
 	<button onclick='Owned_changeOwner_address()'>execute Owned_changeOwner</button>
@@ -79,11 +84,6 @@ Owned_kill:
 	<button onclick='Owned_kill()'>execute Owned_kill</button>
 	<div class="function_result" id="Owned_kill_res"></div>
   </div>
-  <div class="function_execution">
-Owned_getOwner:
-	<button onclick='Owned_getOwner()'>execute Owned_getOwner</button>
-	<div class="function_result" id="Owned_getOwner_res"></div>
-  </div>
 
 </div>
 <div class="contract">
@@ -93,10 +93,9 @@ Manageable:
   </div>
 
   <div class="function_execution">
-Manageable_removeManager:
-	<input type='text' id='Manageable_removeManager_address__managerAddress'>
-	<button onclick='Manageable_removeManager_address()'>execute Manageable_removeManager</button>
-	<div class="function_result" id="Manageable_removeManager_address_res"></div>
+Manageable_canAccess:
+	<button onclick='Manageable_canAccess()'>execute Manageable_canAccess</button>
+	<div class="function_result" id="Manageable_canAccess_res"></div>
   </div>
   <div class="function_execution">
 Manageable_addManager:
@@ -105,9 +104,10 @@ Manageable_addManager:
 	<div class="function_result" id="Manageable_addManager_address_res"></div>
   </div>
   <div class="function_execution">
-Manageable_canAccess:
-	<button onclick='Manageable_canAccess()'>execute Manageable_canAccess</button>
-	<div class="function_result" id="Manageable_canAccess_res"></div>
+Manageable_removeManager:
+	<input type='text' id='Manageable_removeManager_address__managerAddress'>
+	<button onclick='Manageable_removeManager_address()'>execute Manageable_removeManager</button>
+	<div class="function_result" id="Manageable_removeManager_address_res"></div>
   </div>
 
 </div>

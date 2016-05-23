@@ -113,7 +113,7 @@ contract BlogRegistry {
 	*/
 	function registerBlog(string name) public   constant returns (int ) {
 		 bytes32 hash = sha3(name);
-		 if(names[hash]<0){
+		 if(names[hash]==0){
 		 	blogs[blogCount] = new ShortBlog();
 		 	names[hash] = blogCount;
 		 	blogCount++;

@@ -4,9 +4,9 @@
 *
 **/
 
+import "./members.sol";
 import "./basics.sol";
 import "./publishing.sol";
-import "./members.sol";
 
 /*
 * An organ is part of the party, defined in the constitution.
@@ -84,6 +84,32 @@ contract Organ is Manageable,MemberAware {
 		//End of user code
 	}
 	
+	
+	
+	function initalizeOrgan() public   {
+	
+		//Start of user code Organ.function.initalizeOrgan
+		//blogRegistry = new BlogRegistry();		
+		blogRegistry.registerBlog(organName);
+		organBlog = ShortBlog(blogRegistry.getShortBlog(organName));
+		
+		//End of user code
+	}
+	
+	// getOrganName
+	function getOrganName() returns(string) {
+		return organName;
+	}
+	// setOrganName
+	function setOrganName (string aOrganName) {
+		organName = aOrganName;
+	}
+	
+	// setBlogRegistry
+	function setBlogRegistry (address aBlogRegistry)  {
+		blogRegistry = BlogRegistry(aBlogRegistry);
+	}
+	
 	// Start of user code Organ.operations
 	//TODO: implement
 	// End of user code
@@ -94,9 +120,11 @@ contract Organ is Manageable,MemberAware {
 */
 contract Party is Manageable {
 
-	Organ[] public organs;
 	MemberRegistry public memberRegistry;
 	string public constitutionHash;
+	uint public organCount;
+	BlogRegistry public blogregistry;
+	mapping (uint=>Organ)public organs;
 	// Start of user code Party.attributes
 	//TODO: implement
 	// End of user code
@@ -110,6 +138,20 @@ contract Party is Manageable {
 	
 		//Start of user code Party.function.Party
 		//TODO: implement
+		//End of user code
+	}
+	
+	
+	
+	function createOrgan(string organName) public   {
+	
+		//Start of user code Party.function.createOrgan
+		organs[organCount] = new Organ();
+		organs[organCount].setOrganName(organName);
+		organs[organCount].setMemberRegistry(memberRegistry);
+		organs[organCount].setBlogRegistry(blogregistry);
+		organs[organCount].initalizeOrgan();
+		organCount++;
 		//End of user code
 	}
 	
@@ -135,6 +177,30 @@ contract KUEKeNParty is Party {
 		//Start of user code KUEKeNParty.function.KUEKeNParty
 		memberRegistry = new MemberRegistry();
 		memberRegistry.addManager(msg.sender);
+//		blogregistry = new BlogRegistry();
+		addManager(msg.sender);
+		//End of user code
+	}
+	
+	
+	
+	function boostrapParty(address fc,address br) external  onlyManager()  {
+	
+		//Start of user code KUEKeNParty.function.boostrapParty
+		
+//		memberRegistry = new MemberRegistry();
+//		memberRegistry.addManager(msg.sender);
+//		blogregistry = new BlogRegistry();
+		
+		organs[organCount] = FoundationConference(fc);
+		FoundationConference organ = FoundationConference(fc);
+		organ.setOrganName("Gruendungsversammlung");
+		organ.setMemberRegistry(memberRegistry);
+		organ.setBlogRegistry(br);
+		blogregistry = BlogRegistry(br);
+		organ.initalizeOrgan();
+		organCount++;
+
 		//End of user code
 	}
 	

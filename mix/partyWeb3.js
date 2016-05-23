@@ -14,6 +14,13 @@ var OrganContract = web3.eth.contract([
     "outputs": [],
     "type": "function"
   }
+,  {
+    "constant": true,
+    "inputs": [],    
+    "name": "initalizeOrgan",
+    "outputs": [],
+    "type": "function"
+  }
  ,
   {
     "constant": true,
@@ -32,6 +39,13 @@ var PartyContract = web3.eth.contract([
     "outputs": [],
     "type": "function"
   }
+,  {
+    "constant": true,
+    "inputs": [{"name": "organName","type": "string"}],    
+    "name": "createOrgan",
+    "outputs": [],
+    "type": "function"
+  }
  ,
   {
     "constant": true,
@@ -47,6 +61,13 @@ var KUEKeNPartyContract = web3.eth.contract([
     "constant": true,
     "inputs": [],    
     "name": "KUEKeNParty",
+    "outputs": [],
+    "type": "function"
+  }
+,  {
+    "constant": true,
+    "inputs": [{"name": "fc","type": "address"},{"name": "mr","type": "address"}],    
+    "name": "boostrapParty",
     "outputs": [],
     "type": "function"
   }

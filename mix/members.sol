@@ -124,13 +124,13 @@ contract MemberRegistry is Manageable {
 		//End of user code
 	}
 	
-	// getactiveMemberCount
+	// getActiveMemberCount
 	function getActiveMemberCount() returns(uint) {
 		return activeMemberCount;
 	}
-	// setactiveMemberCount
-	function setActiveMemberCount (uint aactiveMemberCount) {
-		activeMemberCount = aactiveMemberCount;
+	// setActiveMemberCount
+	function setActiveMemberCount (uint aActiveMemberCount) {
+		activeMemberCount = aActiveMemberCount;
 	}
 	
 	// Start of user code MemberRegistry.operations
@@ -164,9 +164,9 @@ contract MemberAware {
 		//End of user code
 	}
 	
-	// setmemberRegistry
-	function setMemberRegistry (address amemberRegistry) {
-		memberRegistry = MemberRegistry(amemberRegistry);
+	// setMemberRegistry
+	function setMemberRegistry (address aMemberRegistry) {
+		memberRegistry = MemberRegistry(aMemberRegistry);
 	}
 	
 	// Start of user code MemberAware.operations
