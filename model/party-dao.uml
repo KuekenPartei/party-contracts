@@ -221,6 +221,7 @@ It is populated by functions party members.</body>
           <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_LedxoKKuEeWvY9GWZZMftw"/>
         </ownedAttribute>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_pnh2IB9hEea0ndjKa8R1Fg" name="organBlog" type="_4pPWAO82EeWU3MNrGPvZNA"/>
+        <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_99IwECGgEeaIoZ3vQYCn_Q" client="_YVNoUB82Eea0ndjKa8R1Fg" supplier="_qJN2cCGcEeaIoZ3vQYCn_Q" contract="_qJN2cCGcEeaIoZ3vQYCn_Q"/>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_fkDl4B88Eea0ndjKa8R1Fg" name="changeMember">
           <ownedComment xmi:type="uml:Comment" xmi:id="_vEBXAB9AEea0ndjKa8R1Fg">
             <body>Change the member of the function.</body>
@@ -258,8 +259,17 @@ It is populated by functions party members.</body>
           </ownedParameter>
         </ownedOperation>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_maiMECAZEeaptIkV30WcIg" name="initalizeOrgan"/>
-        <ownedOperation xmi:type="uml:Operation" xmi:id="_v_dKICElEea6YuEw3E4qbw" name="publishMessage">
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_v_dKICElEea6YuEw3E4qbw" name="publishFunctionMessage">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_kwJ7gCGmEeaIoZ3vQYCn_Q" name="id">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_2avykCElEea6YuEw3E4qbw" name="message">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_qdDz8CGmEeaIoZ3vQYCn_Q" name="hash">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_s7p9UCGmEeaIoZ3vQYCn_Q" name="er">
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
           </ownedParameter>
         </ownedOperation>
@@ -336,7 +346,7 @@ The KUEKen party.</body>
         </ownedComment>
         <generalization xmi:type="uml:Generalization" xmi:id="_hT-9UB86Eea0ndjKa8R1Fg" general="_kqDeEB82Eea0ndjKa8R1Fg"/>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_j6IgMB86Eea0ndjKa8R1Fg" name="KUEKeNParty"/>
-        <ownedOperation xmi:type="uml:Operation" xmi:id="_auAkoCBHEeax9s8SJwm0VA" name="boostrapParty" visibility="package">
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_auAkoCBHEeax9s8SJwm0VA" name="boostrapParty" visibility="public">
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_cTVfgCBOEeax9s8SJwm0VA" name="fc">
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
           </ownedParameter>
@@ -475,6 +485,33 @@ returns 0 for ok and 1 else.</body>
           </ownedParameter>
         </ownedOperation>
       </packagedElement>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_qJN2cCGcEeaIoZ3vQYCn_Q" name="MessagePublisher">
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_KxTUMCGjEeaIoZ3vQYCn_Q" name="publishMessage">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_KxTUMSGjEeaIoZ3vQYCn_Q" name="message">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_KxTUMiGjEeaIoZ3vQYCn_Q" name="hash">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_KxTUMyGjEeaIoZ3vQYCn_Q" name="er">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_ZFImMCGjEeaIoZ3vQYCn_Q" name="getMessage">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_ZFImMiGjEeaIoZ3vQYCn_Q" name="id">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_ZFImMSGjEeaIoZ3vQYCn_Q" name="_message" direction="return">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_kWMqwCGjEeaIoZ3vQYCn_Q" name="date" direction="return">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_qlDZsCGjEeaIoZ3vQYCn_Q" name="_sender">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
+      </packagedElement>
     </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_TmqI0M2EEeWqGaV8xrZGjQ">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SB04cCAXEeaptIkV30WcIg" source="PapyrusVersion">
@@ -572,4 +609,6 @@ returns 0 for ok and 1 else.</body>
     <modifiers xmi:type="Contracts:Modifier" xmi:id="_ehh5kCBHEeax9s8SJwm0VA" parameter="" modifier="_8DcOwM2GEeWqGaV8xrZGjQ"/>
   </Contracts:Function>
   <Contracts:Function xmi:id="_34imQCElEea6YuEw3E4qbw" base_Operation="_v_dKICElEea6YuEw3E4qbw"/>
+  <Contracts:Function xmi:id="_KxVJYCGjEeaIoZ3vQYCn_Q" functionCode="" base_Operation="_KxTUMCGjEeaIoZ3vQYCn_Q" returnType="constant"/>
+  <Contracts:Function xmi:id="_ZFJNQCGjEeaIoZ3vQYCn_Q" functionCode="" base_Operation="_ZFImMCGjEeaIoZ3vQYCn_Q" returnType="constant"/>
 </xmi:XMI>
