@@ -258,6 +258,11 @@ It is populated by functions party members.</body>
           </ownedParameter>
         </ownedOperation>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_maiMECAZEeaptIkV30WcIg" name="initalizeOrgan"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_v_dKICElEea6YuEw3E4qbw" name="publishMessage">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_2avykCElEea6YuEw3E4qbw" name="message">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
         <nestedClassifier xmi:type="uml:Class" xmi:id="_CiX8MB84Eea0ndjKa8R1Fg" name="OrganFunction">
           <ownedComment xmi:type="uml:Comment" xmi:id="_dCOlgB9AEea0ndjKa8R1Fg">
             <body>The function definition.
@@ -335,7 +340,7 @@ The KUEKen party.</body>
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_cTVfgCBOEeax9s8SJwm0VA" name="fc">
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
           </ownedParameter>
-          <ownedParameter xmi:type="uml:Parameter" xmi:id="_fG8vQCBREeax9s8SJwm0VA" name="mr">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_fG8vQCBREeax9s8SJwm0VA" name="br">
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
           </ownedParameter>
         </ownedOperation>
@@ -459,9 +464,7 @@ returns 0 for ok and 1 else.</body>
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_4pQkJe82EeWU3MNrGPvZNA" name="name">
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
           </ownedParameter>
-          <ownedParameter xmi:type="uml:Parameter" xmi:id="_4pQkJu82EeWU3MNrGPvZNA" direction="return">
-            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Ym7uoKKsEeWvY9GWZZMftw"/>
-          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_4pQkJu82EeWU3MNrGPvZNA" type="_4pPWAO82EeWU3MNrGPvZNA" direction="return"/>
         </ownedOperation>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_foUfMB9aEea0ndjKa8R1Fg" name="getShortBlog">
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_oaQO4B9aEea0ndjKa8R1Fg" name="name">
@@ -535,7 +538,7 @@ returns 0 for ok and 1 else.</body>
   <Contracts:Mapping xmi:id="_4pWqwO82EeWU3MNrGPvZNA" base_Property="_4pQkIu82EeWU3MNrGPvZNA">
     <value xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
   </Contracts:Mapping>
-  <Contracts:Function xmi:id="_4pWqwe82EeWU3MNrGPvZNA" functionCode="bytes32 hash = sha3(name);&#xA;if(names[hash]==0){&#xD;&#xA;&#x9;blogs[blogCount] = new ShortBlog();&#xD;&#xA;&#x9;names[hash] = blogCount;&#xD;&#xA;&#x9;blogCount++;&#xD;&#xA;&#x9;return 0;&#xD;&#xA;}&#xD;&#xA;return 1;&#xD;&#xA;" base_Operation="_4pQkJO82EeWU3MNrGPvZNA" returnType="constant"/>
+  <Contracts:Function xmi:id="_4pWqwe82EeWU3MNrGPvZNA" functionCode="bytes32 hash = sha3(name);&#xA;if(names[hash]==0){&#xA;&#x9;ShortBlog b = new ShortBlog();&#xD;&#xA;&#x9;blogs[blogCount] =b ;&#xD;&#xA;&#x9;names[hash] = blogCount;&#xD;&#xA;&#x9;blogCount++;&#xD;&#xA;&#x9;return b;&#xD;&#xA;}&#xD;&#xA;return ShortBlog(0);&#xD;&#xA;" base_Operation="_4pQkJO82EeWU3MNrGPvZNA" returnType="constant"/>
   <Contracts:Import xmi:id="_jycdoPXWEeW3toBIpTL0QQ" base_PackageImport="_GHsxIO81EeWU3MNrGPvZNA"/>
   <Contracts:Import xmi:id="_qmgycPXWEeW3toBIpTL0QQ" base_PackageImport="_aeJ04On7EeWOi9aiZLczlg"/>
   <Contracts:GetterSetter xmi:id="_1dvTIB81Eea0ndjKa8R1Fg" base_Property="_OhUKNM2FEeWqGaV8xrZGjQ"/>
@@ -563,11 +566,10 @@ returns 0 for ok and 1 else.</body>
   </Contracts:KeyMapping>
   <Contracts:Function xmi:id="_YXqHMCAZEeaptIkV30WcIg" base_Operation="_Vf528CAZEeaptIkV30WcIg"/>
   <Contracts:Function xmi:id="_nrgrwCAZEeaptIkV30WcIg" base_Operation="_maiMECAZEeaptIkV30WcIg"/>
-  <Contracts:GetterSetter xmi:id="_AT6yoCAfEeax9s8SJwm0VA" getter="false" base_Property="_3eXXAB9JEea0ndjKa8R1Fg">
-    <modifiers xmi:type="Contracts:Modifier" xmi:id="_CjHOECAfEeax9s8SJwm0VA" parameter="" modifier="_8DcOwM2GEeWqGaV8xrZGjQ"/>
-  </Contracts:GetterSetter>
+  <Contracts:GetterSetter xmi:id="_AT6yoCAfEeax9s8SJwm0VA" getter="false" base_Property="_3eXXAB9JEea0ndjKa8R1Fg"/>
   <Contracts:GetterSetter xmi:id="_5cAtYCAjEeax9s8SJwm0VA" base_Property="_1UPmoB86Eea0ndjKa8R1Fg"/>
   <Contracts:Function xmi:id="_c5zt0CBHEeax9s8SJwm0VA" base_Operation="_auAkoCBHEeax9s8SJwm0VA">
     <modifiers xmi:type="Contracts:Modifier" xmi:id="_ehh5kCBHEeax9s8SJwm0VA" parameter="" modifier="_8DcOwM2GEeWqGaV8xrZGjQ"/>
   </Contracts:Function>
+  <Contracts:Function xmi:id="_34imQCElEea6YuEw3E4qbw" base_Operation="_v_dKICElEea6YuEw3E4qbw"/>
 </xmi:XMI>

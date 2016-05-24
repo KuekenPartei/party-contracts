@@ -111,15 +111,16 @@ contract BlogRegistry {
 	* returns
 	*  -
 	*/
-	function registerBlog(string name) public   constant returns (int ) {
+	function registerBlog(string name) public   constant returns (ShortBlog ) {
 		 bytes32 hash = sha3(name);
 		 if(names[hash]==0){
-		 	blogs[blogCount] = new ShortBlog();
+		 	ShortBlog b = new ShortBlog();
+		 	blogs[blogCount] =b ;
 		 	names[hash] = blogCount;
 		 	blogCount++;
-		 	return 0;
+		 	return b;
 		 }
-		 return 1;
+		 return ShortBlog(0);
 		
 		//Start of user code BlogRegistry.function.registerBlog
 		//TODO: implement

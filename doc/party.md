@@ -12,6 +12,7 @@
 	function changeMember(uint _id,address _address) public  onlyManager() 
 	function createFunction(string _functionName,string _constittiutionHash) public  onlyManager() 
 	function initalizeOrgan() public  
+	function publishMessage(string message) public  
 
 inherites: [MemberAware](#contract-memberaware),[Manageable](#contract-manageable)
 
@@ -82,6 +83,13 @@ _constittiutionHash|string|in|
 
 
 
+#### Organ.publishMessage(string message) public  
+
+
+name|type|direction|doc
+----|----|----|----
+message|string|in|
+
 
 ## contract: Party
 
@@ -122,7 +130,7 @@ organName|string|in|
 
     overview:
 	function KUEKeNParty() public  
-	function boostrapParty(address fc,address mr) external  onlyManager() 
+	function boostrapParty(address fc,address br) external  onlyManager() 
 
 inherites: [Party](#contract-party)
 
@@ -137,13 +145,13 @@ The KUEKen party.
 
 
 
-#### KUEKeNParty.boostrapParty(address fc,address mr) external  onlyManager() 
+#### KUEKeNParty.boostrapParty(address fc,address br) external  onlyManager() 
 
 
 name|type|direction|doc
 ----|----|----|----
 fc|address|in|
-mr|address|in|
+br|address|in|
 
 
 ## contract: FoundationConference

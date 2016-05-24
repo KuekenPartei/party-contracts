@@ -1,73 +1,89 @@
 <!doctype>
 <html>
 <head>
+<script type='text/javascript' src="publishingWeb3.js">
+</script>
 <script type='text/javascript'>
 // script for ShortBlog
+var ShortBlog_instance = contracts['ShortBlog'].contract;
+// set address
+function ShortBlog_setAddress() {
+	var _address = document.getElementById('ShortBlog_address').value;
+	ShortBlog_instance = ShortBlogContract.at(_address);
+}
+
 function ShortBlog_updateAttributes() {
 // update attributes
-var messageCount_res = contracts['ShortBlog'].contract.messageCount();
+var messageCount_res = ShortBlog_instance.messageCount();
 	if(messageCount_res!=null)
 		document.getElementById('ShortBlog_messageCount_value').innerText = messageCount_res;
-var lastMessageDate_res = contracts['ShortBlog'].contract.lastMessageDate();
+var lastMessageDate_res = ShortBlog_instance.lastMessageDate();
 	if(lastMessageDate_res!=null)
 		document.getElementById('ShortBlog_lastMessageDate_value').innerText = lastMessageDate_res;
 }
 //call functions
 //function ShortBlog_getOwner
 function Owned_getOwner() {
-	var res = contracts['ShortBlog'].contract.getOwner();
+	var res = ShortBlog_instance.getOwner();
 	if(res!=null)
 		document.getElementById('Owned_getOwner_res').innerText = res;
+}
+//function ShortBlog_changeOwner
+function Owned_changeOwner_address() {
+	var param_newOwner = document.getElementById('Owned_changeOwner_address_newOwner').value;
+	var res = ShortBlog_instance.changeOwner(param_newOwner);
 }
 //function ShortBlog_sendMessage
 function ShortBlog_sendMessage_string_string_string() {
 	var param_message = document.getElementById('ShortBlog_sendMessage_string_string_string_message').value;
 	var param_hash = document.getElementById('ShortBlog_sendMessage_string_string_string_hash').value;
 	var param_er = document.getElementById('ShortBlog_sendMessage_string_string_string_er').value;
-	var res = contracts['ShortBlog'].contract.sendMessage(param_message, param_hash, param_er);
-}
-//function ShortBlog_changeOwner
-function Owned_changeOwner_address() {
-	var param_newOwner = document.getElementById('Owned_changeOwner_address_newOwner').value;
-	var res = contracts['ShortBlog'].contract.changeOwner(param_newOwner);
+	var res = ShortBlog_instance.sendMessage(param_message, param_hash, param_er);
 }
 //function ShortBlog_getMessage
 function ShortBlog_getMessage_uint() {
 	var param_id = document.getElementById('ShortBlog_getMessage_uint_id').value;
-	var res = contracts['ShortBlog'].contract.getMessage(param_id);
+	var res = ShortBlog_instance.getMessage(param_id);
 	if(res!=null)
 		document.getElementById('ShortBlog_getMessage_uint_res').innerText = res;
 }
 //function ShortBlog_kill
 function Owned_kill() {
-	var res = contracts['ShortBlog'].contract.kill();
+	var res = ShortBlog_instance.kill();
 }
 //function ShortBlog_getMessageDate
 function ShortBlog_getMessageDate_uint() {
 	var param_id = document.getElementById('ShortBlog_getMessageDate_uint_id').value;
-	var res = contracts['ShortBlog'].contract.getMessageDate(param_id);
+	var res = ShortBlog_instance.getMessageDate(param_id);
 	if(res!=null)
 		document.getElementById('ShortBlog_getMessageDate_uint_res').innerText = res;
 }
 //function ShortBlog_getMessageCount
 function ShortBlog_getMessageCount() {
-	var res = contracts['ShortBlog'].contract.getMessageCount();
+	var res = ShortBlog_instance.getMessageCount();
 	if(res!=null)
 		document.getElementById('ShortBlog_getMessageCount_res').innerText = res;
 }
 //function ShortBlog_getMessageBlock
 function ShortBlog_getMessageBlock_uint() {
 	var param_id = document.getElementById('ShortBlog_getMessageBlock_uint_id').value;
-	var res = contracts['ShortBlog'].contract.getMessageBlock(param_id);
+	var res = ShortBlog_instance.getMessageBlock(param_id);
 	if(res!=null)
 		document.getElementById('ShortBlog_getMessageBlock_uint_res').innerText = res;
 }
 
 //delegated calls
 // script for BlogRegistry
+var BlogRegistry_instance = contracts['BlogRegistry'].contract;
+// set address
+function BlogRegistry_setAddress() {
+	var _address = document.getElementById('BlogRegistry_address').value;
+	BlogRegistry_instance = BlogRegistryContract.at(_address);
+}
+
 function BlogRegistry_updateAttributes() {
 // update attributes
-var blogCount_res = contracts['BlogRegistry'].contract.blogCount();
+var blogCount_res = BlogRegistry_instance.blogCount();
 	if(blogCount_res!=null)
 		document.getElementById('BlogRegistry_blogCount_value').innerText = blogCount_res;
 }
@@ -75,14 +91,14 @@ var blogCount_res = contracts['BlogRegistry'].contract.blogCount();
 //function BlogRegistry_registerBlog
 function BlogRegistry_registerBlog_string() {
 	var param_name = document.getElementById('BlogRegistry_registerBlog_string_name').value;
-	var res = contracts['BlogRegistry'].contract.registerBlog(param_name);
+	var res = BlogRegistry_instance.registerBlog(param_name);
 	if(res!=null)
 		document.getElementById('BlogRegistry_registerBlog_string_res').innerText = res;
 }
 //function BlogRegistry_getShortBlog
 function BlogRegistry_getShortBlog_string() {
 	var param_name = document.getElementById('BlogRegistry_getShortBlog_string_name').value;
-	var res = contracts['BlogRegistry'].contract.getShortBlog(param_name);
+	var res = BlogRegistry_instance.getShortBlog(param_name);
 	if(res!=null)
 		document.getElementById('BlogRegistry_getShortBlog_string_res').innerText = res;
 }
@@ -105,6 +121,7 @@ function BlogRegistry_getShortBlog_string() {
 	<h1>Sample Interface for publishing</h1>
 <div class="contract">
 ShortBlog:
+  <input type='text' id='ShortBlog_address'> <button onclick='ShortBlog_setAddress()'>change ShortBlog Address</button>
   <div class="contract_attributes"> attributes:
     <div class="contract_attribute"> messageCount:
       <div class="contract_attribute_value" id="ShortBlog_messageCount_value"> </div>
@@ -121,18 +138,18 @@ ShortBlog_getOwner:
 	<div class="function_result" id="Owned_getOwner_res"></div>
   </div>
   <div class="function_execution">
+ShortBlog_changeOwner:
+	<input type='text' id='Owned_changeOwner_address_newOwner'>
+	<button onclick='Owned_changeOwner_address()'>execute ShortBlog_changeOwner</button>
+	<div class="function_result" id="Owned_changeOwner_address_res"></div>
+  </div>
+  <div class="function_execution">
 ShortBlog_sendMessage:
 	<input type='text' id='ShortBlog_sendMessage_string_string_string_message'>
 	<input type='text' id='ShortBlog_sendMessage_string_string_string_hash'>
 	<input type='text' id='ShortBlog_sendMessage_string_string_string_er'>
 	<button onclick='ShortBlog_sendMessage_string_string_string()'>execute ShortBlog_sendMessage</button>
 	<div class="function_result" id="ShortBlog_sendMessage_string_string_string_res"></div>
-  </div>
-  <div class="function_execution">
-ShortBlog_changeOwner:
-	<input type='text' id='Owned_changeOwner_address_newOwner'>
-	<button onclick='Owned_changeOwner_address()'>execute ShortBlog_changeOwner</button>
-	<div class="function_result" id="Owned_changeOwner_address_res"></div>
   </div>
   <div class="function_execution">
 ShortBlog_getMessage:
@@ -166,6 +183,7 @@ ShortBlog_getMessageBlock:
 </div>
 <div class="contract">
 BlogRegistry:
+  <input type='text' id='BlogRegistry_address'> <button onclick='BlogRegistry_setAddress()'>change BlogRegistry Address</button>
   <div class="contract_attributes"> attributes:
     <div class="contract_attribute"> blogCount:
       <div class="contract_attribute_value" id="BlogRegistry_blogCount_value"> </div>
@@ -188,5 +206,9 @@ BlogRegistry_getShortBlog:
 
 </div>
 
+<script type='text/javascript'>
+document.getElementById('ShortBlog_address').value = ShortBlog_instance.address; 
+document.getElementById('BlogRegistry_address').value = BlogRegistry_instance.address; 
+</script>
 </body>
 </html>

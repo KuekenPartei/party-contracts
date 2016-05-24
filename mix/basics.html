@@ -1,49 +1,65 @@
 <!doctype>
 <html>
 <head>
+<script type='text/javascript' src="basicsWeb3.js">
+</script>
 <script type='text/javascript'>
 // script for Owned
+var Owned_instance = contracts['Owned'].contract;
+// set address
+function Owned_setAddress() {
+	var _address = document.getElementById('Owned_address').value;
+	Owned_instance = OwnedContract.at(_address);
+}
+
 function Owned_updateAttributes() {
 // update attributes
 }
 //call functions
 //function Owned_getOwner
 function Owned_getOwner() {
-	var res = contracts['Owned'].contract.getOwner();
+	var res = Owned_instance.getOwner();
 	if(res!=null)
 		document.getElementById('Owned_getOwner_res').innerText = res;
 }
 //function Owned_changeOwner
 function Owned_changeOwner_address() {
 	var param_newOwner = document.getElementById('Owned_changeOwner_address_newOwner').value;
-	var res = contracts['Owned'].contract.changeOwner(param_newOwner);
+	var res = Owned_instance.changeOwner(param_newOwner);
 }
 //function Owned_kill
 function Owned_kill() {
-	var res = contracts['Owned'].contract.kill();
+	var res = Owned_instance.kill();
 }
 
 //delegated calls
 // script for Manageable
+var Manageable_instance = contracts['Manageable'].contract;
+// set address
+function Manageable_setAddress() {
+	var _address = document.getElementById('Manageable_address').value;
+	Manageable_instance = ManageableContract.at(_address);
+}
+
 function Manageable_updateAttributes() {
 // update attributes
 }
 //call functions
 //function Manageable_canAccess
 function Manageable_canAccess() {
-	var res = contracts['Manageable'].contract.canAccess();
+	var res = Manageable_instance.canAccess();
 	if(res!=null)
 		document.getElementById('Manageable_canAccess_res').innerText = res;
 }
 //function Manageable_addManager
 function Manageable_addManager_address() {
 	var param__newManagerAddress = document.getElementById('Manageable_addManager_address__newManagerAddress').value;
-	var res = contracts['Manageable'].contract.addManager(param__newManagerAddress);
+	var res = Manageable_instance.addManager(param__newManagerAddress);
 }
 //function Manageable_removeManager
 function Manageable_removeManager_address() {
 	var param__managerAddress = document.getElementById('Manageable_removeManager_address__managerAddress').value;
-	var res = contracts['Manageable'].contract.removeManager(param__managerAddress);
+	var res = Manageable_instance.removeManager(param__managerAddress);
 }
 
 //delegated calls
@@ -64,6 +80,7 @@ function Manageable_removeManager_address() {
 	<h1>Sample Interface for basics</h1>
 <div class="contract">
 Owned:
+  <input type='text' id='Owned_address'> <button onclick='Owned_setAddress()'>change Owned Address</button>
   <div class="contract_attributes"> attributes:
     <button onclick='Owned_updateAttributes()'>update Owned attributes</button>
   </div>
@@ -88,6 +105,7 @@ Owned_kill:
 </div>
 <div class="contract">
 Manageable:
+  <input type='text' id='Manageable_address'> <button onclick='Manageable_setAddress()'>change Manageable Address</button>
   <div class="contract_attributes"> attributes:
     <button onclick='Manageable_updateAttributes()'>update Manageable attributes</button>
   </div>
@@ -112,5 +130,9 @@ Manageable_removeManager:
 
 </div>
 
+<script type='text/javascript'>
+document.getElementById('Owned_address').value = Owned_instance.address; 
+document.getElementById('Manageable_address').value = Manageable_instance.address; 
+</script>
 </body>
 </html>

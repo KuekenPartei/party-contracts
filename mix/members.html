@@ -1,21 +1,30 @@
 <!doctype>
 <html>
 <head>
+<script type='text/javascript' src="membersWeb3.js">
+</script>
 <script type='text/javascript'>
 // script for MemberRegistry
+var MemberRegistry_instance = contracts['MemberRegistry'].contract;
+// set address
+function MemberRegistry_setAddress() {
+	var _address = document.getElementById('MemberRegistry_address').value;
+	MemberRegistry_instance = MemberRegistryContract.at(_address);
+}
+
 function MemberRegistry_updateAttributes() {
 // update attributes
-var partyMemberCount_res = contracts['MemberRegistry'].contract.partyMemberCount();
+var partyMemberCount_res = MemberRegistry_instance.partyMemberCount();
 	if(partyMemberCount_res!=null)
 		document.getElementById('MemberRegistry_partyMemberCount_value').innerText = partyMemberCount_res;
-var activeMemberCount_res = contracts['MemberRegistry'].contract.activeMemberCount();
+var activeMemberCount_res = MemberRegistry_instance.activeMemberCount();
 	if(activeMemberCount_res!=null)
 		document.getElementById('MemberRegistry_activeMemberCount_value').innerText = activeMemberCount_res;
 }
 //call functions
 //function MemberRegistry_canAccess
 function Manageable_canAccess() {
-	var res = contracts['MemberRegistry'].contract.canAccess();
+	var res = MemberRegistry_instance.canAccess();
 	if(res!=null)
 		document.getElementById('Manageable_canAccess_res').innerText = res;
 }
@@ -23,33 +32,33 @@ function Manageable_canAccess() {
 function MemberRegistry_addMember_string_address() {
 	var param_name = document.getElementById('MemberRegistry_addMember_string_address_name').value;
 	var param__memberAddress = document.getElementById('MemberRegistry_addMember_string_address__memberAddress').value;
-	var res = contracts['MemberRegistry'].contract.addMember(param_name, param__memberAddress);
+	var res = MemberRegistry_instance.addMember(param_name, param__memberAddress);
 }
 //function MemberRegistry_addManager
 function Manageable_addManager_address() {
 	var param__newManagerAddress = document.getElementById('Manageable_addManager_address__newManagerAddress').value;
-	var res = contracts['MemberRegistry'].contract.addManager(param__newManagerAddress);
+	var res = MemberRegistry_instance.addManager(param__newManagerAddress);
 }
 //function MemberRegistry_unregisterMember
 function MemberRegistry_unregisterMember_uint() {
 	var param_id = document.getElementById('MemberRegistry_unregisterMember_uint_id').value;
-	var res = contracts['MemberRegistry'].contract.unregisterMember(param_id);
+	var res = MemberRegistry_instance.unregisterMember(param_id);
 }
 //function MemberRegistry_removeManager
 function Manageable_removeManager_address() {
 	var param__managerAddress = document.getElementById('Manageable_removeManager_address__managerAddress').value;
-	var res = contracts['MemberRegistry'].contract.removeManager(param__managerAddress);
+	var res = MemberRegistry_instance.removeManager(param__managerAddress);
 }
 //function MemberRegistry_getMemberCount
 function MemberRegistry_getMemberCount() {
-	var res = contracts['MemberRegistry'].contract.getMemberCount();
+	var res = MemberRegistry_instance.getMemberCount();
 	if(res!=null)
 		document.getElementById('MemberRegistry_getMemberCount_res').innerText = res;
 }
 //function MemberRegistry_isActiveMember
 function MemberRegistry_isActiveMember_address() {
 	var param__memberAdress = document.getElementById('MemberRegistry_isActiveMember_address__memberAdress').value;
-	var res = contracts['MemberRegistry'].contract.isActiveMember(param__memberAdress);
+	var res = MemberRegistry_instance.isActiveMember(param__memberAdress);
 	if(res!=null)
 		document.getElementById('MemberRegistry_isActiveMember_address_res').innerText = res;
 }
@@ -57,14 +66,21 @@ function MemberRegistry_isActiveMember_address() {
 function MemberRegistry_changeMemberAddress_uint_address() {
 	var param_id = document.getElementById('MemberRegistry_changeMemberAddress_uint_address_id').value;
 	var param__newMemberAddress = document.getElementById('MemberRegistry_changeMemberAddress_uint_address__newMemberAddress').value;
-	var res = contracts['MemberRegistry'].contract.changeMemberAddress(param_id, param__newMemberAddress);
+	var res = MemberRegistry_instance.changeMemberAddress(param_id, param__newMemberAddress);
 }
 
 //delegated calls
 // script for MemberAware
+var MemberAware_instance = contracts['MemberAware'].contract;
+// set address
+function MemberAware_setAddress() {
+	var _address = document.getElementById('MemberAware_address').value;
+	MemberAware_instance = MemberAwareContract.at(_address);
+}
+
 function MemberAware_updateAttributes() {
 // update attributes
-var memberRegistry_res = contracts['MemberAware'].contract.memberRegistry();
+var memberRegistry_res = MemberAware_instance.memberRegistry();
 	if(memberRegistry_res!=null)
 		document.getElementById('MemberAware_memberRegistry_value').innerText = memberRegistry_res;
 }
@@ -72,7 +88,7 @@ var memberRegistry_res = contracts['MemberAware'].contract.memberRegistry();
 //function MemberAware_isMember
 function MemberAware_isMember_address() {
 	var param__address = document.getElementById('MemberAware_isMember_address__address').value;
-	var res = contracts['MemberAware'].contract.isMember(param__address);
+	var res = MemberAware_instance.isMember(param__address);
 	if(res!=null)
 		document.getElementById('MemberAware_isMember_address_res').innerText = res;
 }
@@ -95,6 +111,7 @@ function MemberAware_isMember_address() {
 	<h1>Sample Interface for members</h1>
 <div class="contract">
 MemberRegistry:
+  <input type='text' id='MemberRegistry_address'> <button onclick='MemberRegistry_setAddress()'>change MemberRegistry Address</button>
   <div class="contract_attributes"> attributes:
     <div class="contract_attribute"> partyMemberCount:
       <div class="contract_attribute_value" id="MemberRegistry_partyMemberCount_value"> </div>
@@ -157,6 +174,7 @@ MemberRegistry_changeMemberAddress:
 </div>
 <div class="contract">
 MemberAware:
+  <input type='text' id='MemberAware_address'> <button onclick='MemberAware_setAddress()'>change MemberAware Address</button>
   <div class="contract_attributes"> attributes:
     <div class="contract_attribute"> memberRegistry:
       <div class="contract_attribute_value" id="MemberAware_memberRegistry_value"> </div>
@@ -173,5 +191,9 @@ MemberAware_isMember:
 
 </div>
 
+<script type='text/javascript'>
+document.getElementById('MemberRegistry_address').value = MemberRegistry_instance.address; 
+document.getElementById('MemberAware_address').value = MemberAware_instance.address; 
+</script>
 </body>
 </html>

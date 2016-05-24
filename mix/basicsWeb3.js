@@ -1,5 +1,6 @@
 
 var OwnedContract = web3.eth.contract([
+{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"type":"function"},
   {
     "constant": true,
     "inputs": [],    
@@ -25,6 +26,7 @@ var OwnedContract = web3.eth.contract([
 ] );   
 
 var ManageableContract = web3.eth.contract([
+{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"managers","outputs":[{"name":"","type":"bool"}],"type":"function"},
   {
     "constant": true,
     "inputs": [],    

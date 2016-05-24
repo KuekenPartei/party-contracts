@@ -80,19 +80,12 @@
 								"unit": 18,
 								"value": "0"
 							}
-						}
-					]
-				},
-				{
-					"hash": "",
-					"number": 2,
-					"status": "mined",
-					"transactions": [
+						},
 						{
 							"contractId": "<BlogRegistry - 0>",
 							"functionId": "registerBlog",
 							"gas": {
-								"value": "47907"
+								"value": "813107"
 							},
 							"gasAuto": true,
 							"gasPrice": {
@@ -103,7 +96,7 @@
 							"isFunctionCall": true,
 							"label": "<BlogRegistry - 0>.registerBlog()",
 							"parameters": {
-								"name": "fffff"
+								"name": "test1"
 							},
 							"saveStatus": true,
 							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
@@ -111,19 +104,36 @@
 								"unit": 18,
 								"value": "0"
 							}
-						}
-					]
-				},
-				{
-					"hash": "",
-					"number": 3,
-					"status": "mined",
-					"transactions": [
+						},
 						{
-							"contractId": "KUEKeNParty",
-							"functionId": "KUEKeNParty",
+							"contractId": "<BlogRegistry - 0>",
+							"functionId": "getShortBlog",
 							"gas": {
-								"value": "4231662"
+								"value": "23091"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": false,
+							"isFunctionCall": true,
+							"label": "<BlogRegistry - 0>.getShortBlog()",
+							"parameters": {
+								"name": "test1"
+							},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						},
+						{
+							"contractId": "ShortBlog",
+							"functionId": "ShortBlog",
+							"gas": {
+								"value": "958430"
 							},
 							"gasAuto": true,
 							"gasPrice": {
@@ -132,7 +142,7 @@
 							},
 							"isContractCreation": true,
 							"isFunctionCall": true,
-							"label": "KUEKeNParty.KUEKeNParty()",
+							"label": "ShortBlog.ShortBlog()",
 							"parameters": {},
 							"saveStatus": true,
 							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
@@ -145,14 +155,14 @@
 				},
 				{
 					"hash": "",
-					"number": 4,
+					"number": 2,
 					"status": "mined",
 					"transactions": [
 						{
 							"contractId": "FoundationConference",
 							"functionId": "FoundationConference",
 							"gas": {
-								"value": "1377436"
+								"value": "1246727"
 							},
 							"gasAuto": true,
 							"gasPrice": {
@@ -174,28 +184,24 @@
 				},
 				{
 					"hash": "",
-					"number": 5,
+					"number": 3,
 					"status": "mined",
 					"transactions": [
 						{
-							"contractId": "<KUEKeNParty - 1>",
-							"functionId": "boostrapParty",
+							"contractId": "KUEKeNParty",
+							"functionId": "KUEKeNParty",
 							"gas": {
-								"value": "63534"
+								"value": "3052718"
 							},
 							"gasAuto": true,
 							"gasPrice": {
 								"unit": 18,
 								"value": "100000"
 							},
-							"isContractCreation": false,
+							"isContractCreation": true,
 							"isFunctionCall": true,
-							"label": "KUEKeNParty.boostrapParty()",
-							"parameters": {
-								"0": "",
-								"br": "<BlogRegistry - 0>",
-								"fc": "<FoundationConference - 2>"
-							},
+							"label": "KUEKeNParty.KUEKeNParty()",
+							"parameters": {},
 							"saveStatus": true,
 							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
 							"value": {
@@ -226,8 +232,8 @@
 			"title": "Default",
 			"transactions": [
 				{
-					"contractId": "BlogRegistry",
-					"functionId": "BlogRegistry",
+					"contractId": "Manageable",
+					"functionId": "Manageable",
 					"gas": {
 						"value": "250000"
 					},
@@ -238,7 +244,7 @@
 					},
 					"isContractCreation": true,
 					"isFunctionCall": true,
-					"label": "BlogRegistry.BlogRegistry()",
+					"label": "Manageable.Manageable()",
 					"parameters": {},
 					"saveStatus": true,
 					"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
@@ -292,13 +298,145 @@
 				{
 					"hash": "",
 					"number": 1,
-					"status": "mined",
+					"status": "pending",
 					"transactions": [
+						{
+							"contractId": "BlogRegistry",
+							"functionId": "BlogRegistry",
+							"gas": {
+								"value": "250000"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": true,
+							"isFunctionCall": true,
+							"label": "BlogRegistry.BlogRegistry()",
+							"parameters": {},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						},
+						{
+							"contractId": "FoundationConference",
+							"functionId": "FoundationConference",
+							"gas": {
+								"value": "250000"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": true,
+							"isFunctionCall": true,
+							"label": "FoundationConference.FoundationConference()",
+							"parameters": {},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						},
+						{
+							"contractId": "KUEKeNParty",
+							"functionId": "KUEKeNParty",
+							"gas": {
+								"value": "250000"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": true,
+							"isFunctionCall": true,
+							"label": "KUEKeNParty.KUEKeNParty()",
+							"parameters": {},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						},
+						{
+							"contractId": "Manageable",
+							"functionId": "Manageable",
+							"gas": {
+								"value": "250000"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": true,
+							"isFunctionCall": true,
+							"label": "Manageable.Manageable()",
+							"parameters": {},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						},
+						{
+							"contractId": "MemberAware",
+							"functionId": "MemberAware",
+							"gas": {
+								"value": "250000"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": true,
+							"isFunctionCall": true,
+							"label": "MemberAware.MemberAware()",
+							"parameters": {},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						},
+						{
+							"contractId": "MemberRegistry",
+							"functionId": "MemberRegistry",
+							"gas": {
+								"value": "250000"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": true,
+							"isFunctionCall": true,
+							"label": "MemberRegistry.MemberRegistry()",
+							"parameters": {},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						},
 						{
 							"contractId": "Organ",
 							"functionId": "Organ",
 							"gas": {
-								"value": "1377564"
+								"value": "250000"
 							},
 							"gasAuto": true,
 							"gasPrice": {
@@ -317,10 +455,10 @@
 							}
 						},
 						{
-							"contractId": "BlogRegistry",
-							"functionId": "BlogRegistry",
+							"contractId": "Owned",
+							"functionId": "Owned",
 							"gas": {
-								"value": "1212312"
+								"value": "250000"
 							},
 							"gasAuto": true,
 							"gasPrice": {
@@ -329,7 +467,51 @@
 							},
 							"isContractCreation": true,
 							"isFunctionCall": true,
-							"label": "BlogRegistry.BlogRegistry()",
+							"label": "Owned.Owned()",
+							"parameters": {},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						},
+						{
+							"contractId": "Party",
+							"functionId": "Party",
+							"gas": {
+								"value": "250000"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": true,
+							"isFunctionCall": true,
+							"label": "Party.Party()",
+							"parameters": {},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						},
+						{
+							"contractId": "ShortBlog",
+							"functionId": "ShortBlog",
+							"gas": {
+								"value": "250000"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": true,
+							"isFunctionCall": true,
+							"label": "ShortBlog.ShortBlog()",
 							"parameters": {},
 							"saveStatus": true,
 							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
@@ -339,130 +521,6 @@
 							}
 						}
 					]
-				},
-				{
-					"hash": "",
-					"number": 2,
-					"status": "mined",
-					"transactions": [
-						{
-							"contractId": "<Organ - 0>",
-							"functionId": "setOrganName",
-							"gas": {
-								"value": "42693"
-							},
-							"gasAuto": true,
-							"gasPrice": {
-								"unit": 18,
-								"value": "100000"
-							},
-							"isContractCreation": false,
-							"isFunctionCall": true,
-							"label": "Organ.setOrganName()",
-							"parameters": {
-								"aOrganName": "bbbbb"
-							},
-							"saveStatus": true,
-							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
-							"value": {
-								"unit": 18,
-								"value": "0"
-							}
-						},
-						{
-							"contractId": "<Organ - 0>",
-							"functionId": "setBlogRegistry",
-							"gas": {
-								"value": "43282"
-							},
-							"gasAuto": true,
-							"gasPrice": {
-								"unit": 18,
-								"value": "100000"
-							},
-							"isContractCreation": false,
-							"isFunctionCall": true,
-							"label": "Organ.setBlogRegistry()",
-							"parameters": {
-								"aBlogRegistry": "<BlogRegistry - 1>",
-								"aOrganName": ""
-							},
-							"saveStatus": true,
-							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
-							"value": {
-								"unit": 18,
-								"value": "0"
-							}
-						}
-					]
-				},
-				{
-					"hash": "",
-					"number": 3,
-					"status": "mined",
-					"transactions": [
-						{
-							"contractId": "<Organ - 0>",
-							"functionId": "initalizeOrgan",
-							"gas": {
-								"value": "54869"
-							},
-							"gasAuto": true,
-							"gasPrice": {
-								"unit": 18,
-								"value": "100000"
-							},
-							"isContractCreation": false,
-							"isFunctionCall": true,
-							"label": "Organ.initalizeOrgan()",
-							"parameters": {
-								"aBlogRegistry": "<Organ - 0>"
-							},
-							"saveStatus": true,
-							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
-							"value": {
-								"unit": 18,
-								"value": "0"
-							}
-						}
-					]
-				},
-				{
-					"hash": "",
-					"number": 4,
-					"status": "mined",
-					"transactions": [
-						{
-							"contractId": "<Organ - 0>",
-							"functionId": "setOrganName",
-							"gas": {
-								"value": "17368"
-							},
-							"gasAuto": true,
-							"gasPrice": {
-								"unit": 18,
-								"value": "100000"
-							},
-							"isContractCreation": false,
-							"isFunctionCall": true,
-							"label": "<Organ - 0>.setOrganName()",
-							"parameters": {
-								"aOrganName": ""
-							},
-							"saveStatus": true,
-							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
-							"value": {
-								"unit": 18,
-								"value": "0"
-							}
-						}
-					]
-				},
-				{
-					"hash": "",
-					"number": -1,
-					"status": "pending",
-					"transactions": []
 				}
 			],
 			"contracts": [],
@@ -471,12 +529,14 @@
 				"balance": {
 					"objectName": "",
 					"value": "1000000",
+					"unit": 12,
+					"value": "1000000",
 					"unit": 12
 				},
 				"name": "user1",
 				"secret": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074"
 			},
-			"title": "test1",
+			"title": "New Scenario_1",
 			"transactions": [
 				{
 					"contractId": "BlogRegistry",
@@ -492,6 +552,204 @@
 					"isContractCreation": true,
 					"isFunctionCall": true,
 					"label": "BlogRegistry.BlogRegistry()",
+					"parameters": {},
+					"saveStatus": true,
+					"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+					"value": {
+						"unit": 18,
+						"value": "0"
+					}
+				},
+				{
+					"contractId": "FoundationConference",
+					"functionId": "FoundationConference",
+					"gas": {
+						"value": "250000"
+					},
+					"gasAuto": true,
+					"gasPrice": {
+						"unit": 18,
+						"value": "100000"
+					},
+					"isContractCreation": true,
+					"isFunctionCall": true,
+					"label": "FoundationConference.FoundationConference()",
+					"parameters": {},
+					"saveStatus": true,
+					"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+					"value": {
+						"unit": 18,
+						"value": "0"
+					}
+				},
+				{
+					"contractId": "KUEKeNParty",
+					"functionId": "KUEKeNParty",
+					"gas": {
+						"value": "250000"
+					},
+					"gasAuto": true,
+					"gasPrice": {
+						"unit": 18,
+						"value": "100000"
+					},
+					"isContractCreation": true,
+					"isFunctionCall": true,
+					"label": "KUEKeNParty.KUEKeNParty()",
+					"parameters": {},
+					"saveStatus": true,
+					"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+					"value": {
+						"unit": 18,
+						"value": "0"
+					}
+				},
+				{
+					"contractId": "Manageable",
+					"functionId": "Manageable",
+					"gas": {
+						"value": "250000"
+					},
+					"gasAuto": true,
+					"gasPrice": {
+						"unit": 18,
+						"value": "100000"
+					},
+					"isContractCreation": true,
+					"isFunctionCall": true,
+					"label": "Manageable.Manageable()",
+					"parameters": {},
+					"saveStatus": true,
+					"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+					"value": {
+						"unit": 18,
+						"value": "0"
+					}
+				},
+				{
+					"contractId": "MemberAware",
+					"functionId": "MemberAware",
+					"gas": {
+						"value": "250000"
+					},
+					"gasAuto": true,
+					"gasPrice": {
+						"unit": 18,
+						"value": "100000"
+					},
+					"isContractCreation": true,
+					"isFunctionCall": true,
+					"label": "MemberAware.MemberAware()",
+					"parameters": {},
+					"saveStatus": true,
+					"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+					"value": {
+						"unit": 18,
+						"value": "0"
+					}
+				},
+				{
+					"contractId": "MemberRegistry",
+					"functionId": "MemberRegistry",
+					"gas": {
+						"value": "250000"
+					},
+					"gasAuto": true,
+					"gasPrice": {
+						"unit": 18,
+						"value": "100000"
+					},
+					"isContractCreation": true,
+					"isFunctionCall": true,
+					"label": "MemberRegistry.MemberRegistry()",
+					"parameters": {},
+					"saveStatus": true,
+					"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+					"value": {
+						"unit": 18,
+						"value": "0"
+					}
+				},
+				{
+					"contractId": "Organ",
+					"functionId": "Organ",
+					"gas": {
+						"value": "250000"
+					},
+					"gasAuto": true,
+					"gasPrice": {
+						"unit": 18,
+						"value": "100000"
+					},
+					"isContractCreation": true,
+					"isFunctionCall": true,
+					"label": "Organ.Organ()",
+					"parameters": {},
+					"saveStatus": true,
+					"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+					"value": {
+						"unit": 18,
+						"value": "0"
+					}
+				},
+				{
+					"contractId": "Owned",
+					"functionId": "Owned",
+					"gas": {
+						"value": "250000"
+					},
+					"gasAuto": true,
+					"gasPrice": {
+						"unit": 18,
+						"value": "100000"
+					},
+					"isContractCreation": true,
+					"isFunctionCall": true,
+					"label": "Owned.Owned()",
+					"parameters": {},
+					"saveStatus": true,
+					"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+					"value": {
+						"unit": 18,
+						"value": "0"
+					}
+				},
+				{
+					"contractId": "Party",
+					"functionId": "Party",
+					"gas": {
+						"value": "250000"
+					},
+					"gasAuto": true,
+					"gasPrice": {
+						"unit": 18,
+						"value": "100000"
+					},
+					"isContractCreation": true,
+					"isFunctionCall": true,
+					"label": "Party.Party()",
+					"parameters": {},
+					"saveStatus": true,
+					"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+					"value": {
+						"unit": 18,
+						"value": "0"
+					}
+				},
+				{
+					"contractId": "ShortBlog",
+					"functionId": "ShortBlog",
+					"gas": {
+						"value": "250000"
+					},
+					"gasAuto": true,
+					"gasPrice": {
+						"unit": 18,
+						"value": "100000"
+					},
+					"isContractCreation": true,
+					"isFunctionCall": true,
+					"label": "ShortBlog.ShortBlog()",
 					"parameters": {},
 					"saveStatus": true,
 					"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",

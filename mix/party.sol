@@ -4,8 +4,8 @@
 *
 **/
 
-import "./members.sol";
 import "./basics.sol";
+import "./members.sol";
 import "./publishing.sol";
 
 /*
@@ -75,11 +75,10 @@ contract Organ is Manageable,MemberAware {
 	function createFunction(string _functionName,string _constittiutionHash) public  onlyManager()  {
 	
 		//Start of user code Organ.function.createFunction
-		blogRegistry.registerBlog(_functionName);
 		organFunctions[lastFunctionId].functionName = _functionName;
 		organFunctions[lastFunctionId].constitutionHash = _constittiutionHash;
 		organFunctions[lastFunctionId].lastConstitutionHashChanged = now;
-		organFunctions[lastFunctionId].publisher = ShortBlog(blogRegistry.getShortBlog(_functionName));
+		organFunctions[lastFunctionId].publisher = blogRegistry.registerBlog(_functionName);
 		lastFunctionId++;
 		//End of user code
 	}
@@ -90,9 +89,18 @@ contract Organ is Manageable,MemberAware {
 	
 		//Start of user code Organ.function.initalizeOrgan
 		//blogRegistry = new BlogRegistry();		
-		blogRegistry.registerBlog(organName);
-		organBlog = ShortBlog(blogRegistry.getShortBlog(organName));
 		
+		organBlog = blogRegistry.registerBlog(organName);
+		
+		//End of user code
+	}
+	
+	
+	
+	function publishMessage(string message) public   {
+	
+		//Start of user code Organ.function.publishMessage
+		//TODO: implement
 		//End of user code
 	}
 	
@@ -106,7 +114,7 @@ contract Organ is Manageable,MemberAware {
 	}
 	
 	// setBlogRegistry
-	function setBlogRegistry (address aBlogRegistry)  {
+	function setBlogRegistry (address aBlogRegistry) {
 		blogRegistry = BlogRegistry(aBlogRegistry);
 	}
 	
@@ -192,8 +200,8 @@ contract KUEKeNParty is Party {
 //		memberRegistry.addManager(msg.sender);
 //		blogregistry = new BlogRegistry();
 		
-		organs[organCount] = FoundationConference(fc);
 		FoundationConference organ = FoundationConference(fc);
+		organs[organCount] = organ;
 		organ.setOrganName("Gruendungsversammlung");
 		organ.setMemberRegistry(memberRegistry);
 		organ.setBlogRegistry(br);
@@ -217,7 +225,14 @@ contract FoundationConference is Organ {
 	// End of user code
 	
 	// Start of user code FoundationConference.operations
-	//TODO: implement
+	/**
+	*  initalizeOrgan
+	*/
+	function initalizeOrgan() public {
+		super.initalizeOrgan();
+		isActive = true;
+//		createFunction("test","");
+	}
 	// End of user code
 }
 
