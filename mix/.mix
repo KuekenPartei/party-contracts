@@ -14,7 +14,7 @@
 	"registerContentHashTrHash": "",
 	"registerUrlBlockNumber": -1,
 	"registerUrlTrHash": "",
-	"startUrl": "/publishing.html",
+	"startUrl": "/voting.html",
 	"title": "party-dao",
 	"states": [
 		{

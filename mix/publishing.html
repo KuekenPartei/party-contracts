@@ -30,17 +30,17 @@ function Owned_getOwner() {
 	if(res!=null)
 		document.getElementById('Owned_getOwner_res').innerText = res;
 }
+//function ShortBlog_changeOwner
+function Owned_changeOwner_address() {
+	var param_newOwner = document.getElementById('Owned_changeOwner_address_newOwner').value;
+	var res = ShortBlog_instance.changeOwner(param_newOwner);
+}
 //function ShortBlog_sendMessage
 function ShortBlog_sendMessage_string_string_string() {
 	var param_message = document.getElementById('ShortBlog_sendMessage_string_string_string_message').value;
 	var param_hash = document.getElementById('ShortBlog_sendMessage_string_string_string_hash').value;
 	var param_er = document.getElementById('ShortBlog_sendMessage_string_string_string_er').value;
 	var res = ShortBlog_instance.sendMessage(param_message, param_hash, param_er);
-}
-//function ShortBlog_changeOwner
-function Owned_changeOwner_address() {
-	var param_newOwner = document.getElementById('Owned_changeOwner_address_newOwner').value;
-	var res = ShortBlog_instance.changeOwner(param_newOwner);
 }
 //function ShortBlog_kill
 function Owned_kill() {
@@ -145,18 +145,18 @@ ShortBlog_getOwner:
 	<div class="function_result" id="Owned_getOwner_res"></div>
   </div>
   <div class="function_execution">
+ShortBlog_changeOwner:
+	<input type='text' id='Owned_changeOwner_address_newOwner'>
+	<button onclick='Owned_changeOwner_address()'>execute ShortBlog_changeOwner</button>
+	<div class="function_result" id="Owned_changeOwner_address_res"></div>
+  </div>
+  <div class="function_execution">
 ShortBlog_sendMessage:
 	<input type='text' id='ShortBlog_sendMessage_string_string_string_message'>
 	<input type='text' id='ShortBlog_sendMessage_string_string_string_hash'>
 	<input type='text' id='ShortBlog_sendMessage_string_string_string_er'>
 	<button onclick='ShortBlog_sendMessage_string_string_string()'>execute ShortBlog_sendMessage</button>
 	<div class="function_result" id="ShortBlog_sendMessage_string_string_string_res"></div>
-  </div>
-  <div class="function_execution">
-ShortBlog_changeOwner:
-	<input type='text' id='Owned_changeOwner_address_newOwner'>
-	<button onclick='Owned_changeOwner_address()'>execute ShortBlog_changeOwner</button>
-	<div class="function_result" id="Owned_changeOwner_address_res"></div>
   </div>
   <div class="function_execution">
 ShortBlog_kill:

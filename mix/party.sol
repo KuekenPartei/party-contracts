@@ -4,9 +4,10 @@
 *
 **/
 
-import "./members.sol";
+import "./voting.sol";
 import "./publishing.sol";
 import "./basics.sol";
+import "./members.sol";
 
 /*
 * An organ is part of the party, defined in the constitution.
@@ -32,7 +33,9 @@ contract Organ is MemberAware,Manageable,MessagePublisher {
 	BlogRegistry public blogRegistry;
 	bool public isActive;
 	ShortBlog public organBlog;
+	uint public ballotCount;
 	mapping (uint=>OrganFunction)public organFunctions;
+	mapping (uint=>Ballot)public ballots;
 	// Start of user code Organ.attributes
 	//TODO: implement
 	// End of user code
@@ -58,7 +61,7 @@ contract Organ is MemberAware,Manageable,MessagePublisher {
 	}
 	
 	
-	function getMessage(uint id,address _sender) public   constant returns (string _message,uint date) {
+	function getMessage(uint id) public   constant returns (string _message,uint date,address _sender) {
 		 
 		
 		//Start of user code MessagePublisher.function.getMessage
@@ -124,6 +127,26 @@ contract Organ is MemberAware,Manageable,MessagePublisher {
 		//End of user code
 	}
 	
+	
+	
+	function createBallot(string name,bytes32[] proposalNames) public  returns (uint ) {
+	
+		//Start of user code Organ.function.createBallot
+		Ballot b = new Ballot(name,proposalNames);
+		ballots[ballotCount] = b;
+		ballotCount++;
+		//End of user code
+	}
+	
+	
+	
+	function getFunctionAddress(uint id) public   constant returns (address ) {
+	
+		//Start of user code Organ.function.getFunctionAddress
+		return organFunctions[id].publisher;
+		//End of user code
+	}
+	
 	// getOrganName
 	function getOrganName() returns(string) {
 		return organName;
@@ -183,6 +206,33 @@ contract Party is Manageable {
 		//End of user code
 	}
 	
+	// delegate functions from memberRegistry (MemberRegistry)
+	
+	// delegate to addMember
+	function memberRegistry_addMember(string name,address _memberAddress)  {
+		memberRegistry.addMember(name,_memberAddress);    
+	}
+	
+	// delegate to unregisterMember
+	function memberRegistry_unregisterMember(uint id)  {
+		memberRegistry.unregisterMember(id);    
+	}
+	
+	// delegate to getMemberCount
+	function memberRegistry_getMemberCount()  constant returns (uint ) {
+		return memberRegistry.getMemberCount();
+	}
+	
+	// delegate to isActiveMember
+	function memberRegistry_isActiveMember(address _memberAdress)  constant returns (bool ) {
+		return memberRegistry.isActiveMember(_memberAdress);
+	}
+	
+	// delegate to changeMemberAddress
+	function memberRegistry_changeMemberAddress(uint id,address _newMemberAddress)  {
+		memberRegistry.changeMemberAddress(id,_newMemberAddress);    
+	}
+	
 	// Start of user code Party.operations
 	//TODO: implement
 	// End of user code
@@ -205,7 +255,7 @@ contract KUEKeNParty is Party {
 		//Start of user code KUEKeNParty.function.KUEKeNParty
 		memberRegistry = new MemberRegistry();
 		memberRegistry.addManager(msg.sender);
-		blogregistry = new BlogRegistry();
+		//blogregistry = new BlogRegistry();
 		addManager(msg.sender);
 		//End of user code
 	}

@@ -291,6 +291,17 @@ It is populated by functions party members.</body>
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
           </ownedParameter>
         </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_im5LECJ5Eeal34PkzMsO3g" name="getFunctionAddress">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_sMqLcCJ5Eeal34PkzMsO3g" name="id">
+            <ownedComment xmi:type="uml:Comment" xmi:id="_sMqLcSJ5Eeal34PkzMsO3g">
+              <body>The function id.</body>
+            </ownedComment>
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_3ksasCJ5Eeal34PkzMsO3g" direction="return">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
         <nestedClassifier xmi:type="uml:Class" xmi:id="_CiX8MB84Eea0ndjKa8R1Fg" name="OrganFunction">
           <ownedComment xmi:type="uml:Comment" xmi:id="_dCOlgB9AEea0ndjKa8R1Fg">
             <body>The function definition.
@@ -721,4 +732,5 @@ returns 0 for ok and 1 else.</body>
     <key xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
   </Contracts:KeyMapping>
   <Contracts:Function xmi:id="_TNST4CJlEeaS_4eQUjWtCw" base_Operation="_TNOCcCJlEeaS_4eQUjWtCw"/>
+  <Contracts:Function xmi:id="_uUurMCJ5Eeal34PkzMsO3g" base_Operation="_im5LECJ5Eeal34PkzMsO3g" returnType="constant"/>
 </xmi:XMI>

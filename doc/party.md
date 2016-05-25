@@ -9,12 +9,16 @@
 ## contract: Organ
 
     overview:
+	abstract function publishMessage(string message,string hash,string er) public  
+	abstract function getMessage(uint id) public   constant returns (string _message,uint date,address _sender)
 	function changeMember(uint _id,address _address) public  onlyManager() 
 	function createFunction(string _functionName,string _constittiutionHash) public  onlyManager() 
 	function initalizeOrgan() public  
-	function publishMessage(string message) public  
+	function publishFunctionMessage(uint id,string message,string hash,string er) public  
+	function createBallot(string name,bytes32[] proposalNames) public  returns (uint )
+	function getFunctionAddress(uint id) public   constant returns (address )
 
-inherites: [MemberAware](#contract-memberaware),[Manageable](#contract-manageable)
+inherites: [Manageable](#contract-manageable),[MemberAware](#contract-memberaware)
 
 An organ is part of the party, defined in the constitution.
 It is populated by functions party members.
@@ -52,6 +56,7 @@ lastFunctionId|uint|public||
 blogRegistry|BlogRegistry|public||
 isActive|bool|public||
 organBlog|ShortBlog|public||
+ballotCount|uint|public||
 
 #### Organ mappings
 
@@ -83,12 +88,32 @@ _constittiutionHash|string|in|
 
 
 
-#### Organ.publishMessage(string message) public  
+#### Organ.publishFunctionMessage(uint id,string message,string hash,string er) public  
 
 
 name|type|direction|doc
 ----|----|----|----
+id|uint|in|
 message|string|in|
+hash|string|in|
+er|string|in|
+
+#### Organ.createBallot(string name,bytes32[] proposalNames) public  returns (uint )
+
+
+name|type|direction|doc
+----|----|----|----
+name|string|in|
+proposalNames|bytes32|in|
+|uint|return|
+
+#### Organ.getFunctionAddress(uint id) public   constant returns (address )
+
+
+name|type|direction|doc
+----|----|----|----
+id|uint|in|The function id.
+|address|return|
 
 
 ## contract: Party
@@ -108,7 +133,7 @@ A basic party contract.
 
 name|type|visiblity|delegate|doc
 ----|----|----|----|----
-memberRegistry|MemberRegistry|public||
+memberRegistry|MemberRegistry|public|X|
 constitutionHash|string|public||
 organCount|uint|public||
 blogregistry|BlogRegistry|public||
@@ -130,7 +155,7 @@ organName|string|in|
 
     overview:
 	function KUEKeNParty() public  
-	function boostrapParty(address fc,address br) external  onlyManager() 
+	function boostrapParty(address fc,address br) public  onlyManager() 
 
 inherites: [Party](#contract-party)
 
@@ -145,7 +170,7 @@ The KUEKen party.
 
 
 
-#### KUEKeNParty.boostrapParty(address fc,address br) external  onlyManager() 
+#### KUEKeNParty.boostrapParty(address fc,address br) public  onlyManager() 
 
 
 name|type|direction|doc

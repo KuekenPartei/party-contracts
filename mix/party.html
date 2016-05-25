@@ -34,20 +34,26 @@ var isActive_res = Organ_instance.isActive();
 var organBlog_res = Organ_instance.organBlog();
 	if(organBlog_res!=null)
 		document.getElementById('Organ_organBlog_value').innerText = organBlog_res;
+var ballots_res = Organ_instance.ballots();
+	if(ballots_res!=null)
+		document.getElementById('Organ_ballots_value').innerText = ballots_res;
+var ballotCount_res = Organ_instance.ballotCount();
+	if(ballotCount_res!=null)
+		document.getElementById('Organ_ballotCount_value').innerText = ballotCount_res;
 }
 //call functions
+//function Organ_changeMember
+function Organ_changeMember_uint_address() {
+	var param__id = document.getElementById('Organ_changeMember_uint_address__id').value;
+	var param__address = document.getElementById('Organ_changeMember_uint_address__address').value;
+	var res = Organ_instance.changeMember(param__id, param__address);
+}
 //function Organ_isMember
 function MemberAware_isMember_address() {
 	var param__address = document.getElementById('MemberAware_isMember_address__address').value;
 	var res = Organ_instance.isMember(param__address);
 	if(res!=null)
 		document.getElementById('MemberAware_isMember_address_res').innerText = res;
-}
-//function Organ_changeMember
-function Organ_changeMember_uint_address() {
-	var param__id = document.getElementById('Organ_changeMember_uint_address__id').value;
-	var param__address = document.getElementById('Organ_changeMember_uint_address__address').value;
-	var res = Organ_instance.changeMember(param__id, param__address);
 }
 //function Organ_canAccess
 function Manageable_canAccess() {
@@ -82,6 +88,21 @@ function Organ_publishFunctionMessage_uint_string_string_string() {
 	var param_hash = document.getElementById('Organ_publishFunctionMessage_uint_string_string_string_hash').value;
 	var param_er = document.getElementById('Organ_publishFunctionMessage_uint_string_string_string_er').value;
 	var res = Organ_instance.publishFunctionMessage(param_id, param_message, param_hash, param_er);
+}
+//function Organ_createBallot
+function Organ_createBallot_string_bytes32() {
+	var param_name = document.getElementById('Organ_createBallot_string_bytes32_name').value;
+	var param_proposalNames = document.getElementById('Organ_createBallot_string_bytes32_proposalNames').value;
+	var res = Organ_instance.createBallot(param_name, param_proposalNames);
+	if(res!=null)
+		document.getElementById('Organ_createBallot_string_bytes32_res').innerText = res;
+}
+//function Organ_getFunctionAddress
+function Organ_getFunctionAddress_uint() {
+	var param_id = document.getElementById('Organ_getFunctionAddress_uint_id').value;
+	var res = Organ_instance.getFunctionAddress(param_id);
+	if(res!=null)
+		document.getElementById('Organ_getFunctionAddress_uint_res').innerText = res;
 }
 
 //delegated calls
@@ -143,6 +164,54 @@ function Party_createOrgan_string() {
 }
 
 //delegated calls
+//call functions
+//function delegate_MemberRegistry_canAccess
+function delegate_Manageable_canAccess() {
+	var res = MemberRegistry_instance.canAccess();
+	if(res!=null)
+		document.getElementById('delegate_Manageable_canAccess_res').innerText = res;
+}
+//function delegate_MemberRegistry_addMember
+function delegate_MemberRegistry_addMember_string_address() {
+	var param_name = document.getElementById('delegate_MemberRegistry_addMember_string_address_name').value;
+	var param__memberAddress = document.getElementById('delegate_MemberRegistry_addMember_string_address__memberAddress').value;
+	var res = MemberRegistry_instance.addMember(param_name, param__memberAddress);
+}
+//function delegate_MemberRegistry_unregisterMember
+function delegate_MemberRegistry_unregisterMember_uint() {
+	var param_id = document.getElementById('delegate_MemberRegistry_unregisterMember_uint_id').value;
+	var res = MemberRegistry_instance.unregisterMember(param_id);
+}
+//function delegate_MemberRegistry_addManager
+function delegate_Manageable_addManager_address() {
+	var param__newManagerAddress = document.getElementById('delegate_Manageable_addManager_address__newManagerAddress').value;
+	var res = MemberRegistry_instance.addManager(param__newManagerAddress);
+}
+//function delegate_MemberRegistry_removeManager
+function delegate_Manageable_removeManager_address() {
+	var param__managerAddress = document.getElementById('delegate_Manageable_removeManager_address__managerAddress').value;
+	var res = MemberRegistry_instance.removeManager(param__managerAddress);
+}
+//function delegate_MemberRegistry_getMemberCount
+function delegate_MemberRegistry_getMemberCount() {
+	var res = MemberRegistry_instance.getMemberCount();
+	if(res!=null)
+		document.getElementById('delegate_MemberRegistry_getMemberCount_res').innerText = res;
+}
+//function delegate_MemberRegistry_isActiveMember
+function delegate_MemberRegistry_isActiveMember_address() {
+	var param__memberAdress = document.getElementById('delegate_MemberRegistry_isActiveMember_address__memberAdress').value;
+	var res = MemberRegistry_instance.isActiveMember(param__memberAdress);
+	if(res!=null)
+		document.getElementById('delegate_MemberRegistry_isActiveMember_address_res').innerText = res;
+}
+//function delegate_MemberRegistry_changeMemberAddress
+function delegate_MemberRegistry_changeMemberAddress_uint_address() {
+	var param_id = document.getElementById('delegate_MemberRegistry_changeMemberAddress_uint_address_id').value;
+	var param__newMemberAddress = document.getElementById('delegate_MemberRegistry_changeMemberAddress_uint_address__newMemberAddress').value;
+	var res = MemberRegistry_instance.changeMemberAddress(param_id, param__newMemberAddress);
+}
+
 </script>
 <!-- javascript for KUEKeNParty -->
 <script type='text/javascript'>
@@ -243,20 +312,26 @@ var isActive_res = FoundationConference_instance.isActive();
 var organBlog_res = FoundationConference_instance.organBlog();
 	if(organBlog_res!=null)
 		document.getElementById('FoundationConference_organBlog_value').innerText = organBlog_res;
+var ballots_res = FoundationConference_instance.ballots();
+	if(ballots_res!=null)
+		document.getElementById('FoundationConference_ballots_value').innerText = ballots_res;
+var ballotCount_res = FoundationConference_instance.ballotCount();
+	if(ballotCount_res!=null)
+		document.getElementById('FoundationConference_ballotCount_value').innerText = ballotCount_res;
 }
 //call functions
+//function FoundationConference_changeMember
+function Organ_changeMember_uint_address() {
+	var param__id = document.getElementById('Organ_changeMember_uint_address__id').value;
+	var param__address = document.getElementById('Organ_changeMember_uint_address__address').value;
+	var res = FoundationConference_instance.changeMember(param__id, param__address);
+}
 //function FoundationConference_isMember
 function MemberAware_isMember_address() {
 	var param__address = document.getElementById('MemberAware_isMember_address__address').value;
 	var res = FoundationConference_instance.isMember(param__address);
 	if(res!=null)
 		document.getElementById('MemberAware_isMember_address_res').innerText = res;
-}
-//function FoundationConference_changeMember
-function Organ_changeMember_uint_address() {
-	var param__id = document.getElementById('Organ_changeMember_uint_address__id').value;
-	var param__address = document.getElementById('Organ_changeMember_uint_address__address').value;
-	var res = FoundationConference_instance.changeMember(param__id, param__address);
 }
 //function FoundationConference_canAccess
 function Manageable_canAccess() {
@@ -291,6 +366,21 @@ function Organ_publishFunctionMessage_uint_string_string_string() {
 	var param_hash = document.getElementById('Organ_publishFunctionMessage_uint_string_string_string_hash').value;
 	var param_er = document.getElementById('Organ_publishFunctionMessage_uint_string_string_string_er').value;
 	var res = FoundationConference_instance.publishFunctionMessage(param_id, param_message, param_hash, param_er);
+}
+//function FoundationConference_createBallot
+function Organ_createBallot_string_bytes32() {
+	var param_name = document.getElementById('Organ_createBallot_string_bytes32_name').value;
+	var param_proposalNames = document.getElementById('Organ_createBallot_string_bytes32_proposalNames').value;
+	var res = FoundationConference_instance.createBallot(param_name, param_proposalNames);
+	if(res!=null)
+		document.getElementById('Organ_createBallot_string_bytes32_res').innerText = res;
+}
+//function FoundationConference_getFunctionAddress
+function Organ_getFunctionAddress_uint() {
+	var param_id = document.getElementById('Organ_getFunctionAddress_uint_id').value;
+	var res = FoundationConference_instance.getFunctionAddress(param_id);
+	if(res!=null)
+		document.getElementById('Organ_getFunctionAddress_uint_res').innerText = res;
 }
 
 //delegated calls
@@ -332,21 +422,27 @@ Organ:
     <div class="contract_attribute"> organBlog:
       <div class="contract_attribute_value" id="Organ_organBlog_value"> </div>
     </div>
+    <div class="contract_attribute"> ballots:
+      <div class="contract_attribute_value" id="Organ_ballots_value"> </div>
+    </div>
+    <div class="contract_attribute"> ballotCount:
+      <div class="contract_attribute_value" id="Organ_ballotCount_value"> </div>
+    </div>
     <button onclick='Organ_updateAttributes()'>update Organ attributes</button>
   </div>
 
-  <div class="function_execution">
-Organ_isMember:
-	<input type='text' id='MemberAware_isMember_address__address'>
-	<button onclick='MemberAware_isMember_address()'>execute Organ_isMember</button>
-	<div class="function_result" id="MemberAware_isMember_address_res"></div>
-  </div>
   <div class="function_execution">
 Organ_changeMember:
 	<input type='text' id='Organ_changeMember_uint_address__id'>
 	<input type='text' id='Organ_changeMember_uint_address__address'>
 	<button onclick='Organ_changeMember_uint_address()'>execute Organ_changeMember</button>
 	<div class="function_result" id="Organ_changeMember_uint_address_res"></div>
+  </div>
+  <div class="function_execution">
+Organ_isMember:
+	<input type='text' id='MemberAware_isMember_address__address'>
+	<button onclick='MemberAware_isMember_address()'>execute Organ_isMember</button>
+	<div class="function_result" id="MemberAware_isMember_address_res"></div>
   </div>
   <div class="function_execution">
 Organ_canAccess:
@@ -385,6 +481,19 @@ Organ_publishFunctionMessage:
 	<input type='text' id='Organ_publishFunctionMessage_uint_string_string_string_er'>
 	<button onclick='Organ_publishFunctionMessage_uint_string_string_string()'>execute Organ_publishFunctionMessage</button>
 	<div class="function_result" id="Organ_publishFunctionMessage_uint_string_string_string_res"></div>
+  </div>
+  <div class="function_execution">
+Organ_createBallot:
+	<input type='text' id='Organ_createBallot_string_bytes32_name'>
+	<input type='text' id='Organ_createBallot_string_bytes32_proposalNames'>
+	<button onclick='Organ_createBallot_string_bytes32()'>execute Organ_createBallot</button>
+	<div class="function_result" id="Organ_createBallot_string_bytes32_res"></div>
+  </div>
+  <div class="function_execution">
+Organ_getFunctionAddress:
+	<input type='text' id='Organ_getFunctionAddress_uint_id'>
+	<button onclick='Organ_getFunctionAddress_uint()'>execute Organ_getFunctionAddress</button>
+	<div class="function_result" id="Organ_getFunctionAddress_uint_res"></div>
   </div>
 
 </div>
@@ -437,6 +546,55 @@ Party_createOrgan:
 	<input type='text' id='Party_createOrgan_string_organName'>
 	<button onclick='Party_createOrgan_string()'>execute Party_createOrgan</button>
 	<div class="function_result" id="Party_createOrgan_string_res"></div>
+  </div>
+
+  <div class="function_execution">
+MemberRegistry_canAccess:
+	<button onclick='delegate_Manageable_canAccess()'>execute MemberRegistry_canAccess</button>
+	<div class="function_result" id="delegate_Manageable_canAccess_res"></div>
+  </div>
+  <div class="function_execution">
+MemberRegistry_addMember:
+	<input type='text' id='delegate_MemberRegistry_addMember_string_address_name'>
+	<input type='text' id='delegate_MemberRegistry_addMember_string_address__memberAddress'>
+	<button onclick='delegate_MemberRegistry_addMember_string_address()'>execute MemberRegistry_addMember</button>
+	<div class="function_result" id="delegate_MemberRegistry_addMember_string_address_res"></div>
+  </div>
+  <div class="function_execution">
+MemberRegistry_unregisterMember:
+	<input type='text' id='delegate_MemberRegistry_unregisterMember_uint_id'>
+	<button onclick='delegate_MemberRegistry_unregisterMember_uint()'>execute MemberRegistry_unregisterMember</button>
+	<div class="function_result" id="delegate_MemberRegistry_unregisterMember_uint_res"></div>
+  </div>
+  <div class="function_execution">
+MemberRegistry_addManager:
+	<input type='text' id='delegate_Manageable_addManager_address__newManagerAddress'>
+	<button onclick='delegate_Manageable_addManager_address()'>execute MemberRegistry_addManager</button>
+	<div class="function_result" id="delegate_Manageable_addManager_address_res"></div>
+  </div>
+  <div class="function_execution">
+MemberRegistry_removeManager:
+	<input type='text' id='delegate_Manageable_removeManager_address__managerAddress'>
+	<button onclick='delegate_Manageable_removeManager_address()'>execute MemberRegistry_removeManager</button>
+	<div class="function_result" id="delegate_Manageable_removeManager_address_res"></div>
+  </div>
+  <div class="function_execution">
+MemberRegistry_getMemberCount:
+	<button onclick='delegate_MemberRegistry_getMemberCount()'>execute MemberRegistry_getMemberCount</button>
+	<div class="function_result" id="delegate_MemberRegistry_getMemberCount_res"></div>
+  </div>
+  <div class="function_execution">
+MemberRegistry_isActiveMember:
+	<input type='text' id='delegate_MemberRegistry_isActiveMember_address__memberAdress'>
+	<button onclick='delegate_MemberRegistry_isActiveMember_address()'>execute MemberRegistry_isActiveMember</button>
+	<div class="function_result" id="delegate_MemberRegistry_isActiveMember_address_res"></div>
+  </div>
+  <div class="function_execution">
+MemberRegistry_changeMemberAddress:
+	<input type='text' id='delegate_MemberRegistry_changeMemberAddress_uint_address_id'>
+	<input type='text' id='delegate_MemberRegistry_changeMemberAddress_uint_address__newMemberAddress'>
+	<button onclick='delegate_MemberRegistry_changeMemberAddress_uint_address()'>execute MemberRegistry_changeMemberAddress</button>
+	<div class="function_result" id="delegate_MemberRegistry_changeMemberAddress_uint_address_res"></div>
   </div>
 
 </div>
@@ -526,21 +684,27 @@ FoundationConference:
     <div class="contract_attribute"> organBlog:
       <div class="contract_attribute_value" id="FoundationConference_organBlog_value"> </div>
     </div>
+    <div class="contract_attribute"> ballots:
+      <div class="contract_attribute_value" id="FoundationConference_ballots_value"> </div>
+    </div>
+    <div class="contract_attribute"> ballotCount:
+      <div class="contract_attribute_value" id="FoundationConference_ballotCount_value"> </div>
+    </div>
     <button onclick='FoundationConference_updateAttributes()'>update FoundationConference attributes</button>
   </div>
 
-  <div class="function_execution">
-FoundationConference_isMember:
-	<input type='text' id='MemberAware_isMember_address__address'>
-	<button onclick='MemberAware_isMember_address()'>execute FoundationConference_isMember</button>
-	<div class="function_result" id="MemberAware_isMember_address_res"></div>
-  </div>
   <div class="function_execution">
 FoundationConference_changeMember:
 	<input type='text' id='Organ_changeMember_uint_address__id'>
 	<input type='text' id='Organ_changeMember_uint_address__address'>
 	<button onclick='Organ_changeMember_uint_address()'>execute FoundationConference_changeMember</button>
 	<div class="function_result" id="Organ_changeMember_uint_address_res"></div>
+  </div>
+  <div class="function_execution">
+FoundationConference_isMember:
+	<input type='text' id='MemberAware_isMember_address__address'>
+	<button onclick='MemberAware_isMember_address()'>execute FoundationConference_isMember</button>
+	<div class="function_result" id="MemberAware_isMember_address_res"></div>
   </div>
   <div class="function_execution">
 FoundationConference_canAccess:
@@ -579,6 +743,19 @@ FoundationConference_publishFunctionMessage:
 	<input type='text' id='Organ_publishFunctionMessage_uint_string_string_string_er'>
 	<button onclick='Organ_publishFunctionMessage_uint_string_string_string()'>execute FoundationConference_publishFunctionMessage</button>
 	<div class="function_result" id="Organ_publishFunctionMessage_uint_string_string_string_res"></div>
+  </div>
+  <div class="function_execution">
+FoundationConference_createBallot:
+	<input type='text' id='Organ_createBallot_string_bytes32_name'>
+	<input type='text' id='Organ_createBallot_string_bytes32_proposalNames'>
+	<button onclick='Organ_createBallot_string_bytes32()'>execute FoundationConference_createBallot</button>
+	<div class="function_result" id="Organ_createBallot_string_bytes32_res"></div>
+  </div>
+  <div class="function_execution">
+FoundationConference_getFunctionAddress:
+	<input type='text' id='Organ_getFunctionAddress_uint_id'>
+	<button onclick='Organ_getFunctionAddress_uint()'>execute FoundationConference_getFunctionAddress</button>
+	<div class="function_result" id="Organ_getFunctionAddress_uint_res"></div>
   </div>
 
 </div>

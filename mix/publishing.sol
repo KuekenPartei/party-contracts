@@ -13,7 +13,7 @@ contract MessagePublisher {
 	function publishMessage(string message,string hash,string er) public  ;
 	
 	
-	function getMessage(uint id,address _sender) public   constant returns (string _message,uint date);
+	function getMessage(uint id) public   constant returns (string _message,uint date,address _sender);
 }
 
 

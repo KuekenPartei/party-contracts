@@ -1,0 +1,138 @@
+<!doctype>
+<html>
+<head>
+<script type='text/javascript' src="votingWeb3.js">
+</script>
+<!-- javascript for Ballot -->
+<script type='text/javascript'>
+// script for Ballot
+var Ballot_instance = undefined;
+	
+// set address
+function Ballot_setAddress() {
+	var _address = document.getElementById('Ballot_address').value;
+	Ballot_instance = BallotContract.at(_address);
+}
+
+function Ballot_updateAttributes() {
+// update attributes
+var chairperson_res = Ballot_instance.chairperson();
+	if(chairperson_res!=null)
+		document.getElementById('Ballot_chairperson_value').innerText = chairperson_res;
+var voters_res = Ballot_instance.voters();
+	if(voters_res!=null)
+		document.getElementById('Ballot_voters_value').innerText = voters_res;
+var proposals_res = Ballot_instance.proposals();
+	if(proposals_res!=null)
+		document.getElementById('Ballot_proposals_value').innerText = proposals_res;
+var ballotName_res = Ballot_instance.ballotName();
+	if(ballotName_res!=null)
+		document.getElementById('Ballot_ballotName_value').innerText = ballotName_res;
+}
+//call functions
+//function Ballot_Ballot
+function Ballot_Ballot_string_bytes32() {
+	var param_name = document.getElementById('Ballot_Ballot_string_bytes32_name').value;
+	var param_proposalNames = document.getElementById('Ballot_Ballot_string_bytes32_proposalNames').value;
+	var res = Ballot_instance.Ballot(param_name, param_proposalNames);
+}
+//function Ballot_giveRightToVote
+function Ballot_giveRightToVote_address() {
+	var param_voter = document.getElementById('Ballot_giveRightToVote_address_voter').value;
+	var res = Ballot_instance.giveRightToVote(param_voter);
+}
+//function Ballot_delegateTo
+function Ballot_delegateTo_address() {
+	var param_to = document.getElementById('Ballot_delegateTo_address_to').value;
+	var res = Ballot_instance.delegateTo(param_to);
+}
+//function Ballot_voteFor
+function Ballot_voteFor_uint() {
+	var param_proposal = document.getElementById('Ballot_voteFor_uint_proposal').value;
+	var res = Ballot_instance.voteFor(param_proposal);
+}
+//function Ballot_winningProposal
+function Ballot_winningProposal() {
+	var res = Ballot_instance.winningProposal();
+	if(res!=null)
+		document.getElementById('Ballot_winningProposal_res').innerText = res;
+}
+
+//delegated calls
+</script>
+
+<!-- start of style -->
+<style>
+.contract {
+	border-style: solid;
+	border-width: 1px;
+	} 
+.contract_attributes{
+	border-style: solid;
+	border-width: 1px;
+	} 
+</style>
+</head>
+<body bgcolor='#E6E6FA'>
+	<h1>Sample Interface for voting</h1>
+<div class="contract">
+Ballot:
+  <input type='text' id='Ballot_address'> <button onclick='Ballot_setAddress()'>change Ballot Address</button>
+  <div class="contract_attributes"> attributes:
+    <div class="contract_attribute"> chairperson:
+      <div class="contract_attribute_value" id="Ballot_chairperson_value"> </div>
+    </div>
+    <div class="contract_attribute"> voters:
+      <div class="contract_attribute_value" id="Ballot_voters_value"> </div>
+    </div>
+    <div class="contract_attribute"> proposals:
+      <div class="contract_attribute_value" id="Ballot_proposals_value"> </div>
+    </div>
+    <div class="contract_attribute"> ballotName:
+      <div class="contract_attribute_value" id="Ballot_ballotName_value"> </div>
+    </div>
+    <button onclick='Ballot_updateAttributes()'>update Ballot attributes</button>
+  </div>
+
+  <div class="function_execution">
+Ballot_Ballot:
+	<input type='text' id='Ballot_Ballot_string_bytes32_name'>
+	<input type='text' id='Ballot_Ballot_string_bytes32_proposalNames'>
+	<button onclick='Ballot_Ballot_string_bytes32()'>execute Ballot_Ballot</button>
+	<div class="function_result" id="Ballot_Ballot_string_bytes32_res"></div>
+  </div>
+  <div class="function_execution">
+Ballot_giveRightToVote:
+	<input type='text' id='Ballot_giveRightToVote_address_voter'>
+	<button onclick='Ballot_giveRightToVote_address()'>execute Ballot_giveRightToVote</button>
+	<div class="function_result" id="Ballot_giveRightToVote_address_res"></div>
+  </div>
+  <div class="function_execution">
+Ballot_delegateTo:
+	<input type='text' id='Ballot_delegateTo_address_to'>
+	<button onclick='Ballot_delegateTo_address()'>execute Ballot_delegateTo</button>
+	<div class="function_result" id="Ballot_delegateTo_address_res"></div>
+  </div>
+  <div class="function_execution">
+Ballot_voteFor:
+	<input type='text' id='Ballot_voteFor_uint_proposal'>
+	<button onclick='Ballot_voteFor_uint()'>execute Ballot_voteFor</button>
+	<div class="function_result" id="Ballot_voteFor_uint_res"></div>
+  </div>
+  <div class="function_execution">
+Ballot_winningProposal:
+	<button onclick='Ballot_winningProposal()'>execute Ballot_winningProposal</button>
+	<div class="function_result" id="Ballot_winningProposal_res"></div>
+  </div>
+
+</div>
+
+<script type='text/javascript'>
+if(contracts['Ballot']!=undefined){
+  Ballot_instance = contracts['Ballot'].contract;
+  document.getElementById('Ballot_address').value = Ballot_instance.address; 
+  Ballot_updateAttributes();
+}
+</script>
+</body>
+</html>
