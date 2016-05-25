@@ -4,15 +4,15 @@
 *
 **/
 
-import "./basics.sol";
 import "./members.sol";
 import "./publishing.sol";
+import "./basics.sol";
 
 /*
 * An organ is part of the party, defined in the constitution.
 * It is populated by functions party members.
 */
-contract Organ is Manageable,MemberAware {
+contract Organ is MemberAware,Manageable,MessagePublisher {
     /*
     * The function definition.
     * A function is defined in the constitution of the party.
@@ -47,6 +47,24 @@ contract Organ is Manageable,MemberAware {
 	
 	event FunctionMemberChange(address oldMember,uint functionId,address newMember);
 	
+	
+	
+	function publishMessage(string message,string hash,string er) public   {
+		 
+		
+		//Start of user code MessagePublisher.function.publishMessage
+		organBlog.sendMessage(message,hash,er);
+		//End of user code
+	}
+	
+	
+	function getMessage(uint id,address _sender) public   constant returns (string _message,uint date) {
+		 
+		
+		//Start of user code MessagePublisher.function.getMessage
+		//TODO: implement
+		//End of user code
+	}
 	
 	/*
 	* Change the member of the function.
@@ -97,10 +115,12 @@ contract Organ is Manageable,MemberAware {
 	
 	
 	
-	function publishMessage(string message) public   {
+	function publishFunctionMessage(uint id,string message,string hash,string er) public   {
 	
-		//Start of user code Organ.function.publishMessage
-		//TODO: implement
+		//Start of user code Organ.function.publishFunctionMessage
+		ShortBlog sb = organFunctions[id].publisher;
+		if(address(sb)==0) throw;
+		sb.sendMessage(message,hash,er);
 		//End of user code
 	}
 	
@@ -185,14 +205,14 @@ contract KUEKeNParty is Party {
 		//Start of user code KUEKeNParty.function.KUEKeNParty
 		memberRegistry = new MemberRegistry();
 		memberRegistry.addManager(msg.sender);
-//		blogregistry = new BlogRegistry();
+		blogregistry = new BlogRegistry();
 		addManager(msg.sender);
 		//End of user code
 	}
 	
 	
 	
-	function boostrapParty(address fc,address br) external  onlyManager()  {
+	function boostrapParty(address fc,address br) public  onlyManager()  {
 	
 		//Start of user code KUEKeNParty.function.boostrapParty
 		
