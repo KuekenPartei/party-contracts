@@ -197,6 +197,7 @@ A registered manager is an address mapped with true.</body>
       <packageImport xmi:type="uml:PackageImport" xmi:id="_GHsxIO81EeWU3MNrGPvZNA" importedPackage="_qaoxoOn5EeWOi9aiZLczlg"/>
       <packageImport xmi:type="uml:PackageImport" xmi:id="_WDCzkB9FEea0ndjKa8R1Fg" importedPackage="_h0h8wM2EEeWqGaV8xrZGjQ"/>
       <packageImport xmi:type="uml:PackageImport" xmi:id="_Q-_HAB9JEea0ndjKa8R1Fg" importedPackage="_t3eckO82EeWU3MNrGPvZNA"/>
+      <packageImport xmi:type="uml:PackageImport" xmi:id="_8kb74CJdEeaS_4eQUjWtCw" importedPackage="_YAdlcCJZEeaS_4eQUjWtCw"/>
       <packagedElement xmi:type="uml:Class" xmi:id="_YVNoUB82Eea0ndjKa8R1Fg" name="Organ">
         <ownedComment xmi:type="uml:Comment" xmi:id="_GlGUUB9EEea0ndjKa8R1Fg">
           <body>An organ is part of the party, defined in the constitution.
@@ -221,6 +222,10 @@ It is populated by functions party members.</body>
           <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_LedxoKKuEeWvY9GWZZMftw"/>
         </ownedAttribute>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_pnh2IB9hEea0ndjKa8R1Fg" name="organBlog" type="_4pPWAO82EeWU3MNrGPvZNA"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_xlrWACJiEeaS_4eQUjWtCw" name="ballots" type="_cZbJwCJZEeaS_4eQUjWtCw"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_FACc8CJjEeaS_4eQUjWtCw" name="ballotCount">
+          <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+        </ownedAttribute>
         <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_99IwECGgEeaIoZ3vQYCn_Q" client="_YVNoUB82Eea0ndjKa8R1Fg" supplier="_qJN2cCGcEeaIoZ3vQYCn_Q" contract="_qJN2cCGcEeaIoZ3vQYCn_Q"/>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_fkDl4B88Eea0ndjKa8R1Fg" name="changeMember">
           <ownedComment xmi:type="uml:Comment" xmi:id="_vEBXAB9AEea0ndjKa8R1Fg">
@@ -273,6 +278,19 @@ It is populated by functions party members.</body>
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
           </ownedParameter>
         </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_TNOCcCJlEeaS_4eQUjWtCw" name="createBallot">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_TNOCcSJlEeaS_4eQUjWtCw" name="name">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_TNOCciJlEeaS_4eQUjWtCw" name="proposalNames">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_x7cwUKMvEeWyXvjE6XZ9yw"/>
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_TNOCcyJlEeaS_4eQUjWtCw"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_TNOCdCJlEeaS_4eQUjWtCw" value="*"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_bF1kgCJlEeaS_4eQUjWtCw" direction="return">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
         <nestedClassifier xmi:type="uml:Class" xmi:id="_CiX8MB84Eea0ndjKa8R1Fg" name="OrganFunction">
           <ownedComment xmi:type="uml:Comment" xmi:id="_dCOlgB9AEea0ndjKa8R1Fg">
             <body>The function definition.
@@ -321,6 +339,14 @@ A function is defined in the constitution of the party.</body>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_Vf528CAZEeaptIkV30WcIg" name="createOrgan">
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_de_NYCAZEeaptIkV30WcIg" name="organName">
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_fWVHICJWEeaS_4eQUjWtCw" name="getOrganAddress">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_jG_VUCJWEeaS_4eQUjWtCw" name="id">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_mPQt0CJWEeaS_4eQUjWtCw" direction="return">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
           </ownedParameter>
         </ownedOperation>
       </packagedElement>
@@ -507,10 +533,77 @@ returns 0 for ok and 1 else.</body>
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_kWMqwCGjEeaIoZ3vQYCn_Q" name="date" direction="return">
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
           </ownedParameter>
-          <ownedParameter xmi:type="uml:Parameter" xmi:id="_qlDZsCGjEeaIoZ3vQYCn_Q" name="_sender">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_qlDZsCGjEeaIoZ3vQYCn_Q" name="_sender" direction="return">
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
           </ownedParameter>
         </ownedOperation>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_YAdlcCJZEeaS_4eQUjWtCw" name="voting">
+      <packagedElement xmi:type="uml:Class" xmi:id="_cZbJwCJZEeaS_4eQUjWtCw" name="Ballot">
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_pc248CJbEeaS_4eQUjWtCw" name="chairperson">
+          <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_t8CaACJbEeaS_4eQUjWtCw" name="voters" type="_egrKICJZEeaS_4eQUjWtCw"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_2vvrUCJbEeaS_4eQUjWtCw" name="proposals" type="_UxF0gCJbEeaS_4eQUjWtCw">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5QX1ACJbEeaS_4eQUjWtCw"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5RKfMCJbEeaS_4eQUjWtCw" value="*"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_yn5dcCJhEeaS_4eQUjWtCw" name="ballotName">
+          <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+        </ownedAttribute>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_AG7dICJcEeaS_4eQUjWtCw" name="Ballot">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_9kV84CJhEeaS_4eQUjWtCw" name="name">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_FhirsCJcEeaS_4eQUjWtCw" name="proposalNames">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_x7cwUKMvEeWyXvjE6XZ9yw"/>
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5SV00CJkEeaS_4eQUjWtCw"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5SZfMCJkEeaS_4eQUjWtCw" value="*"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_K2cT0CJcEeaS_4eQUjWtCw" name="giveRightToVote">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_NQJWICJcEeaS_4eQUjWtCw" name="voter">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_SfhlECJcEeaS_4eQUjWtCw" name="delegateTo">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_ZGR2oCJcEeaS_4eQUjWtCw" name="to">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_fNd3UCJcEeaS_4eQUjWtCw" name="voteFor">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_ioz80CJcEeaS_4eQUjWtCw" name="proposal">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_n05nMCJcEeaS_4eQUjWtCw" name="winningProposal">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_uwv_ACJcEeaS_4eQUjWtCw" name="winningProposal" direction="return">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
+        <nestedClassifier xmi:type="uml:Class" xmi:id="_egrKICJZEeaS_4eQUjWtCw" name="Voter">
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_E-2DwCJbEeaS_4eQUjWtCw" name="weight">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_JO2gYCJbEeaS_4eQUjWtCw" name="voted">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_LedxoKKuEeWvY9GWZZMftw"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_McAY4CJbEeaS_4eQUjWtCw" name="delegate">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_RFfsgCJbEeaS_4eQUjWtCw" name="vote">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedAttribute>
+        </nestedClassifier>
+        <nestedClassifier xmi:type="uml:Class" xmi:id="_UxF0gCJbEeaS_4eQUjWtCw" name="Proposal">
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_dVQN8CJbEeaS_4eQUjWtCw" name="name">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_x7cwUKMvEeWyXvjE6XZ9yw"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_hkOIwCJbEeaS_4eQUjWtCw" name="voteCount">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedAttribute>
+        </nestedClassifier>
       </packagedElement>
     </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_TmqI0M2EEeWqGaV8xrZGjQ">
@@ -611,4 +704,21 @@ returns 0 for ok and 1 else.</body>
   <Contracts:Function xmi:id="_34imQCElEea6YuEw3E4qbw" base_Operation="_v_dKICElEea6YuEw3E4qbw"/>
   <Contracts:Function xmi:id="_KxVJYCGjEeaIoZ3vQYCn_Q" functionCode="" base_Operation="_KxTUMCGjEeaIoZ3vQYCn_Q" returnType="constant"/>
   <Contracts:Function xmi:id="_ZFJNQCGjEeaIoZ3vQYCn_Q" functionCode="" base_Operation="_ZFImMCGjEeaIoZ3vQYCn_Q" returnType="constant"/>
+  <Contracts:Struct xmi:id="_CQgOMCJbEeaS_4eQUjWtCw" base_Class="_egrKICJZEeaS_4eQUjWtCw"/>
+  <Contracts:Contract xmi:id="_DWeXwCJbEeaS_4eQUjWtCw" base_Class="_cZbJwCJZEeaS_4eQUjWtCw"/>
+  <Contracts:Struct xmi:id="_YvvbYCJbEeaS_4eQUjWtCw" base_Class="_UxF0gCJbEeaS_4eQUjWtCw"/>
+  <Contracts:KeyMapping xmi:id="_yMwoUCJbEeaS_4eQUjWtCw" base_Property="_t8CaACJbEeaS_4eQUjWtCw">
+    <key xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+  </Contracts:KeyMapping>
+  <Contracts:Function xmi:id="_OmWUECJcEeaS_4eQUjWtCw" base_Operation="_AG7dICJcEeaS_4eQUjWtCw"/>
+  <Contracts:Function xmi:id="_PTcDkCJcEeaS_4eQUjWtCw" base_Operation="_K2cT0CJcEeaS_4eQUjWtCw"/>
+  <Contracts:Function xmi:id="_pFMxcCJcEeaS_4eQUjWtCw" base_Operation="_n05nMCJcEeaS_4eQUjWtCw"/>
+  <Contracts:Delegate xmi:id="_aZptkCJdEeaS_4eQUjWtCw" base_Property="_UYWNUh86Eea0ndjKa8R1Fg"/>
+  <Contracts:Import xmi:id="_9elP8CJdEeaS_4eQUjWtCw" base_PackageImport="_8kb74CJdEeaS_4eQUjWtCw"/>
+  <Contracts:Function xmi:id="_cpu9ACJhEeaS_4eQUjWtCw" base_Operation="_SfhlECJcEeaS_4eQUjWtCw"/>
+  <Contracts:Function xmi:id="_dgaGUCJhEeaS_4eQUjWtCw" base_Operation="_fNd3UCJcEeaS_4eQUjWtCw"/>
+  <Contracts:KeyMapping xmi:id="_8O1tECJiEeaS_4eQUjWtCw" base_Property="_xlrWACJiEeaS_4eQUjWtCw">
+    <key xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+  </Contracts:KeyMapping>
+  <Contracts:Function xmi:id="_TNST4CJlEeaS_4eQUjWtCw" base_Operation="_TNOCcCJlEeaS_4eQUjWtCw"/>
 </xmi:XMI>
