@@ -3,9 +3,11 @@
 <head>
 <script type='text/javascript' src="basicsWeb3.js">
 </script>
+<!-- javascript for Owned -->
 <script type='text/javascript'>
 // script for Owned
-var Owned_instance = contracts['Owned'].contract;
+var Owned_instance = undefined;
+	
 // set address
 function Owned_setAddress() {
 	var _address = document.getElementById('Owned_address').value;
@@ -33,8 +35,12 @@ function Owned_kill() {
 }
 
 //delegated calls
+</script>
+<!-- javascript for Manageable -->
+<script type='text/javascript'>
 // script for Manageable
-var Manageable_instance = contracts['Manageable'].contract;
+var Manageable_instance = undefined;
+	
 // set address
 function Manageable_setAddress() {
 	var _address = document.getElementById('Manageable_address').value;
@@ -63,8 +69,9 @@ function Manageable_removeManager_address() {
 }
 
 //delegated calls
-
 </script>
+
+<!-- start of style -->
 <style>
 .contract {
 	border-style: solid;
@@ -131,8 +138,16 @@ Manageable_removeManager:
 </div>
 
 <script type='text/javascript'>
-document.getElementById('Owned_address').value = Owned_instance.address; 
-document.getElementById('Manageable_address').value = Manageable_instance.address; 
+if(contracts['Owned']!=undefined){
+  Owned_instance = contracts['Owned'].contract;
+  document.getElementById('Owned_address').value = Owned_instance.address; 
+  Owned_updateAttributes();
+}
+if(contracts['Manageable']!=undefined){
+  Manageable_instance = contracts['Manageable'].contract;
+  document.getElementById('Manageable_address').value = Manageable_instance.address; 
+  Manageable_updateAttributes();
+}
 </script>
 </body>
 </html>

@@ -3,9 +3,11 @@
 <head>
 <script type='text/javascript' src="partyWeb3.js">
 </script>
+<!-- javascript for Organ -->
 <script type='text/javascript'>
 // script for Organ
-var Organ_instance = contracts['Organ'].contract;
+var Organ_instance = undefined;
+	
 // set address
 function Organ_setAddress() {
 	var _address = document.getElementById('Organ_address').value;
@@ -34,12 +36,6 @@ var organBlog_res = Organ_instance.organBlog();
 		document.getElementById('Organ_organBlog_value').innerText = organBlog_res;
 }
 //call functions
-//function Organ_canAccess
-function Manageable_canAccess() {
-	var res = Organ_instance.canAccess();
-	if(res!=null)
-		document.getElementById('Manageable_canAccess_res').innerText = res;
-}
 //function Organ_isMember
 function MemberAware_isMember_address() {
 	var param__address = document.getElementById('MemberAware_isMember_address__address').value;
@@ -52,6 +48,12 @@ function Organ_changeMember_uint_address() {
 	var param__id = document.getElementById('Organ_changeMember_uint_address__id').value;
 	var param__address = document.getElementById('Organ_changeMember_uint_address__address').value;
 	var res = Organ_instance.changeMember(param__id, param__address);
+}
+//function Organ_canAccess
+function Manageable_canAccess() {
+	var res = Organ_instance.canAccess();
+	if(res!=null)
+		document.getElementById('Manageable_canAccess_res').innerText = res;
 }
 //function Organ_addManager
 function Manageable_addManager_address() {
@@ -73,15 +75,22 @@ function Manageable_removeManager_address() {
 function Organ_initalizeOrgan() {
 	var res = Organ_instance.initalizeOrgan();
 }
-//function Organ_publishMessage
-function Organ_publishMessage_string() {
-	var param_message = document.getElementById('Organ_publishMessage_string_message').value;
-	var res = Organ_instance.publishMessage(param_message);
+//function Organ_publishFunctionMessage
+function Organ_publishFunctionMessage_uint_string_string_string() {
+	var param_id = document.getElementById('Organ_publishFunctionMessage_uint_string_string_string_id').value;
+	var param_message = document.getElementById('Organ_publishFunctionMessage_uint_string_string_string_message').value;
+	var param_hash = document.getElementById('Organ_publishFunctionMessage_uint_string_string_string_hash').value;
+	var param_er = document.getElementById('Organ_publishFunctionMessage_uint_string_string_string_er').value;
+	var res = Organ_instance.publishFunctionMessage(param_id, param_message, param_hash, param_er);
 }
 
 //delegated calls
+</script>
+<!-- javascript for Party -->
+<script type='text/javascript'>
 // script for Party
-var Party_instance = contracts['Party'].contract;
+var Party_instance = undefined;
+	
 // set address
 function Party_setAddress() {
 	var _address = document.getElementById('Party_address').value;
@@ -134,8 +143,12 @@ function Party_createOrgan_string() {
 }
 
 //delegated calls
+</script>
+<!-- javascript for KUEKeNParty -->
+<script type='text/javascript'>
 // script for KUEKeNParty
-var KUEKeNParty_instance = contracts['KUEKeNParty'].contract;
+var KUEKeNParty_instance = undefined;
+	
 // set address
 function KUEKeNParty_setAddress() {
 	var _address = document.getElementById('KUEKeNParty_address').value;
@@ -161,10 +174,6 @@ var blogregistry_res = KUEKeNParty_instance.blogregistry();
 		document.getElementById('KUEKeNParty_blogregistry_value').innerText = blogregistry_res;
 }
 //call functions
-//function KUEKeNParty_KUEKeNParty
-function KUEKeNParty_KUEKeNParty() {
-	var res = KUEKeNParty_instance.KUEKeNParty();
-}
 //function KUEKeNParty_Party
 function Party_Party() {
 	var res = KUEKeNParty_instance.Party();
@@ -175,16 +184,20 @@ function Manageable_canAccess() {
 	if(res!=null)
 		document.getElementById('Manageable_canAccess_res').innerText = res;
 }
-//function KUEKeNParty_addManager
-function Manageable_addManager_address() {
-	var param__newManagerAddress = document.getElementById('Manageable_addManager_address__newManagerAddress').value;
-	var res = KUEKeNParty_instance.addManager(param__newManagerAddress);
+//function KUEKeNParty_KUEKeNParty
+function KUEKeNParty_KUEKeNParty() {
+	var res = KUEKeNParty_instance.KUEKeNParty();
 }
 //function KUEKeNParty_boostrapParty
 function KUEKeNParty_boostrapParty_address_address() {
 	var param_fc = document.getElementById('KUEKeNParty_boostrapParty_address_address_fc').value;
 	var param_br = document.getElementById('KUEKeNParty_boostrapParty_address_address_br').value;
 	var res = KUEKeNParty_instance.boostrapParty(param_fc, param_br);
+}
+//function KUEKeNParty_addManager
+function Manageable_addManager_address() {
+	var param__newManagerAddress = document.getElementById('Manageable_addManager_address__newManagerAddress').value;
+	var res = KUEKeNParty_instance.addManager(param__newManagerAddress);
 }
 //function KUEKeNParty_removeManager
 function Manageable_removeManager_address() {
@@ -198,8 +211,12 @@ function Party_createOrgan_string() {
 }
 
 //delegated calls
+</script>
+<!-- javascript for FoundationConference -->
+<script type='text/javascript'>
 // script for FoundationConference
-var FoundationConference_instance = contracts['FoundationConference'].contract;
+var FoundationConference_instance = undefined;
+	
 // set address
 function FoundationConference_setAddress() {
 	var _address = document.getElementById('FoundationConference_address').value;
@@ -228,12 +245,6 @@ var organBlog_res = FoundationConference_instance.organBlog();
 		document.getElementById('FoundationConference_organBlog_value').innerText = organBlog_res;
 }
 //call functions
-//function FoundationConference_canAccess
-function Manageable_canAccess() {
-	var res = FoundationConference_instance.canAccess();
-	if(res!=null)
-		document.getElementById('Manageable_canAccess_res').innerText = res;
-}
 //function FoundationConference_isMember
 function MemberAware_isMember_address() {
 	var param__address = document.getElementById('MemberAware_isMember_address__address').value;
@@ -246,6 +257,12 @@ function Organ_changeMember_uint_address() {
 	var param__id = document.getElementById('Organ_changeMember_uint_address__id').value;
 	var param__address = document.getElementById('Organ_changeMember_uint_address__address').value;
 	var res = FoundationConference_instance.changeMember(param__id, param__address);
+}
+//function FoundationConference_canAccess
+function Manageable_canAccess() {
+	var res = FoundationConference_instance.canAccess();
+	if(res!=null)
+		document.getElementById('Manageable_canAccess_res').innerText = res;
 }
 //function FoundationConference_addManager
 function Manageable_addManager_address() {
@@ -267,15 +284,19 @@ function Manageable_removeManager_address() {
 function Organ_initalizeOrgan() {
 	var res = FoundationConference_instance.initalizeOrgan();
 }
-//function FoundationConference_publishMessage
-function Organ_publishMessage_string() {
-	var param_message = document.getElementById('Organ_publishMessage_string_message').value;
-	var res = FoundationConference_instance.publishMessage(param_message);
+//function FoundationConference_publishFunctionMessage
+function Organ_publishFunctionMessage_uint_string_string_string() {
+	var param_id = document.getElementById('Organ_publishFunctionMessage_uint_string_string_string_id').value;
+	var param_message = document.getElementById('Organ_publishFunctionMessage_uint_string_string_string_message').value;
+	var param_hash = document.getElementById('Organ_publishFunctionMessage_uint_string_string_string_hash').value;
+	var param_er = document.getElementById('Organ_publishFunctionMessage_uint_string_string_string_er').value;
+	var res = FoundationConference_instance.publishFunctionMessage(param_id, param_message, param_hash, param_er);
 }
 
 //delegated calls
-
 </script>
+
+<!-- start of style -->
 <style>
 .contract {
 	border-style: solid;
@@ -315,11 +336,6 @@ Organ:
   </div>
 
   <div class="function_execution">
-Organ_canAccess:
-	<button onclick='Manageable_canAccess()'>execute Organ_canAccess</button>
-	<div class="function_result" id="Manageable_canAccess_res"></div>
-  </div>
-  <div class="function_execution">
 Organ_isMember:
 	<input type='text' id='MemberAware_isMember_address__address'>
 	<button onclick='MemberAware_isMember_address()'>execute Organ_isMember</button>
@@ -331,6 +347,11 @@ Organ_changeMember:
 	<input type='text' id='Organ_changeMember_uint_address__address'>
 	<button onclick='Organ_changeMember_uint_address()'>execute Organ_changeMember</button>
 	<div class="function_result" id="Organ_changeMember_uint_address_res"></div>
+  </div>
+  <div class="function_execution">
+Organ_canAccess:
+	<button onclick='Manageable_canAccess()'>execute Organ_canAccess</button>
+	<div class="function_result" id="Manageable_canAccess_res"></div>
   </div>
   <div class="function_execution">
 Organ_addManager:
@@ -357,10 +378,13 @@ Organ_initalizeOrgan:
 	<div class="function_result" id="Organ_initalizeOrgan_res"></div>
   </div>
   <div class="function_execution">
-Organ_publishMessage:
-	<input type='text' id='Organ_publishMessage_string_message'>
-	<button onclick='Organ_publishMessage_string()'>execute Organ_publishMessage</button>
-	<div class="function_result" id="Organ_publishMessage_string_res"></div>
+Organ_publishFunctionMessage:
+	<input type='text' id='Organ_publishFunctionMessage_uint_string_string_string_id'>
+	<input type='text' id='Organ_publishFunctionMessage_uint_string_string_string_message'>
+	<input type='text' id='Organ_publishFunctionMessage_uint_string_string_string_hash'>
+	<input type='text' id='Organ_publishFunctionMessage_uint_string_string_string_er'>
+	<button onclick='Organ_publishFunctionMessage_uint_string_string_string()'>execute Organ_publishFunctionMessage</button>
+	<div class="function_result" id="Organ_publishFunctionMessage_uint_string_string_string_res"></div>
   </div>
 
 </div>
@@ -439,11 +463,6 @@ KUEKeNParty:
   </div>
 
   <div class="function_execution">
-KUEKeNParty_KUEKeNParty:
-	<button onclick='KUEKeNParty_KUEKeNParty()'>execute KUEKeNParty_KUEKeNParty</button>
-	<div class="function_result" id="KUEKeNParty_KUEKeNParty_res"></div>
-  </div>
-  <div class="function_execution">
 KUEKeNParty_Party:
 	<button onclick='Party_Party()'>execute KUEKeNParty_Party</button>
 	<div class="function_result" id="Party_Party_res"></div>
@@ -454,10 +473,9 @@ KUEKeNParty_canAccess:
 	<div class="function_result" id="Manageable_canAccess_res"></div>
   </div>
   <div class="function_execution">
-KUEKeNParty_addManager:
-	<input type='text' id='Manageable_addManager_address__newManagerAddress'>
-	<button onclick='Manageable_addManager_address()'>execute KUEKeNParty_addManager</button>
-	<div class="function_result" id="Manageable_addManager_address_res"></div>
+KUEKeNParty_KUEKeNParty:
+	<button onclick='KUEKeNParty_KUEKeNParty()'>execute KUEKeNParty_KUEKeNParty</button>
+	<div class="function_result" id="KUEKeNParty_KUEKeNParty_res"></div>
   </div>
   <div class="function_execution">
 KUEKeNParty_boostrapParty:
@@ -465,6 +483,12 @@ KUEKeNParty_boostrapParty:
 	<input type='text' id='KUEKeNParty_boostrapParty_address_address_br'>
 	<button onclick='KUEKeNParty_boostrapParty_address_address()'>execute KUEKeNParty_boostrapParty</button>
 	<div class="function_result" id="KUEKeNParty_boostrapParty_address_address_res"></div>
+  </div>
+  <div class="function_execution">
+KUEKeNParty_addManager:
+	<input type='text' id='Manageable_addManager_address__newManagerAddress'>
+	<button onclick='Manageable_addManager_address()'>execute KUEKeNParty_addManager</button>
+	<div class="function_result" id="Manageable_addManager_address_res"></div>
   </div>
   <div class="function_execution">
 KUEKeNParty_removeManager:
@@ -506,11 +530,6 @@ FoundationConference:
   </div>
 
   <div class="function_execution">
-FoundationConference_canAccess:
-	<button onclick='Manageable_canAccess()'>execute FoundationConference_canAccess</button>
-	<div class="function_result" id="Manageable_canAccess_res"></div>
-  </div>
-  <div class="function_execution">
 FoundationConference_isMember:
 	<input type='text' id='MemberAware_isMember_address__address'>
 	<button onclick='MemberAware_isMember_address()'>execute FoundationConference_isMember</button>
@@ -522,6 +541,11 @@ FoundationConference_changeMember:
 	<input type='text' id='Organ_changeMember_uint_address__address'>
 	<button onclick='Organ_changeMember_uint_address()'>execute FoundationConference_changeMember</button>
 	<div class="function_result" id="Organ_changeMember_uint_address_res"></div>
+  </div>
+  <div class="function_execution">
+FoundationConference_canAccess:
+	<button onclick='Manageable_canAccess()'>execute FoundationConference_canAccess</button>
+	<div class="function_result" id="Manageable_canAccess_res"></div>
   </div>
   <div class="function_execution">
 FoundationConference_addManager:
@@ -548,19 +572,38 @@ FoundationConference_initalizeOrgan:
 	<div class="function_result" id="Organ_initalizeOrgan_res"></div>
   </div>
   <div class="function_execution">
-FoundationConference_publishMessage:
-	<input type='text' id='Organ_publishMessage_string_message'>
-	<button onclick='Organ_publishMessage_string()'>execute FoundationConference_publishMessage</button>
-	<div class="function_result" id="Organ_publishMessage_string_res"></div>
+FoundationConference_publishFunctionMessage:
+	<input type='text' id='Organ_publishFunctionMessage_uint_string_string_string_id'>
+	<input type='text' id='Organ_publishFunctionMessage_uint_string_string_string_message'>
+	<input type='text' id='Organ_publishFunctionMessage_uint_string_string_string_hash'>
+	<input type='text' id='Organ_publishFunctionMessage_uint_string_string_string_er'>
+	<button onclick='Organ_publishFunctionMessage_uint_string_string_string()'>execute FoundationConference_publishFunctionMessage</button>
+	<div class="function_result" id="Organ_publishFunctionMessage_uint_string_string_string_res"></div>
   </div>
 
 </div>
 
 <script type='text/javascript'>
-document.getElementById('Organ_address').value = Organ_instance.address; 
-document.getElementById('Party_address').value = Party_instance.address; 
-document.getElementById('KUEKeNParty_address').value = KUEKeNParty_instance.address; 
-document.getElementById('FoundationConference_address').value = FoundationConference_instance.address; 
+if(contracts['Organ']!=undefined){
+  Organ_instance = contracts['Organ'].contract;
+  document.getElementById('Organ_address').value = Organ_instance.address; 
+  Organ_updateAttributes();
+}
+if(contracts['Party']!=undefined){
+  Party_instance = contracts['Party'].contract;
+  document.getElementById('Party_address').value = Party_instance.address; 
+  Party_updateAttributes();
+}
+if(contracts['KUEKeNParty']!=undefined){
+  KUEKeNParty_instance = contracts['KUEKeNParty'].contract;
+  document.getElementById('KUEKeNParty_address').value = KUEKeNParty_instance.address; 
+  KUEKeNParty_updateAttributes();
+}
+if(contracts['FoundationConference']!=undefined){
+  FoundationConference_instance = contracts['FoundationConference'].contract;
+  document.getElementById('FoundationConference_address').value = FoundationConference_instance.address; 
+  FoundationConference_updateAttributes();
+}
 </script>
 </body>
 </html>

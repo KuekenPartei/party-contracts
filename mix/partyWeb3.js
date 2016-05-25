@@ -31,8 +31,8 @@ var OrganContract = web3.eth.contract([
   }
 ,  {
     "constant": true,
-    "inputs": [{"name": "message","type": "string"}],    
-    "name": "publishMessage",
+    "inputs": [{"name": "id","type": "uint"},{"name": "message","type": "string"},{"name": "hash","type": "string"},{"name": "er","type": "string"}],    
+    "name": "publishFunctionMessage",
     "outputs": [],
     "type": "function"
   }

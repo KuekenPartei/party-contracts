@@ -1257,7 +1257,7 @@
       </children>
       <styles xmi:type="notation:CanonicalStyle" xmi:id="_HtVAQO83EeWU3MNrGPvZNA"/>
       <element xmi:type="uml:Class" href="party-dao.uml#_4pPWAO82EeWU3MNrGPvZNA"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Ga0Pge83EeWU3MNrGPvZNA" x="73" y="51"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Ga0Pge83EeWU3MNrGPvZNA" x="73" y="51" width="438"/>
     </children>
     <children xmi:type="notation:Shape" xmi:id="_Ga7kR-83EeWU3MNrGPvZNA" type="StereotypeComment">
       <styles xmi:type="notation:TitleStyle" xmi:id="_Ga7kSO83EeWU3MNrGPvZNA" showTitle="true"/>
