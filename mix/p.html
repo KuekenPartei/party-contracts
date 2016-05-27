@@ -271,7 +271,11 @@ function KUEKeNParty_initalize() {
 	var mr = KUEKeNParty_instance.memberRegistry();
 	console.log("memberregistry:"+mr);
 	var br = KUEKeNParty_instance.blogregistry();
-	console.log("blogregistry"+br);
+	console.log("blogregistry:"+br);
+	var br = KUEKeNParty_instance.memberRegistry_getMemberCount();
+	console.log("membercount:"+br);
+	var br = KUEKeNParty_instance.organs(0);
+	console.log("FunctionBlogCount:"+br);
 }
 
 KUEKeNParty_initalize();
@@ -280,25 +284,25 @@ KUEKeNParty_initalize();
 // var FoundationConferenceContract = web3.eth.contract(contracts['FoundationConference'].interface);
 //web3.eth.defaultAccount = web3.eth.accounts[0];
 
-function KUEKeNParty_initalize()1 {
+
 
 
 if(contracts['KUEKeNParty']!=undefined){
      KUEKeNParty_instance = KUEKeNPartyContract.at(contracts['KUEKeNParty'].address);
   // KUEKeNParty_instance = contracts['KUEKeNParty'].contract;
-  console.log("abi-mix"+contracts['KUEKeNParty'].interface);
-    console.log("abi"+KUEKeNParty_instance.abi);
-    console.log("abi1"+JSON.parse(KUEKeNParty.abi));
+//   console.log("abi-mix"+contracts['KUEKeNParty'].interface);
+//     console.log("abi"+KUEKeNParty_instance.abi);
+//     console.log("abi1"+JSON.parse(KUEKeNParty.abi));
 
-	console.log("instance"+KUEKeNParty_instance.address);
-  document.getElementById('KUEKeNParty_address').value = KUEKeNParty_instance.address; 
-  var ret = KUEKeNParty_instance.createOrgan("testOrgan");
-  console.log("create organ -->ret: "+ret);
-  var ret = KUEKeNParty_instance.addManager(KUEKeNParty_instance.address);
-  console.log("addManager -->ret: "+ret);
-   console.log("memberregistry"+KUEKeNParty_instance.memberRegistry());
-   console.log("organ count"+KUEKeNParty_instance.organCount());
-   console.log("blogregistry"+KUEKeNParty_instance.blogregistry());
+// 	console.log("instance"+KUEKeNParty_instance.address);
+//   document.getElementById('KUEKeNParty_address').value = KUEKeNParty_instance.address; 
+//   var ret = KUEKeNParty_instance.createOrgan("testOrgan");
+//   console.log("create organ -->ret: "+ret);
+//   var ret = KUEKeNParty_instance.addManager(KUEKeNParty_instance.address);
+//   console.log("addManager -->ret: "+ret);
+//    console.log("memberregistry"+KUEKeNParty_instance.memberRegistry());
+//    console.log("organ count"+KUEKeNParty_instance.organCount());
+//    console.log("blogregistry"+KUEKeNParty_instance.blogregistry());
 //   console.log(KUEKeNParty_instance.constitutionHash());
   //KUEKeNParty_updateAttributes();
   
@@ -312,23 +316,23 @@ if(contracts['FoundationConference']!=undefined){
   document.getElementById('FoundationConference_address').value = FoundationConference_instance.address; 
 //   contracts['FoundationConference'].contract.createFunction();
 //   console.log("test1"+contracts['FoundationConference'].contract.getLastBallot());
-  var blogFunction1 = FoundationConference_instance.getFunctionBlogAddress(0);
-  var blogFunction2 = FoundationConference_instance.getFunctionBlogAddress(1);
-  console.log("blog:"+blogFunction1+"--"+blogFunction2);
+//   var blogFunction1 = FoundationConference_instance.getFunctionBlogAddress(0);
+//   var blogFunction2 = FoundationConference_instance.getFunctionBlogAddress(1);
+//   console.log("blog:"+blogFunction1+"--"+blogFunction2);
   
-  console.log("lastFunction:"+FoundationConference_instance.lastFunctionId());
-  var res = FoundationConference_instance.createFunction("test","");
-  console.log("res:"+res);
-  console.log("lastFunction:"+FoundationConference_instance.lastFunctionId());
+//   console.log("lastFunction:"+FoundationConference_instance.lastFunctionId());
+//   var res = FoundationConference_instance.createFunction("test","");
+//   console.log("res:"+res);
+//   console.log("lastFunction:"+FoundationConference_instance.lastFunctionId());
 //   var res = FoundationConference_instance.createBallot.sendTransaction("test","22",{gas: 200000},function(err, address) {
 // 	  if (!err)
 // 		    console.log("err:"+address+" "+res); // "0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
 // 		});
 //   console.log("res:"+res);
   //console.log(FoundationConference_instance.createFunction(blogFunction1,blogFunction2));
-  ShortBlog_instance = ShortBlogContract.at(blogFunction1);//ShortBlogContract.at(contracts['ShortBlog'].address);
-  console.log("-->"+ShortBlog_instance.address);
-  console.log(ShortBlog_instance.getMessageCount());
+//   ShortBlog_instance = ShortBlogContract.at(blogFunction1);//ShortBlogContract.at(contracts['ShortBlog'].address);
+//   console.log("-->"+ShortBlog_instance.address);
+//   console.log(ShortBlog_instance.getMessageCount());
 //   var ret= ShortBlog_instance.sendMessage.sendTransaction("test1","test","test",{gas: 2000000});
 //   console.log("ret: "+ret);
 //   console.log(ShortBlog_instance.getMessageCount());
@@ -338,13 +342,13 @@ if(contracts['FoundationConference']!=undefined){
 //   var ret= ShortBlog_instance.sendMessage.sendTransaction("test3","test","test",{gas: 2000000});
 //   console.log("ret: "+ret);
 //   console.log(ShortBlog_instance.getMessageCount());
-  var ret= ShortBlog_instance.sendMessage("test4","test","test");
-  var ret= ShortBlog_instance.sendMessage("test5","test","test");
-  var ret= ShortBlog_instance.sendMessage("test6","test","test");
-  console.log("ret: "+ret);
-   console.log(ShortBlog_instance.getMessageCount());
+//   var ret= ShortBlog_instance.sendMessage("test4","test","test");
+//   var ret= ShortBlog_instance.sendMessage("test5","test","test");
+//   var ret= ShortBlog_instance.sendMessage("test6","test","test");
+//   console.log("ret: "+ret);
+//    console.log(ShortBlog_instance.getMessageCount());
 //   ShortBlog_instance.getMessageText(0);
-  ShortBlog_instance.getMessageBlock(0);
+//   ShortBlog_instance.getMessageBlock(0);
   //FoundationConference_instance.addManager(blogFunction1)
 //   contracts['FoundationConference'].contract.createFunction().call();
 //   console.log("test2"+FoundationConference_instance.getLastBallot());
@@ -355,7 +359,7 @@ if(contracts['FoundationConference']!=undefined){
 // contracts['FoundationConference'].contract.getLastBallot();
  //FoundationConference_updateAttributes();
 }
-}
+
 </script>
 </body>
 </html>
