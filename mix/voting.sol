@@ -5,7 +5,9 @@
 **/
 
 
-
+/*
+* A simple ballot for voting on alternatives.
+*/
 contract Ballot {
     
     struct Voter {
@@ -31,7 +33,6 @@ contract Ballot {
 	
 	
 	function Ballot(string name,bytes32[] proposalNames) public   {
-	
 		//Start of user code Ballot.function.Ballot
 		//TODO: implement
 		//End of user code
@@ -40,7 +41,6 @@ contract Ballot {
 	
 	
 	function giveRightToVote(address voter) public   {
-	
 		//Start of user code Ballot.function.giveRightToVote
 		//TODO: implement
 		//End of user code
@@ -49,7 +49,6 @@ contract Ballot {
 	
 	
 	function delegateTo(address to) public   {
-	
 		//Start of user code Ballot.function.delegateTo
 		//TODO: implement
 		//End of user code
@@ -58,7 +57,6 @@ contract Ballot {
 	
 	
 	function voteFor(uint proposal) public   {
-	
 		//Start of user code Ballot.function.voteFor
 		//TODO: implement
 		//End of user code
@@ -67,7 +65,6 @@ contract Ballot {
 	
 	
 	function winningProposal() public  returns (uint winningProposal) {
-	
 		//Start of user code Ballot.function.winningProposal
 		//TODO: implement
 		//End of user code

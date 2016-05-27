@@ -4,10 +4,10 @@
 *
 **/
 
-import "./voting.sol";
-import "./publishing.sol";
 import "./basics.sol";
 import "./members.sol";
+import "./publishing.sol";
+import "./voting.sol";
 
 /*
 * An organ is part of the party, defined in the constitution.
@@ -17,6 +17,7 @@ contract Organ is MemberAware,Manageable,MessagePublisher {
     /*
     * The function definition.
     * A function is defined in the constitution of the party.
+    * Normaly it is associated with a party member.
     */
     struct OrganFunction {
     	address currentMember;
@@ -60,12 +61,24 @@ contract Organ is MemberAware,Manageable,MessagePublisher {
 		//End of user code
 	}
 	
-	
-	function getMessage(uint id) public   constant returns (string _message,uint date,address _sender) {
+	/*
+	* Get the message with the id.
+	* 
+	* id -
+	* returns
+	* _message - The message text.
+	* _blockNumber - The blocknumber.
+	* _sender -
+	* _externalResource -
+	*/
+	function getMessage(uint id) public   constant returns (string _message,uint _blockNumber,address _sender,string _externalResource) {
 		 
 		
 		//Start of user code MessagePublisher.function.getMessage
-		//TODO: implement
+		var (a,b) = organBlog.getBlogMessage(id);
+		_blockNumber = a;
+		_sender = b;
+		return ;
 		//End of user code
 	}
 	
@@ -76,7 +89,6 @@ contract Organ is MemberAware,Manageable,MessagePublisher {
 	* _address -
 	*/
 	function changeMember(uint _id,address _address) public  onlyManager()  {
-	
 		//Start of user code Organ.function.changeMember
 		if(!isMember(_address)) throw;
 		if(organFunctions[_id].id!= _id) throw;
@@ -94,7 +106,6 @@ contract Organ is MemberAware,Manageable,MessagePublisher {
 	* _constittiutionHash -
 	*/
 	function createFunction(string _functionName,string _constittiutionHash) public  onlyManager()  {
-	
 		//Start of user code Organ.function.createFunction
 		organFunctions[lastFunctionId].functionName = _functionName;
 		organFunctions[lastFunctionId].constitutionHash = _constittiutionHash;
@@ -107,19 +118,25 @@ contract Organ is MemberAware,Manageable,MessagePublisher {
 	
 	
 	function initalizeOrgan() public   {
-	
 		//Start of user code Organ.function.initalizeOrgan
 		//blogRegistry = new BlogRegistry();		
 		
 		organBlog = blogRegistry.registerBlog(organName);
+		organBlog.changeOwner(this);
 		
 		//End of user code
 	}
 	
 	
-	
+	/*
+	* Publish a message at a function blog.
+	* 
+	* id -
+	* message -
+	* hash -
+	* er -
+	*/
 	function publishFunctionMessage(uint id,string message,string hash,string er) public   {
-	
 		//Start of user code Organ.function.publishFunctionMessage
 		ShortBlog sb = organFunctions[id].publisher;
 		if(address(sb)==0) throw;
@@ -128,9 +145,15 @@ contract Organ is MemberAware,Manageable,MessagePublisher {
 	}
 	
 	
-	
+	/*
+	* Creates a new ballot for this organ.
+	* 
+	* name -
+	* proposalNames -
+	* returns
+	*  -
+	*/
 	function createBallot(string name,bytes32[] proposalNames) public  returns (uint ) {
-	
 		//Start of user code Organ.function.createBallot
 		Ballot b = new Ballot(name,proposalNames);
 		ballots[ballotCount] = b;
@@ -139,11 +162,24 @@ contract Organ is MemberAware,Manageable,MessagePublisher {
 	}
 	
 	
-	
-	function getFunctionAddress(uint id) public   constant returns (address ) {
-	
-		//Start of user code Organ.function.getFunctionAddress
+	/*
+	* Get the address of the organ function blog.
+	* 
+	* id - The function id.
+	* returns
+	*  -
+	*/
+	function getFunctionBlogAddress(uint id) public   constant returns (address ) {
+		//Start of user code Organ.function.getFunctionBlogAddress
 		return organFunctions[id].publisher;
+		//End of user code
+	}
+	
+	
+	
+	function getLastBallot() public   constant returns (address ) {
+		//Start of user code Organ.function.getLastBallot
+		return ballots[ballotCount];
 		//End of user code
 	}
 	
@@ -162,7 +198,7 @@ contract Organ is MemberAware,Manageable,MessagePublisher {
 	}
 	
 	// Start of user code Organ.operations
-	//TODO: implement
+	//TODO: implement 
 	// End of user code
 }
 
@@ -186,7 +222,6 @@ contract Party is Manageable {
 	
 	
 	function Party() public   {
-	
 		//Start of user code Party.function.Party
 		//TODO: implement
 		//End of user code
@@ -195,7 +230,6 @@ contract Party is Manageable {
 	
 	
 	function createOrgan(string organName) public   {
-	
 		//Start of user code Party.function.createOrgan
 		organs[organCount] = new Organ();
 		organs[organCount].setOrganName(organName);
@@ -251,7 +285,6 @@ contract KUEKeNParty is Party {
 	
 	
 	function KUEKeNParty() public   {
-	
 		//Start of user code KUEKeNParty.function.KUEKeNParty
 		memberRegistry = new MemberRegistry();
 		memberRegistry.addManager(msg.sender);
@@ -263,7 +296,6 @@ contract KUEKeNParty is Party {
 	
 	
 	function boostrapParty(address fc,address br) public  onlyManager()  {
-	
 		//Start of user code KUEKeNParty.function.boostrapParty
 		
 //		memberRegistry = new MemberRegistry();
@@ -287,12 +319,24 @@ contract KUEKeNParty is Party {
 	// End of user code
 }
 
-
+/*
+* Will found the party.
+* In the first and only session.
+*/
 contract FoundationConference is Organ {
 
+	address[] public accreditation;
 	// Start of user code FoundationConference.attributes
 	//TODO: implement
 	// End of user code
+	
+	
+	
+	function accreditationMember(address _address) public   {
+		//Start of user code FoundationConference.function.accreditationMember
+		if(!isMember(_address))throw;
+		//End of user code
+	}
 	
 	// Start of user code FoundationConference.operations
 	/**

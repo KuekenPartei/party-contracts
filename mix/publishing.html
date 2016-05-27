@@ -42,16 +42,16 @@ function ShortBlog_sendMessage_string_string_string() {
 	var param_er = document.getElementById('ShortBlog_sendMessage_string_string_string_er').value;
 	var res = ShortBlog_instance.sendMessage(param_message, param_hash, param_er);
 }
+//function ShortBlog_getMessageText
+function ShortBlog_getMessageText_uint() {
+	var param_id = document.getElementById('ShortBlog_getMessageText_uint_id').value;
+	var res = ShortBlog_instance.getMessageText(param_id);
+	if(res!=null)
+		document.getElementById('ShortBlog_getMessageText_uint_res').innerText = res;
+}
 //function ShortBlog_kill
 function Owned_kill() {
 	var res = ShortBlog_instance.kill();
-}
-//function ShortBlog_getMessage
-function ShortBlog_getMessage_uint() {
-	var param_id = document.getElementById('ShortBlog_getMessage_uint_id').value;
-	var res = ShortBlog_instance.getMessage(param_id);
-	if(res!=null)
-		document.getElementById('ShortBlog_getMessage_uint_res').innerText = res;
 }
 //function ShortBlog_getMessageDate
 function ShortBlog_getMessageDate_uint() {
@@ -73,8 +73,16 @@ function ShortBlog_getMessageBlock_uint() {
 	if(res!=null)
 		document.getElementById('ShortBlog_getMessageBlock_uint_res').innerText = res;
 }
+//function ShortBlog_getBlogMessage
+function ShortBlog_getBlogMessage_uint() {
+	var param_id = document.getElementById('ShortBlog_getBlogMessage_uint_id').value;
+	var res = ShortBlog_instance.getBlogMessage(param_id);
+	if(res!=null)
+		document.getElementById('ShortBlog_getBlogMessage_uint_res').innerText = res;
+}
 
 //delegated calls
+
 </script>
 <!-- javascript for BlogRegistry -->
 <script type='text/javascript'>
@@ -110,6 +118,7 @@ function BlogRegistry_getShortBlog_string() {
 }
 
 //delegated calls
+
 </script>
 
 <!-- start of style -->
@@ -126,31 +135,31 @@ function BlogRegistry_getShortBlog_string() {
 </head>
 <body bgcolor='#E6E6FA'>
 	<h1>Sample Interface for publishing</h1>
-<div class="contract">
+<!-- gui for ShortBlog_contract -->
+<div class="contract" id="ShortBlog_contract">
 ShortBlog:
   <input type='text' id='ShortBlog_address'> <button onclick='ShortBlog_setAddress()'>change ShortBlog Address</button>
-  <div class="contract_attributes"> attributes:
-    <div class="contract_attribute"> messageCount:
+  <div class="contract_attributes" id="ShortBlog_contract_attributes"> attributes:
+    <div class="contract_attribute" id="ShortBlog_contract_attribute_messageCount"> messageCount:
       <div class="contract_attribute_value" id="ShortBlog_messageCount_value"> </div>
     </div>
-    <div class="contract_attribute"> lastMessageDate:
+    <div class="contract_attribute" id="ShortBlog_contract_attribute_lastMessageDate"> lastMessageDate:
       <div class="contract_attribute_value" id="ShortBlog_lastMessageDate_value"> </div>
     </div>
     <button onclick='ShortBlog_updateAttributes()'>update ShortBlog attributes</button>
   </div>
-
-  <div class="function_execution">
+  <div class="function_execution" id="ShortBlog_contract_function_Owned_getOwner">
 ShortBlog_getOwner:
 	<button onclick='Owned_getOwner()'>execute ShortBlog_getOwner</button>
 	<div class="function_result" id="Owned_getOwner_res"></div>
   </div>
-  <div class="function_execution">
+  <div class="function_execution" id="ShortBlog_contract_function_Owned_changeOwner_address">
 ShortBlog_changeOwner:
 	<input type='text' id='Owned_changeOwner_address_newOwner'>
 	<button onclick='Owned_changeOwner_address()'>execute ShortBlog_changeOwner</button>
 	<div class="function_result" id="Owned_changeOwner_address_res"></div>
   </div>
-  <div class="function_execution">
+  <div class="function_execution" id="ShortBlog_contract_function_ShortBlog_sendMessage_string_string_string">
 ShortBlog_sendMessage:
 	<input type='text' id='ShortBlog_sendMessage_string_string_string_message'>
 	<input type='text' id='ShortBlog_sendMessage_string_string_string_hash'>
@@ -158,53 +167,59 @@ ShortBlog_sendMessage:
 	<button onclick='ShortBlog_sendMessage_string_string_string()'>execute ShortBlog_sendMessage</button>
 	<div class="function_result" id="ShortBlog_sendMessage_string_string_string_res"></div>
   </div>
-  <div class="function_execution">
+  <div class="function_execution" id="ShortBlog_contract_function_ShortBlog_getMessageText_uint">
+ShortBlog_getMessageText:
+	<input type='text' id='ShortBlog_getMessageText_uint_id'>
+	<button onclick='ShortBlog_getMessageText_uint()'>execute ShortBlog_getMessageText</button>
+	<div class="function_result" id="ShortBlog_getMessageText_uint_res"></div>
+  </div>
+  <div class="function_execution" id="ShortBlog_contract_function_Owned_kill">
 ShortBlog_kill:
 	<button onclick='Owned_kill()'>execute ShortBlog_kill</button>
 	<div class="function_result" id="Owned_kill_res"></div>
   </div>
-  <div class="function_execution">
-ShortBlog_getMessage:
-	<input type='text' id='ShortBlog_getMessage_uint_id'>
-	<button onclick='ShortBlog_getMessage_uint()'>execute ShortBlog_getMessage</button>
-	<div class="function_result" id="ShortBlog_getMessage_uint_res"></div>
-  </div>
-  <div class="function_execution">
+  <div class="function_execution" id="ShortBlog_contract_function_ShortBlog_getMessageDate_uint">
 ShortBlog_getMessageDate:
 	<input type='text' id='ShortBlog_getMessageDate_uint_id'>
 	<button onclick='ShortBlog_getMessageDate_uint()'>execute ShortBlog_getMessageDate</button>
 	<div class="function_result" id="ShortBlog_getMessageDate_uint_res"></div>
   </div>
-  <div class="function_execution">
+  <div class="function_execution" id="ShortBlog_contract_function_ShortBlog_getMessageCount">
 ShortBlog_getMessageCount:
 	<button onclick='ShortBlog_getMessageCount()'>execute ShortBlog_getMessageCount</button>
 	<div class="function_result" id="ShortBlog_getMessageCount_res"></div>
   </div>
-  <div class="function_execution">
+  <div class="function_execution" id="ShortBlog_contract_function_ShortBlog_getMessageBlock_uint">
 ShortBlog_getMessageBlock:
 	<input type='text' id='ShortBlog_getMessageBlock_uint_id'>
 	<button onclick='ShortBlog_getMessageBlock_uint()'>execute ShortBlog_getMessageBlock</button>
 	<div class="function_result" id="ShortBlog_getMessageBlock_uint_res"></div>
   </div>
+  <div class="function_execution" id="ShortBlog_contract_function_ShortBlog_getBlogMessage_uint">
+ShortBlog_getBlogMessage:
+	<input type='text' id='ShortBlog_getBlogMessage_uint_id'>
+	<button onclick='ShortBlog_getBlogMessage_uint()'>execute ShortBlog_getBlogMessage</button>
+	<div class="function_result" id="ShortBlog_getBlogMessage_uint_res"></div>
+  </div>
 
 </div>
-<div class="contract">
+<!-- gui for BlogRegistry_contract -->
+<div class="contract" id="BlogRegistry_contract">
 BlogRegistry:
   <input type='text' id='BlogRegistry_address'> <button onclick='BlogRegistry_setAddress()'>change BlogRegistry Address</button>
-  <div class="contract_attributes"> attributes:
-    <div class="contract_attribute"> blogCount:
+  <div class="contract_attributes" id="BlogRegistry_contract_attributes"> attributes:
+    <div class="contract_attribute" id="BlogRegistry_contract_attribute_blogCount"> blogCount:
       <div class="contract_attribute_value" id="BlogRegistry_blogCount_value"> </div>
     </div>
     <button onclick='BlogRegistry_updateAttributes()'>update BlogRegistry attributes</button>
   </div>
-
-  <div class="function_execution">
+  <div class="function_execution" id="BlogRegistry_contract_function_BlogRegistry_registerBlog_string">
 BlogRegistry_registerBlog:
 	<input type='text' id='BlogRegistry_registerBlog_string_name'>
 	<button onclick='BlogRegistry_registerBlog_string()'>execute BlogRegistry_registerBlog</button>
 	<div class="function_result" id="BlogRegistry_registerBlog_string_res"></div>
   </div>
-  <div class="function_execution">
+  <div class="function_execution" id="BlogRegistry_contract_function_BlogRegistry_getShortBlog_string">
 BlogRegistry_getShortBlog:
 	<input type='text' id='BlogRegistry_getShortBlog_string_name'>
 	<button onclick='BlogRegistry_getShortBlog_string()'>execute BlogRegistry_getShortBlog</button>

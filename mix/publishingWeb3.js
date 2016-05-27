@@ -2,10 +2,23 @@
 var ShortBlogContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"messageCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"lastMessageDate","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[{"name":"","type":"uint"}],"name":"messages","outputs":[{"name":"","type":"Message"}],"type":"function"},
   {
-    "constant": true,
+    "constant": false,
+    "inputs": [],    
+    "name": "getOwner",
+    "outputs": [{"name": "result","type": "address"}],
+    "type": "function"
+  }
+,  {
+    "constant": false,
+    "inputs": [{"name": "newOwner","type": "address"}],    
+    "name": "changeOwner",
+    "outputs": [],
+    "type": "function"
+  }
+,  {
+    "constant": false,
     "inputs": [{"name": "message","type": "string"},{"name": "hash","type": "string"},{"name": "er","type": "string"}],    
     "name": "sendMessage",
     "outputs": [],
@@ -14,8 +27,15 @@ var ShortBlogContract = web3.eth.contract([
 ,  {
     "constant": true,
     "inputs": [{"name": "id","type": "uint"}],    
-    "name": "getMessage",
+    "name": "getMessageText",
     "outputs": [{"name": "","type": "string"}],
+    "type": "function"
+  }
+,  {
+    "constant": false,
+    "inputs": [],    
+    "name": "kill",
+    "outputs": [],
     "type": "function"
   }
 ,  {
@@ -39,6 +59,13 @@ var ShortBlogContract = web3.eth.contract([
     "outputs": [{"name": "","type": "uint"}],
     "type": "function"
   }
+,  {
+    "constant": true,
+    "inputs": [{"name": "id","type": "uint"}],    
+    "name": "getBlogMessage",
+    "outputs": [{"name": "_message","type": "string"},{"name": "_blockNumber","type": "uint"},{"name": "_sender","type": "address"},{"name": "_externalResource","type": "string"}],
+    "type": "function"
+  }
  ,
   {
     "constant": true,
@@ -54,7 +81,7 @@ var BlogRegistryContract = web3.eth.contract([
 {"constant":true,"inputs":[{"name":"","type":"uint"}],"name":"blogs","outputs":[{"name":"","type":"ShortBlog"}],"type":"function"},
 {"constant":true,"inputs":[{"name":"","type":"bytes32"}],"name":"names","outputs":[{"name":"","type":"uint"}],"type":"function"},
   {
-    "constant": true,
+    "constant": false,
     "inputs": [{"name": "name","type": "string"}],    
     "name": "registerBlog",
     "outputs": [{"name": "","type": "ShortBlog"}],

@@ -5,35 +5,35 @@ var BallotContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"ballotName","outputs":[{"name":"","type":"string"}],"type":"function"},
 {"constant":true,"inputs":[{"name":"","type":"invalid"}],"name":"voters","outputs":[{"name":"","type":"Voter"}],"type":"function"},
   {
-    "constant": true,
+    "constant": false,
     "inputs": [{"name": "name","type": "string"},{"name": "proposalNames","type": "bytes32"}],    
     "name": "Ballot",
     "outputs": [],
     "type": "function"
   }
 ,  {
-    "constant": true,
+    "constant": false,
     "inputs": [{"name": "voter","type": "address"}],    
     "name": "giveRightToVote",
     "outputs": [],
     "type": "function"
   }
 ,  {
-    "constant": true,
+    "constant": false,
     "inputs": [{"name": "to","type": "address"}],    
     "name": "delegateTo",
     "outputs": [],
     "type": "function"
   }
 ,  {
-    "constant": true,
+    "constant": false,
     "inputs": [{"name": "proposal","type": "uint"}],    
     "name": "voteFor",
     "outputs": [],
     "type": "function"
   }
 ,  {
-    "constant": true,
+    "constant": false,
     "inputs": [],    
     "name": "winningProposal",
     "outputs": [{"name": "winningProposal","type": "uint"}],

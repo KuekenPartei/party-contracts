@@ -5,7 +5,9 @@ Contains the member contracts.
 
 
 * [MemberRegistry](#contract-memberregistry)
+
 * [MemberAware](#contract-memberaware)
+
 
 ## contract: MemberRegistry
 
@@ -16,7 +18,8 @@ Contains the member contracts.
 	function isActiveMember(address _memberAdress) public   constant returns (bool )
 	function changeMemberAddress(uint id,address _newMemberAddress) public  onlyManager() 
 
-inherites: [Manageable](#contract-manageable)
+inherites: [Manageable](basics#contract-manageable)
+
 
 Holds the members and their states.
 Also the contract to manage these member states.

@@ -19,9 +19,6 @@ function Ballot_updateAttributes() {
 var chairperson_res = Ballot_instance.chairperson();
 	if(chairperson_res!=null)
 		document.getElementById('Ballot_chairperson_value').innerText = chairperson_res;
-var voters_res = Ballot_instance.voters();
-	if(voters_res!=null)
-		document.getElementById('Ballot_voters_value').innerText = voters_res;
 var proposals_res = Ballot_instance.proposals();
 	if(proposals_res!=null)
 		document.getElementById('Ballot_proposals_value').innerText = proposals_res;
@@ -59,6 +56,7 @@ function Ballot_winningProposal() {
 }
 
 //delegated calls
+
 </script>
 
 <!-- start of style -->
@@ -75,51 +73,48 @@ function Ballot_winningProposal() {
 </head>
 <body bgcolor='#E6E6FA'>
 	<h1>Sample Interface for voting</h1>
-<div class="contract">
+<!-- gui for Ballot_contract -->
+<div class="contract" id="Ballot_contract">
 Ballot:
   <input type='text' id='Ballot_address'> <button onclick='Ballot_setAddress()'>change Ballot Address</button>
-  <div class="contract_attributes"> attributes:
-    <div class="contract_attribute"> chairperson:
+  <div class="contract_attributes" id="Ballot_contract_attributes"> attributes:
+    <div class="contract_attribute" id="Ballot_contract_attribute_chairperson"> chairperson:
       <div class="contract_attribute_value" id="Ballot_chairperson_value"> </div>
     </div>
-    <div class="contract_attribute"> voters:
-      <div class="contract_attribute_value" id="Ballot_voters_value"> </div>
-    </div>
-    <div class="contract_attribute"> proposals:
+    <div class="contract_attribute" id="Ballot_contract_attribute_proposals"> proposals:
       <div class="contract_attribute_value" id="Ballot_proposals_value"> </div>
     </div>
-    <div class="contract_attribute"> ballotName:
+    <div class="contract_attribute" id="Ballot_contract_attribute_ballotName"> ballotName:
       <div class="contract_attribute_value" id="Ballot_ballotName_value"> </div>
     </div>
     <button onclick='Ballot_updateAttributes()'>update Ballot attributes</button>
   </div>
-
-  <div class="function_execution">
+  <div class="function_execution" id="Ballot_contract_function_Ballot_Ballot_string_bytes32">
 Ballot_Ballot:
 	<input type='text' id='Ballot_Ballot_string_bytes32_name'>
 	<input type='text' id='Ballot_Ballot_string_bytes32_proposalNames'>
 	<button onclick='Ballot_Ballot_string_bytes32()'>execute Ballot_Ballot</button>
 	<div class="function_result" id="Ballot_Ballot_string_bytes32_res"></div>
   </div>
-  <div class="function_execution">
+  <div class="function_execution" id="Ballot_contract_function_Ballot_giveRightToVote_address">
 Ballot_giveRightToVote:
 	<input type='text' id='Ballot_giveRightToVote_address_voter'>
 	<button onclick='Ballot_giveRightToVote_address()'>execute Ballot_giveRightToVote</button>
 	<div class="function_result" id="Ballot_giveRightToVote_address_res"></div>
   </div>
-  <div class="function_execution">
+  <div class="function_execution" id="Ballot_contract_function_Ballot_delegateTo_address">
 Ballot_delegateTo:
 	<input type='text' id='Ballot_delegateTo_address_to'>
 	<button onclick='Ballot_delegateTo_address()'>execute Ballot_delegateTo</button>
 	<div class="function_result" id="Ballot_delegateTo_address_res"></div>
   </div>
-  <div class="function_execution">
+  <div class="function_execution" id="Ballot_contract_function_Ballot_voteFor_uint">
 Ballot_voteFor:
 	<input type='text' id='Ballot_voteFor_uint_proposal'>
 	<button onclick='Ballot_voteFor_uint()'>execute Ballot_voteFor</button>
 	<div class="function_result" id="Ballot_voteFor_uint_res"></div>
   </div>
-  <div class="function_execution">
+  <div class="function_execution" id="Ballot_contract_function_Ballot_winningProposal">
 Ballot_winningProposal:
 	<button onclick='Ballot_winningProposal()'>execute Ballot_winningProposal</button>
 	<div class="function_result" id="Ballot_winningProposal_res"></div>

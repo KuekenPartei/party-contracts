@@ -1,15 +1,21 @@
 <!doctype>
 <html>
 <head>
+	
 <script type='text/javascript' src="partyWeb3.js">
 </script>
 <script type='text/javascript' src="membersWeb3.js">
 </script>
 <script type='text/javascript' src="publishingWeb3.js">
 </script>
+<script type='text/javascript' src="package/compilation/party.sol.js">
+</script>
+<script type='text/javascript' src="package/compilation/members.sol.js">
+</script>
 <!-- javascript for KUEKeNParty -->
 <script type='text/javascript'>
 	// script for KUEKeNParty
+	var KUEKeNPartyContract = web3.eth.contract(KUEKeNParty.abi);
 	var KUEKeNParty_instance = undefined;
 
 	// set address
@@ -574,9 +580,11 @@
 
 	<script type='text/javascript'>
 		if (contracts['KUEKeNParty'] != undefined) {
-			KUEKeNParty_instance = contracts['KUEKeNParty'].contract;
-			document.getElementById('KUEKeNParty_address').value = KUEKeNParty_instance.address;
-			KUEKeNParty_updateAttributes();
+			//KUEKeNParty_instance = contracts['KUEKeNParty'].contract;
+			document.getElementById('KUEKeNParty_address').value = contracts['KUEKeNParty'].contract.address;
+			KUEKeNParty_instance = KUEKeNPartyContract.at(contracts['KUEKeNParty'].contract.address)
+			KUEKeNParty_updateAttributes(); 
+			console.log(FoundationConference_instance.abi);
 		}
 		if (contracts['FoundationConference'] != undefined) {
 			FoundationConference_instance = contracts['FoundationConference'].contract;

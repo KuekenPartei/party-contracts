@@ -2,23 +2,30 @@
 
 
 * [Organ](#contract-organ)
+
 * [Party](#contract-party)
+
 * [KUEKeNParty](#contract-kuekenparty)
+
 * [FoundationConference](#contract-foundationconference)
+
 
 ## contract: Organ
 
     overview:
 	abstract function publishMessage(string message,string hash,string er) public  
-	abstract function getMessage(uint id) public   constant returns (string _message,uint date,address _sender)
+	abstract function getMessage(uint id) public   constant returns (string _message,uint _blockNumber,address _sender,string _externalResource)
 	function changeMember(uint _id,address _address) public  onlyManager() 
 	function createFunction(string _functionName,string _constittiutionHash) public  onlyManager() 
 	function initalizeOrgan() public  
 	function publishFunctionMessage(uint id,string message,string hash,string er) public  
 	function createBallot(string name,bytes32[] proposalNames) public  returns (uint )
-	function getFunctionAddress(uint id) public   constant returns (address )
+	function getFunctionBlogAddress(uint id) public   constant returns (address )
+	function getLastBallot() public   constant returns (address )
 
-inherites: [Manageable](#contract-manageable),[MemberAware](#contract-memberaware)
+inherites: [MemberAware](members#contract-memberaware)
+,[Manageable](basics#contract-manageable)
+
 
 An organ is part of the party, defined in the constitution.
 It is populated by functions party members.
@@ -30,6 +37,7 @@ It is populated by functions party members.
 OrganFunction
 The function definition.
 A function is defined in the constitution of the party.
+Normaly it is associated with a party member.
 
 
 
@@ -90,6 +98,8 @@ _constittiutionHash|string|in|
 
 #### Organ.publishFunctionMessage(uint id,string message,string hash,string er) public  
 
+Publish a message at a function blog.
+
 
 name|type|direction|doc
 ----|----|----|----
@@ -100,6 +110,8 @@ er|string|in|
 
 #### Organ.createBallot(string name,bytes32[] proposalNames) public  returns (uint )
 
+Creates a new ballot for this organ.
+
 
 name|type|direction|doc
 ----|----|----|----
@@ -107,12 +119,21 @@ name|string|in|
 proposalNames|bytes32|in|
 |uint|return|
 
-#### Organ.getFunctionAddress(uint id) public   constant returns (address )
+#### Organ.getFunctionBlogAddress(uint id) public   constant returns (address )
+
+Get the address of the organ function blog.
 
 
 name|type|direction|doc
 ----|----|----|----
 id|uint|in|The function id.
+|address|return|
+
+#### Organ.getLastBallot() public   constant returns (address )
+
+
+name|type|direction|doc
+----|----|----|----
 |address|return|
 
 
@@ -122,7 +143,8 @@ id|uint|in|The function id.
 	function Party() public  
 	function createOrgan(string organName) public  
 
-inherites: [Manageable](#contract-manageable)
+inherites: [Manageable](basics#contract-manageable)
+
 
 A basic party contract.
 
@@ -159,6 +181,7 @@ organName|string|in|
 
 inherites: [Party](#contract-party)
 
+
 An actual party.
 The KUEKen party.
 
@@ -182,11 +205,29 @@ br|address|in|
 ## contract: FoundationConference
 
     overview:
+	function accreditationMember(address _address) public  
 
 inherites: [Organ](#contract-organ)
 
 
+Will found the party.
+In the first and only session.
 
+
+
+
+#### FoundationConference properties
+
+name|type|visiblity|delegate|doc
+----|----|----|----|----
+accreditation|address|public||
 -
+
+#### FoundationConference.accreditationMember(address _address) public  
+
+
+name|type|direction|doc
+----|----|----|----
+_address|address|in|
 
 

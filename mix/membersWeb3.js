@@ -6,14 +6,21 @@ var MemberRegistryContract = web3.eth.contract([
 {"constant":true,"inputs":[{"name":"","type":"address"}],"name":"memberAddress","outputs":[{"name":"","type":"Member"}],"type":"function"},
 {"constant":true,"inputs":[{"name":"","type":"address"}],"name":"managers","outputs":[{"name":"","type":"bool"}],"type":"function"},
   {
-    "constant": true,
+    "constant": false,
     "inputs": [{"name": "name","type": "string"},{"name": "_memberAddress","type": "address"}],    
     "name": "addMember",
     "outputs": [],
     "type": "function"
   }
 ,  {
-    "constant": true,
+    "constant": false,
+    "inputs": [{"name": "_newManagerAddress","type": "address"}],    
+    "name": "addManager",
+    "outputs": [],
+    "type": "function"
+  }
+,  {
+    "constant": false,
     "inputs": [{"name": "id","type": "uint"}],    
     "name": "unregisterMember",
     "outputs": [],
@@ -27,6 +34,13 @@ var MemberRegistryContract = web3.eth.contract([
     "type": "function"
   }
 ,  {
+    "constant": false,
+    "inputs": [{"name": "_managerAddress","type": "address"}],    
+    "name": "removeManager",
+    "outputs": [],
+    "type": "function"
+  }
+,  {
     "constant": true,
     "inputs": [{"name": "_memberAdress","type": "address"}],    
     "name": "isActiveMember",
@@ -34,7 +48,7 @@ var MemberRegistryContract = web3.eth.contract([
     "type": "function"
   }
 ,  {
-    "constant": true,
+    "constant": false,
     "inputs": [{"name": "id","type": "uint"},{"name": "_newMemberAddress","type": "address"}],    
     "name": "changeMemberAddress",
     "outputs": [],
@@ -45,13 +59,6 @@ var MemberRegistryContract = web3.eth.contract([
 
 var MemberAwareContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"memberRegistry","outputs":[{"name":"","type":"MemberRegistry"}],"type":"function"},
-  {
-    "constant": true,
-    "inputs": [{"name": "_address","type": "address"}],    
-    "name": "isMember",
-    "outputs": [{"name": "","type": "bool"}],
-    "type": "function"
-  }
  
 ] );   
 

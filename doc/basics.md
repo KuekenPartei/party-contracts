@@ -4,7 +4,9 @@ Collection of basic functionalities.
 
 
 * [Owned](#contract-owned)
+
 * [Manageable](#contract-manageable)
+
 
 ## contract: Owned
 

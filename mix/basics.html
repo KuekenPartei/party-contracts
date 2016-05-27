@@ -35,6 +35,7 @@ function Owned_kill() {
 }
 
 //delegated calls
+
 </script>
 <!-- javascript for Manageable -->
 <script type='text/javascript'>
@@ -69,6 +70,7 @@ function Manageable_removeManager_address() {
 }
 
 //delegated calls
+
 </script>
 
 <!-- start of style -->
@@ -85,50 +87,45 @@ function Manageable_removeManager_address() {
 </head>
 <body bgcolor='#E6E6FA'>
 	<h1>Sample Interface for basics</h1>
-<div class="contract">
+<!-- gui for Owned_contract -->
+<div class="contract" id="Owned_contract">
 Owned:
   <input type='text' id='Owned_address'> <button onclick='Owned_setAddress()'>change Owned Address</button>
-  <div class="contract_attributes"> attributes:
+  <div class="contract_attributes" id="Owned_contract_attributes"> attributes:
     <button onclick='Owned_updateAttributes()'>update Owned attributes</button>
   </div>
-
-  <div class="function_execution">
+  <div class="function_execution" id="Owned_contract_function_Owned_getOwner">
 Owned_getOwner:
 	<button onclick='Owned_getOwner()'>execute Owned_getOwner</button>
 	<div class="function_result" id="Owned_getOwner_res"></div>
   </div>
-  <div class="function_execution">
+  <div class="function_execution" id="Owned_contract_function_Owned_changeOwner_address">
 Owned_changeOwner:
 	<input type='text' id='Owned_changeOwner_address_newOwner'>
 	<button onclick='Owned_changeOwner_address()'>execute Owned_changeOwner</button>
 	<div class="function_result" id="Owned_changeOwner_address_res"></div>
   </div>
-  <div class="function_execution">
+  <div class="function_execution" id="Owned_contract_function_Owned_kill">
 Owned_kill:
 	<button onclick='Owned_kill()'>execute Owned_kill</button>
 	<div class="function_result" id="Owned_kill_res"></div>
   </div>
 
 </div>
-<div class="contract">
+<!-- gui for Manageable_contract -->
+<div class="contract" id="Manageable_contract">
 Manageable:
   <input type='text' id='Manageable_address'> <button onclick='Manageable_setAddress()'>change Manageable Address</button>
-  <div class="contract_attributes"> attributes:
+  <div class="contract_attributes" id="Manageable_contract_attributes"> attributes:
     <button onclick='Manageable_updateAttributes()'>update Manageable attributes</button>
   </div>
-
-  <div class="function_execution">
-Manageable_canAccess:
-	<button onclick='Manageable_canAccess()'>execute Manageable_canAccess</button>
-	<div class="function_result" id="Manageable_canAccess_res"></div>
-  </div>
-  <div class="function_execution">
+  <div class="function_execution" id="Manageable_contract_function_Manageable_addManager_address">
 Manageable_addManager:
 	<input type='text' id='Manageable_addManager_address__newManagerAddress'>
 	<button onclick='Manageable_addManager_address()'>execute Manageable_addManager</button>
 	<div class="function_result" id="Manageable_addManager_address_res"></div>
   </div>
-  <div class="function_execution">
+  <div class="function_execution" id="Manageable_contract_function_Manageable_removeManager_address">
 Manageable_removeManager:
 	<input type='text' id='Manageable_removeManager_address__managerAddress'>
 	<button onclick='Manageable_removeManager_address()'>execute Manageable_removeManager</button>

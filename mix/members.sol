@@ -83,7 +83,6 @@ contract MemberRegistry is Manageable {
 	*  -
 	*/
 	function getMemberCount() public   constant returns (uint ) {
-	
 		//Start of user code MemberRegistry.function.getMemberCount
 		//TODO: implement
 		//End of user code

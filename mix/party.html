@@ -34,14 +34,17 @@ var isActive_res = Organ_instance.isActive();
 var organBlog_res = Organ_instance.organBlog();
 	if(organBlog_res!=null)
 		document.getElementById('Organ_organBlog_value').innerText = organBlog_res;
-var ballots_res = Organ_instance.ballots();
-	if(ballots_res!=null)
-		document.getElementById('Organ_ballots_value').innerText = ballots_res;
 var ballotCount_res = Organ_instance.ballotCount();
 	if(ballotCount_res!=null)
 		document.getElementById('Organ_ballotCount_value').innerText = ballotCount_res;
 }
 //call functions
+//function Organ_canAccess
+function Manageable_canAccess() {
+	var res = Organ_instance.canAccess();
+	if(res!=null)
+		document.getElementById('Manageable_canAccess_res').innerText = res;
+}
 //function Organ_changeMember
 function Organ_changeMember_uint_address() {
 	var param__id = document.getElementById('Organ_changeMember_uint_address__id').value;
@@ -54,12 +57,6 @@ function MemberAware_isMember_address() {
 	var res = Organ_instance.isMember(param__address);
 	if(res!=null)
 		document.getElementById('MemberAware_isMember_address_res').innerText = res;
-}
-//function Organ_canAccess
-function Manageable_canAccess() {
-	var res = Organ_instance.canAccess();
-	if(res!=null)
-		document.getElementById('Manageable_canAccess_res').innerText = res;
 }
 //function Organ_addManager
 function Manageable_addManager_address() {
@@ -97,15 +94,22 @@ function Organ_createBallot_string_bytes32() {
 	if(res!=null)
 		document.getElementById('Organ_createBallot_string_bytes32_res').innerText = res;
 }
-//function Organ_getFunctionAddress
-function Organ_getFunctionAddress_uint() {
-	var param_id = document.getElementById('Organ_getFunctionAddress_uint_id').value;
-	var res = Organ_instance.getFunctionAddress(param_id);
+//function Organ_getFunctionBlogAddress
+function Organ_getFunctionBlogAddress_uint() {
+	var param_id = document.getElementById('Organ_getFunctionBlogAddress_uint_id').value;
+	var res = Organ_instance.getFunctionBlogAddress(param_id);
 	if(res!=null)
-		document.getElementById('Organ_getFunctionAddress_uint_res').innerText = res;
+		document.getElementById('Organ_getFunctionBlogAddress_uint_res').innerText = res;
+}
+//function Organ_getLastBallot
+function Organ_getLastBallot() {
+	var res = Organ_instance.getLastBallot();
+	if(res!=null)
+		document.getElementById('Organ_getLastBallot_res').innerText = res;
 }
 
 //delegated calls
+
 </script>
 <!-- javascript for Party -->
 <script type='text/javascript'>
@@ -120,9 +124,6 @@ function Party_setAddress() {
 
 function Party_updateAttributes() {
 // update attributes
-var organs_res = Party_instance.organs();
-	if(organs_res!=null)
-		document.getElementById('Party_organs_value').innerText = organs_res;
 var memberRegistry_res = Party_instance.memberRegistry();
 	if(memberRegistry_res!=null)
 		document.getElementById('Party_memberRegistry_value').innerText = memberRegistry_res;
@@ -152,51 +153,51 @@ function Manageable_addManager_address() {
 	var param__newManagerAddress = document.getElementById('Manageable_addManager_address__newManagerAddress').value;
 	var res = Party_instance.addManager(param__newManagerAddress);
 }
-//function Party_removeManager
-function Manageable_removeManager_address() {
-	var param__managerAddress = document.getElementById('Manageable_removeManager_address__managerAddress').value;
-	var res = Party_instance.removeManager(param__managerAddress);
-}
 //function Party_createOrgan
 function Party_createOrgan_string() {
 	var param_organName = document.getElementById('Party_createOrgan_string_organName').value;
 	var res = Party_instance.createOrgan(param_organName);
 }
+//function Party_removeManager
+function Manageable_removeManager_address() {
+	var param__managerAddress = document.getElementById('Manageable_removeManager_address__managerAddress').value;
+	var res = Party_instance.removeManager(param__managerAddress);
+}
 
 //delegated calls
 //call functions
-//function delegate_MemberRegistry_canAccess
-function delegate_Manageable_canAccess() {
-	var res = MemberRegistry_instance.canAccess();
-	if(res!=null)
-		document.getElementById('delegate_Manageable_canAccess_res').innerText = res;
-}
 //function delegate_MemberRegistry_addMember
 function delegate_MemberRegistry_addMember_string_address() {
 	var param_name = document.getElementById('delegate_MemberRegistry_addMember_string_address_name').value;
 	var param__memberAddress = document.getElementById('delegate_MemberRegistry_addMember_string_address__memberAddress').value;
 	var res = MemberRegistry_instance.addMember(param_name, param__memberAddress);
 }
-//function delegate_MemberRegistry_unregisterMember
-function delegate_MemberRegistry_unregisterMember_uint() {
-	var param_id = document.getElementById('delegate_MemberRegistry_unregisterMember_uint_id').value;
-	var res = MemberRegistry_instance.unregisterMember(param_id);
+//function delegate_MemberRegistry_canAccess
+function delegate_Manageable_canAccess() {
+	var res = MemberRegistry_instance.canAccess();
+	if(res!=null)
+		document.getElementById('delegate_Manageable_canAccess_res').innerText = res;
 }
 //function delegate_MemberRegistry_addManager
 function delegate_Manageable_addManager_address() {
 	var param__newManagerAddress = document.getElementById('delegate_Manageable_addManager_address__newManagerAddress').value;
 	var res = MemberRegistry_instance.addManager(param__newManagerAddress);
 }
-//function delegate_MemberRegistry_removeManager
-function delegate_Manageable_removeManager_address() {
-	var param__managerAddress = document.getElementById('delegate_Manageable_removeManager_address__managerAddress').value;
-	var res = MemberRegistry_instance.removeManager(param__managerAddress);
+//function delegate_MemberRegistry_unregisterMember
+function delegate_MemberRegistry_unregisterMember_uint() {
+	var param_id = document.getElementById('delegate_MemberRegistry_unregisterMember_uint_id').value;
+	var res = MemberRegistry_instance.unregisterMember(param_id);
 }
 //function delegate_MemberRegistry_getMemberCount
 function delegate_MemberRegistry_getMemberCount() {
 	var res = MemberRegistry_instance.getMemberCount();
 	if(res!=null)
 		document.getElementById('delegate_MemberRegistry_getMemberCount_res').innerText = res;
+}
+//function delegate_MemberRegistry_removeManager
+function delegate_Manageable_removeManager_address() {
+	var param__managerAddress = document.getElementById('delegate_Manageable_removeManager_address__managerAddress').value;
+	var res = MemberRegistry_instance.removeManager(param__managerAddress);
 }
 //function delegate_MemberRegistry_isActiveMember
 function delegate_MemberRegistry_isActiveMember_address() {
@@ -212,6 +213,7 @@ function delegate_MemberRegistry_changeMemberAddress_uint_address() {
 	var res = MemberRegistry_instance.changeMemberAddress(param_id, param__newMemberAddress);
 }
 
+
 </script>
 <!-- javascript for KUEKeNParty -->
 <script type='text/javascript'>
@@ -226,9 +228,6 @@ function KUEKeNParty_setAddress() {
 
 function KUEKeNParty_updateAttributes() {
 // update attributes
-var organs_res = KUEKeNParty_instance.organs();
-	if(organs_res!=null)
-		document.getElementById('KUEKeNParty_organs_value').innerText = organs_res;
 var memberRegistry_res = KUEKeNParty_instance.memberRegistry();
 	if(memberRegistry_res!=null)
 		document.getElementById('KUEKeNParty_memberRegistry_value').innerText = memberRegistry_res;
@@ -243,6 +242,10 @@ var blogregistry_res = KUEKeNParty_instance.blogregistry();
 		document.getElementById('KUEKeNParty_blogregistry_value').innerText = blogregistry_res;
 }
 //call functions
+//function KUEKeNParty_KUEKeNParty
+function KUEKeNParty_KUEKeNParty() {
+	var res = KUEKeNParty_instance.KUEKeNParty();
+}
 //function KUEKeNParty_Party
 function Party_Party() {
 	var res = KUEKeNParty_instance.Party();
@@ -253,9 +256,10 @@ function Manageable_canAccess() {
 	if(res!=null)
 		document.getElementById('Manageable_canAccess_res').innerText = res;
 }
-//function KUEKeNParty_KUEKeNParty
-function KUEKeNParty_KUEKeNParty() {
-	var res = KUEKeNParty_instance.KUEKeNParty();
+//function KUEKeNParty_addManager
+function Manageable_addManager_address() {
+	var param__newManagerAddress = document.getElementById('Manageable_addManager_address__newManagerAddress').value;
+	var res = KUEKeNParty_instance.addManager(param__newManagerAddress);
 }
 //function KUEKeNParty_boostrapParty
 function KUEKeNParty_boostrapParty_address_address() {
@@ -263,23 +267,19 @@ function KUEKeNParty_boostrapParty_address_address() {
 	var param_br = document.getElementById('KUEKeNParty_boostrapParty_address_address_br').value;
 	var res = KUEKeNParty_instance.boostrapParty(param_fc, param_br);
 }
-//function KUEKeNParty_addManager
-function Manageable_addManager_address() {
-	var param__newManagerAddress = document.getElementById('Manageable_addManager_address__newManagerAddress').value;
-	var res = KUEKeNParty_instance.addManager(param__newManagerAddress);
+//function KUEKeNParty_createOrgan
+function Party_createOrgan_string() {
+	var param_organName = document.getElementById('Party_createOrgan_string_organName').value;
+	var res = KUEKeNParty_instance.createOrgan(param_organName);
 }
 //function KUEKeNParty_removeManager
 function Manageable_removeManager_address() {
 	var param__managerAddress = document.getElementById('Manageable_removeManager_address__managerAddress').value;
 	var res = KUEKeNParty_instance.removeManager(param__managerAddress);
 }
-//function KUEKeNParty_createOrgan
-function Party_createOrgan_string() {
-	var param_organName = document.getElementById('Party_createOrgan_string_organName').value;
-	var res = KUEKeNParty_instance.createOrgan(param_organName);
-}
 
 //delegated calls
+
 </script>
 <!-- javascript for FoundationConference -->
 <script type='text/javascript'>
@@ -294,6 +294,9 @@ function FoundationConference_setAddress() {
 
 function FoundationConference_updateAttributes() {
 // update attributes
+var accreditation_res = FoundationConference_instance.accreditation();
+	if(accreditation_res!=null)
+		document.getElementById('FoundationConference_accreditation_value').innerText = accreditation_res;
 var memberRegistry_res = FoundationConference_instance.memberRegistry();
 	if(memberRegistry_res!=null)
 		document.getElementById('FoundationConference_memberRegistry_value').innerText = memberRegistry_res;
@@ -312,14 +315,22 @@ var isActive_res = FoundationConference_instance.isActive();
 var organBlog_res = FoundationConference_instance.organBlog();
 	if(organBlog_res!=null)
 		document.getElementById('FoundationConference_organBlog_value').innerText = organBlog_res;
-var ballots_res = FoundationConference_instance.ballots();
-	if(ballots_res!=null)
-		document.getElementById('FoundationConference_ballots_value').innerText = ballots_res;
 var ballotCount_res = FoundationConference_instance.ballotCount();
 	if(ballotCount_res!=null)
 		document.getElementById('FoundationConference_ballotCount_value').innerText = ballotCount_res;
 }
 //call functions
+//function FoundationConference_accreditationMember
+function FoundationConference_accreditationMember_address() {
+	var param__address = document.getElementById('FoundationConference_accreditationMember_address__address').value;
+	var res = FoundationConference_instance.accreditationMember(param__address);
+}
+//function FoundationConference_canAccess
+function Manageable_canAccess() {
+	var res = FoundationConference_instance.canAccess();
+	if(res!=null)
+		document.getElementById('Manageable_canAccess_res').innerText = res;
+}
 //function FoundationConference_changeMember
 function Organ_changeMember_uint_address() {
 	var param__id = document.getElementById('Organ_changeMember_uint_address__id').value;
@@ -332,12 +343,6 @@ function MemberAware_isMember_address() {
 	var res = FoundationConference_instance.isMember(param__address);
 	if(res!=null)
 		document.getElementById('MemberAware_isMember_address_res').innerText = res;
-}
-//function FoundationConference_canAccess
-function Manageable_canAccess() {
-	var res = FoundationConference_instance.canAccess();
-	if(res!=null)
-		document.getElementById('Manageable_canAccess_res').innerText = res;
 }
 //function FoundationConference_addManager
 function Manageable_addManager_address() {
@@ -375,15 +380,22 @@ function Organ_createBallot_string_bytes32() {
 	if(res!=null)
 		document.getElementById('Organ_createBallot_string_bytes32_res').innerText = res;
 }
-//function FoundationConference_getFunctionAddress
-function Organ_getFunctionAddress_uint() {
-	var param_id = document.getElementById('Organ_getFunctionAddress_uint_id').value;
-	var res = FoundationConference_instance.getFunctionAddress(param_id);
+//function FoundationConference_getFunctionBlogAddress
+function Organ_getFunctionBlogAddress_uint() {
+	var param_id = document.getElementById('Organ_getFunctionBlogAddress_uint_id').value;
+	var res = FoundationConference_instance.getFunctionBlogAddress(param_id);
 	if(res!=null)
-		document.getElementById('Organ_getFunctionAddress_uint_res').innerText = res;
+		document.getElementById('Organ_getFunctionBlogAddress_uint_res').innerText = res;
+}
+//function FoundationConference_getLastBallot
+function Organ_getLastBallot() {
+	var res = FoundationConference_instance.getLastBallot();
+	if(res!=null)
+		document.getElementById('Organ_getLastBallot_res').innerText = res;
 }
 
 //delegated calls
+
 </script>
 
 <!-- start of style -->
@@ -400,80 +412,66 @@ function Organ_getFunctionAddress_uint() {
 </head>
 <body bgcolor='#E6E6FA'>
 	<h1>Sample Interface for party</h1>
-<div class="contract">
+<!-- gui for Organ_contract -->
+<div class="contract" id="Organ_contract">
 Organ:
   <input type='text' id='Organ_address'> <button onclick='Organ_setAddress()'>change Organ Address</button>
-  <div class="contract_attributes"> attributes:
-    <div class="contract_attribute"> memberRegistry:
+  <div class="contract_attributes" id="Organ_contract_attributes"> attributes:
+    <div class="contract_attribute" id="Organ_contract_attribute_memberRegistry"> memberRegistry:
       <div class="contract_attribute_value" id="Organ_memberRegistry_value"> </div>
     </div>
-    <div class="contract_attribute"> organName:
+    <div class="contract_attribute" id="Organ_contract_attribute_organName"> organName:
       <div class="contract_attribute_value" id="Organ_organName_value"> </div>
     </div>
-    <div class="contract_attribute"> lastFunctionId:
+    <div class="contract_attribute" id="Organ_contract_attribute_lastFunctionId"> lastFunctionId:
       <div class="contract_attribute_value" id="Organ_lastFunctionId_value"> </div>
     </div>
-    <div class="contract_attribute"> blogRegistry:
+    <div class="contract_attribute" id="Organ_contract_attribute_blogRegistry"> blogRegistry:
       <div class="contract_attribute_value" id="Organ_blogRegistry_value"> </div>
     </div>
-    <div class="contract_attribute"> isActive:
+    <div class="contract_attribute" id="Organ_contract_attribute_isActive"> isActive:
       <div class="contract_attribute_value" id="Organ_isActive_value"> </div>
     </div>
-    <div class="contract_attribute"> organBlog:
+    <div class="contract_attribute" id="Organ_contract_attribute_organBlog"> organBlog:
       <div class="contract_attribute_value" id="Organ_organBlog_value"> </div>
     </div>
-    <div class="contract_attribute"> ballots:
-      <div class="contract_attribute_value" id="Organ_ballots_value"> </div>
-    </div>
-    <div class="contract_attribute"> ballotCount:
+    <div class="contract_attribute" id="Organ_contract_attribute_ballotCount"> ballotCount:
       <div class="contract_attribute_value" id="Organ_ballotCount_value"> </div>
     </div>
     <button onclick='Organ_updateAttributes()'>update Organ attributes</button>
   </div>
-
-  <div class="function_execution">
+  <div class="function_execution" id="Organ_contract_function_Organ_changeMember_uint_address">
 Organ_changeMember:
 	<input type='text' id='Organ_changeMember_uint_address__id'>
 	<input type='text' id='Organ_changeMember_uint_address__address'>
 	<button onclick='Organ_changeMember_uint_address()'>execute Organ_changeMember</button>
 	<div class="function_result" id="Organ_changeMember_uint_address_res"></div>
   </div>
-  <div class="function_execution">
-Organ_isMember:
-	<input type='text' id='MemberAware_isMember_address__address'>
-	<button onclick='MemberAware_isMember_address()'>execute Organ_isMember</button>
-	<div class="function_result" id="MemberAware_isMember_address_res"></div>
-  </div>
-  <div class="function_execution">
-Organ_canAccess:
-	<button onclick='Manageable_canAccess()'>execute Organ_canAccess</button>
-	<div class="function_result" id="Manageable_canAccess_res"></div>
-  </div>
-  <div class="function_execution">
+  <div class="function_execution" id="Organ_contract_function_Manageable_addManager_address">
 Organ_addManager:
 	<input type='text' id='Manageable_addManager_address__newManagerAddress'>
 	<button onclick='Manageable_addManager_address()'>execute Organ_addManager</button>
 	<div class="function_result" id="Manageable_addManager_address_res"></div>
   </div>
-  <div class="function_execution">
+  <div class="function_execution" id="Organ_contract_function_Organ_createFunction_string_string">
 Organ_createFunction:
 	<input type='text' id='Organ_createFunction_string_string__functionName'>
 	<input type='text' id='Organ_createFunction_string_string__constittiutionHash'>
 	<button onclick='Organ_createFunction_string_string()'>execute Organ_createFunction</button>
 	<div class="function_result" id="Organ_createFunction_string_string_res"></div>
   </div>
-  <div class="function_execution">
+  <div class="function_execution" id="Organ_contract_function_Manageable_removeManager_address">
 Organ_removeManager:
 	<input type='text' id='Manageable_removeManager_address__managerAddress'>
 	<button onclick='Manageable_removeManager_address()'>execute Organ_removeManager</button>
 	<div class="function_result" id="Manageable_removeManager_address_res"></div>
   </div>
-  <div class="function_execution">
+  <div class="function_execution" id="Organ_contract_function_Organ_initalizeOrgan">
 Organ_initalizeOrgan:
 	<button onclick='Organ_initalizeOrgan()'>execute Organ_initalizeOrgan</button>
 	<div class="function_result" id="Organ_initalizeOrgan_res"></div>
   </div>
-  <div class="function_execution">
+  <div class="function_execution" id="Organ_contract_function_Organ_publishFunctionMessage_uint_string_string_string">
 Organ_publishFunctionMessage:
 	<input type='text' id='Organ_publishFunctionMessage_uint_string_string_string_id'>
 	<input type='text' id='Organ_publishFunctionMessage_uint_string_string_string_message'>
@@ -482,114 +480,106 @@ Organ_publishFunctionMessage:
 	<button onclick='Organ_publishFunctionMessage_uint_string_string_string()'>execute Organ_publishFunctionMessage</button>
 	<div class="function_result" id="Organ_publishFunctionMessage_uint_string_string_string_res"></div>
   </div>
-  <div class="function_execution">
+  <div class="function_execution" id="Organ_contract_function_Organ_createBallot_string_bytes32">
 Organ_createBallot:
 	<input type='text' id='Organ_createBallot_string_bytes32_name'>
 	<input type='text' id='Organ_createBallot_string_bytes32_proposalNames'>
 	<button onclick='Organ_createBallot_string_bytes32()'>execute Organ_createBallot</button>
 	<div class="function_result" id="Organ_createBallot_string_bytes32_res"></div>
   </div>
-  <div class="function_execution">
-Organ_getFunctionAddress:
-	<input type='text' id='Organ_getFunctionAddress_uint_id'>
-	<button onclick='Organ_getFunctionAddress_uint()'>execute Organ_getFunctionAddress</button>
-	<div class="function_result" id="Organ_getFunctionAddress_uint_res"></div>
+  <div class="function_execution" id="Organ_contract_function_Organ_getFunctionBlogAddress_uint">
+Organ_getFunctionBlogAddress:
+	<input type='text' id='Organ_getFunctionBlogAddress_uint_id'>
+	<button onclick='Organ_getFunctionBlogAddress_uint()'>execute Organ_getFunctionBlogAddress</button>
+	<div class="function_result" id="Organ_getFunctionBlogAddress_uint_res"></div>
+  </div>
+  <div class="function_execution" id="Organ_contract_function_Organ_getLastBallot">
+Organ_getLastBallot:
+	<button onclick='Organ_getLastBallot()'>execute Organ_getLastBallot</button>
+	<div class="function_result" id="Organ_getLastBallot_res"></div>
   </div>
 
 </div>
-<div class="contract">
+<!-- gui for Party_contract -->
+<div class="contract" id="Party_contract">
 Party:
   <input type='text' id='Party_address'> <button onclick='Party_setAddress()'>change Party Address</button>
-  <div class="contract_attributes"> attributes:
-    <div class="contract_attribute"> organs:
-      <div class="contract_attribute_value" id="Party_organs_value"> </div>
-    </div>
-    <div class="contract_attribute"> memberRegistry:
+  <div class="contract_attributes" id="Party_contract_attributes"> attributes:
+    <div class="contract_attribute" id="Party_contract_attribute_memberRegistry"> memberRegistry:
       <div class="contract_attribute_value" id="Party_memberRegistry_value"> </div>
     </div>
-    <div class="contract_attribute"> constitutionHash:
+    <div class="contract_attribute" id="Party_contract_attribute_constitutionHash"> constitutionHash:
       <div class="contract_attribute_value" id="Party_constitutionHash_value"> </div>
     </div>
-    <div class="contract_attribute"> organCount:
+    <div class="contract_attribute" id="Party_contract_attribute_organCount"> organCount:
       <div class="contract_attribute_value" id="Party_organCount_value"> </div>
     </div>
-    <div class="contract_attribute"> blogregistry:
+    <div class="contract_attribute" id="Party_contract_attribute_blogregistry"> blogregistry:
       <div class="contract_attribute_value" id="Party_blogregistry_value"> </div>
     </div>
     <button onclick='Party_updateAttributes()'>update Party attributes</button>
   </div>
-
-  <div class="function_execution">
+  <div class="function_execution" id="Party_contract_function_Party_Party">
 Party_Party:
 	<button onclick='Party_Party()'>execute Party_Party</button>
 	<div class="function_result" id="Party_Party_res"></div>
   </div>
-  <div class="function_execution">
-Party_canAccess:
-	<button onclick='Manageable_canAccess()'>execute Party_canAccess</button>
-	<div class="function_result" id="Manageable_canAccess_res"></div>
-  </div>
-  <div class="function_execution">
+  <div class="function_execution" id="Party_contract_function_Manageable_addManager_address">
 Party_addManager:
 	<input type='text' id='Manageable_addManager_address__newManagerAddress'>
 	<button onclick='Manageable_addManager_address()'>execute Party_addManager</button>
 	<div class="function_result" id="Manageable_addManager_address_res"></div>
   </div>
-  <div class="function_execution">
-Party_removeManager:
-	<input type='text' id='Manageable_removeManager_address__managerAddress'>
-	<button onclick='Manageable_removeManager_address()'>execute Party_removeManager</button>
-	<div class="function_result" id="Manageable_removeManager_address_res"></div>
-  </div>
-  <div class="function_execution">
+  <div class="function_execution" id="Party_contract_function_Party_createOrgan_string">
 Party_createOrgan:
 	<input type='text' id='Party_createOrgan_string_organName'>
 	<button onclick='Party_createOrgan_string()'>execute Party_createOrgan</button>
 	<div class="function_result" id="Party_createOrgan_string_res"></div>
   </div>
-
-  <div class="function_execution">
-MemberRegistry_canAccess:
-	<button onclick='delegate_Manageable_canAccess()'>execute MemberRegistry_canAccess</button>
-	<div class="function_result" id="delegate_Manageable_canAccess_res"></div>
+  <div class="function_execution" id="Party_contract_function_Manageable_removeManager_address">
+Party_removeManager:
+	<input type='text' id='Manageable_removeManager_address__managerAddress'>
+	<button onclick='Manageable_removeManager_address()'>execute Party_removeManager</button>
+	<div class="function_result" id="Manageable_removeManager_address_res"></div>
   </div>
-  <div class="function_execution">
+
+  <div class="function_execution" id="MemberRegistry_contract_function_MemberRegistry_addMember_string_address">
 MemberRegistry_addMember:
 	<input type='text' id='delegate_MemberRegistry_addMember_string_address_name'>
 	<input type='text' id='delegate_MemberRegistry_addMember_string_address__memberAddress'>
 	<button onclick='delegate_MemberRegistry_addMember_string_address()'>execute MemberRegistry_addMember</button>
 	<div class="function_result" id="delegate_MemberRegistry_addMember_string_address_res"></div>
   </div>
-  <div class="function_execution">
-MemberRegistry_unregisterMember:
-	<input type='text' id='delegate_MemberRegistry_unregisterMember_uint_id'>
-	<button onclick='delegate_MemberRegistry_unregisterMember_uint()'>execute MemberRegistry_unregisterMember</button>
-	<div class="function_result" id="delegate_MemberRegistry_unregisterMember_uint_res"></div>
-  </div>
-  <div class="function_execution">
+  <div class="function_execution" id="MemberRegistry_contract_function_Manageable_addManager_address">
 MemberRegistry_addManager:
 	<input type='text' id='delegate_Manageable_addManager_address__newManagerAddress'>
 	<button onclick='delegate_Manageable_addManager_address()'>execute MemberRegistry_addManager</button>
 	<div class="function_result" id="delegate_Manageable_addManager_address_res"></div>
   </div>
-  <div class="function_execution">
+  <div class="function_execution" id="MemberRegistry_contract_function_MemberRegistry_unregisterMember_uint">
+MemberRegistry_unregisterMember:
+	<input type='text' id='delegate_MemberRegistry_unregisterMember_uint_id'>
+	<button onclick='delegate_MemberRegistry_unregisterMember_uint()'>execute MemberRegistry_unregisterMember</button>
+	<div class="function_result" id="delegate_MemberRegistry_unregisterMember_uint_res"></div>
+  </div>
+  <div class="function_execution" id="MemberRegistry_contract_function_MemberRegistry_getMemberCount">
+MemberRegistry_getMemberCount:
+	<button onclick='delegate_MemberRegistry_getMemberCount()'>execute MemberRegistry_getMemberCount</button>
+	<div class="function_result" id="delegate_MemberRegistry_getMemberCount_res"></div>
+  </div>
+  <div class="function_execution" id="MemberRegistry_contract_function_Manageable_removeManager_address">
 MemberRegistry_removeManager:
 	<input type='text' id='delegate_Manageable_removeManager_address__managerAddress'>
 	<button onclick='delegate_Manageable_removeManager_address()'>execute MemberRegistry_removeManager</button>
 	<div class="function_result" id="delegate_Manageable_removeManager_address_res"></div>
   </div>
-  <div class="function_execution">
-MemberRegistry_getMemberCount:
-	<button onclick='delegate_MemberRegistry_getMemberCount()'>execute MemberRegistry_getMemberCount</button>
-	<div class="function_result" id="delegate_MemberRegistry_getMemberCount_res"></div>
-  </div>
-  <div class="function_execution">
+  <div class="function_execution" id="MemberRegistry_contract_function_MemberRegistry_isActiveMember_address">
 MemberRegistry_isActiveMember:
 	<input type='text' id='delegate_MemberRegistry_isActiveMember_address__memberAdress'>
 	<button onclick='delegate_MemberRegistry_isActiveMember_address()'>execute MemberRegistry_isActiveMember</button>
 	<div class="function_result" id="delegate_MemberRegistry_isActiveMember_address_res"></div>
   </div>
-  <div class="function_execution">
+  <div class="function_execution" id="MemberRegistry_contract_function_MemberRegistry_changeMemberAddress_uint_address">
 MemberRegistry_changeMemberAddress:
 	<input type='text' id='delegate_MemberRegistry_changeMemberAddress_uint_address_id'>
 	<input type='text' id='delegate_MemberRegistry_changeMemberAddress_uint_address__newMemberAddress'>
@@ -598,144 +588,131 @@ MemberRegistry_changeMemberAddress:
   </div>
 
 </div>
-<div class="contract">
+<!-- gui for KUEKeNParty_contract -->
+<div class="contract" id="KUEKeNParty_contract">
 KUEKeNParty:
   <input type='text' id='KUEKeNParty_address'> <button onclick='KUEKeNParty_setAddress()'>change KUEKeNParty Address</button>
-  <div class="contract_attributes"> attributes:
-    <div class="contract_attribute"> organs:
-      <div class="contract_attribute_value" id="KUEKeNParty_organs_value"> </div>
-    </div>
-    <div class="contract_attribute"> memberRegistry:
+  <div class="contract_attributes" id="KUEKeNParty_contract_attributes"> attributes:
+    <div class="contract_attribute" id="KUEKeNParty_contract_attribute_memberRegistry"> memberRegistry:
       <div class="contract_attribute_value" id="KUEKeNParty_memberRegistry_value"> </div>
     </div>
-    <div class="contract_attribute"> constitutionHash:
+    <div class="contract_attribute" id="KUEKeNParty_contract_attribute_constitutionHash"> constitutionHash:
       <div class="contract_attribute_value" id="KUEKeNParty_constitutionHash_value"> </div>
     </div>
-    <div class="contract_attribute"> organCount:
+    <div class="contract_attribute" id="KUEKeNParty_contract_attribute_organCount"> organCount:
       <div class="contract_attribute_value" id="KUEKeNParty_organCount_value"> </div>
     </div>
-    <div class="contract_attribute"> blogregistry:
+    <div class="contract_attribute" id="KUEKeNParty_contract_attribute_blogregistry"> blogregistry:
       <div class="contract_attribute_value" id="KUEKeNParty_blogregistry_value"> </div>
     </div>
     <button onclick='KUEKeNParty_updateAttributes()'>update KUEKeNParty attributes</button>
   </div>
-
-  <div class="function_execution">
-KUEKeNParty_Party:
-	<button onclick='Party_Party()'>execute KUEKeNParty_Party</button>
-	<div class="function_result" id="Party_Party_res"></div>
-  </div>
-  <div class="function_execution">
-KUEKeNParty_canAccess:
-	<button onclick='Manageable_canAccess()'>execute KUEKeNParty_canAccess</button>
-	<div class="function_result" id="Manageable_canAccess_res"></div>
-  </div>
-  <div class="function_execution">
+  <div class="function_execution" id="KUEKeNParty_contract_function_KUEKeNParty_KUEKeNParty">
 KUEKeNParty_KUEKeNParty:
 	<button onclick='KUEKeNParty_KUEKeNParty()'>execute KUEKeNParty_KUEKeNParty</button>
 	<div class="function_result" id="KUEKeNParty_KUEKeNParty_res"></div>
   </div>
-  <div class="function_execution">
+  <div class="function_execution" id="KUEKeNParty_contract_function_Party_Party">
+KUEKeNParty_Party:
+	<button onclick='Party_Party()'>execute KUEKeNParty_Party</button>
+	<div class="function_result" id="Party_Party_res"></div>
+  </div>
+  <div class="function_execution" id="KUEKeNParty_contract_function_Manageable_addManager_address">
+KUEKeNParty_addManager:
+	<input type='text' id='Manageable_addManager_address__newManagerAddress'>
+	<button onclick='Manageable_addManager_address()'>execute KUEKeNParty_addManager</button>
+	<div class="function_result" id="Manageable_addManager_address_res"></div>
+  </div>
+  <div class="function_execution" id="KUEKeNParty_contract_function_KUEKeNParty_boostrapParty_address_address">
 KUEKeNParty_boostrapParty:
 	<input type='text' id='KUEKeNParty_boostrapParty_address_address_fc'>
 	<input type='text' id='KUEKeNParty_boostrapParty_address_address_br'>
 	<button onclick='KUEKeNParty_boostrapParty_address_address()'>execute KUEKeNParty_boostrapParty</button>
 	<div class="function_result" id="KUEKeNParty_boostrapParty_address_address_res"></div>
   </div>
-  <div class="function_execution">
-KUEKeNParty_addManager:
-	<input type='text' id='Manageable_addManager_address__newManagerAddress'>
-	<button onclick='Manageable_addManager_address()'>execute KUEKeNParty_addManager</button>
-	<div class="function_result" id="Manageable_addManager_address_res"></div>
-  </div>
-  <div class="function_execution">
-KUEKeNParty_removeManager:
-	<input type='text' id='Manageable_removeManager_address__managerAddress'>
-	<button onclick='Manageable_removeManager_address()'>execute KUEKeNParty_removeManager</button>
-	<div class="function_result" id="Manageable_removeManager_address_res"></div>
-  </div>
-  <div class="function_execution">
+  <div class="function_execution" id="KUEKeNParty_contract_function_Party_createOrgan_string">
 KUEKeNParty_createOrgan:
 	<input type='text' id='Party_createOrgan_string_organName'>
 	<button onclick='Party_createOrgan_string()'>execute KUEKeNParty_createOrgan</button>
 	<div class="function_result" id="Party_createOrgan_string_res"></div>
   </div>
+  <div class="function_execution" id="KUEKeNParty_contract_function_Manageable_removeManager_address">
+KUEKeNParty_removeManager:
+	<input type='text' id='Manageable_removeManager_address__managerAddress'>
+	<button onclick='Manageable_removeManager_address()'>execute KUEKeNParty_removeManager</button>
+	<div class="function_result" id="Manageable_removeManager_address_res"></div>
+  </div>
 
 </div>
-<div class="contract">
+<!-- gui for FoundationConference_contract -->
+<div class="contract" id="FoundationConference_contract">
 FoundationConference:
   <input type='text' id='FoundationConference_address'> <button onclick='FoundationConference_setAddress()'>change FoundationConference Address</button>
-  <div class="contract_attributes"> attributes:
-    <div class="contract_attribute"> memberRegistry:
+  <div class="contract_attributes" id="FoundationConference_contract_attributes"> attributes:
+    <div class="contract_attribute" id="FoundationConference_contract_attribute_accreditation"> accreditation:
+      <div class="contract_attribute_value" id="FoundationConference_accreditation_value"> </div>
+    </div>
+    <div class="contract_attribute" id="FoundationConference_contract_attribute_memberRegistry"> memberRegistry:
       <div class="contract_attribute_value" id="FoundationConference_memberRegistry_value"> </div>
     </div>
-    <div class="contract_attribute"> organName:
+    <div class="contract_attribute" id="FoundationConference_contract_attribute_organName"> organName:
       <div class="contract_attribute_value" id="FoundationConference_organName_value"> </div>
     </div>
-    <div class="contract_attribute"> lastFunctionId:
+    <div class="contract_attribute" id="FoundationConference_contract_attribute_lastFunctionId"> lastFunctionId:
       <div class="contract_attribute_value" id="FoundationConference_lastFunctionId_value"> </div>
     </div>
-    <div class="contract_attribute"> blogRegistry:
+    <div class="contract_attribute" id="FoundationConference_contract_attribute_blogRegistry"> blogRegistry:
       <div class="contract_attribute_value" id="FoundationConference_blogRegistry_value"> </div>
     </div>
-    <div class="contract_attribute"> isActive:
+    <div class="contract_attribute" id="FoundationConference_contract_attribute_isActive"> isActive:
       <div class="contract_attribute_value" id="FoundationConference_isActive_value"> </div>
     </div>
-    <div class="contract_attribute"> organBlog:
+    <div class="contract_attribute" id="FoundationConference_contract_attribute_organBlog"> organBlog:
       <div class="contract_attribute_value" id="FoundationConference_organBlog_value"> </div>
     </div>
-    <div class="contract_attribute"> ballots:
-      <div class="contract_attribute_value" id="FoundationConference_ballots_value"> </div>
-    </div>
-    <div class="contract_attribute"> ballotCount:
+    <div class="contract_attribute" id="FoundationConference_contract_attribute_ballotCount"> ballotCount:
       <div class="contract_attribute_value" id="FoundationConference_ballotCount_value"> </div>
     </div>
     <button onclick='FoundationConference_updateAttributes()'>update FoundationConference attributes</button>
   </div>
-
-  <div class="function_execution">
+  <div class="function_execution" id="FoundationConference_contract_function_FoundationConference_accreditationMember_address">
+FoundationConference_accreditationMember:
+	<input type='text' id='FoundationConference_accreditationMember_address__address'>
+	<button onclick='FoundationConference_accreditationMember_address()'>execute FoundationConference_accreditationMember</button>
+	<div class="function_result" id="FoundationConference_accreditationMember_address_res"></div>
+  </div>
+  <div class="function_execution" id="FoundationConference_contract_function_Organ_changeMember_uint_address">
 FoundationConference_changeMember:
 	<input type='text' id='Organ_changeMember_uint_address__id'>
 	<input type='text' id='Organ_changeMember_uint_address__address'>
 	<button onclick='Organ_changeMember_uint_address()'>execute FoundationConference_changeMember</button>
 	<div class="function_result" id="Organ_changeMember_uint_address_res"></div>
   </div>
-  <div class="function_execution">
-FoundationConference_isMember:
-	<input type='text' id='MemberAware_isMember_address__address'>
-	<button onclick='MemberAware_isMember_address()'>execute FoundationConference_isMember</button>
-	<div class="function_result" id="MemberAware_isMember_address_res"></div>
-  </div>
-  <div class="function_execution">
-FoundationConference_canAccess:
-	<button onclick='Manageable_canAccess()'>execute FoundationConference_canAccess</button>
-	<div class="function_result" id="Manageable_canAccess_res"></div>
-  </div>
-  <div class="function_execution">
+  <div class="function_execution" id="FoundationConference_contract_function_Manageable_addManager_address">
 FoundationConference_addManager:
 	<input type='text' id='Manageable_addManager_address__newManagerAddress'>
 	<button onclick='Manageable_addManager_address()'>execute FoundationConference_addManager</button>
 	<div class="function_result" id="Manageable_addManager_address_res"></div>
   </div>
-  <div class="function_execution">
+  <div class="function_execution" id="FoundationConference_contract_function_Organ_createFunction_string_string">
 FoundationConference_createFunction:
 	<input type='text' id='Organ_createFunction_string_string__functionName'>
 	<input type='text' id='Organ_createFunction_string_string__constittiutionHash'>
 	<button onclick='Organ_createFunction_string_string()'>execute FoundationConference_createFunction</button>
 	<div class="function_result" id="Organ_createFunction_string_string_res"></div>
   </div>
-  <div class="function_execution">
+  <div class="function_execution" id="FoundationConference_contract_function_Manageable_removeManager_address">
 FoundationConference_removeManager:
 	<input type='text' id='Manageable_removeManager_address__managerAddress'>
 	<button onclick='Manageable_removeManager_address()'>execute FoundationConference_removeManager</button>
 	<div class="function_result" id="Manageable_removeManager_address_res"></div>
   </div>
-  <div class="function_execution">
+  <div class="function_execution" id="FoundationConference_contract_function_Organ_initalizeOrgan">
 FoundationConference_initalizeOrgan:
 	<button onclick='Organ_initalizeOrgan()'>execute FoundationConference_initalizeOrgan</button>
 	<div class="function_result" id="Organ_initalizeOrgan_res"></div>
   </div>
-  <div class="function_execution">
+  <div class="function_execution" id="FoundationConference_contract_function_Organ_publishFunctionMessage_uint_string_string_string">
 FoundationConference_publishFunctionMessage:
 	<input type='text' id='Organ_publishFunctionMessage_uint_string_string_string_id'>
 	<input type='text' id='Organ_publishFunctionMessage_uint_string_string_string_message'>
@@ -744,18 +721,23 @@ FoundationConference_publishFunctionMessage:
 	<button onclick='Organ_publishFunctionMessage_uint_string_string_string()'>execute FoundationConference_publishFunctionMessage</button>
 	<div class="function_result" id="Organ_publishFunctionMessage_uint_string_string_string_res"></div>
   </div>
-  <div class="function_execution">
+  <div class="function_execution" id="FoundationConference_contract_function_Organ_createBallot_string_bytes32">
 FoundationConference_createBallot:
 	<input type='text' id='Organ_createBallot_string_bytes32_name'>
 	<input type='text' id='Organ_createBallot_string_bytes32_proposalNames'>
 	<button onclick='Organ_createBallot_string_bytes32()'>execute FoundationConference_createBallot</button>
 	<div class="function_result" id="Organ_createBallot_string_bytes32_res"></div>
   </div>
-  <div class="function_execution">
-FoundationConference_getFunctionAddress:
-	<input type='text' id='Organ_getFunctionAddress_uint_id'>
-	<button onclick='Organ_getFunctionAddress_uint()'>execute FoundationConference_getFunctionAddress</button>
-	<div class="function_result" id="Organ_getFunctionAddress_uint_res"></div>
+  <div class="function_execution" id="FoundationConference_contract_function_Organ_getFunctionBlogAddress_uint">
+FoundationConference_getFunctionBlogAddress:
+	<input type='text' id='Organ_getFunctionBlogAddress_uint_id'>
+	<button onclick='Organ_getFunctionBlogAddress_uint()'>execute FoundationConference_getFunctionBlogAddress</button>
+	<div class="function_result" id="Organ_getFunctionBlogAddress_uint_res"></div>
+  </div>
+  <div class="function_execution" id="FoundationConference_contract_function_Organ_getLastBallot">
+FoundationConference_getLastBallot:
+	<button onclick='Organ_getLastBallot()'>execute FoundationConference_getLastBallot</button>
+	<div class="function_result" id="Organ_getLastBallot_res"></div>
   </div>
 
 </div>

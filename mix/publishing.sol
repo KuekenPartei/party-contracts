@@ -12,13 +12,24 @@ contract MessagePublisher {
 	
 	function publishMessage(string message,string hash,string er) public  ;
 	
-	
-	function getMessage(uint id) public   constant returns (string _message,uint date,address _sender);
+	/*
+	* Get the message with the id.
+	* 
+	* id -
+	* returns
+	* _message - The message text.
+	* _blockNumber - The blocknumber.
+	* _sender -
+	* _externalResource -
+	*/
+	function getMessage(uint id) public   constant returns (string _message,uint _blockNumber,address _sender,string _externalResource);
 }
 
 
 contract ShortBlog is Owned {
-    
+    /*
+    * A message in the blog.
+    */
     struct Message {
     	string message;
     	uint date;
@@ -53,16 +64,17 @@ contract ShortBlog is Owned {
 		 messageCount++;
 		
 		//Start of user code ShortBlog.function.sendMessage
-		//TODO: implement
+		lastMessageDate = now;
+		
 		//End of user code
 	}
 	
 	
 	
-	function getMessage(uint id) public   constant returns (string ) {
+	function getMessageText(uint id) public   constant returns (string ) {
 		 return messages[id].message;
 		
-		//Start of user code ShortBlog.function.getMessage
+		//Start of user code ShortBlog.function.getMessageText
 		//TODO: implement
 		//End of user code
 	}
@@ -97,6 +109,29 @@ contract ShortBlog is Owned {
 		//End of user code
 	}
 	
+	
+	/*
+	* Get the message with the id.
+	* 
+	* id -
+	* returns
+	* _message - The message text.
+	* _blockNumber - The blocknumber.
+	* _sender -
+	* _externalResource -
+	*/
+	function getBlogMessage(uint id) public   constant returns (string _message,uint _blockNumber,address _sender,string _externalResource) {
+		 
+		
+		//Start of user code ShortBlog.function.getBlogMessage
+		Message m = messages[id];
+		return (
+			m.message,m.blockNumber,m.sender,m.externalResource
+		);
+
+		//End of user code
+	}
+	
 	// Start of user code ShortBlog.operations
 	//TODO: implement
 	// End of user code
@@ -121,7 +156,7 @@ contract BlogRegistry {
 	* returns
 	*  -
 	*/
-	function registerBlog(string name) public   constant returns (ShortBlog ) {
+	function registerBlog(string name) public  returns (ShortBlog ) {
 		 bytes32 hash = sha3(name);
 		 if(names[hash]==0){
 		 	ShortBlog b = new ShortBlog();
@@ -140,7 +175,6 @@ contract BlogRegistry {
 	
 	
 	function getShortBlog(string name) public   constant returns (address ) {
-	
 		//Start of user code BlogRegistry.function.getShortBlog
 		bytes32 hash = sha3(name);
 		uint id = names[hash];

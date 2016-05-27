@@ -3,6 +3,7 @@
 
 * [Ballot](#contract-ballot)
 
+
 ## contract: Ballot
 
     overview:
@@ -13,6 +14,8 @@
 	function winningProposal() public  returns (uint winningProposal)
 
 
+
+A simple ballot for voting on alternatives.
 
 
 
