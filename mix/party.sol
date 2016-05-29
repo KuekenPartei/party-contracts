@@ -33,10 +33,10 @@ contract Organ is MemberAware,Manageable,MessagePublisher {
 	uint public lastFunctionId;
 	BlogRegistry public blogRegistry;
 	bool public isActive;
-	ShortBlog public organBlog;
+	ShortBlog internal organBlog;
 	uint public ballotCount;
 	mapping (uint=>OrganFunction)public organFunctions;
-	mapping (uint=>Ballot)public ballots;
+	mapping (uint=>Ballot)private ballots;
 	// Start of user code Organ.attributes
 	//TODO: implement
 	// End of user code
@@ -52,33 +52,18 @@ contract Organ is MemberAware,Manageable,MessagePublisher {
 	event FunctionMemberChange(address oldMember,uint functionId,address newMember);
 	
 	
-	
+	/*
+	* Publish the message to the blog.
+	* 
+	* message - The message to send.
+	* hash - The hash of the message.
+	* er - The external resource of the message.
+	*/
 	function publishMessage(string message,string hash,string er) public   {
 		 
 		
 		//Start of user code MessagePublisher.function.publishMessage
-		organBlog.sendMessage(message,hash,er);
-		//End of user code
-	}
-	
-	/*
-	* Get the message with the id.
-	* 
-	* id -
-	* returns
-	* _message - The message text.
-	* _blockNumber - The blocknumber.
-	* _sender -
-	* _externalResource -
-	*/
-	function getMessage(uint id) public   constant returns (string _message,uint _blockNumber,address _sender,string _externalResource) {
-		 
-		
-		//Start of user code MessagePublisher.function.getMessage
-		var (a,b) = organBlog.getBlogMessage(id);
-		_blockNumber = a;
-		_sender = b;
-		return ;
+		organBlog.sendMessage(message,hash,er); 
 		//End of user code
 	}
 	
@@ -90,7 +75,7 @@ contract Organ is MemberAware,Manageable,MessagePublisher {
 	*/
 	function changeMember(uint _id,address _address) public  onlyManager()  {
 		//Start of user code Organ.function.changeMember
-		if(!isMember(_address)) throw;
+//		if(!isMember(_address)) throw;
 		if(organFunctions[_id].id!= _id) throw;
 		
 		FunctionMemberChange(organFunctions[_id].currentMember,_id,_address);
@@ -122,7 +107,7 @@ contract Organ is MemberAware,Manageable,MessagePublisher {
 		//blogRegistry = new BlogRegistry();		
 		
 		organBlog = blogRegistry.registerBlog(organName);
-		organBlog.changeOwner(this);
+//		organBlog.changeOwner(this);
 		
 		//End of user code
 	}
@@ -155,9 +140,9 @@ contract Organ is MemberAware,Manageable,MessagePublisher {
 	*/
 	function createBallot(string name,bytes32[] proposalNames) public  returns (uint ) {
 		//Start of user code Organ.function.createBallot
+		ballotCount++;
 		Ballot b = new Ballot(name,proposalNames);
 		ballots[ballotCount] = b;
-		ballotCount++;
 		//End of user code
 	}
 	
@@ -180,6 +165,14 @@ contract Organ is MemberAware,Manageable,MessagePublisher {
 	function getLastBallot() public   constant returns (address ) {
 		//Start of user code Organ.function.getLastBallot
 		return ballots[ballotCount];
+		//End of user code
+	}
+	
+	
+	
+	function getOrganBlog() public   constant returns (address ) {
+		//Start of user code Organ.function.getOrganBlog
+		return organBlog;
 		//End of user code
 	}
 	
@@ -207,7 +200,7 @@ contract Organ is MemberAware,Manageable,MessagePublisher {
 */
 contract Party is Manageable {
 
-	MemberRegistry public memberRegistry;
+	MemberRegistry internal memberRegistry;
 	string public constitutionHash;
 	uint public organCount;
 	BlogRegistry public blogregistry;
@@ -223,7 +216,7 @@ contract Party is Manageable {
 	
 	function Party() public   {
 		//Start of user code Party.function.Party
-		//TODO: implement
+		
 		//End of user code
 	}
 	
@@ -240,31 +233,13 @@ contract Party is Manageable {
 		//End of user code
 	}
 	
-	// delegate functions from memberRegistry (MemberRegistry)
-	
-	// delegate to addMember
-	function memberRegistry_addMember(string name,address _memberAddress)  {
-		memberRegistry.addMember(name,_memberAddress);    
+	// getMemberRegistry
+	function getMemberRegistry() returns(MemberRegistry) {
+		return memberRegistry;
 	}
-	
-	// delegate to unregisterMember
-	function memberRegistry_unregisterMember(uint id)  {
-		memberRegistry.unregisterMember(id);    
-	}
-	
-	// delegate to getMemberCount
-	function memberRegistry_getMemberCount()  constant returns (uint ) {
-		return memberRegistry.getMemberCount();
-	}
-	
-	// delegate to isActiveMember
-	function memberRegistry_isActiveMember(address _memberAdress)  constant returns (bool ) {
-		return memberRegistry.isActiveMember(_memberAdress);
-	}
-	
-	// delegate to changeMemberAddress
-	function memberRegistry_changeMemberAddress(uint id,address _newMemberAddress)  {
-		memberRegistry.changeMemberAddress(id,_newMemberAddress);    
+	// setMemberRegistry
+	function setMemberRegistry (address aMemberRegistry) {
+		memberRegistry = MemberRegistry(aMemberRegistry);
 	}
 	
 	// Start of user code Party.operations
@@ -315,7 +290,17 @@ contract KUEKeNParty is Party {
 	}
 	
 	// Start of user code KUEKeNParty.operations
-	//TODO: implement
+	/**
+	*  bootstrap2
+	*/
+	function bootstrap2() public {
+		createOrgan("TestOrgan1");
+//		createOrgan("TestOran2");
+		
+		Organ o = organs[0];
+		//o.publishMessage("A Test message from the gk.","hash","externalResorce");
+		
+	}
 	// End of user code
 }
 
@@ -325,7 +310,8 @@ contract KUEKeNParty is Party {
 */
 contract FoundationConference is Organ {
 
-	address[] public accreditation;
+	address[] private accreditation;
+	uint public accreditatedMembers;
 	// Start of user code FoundationConference.attributes
 	//TODO: implement
 	// End of user code
@@ -335,6 +321,9 @@ contract FoundationConference is Organ {
 	function accreditationMember(address _address) public   {
 		//Start of user code FoundationConference.function.accreditationMember
 		if(!isMember(_address))throw;
+		
+		accreditation.push(_address);
+		accreditatedMembers++;
 		//End of user code
 	}
 	

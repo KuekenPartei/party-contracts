@@ -72,6 +72,13 @@ var OrganContract = web3.eth.contract([
     "outputs": [{"name": "","type": "address"}],
     "type": "function"
   }
+,  {
+    "constant": true,
+    "inputs": [],    
+    "name": "getOrganBlog",
+    "outputs": [{"name": "","type": "address"}],
+    "type": "function"
+  }
  ,
   {
     "constant": true,
@@ -177,9 +184,9 @@ var KUEKeNPartyContract = web3.eth.contract([
 
 var FoundationConferenceContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"accreditation","outputs":[{"name":"","type":"address"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"accreditatedMembers","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[{"name":"","type":"uint"}],"name":"organFunctions","outputs":[{"name":"","type":"OrganFunction"}],"type":"function"},
 {"constant":true,"inputs":[{"name":"","type":"address"}],"name":"managers","outputs":[{"name":"","type":"bool"}],"type":"function"},
-{"constant":true,"inputs":[{"name":"","type":"invalid"}],"name":"ballots","outputs":[{"name":"","type":"Ballot"}],"type":"function"},
   {
     "constant": false,
     "inputs": [{"name": "_address","type": "address"}],    
@@ -247,6 +254,13 @@ var FoundationConferenceContract = web3.eth.contract([
     "constant": true,
     "inputs": [],    
     "name": "getLastBallot",
+    "outputs": [{"name": "","type": "address"}],
+    "type": "function"
+  }
+,  {
+    "constant": true,
+    "inputs": [],    
+    "name": "getOrganBlog",
     "outputs": [{"name": "","type": "address"}],
     "type": "function"
   }

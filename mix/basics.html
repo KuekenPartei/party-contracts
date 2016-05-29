@@ -16,6 +16,7 @@ function Owned_setAddress() {
 
 function Owned_updateAttributes() {
 // update attributes
+
 }
 //call functions
 //function Owned_getOwner
@@ -37,6 +38,7 @@ function Owned_kill() {
 //delegated calls
 
 </script>
+
 <!-- javascript for Manageable -->
 <script type='text/javascript'>
 // script for Manageable
@@ -50,6 +52,12 @@ function Manageable_setAddress() {
 
 function Manageable_updateAttributes() {
 // update attributes
+var _key = document.getElementById('Manageable_contract_attribute_managers_input').value;
+var managers_res = Manageable_instance.managers(_key);
+	if(managers_res!=null){
+		document.getElementById('Manageable_managers_value').innerText = managers_res;
+	}
+
 }
 //call functions
 //function Manageable_canAccess
@@ -73,6 +81,7 @@ function Manageable_removeManager_address() {
 
 </script>
 
+
 <!-- start of style -->
 <style>
 .contract {
@@ -92,6 +101,8 @@ function Manageable_removeManager_address() {
 Owned:
   <input type='text' id='Owned_address'> <button onclick='Owned_setAddress()'>change Owned Address</button>
   <div class="contract_attributes" id="Owned_contract_attributes"> attributes:
+
+
     <button onclick='Owned_updateAttributes()'>update Owned attributes</button>
   </div>
   <div class="function_execution" id="Owned_contract_function_Owned_getOwner">
@@ -117,6 +128,14 @@ Owned_kill:
 Manageable:
   <input type='text' id='Manageable_address'> <button onclick='Manageable_setAddress()'>change Manageable Address</button>
   <div class="contract_attributes" id="Manageable_contract_attributes"> attributes:
+
+<div class="Value_Mapping" id="Manageable_contract_attribute_managers">mapping  managers:
+		<input type='text' id='Manageable_contract_attribute_managers_input'>(address)
+    	<div class="Mapping_value" id="Manageable_contract_attribute_address"> bool:
+      		<div class="contract_attribute_value" id="Manageable_managers_value"> </div>
+    	</div>
+  </div>
+
     <button onclick='Manageable_updateAttributes()'>update Manageable attributes</button>
   </div>
   <div class="function_execution" id="Manageable_contract_function_Manageable_addManager_address">

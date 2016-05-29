@@ -262,7 +262,7 @@ ShortBlog_getBlogMessage:
 
 
 <script type='text/javascript'> 
-
+web3.eth.defaultAccount = web3.eth.accounts[0];
 
 function KUEKeNParty_initalize() {
 	var KUEKeNPartyContract = web3.eth.contract(JSON.parse(KUEKeNParty.abi));
@@ -274,11 +274,125 @@ function KUEKeNParty_initalize() {
 	console.log("blogregistry:"+br);
 	var br = KUEKeNParty_instance.memberRegistry_getMemberCount();
 	console.log("membercount:"+br);
-	var br = KUEKeNParty_instance.organs(0);
-	console.log("FunctionBlogCount:"+br);
+	var o1 = KUEKeNParty_instance.organs(0);
+	console.log("organ0:"+o1);
+	var o2 = KUEKeNParty_instance.organs(1);
+	console.log("organ1:"+o2);
 }
 
-KUEKeNParty_initalize();
+//KUEKeNParty_initalize();
+
+function ShortBlog_initalize(address){
+	var ShortBlogContract = web3.eth.contract(JSON.parse(ShortBlog.abi));
+	var ShortBlog_instance = ShortBlogContract.at(address);
+	console.log("blog instance:"+ShortBlog_instance.address);
+	
+	var mc = ShortBlog_instance.messageCount();
+	console.log("blogMessageCount:"+mc);
+	
+// 	 var res = ShortBlog_instance.sendMessage.call("test","22","",{value:0,gas:200000});
+// 	console.log("call res:"+res);
+// 	var mc = ShortBlog_instance.getMessageCount();
+// 	console.log("blogMessageCount:"+mc);
+		
+	var res = ShortBlog_instance.sendMessage.sendTransaction("test","22","",{value:0,gas:200000});
+	console.log("transaction res:"+res);
+	var mc = ShortBlog_instance.messageCount();
+	console.log("blogMessageCount:"+mc);
+			
+// 	var res = ShortBlog_instance.sendMessage.getData("test","22","");
+// 	console.log("get data res:"+res);
+				
+	var res = ShortBlog_instance.sendMessage("test","22","");
+	console.log("res:"+res);
+				
+	var mc = ShortBlog_instance.messageCount();
+	console.log("blogMessageCount:"+mc);
+	
+// 	var res = ShortBlog_instance.sendMessage.sendTransaction("test","22","",{gas: 200000},function(err, address) {
+// 	  if (!err)
+// 		    console.log("err:"+address+" "+res); // "0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
+// 		});
+// console.log("res:"+res);
+
+}
+
+function BR(){
+var BRContract = web3.eth.contract(JSON.parse(BlogRegistry.abi));
+var BR_instance = FC_instance = contracts['BlogRegistry'].contract;
+	
+console.log("test:"+BR_instance.blogs(0))
+ShortBlog_initalize(BR_instance.blogs(0));	
+}
+
+function FC_instance_initalize(address){
+	FoundationConferenceContract = web3.eth.contract(JSON.parse(FoundationConference.abi));	
+// 	console.log("instance:"+contracts['FoundationConference'].address);
+	
+	console.log("FC_instance_initalize:");
+	FC_instance = FoundationConferenceContract.at(address);
+	console.log("instance:"+FC_instance.address);
+
+	var mc = FC_instance.lastFunctionId();
+	console.log("lastFunctionId:"+mc);
+
+// 	FC_instance.createFunction("Function1","hash",{gas: 200000});	
+// 	var mc = FC_instance.lastFunctionId();
+// 	console.log("lastFunctionId:"+mc);
+	
+	FC_instance.createFunction("new created Function2","hash");	
+	var mc = FC_instance.lastFunctionId();
+	console.log("lastFunctionId:"+mc);
+	
+	var blogFunction2 = FC_instance.getFunctionBlogAddress(mc-1);
+ 	console.log("blog:"+blogFunction2);
+
+	var blogFunction2 = FC_instance.organFunctions(mc-1);
+ 	console.log("function:"+blogFunction2[1]);
+ 	console.log("blogaddress:"+blogFunction2[6]);
+ 	
+ 	
+
+}
+
+function FoundationConference_instance_initalize(){
+	FoundationConferenceContract = web3.eth.contract(JSON.parse(FoundationConference.abi));	
+// 	console.log("instance:"+contracts['FoundationConference'].address);
+	
+	FoundationConference_instance = FoundationConferenceContract.at(contracts['FoundationConference'].address);
+	console.log("instance:"+FoundationConference_instance.address);
+	
+ 	var blogFunction1 = FoundationConference_instance.getFunctionBlogAddress(0);
+ 	var blogFunction2 = FoundationConference_instance.getFunctionBlogAddress(1);
+ 	console.log("blog:"+blogFunction1+"--"+blogFunction2);
+
+ 	var ballot = FoundationConference_instance.getLastBallot();
+ 	console.log("ballot:"+ballot);
+ 	var ballot = FoundationConference_instance.ballotCount();
+ 	console.log("ballotCount:"+ballot);
+ 	
+ 	var oBlog = FoundationConference_instance.organBlog();
+ 	console.log("organ-blog:"+oBlog);
+	
+ 	
+ 	FC_instance_initalize(FoundationConference_instance.address);
+ 	ShortBlog_initalize(oBlog);
+// 	var c = FoundationConference_instance.organBlog_getMessageCount();
+ 	console.log("finshed");
+  	FoundationConference_instance.publishFunctionMessage(0,"test1","test2","test");
+ //	var c = FoundationConference_instance.organBlog_getMessageCount();
+//  	console.log("blogMessageCount:"+c);
+ 	ShortBlog_initalize(blogFunction1);
+ }
+
+
+//BR();
+FoundationConference_instance_initalize();
+//console.log("test default blog");
+//ShortBlog_initalize(contracts['ShortBlog'].address);
+
+
+
 
  var KUEKeNPartyContract = web3.eth.contract(JSON.parse(KUEKeNParty.abi));
 // var FoundationConferenceContract = web3.eth.contract(contracts['FoundationConference'].interface);

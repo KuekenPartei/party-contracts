@@ -14,7 +14,6 @@
 
     overview:
 	abstract function publishMessage(string message,string hash,string er) public  
-	abstract function getMessage(uint id) public   constant returns (string _message,uint _blockNumber,address _sender,string _externalResource)
 	function changeMember(uint _id,address _address) public  onlyManager() 
 	function createFunction(string _functionName,string _constittiutionHash) public  onlyManager() 
 	function initalizeOrgan() public  
@@ -22,6 +21,7 @@
 	function createBallot(string name,bytes32[] proposalNames) public  returns (uint )
 	function getFunctionBlogAddress(uint id) public   constant returns (address )
 	function getLastBallot() public   constant returns (address )
+	function getOrganBlog() public   constant returns (address )
 
 inherites: [MemberAware](members#contract-memberaware)
 ,[Manageable](basics#contract-manageable)
@@ -63,7 +63,7 @@ organName|string|public||
 lastFunctionId|uint|public||
 blogRegistry|BlogRegistry|public||
 isActive|bool|public||
-organBlog|ShortBlog|public||
+organBlog|ShortBlog|protected||
 ballotCount|uint|public||
 
 #### Organ mappings
@@ -136,6 +136,13 @@ name|type|direction|doc
 ----|----|----|----
 |address|return|
 
+#### Organ.getOrganBlog() public   constant returns (address )
+
+
+name|type|direction|doc
+----|----|----|----
+|address|return|
+
 
 ## contract: Party
 
@@ -155,7 +162,7 @@ A basic party contract.
 
 name|type|visiblity|delegate|doc
 ----|----|----|----|----
-memberRegistry|MemberRegistry|public|X|
+memberRegistry|MemberRegistry|protected||
 constitutionHash|string|public||
 organCount|uint|public||
 blogregistry|BlogRegistry|public||
@@ -220,7 +227,8 @@ In the first and only session.
 
 name|type|visiblity|delegate|doc
 ----|----|----|----|----
-accreditation|address|public||
+accreditation|address|private||
+accreditatedMembers|uint|public||
 -
 
 #### FoundationConference.accreditationMember(address _address) public  

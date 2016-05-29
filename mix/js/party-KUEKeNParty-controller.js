@@ -9,9 +9,6 @@ function KUEKeNParty_setAddress() {
 
 function KUEKeNParty_updateAttributes() {
 // update attributes
-var memberRegistry_res = KUEKeNParty_instance.memberRegistry();
-	if(memberRegistry_res!=null)
-		document.getElementById('KUEKeNParty_memberRegistry_value').innerText = memberRegistry_res;
 var constitutionHash_res = KUEKeNParty_instance.constitutionHash();
 	if(constitutionHash_res!=null)
 		document.getElementById('KUEKeNParty_constitutionHash_value').innerText = constitutionHash_res;
@@ -21,6 +18,24 @@ var organCount_res = KUEKeNParty_instance.organCount();
 var blogregistry_res = KUEKeNParty_instance.blogregistry();
 	if(blogregistry_res!=null)
 		document.getElementById('KUEKeNParty_blogregistry_value').innerText = blogregistry_res;
+var _key = document.getElementById('KUEKeNParty_contract_attribute_managers_input').value;
+var managers_res = KUEKeNParty_instance.managers(_key);
+	if(managers_res!=null){
+		document.getElementById('KUEKeNParty_managers_value').innerText = managers_res;
+	}
+var _key = document.getElementById('KUEKeNParty_contract_attribute_organs_input').value;
+var organs_res = KUEKeNParty_instance.organs(_key);
+	if(organs_res!=null){
+		document.getElementById('KUEKeNParty_organs_organFunctions_value').innerText = organs_res[0];
+		document.getElementById('KUEKeNParty_organs_organName_value').innerText = organs_res[1];
+		document.getElementById('KUEKeNParty_organs_lastFunctionId_value').innerText = organs_res[2];
+		document.getElementById('KUEKeNParty_organs_blogRegistry_value').innerText = organs_res[3];
+		document.getElementById('KUEKeNParty_organs_isActive_value').innerText = organs_res[4];
+		document.getElementById('KUEKeNParty_organs_organBlog_value').innerText = organs_res[5];
+		document.getElementById('KUEKeNParty_organs_ballots_value').innerText = organs_res[6];
+		document.getElementById('KUEKeNParty_organs_ballotCount_value').innerText = organs_res[7];
+	}
+
 }
 //call functions
 //function KUEKeNParty_KUEKeNParty

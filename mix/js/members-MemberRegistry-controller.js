@@ -15,6 +15,28 @@ var partyMemberCount_res = MemberRegistry_instance.partyMemberCount();
 var activeMemberCount_res = MemberRegistry_instance.activeMemberCount();
 	if(activeMemberCount_res!=null)
 		document.getElementById('MemberRegistry_activeMemberCount_value').innerText = activeMemberCount_res;
+var _key = document.getElementById('MemberRegistry_contract_attribute_managers_input').value;
+var managers_res = MemberRegistry_instance.managers(_key);
+	if(managers_res!=null){
+		document.getElementById('MemberRegistry_managers_value').innerText = managers_res;
+	}
+var _key = document.getElementById('MemberRegistry_contract_attribute_partyMembers_input').value;
+var partyMembers_res = MemberRegistry_instance.partyMembers(_key);
+	if(partyMembers_res!=null){
+		document.getElementById('MemberRegistry_partyMembers_name_value').innerText = partyMembers_res[0];
+		document.getElementById('MemberRegistry_partyMembers_id_value').innerText = partyMembers_res[1];
+		document.getElementById('MemberRegistry_partyMembers_member_value').innerText = partyMembers_res[2];
+		document.getElementById('MemberRegistry_partyMembers_state_value').innerText = partyMembers_res[3];
+	}
+var _key = document.getElementById('MemberRegistry_contract_attribute_memberAddress_input').value;
+var memberAddress_res = MemberRegistry_instance.memberAddress(_key);
+	if(memberAddress_res!=null){
+		document.getElementById('MemberRegistry_memberAddress_name_value').innerText = memberAddress_res[0];
+		document.getElementById('MemberRegistry_memberAddress_id_value').innerText = memberAddress_res[1];
+		document.getElementById('MemberRegistry_memberAddress_member_value').innerText = memberAddress_res[2];
+		document.getElementById('MemberRegistry_memberAddress_state_value').innerText = memberAddress_res[3];
+	}
+
 }
 //call functions
 //function MemberRegistry_addMember

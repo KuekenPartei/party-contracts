@@ -9,12 +9,12 @@ function FoundationConference_setAddress() {
 
 function FoundationConference_updateAttributes() {
 // update attributes
-var accreditation_res = FoundationConference_instance.accreditation();
-	if(accreditation_res!=null)
-		document.getElementById('FoundationConference_accreditation_value').innerText = accreditation_res;
 var memberRegistry_res = FoundationConference_instance.memberRegistry();
 	if(memberRegistry_res!=null)
 		document.getElementById('FoundationConference_memberRegistry_value').innerText = memberRegistry_res;
+var accreditatedMembers_res = FoundationConference_instance.accreditatedMembers();
+	if(accreditatedMembers_res!=null)
+		document.getElementById('FoundationConference_accreditatedMembers_value').innerText = accreditatedMembers_res;
 var organName_res = FoundationConference_instance.organName();
 	if(organName_res!=null)
 		document.getElementById('FoundationConference_organName_value').innerText = organName_res;
@@ -27,12 +27,26 @@ var blogRegistry_res = FoundationConference_instance.blogRegistry();
 var isActive_res = FoundationConference_instance.isActive();
 	if(isActive_res!=null)
 		document.getElementById('FoundationConference_isActive_value').innerText = isActive_res;
-var organBlog_res = FoundationConference_instance.organBlog();
-	if(organBlog_res!=null)
-		document.getElementById('FoundationConference_organBlog_value').innerText = organBlog_res;
 var ballotCount_res = FoundationConference_instance.ballotCount();
 	if(ballotCount_res!=null)
 		document.getElementById('FoundationConference_ballotCount_value').innerText = ballotCount_res;
+var _key = document.getElementById('FoundationConference_contract_attribute_managers_input').value;
+var managers_res = FoundationConference_instance.managers(_key);
+	if(managers_res!=null){
+		document.getElementById('FoundationConference_managers_value').innerText = managers_res;
+	}
+var _key = document.getElementById('FoundationConference_contract_attribute_organFunctions_input').value;
+var organFunctions_res = FoundationConference_instance.organFunctions(_key);
+	if(organFunctions_res!=null){
+		document.getElementById('FoundationConference_organFunctions_currentMember_value').innerText = organFunctions_res[0];
+		document.getElementById('FoundationConference_organFunctions_functionName_value').innerText = organFunctions_res[1];
+		document.getElementById('FoundationConference_organFunctions_id_value').innerText = organFunctions_res[2];
+		document.getElementById('FoundationConference_organFunctions_constitutionHash_value').innerText = organFunctions_res[3];
+		document.getElementById('FoundationConference_organFunctions_lastMemberChanged_value').innerText = organFunctions_res[4];
+		document.getElementById('FoundationConference_organFunctions_lastConstitutionHashChanged_value').innerText = organFunctions_res[5];
+		document.getElementById('FoundationConference_organFunctions_publisher_value').innerText = organFunctions_res[6];
+	}
+
 }
 //call functions
 //function FoundationConference_accreditationMember
@@ -107,6 +121,12 @@ function Organ_getLastBallot() {
 	var res = FoundationConference_instance.getLastBallot();
 	if(res!=null)
 		document.getElementById('Organ_getLastBallot_res').innerText = res;
+}
+//function FoundationConference_getOrganBlog
+function Organ_getOrganBlog() {
+	var res = FoundationConference_instance.getOrganBlog();
+	if(res!=null)
+		document.getElementById('Organ_getOrganBlog_res').innerText = res;
 }
 
 //delegated calls

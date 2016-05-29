@@ -9,14 +9,9 @@
 ## contract: ShortBlog
 
     overview:
-	function sendMessage(string message,string hash,string er) public  onlyOwner() 
-	function getMessageText(uint id) public   constant returns (string )
-	function getMessageDate(uint id) public   constant returns (uint )
-	function getMessageCount() public   constant returns (uint )
-	function getMessageBlock(uint id) public   constant returns (uint )
-	function getBlogMessage(uint id) public   constant returns (string _message,uint _blockNumber,address _sender,string _externalResource)
+	function sendMessage(string message,string hash,string er) public  
+	function ShortBlog(string _name) public  
 
-inherites: [Owned](basics#contract-owned)
 
 
 
@@ -48,6 +43,7 @@ name|type|visiblity|delegate|doc
 ----|----|----|----|----
 messageCount|uint|public||
 lastMessageDate|uint|public||
+name|string|public||
 
 #### ShortBlog mappings
 
@@ -55,7 +51,7 @@ name|type|mapsTo|visiblity|doc
 ----|----|----|----|----
 messages|uint|Message|public|-
 
-#### ShortBlog.sendMessage(string message,string hash,string er) public  onlyOwner() 
+#### ShortBlog.sendMessage(string message,string hash,string er) public  
 
 
 name|type|direction|doc
@@ -64,56 +60,18 @@ message|string|in|
 hash|string|in|
 er|string|in|
 
-#### ShortBlog.getMessageText(uint id) public   constant returns (string )
+#### ShortBlog.ShortBlog(string _name) public  
 
 
 name|type|direction|doc
 ----|----|----|----
-|string|return|
-id|uint|in|
-
-#### ShortBlog.getMessageDate(uint id) public   constant returns (uint )
-
-
-name|type|direction|doc
-----|----|----|----
-id|uint|in|
-|uint|return|
-
-#### ShortBlog.getMessageCount() public   constant returns (uint )
-
-
-name|type|direction|doc
-----|----|----|----
-|uint|return|
-
-#### ShortBlog.getMessageBlock(uint id) public   constant returns (uint )
-
-
-name|type|direction|doc
-----|----|----|----
-id|uint|in|
-|uint|return|
-
-#### ShortBlog.getBlogMessage(uint id) public   constant returns (string _message,uint _blockNumber,address _sender,string _externalResource)
-
-Get the message with the id.
-
-
-name|type|direction|doc
-----|----|----|----
-id|uint|in|
-_message|string|return|The message text.
-_blockNumber|uint|return|The blocknumber.
-_sender|address|return|
-_externalResource|string|return|
+_name|string|in|
 
 
 ## contract: BlogRegistry
 
     overview:
 	function registerBlog(string name) public  returns (ShortBlog )
-	function getShortBlog(string name) public   constant returns (address )
 
 
 
@@ -130,7 +88,7 @@ blogCount|uint|public||
 
 name|type|mapsTo|visiblity|doc
 ----|----|----|----|----
-blogs|uint|ShortBlog|public|names|bytes32|uint|public|-
+blogs|uint|ShortBlog|public|names|uint|string|public|-
 
 #### BlogRegistry.registerBlog(string name) public  returns (ShortBlog )
 
@@ -142,13 +100,5 @@ name|type|direction|doc
 ----|----|----|----
 name|string|in|
 |ShortBlog|return|
-
-#### BlogRegistry.getShortBlog(string name) public   constant returns (address )
-
-
-name|type|direction|doc
-----|----|----|----
-name|string|in|
-|address|return|
 
 

@@ -18,6 +18,15 @@ var proposals_res = Ballot_instance.proposals();
 var ballotName_res = Ballot_instance.ballotName();
 	if(ballotName_res!=null)
 		document.getElementById('Ballot_ballotName_value').innerText = ballotName_res;
+var _key = document.getElementById('Ballot_contract_attribute_voters_input').value;
+var voters_res = Ballot_instance.voters(_key);
+	if(voters_res!=null){
+		document.getElementById('Ballot_voters_weight_value').innerText = voters_res[0];
+		document.getElementById('Ballot_voters_voted_value').innerText = voters_res[1];
+		document.getElementById('Ballot_voters_delegate_value').innerText = voters_res[2];
+		document.getElementById('Ballot_voters_vote_value').innerText = voters_res[3];
+	}
+
 }
 //call functions
 //function Ballot_Ballot

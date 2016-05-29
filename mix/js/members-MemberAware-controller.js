@@ -12,6 +12,7 @@ function MemberAware_updateAttributes() {
 var memberRegistry_res = MemberAware_instance.memberRegistry();
 	if(memberRegistry_res!=null)
 		document.getElementById('MemberAware_memberRegistry_value').innerText = memberRegistry_res;
+
 }
 //call functions
 //function MemberAware_isMember

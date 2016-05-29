@@ -24,12 +24,26 @@ var blogRegistry_res = Organ_instance.blogRegistry();
 var isActive_res = Organ_instance.isActive();
 	if(isActive_res!=null)
 		document.getElementById('Organ_isActive_value').innerText = isActive_res;
-var organBlog_res = Organ_instance.organBlog();
-	if(organBlog_res!=null)
-		document.getElementById('Organ_organBlog_value').innerText = organBlog_res;
 var ballotCount_res = Organ_instance.ballotCount();
 	if(ballotCount_res!=null)
 		document.getElementById('Organ_ballotCount_value').innerText = ballotCount_res;
+var _key = document.getElementById('Organ_contract_attribute_managers_input').value;
+var managers_res = Organ_instance.managers(_key);
+	if(managers_res!=null){
+		document.getElementById('Organ_managers_value').innerText = managers_res;
+	}
+var _key = document.getElementById('Organ_contract_attribute_organFunctions_input').value;
+var organFunctions_res = Organ_instance.organFunctions(_key);
+	if(organFunctions_res!=null){
+		document.getElementById('Organ_organFunctions_currentMember_value').innerText = organFunctions_res[0];
+		document.getElementById('Organ_organFunctions_functionName_value').innerText = organFunctions_res[1];
+		document.getElementById('Organ_organFunctions_id_value').innerText = organFunctions_res[2];
+		document.getElementById('Organ_organFunctions_constitutionHash_value').innerText = organFunctions_res[3];
+		document.getElementById('Organ_organFunctions_lastMemberChanged_value').innerText = organFunctions_res[4];
+		document.getElementById('Organ_organFunctions_lastConstitutionHashChanged_value').innerText = organFunctions_res[5];
+		document.getElementById('Organ_organFunctions_publisher_value').innerText = organFunctions_res[6];
+	}
+
 }
 //call functions
 //function Organ_canAccess
@@ -99,6 +113,12 @@ function Organ_getLastBallot() {
 	var res = Organ_instance.getLastBallot();
 	if(res!=null)
 		document.getElementById('Organ_getLastBallot_res').innerText = res;
+}
+//function Organ_getOrganBlog
+function Organ_getOrganBlog() {
+	var res = Organ_instance.getOrganBlog();
+	if(res!=null)
+		document.getElementById('Organ_getOrganBlog_res').innerText = res;
 }
 
 //delegated calls

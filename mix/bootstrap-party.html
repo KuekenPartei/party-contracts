@@ -1,0 +1,121 @@
+<!doctype>
+<html>
+<head>
+<script type='text/javascript' src="partyWeb3.js">
+</script>
+
+<script type='text/javascript' src="package/compilation/party.sol.js">
+</script>
+<script type='text/javascript' src="package/compilation/members.sol.js">
+</script>
+<script type='text/javascript' src="package/compilation/publishing.sol.js">
+</script>
+
+<script type='text/javascript'> 
+web3.eth.defaultAccount = web3.eth.accounts[0];
+var ShortBlogContract = web3.eth.contract(JSON.parse(ShortBlog.abi));
+var KUEKeNPartyContract = web3.eth.contract(JSON.parse(KUEKeNParty.abi));
+var FoundationConferenceContract = web3.eth.contract(JSON.parse(FoundationConference.abi));	
+var OrganContract = web3.eth.contract(JSON.parse(Organ.abi));	
+
+
+function KUEKeNParty_initalize() {
+	KUEKeNParty_instance = KUEKeNPartyContract.at(contracts['KUEKeNParty'].address);
+	console.log("instance:"+KUEKeNParty_instance.address);
+	var organCount_res = KUEKeNParty_instance.organCount();
+	console.log("organ:"+organCount_res);
+
+// 	var mr = KUEKeNParty_instance.memberRegistry();
+// 	console.log("memberregistry:"+mr);
+// 	var br = KUEKeNParty_instance.blogregistry();
+// 	console.log("blogregistry:"+br);
+// 	var br = KUEKeNParty_instance.memberRegistry_getMemberCount();
+// 	console.log("membercount:"+br);
+	var o1 = KUEKeNParty_instance.organs(0);
+	console.log("organ0:"+o1);
+	
+// 	var o2 = KUEKeNParty_instance.organs(1);
+// 	console.log("organ1:"+o2);
+// 	KUEKeNParty_instance.createOrgan("Test-Organ-1");
+// 	var organCount_res = KUEKeNParty_instance.organCount();
+// 	console.log("organ:"+organCount_res);
+	
+	var o2 = KUEKeNParty_instance.organs(1);
+	console.log("organ1:"+o2);
+
+	
+	Organ_Test(o1);
+}
+
+
+function Organ_Test(_address){
+	var Organ_instance = OrganContract.at(_address);
+	console.log("Test organ:"+Organ_instance.address);
+	
+	Organ_instance.createFunction("new created Function2","hash");	
+	var mc = Organ_instance.lastFunctionId();
+	console.log("lastFunctionId:"+mc);
+
+	
+	var o =  Organ_instance.getOrganBlog();	
+	ShortBlog_Test(o);	
+}
+
+
+
+function ShortBlog_Test(address){
+	var ShortBlog_instance = ShortBlogContract.at(address);
+	console.log("test blog instance:"+ShortBlog_instance.address);
+	
+	var mc = ShortBlog_instance.messageCount();
+	console.log("blogMessageCount:"+mc);
+		
+	var res = ShortBlog_instance.sendMessage.sendTransaction("test","22","",{value:0,gas:200000});
+	console.log("transaction res:"+res);
+	var mc = ShortBlog_instance.messageCount();
+	console.log("blogMessageCount:"+mc);
+				
+	var res = ShortBlog_instance.sendMessage("test","22","");
+	console.log("res:"+res);
+				
+	var mc = ShortBlog_instance.messageCount();
+	console.log("blogMessageCount:"+mc);
+}
+
+
+function FC_instance_initalize(address){
+	FoundationConferenceContract = web3.eth.contract(JSON.parse(FoundationConference.abi));	
+// 	console.log("instance:"+contracts['FoundationConference'].address);
+	
+	console.log("FC_instance_initalize:");
+	FC_instance = FoundationConferenceContract.at(address);
+	console.log("instance:"+FC_instance.address);
+
+	var mc = FC_instance.lastFunctionId();
+	console.log("lastFunctionId:"+mc);
+
+// 	FC_instance.createFunction("Function1","hash",{gas: 200000});	
+// 	var mc = FC_instance.lastFunctionId();
+// 	console.log("lastFunctionId:"+mc);
+	
+	FC_instance.createFunction("new created Function2","hash");	
+	var mc = FC_instance.lastFunctionId();
+	console.log("lastFunctionId:"+mc);
+	
+	var blogFunction2 = FC_instance.getFunctionBlogAddress(mc-1);
+ 	console.log("blog:"+blogFunction2);
+
+	var blogFunction2 = FC_instance.organFunctions(mc-1);
+ 	console.log("function:"+blogFunction2[1]);
+ 	console.log("blogaddress:"+blogFunction2[6]);
+ 	
+ 	
+
+}
+
+KUEKeNParty_initalize();
+
+
+</script>
+</body>
+</html>

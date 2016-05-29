@@ -9,6 +9,7 @@ function Owned_setAddress() {
 
 function Owned_updateAttributes() {
 // update attributes
+
 }
 //call functions
 //function Owned_getOwner

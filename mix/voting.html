@@ -25,6 +25,15 @@ var proposals_res = Ballot_instance.proposals();
 var ballotName_res = Ballot_instance.ballotName();
 	if(ballotName_res!=null)
 		document.getElementById('Ballot_ballotName_value').innerText = ballotName_res;
+var _key = document.getElementById('Ballot_contract_attribute_voters_input').value;
+var voters_res = Ballot_instance.voters(_key);
+	if(voters_res!=null){
+		document.getElementById('Ballot_voters_weight_value').innerText = voters_res[0];
+		document.getElementById('Ballot_voters_voted_value').innerText = voters_res[1];
+		document.getElementById('Ballot_voters_delegate_value').innerText = voters_res[2];
+		document.getElementById('Ballot_voters_vote_value').innerText = voters_res[3];
+	}
+
 }
 //call functions
 //function Ballot_Ballot
@@ -59,6 +68,7 @@ function Ballot_winningProposal() {
 
 </script>
 
+
 <!-- start of style -->
 <style>
 .contract {
@@ -87,6 +97,24 @@ Ballot:
     <div class="contract_attribute" id="Ballot_contract_attribute_ballotName"> ballotName:
       <div class="contract_attribute_value" id="Ballot_ballotName_value"> </div>
     </div>
+
+<!--struct -->
+<div class="Struct_Mapping" id="Struc_Ballot_contract_attribute_voters">struc mapping  voters:
+		<input type='text' id='Ballot_contract_attribute_voters_input'>(address)
+    	<div class="Struct_attribute" id="Ballot_contract_attribute_voters_weight"> weight:
+      		<div class="Struct_attribute_value" id="Ballot_voters_weight_value"> </div>
+    	</div>
+    	<div class="Struct_attribute" id="Ballot_contract_attribute_voters_voted"> voted:
+      		<div class="Struct_attribute_value" id="Ballot_voters_voted_value"> </div>
+    	</div>
+    	<div class="Struct_attribute" id="Ballot_contract_attribute_voters_delegate"> delegate:
+      		<div class="Struct_attribute_value" id="Ballot_voters_delegate_value"> </div>
+    	</div>
+    	<div class="Struct_attribute" id="Ballot_contract_attribute_voters_vote"> vote:
+      		<div class="Struct_attribute_value" id="Ballot_voters_vote_value"> </div>
+    	</div>
+  </div>
+
     <button onclick='Ballot_updateAttributes()'>update Ballot attributes</button>
   </div>
   <div class="function_execution" id="Ballot_contract_function_Ballot_Ballot_string_bytes32">

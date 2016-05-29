@@ -9,6 +9,12 @@ function Manageable_setAddress() {
 
 function Manageable_updateAttributes() {
 // update attributes
+var _key = document.getElementById('Manageable_contract_attribute_managers_input').value;
+var managers_res = Manageable_instance.managers(_key);
+	if(managers_res!=null){
+		document.getElementById('Manageable_managers_value').innerText = managers_res;
+	}
+
 }
 //call functions
 //function Manageable_canAccess
