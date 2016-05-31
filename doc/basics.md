@@ -7,6 +7,8 @@ Collection of basic functionalities.
 
 * [Manageable](#contract-manageable)
 
+* [Multiowned](#contract-multiowned)
+
 
 ## contract: Owned
 
@@ -88,5 +90,142 @@ _newManagerAddress|address|in|
 name|type|direction|doc
 ----|----|----|----
 _managerAddress|address|in|
+
+
+## contract: Multiowned
+
+    overview:
+	function Multiowned(address _owners,uint _required) public  
+	function revoke(bytes32 _operation) external  
+	function changeOwner(address _from,address _to) external  onlyManyOwners(sha3(msg.data)) 
+	function addOwner(address _owner) external  onlyManyOwners(sha3(msg.data)) 
+	function removeOwner(address _owner) external  onlyManyOwners(sha3(msg.data)) 
+	function changeRequirement(uint _newRequired) external  onlyManyOwners(sha3(msg.data)) 
+	function isOwner(address _addr) public  returns (bool )
+	function hasConfirmed(bytes32 _operation,address _owner) public   constant returns (bool )
+	function confirmAndCheck(bytes32 _operation) internal  returns (bool )
+	function reorganizeOwners() private  
+	function clearPending() internal  
+
+
+
+
+
+### structs:
+
+PendingState
+
+
+#### PendingState properties
+
+name|type|visiblity|delegate|doc
+----|----|----|----|----
+yetNeeded|uint|public||
+ownersDone|uint|public||
+index|uint|public||
+
+
+
+#### Multiowned properties
+
+name|type|visiblity|delegate|doc
+----|----|----|----|----
+m_required|uint|public||The number of owners that must confirm the same operation before it is run.
+m_numOwners|uint|public||pointer used to find a free slot in m_owners
+m_owners|uint|public||
+c_maxOwners|uint|public||
+m_pendingIndex|bytes32|public||
+
+#### Multiowned mappings
+
+name|type|mapsTo|visiblity|doc
+----|----|----|----|----
+m_ownerIndex|uint|uint|public|index on the list of owners to allow reverse lookup-
+
+#### Multiowned.Multiowned(address _owners,uint _required) public  
+
+Constructor is given number of sigs required to do protected "onlymanyowners" transactions
+as well as the selection of addresses capable of confirming them.
+
+
+name|type|direction|doc
+----|----|----|----
+_owners|address|in|
+_required|uint|in|
+
+#### Multiowned.revoke(bytes32 _operation) external  
+
+Revokes a prior confirmation of the given operation.
+
+
+name|type|direction|doc
+----|----|----|----
+_operation|bytes32|in|
+
+#### Multiowned.changeOwner(address _from,address _to) external  onlyManyOwners(sha3(msg.data)) 
+
+Replaces an owner `_from` with another `_to`.
+
+
+name|type|direction|doc
+----|----|----|----
+_from|address|in|
+_to|address|in|
+
+#### Multiowned.addOwner(address _owner) external  onlyManyOwners(sha3(msg.data)) 
+
+Replaces an owner `_from` with another `_to`.
+
+
+name|type|direction|doc
+----|----|----|----
+_owner|address|in|
+
+#### Multiowned.removeOwner(address _owner) external  onlyManyOwners(sha3(msg.data)) 
+
+
+name|type|direction|doc
+----|----|----|----
+_owner|address|in|
+
+#### Multiowned.changeRequirement(uint _newRequired) external  onlyManyOwners(sha3(msg.data)) 
+
+
+name|type|direction|doc
+----|----|----|----
+_newRequired|uint|in|
+
+#### Multiowned.isOwner(address _addr) public  returns (bool )
+
+
+name|type|direction|doc
+----|----|----|----
+_addr|address|in|
+|bool|return|
+
+#### Multiowned.hasConfirmed(bytes32 _operation,address _owner) public   constant returns (bool )
+
+
+name|type|direction|doc
+----|----|----|----
+_operation|bytes32|in|
+_owner|address|in|
+|bool|return|
+
+#### Multiowned.confirmAndCheck(bytes32 _operation) internal  returns (bool )
+
+
+name|type|direction|doc
+----|----|----|----
+_operation|bytes32|in|
+|bool|return|
+
+#### Multiowned.reorganizeOwners() private  
+
+
+
+#### Multiowned.clearPending() internal  
+
+
 
 

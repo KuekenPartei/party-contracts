@@ -13,7 +13,7 @@ import "./voting.sol";
 * An organ is part of the party, defined in the constitution.
 * It is populated by functions party members.
 */
-contract Organ is MemberAware,Manageable,MessagePublisher {
+contract Organ is Manageable,MemberAware,MessagePublisher {
     /*
     * The function definition.
     * A function is defined in the constitution of the party.
@@ -143,6 +143,7 @@ contract Organ is MemberAware,Manageable,MessagePublisher {
 		ballotCount++;
 		Ballot b = new Ballot(name,proposalNames);
 		ballots[ballotCount] = b;
+		return ballotCount;
 		//End of user code
 	}
 	
