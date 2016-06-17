@@ -12,6 +12,7 @@
 	function sendMessage(string message,string hash,string er) public  
 	function ShortBlog(string _name) public  
 
+inherites: [Manageable](basics#contract-manageable)
 
 
 
@@ -73,6 +74,7 @@ _name|string|in|
     overview:
 	function registerBlog(string name) public  returns (ShortBlog )
 
+inherites: [Manageable](basics#contract-manageable)
 
 
 

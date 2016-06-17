@@ -17,6 +17,8 @@ Contains the member contracts.
 	function getMemberCount() public   constant returns (uint )
 	function isActiveMember(address _memberAdress) public   constant returns (bool )
 	function changeMemberAddress(uint id,address _newMemberAddress) public  onlyManager() 
+	function getMemberData(address _address) public   constant returns (string name,uint id)
+	function publishMemberEvent(address mAddress,uint eventType) public  
 
 inherites: [Manageable](basics#contract-manageable)
 
@@ -26,6 +28,14 @@ Also the contract to manage these member states.
 The registry is a Manageable contract so the writing methods can only accessed by a registered manager.
 
 
+### MemberRegistry enums: EventType
+
+
+name|doc
+----|----|----
+memberStateChanged|
+accreditation|
+functionChange|
 ### MemberRegistry enums: MemberState
 
 
@@ -114,6 +124,23 @@ name|type|direction|doc
 ----|----|----|----
 id|uint|in|
 _newMemberAddress|address|in|
+
+#### MemberRegistry.getMemberData(address _address) public   constant returns (string name,uint id)
+
+
+name|type|direction|doc
+----|----|----|----
+_address|address|in|
+name|string|return|
+id|uint|return|
+
+#### MemberRegistry.publishMemberEvent(address mAddress,uint eventType) public  
+
+
+name|type|direction|doc
+----|----|----|----
+mAddress|address|in|
+eventType|uint|in|
 
 
 ## contract: MemberAware

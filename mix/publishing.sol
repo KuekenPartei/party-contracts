@@ -20,7 +20,7 @@ contract MessagePublisher {
 }
 
 
-contract ShortBlog {
+contract ShortBlog is Manageable {
     /*
     * A message in the blog.
     */
@@ -78,7 +78,7 @@ contract ShortBlog {
 }
 
 
-contract BlogRegistry {
+contract BlogRegistry is Manageable {
 
 	uint public blogCount;
 	mapping (uint=>ShortBlog)public blogs;

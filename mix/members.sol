@@ -15,6 +15,7 @@ import "./basics.sol";
 * The registry is a Manageable contract so the writing methods can only accessed by a registered manager.
 */
 contract MemberRegistry is Manageable {
+    enum EventType { memberStateChanged,accreditation,functionChange }
     enum MemberState { deleted,inactive,active }
     /*
     * A member can be active, inactive or deleted.
@@ -36,6 +37,9 @@ contract MemberRegistry is Manageable {
 	// End of user code
 	
 	
+	event MemberEvent(address mAddress,EventType eType,uint id,string name,MemberState memberState);
+	
+	
 	/*
 	* Add a member.
 	* 
@@ -53,7 +57,7 @@ contract MemberRegistry is Manageable {
 		 activeMemberCount++;			
 		
 		//Start of user code MemberRegistry.function.addMember
-		//TODO: implement
+		publishMemberEvent(_memberAddress,uint(EventType.memberStateChanged));
 		//End of user code
 	}
 	
@@ -72,7 +76,7 @@ contract MemberRegistry is Manageable {
 		 }
 		
 		//Start of user code MemberRegistry.function.unregisterMember
-		//TODO: implement
+		publishMemberEvent(partyMembers[id].member,uint(EventType.memberStateChanged));
 		//End of user code
 	}
 	
@@ -84,7 +88,7 @@ contract MemberRegistry is Manageable {
 	*/
 	function getMemberCount() public   constant returns (uint ) {
 		//Start of user code MemberRegistry.function.getMemberCount
-		//TODO: implement
+		return activeMemberCount;
 		//End of user code
 	}
 	
@@ -119,17 +123,35 @@ contract MemberRegistry is Manageable {
 		 }
 		
 		//Start of user code MemberRegistry.function.changeMemberAddress
-		//TODO: implement
+		MemberEvent(_newMemberAddress,EventType.memberStateChanged,id,partyMembers[id].name,partyMembers[id].state);
 		//End of user code
 	}
 	
-	// getActiveMemberCount
-	function getActiveMemberCount() returns(uint) {
-		return activeMemberCount;
+	
+	
+	function getMemberData(address _address) public   constant returns (string name,uint id) {
+		//Start of user code MemberRegistry.function.getMemberData
+		if(!isActiveMember(_address)) throw;
+		
+		Member m = memberAddress[_address];
+		name = m.name;
+		id= m.id;
+		return;
+		//End of user code
 	}
-	// setActiveMemberCount
-	function setActiveMemberCount (uint aActiveMemberCount) {
-		activeMemberCount = aActiveMemberCount;
+	
+	
+	
+	function publishMemberEvent(address mAddress,uint eventType) public   {
+		//Start of user code MemberRegistry.function.publishMemberEvent
+		EventType state = EventType(eventType);
+		Member m = memberAddress[mAddress];
+		if (state==EventType.memberStateChanged) {
+			MemberEvent(mAddress,EventType(eventType),m.id,m.name,m.state);
+		} else if (state==EventType.accreditation) {
+			MemberEvent(mAddress,EventType(eventType),m.id,m.name,m.state);
+		}
+		//End of user code
 	}
 	
 	// Start of user code MemberRegistry.operations

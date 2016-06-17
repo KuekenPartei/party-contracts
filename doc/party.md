@@ -7,6 +7,8 @@
 
 * [KUEKeNParty](#contract-kuekenparty)
 
+* [Conference](#contract-conference)
+
 * [FoundationConference](#contract-foundationconference)
 
 
@@ -209,10 +211,39 @@ fc|address|in|
 br|address|in|
 
 
-## contract: FoundationConference
+## contract: Conference
 
     overview:
 	function accreditationMember(address _address) public  
+
+inherites: [Organ](#contract-organ)
+
+
+A conference is a meeting of the party members.
+
+
+
+
+#### Conference properties
+
+name|type|visiblity|delegate|doc
+----|----|----|----|----
+accreditation|address|private||
+accreditatedMembers|uint|public||
+date|uint|public||
+-
+
+#### Conference.accreditationMember(address _address) public  
+
+
+name|type|direction|doc
+----|----|----|----
+_address|address|in|
+
+
+## contract: FoundationConference
+
+    overview:
 
 inherites: [Organ](#contract-organ)
 
@@ -222,20 +253,6 @@ In the first and only session.
 
 
 
-
-#### FoundationConference properties
-
-name|type|visiblity|delegate|doc
-----|----|----|----|----
-accreditation|address|private||
-accreditatedMembers|uint|public||
 -
-
-#### FoundationConference.accreditationMember(address _address) public  
-
-
-name|type|direction|doc
-----|----|----|----
-_address|address|in|
 
 

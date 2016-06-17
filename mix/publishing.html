@@ -25,6 +25,11 @@ var lastMessageDate_res = ShortBlog_instance.lastMessageDate();
 var name_res = ShortBlog_instance.name();
 	if(name_res!=null)
 		document.getElementById('ShortBlog_name_value').innerText = name_res;
+var _key = document.getElementById('ShortBlog_contract_attribute_managers_input').value;
+var managers_res = ShortBlog_instance.managers(_key);
+	if(managers_res!=null){
+		document.getElementById('ShortBlog_managers_value').innerText = managers_res;
+	}
 var _key = document.getElementById('ShortBlog_contract_attribute_messages_input').value;
 var messages_res = ShortBlog_instance.messages(_key);
 	if(messages_res!=null){
@@ -39,6 +44,17 @@ var messages_res = ShortBlog_instance.messages(_key);
 
 }
 //call functions
+//function ShortBlog_canAccess
+function Manageable_canAccess() {
+	var res = ShortBlog_instance.canAccess();
+	if(res!=null)
+		document.getElementById('Manageable_canAccess_res').innerText = res;
+}
+//function ShortBlog_addManager
+function Manageable_addManager_address() {
+	var param__newManagerAddress = document.getElementById('Manageable_addManager_address__newManagerAddress').value;
+	var res = ShortBlog_instance.addManager(param__newManagerAddress);
+}
 //function ShortBlog_sendMessage
 function ShortBlog_sendMessage_string_string_string() {
 	var param_message = document.getElementById('ShortBlog_sendMessage_string_string_string_message').value;
@@ -50,6 +66,11 @@ function ShortBlog_sendMessage_string_string_string() {
 function ShortBlog_ShortBlog_string() {
 	var param__name = document.getElementById('ShortBlog_ShortBlog_string__name').value;
 	var res = ShortBlog_instance.ShortBlog(param__name);
+}
+//function ShortBlog_removeManager
+function Manageable_removeManager_address() {
+	var param__managerAddress = document.getElementById('Manageable_removeManager_address__managerAddress').value;
+	var res = ShortBlog_instance.removeManager(param__managerAddress);
 }
 
 //delegated calls
@@ -79,6 +100,11 @@ var blogs_res = BlogRegistry_instance.blogs(_key);
 		document.getElementById('BlogRegistry_blogs_lastMessageDate_value').innerText = blogs_res[1];
 		document.getElementById('BlogRegistry_blogs_messages_value').innerText = blogs_res[2];
 	}
+var _key = document.getElementById('BlogRegistry_contract_attribute_managers_input').value;
+var managers_res = BlogRegistry_instance.managers(_key);
+	if(managers_res!=null){
+		document.getElementById('BlogRegistry_managers_value').innerText = managers_res;
+	}
 var _key = document.getElementById('BlogRegistry_contract_attribute_names_input').value;
 var names_res = BlogRegistry_instance.names(_key);
 	if(names_res!=null){
@@ -87,12 +113,28 @@ var names_res = BlogRegistry_instance.names(_key);
 
 }
 //call functions
+//function BlogRegistry_canAccess
+function Manageable_canAccess() {
+	var res = BlogRegistry_instance.canAccess();
+	if(res!=null)
+		document.getElementById('Manageable_canAccess_res').innerText = res;
+}
 //function BlogRegistry_registerBlog
 function BlogRegistry_registerBlog_string() {
 	var param_name = document.getElementById('BlogRegistry_registerBlog_string_name').value;
 	var res = BlogRegistry_instance.registerBlog(param_name);
 	if(res!=null)
 		document.getElementById('BlogRegistry_registerBlog_string_res').innerText = res;
+}
+//function BlogRegistry_addManager
+function Manageable_addManager_address() {
+	var param__newManagerAddress = document.getElementById('Manageable_addManager_address__newManagerAddress').value;
+	var res = BlogRegistry_instance.addManager(param__newManagerAddress);
+}
+//function BlogRegistry_removeManager
+function Manageable_removeManager_address() {
+	var param__managerAddress = document.getElementById('Manageable_removeManager_address__managerAddress').value;
+	var res = BlogRegistry_instance.removeManager(param__managerAddress);
 }
 
 //delegated calls
@@ -129,6 +171,12 @@ ShortBlog:
       <div class="contract_attribute_value" id="ShortBlog_name_value"> </div>
     </div>
 
+<div class="Value_Mapping" id="ShortBlog_contract_attribute_managers">mapping  managers:
+		<input type='text' id='ShortBlog_contract_attribute_managers_input'>(address)
+    	<div class="Mapping_value" id="ShortBlog_contract_attribute_address"> bool:
+      		<div class="contract_attribute_value" id="ShortBlog_managers_value"> </div>
+    	</div>
+  </div>
 <!--struct -->
 <div class="Struct_Mapping" id="Struc_ShortBlog_contract_attribute_messages">struc mapping  messages:
 		<input type='text' id='ShortBlog_contract_attribute_messages_input'>(uint)
@@ -157,6 +205,12 @@ ShortBlog:
 
     <button onclick='ShortBlog_updateAttributes()'>update ShortBlog attributes</button>
   </div>
+  <div class="function_execution" id="ShortBlog_contract_function_Manageable_addManager_address">
+ShortBlog_addManager:
+	<input type='text' id='Manageable_addManager_address__newManagerAddress'>
+	<button onclick='Manageable_addManager_address()'>execute ShortBlog_addManager</button>
+	<div class="function_result" id="Manageable_addManager_address_res"></div>
+  </div>
   <div class="function_execution" id="ShortBlog_contract_function_ShortBlog_sendMessage_string_string_string">
 ShortBlog_sendMessage:
 	<input type='text' id='ShortBlog_sendMessage_string_string_string_message'>
@@ -170,6 +224,12 @@ ShortBlog_ShortBlog:
 	<input type='text' id='ShortBlog_ShortBlog_string__name'>
 	<button onclick='ShortBlog_ShortBlog_string()'>execute ShortBlog_ShortBlog</button>
 	<div class="function_result" id="ShortBlog_ShortBlog_string_res"></div>
+  </div>
+  <div class="function_execution" id="ShortBlog_contract_function_Manageable_removeManager_address">
+ShortBlog_removeManager:
+	<input type='text' id='Manageable_removeManager_address__managerAddress'>
+	<button onclick='Manageable_removeManager_address()'>execute ShortBlog_removeManager</button>
+	<div class="function_result" id="Manageable_removeManager_address_res"></div>
   </div>
 
 </div>
@@ -195,6 +255,12 @@ BlogRegistry:
       		<div class="Struct_attribute_value" id="BlogRegistry_blogs_messages_value"> </div>
     	</div>
   </div>
+<div class="Value_Mapping" id="BlogRegistry_contract_attribute_managers">mapping  managers:
+		<input type='text' id='BlogRegistry_contract_attribute_managers_input'>(address)
+    	<div class="Mapping_value" id="BlogRegistry_contract_attribute_address"> bool:
+      		<div class="contract_attribute_value" id="BlogRegistry_managers_value"> </div>
+    	</div>
+  </div>
 <div class="Value_Mapping" id="BlogRegistry_contract_attribute_names">mapping  names:
 		<input type='text' id='BlogRegistry_contract_attribute_names_input'>(uint)
     	<div class="Mapping_value" id="BlogRegistry_contract_attribute_uint"> string:
@@ -209,6 +275,18 @@ BlogRegistry_registerBlog:
 	<input type='text' id='BlogRegistry_registerBlog_string_name'>
 	<button onclick='BlogRegistry_registerBlog_string()'>execute BlogRegistry_registerBlog</button>
 	<div class="function_result" id="BlogRegistry_registerBlog_string_res"></div>
+  </div>
+  <div class="function_execution" id="BlogRegistry_contract_function_Manageable_addManager_address">
+BlogRegistry_addManager:
+	<input type='text' id='Manageable_addManager_address__newManagerAddress'>
+	<button onclick='Manageable_addManager_address()'>execute BlogRegistry_addManager</button>
+	<div class="function_result" id="Manageable_addManager_address_res"></div>
+  </div>
+  <div class="function_execution" id="BlogRegistry_contract_function_Manageable_removeManager_address">
+BlogRegistry_removeManager:
+	<input type='text' id='Manageable_removeManager_address__managerAddress'>
+	<button onclick='Manageable_removeManager_address()'>execute BlogRegistry_removeManager</button>
+	<div class="function_result" id="Manageable_removeManager_address_res"></div>
   </div>
 
 </div>

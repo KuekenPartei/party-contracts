@@ -92,6 +92,19 @@ function MemberRegistry_changeMemberAddress_uint_address() {
 	var param__newMemberAddress = document.getElementById('MemberRegistry_changeMemberAddress_uint_address__newMemberAddress').value;
 	var res = MemberRegistry_instance.changeMemberAddress(param_id, param__newMemberAddress);
 }
+//function MemberRegistry_getMemberData
+function MemberRegistry_getMemberData_address() {
+	var param__address = document.getElementById('MemberRegistry_getMemberData_address__address').value;
+	var res = MemberRegistry_instance.getMemberData(param__address);
+	if(res!=null)
+		document.getElementById('MemberRegistry_getMemberData_address_res').innerText = res;
+}
+//function MemberRegistry_publishMemberEvent
+function MemberRegistry_publishMemberEvent_address_uint() {
+	var param_mAddress = document.getElementById('MemberRegistry_publishMemberEvent_address_uint_mAddress').value;
+	var param_eventType = document.getElementById('MemberRegistry_publishMemberEvent_address_uint_eventType').value;
+	var res = MemberRegistry_instance.publishMemberEvent(param_mAddress, param_eventType);
+}
 
 //delegated calls
 
@@ -238,6 +251,19 @@ MemberRegistry_changeMemberAddress:
 	<input type='text' id='MemberRegistry_changeMemberAddress_uint_address__newMemberAddress'>
 	<button onclick='MemberRegistry_changeMemberAddress_uint_address()'>execute MemberRegistry_changeMemberAddress</button>
 	<div class="function_result" id="MemberRegistry_changeMemberAddress_uint_address_res"></div>
+  </div>
+  <div class="function_execution" id="MemberRegistry_contract_function_MemberRegistry_getMemberData_address">
+MemberRegistry_getMemberData:
+	<input type='text' id='MemberRegistry_getMemberData_address__address'>
+	<button onclick='MemberRegistry_getMemberData_address()'>execute MemberRegistry_getMemberData</button>
+	<div class="function_result" id="MemberRegistry_getMemberData_address_res"></div>
+  </div>
+  <div class="function_execution" id="MemberRegistry_contract_function_MemberRegistry_publishMemberEvent_address_uint">
+MemberRegistry_publishMemberEvent:
+	<input type='text' id='MemberRegistry_publishMemberEvent_address_uint_mAddress'>
+	<input type='text' id='MemberRegistry_publishMemberEvent_address_uint_eventType'>
+	<button onclick='MemberRegistry_publishMemberEvent_address_uint()'>execute MemberRegistry_publishMemberEvent</button>
+	<div class="function_result" id="MemberRegistry_publishMemberEvent_address_uint_res"></div>
   </div>
 
 </div>

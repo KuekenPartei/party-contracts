@@ -12,9 +12,6 @@ function FoundationConference_updateAttributes() {
 var memberRegistry_res = FoundationConference_instance.memberRegistry();
 	if(memberRegistry_res!=null)
 		document.getElementById('FoundationConference_memberRegistry_value').innerText = memberRegistry_res;
-var accreditatedMembers_res = FoundationConference_instance.accreditatedMembers();
-	if(accreditatedMembers_res!=null)
-		document.getElementById('FoundationConference_accreditatedMembers_value').innerText = accreditatedMembers_res;
 var organName_res = FoundationConference_instance.organName();
 	if(organName_res!=null)
 		document.getElementById('FoundationConference_organName_value').innerText = organName_res;
@@ -49,11 +46,6 @@ var organFunctions_res = FoundationConference_instance.organFunctions(_key);
 
 }
 //call functions
-//function FoundationConference_accreditationMember
-function FoundationConference_accreditationMember_address() {
-	var param__address = document.getElementById('FoundationConference_accreditationMember_address__address').value;
-	var res = FoundationConference_instance.accreditationMember(param__address);
-}
 //function FoundationConference_canAccess
 function Manageable_canAccess() {
 	var res = FoundationConference_instance.canAccess();

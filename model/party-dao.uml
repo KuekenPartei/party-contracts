@@ -101,10 +101,47 @@ The registry is a Manageable contract so the writing methods can only accessed b
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
           </ownedParameter>
         </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_Bei7cDPjEeaX2cAdiOKUjg" name="getMemberData">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_HHgvEDPjEeaX2cAdiOKUjg" name="_address">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_NzCy8DPjEeaX2cAdiOKUjg" name="name" direction="return">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_RI3fQDPjEeaX2cAdiOKUjg" name="id" direction="return">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_9jAR4DSxEeau9dH_RDsNPA" name="publishMemberEvent">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_KuZ8MDSyEeau9dH_RDsNPA" name="mAddress">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_N_Pa0DSyEeau9dH_RDsNPA" name="eventType">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_D0moQDSxEeau9dH_RDsNPA" name="MemberEvent">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_K7aS4DSxEeau9dH_RDsNPA" name="mAddress">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_4Y1TEDSxEeau9dH_RDsNPA" name="eType" type="_O_FjsDSxEeau9dH_RDsNPA"/>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_cf9SQDSyEeau9dH_RDsNPA" name="id">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_egg0wDSyEeau9dH_RDsNPA" name="name">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_mg3WgDSyEeau9dH_RDsNPA" name="memberState" type="_OhUKP82FEeWqGaV8xrZGjQ"/>
+        </ownedOperation>
         <nestedClassifier xmi:type="uml:Enumeration" xmi:id="_OhUKP82FEeWqGaV8xrZGjQ" name="MemberState">
           <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_OhUKQs2FEeWqGaV8xrZGjQ" name="deleted"/>
           <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_OhUKQc2FEeWqGaV8xrZGjQ" name="inactive"/>
           <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_OhUKQM2FEeWqGaV8xrZGjQ" name="active"/>
+        </nestedClassifier>
+        <nestedClassifier xmi:type="uml:Enumeration" xmi:id="_O_FjsDSxEeau9dH_RDsNPA" name="EventType">
+          <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_UJiPUDSxEeau9dH_RDsNPA" name="memberStateChanged"/>
+          <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_XOGMgDSxEeau9dH_RDsNPA" name="accreditation"/>
+          <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_t7jb4DSxEeau9dH_RDsNPA" name="functionChange"/>
         </nestedClassifier>
         <nestedClassifier xmi:type="uml:Class" xmi:id="_OhUKQ82FEeWqGaV8xrZGjQ" name="Member" useCase="_roU6gO7gEeWFFtOMC9We2w _n4kEMO7gEeWFFtOMC9We2w _58arMO7gEeWFFtOMC9We2w">
           <ownedComment xmi:type="uml:Comment" xmi:id="_OEGM0O29EeWFLeq4Kivuhw">
@@ -149,7 +186,7 @@ It has an id assigned to it and a changeable address.</body>
         <ownedRule xmi:type="uml:Constraint" xmi:id="_4pOu8e82EeWU3MNrGPvZNA" name="onlyOwner()" constrainedElement="_4pOu9O82EeWU3MNrGPvZNA _4pOu9u82EeWU3MNrGPvZNA _4pOu-O82EeWU3MNrGPvZNA">
           <specification xmi:type="uml:LiteralString" xmi:id="_4pOu8u82EeWU3MNrGPvZNA" name="constraintSpec" value="if (msg.sender != owner) return;"/>
         </ownedRule>
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_4pOu8-82EeWU3MNrGPvZNA" name="owner" visibility="protected">
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_4pOu8-82EeWU3MNrGPvZNA" name="owner" visibility="public">
           <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
         </ownedAttribute>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_4pOu9O82EeWU3MNrGPvZNA" name="getOwner">
@@ -236,6 +273,8 @@ as well as the selection of addresses capable of confirming them.</body>
           </ownedComment>
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_FjQb0CaiEea3KKhZ-vTw8A" name="_owners">
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_gcq1sC-fEeak0diUWBOhkA"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_gd8BAC-fEeak0diUWBOhkA" value="*"/>
           </ownedParameter>
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_KW_QkCaiEea3KKhZ-vTw8A" name="_required">
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
@@ -584,12 +623,11 @@ The KUEKen party.</body>
         </eAnnotations>
         <ownedEnd xmi:type="uml:Property" xmi:id="_3eXXAR9JEea0ndjKa8R1Fg" name="organ" type="_YVNoUB82Eea0ndjKa8R1Fg" association="_3eWv8B9JEea0ndjKa8R1Fg"/>
       </packagedElement>
-      <packagedElement xmi:type="uml:Class" xmi:id="_xPL18B9fEea0ndjKa8R1Fg" name="FoundationConference">
-        <ownedComment xmi:type="uml:Comment" xmi:id="_8yS4QCKKEeaF8a6hSTN_zw">
-          <body>Will found the party.
-In the first and only session.</body>
+      <packagedElement xmi:type="uml:Class" xmi:id="_s15rMDPcEeaX2cAdiOKUjg" name="Conference">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_5-EpEDPhEeaX2cAdiOKUjg">
+          <body>A conference is a meeting of the party members.</body>
         </ownedComment>
-        <generalization xmi:type="uml:Generalization" xmi:id="_7159AB9fEea0ndjKa8R1Fg" general="_YVNoUB82Eea0ndjKa8R1Fg"/>
+        <generalization xmi:type="uml:Generalization" xmi:id="_Jpf88DPeEeaX2cAdiOKUjg" general="_YVNoUB82Eea0ndjKa8R1Fg"/>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_rTE30CMYEeauNLpqWVQR0w" name="accreditation" visibility="private">
           <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_zjUPsCMYEeauNLpqWVQR0w"/>
@@ -598,11 +636,32 @@ In the first and only session.</body>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_2qZ70CXeEeapTNf89Lwepg" name="accreditatedMembers">
           <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
         </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_9kQsoDPhEeaX2cAdiOKUjg" name="date">
+          <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+        </ownedAttribute>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_CwT-UCMZEeauNLpqWVQR0w" name="accreditationMember">
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_JqIV0CMZEeauNLpqWVQR0w" name="_address">
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
           </ownedParameter>
         </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_OGjzkDPdEeaX2cAdiOKUjg" name="MemberAccreditated">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_g2uG8DPdEeaX2cAdiOKUjg" name="memberId">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_rU4H4DPdEeaX2cAdiOKUjg" name="memberName">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_yFAX4DPdEeaX2cAdiOKUjg" name="memberAddress">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_xPL18B9fEea0ndjKa8R1Fg" name="FoundationConference">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_8yS4QCKKEeaF8a6hSTN_zw">
+          <body>Will found the party.
+In the first and only session.</body>
+        </ownedComment>
+        <generalization xmi:type="uml:Generalization" xmi:id="_7159AB9fEea0ndjKa8R1Fg" general="_CiX8MB84Eea0ndjKa8R1Fg"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Association" xmi:id="_6SgCwCAeEeax9s8SJwm0VA" memberEnd="_6Sk7QCAeEeax9s8SJwm0VA _6SliUCAeEeax9s8SJwm0VA">
         <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_6SjtICAeEeax9s8SJwm0VA" source="org.eclipse.papyrus">
@@ -614,6 +673,7 @@ In the first and only session.</body>
     <packagedElement xmi:type="uml:Package" xmi:id="_t3eckO82EeWU3MNrGPvZNA" name="publishing">
       <packageImport xmi:type="uml:PackageImport" xmi:id="_yUpygO82EeWU3MNrGPvZNA" importedPackage="_qaoxoOn5EeWOi9aiZLczlg"/>
       <packagedElement xmi:type="uml:Class" xmi:id="_4pPWAO82EeWU3MNrGPvZNA" name="ShortBlog">
+        <generalization xmi:type="uml:Generalization" xmi:id="_TakE8DS7Eeau9dH_RDsNPA" general="_gzuKkM2FEeWqGaV8xrZGjQ"/>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_4pPWAu82EeWU3MNrGPvZNA" name="messageCount">
           <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
         </ownedAttribute>
@@ -678,6 +738,7 @@ In the first and only session.</body>
         </nestedClassifier>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_4pQkIO82EeWU3MNrGPvZNA" name="BlogRegistry">
+        <generalization xmi:type="uml:Generalization" xmi:id="_UJhcsDS7Eeau9dH_RDsNPA" general="_gzuKkM2FEeWqGaV8xrZGjQ"/>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_4pQkIe82EeWU3MNrGPvZNA" name="blogs">
           <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
         </ownedAttribute>
@@ -855,7 +916,6 @@ returns 0 for ok and 1 else.</body>
   <Contracts:Function xmi:id="_4pWqwe82EeWU3MNrGPvZNA" functionCode="ShortBlog b = new ShortBlog(name);&#xA;blogs[blogCount] =b ;&#xA;names[blogCount] = name;&#xA;blogCount++;&#xA;return b;&#xA;" base_Operation="_4pQkJO82EeWU3MNrGPvZNA"/>
   <Contracts:Import xmi:id="_jycdoPXWEeW3toBIpTL0QQ" base_PackageImport="_GHsxIO81EeWU3MNrGPvZNA"/>
   <Contracts:Import xmi:id="_qmgycPXWEeW3toBIpTL0QQ" base_PackageImport="_aeJ04On7EeWOi9aiZLczlg"/>
-  <Contracts:GetterSetter xmi:id="_1dvTIB81Eea0ndjKa8R1Fg" base_Property="_OhUKNM2FEeWqGaV8xrZGjQ"/>
   <Contracts:Contract xmi:id="_ZUPcYB82Eea0ndjKa8R1Fg" base_Class="_YVNoUB82Eea0ndjKa8R1Fg"/>
   <Contracts:Contract xmi:id="_vgjGgB82Eea0ndjKa8R1Fg" base_Class="_kqDeEB82Eea0ndjKa8R1Fg"/>
   <Contracts:Struct xmi:id="_GL4ZgB84Eea0ndjKa8R1Fg" base_Class="_CiX8MB84Eea0ndjKa8R1Fg"/>
@@ -943,4 +1003,9 @@ returns 0 for ok and 1 else.</body>
   <Contracts:Event xmi:id="_xL02YCamEea3KKhZ-vTw8A" base_Operation="_XzZ1kCamEea3KKhZ-vTw8A"/>
   <Contracts:Event xmi:id="_x9Mo8CamEea3KKhZ-vTw8A" base_Operation="_gkpowCamEea3KKhZ-vTw8A"/>
   <Contracts:Event xmi:id="_y0SpACamEea3KKhZ-vTw8A" base_Operation="_qaCZgCamEea3KKhZ-vTw8A"/>
+  <Contracts:Contract xmi:id="_Vw96gDPdEeaX2cAdiOKUjg" base_Class="_s15rMDPcEeaX2cAdiOKUjg"/>
+  <Contracts:Event xmi:id="_XXelUDPdEeaX2cAdiOKUjg" base_Operation="_OGjzkDPdEeaX2cAdiOKUjg"/>
+  <Contracts:Function xmi:id="_gVfacDPjEeaX2cAdiOKUjg" base_Operation="_Bei7cDPjEeaX2cAdiOKUjg" returnType="constant"/>
+  <Contracts:Event xmi:id="_yCWSIDSxEeau9dH_RDsNPA" base_Operation="_D0moQDSxEeau9dH_RDsNPA"/>
+  <Contracts:Function xmi:id="_DycPoDSyEeau9dH_RDsNPA" base_Operation="_9jAR4DSxEeau9dH_RDsNPA"/>
 </xmi:XMI>

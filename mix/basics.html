@@ -16,6 +16,9 @@ function Owned_setAddress() {
 
 function Owned_updateAttributes() {
 // update attributes
+var owner_res = Owned_instance.owner();
+	if(owner_res!=null)
+		document.getElementById('Owned_owner_value').innerText = owner_res;
 
 }
 //call functions
@@ -207,6 +210,9 @@ function Multiowned_confirmAndCheck_bytes32() {
 Owned:
   <input type='text' id='Owned_address'> <button onclick='Owned_setAddress()'>change Owned Address</button>
   <div class="contract_attributes" id="Owned_contract_attributes"> attributes:
+    <div class="contract_attribute" id="Owned_contract_attribute_owner"> owner:
+      <div class="contract_attribute_value" id="Owned_owner_value"> </div>
+    </div>
 
 
     <button onclick='Owned_updateAttributes()'>update Owned attributes</button>

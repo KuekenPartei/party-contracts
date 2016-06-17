@@ -107,6 +107,7 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 		//blogRegistry = new BlogRegistry();		
 		
 		organBlog = blogRegistry.registerBlog(organName);
+		isActive = true;
 //		organBlog.changeOwner(this);
 		
 		//End of user code
@@ -306,27 +307,48 @@ contract KUEKeNParty is Party {
 }
 
 /*
+* A conference is a meeting of the party members.
+*/
+contract Conference is Organ {
+
+	address[] private accreditation;
+	uint public accreditatedMembers;
+	uint public date;
+	// Start of user code Conference.attributes
+	//TODO: implement
+	// End of user code
+	
+	
+	event MemberAccreditated(uint memberId,string memberName,address memberAddress);
+	
+	
+	
+	function accreditationMember(address _address) public   {
+		//Start of user code Conference.function.accreditationMember
+		if(!isMember(_address))throw;
+		
+		accreditation.push(_address);
+		accreditatedMembers++;
+		memberRegistry.publishMemberEvent(_address,1);
+		
+			
+		//End of user code
+	}
+	
+	// Start of user code Conference.operations
+	//TODO: implement
+	// End of user code
+}
+
+/*
 * Will found the party.
 * In the first and only session.
 */
 contract FoundationConference is Organ {
 
-	address[] private accreditation;
-	uint public accreditatedMembers;
 	// Start of user code FoundationConference.attributes
 	//TODO: implement
 	// End of user code
-	
-	
-	
-	function accreditationMember(address _address) public   {
-		//Start of user code FoundationConference.function.accreditationMember
-		if(!isMember(_address))throw;
-		
-		accreditation.push(_address);
-		accreditatedMembers++;
-		//End of user code
-	}
 	
 	// Start of user code FoundationConference.operations
 	/**

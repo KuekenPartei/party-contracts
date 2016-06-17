@@ -9,6 +9,9 @@ function Owned_setAddress() {
 
 function Owned_updateAttributes() {
 // update attributes
+var owner_res = Owned_instance.owner();
+	if(owner_res!=null)
+		document.getElementById('Owned_owner_value').innerText = owner_res;
 
 }
 //call functions

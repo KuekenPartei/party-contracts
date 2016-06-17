@@ -10,7 +10,7 @@
 
 contract Owned {
 
-	address internal owner;
+	address public owner;
 	// Start of user code Owned.attributes
 	//TODO: implement
 	// End of user code
@@ -139,7 +139,7 @@ contract Multiowned {
 	uint public m_required;
 	uint public m_numOwners;
 	uint[250] public m_owners;
-	uint public c_maxOwners = 250;
+	uint constant  public c_maxOwners = 250;
 	bytes32[] public m_pendingIndex;
 	mapping (uint=>uint)public m_ownerIndex;
 	mapping (bytes32=>PendingState)public m_pending;
@@ -179,7 +179,7 @@ contract Multiowned {
 	* _owners -
 	* _required -
 	*/
-	function Multiowned(address _owners,uint _required) public   {
+	function Multiowned(address[] _owners,uint _required) public   {
 		//Start of user code Multiowned.function.Multiowned
         m_numOwners = _owners.length + 1;
         m_owners[1] = uint(msg.sender);
@@ -208,7 +208,7 @@ contract Multiowned {
         var pending = m_pending[_operation];
         if (pending.ownersDone & ownerIndexBit > 0) {
             pending.yetNeeded++;
-            pending.ownersDone -= ownerIndexBit;
+            pending.ownersDone -= ownerIndexBit; 
             Revoke(msg.sender, _operation);
         }
 		//End of user code

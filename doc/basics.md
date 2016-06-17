@@ -26,7 +26,7 @@ Collection of basic functionalities.
 
 name|type|visiblity|delegate|doc
 ----|----|----|----|----
-owner|address|protected||
+owner|address|public||
 -
 
 #### Owned.getOwner() public  onlyOwner() returns (address result)
@@ -95,7 +95,7 @@ _managerAddress|address|in|
 ## contract: Multiowned
 
     overview:
-	function Multiowned(address _owners,uint _required) public  
+	function Multiowned(address[] _owners,uint _required) public  
 	function revoke(bytes32 _operation) external  
 	function changeOwner(address _from,address _to) external  onlyManyOwners(sha3(msg.data)) 
 	function addOwner(address _owner) external  onlyManyOwners(sha3(msg.data)) 
@@ -142,7 +142,7 @@ name|type|mapsTo|visiblity|doc
 ----|----|----|----|----
 m_ownerIndex|uint|uint|public|index on the list of owners to allow reverse lookup-
 
-#### Multiowned.Multiowned(address _owners,uint _required) public  
+#### Multiowned.Multiowned(address[] _owners,uint _required) public  
 
 Constructor is given number of sigs required to do protected "onlymanyowners" transactions
 as well as the selection of addresses capable of confirming them.
