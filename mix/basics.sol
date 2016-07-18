@@ -15,7 +15,7 @@ contract Owned {
 	//TODO: implement
 	// End of user code
 	
-	modifier onlyOwner()
+	modifier onlyOwner
 	{
 	    if (msg.sender != owner) return;
 	    _
@@ -32,7 +32,7 @@ contract Owned {
 	}
 	
 	
-	function getOwner() public  onlyOwner() returns (address result) {
+	function getOwner() public  onlyOwner returns (address result) {
 		 result = owner;
 		
 		//Start of user code Owned.function.getOwner
@@ -42,17 +42,17 @@ contract Owned {
 	
 	
 	
-	function changeOwner(address newOwner) public  onlyOwner()  {
+	function changeOwner(address newOwner) public  onlyOwner  {
 		 owner = newOwner;
 		
-		//Start of user code Owned.function.changeOwner
+		//Start of user code Owned.function.changeOwner_address
 		//TODO: implement
 		//End of user code
 	}
 	
 	
 	
-	function kill() public  onlyOwner()  {
+	function kill() public  onlyOwner  {
 		 suicide(owner);
 		
 		//Start of user code Owned.function.kill
@@ -72,6 +72,7 @@ contract Owned {
 */
 contract Manageable {
 
+	uint public mangerCount;
 	mapping (address=>bool)public managers;
 	// Start of user code Manageable.attributes
 	//TODO: implement
@@ -95,30 +96,38 @@ contract Manageable {
 	
 	
 	function canAccess() internal  returns (bool ) {
-		 return managers[msg.sender];
+		 
 		
 		//Start of user code Manageable.function.canAccess
-		//TODO: implement
+		return managers[msg.sender];
 		//End of user code
 	}
 	
 	
 	
 	function addManager(address _newManagerAddress) public  onlyManager  {
-		 managers[_newManagerAddress] = true;
-		
-		//Start of user code Manageable.function.addManager
-		//TODO: implement
+		//Start of user code Manageable.function.addManager_address
+		if(!managers[_newManagerAddress])
+			mangerCount++;
+		managers[_newManagerAddress] = true;
 		//End of user code
 	}
 	
 	
 	
 	function removeManager(address _managerAddress) public  onlyManager  {
-		 managers[_managerAddress] = true;
-		
-		//Start of user code Manageable.function.removeManager
-		//TODO: implement
+		//Start of user code Manageable.function.removeManager_address
+		if(managers[_managerAddress])
+			mangerCount--;
+		managers[_managerAddress] = false;
+		//End of user code
+	}
+	
+	
+	
+	function isManager(address _managerAddress) public  returns (bool ) {
+		//Start of user code Manageable.function.isManager_address
+		return managers[_managerAddress];
 		//End of user code
 	}
 	
@@ -180,16 +189,8 @@ contract Multiowned {
 	* _required -
 	*/
 	function Multiowned(address[] _owners,uint _required) public   {
-		//Start of user code Multiowned.function.Multiowned
-        m_numOwners = _owners.length + 1;
-        m_owners[1] = uint(msg.sender);
-        m_ownerIndex[uint(msg.sender)] = 1;
-        for (uint i = 0; i < _owners.length; ++i)
-        {
-            m_owners[2 + i] = uint(_owners[i]);
-            m_ownerIndex[uint(_owners[i])] = 2 + i;
-        }
-        m_required = _required;
+		//Start of user code Multiowned.function.Multiowned_address_uint
+		//TODO: implement
 		//End of user code
 	}
 	
@@ -200,17 +201,8 @@ contract Multiowned {
 	* _operation -
 	*/
 	function revoke(bytes32 _operation) external   {
-		//Start of user code Multiowned.function.revoke
-        uint ownerIndex = m_ownerIndex[uint(msg.sender)];
-        // make sure they're an owner
-        if (ownerIndex == 0) return;
-        uint ownerIndexBit = 2**ownerIndex;
-        var pending = m_pending[_operation];
-        if (pending.ownersDone & ownerIndexBit > 0) {
-            pending.yetNeeded++;
-            pending.ownersDone -= ownerIndexBit; 
-            Revoke(msg.sender, _operation);
-        }
+		//Start of user code Multiowned.function.revoke_bytes32
+		//TODO: implement
 		//End of user code
 	}
 	
@@ -222,16 +214,8 @@ contract Multiowned {
 	* _to -
 	*/
 	function changeOwner(address _from,address _to) external  onlyManyOwners(sha3(msg.data))  {
-		//Start of user code Multiowned.function.changeOwner
-        if (isOwner(_to)) return;
-        uint ownerIndex = m_ownerIndex[uint(_from)];
-        if (ownerIndex == 0) return;
-
-        clearPending();
-        m_owners[ownerIndex] = uint(_to);
-        m_ownerIndex[uint(_from)] = 0;
-        m_ownerIndex[uint(_to)] = ownerIndex;
-        OwnerChanged(_from, _to);
+		//Start of user code Multiowned.function.changeOwner_address_address
+		//TODO: implement
 		//End of user code
 	}
 	
@@ -242,7 +226,7 @@ contract Multiowned {
 	* _owner -
 	*/
 	function addOwner(address _owner) external  onlyManyOwners(sha3(msg.data))  {
-		//Start of user code Multiowned.function.addOwner
+		//Start of user code Multiowned.function.addOwner_address
         if (isOwner(_owner)) return;
 
         clearPending();
@@ -260,92 +244,40 @@ contract Multiowned {
 	
 	
 	function removeOwner(address _owner) external  onlyManyOwners(sha3(msg.data))  {
-		//Start of user code Multiowned.function.removeOwner
-        uint ownerIndex = m_ownerIndex[uint(_owner)];
-        if (ownerIndex == 0) return;
-        if (m_required > m_numOwners - 1) return;
-
-        m_owners[ownerIndex] = 0;
-        m_ownerIndex[uint(_owner)] = 0;
-        clearPending();
-        reorganizeOwners(); //make sure m_numOwner is equal to the number of owners and always points to the optimal free slot
-        OwnerRemoved(_owner);
+		//Start of user code Multiowned.function.removeOwner_address
+		//TODO: implement
 		//End of user code
 	}
 	
 	
 	
 	function changeRequirement(uint _newRequired) external  onlyManyOwners(sha3(msg.data))  {
-		//Start of user code Multiowned.function.changeRequirement
-        if (_newRequired > m_numOwners) return;
-        m_required = _newRequired;
-        clearPending();
-        RequirementChanged(_newRequired);
+		//Start of user code Multiowned.function.changeRequirement_uint
+		//TODO: implement
 		//End of user code
 	}
 	
 	
 	
 	function isOwner(address _addr) public  returns (bool ) {
-		//Start of user code Multiowned.function.isOwner
-		return m_ownerIndex[uint(_addr)] > 0;
+		//Start of user code Multiowned.function.isOwner_address
+		//TODO: implement
 		//End of user code
 	}
 	
 	
 	
 	function hasConfirmed(bytes32 _operation,address _owner) public   constant returns (bool ) {
-		//Start of user code Multiowned.function.hasConfirmed
-        var pending = m_pending[_operation];
-        uint ownerIndex = m_ownerIndex[uint(_owner)];
-
-        // make sure they're an owner
-        if (ownerIndex == 0) return false;
-
-        // determine the bit to set for this owner.
-        uint ownerIndexBit = 2**ownerIndex;
-        return !(pending.ownersDone & ownerIndexBit == 0);
+		//Start of user code Multiowned.function.hasConfirmed_bytes32_address
+		//TODO: implement
 		//End of user code
 	}
 	
 	
 	
 	function confirmAndCheck(bytes32 _operation) internal  returns (bool ) {
-		//Start of user code Multiowned.function.confirmAndCheck
-        // determine what index the present sender is:
-        uint ownerIndex = m_ownerIndex[uint(msg.sender)];
-        // make sure they're an owner
-        if (ownerIndex == 0) return;
-
-        var pending = m_pending[_operation];
-        // if we're not yet working on this operation, switch over and reset the confirmation status.
-        if (pending.yetNeeded == 0) {
-            // reset count of confirmations needed.
-            pending.yetNeeded = m_required;
-            // reset which owners have confirmed (none) - set our bitmap to 0.
-            pending.ownersDone = 0;
-            pending.index = m_pendingIndex.length++;
-            m_pendingIndex[pending.index] = _operation;
-        }
-        // determine the bit to set for this owner.
-        uint ownerIndexBit = 2**ownerIndex;
-        // make sure we (the message sender) haven't confirmed this operation previously.
-        if (pending.ownersDone & ownerIndexBit == 0) {
-            Confirmation(msg.sender, _operation);
-            // ok - check if count is enough to go ahead.
-            if (pending.yetNeeded <= 1) {
-                // enough confirmations: reset and run interior.
-                delete m_pendingIndex[m_pending[_operation].index];
-                delete m_pending[_operation];
-                return true;
-            }
-            else
-            {
-                // not enough: record that this owner in particular confirmed.
-                pending.yetNeeded--;
-                pending.ownersDone |= ownerIndexBit;
-            }
-        }
+		//Start of user code Multiowned.function.confirmAndCheck_bytes32
+		//TODO: implement
 		//End of user code
 	}
 	

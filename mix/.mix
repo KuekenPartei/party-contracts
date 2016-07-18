@@ -19,7 +19,7 @@
 	"registerContentHashTrHash": "",
 	"registerUrlBlockNumber": -1,
 	"registerUrlTrHash": "",
-	"startUrl": "/bootstrap-party.html",
+	"startUrl": "/test/publishing-tests.html",
 	"title": "party-dao",
 	"states": [
 		{
@@ -97,52 +97,21 @@
 					"status": "mined",
 					"transactions": [
 						{
-							"contractId": "<BlogRegistry - 0>",
-							"functionId": "registerBlog",
+							"contractId": "ShortBlog",
+							"functionId": "ShortBlog",
 							"gas": {
-								"value": "963242"
+								"value": "783955"
 							},
 							"gasAuto": true,
 							"gasPrice": {
 								"unit": 18,
 								"value": "100000"
 							},
-							"isContractCreation": false,
+							"isContractCreation": true,
 							"isFunctionCall": true,
-							"label": "<BlogRegistry - 0>.registerBlog()",
+							"label": "ShortBlog.ShortBlog()",
 							"parameters": {
-								"name": "test1"
-							},
-							"saveStatus": true,
-							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
-							"value": {
-								"unit": 18,
-								"value": "0"
-							}
-						}
-					]
-				},
-				{
-					"hash": "",
-					"number": 3,
-					"status": "mined",
-					"transactions": [
-						{
-							"contractId": "<BlogRegistry - 0>",
-							"functionId": "registerBlog",
-							"gas": {
-								"value": "938242"
-							},
-							"gasAuto": true,
-							"gasPrice": {
-								"unit": 18,
-								"value": "100000"
-							},
-							"isContractCreation": false,
-							"isFunctionCall": true,
-							"label": "<BlogRegistry - 0>.registerBlog()",
-							"parameters": {
-								"name": "test2"
+								"_name": "Test1"
 							},
 							"saveStatus": true,
 							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
@@ -4451,95 +4420,6 @@
 							"isFunctionCall": true,
 							"label": "MemberRegistry.MemberRegistry()",
 							"parameters": {},
-							"saveStatus": true,
-							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
-							"value": {
-								"unit": 18,
-								"value": "0"
-							}
-						},
-						{
-							"contractId": "<MemberRegistry - 0>",
-							"functionId": "addMember",
-							"gas": {
-								"value": "167363"
-							},
-							"gasAuto": true,
-							"gasPrice": {
-								"unit": 18,
-								"value": "100000"
-							},
-							"isContractCreation": false,
-							"isFunctionCall": true,
-							"label": "MemberRegistry.addMember()",
-							"parameters": {
-								"_memberAddress": "0x06400992be45bc64a52b5c55d3df84596d6cb4a1",
-								"name": "testMember",
-								"_address": "<MemberRegistry - 0>"
-							},
-							"saveStatus": true,
-							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
-							"value": {
-								"unit": 18,
-								"value": "0"
-							}
-						}
-					]
-				},
-				{
-					"hash": "",
-					"number": 2,
-					"status": "mined",
-					"transactions": [
-						{
-							"contractId": "<MemberRegistry - 0>",
-							"functionId": "getMemberData",
-							"gas": {
-								"value": "49209"
-							},
-							"gasAuto": true,
-							"gasPrice": {
-								"unit": 18,
-								"value": "100000"
-							},
-							"isContractCreation": false,
-							"isFunctionCall": true,
-							"label": "MemberRegistry.getMemberData()",
-							"parameters": {
-								"_address": "0x06400992be45bc64a52b5c55d3df84596d6cb4a1"
-							},
-							"saveStatus": true,
-							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
-							"value": {
-								"unit": 18,
-								"value": "0"
-							}
-						}
-					]
-				},
-				{
-					"hash": "",
-					"number": 3,
-					"status": "mined",
-					"transactions": [
-						{
-							"contractId": "<MemberRegistry - 0>",
-							"functionId": "addMember",
-							"gas": {
-								"value": "166957"
-							},
-							"gasAuto": true,
-							"gasPrice": {
-								"unit": 18,
-								"value": "100000"
-							},
-							"isContractCreation": false,
-							"isFunctionCall": true,
-							"label": "<MemberRegistry - 0>.addMember()",
-							"parameters": {
-								"_memberAddress": "0xfa4b795b491cc1975e89f3c78972c3e2e827c882",
-								"name": "name"
-							},
 							"saveStatus": true,
 							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
 							"value": {

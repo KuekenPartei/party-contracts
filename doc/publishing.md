@@ -9,10 +9,10 @@
 ## contract: ShortBlog
 
     overview:
-	function sendMessage(string message,string hash,string er) public  
+	function sendMessage(string message,string hash,string er) public  onlyOwner() 
 	function ShortBlog(string _name) public  
 
-inherites: [Manageable](basics#contract-manageable)
+inherites: [Owned](basics#contract-owned)
 
 
 
@@ -52,7 +52,7 @@ name|type|mapsTo|visiblity|doc
 ----|----|----|----|----
 messages|uint|Message|public|-
 
-#### ShortBlog.sendMessage(string message,string hash,string er) public  
+#### ShortBlog.sendMessage(string message,string hash,string er) public  onlyOwner() 
 
 
 name|type|direction|doc
@@ -68,11 +68,19 @@ name|type|direction|doc
 ----|----|----|----
 _name|string|in|
 
+#### event NewMessage
+
+
+name|type|indexed|doc
+----|----|----|----
+message|string||
+messageId|uint||
+
 
 ## contract: BlogRegistry
 
     overview:
-	function registerBlog(string name) public  returns (ShortBlog )
+	function registerBlog(string name) public  onlyManager() returns (ShortBlog )
 
 inherites: [Manageable](basics#contract-manageable)
 
@@ -92,7 +100,7 @@ name|type|mapsTo|visiblity|doc
 ----|----|----|----|----
 blogs|uint|ShortBlog|public|names|uint|string|public|-
 
-#### BlogRegistry.registerBlog(string name) public  returns (ShortBlog )
+#### BlogRegistry.registerBlog(string name) public  onlyManager() returns (ShortBlog )
 
 Register a blog under a name.
 returns 0 for ok and 1 else.

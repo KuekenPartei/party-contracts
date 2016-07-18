@@ -56,8 +56,9 @@ contract MemberRegistry is Manageable {
 		 partyMemberCount++;
 		 activeMemberCount++;			
 		
-		//Start of user code MemberRegistry.function.addMember
-		publishMemberEvent(_memberAddress,uint(EventType.memberStateChanged));
+		//Start of user code MemberRegistry.function.addMember_string_address
+		Member m = memberAddress[_memberAddress]; 
+		MemberEvent(_memberAddress,EventType.memberStateChanged,m.id,m.name,m.state);
 		//End of user code
 	}
 	
@@ -75,8 +76,9 @@ contract MemberRegistry is Manageable {
 		 	activeMemberCount--;
 		 }
 		
-		//Start of user code MemberRegistry.function.unregisterMember
-		publishMemberEvent(partyMembers[id].member,uint(EventType.memberStateChanged));
+		//Start of user code MemberRegistry.function.unregisterMember_uint
+		Member m = partyMembers[id];
+		MemberEvent(m.member,EventType.memberStateChanged,m.id,m.name,m.state);
 		//End of user code
 	}
 	
@@ -103,7 +105,7 @@ contract MemberRegistry is Manageable {
 	function isActiveMember(address _memberAdress) public   constant returns (bool ) {
 		 return memberAddress[_memberAdress].state == MemberState.active;
 		
-		//Start of user code MemberRegistry.function.isActiveMember
+		//Start of user code MemberRegistry.function.isActiveMember_address
 		//TODO: implement
 		//End of user code
 	}
@@ -122,35 +124,26 @@ contract MemberRegistry is Manageable {
 		 	memberAddress[_newMemberAddress] = partyMembers[id];
 		 }
 		
-		//Start of user code MemberRegistry.function.changeMemberAddress
-		MemberEvent(_newMemberAddress,EventType.memberStateChanged,id,partyMembers[id].name,partyMembers[id].state);
+		//Start of user code MemberRegistry.function.changeMemberAddress_uint_address
+		Member m = partyMembers[id];
+		MemberEvent(m.member,EventType.memberStateChanged,m.id,m.name,m.state);
 		//End of user code
 	}
 	
 	
 	
 	function getMemberData(address _address) public   constant returns (string name,uint id) {
-		//Start of user code MemberRegistry.function.getMemberData
-		if(!isActiveMember(_address)) throw;
-		
-		Member m = memberAddress[_address];
-		name = m.name;
-		id= m.id;
-		return;
+		//Start of user code MemberRegistry.function.getMemberData_address
+		//TODO: implement
 		//End of user code
 	}
 	
 	
 	
 	function publishMemberEvent(address mAddress,uint eventType) public   {
-		//Start of user code MemberRegistry.function.publishMemberEvent
-		EventType state = EventType(eventType);
-		Member m = memberAddress[mAddress];
-		if (state==EventType.memberStateChanged) {
-			MemberEvent(mAddress,EventType(eventType),m.id,m.name,m.state);
-		} else if (state==EventType.accreditation) {
-			MemberEvent(mAddress,EventType(eventType),m.id,m.name,m.state);
-		}
+		//Start of user code MemberRegistry.function.publishMemberEvent_address_uint
+		Member m = memberAddress[mAddress]; 
+		MemberEvent(mAddress,EventType(eventType),m.id,m.name,m.state);
 		//End of user code
 	}
 	
@@ -180,7 +173,7 @@ contract MemberAware {
 	function isMember(address _address) internal   constant returns (bool ) {
 		 return memberRegistry.isActiveMember(_address);
 		
-		//Start of user code MemberAware.function.isMember
+		//Start of user code MemberAware.function.isMember_address
 		//TODO: implement
 		//End of user code
 	}

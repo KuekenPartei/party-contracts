@@ -3,7 +3,12 @@ var BallotContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"chairperson","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"proposals","outputs":[{"name":"","type":"Proposal"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"ballotName","outputs":[{"name":"","type":"string"}],"type":"function"},
-{"constant":true,"inputs":[{"name":"","type":"invalid"}],"name":"voters","outputs":[{"name":"","type":"Voter"}],"type":"function"},
+{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "voters","outputs": [
+{ "name": "weight", "type": "uint"}
+,{ "name": "voted", "type": "bool"}
+,{ "name": "delegate", "type": "address"}
+,{ "name": "vote", "type": "uint"}
+],"type": "function"	},
   {
     "constant": false,
     "inputs": [{"name": "name","type": "string"},{"name": "proposalNames","type": "bytes32"}],    
@@ -41,5 +46,6 @@ var BallotContract = web3.eth.contract([
   }
  
 ] );   
+
 
 

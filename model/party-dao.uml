@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Contracts="http:///schemas/Contracts/_0bFfECAAEeaJNupN1PxZ6A/31" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http:///schemas/Contracts/_0bFfECAAEeaJNupN1PxZ6A/31 pathmap://UML_PROFILE/solidity_profiles.uml#_0bGGICAAEeaJNupN1PxZ6A">
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Contracts="http:///schemas/Contracts/_HcCYMDMgEeaX2cAdiOKUjg/33" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http:///schemas/Contracts/_HcCYMDMgEeaX2cAdiOKUjg/33 pathmap://UML_PROFILE/solidity_profiles.uml#_HcC_QDMgEeaX2cAdiOKUjg">
   <uml:Model xmi:id="_Te7JIM2EEeWqGaV8xrZGjQ" name="party-dao">
     <packagedElement xmi:type="uml:Package" xmi:id="_exlJIM2EEeWqGaV8xrZGjQ" name="uses-cases">
       <packagedElement xmi:type="uml:Package" xmi:id="_L7qJ4O7fEeWFFtOMC9We2w" name="manageable">
@@ -183,7 +183,7 @@ It has an id assigned to it and a changeable address.</body>
         <body>Collection of basic functionalities.</body>
       </ownedComment>
       <packagedElement xmi:type="uml:Class" xmi:id="_4pOu8O82EeWU3MNrGPvZNA" name="Owned">
-        <ownedRule xmi:type="uml:Constraint" xmi:id="_4pOu8e82EeWU3MNrGPvZNA" name="onlyOwner()" constrainedElement="_4pOu9O82EeWU3MNrGPvZNA _4pOu9u82EeWU3MNrGPvZNA _4pOu-O82EeWU3MNrGPvZNA">
+        <ownedRule xmi:type="uml:Constraint" xmi:id="_4pOu8e82EeWU3MNrGPvZNA" name="onlyOwner" constrainedElement="_4pOu9O82EeWU3MNrGPvZNA _4pOu9u82EeWU3MNrGPvZNA _4pOu-O82EeWU3MNrGPvZNA">
           <specification xmi:type="uml:LiteralString" xmi:id="_4pOu8u82EeWU3MNrGPvZNA" name="constraintSpec" value="if (msg.sender != owner) return;"/>
         </ownedRule>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_4pOu8-82EeWU3MNrGPvZNA" name="owner" visibility="public">
@@ -213,6 +213,9 @@ A registered manager is an address mapped with true.</body>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_GGeLwO25EeWFLeq4Kivuhw" name="managers">
           <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
         </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_XyBW8E0xEeadF69It2kUQA" name="mangerCount">
+          <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+        </ownedAttribute>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_nkPcIM2FEeWqGaV8xrZGjQ" name="canAccess" visibility="protected">
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_yPFOMM2FEeWqGaV8xrZGjQ" direction="return">
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_LedxoKKuEeWvY9GWZZMftw"/>
@@ -225,7 +228,21 @@ A registered manager is an address mapped with true.</body>
         </ownedOperation>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_ftqBUO25EeWFLeq4Kivuhw" name="removeManager">
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_j8W2YO25EeWFLeq4Kivuhw" name="_managerAddress">
+            <ownedComment xmi:type="uml:Comment" xmi:id="_dhwYkE0_EeadF69It2kUQA">
+              <body>The address of the manager to work with</body>
+            </ownedComment>
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_UcmK4E0_EeadF69It2kUQA" name="isManager">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_fjF-ME0_EeadF69It2kUQA" name="_managerAddress">
+            <ownedComment xmi:type="uml:Comment" xmi:id="_fjF-MU0_EeadF69It2kUQA">
+              <body>The address of the manager to work with</body>
+            </ownedComment>
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_iuN2YE0_EeadF69It2kUQA" direction="return">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_LedxoKKuEeWvY9GWZZMftw"/>
           </ownedParameter>
         </ownedOperation>
       </packagedElement>
@@ -661,7 +678,7 @@ The KUEKen party.</body>
           <body>Will found the party.
 In the first and only session.</body>
         </ownedComment>
-        <generalization xmi:type="uml:Generalization" xmi:id="_7159AB9fEea0ndjKa8R1Fg" general="_CiX8MB84Eea0ndjKa8R1Fg"/>
+        <generalization xmi:type="uml:Generalization" xmi:id="_TYLn4DTSEeaFMdTZlKbkRA" general="_s15rMDPcEeaX2cAdiOKUjg"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Association" xmi:id="_6SgCwCAeEeax9s8SJwm0VA" memberEnd="_6Sk7QCAeEeax9s8SJwm0VA _6SliUCAeEeax9s8SJwm0VA">
         <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_6SjtICAeEeax9s8SJwm0VA" source="org.eclipse.papyrus">
@@ -673,7 +690,7 @@ In the first and only session.</body>
     <packagedElement xmi:type="uml:Package" xmi:id="_t3eckO82EeWU3MNrGPvZNA" name="publishing">
       <packageImport xmi:type="uml:PackageImport" xmi:id="_yUpygO82EeWU3MNrGPvZNA" importedPackage="_qaoxoOn5EeWOi9aiZLczlg"/>
       <packagedElement xmi:type="uml:Class" xmi:id="_4pPWAO82EeWU3MNrGPvZNA" name="ShortBlog">
-        <generalization xmi:type="uml:Generalization" xmi:id="_TakE8DS7Eeau9dH_RDsNPA" general="_gzuKkM2FEeWqGaV8xrZGjQ"/>
+        <generalization xmi:type="uml:Generalization" xmi:id="_TakE8DS7Eeau9dH_RDsNPA" general="_4pOu8O82EeWU3MNrGPvZNA"/>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_4pPWAu82EeWU3MNrGPvZNA" name="messageCount">
           <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
         </ownedAttribute>
@@ -856,15 +873,15 @@ returns 0 for ok and 1 else.</body>
       </packagedElement>
     </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_TmqI0M2EEeWqGaV8xrZGjQ">
-      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SB04cCAXEeaptIkV30WcIg" source="PapyrusVersion">
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_SB04cSAXEeaptIkV30WcIg" key="Version" value="0.0.32"/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_SB04ciAXEeaptIkV30WcIg" key="Comment" value=""/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_SB04cyAXEeaptIkV30WcIg" key="Copyright" value=""/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_SB04dCAXEeaptIkV30WcIg" key="Date" value="2016-05-22"/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_SB04dSAXEeaptIkV30WcIg" key="Author" value=""/>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_YfA0QDTREeaFMdTZlKbkRA" source="PapyrusVersion">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_YfA0QTTREeaFMdTZlKbkRA" key="Version" value="0.0.34"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_YfA0QjTREeaFMdTZlKbkRA" key="Comment" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_YfA0QzTREeaFMdTZlKbkRA" key="Copyright" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_YfA0RDTREeaFMdTZlKbkRA" key="Date" value="2016-06-15"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_YfA0RTTREeaFMdTZlKbkRA" key="Author" value="Urs Zeidler"/>
       </eAnnotations>
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_TmtMIM2EEeWqGaV8xrZGjQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <references xmi:type="ecore:EPackage" href="pathmap://UML_PROFILE/solidity_profiles.uml#_0bGGICAAEeaJNupN1PxZ6A"/>
+        <references xmi:type="ecore:EPackage" href="pathmap://UML_PROFILE/solidity_profiles.uml#_HcC_QDMgEeaX2cAdiOKUjg"/>
       </eAnnotations>
       <appliedProfile xmi:type="uml:Profile" href="pathmap://UML_PROFILE/solidity_profiles.uml#_uCE5EKHREeWjOZ0I8ilEXA"/>
     </profileApplication>
@@ -881,7 +898,7 @@ returns 0 for ok and 1 else.</body>
   <Contracts:Function xmi:id="_OhqIcM2FEeWqGaV8xrZGjQ" functionCode="return memberAddress[_memberAdress].state == MemberState.active;" base_Operation="_OhUKPM2FEeWqGaV8xrZGjQ" returnType="constant"/>
   <Contracts:Struct xmi:id="_OhqvgM2FEeWqGaV8xrZGjQ" base_Class="_OhUKQ82FEeWqGaV8xrZGjQ"/>
   <Contracts:Contract xmi:id="_j_Aa0M2FEeWqGaV8xrZGjQ" base_Class="_gzuKkM2FEeWqGaV8xrZGjQ" ConstructorCode="managers[msg.sender] = true;"/>
-  <Contracts:Function xmi:id="_t9grUM2FEeWqGaV8xrZGjQ" functionCode="return managers[msg.sender];" base_Operation="_nkPcIM2FEeWqGaV8xrZGjQ"/>
+  <Contracts:Function xmi:id="_t9grUM2FEeWqGaV8xrZGjQ" functionCode="" base_Operation="_nkPcIM2FEeWqGaV8xrZGjQ"/>
   <Contracts:Contract xmi:id="_UDIXgM2GEeWqGaV8xrZGjQ" base_Class="_HcFXcM2GEeWqGaV8xrZGjQ"/>
   <Contracts:GetterSetter xmi:id="_afsLQM2GEeWqGaV8xrZGjQ" getter="false" base_Property="_VLDo4M2GEeWqGaV8xrZGjQ"/>
   <Contracts:Function xmi:id="_Q4HHMO2qEeWs5ucczjuLlQ" functionCode="return memberRegistry.isActiveMember(_address);" base_Operation="_qopL0M2GEeWqGaV8xrZGjQ" returnType="constant"/>
@@ -889,8 +906,8 @@ returns 0 for ok and 1 else.</body>
   <Contracts:Mapping xmi:id="_Nxn5kO25EeWFLeq4Kivuhw" base_Property="_GGeLwO25EeWFLeq4Kivuhw">
     <value xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_LedxoKKuEeWvY9GWZZMftw"/>
   </Contracts:Mapping>
-  <Contracts:Function xmi:id="_alYf8O25EeWFLeq4Kivuhw" functionCode="managers[_newManagerAddress] = true;" base_Operation="_R11V4O25EeWFLeq4Kivuhw"/>
-  <Contracts:Function xmi:id="_iH3Z8O25EeWFLeq4Kivuhw" functionCode="managers[_managerAddress] = true;" base_Operation="_ftqBUO25EeWFLeq4Kivuhw"/>
+  <Contracts:Function xmi:id="_alYf8O25EeWFLeq4Kivuhw" functionCode="" base_Operation="_R11V4O25EeWFLeq4Kivuhw"/>
+  <Contracts:Function xmi:id="_iH3Z8O25EeWFLeq4Kivuhw" functionCode="" base_Operation="_ftqBUO25EeWFLeq4Kivuhw"/>
   <Contracts:Function xmi:id="_RchWoO28EeWFLeq4Kivuhw" functionCode="if(id>partyMemberCount) throw;&#xA;if(partyMembers[id].state == MemberState.active){&#xA;&#x9;partyMembers[id].member = _newMemberAddress;&#xA;&#x9;memberAddress[_newMemberAddress] = partyMembers[id];&#xA;}&#xA;" base_Operation="_O67joO28EeWFLeq4Kivuhw">
     <modifiers xmi:type="Contracts:Modifier" xmi:id="_7pUWgB8zEea0ndjKa8R1Fg" parameter="" modifier="_8DcOwM2GEeWqGaV8xrZGjQ"/>
   </Contracts:Function>
@@ -900,20 +917,20 @@ returns 0 for ok and 1 else.</body>
   <Contracts:Function xmi:id="_4pSZUO82EeWU3MNrGPvZNA" functionCode="owner = newOwner;" base_Operation="_4pOu9u82EeWU3MNrGPvZNA"/>
   <Contracts:Function xmi:id="_4pTAYO82EeWU3MNrGPvZNA" functionCode="suicide(owner);" base_Operation="_4pOu-O82EeWU3MNrGPvZNA"/>
   <Contracts:Contract xmi:id="_4pTAYe82EeWU3MNrGPvZNA" base_Class="_4pPWAO82EeWU3MNrGPvZNA"/>
-  <Contracts:Mapping xmi:id="_4pTncO82EeWU3MNrGPvZNA" base_Property="_4pPWBO82EeWU3MNrGPvZNA">
-    <value xmi:type="uml:Class" href="../../kueken-party/model/short_blogger.uml#_jo7R0KNvEeWyXvjE6XZ9yw"/>
-  </Contracts:Mapping>
+  <Contracts:Mapping xmi:id="_4pTncO82EeWU3MNrGPvZNA" base_Property="_4pPWBO82EeWU3MNrGPvZNA" value="_4pPWF-82EeWU3MNrGPvZNA"/>
   <Contracts:Event xmi:id="_4pTnce82EeWU3MNrGPvZNA" base_Operation="_4pPWBe82EeWU3MNrGPvZNA"/>
-  <Contracts:Function xmi:id="_4pUOgO82EeWU3MNrGPvZNA" functionCode="messages[messageCount].message=message;&#xA;messages[messageCount].id=messageCount;&#xA;messages[messageCount].date=now;&#xA;//messages[messageCount].sender=owner;&#xA;messages[messageCount].externalResource = er;&#xA;messages[messageCount].hashValue = hash;&#xA;messages[messageCount].blockNumber=block.number;&#xA;NewMessage(message,messageCount);&#xA;messageCount++;" base_Operation="_4pPWCO82EeWU3MNrGPvZNA"/>
+  <Contracts:Function xmi:id="_4pUOgO82EeWU3MNrGPvZNA" functionCode="messages[messageCount].message=message;&#xA;messages[messageCount].id=messageCount;&#xA;messages[messageCount].date=now;&#xA;//messages[messageCount].sender=owner;&#xA;messages[messageCount].externalResource = er;&#xA;messages[messageCount].hashValue = hash;&#xA;messages[messageCount].blockNumber=block.number;&#xA;NewMessage(message,messageCount);&#xA;messageCount++;" base_Operation="_4pPWCO82EeWU3MNrGPvZNA">
+    <modifiers xmi:type="Contracts:Modifier" xmi:id="_iacqAE04EeadF69It2kUQA" parameter="" modifier="_4pOu8e82EeWU3MNrGPvZNA"/>
+  </Contracts:Function>
   <Contracts:Struct xmi:id="_4pWDsO82EeWU3MNrGPvZNA" base_Class="_4pPWF-82EeWU3MNrGPvZNA"/>
   <Contracts:Contract xmi:id="_4pWDse82EeWU3MNrGPvZNA" base_Class="_4pQkIO82EeWU3MNrGPvZNA"/>
-  <Contracts:Mapping xmi:id="_4pWDsu82EeWU3MNrGPvZNA" base_Property="_4pQkIe82EeWU3MNrGPvZNA">
-    <value xmi:type="uml:Class" href="../../kueken-party/model/short_blogger.uml#_yuj7kKNsEeWyXvjE6XZ9yw"/>
-  </Contracts:Mapping>
+  <Contracts:Mapping xmi:id="_4pWDsu82EeWU3MNrGPvZNA" base_Property="_4pQkIe82EeWU3MNrGPvZNA" value="_4pPWAO82EeWU3MNrGPvZNA"/>
   <Contracts:Mapping xmi:id="_4pWqwO82EeWU3MNrGPvZNA" base_Property="_4pQkIu82EeWU3MNrGPvZNA">
     <value xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
   </Contracts:Mapping>
-  <Contracts:Function xmi:id="_4pWqwe82EeWU3MNrGPvZNA" functionCode="ShortBlog b = new ShortBlog(name);&#xA;blogs[blogCount] =b ;&#xA;names[blogCount] = name;&#xA;blogCount++;&#xA;return b;&#xA;" base_Operation="_4pQkJO82EeWU3MNrGPvZNA"/>
+  <Contracts:Function xmi:id="_4pWqwe82EeWU3MNrGPvZNA" functionCode="&#xA;" base_Operation="_4pQkJO82EeWU3MNrGPvZNA">
+    <modifiers xmi:type="Contracts:Modifier" xmi:id="_0mOXkE0wEeadF69It2kUQA" parameter="" modifier="_8DcOwM2GEeWqGaV8xrZGjQ"/>
+  </Contracts:Function>
   <Contracts:Import xmi:id="_jycdoPXWEeW3toBIpTL0QQ" base_PackageImport="_GHsxIO81EeWU3MNrGPvZNA"/>
   <Contracts:Import xmi:id="_qmgycPXWEeW3toBIpTL0QQ" base_PackageImport="_aeJ04On7EeWOi9aiZLczlg"/>
   <Contracts:Contract xmi:id="_ZUPcYB82Eea0ndjKa8R1Fg" base_Class="_YVNoUB82Eea0ndjKa8R1Fg"/>
@@ -1008,4 +1025,5 @@ returns 0 for ok and 1 else.</body>
   <Contracts:Function xmi:id="_gVfacDPjEeaX2cAdiOKUjg" base_Operation="_Bei7cDPjEeaX2cAdiOKUjg" returnType="constant"/>
   <Contracts:Event xmi:id="_yCWSIDSxEeau9dH_RDsNPA" base_Operation="_D0moQDSxEeau9dH_RDsNPA"/>
   <Contracts:Function xmi:id="_DycPoDSyEeau9dH_RDsNPA" base_Operation="_9jAR4DSxEeau9dH_RDsNPA"/>
+  <Contracts:Function xmi:id="_lAYGQE0_EeadF69It2kUQA" base_Operation="_UcmK4E0_EeadF69It2kUQA"/>
 </xmi:XMI>

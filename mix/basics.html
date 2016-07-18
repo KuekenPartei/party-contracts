@@ -1,195 +1,14 @@
 <!doctype>
 <html>
 <head>
+<!--
 <script type='text/javascript' src="basicsWeb3.js">
 </script>
-<!-- javascript for Owned -->
-<script type='text/javascript'>
-// script for Owned
-var Owned_instance = undefined;
-	
-// set address
-function Owned_setAddress() {
-	var _address = document.getElementById('Owned_address').value;
-	Owned_instance = OwnedContract.at(_address);
-}
+-->
 
-function Owned_updateAttributes() {
-// update attributes
-var owner_res = Owned_instance.owner();
-	if(owner_res!=null)
-		document.getElementById('Owned_owner_value').innerText = owner_res;
 
-}
-//call functions
-//function Owned_getOwner
-function Owned_getOwner() {
-	var res = Owned_instance.getOwner();
-	if(res!=null)
-		document.getElementById('Owned_getOwner_res').innerText = res;
-}
-//function Owned_changeOwner
-function Owned_changeOwner_address() {
-	var param_newOwner = document.getElementById('Owned_changeOwner_address_newOwner').value;
-	var res = Owned_instance.changeOwner(param_newOwner);
-}
-//function Owned_kill
-function Owned_kill() {
-	var res = Owned_instance.kill();
-}
-
-//delegated calls
-
+<script type='text/javascript' src="js/basics-main.js">
 </script>
-
-<!-- javascript for Manageable -->
-<script type='text/javascript'>
-// script for Manageable
-var Manageable_instance = undefined;
-	
-// set address
-function Manageable_setAddress() {
-	var _address = document.getElementById('Manageable_address').value;
-	Manageable_instance = ManageableContract.at(_address);
-}
-
-function Manageable_updateAttributes() {
-// update attributes
-var _key = document.getElementById('Manageable_contract_attribute_managers_input').value;
-var managers_res = Manageable_instance.managers(_key);
-	if(managers_res!=null){
-		document.getElementById('Manageable_managers_value').innerText = managers_res;
-	}
-
-}
-//call functions
-//function Manageable_canAccess
-function Manageable_canAccess() {
-	var res = Manageable_instance.canAccess();
-	if(res!=null)
-		document.getElementById('Manageable_canAccess_res').innerText = res;
-}
-//function Manageable_addManager
-function Manageable_addManager_address() {
-	var param__newManagerAddress = document.getElementById('Manageable_addManager_address__newManagerAddress').value;
-	var res = Manageable_instance.addManager(param__newManagerAddress);
-}
-//function Manageable_removeManager
-function Manageable_removeManager_address() {
-	var param__managerAddress = document.getElementById('Manageable_removeManager_address__managerAddress').value;
-	var res = Manageable_instance.removeManager(param__managerAddress);
-}
-
-//delegated calls
-
-</script>
-
-<!-- javascript for Multiowned -->
-<script type='text/javascript'>
-// script for Multiowned
-var Multiowned_instance = undefined;
-	
-// set address
-function Multiowned_setAddress() {
-	var _address = document.getElementById('Multiowned_address').value;
-	Multiowned_instance = MultiownedContract.at(_address);
-}
-
-function Multiowned_updateAttributes() {
-// update attributes
-var m_required_res = Multiowned_instance.m_required();
-	if(m_required_res!=null)
-		document.getElementById('Multiowned_m_required_value').innerText = m_required_res;
-var m_numOwners_res = Multiowned_instance.m_numOwners();
-	if(m_numOwners_res!=null)
-		document.getElementById('Multiowned_m_numOwners_value').innerText = m_numOwners_res;
-var m_owners_res = Multiowned_instance.m_owners();
-	if(m_owners_res!=null)
-		document.getElementById('Multiowned_m_owners_value').innerText = m_owners_res;
-var c_maxOwners_res = Multiowned_instance.c_maxOwners();
-	if(c_maxOwners_res!=null)
-		document.getElementById('Multiowned_c_maxOwners_value').innerText = c_maxOwners_res;
-var m_pendingIndex_res = Multiowned_instance.m_pendingIndex();
-	if(m_pendingIndex_res!=null)
-		document.getElementById('Multiowned_m_pendingIndex_value').innerText = m_pendingIndex_res;
-var _key = document.getElementById('Multiowned_contract_attribute_m_ownerIndex_input').value;
-var m_ownerIndex_res = Multiowned_instance.m_ownerIndex(_key);
-	if(m_ownerIndex_res!=null){
-		document.getElementById('Multiowned_m_ownerIndex_value').innerText = m_ownerIndex_res;
-	}
-var _key = document.getElementById('Multiowned_contract_attribute_m_pending_input').value;
-var m_pending_res = Multiowned_instance.m_pending(_key);
-	if(m_pending_res!=null){
-		document.getElementById('Multiowned_m_pending_yetNeeded_value').innerText = m_pending_res[0];
-		document.getElementById('Multiowned_m_pending_ownersDone_value').innerText = m_pending_res[1];
-		document.getElementById('Multiowned_m_pending_index_value').innerText = m_pending_res[2];
-	}
-
-}
-//call functions
-//function Multiowned_Multiowned
-function Multiowned_Multiowned_address_uint() {
-	var param__owners = document.getElementById('Multiowned_Multiowned_address_uint__owners').value;
-	var param__required = document.getElementById('Multiowned_Multiowned_address_uint__required').value;
-	var res = Multiowned_instance.Multiowned(param__owners, param__required);
-}
-//function Multiowned_clearPending
-function Multiowned_clearPending() {
-	var res = Multiowned_instance.clearPending();
-}
-//function Multiowned_revoke
-function Multiowned_revoke_bytes32() {
-	var param__operation = document.getElementById('Multiowned_revoke_bytes32__operation').value;
-	var res = Multiowned_instance.revoke(param__operation);
-}
-//function Multiowned_changeOwner
-function Multiowned_changeOwner_address_address() {
-	var param__from = document.getElementById('Multiowned_changeOwner_address_address__from').value;
-	var param__to = document.getElementById('Multiowned_changeOwner_address_address__to').value;
-	var res = Multiowned_instance.changeOwner(param__from, param__to);
-}
-//function Multiowned_addOwner
-function Multiowned_addOwner_address() {
-	var param__owner = document.getElementById('Multiowned_addOwner_address__owner').value;
-	var res = Multiowned_instance.addOwner(param__owner);
-}
-//function Multiowned_removeOwner
-function Multiowned_removeOwner_address() {
-	var param__owner = document.getElementById('Multiowned_removeOwner_address__owner').value;
-	var res = Multiowned_instance.removeOwner(param__owner);
-}
-//function Multiowned_changeRequirement
-function Multiowned_changeRequirement_uint() {
-	var param__newRequired = document.getElementById('Multiowned_changeRequirement_uint__newRequired').value;
-	var res = Multiowned_instance.changeRequirement(param__newRequired);
-}
-//function Multiowned_isOwner
-function Multiowned_isOwner_address() {
-	var param__addr = document.getElementById('Multiowned_isOwner_address__addr').value;
-	var res = Multiowned_instance.isOwner(param__addr);
-	if(res!=null)
-		document.getElementById('Multiowned_isOwner_address_res').innerText = res;
-}
-//function Multiowned_hasConfirmed
-function Multiowned_hasConfirmed_bytes32_address() {
-	var param__operation = document.getElementById('Multiowned_hasConfirmed_bytes32_address__operation').value;
-	var param__owner = document.getElementById('Multiowned_hasConfirmed_bytes32_address__owner').value;
-	var res = Multiowned_instance.hasConfirmed(param__operation, param__owner);
-	if(res!=null)
-		document.getElementById('Multiowned_hasConfirmed_bytes32_address_res').innerText = res;
-}
-//function Multiowned_confirmAndCheck
-function Multiowned_confirmAndCheck_bytes32() {
-	var param__operation = document.getElementById('Multiowned_confirmAndCheck_bytes32__operation').value;
-	var res = Multiowned_instance.confirmAndCheck(param__operation);
-	if(res!=null)
-		document.getElementById('Multiowned_confirmAndCheck_bytes32_res').innerText = res;
-}
-
-//delegated calls
-
-</script>
-
 
 <!-- start of style -->
 <style>
@@ -201,6 +20,14 @@ function Multiowned_confirmAndCheck_bytes32() {
 	border-style: solid;
 	border-width: 1px;
 	} 
+.Struct_Mapping{}
+.Value_Mapping{}
+.contract_attribute{}
+.contract_attribute_value{}
+.function_execution{}
+.function_parameter{}
+.function_result{}
+
 </style>
 </head>
 <body bgcolor='#E6E6FA'>
@@ -208,29 +35,28 @@ function Multiowned_confirmAndCheck_bytes32() {
 <!-- gui for Owned_contract -->
 <div class="contract" id="Owned_contract">
 Owned:
-  <input type='text' id='Owned_address'> <button onclick='Owned_setAddress()'>change Owned Address</button>
+  <input type="text" id="Owned_address"> <button id="OwnedController.setAddress" onclick="OwnedController.setAddress()">change Owned Address</button>
   <div class="contract_attributes" id="Owned_contract_attributes"> attributes:
     <div class="contract_attribute" id="Owned_contract_attribute_owner"> owner:
       <div class="contract_attribute_value" id="Owned_owner_value"> </div>
     </div>
 
-
-    <button onclick='Owned_updateAttributes()'>update Owned attributes</button>
+    <button id="Owned_updateAttributes" onclick="OwnedController._updateAttributes()">update Owned attributes</button>
   </div>
   <div class="function_execution" id="Owned_contract_function_Owned_getOwner">
 Owned_getOwner:
-	<button onclick='Owned_getOwner()'>execute Owned_getOwner</button>
+	<button id="OwnedController.Owned_getOwner" onclick="OwnedController.Owned_getOwner()">execute Owned_getOwner</button>
 	<div class="function_result" id="Owned_getOwner_res"></div>
   </div>
   <div class="function_execution" id="Owned_contract_function_Owned_changeOwner_address">
 Owned_changeOwner:
-	<input type='text' id='Owned_changeOwner_address_newOwner'>
-	<button onclick='Owned_changeOwner_address()'>execute Owned_changeOwner</button>
+	  <div class="function_parameter">newOwner<input type="text" id="Owned_changeOwner_address_newOwner"></div>
+	<button id="OwnedController.Owned_changeOwner_address" onclick="OwnedController.Owned_changeOwner_address()">execute Owned_changeOwner</button>
 	<div class="function_result" id="Owned_changeOwner_address_res"></div>
   </div>
   <div class="function_execution" id="Owned_contract_function_Owned_kill">
 Owned_kill:
-	<button onclick='Owned_kill()'>execute Owned_kill</button>
+	<button id="OwnedController.Owned_kill" onclick="OwnedController.Owned_kill()">execute Owned_kill</button>
 	<div class="function_result" id="Owned_kill_res"></div>
   </div>
 
@@ -238,36 +64,44 @@ Owned_kill:
 <!-- gui for Manageable_contract -->
 <div class="contract" id="Manageable_contract">
 Manageable:
-  <input type='text' id='Manageable_address'> <button onclick='Manageable_setAddress()'>change Manageable Address</button>
+  <input type="text" id="Manageable_address"> <button id="ManageableController.setAddress" onclick="ManageableController.setAddress()">change Manageable Address</button>
   <div class="contract_attributes" id="Manageable_contract_attributes"> attributes:
+    <div class="contract_attribute" id="Manageable_contract_attribute_mangerCount"> mangerCount:
+      <div class="contract_attribute_value" id="Manageable_mangerCount_value"> </div>
+    </div>
 
 <div class="Value_Mapping" id="Manageable_contract_attribute_managers">mapping  managers:
-		<input type='text' id='Manageable_contract_attribute_managers_input'>(address)
+		<input type="text" id="Manageable_contract_attribute_managers_input">(address)
     	<div class="Mapping_value" id="Manageable_contract_attribute_address"> bool:
       		<div class="contract_attribute_value" id="Manageable_managers_value"> </div>
     	</div>
   </div>
-
-    <button onclick='Manageable_updateAttributes()'>update Manageable attributes</button>
+    <button id="Manageable_updateAttributes" onclick="ManageableController._updateAttributes()">update Manageable attributes</button>
   </div>
   <div class="function_execution" id="Manageable_contract_function_Manageable_addManager_address">
 Manageable_addManager:
-	<input type='text' id='Manageable_addManager_address__newManagerAddress'>
-	<button onclick='Manageable_addManager_address()'>execute Manageable_addManager</button>
+	  <div class="function_parameter">_newManagerAddress<input type="text" id="Manageable_addManager_address__newManagerAddress"></div>
+	<button id="ManageableController.Manageable_addManager_address" onclick="ManageableController.Manageable_addManager_address()">execute Manageable_addManager</button>
 	<div class="function_result" id="Manageable_addManager_address_res"></div>
   </div>
   <div class="function_execution" id="Manageable_contract_function_Manageable_removeManager_address">
 Manageable_removeManager:
-	<input type='text' id='Manageable_removeManager_address__managerAddress'>
-	<button onclick='Manageable_removeManager_address()'>execute Manageable_removeManager</button>
+	  <div class="function_parameter">_managerAddress<input type="text" id="Manageable_removeManager_address__managerAddress"></div>
+	<button id="ManageableController.Manageable_removeManager_address" onclick="ManageableController.Manageable_removeManager_address()">execute Manageable_removeManager</button>
 	<div class="function_result" id="Manageable_removeManager_address_res"></div>
+  </div>
+  <div class="function_execution" id="Manageable_contract_function_Manageable_isManager_address">
+Manageable_isManager:
+	  <div class="function_parameter">_managerAddress<input type="text" id="Manageable_isManager_address__managerAddress"></div>
+	<button id="ManageableController.Manageable_isManager_address" onclick="ManageableController.Manageable_isManager_address()">execute Manageable_isManager</button>
+	<div class="function_result" id="Manageable_isManager_address_res"></div>
   </div>
 
 </div>
 <!-- gui for Multiowned_contract -->
 <div class="contract" id="Multiowned_contract">
 Multiowned:
-  <input type='text' id='Multiowned_address'> <button onclick='Multiowned_setAddress()'>change Multiowned Address</button>
+  <input type="text" id="Multiowned_address"> <button id="MultiownedController.setAddress" onclick="MultiownedController.setAddress()">change Multiowned Address</button>
   <div class="contract_attributes" id="Multiowned_contract_attributes"> attributes:
     <div class="contract_attribute" id="Multiowned_contract_attribute_m_required"> m_required:
       <div class="contract_attribute_value" id="Multiowned_m_required_value"> </div>
@@ -286,14 +120,14 @@ Multiowned:
     </div>
 
 <div class="Value_Mapping" id="Multiowned_contract_attribute_m_ownerIndex">mapping  m_ownerIndex:
-		<input type='text' id='Multiowned_contract_attribute_m_ownerIndex_input'>(uint)
+		<input type="number" id="Multiowned_contract_attribute_m_ownerIndex_input">(uint)
     	<div class="Mapping_value" id="Multiowned_contract_attribute_uint"> uint:
       		<div class="contract_attribute_value" id="Multiowned_m_ownerIndex_value"> </div>
     	</div>
   </div>
 <!--struct -->
 <div class="Struct_Mapping" id="Struc_Multiowned_contract_attribute_m_pending">struc mapping  m_pending:
-		<input type='text' id='Multiowned_contract_attribute_m_pending_input'>(bytes32)
+		<input type="text" id="Multiowned_contract_attribute_m_pending_input">(bytes32)
     	<div class="Struct_attribute" id="Multiowned_contract_attribute_m_pending_yetNeeded"> yetNeeded:
       		<div class="Struct_attribute_value" id="Multiowned_m_pending_yetNeeded_value"> </div>
     	</div>
@@ -304,48 +138,114 @@ Multiowned:
       		<div class="Struct_attribute_value" id="Multiowned_m_pending_index_value"> </div>
     	</div>
   </div>
-
-    <button onclick='Multiowned_updateAttributes()'>update Multiowned attributes</button>
+    <button id="Multiowned_updateAttributes" onclick="MultiownedController._updateAttributes()">update Multiowned attributes</button>
   </div>
   <div class="function_execution" id="Multiowned_contract_function_Multiowned_Multiowned_address_uint">
 Multiowned_Multiowned:
-	<input type='text' id='Multiowned_Multiowned_address_uint__owners'>
-	<input type='text' id='Multiowned_Multiowned_address_uint__required'>
-	<button onclick='Multiowned_Multiowned_address_uint()'>execute Multiowned_Multiowned</button>
+	  <div class="function_parameter">_owners<input type="text" id="Multiowned_Multiowned_address_uint__owners"></div>
+	  <div class="function_parameter">_required<input type="number" id="Multiowned_Multiowned_address_uint__required"></div>
+	<button id="MultiownedController.Multiowned_Multiowned_address_uint" onclick="MultiownedController.Multiowned_Multiowned_address_uint()">execute Multiowned_Multiowned</button>
 	<div class="function_result" id="Multiowned_Multiowned_address_uint_res"></div>
   </div>
   <div class="function_execution" id="Multiowned_contract_function_Multiowned_isOwner_address">
 Multiowned_isOwner:
-	<input type='text' id='Multiowned_isOwner_address__addr'>
-	<button onclick='Multiowned_isOwner_address()'>execute Multiowned_isOwner</button>
+	  <div class="function_parameter">_addr<input type="text" id="Multiowned_isOwner_address__addr"></div>
+	<button id="MultiownedController.Multiowned_isOwner_address" onclick="MultiownedController.Multiowned_isOwner_address()">execute Multiowned_isOwner</button>
 	<div class="function_result" id="Multiowned_isOwner_address_res"></div>
   </div>
   <div class="function_execution" id="Multiowned_contract_function_Multiowned_hasConfirmed_bytes32_address">
 Multiowned_hasConfirmed:
-	<input type='text' id='Multiowned_hasConfirmed_bytes32_address__operation'>
-	<input type='text' id='Multiowned_hasConfirmed_bytes32_address__owner'>
-	<button onclick='Multiowned_hasConfirmed_bytes32_address()'>execute Multiowned_hasConfirmed</button>
+	  <div class="function_parameter">_operation<input type="text" id="Multiowned_hasConfirmed_bytes32_address__operation"></div>
+	  <div class="function_parameter">_owner<input type="text" id="Multiowned_hasConfirmed_bytes32_address__owner"></div>
+	<button id="MultiownedController.Multiowned_hasConfirmed_bytes32_address" onclick="MultiownedController.Multiowned_hasConfirmed_bytes32_address()">execute Multiowned_hasConfirmed</button>
 	<div class="function_result" id="Multiowned_hasConfirmed_bytes32_address_res"></div>
   </div>
 
 </div>
+<div class="contract">Owned
+<div id="Owned_gui" ></div>
+</div>
+<div class="contract">Manageable
+<div id="Manageable_gui" ></div>
+</div>
+<div class="contract">Multiowned
+<div id="Multiowned_gui" ></div>
+</div>
+<div class="contract">test : Owned
+<div id="TestOwned_gui" ></div>
+</div>
+<div class="contract">test : Manageable
+<div id="TestManageable_gui" ></div>
+</div>
+<div class="contract">test : Multiowned
+<div id="TestMultiowned_gui" ></div>
+</div>
 
 <script type='text/javascript'>
+var  defaultOwnedController  = new OwnedController();
+defaultOwnedController.bindGui();
+
+OwnedGui  = new OwnedGuiFactory();
 if(contracts['Owned']!=undefined){
-  Owned_instance = contracts['Owned'].contract;
-  document.getElementById('Owned_address').value = Owned_instance.address; 
-  Owned_updateAttributes();
+  	defaultOwnedController.Owned_instance = contracts['Owned'].contract;
+  	document.getElementById('Owned_address').value = contracts['Owned'].contract.address; 
+  
+	defaultOwnedController.bindGui();
+	defaultOwnedController._updateAttributes();
+  
 }
+//OwnedGui.placeDefaultGui();
+//var  defaultOwnedModel  = new OwnedModel('Test');
+//defaultOwnedModel.create();
+OwnedGui.prefix='Test';
+OwnedGui.placeDefaultGui();
+testOwnedController  = new OwnedController();
+testOwnedController.prefix='Test';
+testOwnedController.bindGui();
+
+var  defaultManageableController  = new ManageableController();
+defaultManageableController.bindGui();
+
+ManageableGui  = new ManageableGuiFactory();
 if(contracts['Manageable']!=undefined){
-  Manageable_instance = contracts['Manageable'].contract;
-  document.getElementById('Manageable_address').value = Manageable_instance.address; 
-  Manageable_updateAttributes();
+  	defaultManageableController.Manageable_instance = contracts['Manageable'].contract;
+  	document.getElementById('Manageable_address').value = contracts['Manageable'].contract.address; 
+  
+	defaultManageableController.bindGui();
+	defaultManageableController._updateAttributes();
+  
 }
+//ManageableGui.placeDefaultGui();
+//var  defaultManageableModel  = new ManageableModel('Test');
+//defaultManageableModel.create();
+ManageableGui.prefix='Test';
+ManageableGui.placeDefaultGui();
+testManageableController  = new ManageableController();
+testManageableController.prefix='Test';
+testManageableController.bindGui();
+
+var  defaultMultiownedController  = new MultiownedController();
+defaultMultiownedController.bindGui();
+
+MultiownedGui  = new MultiownedGuiFactory();
 if(contracts['Multiowned']!=undefined){
-  Multiowned_instance = contracts['Multiowned'].contract;
-  document.getElementById('Multiowned_address').value = Multiowned_instance.address; 
-  Multiowned_updateAttributes();
+  	defaultMultiownedController.Multiowned_instance = contracts['Multiowned'].contract;
+  	document.getElementById('Multiowned_address').value = contracts['Multiowned'].contract.address; 
+  
+	defaultMultiownedController.bindGui();
+	defaultMultiownedController._updateAttributes();
+  
 }
+//MultiownedGui.placeDefaultGui();
+//var  defaultMultiownedModel  = new MultiownedModel('Test');
+//defaultMultiownedModel.create();
+MultiownedGui.prefix='Test';
+MultiownedGui.placeDefaultGui();
+testMultiownedController  = new MultiownedController();
+testMultiownedController.prefix='Test';
+testMultiownedController.bindGui();
+
 </script>
+
 </body>
 </html>

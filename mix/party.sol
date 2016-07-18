@@ -62,8 +62,8 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 	function publishMessage(string message,string hash,string er) public   {
 		 
 		
-		//Start of user code MessagePublisher.function.publishMessage
-		organBlog.sendMessage(message,hash,er); 
+		//Start of user code MessagePublisher.function.publishMessage_string_string_string
+		//TODO: implement
 		//End of user code
 	}
 	
@@ -74,7 +74,7 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 	* _address -
 	*/
 	function changeMember(uint _id,address _address) public  onlyManager()  {
-		//Start of user code Organ.function.changeMember
+		//Start of user code Organ.function.changeMember_uint_address
 //		if(!isMember(_address)) throw;
 		if(organFunctions[_id].id!= _id) throw;
 		
@@ -91,7 +91,7 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 	* _constittiutionHash -
 	*/
 	function createFunction(string _functionName,string _constittiutionHash) public  onlyManager()  {
-		//Start of user code Organ.function.createFunction
+		//Start of user code Organ.function.createFunction_string_string
 		organFunctions[lastFunctionId].functionName = _functionName;
 		organFunctions[lastFunctionId].constitutionHash = _constittiutionHash;
 		organFunctions[lastFunctionId].lastConstitutionHashChanged = now;
@@ -123,10 +123,8 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 	* er -
 	*/
 	function publishFunctionMessage(uint id,string message,string hash,string er) public   {
-		//Start of user code Organ.function.publishFunctionMessage
-		ShortBlog sb = organFunctions[id].publisher;
-		if(address(sb)==0) throw;
-		sb.sendMessage(message,hash,er);
+		//Start of user code Organ.function.publishFunctionMessage_uint_string_string_string
+		//TODO: implement
 		//End of user code
 	}
 	
@@ -140,7 +138,7 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 	*  -
 	*/
 	function createBallot(string name,bytes32[] proposalNames) public  returns (uint ) {
-		//Start of user code Organ.function.createBallot
+		//Start of user code Organ.function.createBallot_string_bytes32
 		ballotCount++;
 		Ballot b = new Ballot(name,proposalNames);
 		ballots[ballotCount] = b;
@@ -157,7 +155,7 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 	*  -
 	*/
 	function getFunctionBlogAddress(uint id) public   constant returns (address ) {
-		//Start of user code Organ.function.getFunctionBlogAddress
+		//Start of user code Organ.function.getFunctionBlogAddress_uint
 		return organFunctions[id].publisher;
 		//End of user code
 	}
@@ -225,7 +223,7 @@ contract Party is Manageable {
 	
 	
 	function createOrgan(string organName) public   {
-		//Start of user code Party.function.createOrgan
+		//Start of user code Party.function.createOrgan_string
 		organs[organCount] = new Organ();
 		organs[organCount].setOrganName(organName);
 		organs[organCount].setMemberRegistry(memberRegistry);
@@ -273,8 +271,7 @@ contract KUEKeNParty is Party {
 	
 	
 	function boostrapParty(address fc,address br) public  onlyManager()  {
-		//Start of user code KUEKeNParty.function.boostrapParty
-		
+		//Start of user code KUEKeNParty.function.boostrapParty_address_address
 //		memberRegistry = new MemberRegistry();
 //		memberRegistry.addManager(msg.sender);
 //		blogregistry = new BlogRegistry();
@@ -287,7 +284,6 @@ contract KUEKeNParty is Party {
 		blogregistry = BlogRegistry(br);
 		organ.initalizeOrgan();
 		organCount++;
-
 		//End of user code
 	}
 	
@@ -324,14 +320,12 @@ contract Conference is Organ {
 	
 	
 	function accreditationMember(address _address) public   {
-		//Start of user code Conference.function.accreditationMember
+		//Start of user code Conference.function.accreditationMember_address
 		if(!isMember(_address))throw;
 		
 		accreditation.push(_address);
 		accreditatedMembers++;
 		memberRegistry.publishMemberEvent(_address,1);
-		
-			
 		//End of user code
 	}
 	
@@ -344,7 +338,7 @@ contract Conference is Organ {
 * Will found the party.
 * In the first and only session.
 */
-contract FoundationConference is Organ {
+contract FoundationConference is Conference {
 
 	// Start of user code FoundationConference.attributes
 	//TODO: implement

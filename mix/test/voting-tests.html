@@ -1,0 +1,54 @@
+<!doctype>
+<html>
+<head>
+<script type='text/javascript' src="voting-test.js">
+</script>
+<style>
+.contract {
+	border-style: solid;
+	border-width: 1px;
+	} 
+.contract_attributes{
+	border-style: solid;
+	border-width: 1px;
+	} 
+.Struct_Mapping{}
+.Value_Mapping{}
+.contract_attribute{}
+.contract_attribute_value{}
+.function_execution{}
+.function_parameter{}
+.function_result{}
+.failed_state{
+	border-style: solid;
+	border-width: 1px;
+}
+
+</style>
+</head>
+<body bgcolor='#E6E6FA'>
+	<h1>Tests for voting</h1>
+
+
+<div id="all-testResult" ></div>
+<h1>Events</h1>
+<div id="eventLog" ></div>
+<script type='text/javascript'>
+web3.eth.defaultAccount = web3.eth.accounts[0];
+// execute all Ballot tests if set 
+if(contracts['Ballot'] !=undefined){
+	var contract = contracts['Ballot'].contract;
+	var instance = new TestBallot(contract);
+	instance.prefix = 'all';
+
+
+
+//console.log(instance+'-->');
+	instance.allTests();
+}	//Start of user code moreCustomTests_voting
+	//TODO: implement
+	//End of user code
+
+</script>
+</body>
+</html>

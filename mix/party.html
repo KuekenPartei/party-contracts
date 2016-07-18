@@ -1,560 +1,14 @@
 <!doctype>
 <html>
 <head>
+<!--
 <script type='text/javascript' src="partyWeb3.js">
 </script>
-<!-- javascript for Organ -->
-<script type='text/javascript'>
-// script for Organ
-var Organ_instance = undefined;
-	
-// set address
-function Organ_setAddress() {
-	var _address = document.getElementById('Organ_address').value;
-	Organ_instance = OrganContract.at(_address);
-}
+-->
 
-function Organ_updateAttributes() {
-// update attributes
-var memberRegistry_res = Organ_instance.memberRegistry();
-	if(memberRegistry_res!=null)
-		document.getElementById('Organ_memberRegistry_value').innerText = memberRegistry_res;
-var organName_res = Organ_instance.organName();
-	if(organName_res!=null)
-		document.getElementById('Organ_organName_value').innerText = organName_res;
-var lastFunctionId_res = Organ_instance.lastFunctionId();
-	if(lastFunctionId_res!=null)
-		document.getElementById('Organ_lastFunctionId_value').innerText = lastFunctionId_res;
-var blogRegistry_res = Organ_instance.blogRegistry();
-	if(blogRegistry_res!=null)
-		document.getElementById('Organ_blogRegistry_value').innerText = blogRegistry_res;
-var isActive_res = Organ_instance.isActive();
-	if(isActive_res!=null)
-		document.getElementById('Organ_isActive_value').innerText = isActive_res;
-var ballotCount_res = Organ_instance.ballotCount();
-	if(ballotCount_res!=null)
-		document.getElementById('Organ_ballotCount_value').innerText = ballotCount_res;
-var _key = document.getElementById('Organ_contract_attribute_managers_input').value;
-var managers_res = Organ_instance.managers(_key);
-	if(managers_res!=null){
-		document.getElementById('Organ_managers_value').innerText = managers_res;
-	}
-var _key = document.getElementById('Organ_contract_attribute_organFunctions_input').value;
-var organFunctions_res = Organ_instance.organFunctions(_key);
-	if(organFunctions_res!=null){
-		document.getElementById('Organ_organFunctions_currentMember_value').innerText = organFunctions_res[0];
-		document.getElementById('Organ_organFunctions_functionName_value').innerText = organFunctions_res[1];
-		document.getElementById('Organ_organFunctions_id_value').innerText = organFunctions_res[2];
-		document.getElementById('Organ_organFunctions_constitutionHash_value').innerText = organFunctions_res[3];
-		document.getElementById('Organ_organFunctions_lastMemberChanged_value').innerText = organFunctions_res[4];
-		document.getElementById('Organ_organFunctions_lastConstitutionHashChanged_value').innerText = organFunctions_res[5];
-		document.getElementById('Organ_organFunctions_publisher_value').innerText = organFunctions_res[6];
-	}
 
-}
-//call functions
-//function Organ_canAccess
-function Manageable_canAccess() {
-	var res = Organ_instance.canAccess();
-	if(res!=null)
-		document.getElementById('Manageable_canAccess_res').innerText = res;
-}
-//function Organ_changeMember
-function Organ_changeMember_uint_address() {
-	var param__id = document.getElementById('Organ_changeMember_uint_address__id').value;
-	var param__address = document.getElementById('Organ_changeMember_uint_address__address').value;
-	var res = Organ_instance.changeMember(param__id, param__address);
-}
-//function Organ_isMember
-function MemberAware_isMember_address() {
-	var param__address = document.getElementById('MemberAware_isMember_address__address').value;
-	var res = Organ_instance.isMember(param__address);
-	if(res!=null)
-		document.getElementById('MemberAware_isMember_address_res').innerText = res;
-}
-//function Organ_addManager
-function Manageable_addManager_address() {
-	var param__newManagerAddress = document.getElementById('Manageable_addManager_address__newManagerAddress').value;
-	var res = Organ_instance.addManager(param__newManagerAddress);
-}
-//function Organ_createFunction
-function Organ_createFunction_string_string() {
-	var param__functionName = document.getElementById('Organ_createFunction_string_string__functionName').value;
-	var param__constittiutionHash = document.getElementById('Organ_createFunction_string_string__constittiutionHash').value;
-	var res = Organ_instance.createFunction(param__functionName, param__constittiutionHash);
-}
-//function Organ_removeManager
-function Manageable_removeManager_address() {
-	var param__managerAddress = document.getElementById('Manageable_removeManager_address__managerAddress').value;
-	var res = Organ_instance.removeManager(param__managerAddress);
-}
-//function Organ_initalizeOrgan
-function Organ_initalizeOrgan() {
-	var res = Organ_instance.initalizeOrgan();
-}
-//function Organ_publishFunctionMessage
-function Organ_publishFunctionMessage_uint_string_string_string() {
-	var param_id = document.getElementById('Organ_publishFunctionMessage_uint_string_string_string_id').value;
-	var param_message = document.getElementById('Organ_publishFunctionMessage_uint_string_string_string_message').value;
-	var param_hash = document.getElementById('Organ_publishFunctionMessage_uint_string_string_string_hash').value;
-	var param_er = document.getElementById('Organ_publishFunctionMessage_uint_string_string_string_er').value;
-	var res = Organ_instance.publishFunctionMessage(param_id, param_message, param_hash, param_er);
-}
-//function Organ_createBallot
-function Organ_createBallot_string_bytes32() {
-	var param_name = document.getElementById('Organ_createBallot_string_bytes32_name').value;
-	var param_proposalNames = document.getElementById('Organ_createBallot_string_bytes32_proposalNames').value;
-	var res = Organ_instance.createBallot(param_name, param_proposalNames);
-	if(res!=null)
-		document.getElementById('Organ_createBallot_string_bytes32_res').innerText = res;
-}
-//function Organ_getFunctionBlogAddress
-function Organ_getFunctionBlogAddress_uint() {
-	var param_id = document.getElementById('Organ_getFunctionBlogAddress_uint_id').value;
-	var res = Organ_instance.getFunctionBlogAddress(param_id);
-	if(res!=null)
-		document.getElementById('Organ_getFunctionBlogAddress_uint_res').innerText = res;
-}
-//function Organ_getLastBallot
-function Organ_getLastBallot() {
-	var res = Organ_instance.getLastBallot();
-	if(res!=null)
-		document.getElementById('Organ_getLastBallot_res').innerText = res;
-}
-//function Organ_getOrganBlog
-function Organ_getOrganBlog() {
-	var res = Organ_instance.getOrganBlog();
-	if(res!=null)
-		document.getElementById('Organ_getOrganBlog_res').innerText = res;
-}
-
-//delegated calls
-
+<script type='text/javascript' src="js/party-main.js">
 </script>
-
-<!-- javascript for Party -->
-<script type='text/javascript'>
-// script for Party
-var Party_instance = undefined;
-	
-// set address
-function Party_setAddress() {
-	var _address = document.getElementById('Party_address').value;
-	Party_instance = PartyContract.at(_address);
-}
-
-function Party_updateAttributes() {
-// update attributes
-var constitutionHash_res = Party_instance.constitutionHash();
-	if(constitutionHash_res!=null)
-		document.getElementById('Party_constitutionHash_value').innerText = constitutionHash_res;
-var organCount_res = Party_instance.organCount();
-	if(organCount_res!=null)
-		document.getElementById('Party_organCount_value').innerText = organCount_res;
-var blogregistry_res = Party_instance.blogregistry();
-	if(blogregistry_res!=null)
-		document.getElementById('Party_blogregistry_value').innerText = blogregistry_res;
-var _key = document.getElementById('Party_contract_attribute_managers_input').value;
-var managers_res = Party_instance.managers(_key);
-	if(managers_res!=null){
-		document.getElementById('Party_managers_value').innerText = managers_res;
-	}
-var _key = document.getElementById('Party_contract_attribute_organs_input').value;
-var organs_res = Party_instance.organs(_key);
-	if(organs_res!=null){
-		document.getElementById('Party_organs_organFunctions_value').innerText = organs_res[0];
-		document.getElementById('Party_organs_organName_value').innerText = organs_res[1];
-		document.getElementById('Party_organs_lastFunctionId_value').innerText = organs_res[2];
-		document.getElementById('Party_organs_blogRegistry_value').innerText = organs_res[3];
-		document.getElementById('Party_organs_isActive_value').innerText = organs_res[4];
-		document.getElementById('Party_organs_organBlog_value').innerText = organs_res[5];
-		document.getElementById('Party_organs_ballots_value').innerText = organs_res[6];
-		document.getElementById('Party_organs_ballotCount_value').innerText = organs_res[7];
-	}
-
-}
-//call functions
-//function Party_Party
-function Party_Party() {
-	var res = Party_instance.Party();
-}
-//function Party_canAccess
-function Manageable_canAccess() {
-	var res = Party_instance.canAccess();
-	if(res!=null)
-		document.getElementById('Manageable_canAccess_res').innerText = res;
-}
-//function Party_addManager
-function Manageable_addManager_address() {
-	var param__newManagerAddress = document.getElementById('Manageable_addManager_address__newManagerAddress').value;
-	var res = Party_instance.addManager(param__newManagerAddress);
-}
-//function Party_createOrgan
-function Party_createOrgan_string() {
-	var param_organName = document.getElementById('Party_createOrgan_string_organName').value;
-	var res = Party_instance.createOrgan(param_organName);
-}
-//function Party_removeManager
-function Manageable_removeManager_address() {
-	var param__managerAddress = document.getElementById('Manageable_removeManager_address__managerAddress').value;
-	var res = Party_instance.removeManager(param__managerAddress);
-}
-
-//delegated calls
-
-</script>
-
-<!-- javascript for KUEKeNParty -->
-<script type='text/javascript'>
-// script for KUEKeNParty
-var KUEKeNParty_instance = undefined;
-	
-// set address
-function KUEKeNParty_setAddress() {
-	var _address = document.getElementById('KUEKeNParty_address').value;
-	KUEKeNParty_instance = KUEKeNPartyContract.at(_address);
-}
-
-function KUEKeNParty_updateAttributes() {
-// update attributes
-var constitutionHash_res = KUEKeNParty_instance.constitutionHash();
-	if(constitutionHash_res!=null)
-		document.getElementById('KUEKeNParty_constitutionHash_value').innerText = constitutionHash_res;
-var organCount_res = KUEKeNParty_instance.organCount();
-	if(organCount_res!=null)
-		document.getElementById('KUEKeNParty_organCount_value').innerText = organCount_res;
-var blogregistry_res = KUEKeNParty_instance.blogregistry();
-	if(blogregistry_res!=null)
-		document.getElementById('KUEKeNParty_blogregistry_value').innerText = blogregistry_res;
-var _key = document.getElementById('KUEKeNParty_contract_attribute_managers_input').value;
-var managers_res = KUEKeNParty_instance.managers(_key);
-	if(managers_res!=null){
-		document.getElementById('KUEKeNParty_managers_value').innerText = managers_res;
-	}
-var _key = document.getElementById('KUEKeNParty_contract_attribute_organs_input').value;
-var organs_res = KUEKeNParty_instance.organs(_key);
-	if(organs_res!=null){
-		document.getElementById('KUEKeNParty_organs_organFunctions_value').innerText = organs_res[0];
-		document.getElementById('KUEKeNParty_organs_organName_value').innerText = organs_res[1];
-		document.getElementById('KUEKeNParty_organs_lastFunctionId_value').innerText = organs_res[2];
-		document.getElementById('KUEKeNParty_organs_blogRegistry_value').innerText = organs_res[3];
-		document.getElementById('KUEKeNParty_organs_isActive_value').innerText = organs_res[4];
-		document.getElementById('KUEKeNParty_organs_organBlog_value').innerText = organs_res[5];
-		document.getElementById('KUEKeNParty_organs_ballots_value').innerText = organs_res[6];
-		document.getElementById('KUEKeNParty_organs_ballotCount_value').innerText = organs_res[7];
-	}
-
-}
-//call functions
-//function KUEKeNParty_KUEKeNParty
-function KUEKeNParty_KUEKeNParty() {
-	var res = KUEKeNParty_instance.KUEKeNParty();
-}
-//function KUEKeNParty_Party
-function Party_Party() {
-	var res = KUEKeNParty_instance.Party();
-}
-//function KUEKeNParty_canAccess
-function Manageable_canAccess() {
-	var res = KUEKeNParty_instance.canAccess();
-	if(res!=null)
-		document.getElementById('Manageable_canAccess_res').innerText = res;
-}
-//function KUEKeNParty_addManager
-function Manageable_addManager_address() {
-	var param__newManagerAddress = document.getElementById('Manageable_addManager_address__newManagerAddress').value;
-	var res = KUEKeNParty_instance.addManager(param__newManagerAddress);
-}
-//function KUEKeNParty_boostrapParty
-function KUEKeNParty_boostrapParty_address_address() {
-	var param_fc = document.getElementById('KUEKeNParty_boostrapParty_address_address_fc').value;
-	var param_br = document.getElementById('KUEKeNParty_boostrapParty_address_address_br').value;
-	var res = KUEKeNParty_instance.boostrapParty(param_fc, param_br);
-}
-//function KUEKeNParty_createOrgan
-function Party_createOrgan_string() {
-	var param_organName = document.getElementById('Party_createOrgan_string_organName').value;
-	var res = KUEKeNParty_instance.createOrgan(param_organName);
-}
-//function KUEKeNParty_removeManager
-function Manageable_removeManager_address() {
-	var param__managerAddress = document.getElementById('Manageable_removeManager_address__managerAddress').value;
-	var res = KUEKeNParty_instance.removeManager(param__managerAddress);
-}
-
-//delegated calls
-
-</script>
-
-<!-- javascript for Conference -->
-<script type='text/javascript'>
-// script for Conference
-var Conference_instance = undefined;
-	
-// set address
-function Conference_setAddress() {
-	var _address = document.getElementById('Conference_address').value;
-	Conference_instance = ConferenceContract.at(_address);
-}
-
-function Conference_updateAttributes() {
-// update attributes
-var memberRegistry_res = Conference_instance.memberRegistry();
-	if(memberRegistry_res!=null)
-		document.getElementById('Conference_memberRegistry_value').innerText = memberRegistry_res;
-var accreditatedMembers_res = Conference_instance.accreditatedMembers();
-	if(accreditatedMembers_res!=null)
-		document.getElementById('Conference_accreditatedMembers_value').innerText = accreditatedMembers_res;
-var organName_res = Conference_instance.organName();
-	if(organName_res!=null)
-		document.getElementById('Conference_organName_value').innerText = organName_res;
-var date_res = Conference_instance.date();
-	if(date_res!=null)
-		document.getElementById('Conference_date_value').innerText = date_res;
-var lastFunctionId_res = Conference_instance.lastFunctionId();
-	if(lastFunctionId_res!=null)
-		document.getElementById('Conference_lastFunctionId_value').innerText = lastFunctionId_res;
-var blogRegistry_res = Conference_instance.blogRegistry();
-	if(blogRegistry_res!=null)
-		document.getElementById('Conference_blogRegistry_value').innerText = blogRegistry_res;
-var isActive_res = Conference_instance.isActive();
-	if(isActive_res!=null)
-		document.getElementById('Conference_isActive_value').innerText = isActive_res;
-var ballotCount_res = Conference_instance.ballotCount();
-	if(ballotCount_res!=null)
-		document.getElementById('Conference_ballotCount_value').innerText = ballotCount_res;
-var _key = document.getElementById('Conference_contract_attribute_managers_input').value;
-var managers_res = Conference_instance.managers(_key);
-	if(managers_res!=null){
-		document.getElementById('Conference_managers_value').innerText = managers_res;
-	}
-var _key = document.getElementById('Conference_contract_attribute_organFunctions_input').value;
-var organFunctions_res = Conference_instance.organFunctions(_key);
-	if(organFunctions_res!=null){
-		document.getElementById('Conference_organFunctions_currentMember_value').innerText = organFunctions_res[0];
-		document.getElementById('Conference_organFunctions_functionName_value').innerText = organFunctions_res[1];
-		document.getElementById('Conference_organFunctions_id_value').innerText = organFunctions_res[2];
-		document.getElementById('Conference_organFunctions_constitutionHash_value').innerText = organFunctions_res[3];
-		document.getElementById('Conference_organFunctions_lastMemberChanged_value').innerText = organFunctions_res[4];
-		document.getElementById('Conference_organFunctions_lastConstitutionHashChanged_value').innerText = organFunctions_res[5];
-		document.getElementById('Conference_organFunctions_publisher_value').innerText = organFunctions_res[6];
-	}
-
-}
-//call functions
-//function Conference_accreditationMember
-function Conference_accreditationMember_address() {
-	var param__address = document.getElementById('Conference_accreditationMember_address__address').value;
-	var res = Conference_instance.accreditationMember(param__address);
-}
-//function Conference_canAccess
-function Manageable_canAccess() {
-	var res = Conference_instance.canAccess();
-	if(res!=null)
-		document.getElementById('Manageable_canAccess_res').innerText = res;
-}
-//function Conference_changeMember
-function Organ_changeMember_uint_address() {
-	var param__id = document.getElementById('Organ_changeMember_uint_address__id').value;
-	var param__address = document.getElementById('Organ_changeMember_uint_address__address').value;
-	var res = Conference_instance.changeMember(param__id, param__address);
-}
-//function Conference_isMember
-function MemberAware_isMember_address() {
-	var param__address = document.getElementById('MemberAware_isMember_address__address').value;
-	var res = Conference_instance.isMember(param__address);
-	if(res!=null)
-		document.getElementById('MemberAware_isMember_address_res').innerText = res;
-}
-//function Conference_addManager
-function Manageable_addManager_address() {
-	var param__newManagerAddress = document.getElementById('Manageable_addManager_address__newManagerAddress').value;
-	var res = Conference_instance.addManager(param__newManagerAddress);
-}
-//function Conference_createFunction
-function Organ_createFunction_string_string() {
-	var param__functionName = document.getElementById('Organ_createFunction_string_string__functionName').value;
-	var param__constittiutionHash = document.getElementById('Organ_createFunction_string_string__constittiutionHash').value;
-	var res = Conference_instance.createFunction(param__functionName, param__constittiutionHash);
-}
-//function Conference_removeManager
-function Manageable_removeManager_address() {
-	var param__managerAddress = document.getElementById('Manageable_removeManager_address__managerAddress').value;
-	var res = Conference_instance.removeManager(param__managerAddress);
-}
-//function Conference_initalizeOrgan
-function Organ_initalizeOrgan() {
-	var res = Conference_instance.initalizeOrgan();
-}
-//function Conference_publishFunctionMessage
-function Organ_publishFunctionMessage_uint_string_string_string() {
-	var param_id = document.getElementById('Organ_publishFunctionMessage_uint_string_string_string_id').value;
-	var param_message = document.getElementById('Organ_publishFunctionMessage_uint_string_string_string_message').value;
-	var param_hash = document.getElementById('Organ_publishFunctionMessage_uint_string_string_string_hash').value;
-	var param_er = document.getElementById('Organ_publishFunctionMessage_uint_string_string_string_er').value;
-	var res = Conference_instance.publishFunctionMessage(param_id, param_message, param_hash, param_er);
-}
-//function Conference_createBallot
-function Organ_createBallot_string_bytes32() {
-	var param_name = document.getElementById('Organ_createBallot_string_bytes32_name').value;
-	var param_proposalNames = document.getElementById('Organ_createBallot_string_bytes32_proposalNames').value;
-	var res = Conference_instance.createBallot(param_name, param_proposalNames);
-	if(res!=null)
-		document.getElementById('Organ_createBallot_string_bytes32_res').innerText = res;
-}
-//function Conference_getFunctionBlogAddress
-function Organ_getFunctionBlogAddress_uint() {
-	var param_id = document.getElementById('Organ_getFunctionBlogAddress_uint_id').value;
-	var res = Conference_instance.getFunctionBlogAddress(param_id);
-	if(res!=null)
-		document.getElementById('Organ_getFunctionBlogAddress_uint_res').innerText = res;
-}
-//function Conference_getLastBallot
-function Organ_getLastBallot() {
-	var res = Conference_instance.getLastBallot();
-	if(res!=null)
-		document.getElementById('Organ_getLastBallot_res').innerText = res;
-}
-//function Conference_getOrganBlog
-function Organ_getOrganBlog() {
-	var res = Conference_instance.getOrganBlog();
-	if(res!=null)
-		document.getElementById('Organ_getOrganBlog_res').innerText = res;
-}
-
-//delegated calls
-
-</script>
-
-<!-- javascript for FoundationConference -->
-<script type='text/javascript'>
-// script for FoundationConference
-var FoundationConference_instance = undefined;
-	
-// set address
-function FoundationConference_setAddress() {
-	var _address = document.getElementById('FoundationConference_address').value;
-	FoundationConference_instance = FoundationConferenceContract.at(_address);
-}
-
-function FoundationConference_updateAttributes() {
-// update attributes
-var memberRegistry_res = FoundationConference_instance.memberRegistry();
-	if(memberRegistry_res!=null)
-		document.getElementById('FoundationConference_memberRegistry_value').innerText = memberRegistry_res;
-var organName_res = FoundationConference_instance.organName();
-	if(organName_res!=null)
-		document.getElementById('FoundationConference_organName_value').innerText = organName_res;
-var lastFunctionId_res = FoundationConference_instance.lastFunctionId();
-	if(lastFunctionId_res!=null)
-		document.getElementById('FoundationConference_lastFunctionId_value').innerText = lastFunctionId_res;
-var blogRegistry_res = FoundationConference_instance.blogRegistry();
-	if(blogRegistry_res!=null)
-		document.getElementById('FoundationConference_blogRegistry_value').innerText = blogRegistry_res;
-var isActive_res = FoundationConference_instance.isActive();
-	if(isActive_res!=null)
-		document.getElementById('FoundationConference_isActive_value').innerText = isActive_res;
-var ballotCount_res = FoundationConference_instance.ballotCount();
-	if(ballotCount_res!=null)
-		document.getElementById('FoundationConference_ballotCount_value').innerText = ballotCount_res;
-var _key = document.getElementById('FoundationConference_contract_attribute_managers_input').value;
-var managers_res = FoundationConference_instance.managers(_key);
-	if(managers_res!=null){
-		document.getElementById('FoundationConference_managers_value').innerText = managers_res;
-	}
-var _key = document.getElementById('FoundationConference_contract_attribute_organFunctions_input').value;
-var organFunctions_res = FoundationConference_instance.organFunctions(_key);
-	if(organFunctions_res!=null){
-		document.getElementById('FoundationConference_organFunctions_currentMember_value').innerText = organFunctions_res[0];
-		document.getElementById('FoundationConference_organFunctions_functionName_value').innerText = organFunctions_res[1];
-		document.getElementById('FoundationConference_organFunctions_id_value').innerText = organFunctions_res[2];
-		document.getElementById('FoundationConference_organFunctions_constitutionHash_value').innerText = organFunctions_res[3];
-		document.getElementById('FoundationConference_organFunctions_lastMemberChanged_value').innerText = organFunctions_res[4];
-		document.getElementById('FoundationConference_organFunctions_lastConstitutionHashChanged_value').innerText = organFunctions_res[5];
-		document.getElementById('FoundationConference_organFunctions_publisher_value').innerText = organFunctions_res[6];
-	}
-
-}
-//call functions
-//function FoundationConference_canAccess
-function Manageable_canAccess() {
-	var res = FoundationConference_instance.canAccess();
-	if(res!=null)
-		document.getElementById('Manageable_canAccess_res').innerText = res;
-}
-//function FoundationConference_changeMember
-function Organ_changeMember_uint_address() {
-	var param__id = document.getElementById('Organ_changeMember_uint_address__id').value;
-	var param__address = document.getElementById('Organ_changeMember_uint_address__address').value;
-	var res = FoundationConference_instance.changeMember(param__id, param__address);
-}
-//function FoundationConference_isMember
-function MemberAware_isMember_address() {
-	var param__address = document.getElementById('MemberAware_isMember_address__address').value;
-	var res = FoundationConference_instance.isMember(param__address);
-	if(res!=null)
-		document.getElementById('MemberAware_isMember_address_res').innerText = res;
-}
-//function FoundationConference_addManager
-function Manageable_addManager_address() {
-	var param__newManagerAddress = document.getElementById('Manageable_addManager_address__newManagerAddress').value;
-	var res = FoundationConference_instance.addManager(param__newManagerAddress);
-}
-//function FoundationConference_createFunction
-function Organ_createFunction_string_string() {
-	var param__functionName = document.getElementById('Organ_createFunction_string_string__functionName').value;
-	var param__constittiutionHash = document.getElementById('Organ_createFunction_string_string__constittiutionHash').value;
-	var res = FoundationConference_instance.createFunction(param__functionName, param__constittiutionHash);
-}
-//function FoundationConference_removeManager
-function Manageable_removeManager_address() {
-	var param__managerAddress = document.getElementById('Manageable_removeManager_address__managerAddress').value;
-	var res = FoundationConference_instance.removeManager(param__managerAddress);
-}
-//function FoundationConference_initalizeOrgan
-function Organ_initalizeOrgan() {
-	var res = FoundationConference_instance.initalizeOrgan();
-}
-//function FoundationConference_publishFunctionMessage
-function Organ_publishFunctionMessage_uint_string_string_string() {
-	var param_id = document.getElementById('Organ_publishFunctionMessage_uint_string_string_string_id').value;
-	var param_message = document.getElementById('Organ_publishFunctionMessage_uint_string_string_string_message').value;
-	var param_hash = document.getElementById('Organ_publishFunctionMessage_uint_string_string_string_hash').value;
-	var param_er = document.getElementById('Organ_publishFunctionMessage_uint_string_string_string_er').value;
-	var res = FoundationConference_instance.publishFunctionMessage(param_id, param_message, param_hash, param_er);
-}
-//function FoundationConference_createBallot
-function Organ_createBallot_string_bytes32() {
-	var param_name = document.getElementById('Organ_createBallot_string_bytes32_name').value;
-	var param_proposalNames = document.getElementById('Organ_createBallot_string_bytes32_proposalNames').value;
-	var res = FoundationConference_instance.createBallot(param_name, param_proposalNames);
-	if(res!=null)
-		document.getElementById('Organ_createBallot_string_bytes32_res').innerText = res;
-}
-//function FoundationConference_getFunctionBlogAddress
-function Organ_getFunctionBlogAddress_uint() {
-	var param_id = document.getElementById('Organ_getFunctionBlogAddress_uint_id').value;
-	var res = FoundationConference_instance.getFunctionBlogAddress(param_id);
-	if(res!=null)
-		document.getElementById('Organ_getFunctionBlogAddress_uint_res').innerText = res;
-}
-//function FoundationConference_getLastBallot
-function Organ_getLastBallot() {
-	var res = FoundationConference_instance.getLastBallot();
-	if(res!=null)
-		document.getElementById('Organ_getLastBallot_res').innerText = res;
-}
-//function FoundationConference_getOrganBlog
-function Organ_getOrganBlog() {
-	var res = FoundationConference_instance.getOrganBlog();
-	if(res!=null)
-		document.getElementById('Organ_getOrganBlog_res').innerText = res;
-}
-
-//delegated calls
-
-</script>
-
 
 <!-- start of style -->
 <style>
@@ -566,6 +20,14 @@ function Organ_getOrganBlog() {
 	border-style: solid;
 	border-width: 1px;
 	} 
+.Struct_Mapping{}
+.Value_Mapping{}
+.contract_attribute{}
+.contract_attribute_value{}
+.function_execution{}
+.function_parameter{}
+.function_result{}
+
 </style>
 </head>
 <body bgcolor='#E6E6FA'>
@@ -573,10 +35,13 @@ function Organ_getOrganBlog() {
 <!-- gui for Organ_contract -->
 <div class="contract" id="Organ_contract">
 Organ:
-  <input type='text' id='Organ_address'> <button onclick='Organ_setAddress()'>change Organ Address</button>
+  <input type="text" id="Organ_address"> <button id="OrganController.setAddress" onclick="OrganController.setAddress()">change Organ Address</button>
   <div class="contract_attributes" id="Organ_contract_attributes"> attributes:
     <div class="contract_attribute" id="Organ_contract_attribute_memberRegistry"> memberRegistry:
       <div class="contract_attribute_value" id="Organ_memberRegistry_value"> </div>
+    </div>
+    <div class="contract_attribute" id="Organ_contract_attribute_mangerCount"> mangerCount:
+      <div class="contract_attribute_value" id="Organ_mangerCount_value"> </div>
     </div>
     <div class="contract_attribute" id="Organ_contract_attribute_organName"> organName:
       <div class="contract_attribute_value" id="Organ_organName_value"> </div>
@@ -595,14 +60,14 @@ Organ:
     </div>
 
 <div class="Value_Mapping" id="Organ_contract_attribute_managers">mapping  managers:
-		<input type='text' id='Organ_contract_attribute_managers_input'>(address)
+		<input type="text" id="Organ_contract_attribute_managers_input">(address)
     	<div class="Mapping_value" id="Organ_contract_attribute_address"> bool:
       		<div class="contract_attribute_value" id="Organ_managers_value"> </div>
     	</div>
   </div>
 <!--struct -->
 <div class="Struct_Mapping" id="Struc_Organ_contract_attribute_organFunctions">struc mapping  organFunctions:
-		<input type='text' id='Organ_contract_attribute_organFunctions_input'>(uint)
+		<input type="number" id="Organ_contract_attribute_organFunctions_input">(uint)
     	<div class="Struct_attribute" id="Organ_contract_attribute_organFunctions_currentMember"> currentMember:
       		<div class="Struct_attribute_value" id="Organ_organFunctions_currentMember_value"> </div>
     	</div>
@@ -625,70 +90,75 @@ Organ:
       		<div class="Struct_attribute_value" id="Organ_organFunctions_publisher_value"> </div>
     	</div>
   </div>
-
-    <button onclick='Organ_updateAttributes()'>update Organ attributes</button>
+    <button id="Organ_updateAttributes" onclick="OrganController._updateAttributes()">update Organ attributes</button>
   </div>
   <div class="function_execution" id="Organ_contract_function_Organ_changeMember_uint_address">
 Organ_changeMember:
-	<input type='text' id='Organ_changeMember_uint_address__id'>
-	<input type='text' id='Organ_changeMember_uint_address__address'>
-	<button onclick='Organ_changeMember_uint_address()'>execute Organ_changeMember</button>
+	  <div class="function_parameter">_id<input type="number" id="Organ_changeMember_uint_address__id"></div>
+	  <div class="function_parameter">_address<input type="text" id="Organ_changeMember_uint_address__address"></div>
+	<button id="OrganController.Organ_changeMember_uint_address" onclick="OrganController.Organ_changeMember_uint_address()">execute Organ_changeMember</button>
 	<div class="function_result" id="Organ_changeMember_uint_address_res"></div>
   </div>
   <div class="function_execution" id="Organ_contract_function_Manageable_addManager_address">
 Organ_addManager:
-	<input type='text' id='Manageable_addManager_address__newManagerAddress'>
-	<button onclick='Manageable_addManager_address()'>execute Organ_addManager</button>
+	  <div class="function_parameter">_newManagerAddress<input type="text" id="Manageable_addManager_address__newManagerAddress"></div>
+	<button id="OrganController.Manageable_addManager_address" onclick="OrganController.Manageable_addManager_address()">execute Organ_addManager</button>
 	<div class="function_result" id="Manageable_addManager_address_res"></div>
   </div>
   <div class="function_execution" id="Organ_contract_function_Organ_createFunction_string_string">
 Organ_createFunction:
-	<input type='text' id='Organ_createFunction_string_string__functionName'>
-	<input type='text' id='Organ_createFunction_string_string__constittiutionHash'>
-	<button onclick='Organ_createFunction_string_string()'>execute Organ_createFunction</button>
+	  <div class="function_parameter">_functionName<input type="text" id="Organ_createFunction_string_string__functionName"></div>
+	  <div class="function_parameter">_constittiutionHash<input type="text" id="Organ_createFunction_string_string__constittiutionHash"></div>
+	<button id="OrganController.Organ_createFunction_string_string" onclick="OrganController.Organ_createFunction_string_string()">execute Organ_createFunction</button>
 	<div class="function_result" id="Organ_createFunction_string_string_res"></div>
   </div>
   <div class="function_execution" id="Organ_contract_function_Manageable_removeManager_address">
 Organ_removeManager:
-	<input type='text' id='Manageable_removeManager_address__managerAddress'>
-	<button onclick='Manageable_removeManager_address()'>execute Organ_removeManager</button>
+	  <div class="function_parameter">_managerAddress<input type="text" id="Manageable_removeManager_address__managerAddress"></div>
+	<button id="OrganController.Manageable_removeManager_address" onclick="OrganController.Manageable_removeManager_address()">execute Organ_removeManager</button>
 	<div class="function_result" id="Manageable_removeManager_address_res"></div>
   </div>
   <div class="function_execution" id="Organ_contract_function_Organ_initalizeOrgan">
 Organ_initalizeOrgan:
-	<button onclick='Organ_initalizeOrgan()'>execute Organ_initalizeOrgan</button>
+	<button id="OrganController.Organ_initalizeOrgan" onclick="OrganController.Organ_initalizeOrgan()">execute Organ_initalizeOrgan</button>
 	<div class="function_result" id="Organ_initalizeOrgan_res"></div>
+  </div>
+  <div class="function_execution" id="Organ_contract_function_Manageable_isManager_address">
+Organ_isManager:
+	  <div class="function_parameter">_managerAddress<input type="text" id="Manageable_isManager_address__managerAddress"></div>
+	<button id="OrganController.Manageable_isManager_address" onclick="OrganController.Manageable_isManager_address()">execute Organ_isManager</button>
+	<div class="function_result" id="Manageable_isManager_address_res"></div>
   </div>
   <div class="function_execution" id="Organ_contract_function_Organ_publishFunctionMessage_uint_string_string_string">
 Organ_publishFunctionMessage:
-	<input type='text' id='Organ_publishFunctionMessage_uint_string_string_string_id'>
-	<input type='text' id='Organ_publishFunctionMessage_uint_string_string_string_message'>
-	<input type='text' id='Organ_publishFunctionMessage_uint_string_string_string_hash'>
-	<input type='text' id='Organ_publishFunctionMessage_uint_string_string_string_er'>
-	<button onclick='Organ_publishFunctionMessage_uint_string_string_string()'>execute Organ_publishFunctionMessage</button>
+	  <div class="function_parameter">id<input type="number" id="Organ_publishFunctionMessage_uint_string_string_string_id"></div>
+	  <div class="function_parameter">message<input type="text" id="Organ_publishFunctionMessage_uint_string_string_string_message"></div>
+	  <div class="function_parameter">hash<input type="text" id="Organ_publishFunctionMessage_uint_string_string_string_hash"></div>
+	  <div class="function_parameter">er<input type="text" id="Organ_publishFunctionMessage_uint_string_string_string_er"></div>
+	<button id="OrganController.Organ_publishFunctionMessage_uint_string_string_string" onclick="OrganController.Organ_publishFunctionMessage_uint_string_string_string()">execute Organ_publishFunctionMessage</button>
 	<div class="function_result" id="Organ_publishFunctionMessage_uint_string_string_string_res"></div>
   </div>
   <div class="function_execution" id="Organ_contract_function_Organ_createBallot_string_bytes32">
 Organ_createBallot:
-	<input type='text' id='Organ_createBallot_string_bytes32_name'>
-	<input type='text' id='Organ_createBallot_string_bytes32_proposalNames'>
-	<button onclick='Organ_createBallot_string_bytes32()'>execute Organ_createBallot</button>
+	  <div class="function_parameter">name<input type="text" id="Organ_createBallot_string_bytes32_name"></div>
+	  <div class="function_parameter">proposalNames<input type="text" id="Organ_createBallot_string_bytes32_proposalNames"></div>
+	<button id="OrganController.Organ_createBallot_string_bytes32" onclick="OrganController.Organ_createBallot_string_bytes32()">execute Organ_createBallot</button>
 	<div class="function_result" id="Organ_createBallot_string_bytes32_res"></div>
   </div>
   <div class="function_execution" id="Organ_contract_function_Organ_getFunctionBlogAddress_uint">
 Organ_getFunctionBlogAddress:
-	<input type='text' id='Organ_getFunctionBlogAddress_uint_id'>
-	<button onclick='Organ_getFunctionBlogAddress_uint()'>execute Organ_getFunctionBlogAddress</button>
+	  <div class="function_parameter">id<input type="number" id="Organ_getFunctionBlogAddress_uint_id"></div>
+	<button id="OrganController.Organ_getFunctionBlogAddress_uint" onclick="OrganController.Organ_getFunctionBlogAddress_uint()">execute Organ_getFunctionBlogAddress</button>
 	<div class="function_result" id="Organ_getFunctionBlogAddress_uint_res"></div>
   </div>
   <div class="function_execution" id="Organ_contract_function_Organ_getLastBallot">
 Organ_getLastBallot:
-	<button onclick='Organ_getLastBallot()'>execute Organ_getLastBallot</button>
+	<button id="OrganController.Organ_getLastBallot" onclick="OrganController.Organ_getLastBallot()">execute Organ_getLastBallot</button>
 	<div class="function_result" id="Organ_getLastBallot_res"></div>
   </div>
   <div class="function_execution" id="Organ_contract_function_Organ_getOrganBlog">
 Organ_getOrganBlog:
-	<button onclick='Organ_getOrganBlog()'>execute Organ_getOrganBlog</button>
+	<button id="OrganController.Organ_getOrganBlog" onclick="OrganController.Organ_getOrganBlog()">execute Organ_getOrganBlog</button>
 	<div class="function_result" id="Organ_getOrganBlog_res"></div>
   </div>
 
@@ -696,8 +166,11 @@ Organ_getOrganBlog:
 <!-- gui for Party_contract -->
 <div class="contract" id="Party_contract">
 Party:
-  <input type='text' id='Party_address'> <button onclick='Party_setAddress()'>change Party Address</button>
+  <input type="text" id="Party_address"> <button id="PartyController.setAddress" onclick="PartyController.setAddress()">change Party Address</button>
   <div class="contract_attributes" id="Party_contract_attributes"> attributes:
+    <div class="contract_attribute" id="Party_contract_attribute_mangerCount"> mangerCount:
+      <div class="contract_attribute_value" id="Party_mangerCount_value"> </div>
+    </div>
     <div class="contract_attribute" id="Party_contract_attribute_constitutionHash"> constitutionHash:
       <div class="contract_attribute_value" id="Party_constitutionHash_value"> </div>
     </div>
@@ -709,72 +182,58 @@ Party:
     </div>
 
 <div class="Value_Mapping" id="Party_contract_attribute_managers">mapping  managers:
-		<input type='text' id='Party_contract_attribute_managers_input'>(address)
+		<input type="text" id="Party_contract_attribute_managers_input">(address)
     	<div class="Mapping_value" id="Party_contract_attribute_address"> bool:
       		<div class="contract_attribute_value" id="Party_managers_value"> </div>
     	</div>
   </div>
-<!--struct -->
-<div class="Struct_Mapping" id="Struc_Party_contract_attribute_organs">struc mapping  organs:
-		<input type='text' id='Party_contract_attribute_organs_input'>(uint)
-    	<div class="Struct_attribute" id="Party_contract_attribute_organs_organFunctions"> organFunctions:
-      		<div class="Struct_attribute_value" id="Party_organs_organFunctions_value"> </div>
-    	</div>
-    	<div class="Struct_attribute" id="Party_contract_attribute_organs_organName"> organName:
-      		<div class="Struct_attribute_value" id="Party_organs_organName_value"> </div>
-    	</div>
-    	<div class="Struct_attribute" id="Party_contract_attribute_organs_lastFunctionId"> lastFunctionId:
-      		<div class="Struct_attribute_value" id="Party_organs_lastFunctionId_value"> </div>
-    	</div>
-    	<div class="Struct_attribute" id="Party_contract_attribute_organs_blogRegistry"> blogRegistry:
-      		<div class="Struct_attribute_value" id="Party_organs_blogRegistry_value"> </div>
-    	</div>
-    	<div class="Struct_attribute" id="Party_contract_attribute_organs_isActive"> isActive:
-      		<div class="Struct_attribute_value" id="Party_organs_isActive_value"> </div>
-    	</div>
-    	<div class="Struct_attribute" id="Party_contract_attribute_organs_organBlog"> organBlog:
-      		<div class="Struct_attribute_value" id="Party_organs_organBlog_value"> </div>
-    	</div>
-    	<div class="Struct_attribute" id="Party_contract_attribute_organs_ballots"> ballots:
-      		<div class="Struct_attribute_value" id="Party_organs_ballots_value"> </div>
-    	</div>
-    	<div class="Struct_attribute" id="Party_contract_attribute_organs_ballotCount"> ballotCount:
-      		<div class="Struct_attribute_value" id="Party_organs_ballotCount_value"> </div>
+<div class="Value_Mapping" id="Party_contract_attribute_organs">mapping  organs:
+		<input type="number" id="Party_contract_attribute_organs_input">(uint)
+    	<div class="Mapping_value" id="Party_contract_attribute_uint"> Organ:
+      		<div class="contract_attribute_value" id="Party_organs_value"> </div>
     	</div>
   </div>
-
-    <button onclick='Party_updateAttributes()'>update Party attributes</button>
+    <button id="Party_updateAttributes" onclick="PartyController._updateAttributes()">update Party attributes</button>
   </div>
   <div class="function_execution" id="Party_contract_function_Party_Party">
 Party_Party:
-	<button onclick='Party_Party()'>execute Party_Party</button>
+	<button id="PartyController.Party_Party" onclick="PartyController.Party_Party()">execute Party_Party</button>
 	<div class="function_result" id="Party_Party_res"></div>
   </div>
   <div class="function_execution" id="Party_contract_function_Manageable_addManager_address">
 Party_addManager:
-	<input type='text' id='Manageable_addManager_address__newManagerAddress'>
-	<button onclick='Manageable_addManager_address()'>execute Party_addManager</button>
+	  <div class="function_parameter">_newManagerAddress<input type="text" id="Manageable_addManager_address__newManagerAddress"></div>
+	<button id="PartyController.Manageable_addManager_address" onclick="PartyController.Manageable_addManager_address()">execute Party_addManager</button>
 	<div class="function_result" id="Manageable_addManager_address_res"></div>
   </div>
   <div class="function_execution" id="Party_contract_function_Party_createOrgan_string">
 Party_createOrgan:
-	<input type='text' id='Party_createOrgan_string_organName'>
-	<button onclick='Party_createOrgan_string()'>execute Party_createOrgan</button>
+	  <div class="function_parameter">organName<input type="text" id="Party_createOrgan_string_organName"></div>
+	<button id="PartyController.Party_createOrgan_string" onclick="PartyController.Party_createOrgan_string()">execute Party_createOrgan</button>
 	<div class="function_result" id="Party_createOrgan_string_res"></div>
   </div>
   <div class="function_execution" id="Party_contract_function_Manageable_removeManager_address">
 Party_removeManager:
-	<input type='text' id='Manageable_removeManager_address__managerAddress'>
-	<button onclick='Manageable_removeManager_address()'>execute Party_removeManager</button>
+	  <div class="function_parameter">_managerAddress<input type="text" id="Manageable_removeManager_address__managerAddress"></div>
+	<button id="PartyController.Manageable_removeManager_address" onclick="PartyController.Manageable_removeManager_address()">execute Party_removeManager</button>
 	<div class="function_result" id="Manageable_removeManager_address_res"></div>
+  </div>
+  <div class="function_execution" id="Party_contract_function_Manageable_isManager_address">
+Party_isManager:
+	  <div class="function_parameter">_managerAddress<input type="text" id="Manageable_isManager_address__managerAddress"></div>
+	<button id="PartyController.Manageable_isManager_address" onclick="PartyController.Manageable_isManager_address()">execute Party_isManager</button>
+	<div class="function_result" id="Manageable_isManager_address_res"></div>
   </div>
 
 </div>
 <!-- gui for KUEKeNParty_contract -->
 <div class="contract" id="KUEKeNParty_contract">
 KUEKeNParty:
-  <input type='text' id='KUEKeNParty_address'> <button onclick='KUEKeNParty_setAddress()'>change KUEKeNParty Address</button>
+  <input type="text" id="KUEKeNParty_address"> <button id="KUEKeNPartyController.setAddress" onclick="KUEKeNPartyController.setAddress()">change KUEKeNParty Address</button>
   <div class="contract_attributes" id="KUEKeNParty_contract_attributes"> attributes:
+    <div class="contract_attribute" id="KUEKeNParty_contract_attribute_mangerCount"> mangerCount:
+      <div class="contract_attribute_value" id="KUEKeNParty_mangerCount_value"> </div>
+    </div>
     <div class="contract_attribute" id="KUEKeNParty_contract_attribute_constitutionHash"> constitutionHash:
       <div class="contract_attribute_value" id="KUEKeNParty_constitutionHash_value"> </div>
     </div>
@@ -786,89 +245,75 @@ KUEKeNParty:
     </div>
 
 <div class="Value_Mapping" id="KUEKeNParty_contract_attribute_managers">mapping  managers:
-		<input type='text' id='KUEKeNParty_contract_attribute_managers_input'>(address)
+		<input type="text" id="KUEKeNParty_contract_attribute_managers_input">(address)
     	<div class="Mapping_value" id="KUEKeNParty_contract_attribute_address"> bool:
       		<div class="contract_attribute_value" id="KUEKeNParty_managers_value"> </div>
     	</div>
   </div>
-<!--struct -->
-<div class="Struct_Mapping" id="Struc_KUEKeNParty_contract_attribute_organs">struc mapping  organs:
-		<input type='text' id='KUEKeNParty_contract_attribute_organs_input'>(uint)
-    	<div class="Struct_attribute" id="KUEKeNParty_contract_attribute_organs_organFunctions"> organFunctions:
-      		<div class="Struct_attribute_value" id="KUEKeNParty_organs_organFunctions_value"> </div>
-    	</div>
-    	<div class="Struct_attribute" id="KUEKeNParty_contract_attribute_organs_organName"> organName:
-      		<div class="Struct_attribute_value" id="KUEKeNParty_organs_organName_value"> </div>
-    	</div>
-    	<div class="Struct_attribute" id="KUEKeNParty_contract_attribute_organs_lastFunctionId"> lastFunctionId:
-      		<div class="Struct_attribute_value" id="KUEKeNParty_organs_lastFunctionId_value"> </div>
-    	</div>
-    	<div class="Struct_attribute" id="KUEKeNParty_contract_attribute_organs_blogRegistry"> blogRegistry:
-      		<div class="Struct_attribute_value" id="KUEKeNParty_organs_blogRegistry_value"> </div>
-    	</div>
-    	<div class="Struct_attribute" id="KUEKeNParty_contract_attribute_organs_isActive"> isActive:
-      		<div class="Struct_attribute_value" id="KUEKeNParty_organs_isActive_value"> </div>
-    	</div>
-    	<div class="Struct_attribute" id="KUEKeNParty_contract_attribute_organs_organBlog"> organBlog:
-      		<div class="Struct_attribute_value" id="KUEKeNParty_organs_organBlog_value"> </div>
-    	</div>
-    	<div class="Struct_attribute" id="KUEKeNParty_contract_attribute_organs_ballots"> ballots:
-      		<div class="Struct_attribute_value" id="KUEKeNParty_organs_ballots_value"> </div>
-    	</div>
-    	<div class="Struct_attribute" id="KUEKeNParty_contract_attribute_organs_ballotCount"> ballotCount:
-      		<div class="Struct_attribute_value" id="KUEKeNParty_organs_ballotCount_value"> </div>
+<div class="Value_Mapping" id="KUEKeNParty_contract_attribute_organs">mapping  organs:
+		<input type="number" id="KUEKeNParty_contract_attribute_organs_input">(uint)
+    	<div class="Mapping_value" id="KUEKeNParty_contract_attribute_uint"> Organ:
+      		<div class="contract_attribute_value" id="KUEKeNParty_organs_value"> </div>
     	</div>
   </div>
-
-    <button onclick='KUEKeNParty_updateAttributes()'>update KUEKeNParty attributes</button>
+    <button id="KUEKeNParty_updateAttributes" onclick="KUEKeNPartyController._updateAttributes()">update KUEKeNParty attributes</button>
   </div>
   <div class="function_execution" id="KUEKeNParty_contract_function_KUEKeNParty_KUEKeNParty">
 KUEKeNParty_KUEKeNParty:
-	<button onclick='KUEKeNParty_KUEKeNParty()'>execute KUEKeNParty_KUEKeNParty</button>
+	<button id="KUEKeNPartyController.KUEKeNParty_KUEKeNParty" onclick="KUEKeNPartyController.KUEKeNParty_KUEKeNParty()">execute KUEKeNParty_KUEKeNParty</button>
 	<div class="function_result" id="KUEKeNParty_KUEKeNParty_res"></div>
   </div>
   <div class="function_execution" id="KUEKeNParty_contract_function_Party_Party">
 KUEKeNParty_Party:
-	<button onclick='Party_Party()'>execute KUEKeNParty_Party</button>
+	<button id="KUEKeNPartyController.Party_Party" onclick="KUEKeNPartyController.Party_Party()">execute KUEKeNParty_Party</button>
 	<div class="function_result" id="Party_Party_res"></div>
   </div>
   <div class="function_execution" id="KUEKeNParty_contract_function_Manageable_addManager_address">
 KUEKeNParty_addManager:
-	<input type='text' id='Manageable_addManager_address__newManagerAddress'>
-	<button onclick='Manageable_addManager_address()'>execute KUEKeNParty_addManager</button>
+	  <div class="function_parameter">_newManagerAddress<input type="text" id="Manageable_addManager_address__newManagerAddress"></div>
+	<button id="KUEKeNPartyController.Manageable_addManager_address" onclick="KUEKeNPartyController.Manageable_addManager_address()">execute KUEKeNParty_addManager</button>
 	<div class="function_result" id="Manageable_addManager_address_res"></div>
   </div>
   <div class="function_execution" id="KUEKeNParty_contract_function_KUEKeNParty_boostrapParty_address_address">
 KUEKeNParty_boostrapParty:
-	<input type='text' id='KUEKeNParty_boostrapParty_address_address_fc'>
-	<input type='text' id='KUEKeNParty_boostrapParty_address_address_br'>
-	<button onclick='KUEKeNParty_boostrapParty_address_address()'>execute KUEKeNParty_boostrapParty</button>
+	  <div class="function_parameter">fc<input type="text" id="KUEKeNParty_boostrapParty_address_address_fc"></div>
+	  <div class="function_parameter">br<input type="text" id="KUEKeNParty_boostrapParty_address_address_br"></div>
+	<button id="KUEKeNPartyController.KUEKeNParty_boostrapParty_address_address" onclick="KUEKeNPartyController.KUEKeNParty_boostrapParty_address_address()">execute KUEKeNParty_boostrapParty</button>
 	<div class="function_result" id="KUEKeNParty_boostrapParty_address_address_res"></div>
   </div>
   <div class="function_execution" id="KUEKeNParty_contract_function_Party_createOrgan_string">
 KUEKeNParty_createOrgan:
-	<input type='text' id='Party_createOrgan_string_organName'>
-	<button onclick='Party_createOrgan_string()'>execute KUEKeNParty_createOrgan</button>
+	  <div class="function_parameter">organName<input type="text" id="Party_createOrgan_string_organName"></div>
+	<button id="KUEKeNPartyController.Party_createOrgan_string" onclick="KUEKeNPartyController.Party_createOrgan_string()">execute KUEKeNParty_createOrgan</button>
 	<div class="function_result" id="Party_createOrgan_string_res"></div>
   </div>
   <div class="function_execution" id="KUEKeNParty_contract_function_Manageable_removeManager_address">
 KUEKeNParty_removeManager:
-	<input type='text' id='Manageable_removeManager_address__managerAddress'>
-	<button onclick='Manageable_removeManager_address()'>execute KUEKeNParty_removeManager</button>
+	  <div class="function_parameter">_managerAddress<input type="text" id="Manageable_removeManager_address__managerAddress"></div>
+	<button id="KUEKeNPartyController.Manageable_removeManager_address" onclick="KUEKeNPartyController.Manageable_removeManager_address()">execute KUEKeNParty_removeManager</button>
 	<div class="function_result" id="Manageable_removeManager_address_res"></div>
+  </div>
+  <div class="function_execution" id="KUEKeNParty_contract_function_Manageable_isManager_address">
+KUEKeNParty_isManager:
+	  <div class="function_parameter">_managerAddress<input type="text" id="Manageable_isManager_address__managerAddress"></div>
+	<button id="KUEKeNPartyController.Manageable_isManager_address" onclick="KUEKeNPartyController.Manageable_isManager_address()">execute KUEKeNParty_isManager</button>
+	<div class="function_result" id="Manageable_isManager_address_res"></div>
   </div>
 
 </div>
 <!-- gui for Conference_contract -->
 <div class="contract" id="Conference_contract">
 Conference:
-  <input type='text' id='Conference_address'> <button onclick='Conference_setAddress()'>change Conference Address</button>
+  <input type="text" id="Conference_address"> <button id="ConferenceController.setAddress" onclick="ConferenceController.setAddress()">change Conference Address</button>
   <div class="contract_attributes" id="Conference_contract_attributes"> attributes:
     <div class="contract_attribute" id="Conference_contract_attribute_memberRegistry"> memberRegistry:
       <div class="contract_attribute_value" id="Conference_memberRegistry_value"> </div>
     </div>
     <div class="contract_attribute" id="Conference_contract_attribute_accreditatedMembers"> accreditatedMembers:
       <div class="contract_attribute_value" id="Conference_accreditatedMembers_value"> </div>
+    </div>
+    <div class="contract_attribute" id="Conference_contract_attribute_mangerCount"> mangerCount:
+      <div class="contract_attribute_value" id="Conference_mangerCount_value"> </div>
     </div>
     <div class="contract_attribute" id="Conference_contract_attribute_organName"> organName:
       <div class="contract_attribute_value" id="Conference_organName_value"> </div>
@@ -890,14 +335,14 @@ Conference:
     </div>
 
 <div class="Value_Mapping" id="Conference_contract_attribute_managers">mapping  managers:
-		<input type='text' id='Conference_contract_attribute_managers_input'>(address)
+		<input type="text" id="Conference_contract_attribute_managers_input">(address)
     	<div class="Mapping_value" id="Conference_contract_attribute_address"> bool:
       		<div class="contract_attribute_value" id="Conference_managers_value"> </div>
     	</div>
   </div>
 <!--struct -->
 <div class="Struct_Mapping" id="Struc_Conference_contract_attribute_organFunctions">struc mapping  organFunctions:
-		<input type='text' id='Conference_contract_attribute_organFunctions_input'>(uint)
+		<input type="number" id="Conference_contract_attribute_organFunctions_input">(uint)
     	<div class="Struct_attribute" id="Conference_contract_attribute_organFunctions_currentMember"> currentMember:
       		<div class="Struct_attribute_value" id="Conference_organFunctions_currentMember_value"> </div>
     	</div>
@@ -920,76 +365,81 @@ Conference:
       		<div class="Struct_attribute_value" id="Conference_organFunctions_publisher_value"> </div>
     	</div>
   </div>
-
-    <button onclick='Conference_updateAttributes()'>update Conference attributes</button>
+    <button id="Conference_updateAttributes" onclick="ConferenceController._updateAttributes()">update Conference attributes</button>
   </div>
   <div class="function_execution" id="Conference_contract_function_Conference_accreditationMember_address">
 Conference_accreditationMember:
-	<input type='text' id='Conference_accreditationMember_address__address'>
-	<button onclick='Conference_accreditationMember_address()'>execute Conference_accreditationMember</button>
+	  <div class="function_parameter">_address<input type="text" id="Conference_accreditationMember_address__address"></div>
+	<button id="ConferenceController.Conference_accreditationMember_address" onclick="ConferenceController.Conference_accreditationMember_address()">execute Conference_accreditationMember</button>
 	<div class="function_result" id="Conference_accreditationMember_address_res"></div>
   </div>
   <div class="function_execution" id="Conference_contract_function_Organ_changeMember_uint_address">
 Conference_changeMember:
-	<input type='text' id='Organ_changeMember_uint_address__id'>
-	<input type='text' id='Organ_changeMember_uint_address__address'>
-	<button onclick='Organ_changeMember_uint_address()'>execute Conference_changeMember</button>
+	  <div class="function_parameter">_id<input type="number" id="Organ_changeMember_uint_address__id"></div>
+	  <div class="function_parameter">_address<input type="text" id="Organ_changeMember_uint_address__address"></div>
+	<button id="ConferenceController.Organ_changeMember_uint_address" onclick="ConferenceController.Organ_changeMember_uint_address()">execute Conference_changeMember</button>
 	<div class="function_result" id="Organ_changeMember_uint_address_res"></div>
   </div>
   <div class="function_execution" id="Conference_contract_function_Manageable_addManager_address">
 Conference_addManager:
-	<input type='text' id='Manageable_addManager_address__newManagerAddress'>
-	<button onclick='Manageable_addManager_address()'>execute Conference_addManager</button>
+	  <div class="function_parameter">_newManagerAddress<input type="text" id="Manageable_addManager_address__newManagerAddress"></div>
+	<button id="ConferenceController.Manageable_addManager_address" onclick="ConferenceController.Manageable_addManager_address()">execute Conference_addManager</button>
 	<div class="function_result" id="Manageable_addManager_address_res"></div>
   </div>
   <div class="function_execution" id="Conference_contract_function_Organ_createFunction_string_string">
 Conference_createFunction:
-	<input type='text' id='Organ_createFunction_string_string__functionName'>
-	<input type='text' id='Organ_createFunction_string_string__constittiutionHash'>
-	<button onclick='Organ_createFunction_string_string()'>execute Conference_createFunction</button>
+	  <div class="function_parameter">_functionName<input type="text" id="Organ_createFunction_string_string__functionName"></div>
+	  <div class="function_parameter">_constittiutionHash<input type="text" id="Organ_createFunction_string_string__constittiutionHash"></div>
+	<button id="ConferenceController.Organ_createFunction_string_string" onclick="ConferenceController.Organ_createFunction_string_string()">execute Conference_createFunction</button>
 	<div class="function_result" id="Organ_createFunction_string_string_res"></div>
   </div>
   <div class="function_execution" id="Conference_contract_function_Manageable_removeManager_address">
 Conference_removeManager:
-	<input type='text' id='Manageable_removeManager_address__managerAddress'>
-	<button onclick='Manageable_removeManager_address()'>execute Conference_removeManager</button>
+	  <div class="function_parameter">_managerAddress<input type="text" id="Manageable_removeManager_address__managerAddress"></div>
+	<button id="ConferenceController.Manageable_removeManager_address" onclick="ConferenceController.Manageable_removeManager_address()">execute Conference_removeManager</button>
 	<div class="function_result" id="Manageable_removeManager_address_res"></div>
   </div>
   <div class="function_execution" id="Conference_contract_function_Organ_initalizeOrgan">
 Conference_initalizeOrgan:
-	<button onclick='Organ_initalizeOrgan()'>execute Conference_initalizeOrgan</button>
+	<button id="ConferenceController.Organ_initalizeOrgan" onclick="ConferenceController.Organ_initalizeOrgan()">execute Conference_initalizeOrgan</button>
 	<div class="function_result" id="Organ_initalizeOrgan_res"></div>
+  </div>
+  <div class="function_execution" id="Conference_contract_function_Manageable_isManager_address">
+Conference_isManager:
+	  <div class="function_parameter">_managerAddress<input type="text" id="Manageable_isManager_address__managerAddress"></div>
+	<button id="ConferenceController.Manageable_isManager_address" onclick="ConferenceController.Manageable_isManager_address()">execute Conference_isManager</button>
+	<div class="function_result" id="Manageable_isManager_address_res"></div>
   </div>
   <div class="function_execution" id="Conference_contract_function_Organ_publishFunctionMessage_uint_string_string_string">
 Conference_publishFunctionMessage:
-	<input type='text' id='Organ_publishFunctionMessage_uint_string_string_string_id'>
-	<input type='text' id='Organ_publishFunctionMessage_uint_string_string_string_message'>
-	<input type='text' id='Organ_publishFunctionMessage_uint_string_string_string_hash'>
-	<input type='text' id='Organ_publishFunctionMessage_uint_string_string_string_er'>
-	<button onclick='Organ_publishFunctionMessage_uint_string_string_string()'>execute Conference_publishFunctionMessage</button>
+	  <div class="function_parameter">id<input type="number" id="Organ_publishFunctionMessage_uint_string_string_string_id"></div>
+	  <div class="function_parameter">message<input type="text" id="Organ_publishFunctionMessage_uint_string_string_string_message"></div>
+	  <div class="function_parameter">hash<input type="text" id="Organ_publishFunctionMessage_uint_string_string_string_hash"></div>
+	  <div class="function_parameter">er<input type="text" id="Organ_publishFunctionMessage_uint_string_string_string_er"></div>
+	<button id="ConferenceController.Organ_publishFunctionMessage_uint_string_string_string" onclick="ConferenceController.Organ_publishFunctionMessage_uint_string_string_string()">execute Conference_publishFunctionMessage</button>
 	<div class="function_result" id="Organ_publishFunctionMessage_uint_string_string_string_res"></div>
   </div>
   <div class="function_execution" id="Conference_contract_function_Organ_createBallot_string_bytes32">
 Conference_createBallot:
-	<input type='text' id='Organ_createBallot_string_bytes32_name'>
-	<input type='text' id='Organ_createBallot_string_bytes32_proposalNames'>
-	<button onclick='Organ_createBallot_string_bytes32()'>execute Conference_createBallot</button>
+	  <div class="function_parameter">name<input type="text" id="Organ_createBallot_string_bytes32_name"></div>
+	  <div class="function_parameter">proposalNames<input type="text" id="Organ_createBallot_string_bytes32_proposalNames"></div>
+	<button id="ConferenceController.Organ_createBallot_string_bytes32" onclick="ConferenceController.Organ_createBallot_string_bytes32()">execute Conference_createBallot</button>
 	<div class="function_result" id="Organ_createBallot_string_bytes32_res"></div>
   </div>
   <div class="function_execution" id="Conference_contract_function_Organ_getFunctionBlogAddress_uint">
 Conference_getFunctionBlogAddress:
-	<input type='text' id='Organ_getFunctionBlogAddress_uint_id'>
-	<button onclick='Organ_getFunctionBlogAddress_uint()'>execute Conference_getFunctionBlogAddress</button>
+	  <div class="function_parameter">id<input type="number" id="Organ_getFunctionBlogAddress_uint_id"></div>
+	<button id="ConferenceController.Organ_getFunctionBlogAddress_uint" onclick="ConferenceController.Organ_getFunctionBlogAddress_uint()">execute Conference_getFunctionBlogAddress</button>
 	<div class="function_result" id="Organ_getFunctionBlogAddress_uint_res"></div>
   </div>
   <div class="function_execution" id="Conference_contract_function_Organ_getLastBallot">
 Conference_getLastBallot:
-	<button onclick='Organ_getLastBallot()'>execute Conference_getLastBallot</button>
+	<button id="ConferenceController.Organ_getLastBallot" onclick="ConferenceController.Organ_getLastBallot()">execute Conference_getLastBallot</button>
 	<div class="function_result" id="Organ_getLastBallot_res"></div>
   </div>
   <div class="function_execution" id="Conference_contract_function_Organ_getOrganBlog">
 Conference_getOrganBlog:
-	<button onclick='Organ_getOrganBlog()'>execute Conference_getOrganBlog</button>
+	<button id="ConferenceController.Organ_getOrganBlog" onclick="ConferenceController.Organ_getOrganBlog()">execute Conference_getOrganBlog</button>
 	<div class="function_result" id="Organ_getOrganBlog_res"></div>
   </div>
 
@@ -997,13 +447,22 @@ Conference_getOrganBlog:
 <!-- gui for FoundationConference_contract -->
 <div class="contract" id="FoundationConference_contract">
 FoundationConference:
-  <input type='text' id='FoundationConference_address'> <button onclick='FoundationConference_setAddress()'>change FoundationConference Address</button>
+  <input type="text" id="FoundationConference_address"> <button id="FoundationConferenceController.setAddress" onclick="FoundationConferenceController.setAddress()">change FoundationConference Address</button>
   <div class="contract_attributes" id="FoundationConference_contract_attributes"> attributes:
     <div class="contract_attribute" id="FoundationConference_contract_attribute_memberRegistry"> memberRegistry:
       <div class="contract_attribute_value" id="FoundationConference_memberRegistry_value"> </div>
     </div>
+    <div class="contract_attribute" id="FoundationConference_contract_attribute_accreditatedMembers"> accreditatedMembers:
+      <div class="contract_attribute_value" id="FoundationConference_accreditatedMembers_value"> </div>
+    </div>
+    <div class="contract_attribute" id="FoundationConference_contract_attribute_mangerCount"> mangerCount:
+      <div class="contract_attribute_value" id="FoundationConference_mangerCount_value"> </div>
+    </div>
     <div class="contract_attribute" id="FoundationConference_contract_attribute_organName"> organName:
       <div class="contract_attribute_value" id="FoundationConference_organName_value"> </div>
+    </div>
+    <div class="contract_attribute" id="FoundationConference_contract_attribute_date"> date:
+      <div class="contract_attribute_value" id="FoundationConference_date_value"> </div>
     </div>
     <div class="contract_attribute" id="FoundationConference_contract_attribute_lastFunctionId"> lastFunctionId:
       <div class="contract_attribute_value" id="FoundationConference_lastFunctionId_value"> </div>
@@ -1019,14 +478,14 @@ FoundationConference:
     </div>
 
 <div class="Value_Mapping" id="FoundationConference_contract_attribute_managers">mapping  managers:
-		<input type='text' id='FoundationConference_contract_attribute_managers_input'>(address)
+		<input type="text" id="FoundationConference_contract_attribute_managers_input">(address)
     	<div class="Mapping_value" id="FoundationConference_contract_attribute_address"> bool:
       		<div class="contract_attribute_value" id="FoundationConference_managers_value"> </div>
     	</div>
   </div>
 <!--struct -->
 <div class="Struct_Mapping" id="Struc_FoundationConference_contract_attribute_organFunctions">struc mapping  organFunctions:
-		<input type='text' id='FoundationConference_contract_attribute_organFunctions_input'>(uint)
+		<input type="number" id="FoundationConference_contract_attribute_organFunctions_input">(uint)
     	<div class="Struct_attribute" id="FoundationConference_contract_attribute_organFunctions_currentMember"> currentMember:
       		<div class="Struct_attribute_value" id="FoundationConference_organFunctions_currentMember_value"> </div>
     	</div>
@@ -1049,101 +508,223 @@ FoundationConference:
       		<div class="Struct_attribute_value" id="FoundationConference_organFunctions_publisher_value"> </div>
     	</div>
   </div>
-
-    <button onclick='FoundationConference_updateAttributes()'>update FoundationConference attributes</button>
+    <button id="FoundationConference_updateAttributes" onclick="FoundationConferenceController._updateAttributes()">update FoundationConference attributes</button>
+  </div>
+  <div class="function_execution" id="FoundationConference_contract_function_Conference_accreditationMember_address">
+FoundationConference_accreditationMember:
+	  <div class="function_parameter">_address<input type="text" id="Conference_accreditationMember_address__address"></div>
+	<button id="FoundationConferenceController.Conference_accreditationMember_address" onclick="FoundationConferenceController.Conference_accreditationMember_address()">execute FoundationConference_accreditationMember</button>
+	<div class="function_result" id="Conference_accreditationMember_address_res"></div>
   </div>
   <div class="function_execution" id="FoundationConference_contract_function_Organ_changeMember_uint_address">
 FoundationConference_changeMember:
-	<input type='text' id='Organ_changeMember_uint_address__id'>
-	<input type='text' id='Organ_changeMember_uint_address__address'>
-	<button onclick='Organ_changeMember_uint_address()'>execute FoundationConference_changeMember</button>
+	  <div class="function_parameter">_id<input type="number" id="Organ_changeMember_uint_address__id"></div>
+	  <div class="function_parameter">_address<input type="text" id="Organ_changeMember_uint_address__address"></div>
+	<button id="FoundationConferenceController.Organ_changeMember_uint_address" onclick="FoundationConferenceController.Organ_changeMember_uint_address()">execute FoundationConference_changeMember</button>
 	<div class="function_result" id="Organ_changeMember_uint_address_res"></div>
   </div>
   <div class="function_execution" id="FoundationConference_contract_function_Manageable_addManager_address">
 FoundationConference_addManager:
-	<input type='text' id='Manageable_addManager_address__newManagerAddress'>
-	<button onclick='Manageable_addManager_address()'>execute FoundationConference_addManager</button>
+	  <div class="function_parameter">_newManagerAddress<input type="text" id="Manageable_addManager_address__newManagerAddress"></div>
+	<button id="FoundationConferenceController.Manageable_addManager_address" onclick="FoundationConferenceController.Manageable_addManager_address()">execute FoundationConference_addManager</button>
 	<div class="function_result" id="Manageable_addManager_address_res"></div>
   </div>
   <div class="function_execution" id="FoundationConference_contract_function_Organ_createFunction_string_string">
 FoundationConference_createFunction:
-	<input type='text' id='Organ_createFunction_string_string__functionName'>
-	<input type='text' id='Organ_createFunction_string_string__constittiutionHash'>
-	<button onclick='Organ_createFunction_string_string()'>execute FoundationConference_createFunction</button>
+	  <div class="function_parameter">_functionName<input type="text" id="Organ_createFunction_string_string__functionName"></div>
+	  <div class="function_parameter">_constittiutionHash<input type="text" id="Organ_createFunction_string_string__constittiutionHash"></div>
+	<button id="FoundationConferenceController.Organ_createFunction_string_string" onclick="FoundationConferenceController.Organ_createFunction_string_string()">execute FoundationConference_createFunction</button>
 	<div class="function_result" id="Organ_createFunction_string_string_res"></div>
   </div>
   <div class="function_execution" id="FoundationConference_contract_function_Manageable_removeManager_address">
 FoundationConference_removeManager:
-	<input type='text' id='Manageable_removeManager_address__managerAddress'>
-	<button onclick='Manageable_removeManager_address()'>execute FoundationConference_removeManager</button>
+	  <div class="function_parameter">_managerAddress<input type="text" id="Manageable_removeManager_address__managerAddress"></div>
+	<button id="FoundationConferenceController.Manageable_removeManager_address" onclick="FoundationConferenceController.Manageable_removeManager_address()">execute FoundationConference_removeManager</button>
 	<div class="function_result" id="Manageable_removeManager_address_res"></div>
   </div>
   <div class="function_execution" id="FoundationConference_contract_function_Organ_initalizeOrgan">
 FoundationConference_initalizeOrgan:
-	<button onclick='Organ_initalizeOrgan()'>execute FoundationConference_initalizeOrgan</button>
+	<button id="FoundationConferenceController.Organ_initalizeOrgan" onclick="FoundationConferenceController.Organ_initalizeOrgan()">execute FoundationConference_initalizeOrgan</button>
 	<div class="function_result" id="Organ_initalizeOrgan_res"></div>
+  </div>
+  <div class="function_execution" id="FoundationConference_contract_function_Manageable_isManager_address">
+FoundationConference_isManager:
+	  <div class="function_parameter">_managerAddress<input type="text" id="Manageable_isManager_address__managerAddress"></div>
+	<button id="FoundationConferenceController.Manageable_isManager_address" onclick="FoundationConferenceController.Manageable_isManager_address()">execute FoundationConference_isManager</button>
+	<div class="function_result" id="Manageable_isManager_address_res"></div>
   </div>
   <div class="function_execution" id="FoundationConference_contract_function_Organ_publishFunctionMessage_uint_string_string_string">
 FoundationConference_publishFunctionMessage:
-	<input type='text' id='Organ_publishFunctionMessage_uint_string_string_string_id'>
-	<input type='text' id='Organ_publishFunctionMessage_uint_string_string_string_message'>
-	<input type='text' id='Organ_publishFunctionMessage_uint_string_string_string_hash'>
-	<input type='text' id='Organ_publishFunctionMessage_uint_string_string_string_er'>
-	<button onclick='Organ_publishFunctionMessage_uint_string_string_string()'>execute FoundationConference_publishFunctionMessage</button>
+	  <div class="function_parameter">id<input type="number" id="Organ_publishFunctionMessage_uint_string_string_string_id"></div>
+	  <div class="function_parameter">message<input type="text" id="Organ_publishFunctionMessage_uint_string_string_string_message"></div>
+	  <div class="function_parameter">hash<input type="text" id="Organ_publishFunctionMessage_uint_string_string_string_hash"></div>
+	  <div class="function_parameter">er<input type="text" id="Organ_publishFunctionMessage_uint_string_string_string_er"></div>
+	<button id="FoundationConferenceController.Organ_publishFunctionMessage_uint_string_string_string" onclick="FoundationConferenceController.Organ_publishFunctionMessage_uint_string_string_string()">execute FoundationConference_publishFunctionMessage</button>
 	<div class="function_result" id="Organ_publishFunctionMessage_uint_string_string_string_res"></div>
   </div>
   <div class="function_execution" id="FoundationConference_contract_function_Organ_createBallot_string_bytes32">
 FoundationConference_createBallot:
-	<input type='text' id='Organ_createBallot_string_bytes32_name'>
-	<input type='text' id='Organ_createBallot_string_bytes32_proposalNames'>
-	<button onclick='Organ_createBallot_string_bytes32()'>execute FoundationConference_createBallot</button>
+	  <div class="function_parameter">name<input type="text" id="Organ_createBallot_string_bytes32_name"></div>
+	  <div class="function_parameter">proposalNames<input type="text" id="Organ_createBallot_string_bytes32_proposalNames"></div>
+	<button id="FoundationConferenceController.Organ_createBallot_string_bytes32" onclick="FoundationConferenceController.Organ_createBallot_string_bytes32()">execute FoundationConference_createBallot</button>
 	<div class="function_result" id="Organ_createBallot_string_bytes32_res"></div>
   </div>
   <div class="function_execution" id="FoundationConference_contract_function_Organ_getFunctionBlogAddress_uint">
 FoundationConference_getFunctionBlogAddress:
-	<input type='text' id='Organ_getFunctionBlogAddress_uint_id'>
-	<button onclick='Organ_getFunctionBlogAddress_uint()'>execute FoundationConference_getFunctionBlogAddress</button>
+	  <div class="function_parameter">id<input type="number" id="Organ_getFunctionBlogAddress_uint_id"></div>
+	<button id="FoundationConferenceController.Organ_getFunctionBlogAddress_uint" onclick="FoundationConferenceController.Organ_getFunctionBlogAddress_uint()">execute FoundationConference_getFunctionBlogAddress</button>
 	<div class="function_result" id="Organ_getFunctionBlogAddress_uint_res"></div>
   </div>
   <div class="function_execution" id="FoundationConference_contract_function_Organ_getLastBallot">
 FoundationConference_getLastBallot:
-	<button onclick='Organ_getLastBallot()'>execute FoundationConference_getLastBallot</button>
+	<button id="FoundationConferenceController.Organ_getLastBallot" onclick="FoundationConferenceController.Organ_getLastBallot()">execute FoundationConference_getLastBallot</button>
 	<div class="function_result" id="Organ_getLastBallot_res"></div>
   </div>
   <div class="function_execution" id="FoundationConference_contract_function_Organ_getOrganBlog">
 FoundationConference_getOrganBlog:
-	<button onclick='Organ_getOrganBlog()'>execute FoundationConference_getOrganBlog</button>
+	<button id="FoundationConferenceController.Organ_getOrganBlog" onclick="FoundationConferenceController.Organ_getOrganBlog()">execute FoundationConference_getOrganBlog</button>
 	<div class="function_result" id="Organ_getOrganBlog_res"></div>
   </div>
 
 </div>
+<div class="contract">Organ
+<div id="Organ_gui" ></div>
+</div>
+<div class="contract">Party
+<div id="Party_gui" ></div>
+</div>
+<div class="contract">KUEKeNParty
+<div id="KUEKeNParty_gui" ></div>
+</div>
+<div class="contract">Conference
+<div id="Conference_gui" ></div>
+</div>
+<div class="contract">FoundationConference
+<div id="FoundationConference_gui" ></div>
+</div>
+<div class="contract">test : Organ
+<div id="TestOrgan_gui" ></div>
+</div>
+<div class="contract">test : Party
+<div id="TestParty_gui" ></div>
+</div>
+<div class="contract">test : KUEKeNParty
+<div id="TestKUEKeNParty_gui" ></div>
+</div>
+<div class="contract">test : Conference
+<div id="TestConference_gui" ></div>
+</div>
+<div class="contract">test : FoundationConference
+<div id="TestFoundationConference_gui" ></div>
+</div>
 
 <script type='text/javascript'>
+var  defaultOrganController  = new OrganController();
+defaultOrganController.bindGui();
+
+OrganGui  = new OrganGuiFactory();
 if(contracts['Organ']!=undefined){
-  Organ_instance = contracts['Organ'].contract;
-  document.getElementById('Organ_address').value = Organ_instance.address; 
-  Organ_updateAttributes();
+  	defaultOrganController.Organ_instance = contracts['Organ'].contract;
+  	document.getElementById('Organ_address').value = contracts['Organ'].contract.address; 
+  
+	defaultOrganController.bindGui();
+	defaultOrganController._updateAttributes();
+  
 }
+//OrganGui.placeDefaultGui();
+//var  defaultOrganModel  = new OrganModel('Test');
+//defaultOrganModel.create();
+OrganGui.prefix='Test';
+OrganGui.placeDefaultGui();
+testOrganController  = new OrganController();
+testOrganController.prefix='Test';
+testOrganController.bindGui();
+
+var  defaultPartyController  = new PartyController();
+defaultPartyController.bindGui();
+
+PartyGui  = new PartyGuiFactory();
 if(contracts['Party']!=undefined){
-  Party_instance = contracts['Party'].contract;
-  document.getElementById('Party_address').value = Party_instance.address; 
-  Party_updateAttributes();
+  	defaultPartyController.Party_instance = contracts['Party'].contract;
+  	document.getElementById('Party_address').value = contracts['Party'].contract.address; 
+  
+	defaultPartyController.bindGui();
+	defaultPartyController._updateAttributes();
+  
 }
+//PartyGui.placeDefaultGui();
+//var  defaultPartyModel  = new PartyModel('Test');
+//defaultPartyModel.create();
+PartyGui.prefix='Test';
+PartyGui.placeDefaultGui();
+testPartyController  = new PartyController();
+testPartyController.prefix='Test';
+testPartyController.bindGui();
+
+var  defaultKUEKeNPartyController  = new KUEKeNPartyController();
+defaultKUEKeNPartyController.bindGui();
+
+KUEKeNPartyGui  = new KUEKeNPartyGuiFactory();
 if(contracts['KUEKeNParty']!=undefined){
-  KUEKeNParty_instance = contracts['KUEKeNParty'].contract;
-  document.getElementById('KUEKeNParty_address').value = KUEKeNParty_instance.address; 
-  KUEKeNParty_updateAttributes();
+  	defaultKUEKeNPartyController.KUEKeNParty_instance = contracts['KUEKeNParty'].contract;
+  	document.getElementById('KUEKeNParty_address').value = contracts['KUEKeNParty'].contract.address; 
+  
+	defaultKUEKeNPartyController.bindGui();
+	defaultKUEKeNPartyController._updateAttributes();
+  
 }
+//KUEKeNPartyGui.placeDefaultGui();
+//var  defaultKUEKeNPartyModel  = new KUEKeNPartyModel('Test');
+//defaultKUEKeNPartyModel.create();
+KUEKeNPartyGui.prefix='Test';
+KUEKeNPartyGui.placeDefaultGui();
+testKUEKeNPartyController  = new KUEKeNPartyController();
+testKUEKeNPartyController.prefix='Test';
+testKUEKeNPartyController.bindGui();
+
+var  defaultConferenceController  = new ConferenceController();
+defaultConferenceController.bindGui();
+
+ConferenceGui  = new ConferenceGuiFactory();
 if(contracts['Conference']!=undefined){
-  Conference_instance = contracts['Conference'].contract;
-  document.getElementById('Conference_address').value = Conference_instance.address; 
-  Conference_updateAttributes();
+  	defaultConferenceController.Conference_instance = contracts['Conference'].contract;
+  	document.getElementById('Conference_address').value = contracts['Conference'].contract.address; 
+  
+	defaultConferenceController.bindGui();
+	defaultConferenceController._updateAttributes();
+  
 }
+//ConferenceGui.placeDefaultGui();
+//var  defaultConferenceModel  = new ConferenceModel('Test');
+//defaultConferenceModel.create();
+ConferenceGui.prefix='Test';
+ConferenceGui.placeDefaultGui();
+testConferenceController  = new ConferenceController();
+testConferenceController.prefix='Test';
+testConferenceController.bindGui();
+
+var  defaultFoundationConferenceController  = new FoundationConferenceController();
+defaultFoundationConferenceController.bindGui();
+
+FoundationConferenceGui  = new FoundationConferenceGuiFactory();
 if(contracts['FoundationConference']!=undefined){
-  FoundationConference_instance = contracts['FoundationConference'].contract;
-  document.getElementById('FoundationConference_address').value = FoundationConference_instance.address; 
-  FoundationConference_updateAttributes();
+  	defaultFoundationConferenceController.FoundationConference_instance = contracts['FoundationConference'].contract;
+  	document.getElementById('FoundationConference_address').value = contracts['FoundationConference'].contract.address; 
+  
+	defaultFoundationConferenceController.bindGui();
+	defaultFoundationConferenceController._updateAttributes();
+  
 }
+//FoundationConferenceGui.placeDefaultGui();
+//var  defaultFoundationConferenceModel  = new FoundationConferenceModel('Test');
+//defaultFoundationConferenceModel.create();
+FoundationConferenceGui.prefix='Test';
+FoundationConferenceGui.placeDefaultGui();
+testFoundationConferenceController  = new FoundationConferenceController();
+testFoundationConferenceController.prefix='Test';
+testFoundationConferenceController.bindGui();
+
 </script>
+
 </body>
 </html>

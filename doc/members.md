@@ -142,6 +142,17 @@ name|type|direction|doc
 mAddress|address|in|
 eventType|uint|in|
 
+#### event MemberEvent
+
+
+name|type|indexed|doc
+----|----|----|----
+mAddress|address||
+eType|EventType||
+id|uint||
+name|string||
+memberState|MemberState||
+
 
 ## contract: MemberAware
 

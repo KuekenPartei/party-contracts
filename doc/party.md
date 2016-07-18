@@ -25,8 +25,8 @@
 	function getLastBallot() public   constant returns (address )
 	function getOrganBlog() public   constant returns (address )
 
-inherites: [MemberAware](members#contract-memberaware)
-,[Manageable](basics#contract-manageable)
+inherites: [Manageable](basics#contract-manageable)
+,[MemberAware](members#contract-memberaware)
 
 
 An organ is part of the party, defined in the constitution.
@@ -145,6 +145,15 @@ name|type|direction|doc
 ----|----|----|----
 |address|return|
 
+#### event FunctionMemberChange
+
+
+name|type|indexed|doc
+----|----|----|----
+oldMember|address||
+functionId|uint||
+newMember|address||
+
 
 ## contract: Party
 
@@ -180,6 +189,10 @@ blogregistry|BlogRegistry|public||
 name|type|direction|doc
 ----|----|----|----
 organName|string|in|
+
+#### event ConstiutionChange
+
+
 
 
 ## contract: KUEKeNParty
@@ -240,12 +253,21 @@ name|type|direction|doc
 ----|----|----|----
 _address|address|in|
 
+#### event MemberAccreditated
+
+
+name|type|indexed|doc
+----|----|----|----
+memberId|uint||
+memberName|string||
+memberAddress|address||
+
 
 ## contract: FoundationConference
 
     overview:
 
-inherites: [Organ](#contract-organ)
+inherites: [Conference](#contract-conference)
 
 
 Will found the party.

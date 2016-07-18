@@ -1,0 +1,139 @@
+<!doctype>
+<html>
+<head>
+<script type='text/javascript' src="party-test.js">
+</script>
+<style>
+.contract {
+	border-style: solid;
+	border-width: 1px;
+	} 
+.contract_attributes{
+	border-style: solid;
+	border-width: 1px;
+	} 
+.Struct_Mapping{}
+.Value_Mapping{}
+.contract_attribute{}
+.contract_attribute_value{}
+.function_execution{}
+.function_parameter{}
+.function_result{}
+.failed_state{
+	border-style: solid;
+	border-width: 1px;
+}
+
+</style>
+</head>
+<body bgcolor='#E6E6FA'>
+	<h1>Tests for party</h1>
+
+
+<div id="all-testResult" ></div>
+<h1>Events</h1>
+<div id="eventLog" ></div>
+<script type='text/javascript'>
+web3.eth.defaultAccount = web3.eth.accounts[0];
+// execute all Organ tests if set 
+if(contracts['Organ'] !=undefined){
+	var contract = contracts['Organ'].contract;
+	var instance = new TestOrgan(contract);
+	instance.prefix = 'all';
+
+var event_FunctionMemberChange = contract.FunctionMemberChange({},{fromBlock: 0});
+event_FunctionMemberChange.watch(function(error,result){
+	if(!error){
+		var e = document.getElementById('eventLog');
+		var elemDiv = document.createElement('div');
+		elemDiv.id= result.blockNumber +'event';
+		e.appendChild(elemDiv);
+		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
+		elemDiv.innerHTML = '<div>'
+        +'<span>'+result.args.oldMember+'</span>'
+        +'<span>'+result.args.functionId+'</span>'
+        +'<span>'+result.args.newMember+'</span>'
++ '</div>';
+		}else
+		console.log(error);
+	});
+
+
+//console.log(instance+'-->');
+	instance.allTests();
+}// execute all Party tests if set 
+if(contracts['Party'] !=undefined){
+	var contract = contracts['Party'].contract;
+	var instance = new TestParty(contract);
+	instance.prefix = 'all';
+
+var event_ConstiutionChange = contract.ConstiutionChange({},{fromBlock: 0});
+event_ConstiutionChange.watch(function(error,result){
+	if(!error){
+		var e = document.getElementById('eventLog');
+		var elemDiv = document.createElement('div');
+		elemDiv.id= result.blockNumber +'event';
+		e.appendChild(elemDiv);
+		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
+		elemDiv.innerHTML = '<div>'
++ '</div>';
+		}else
+		console.log(error);
+	});
+
+
+//console.log(instance+'-->');
+	instance.allTests();
+}// execute all KUEKeNParty tests if set 
+if(contracts['KUEKeNParty'] !=undefined){
+	var contract = contracts['KUEKeNParty'].contract;
+	var instance = new TestKUEKeNParty(contract);
+	instance.prefix = 'all';
+
+
+
+//console.log(instance+'-->');
+	instance.allTests();
+}// execute all Conference tests if set 
+if(contracts['Conference'] !=undefined){
+	var contract = contracts['Conference'].contract;
+	var instance = new TestConference(contract);
+	instance.prefix = 'all';
+
+var event_MemberAccreditated = contract.MemberAccreditated({},{fromBlock: 0});
+event_MemberAccreditated.watch(function(error,result){
+	if(!error){
+		var e = document.getElementById('eventLog');
+		var elemDiv = document.createElement('div');
+		elemDiv.id= result.blockNumber +'event';
+		e.appendChild(elemDiv);
+		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
+		elemDiv.innerHTML = '<div>'
+        +'<span>'+result.args.memberId+'</span>'
+        +'<span>'+result.args.memberName+'</span>'
+        +'<span>'+result.args.memberAddress+'</span>'
++ '</div>';
+		}else
+		console.log(error);
+	});
+
+
+//console.log(instance+'-->');
+	instance.allTests();
+}// execute all FoundationConference tests if set 
+if(contracts['FoundationConference'] !=undefined){
+	var contract = contracts['FoundationConference'].contract;
+	var instance = new TestFoundationConference(contract);
+	instance.prefix = 'all';
+
+
+
+//console.log(instance+'-->');
+	instance.allTests();
+}	//Start of user code moreCustomTests_party
+	//TODO: implement
+	//End of user code
+
+</script>
+</body>
+</html>

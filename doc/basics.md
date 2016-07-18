@@ -13,9 +13,9 @@ Collection of basic functionalities.
 ## contract: Owned
 
     overview:
-	function getOwner() public  onlyOwner() returns (address result)
-	function changeOwner(address newOwner) public  onlyOwner() 
-	function kill() public  onlyOwner() 
+	function getOwner() public  onlyOwner returns (address result)
+	function changeOwner(address newOwner) public  onlyOwner 
+	function kill() public  onlyOwner 
 
 
 
@@ -29,21 +29,21 @@ name|type|visiblity|delegate|doc
 owner|address|public||
 -
 
-#### Owned.getOwner() public  onlyOwner() returns (address result)
+#### Owned.getOwner() public  onlyOwner returns (address result)
 
 
 name|type|direction|doc
 ----|----|----|----
 result|address|return|
 
-#### Owned.changeOwner(address newOwner) public  onlyOwner() 
+#### Owned.changeOwner(address newOwner) public  onlyOwner 
 
 
 name|type|direction|doc
 ----|----|----|----
 newOwner|address|in|
 
-#### Owned.kill() public  onlyOwner() 
+#### Owned.kill() public  onlyOwner 
 
 
 
@@ -54,6 +54,7 @@ newOwner|address|in|
 	function canAccess() internal  returns (bool )
 	function addManager(address _newManagerAddress) public  onlyManager 
 	function removeManager(address _managerAddress) public  onlyManager 
+	function isManager(address _managerAddress) public  returns (bool )
 
 
 
@@ -63,6 +64,12 @@ A registered manager is an address mapped with true.
 
 
 
+
+#### Manageable properties
+
+name|type|visiblity|delegate|doc
+----|----|----|----|----
+mangerCount|uint|public||
 
 #### Manageable mappings
 
@@ -89,7 +96,15 @@ _newManagerAddress|address|in|
 
 name|type|direction|doc
 ----|----|----|----
-_managerAddress|address|in|
+_managerAddress|address|in|The address of the manager to work with
+
+#### Manageable.isManager(address _managerAddress) public  returns (bool )
+
+
+name|type|direction|doc
+----|----|----|----
+_managerAddress|address|in|The address of the manager to work with
+|bool|return|
 
 
 ## contract: Multiowned
@@ -227,5 +242,50 @@ _operation|bytes32|in|
 #### Multiowned.clearPending() internal  
 
 
+
+#### event Confirmation
+
+
+name|type|indexed|doc
+----|----|----|----
+owner|address||
+operation|bytes32||
+
+#### event Revoke
+
+
+name|type|indexed|doc
+----|----|----|----
+owner|address||
+operation|bytes32||
+
+#### event OwnerChanged
+
+
+name|type|indexed|doc
+----|----|----|----
+oldOwner|address||
+newOwner|address||
+
+#### event OwnerAdded
+
+
+name|type|indexed|doc
+----|----|----|----
+newOwner|address||
+
+#### event OwnerRemoved
+
+
+name|type|indexed|doc
+----|----|----|----
+oldOwner|address||
+
+#### event RequirementChanged
+
+
+name|type|indexed|doc
+----|----|----|----
+newRequirement|uint||
 
 

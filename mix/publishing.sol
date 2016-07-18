@@ -20,7 +20,7 @@ contract MessagePublisher {
 }
 
 
-contract ShortBlog is Manageable {
+contract ShortBlog is Owned {
     /*
     * A message in the blog.
     */
@@ -47,7 +47,7 @@ contract ShortBlog is Manageable {
 	
 	
 	
-	function sendMessage(string message,string hash,string er) public   {
+	function sendMessage(string message,string hash,string er) public  onlyOwner()  {
 		 messages[messageCount].message=message;
 		 messages[messageCount].id=messageCount;
 		 messages[messageCount].date=now;
@@ -58,17 +58,16 @@ contract ShortBlog is Manageable {
 		 NewMessage(message,messageCount);
 		 messageCount++;
 		
-		//Start of user code ShortBlog.function.sendMessage
-		lastMessageDate = now;
-		
+		//Start of user code ShortBlog.function.sendMessage_string_string_string
+		//TODO: implement
 		//End of user code
 	}
 	
 	
 	
 	function ShortBlog(string _name) public   {
-		//Start of user code ShortBlog.function.ShortBlog
-		name = _name;
+		//Start of user code ShortBlog.function.ShortBlog_string
+		//TODO: implement
 		//End of user code
 	}
 	
@@ -96,15 +95,15 @@ contract BlogRegistry is Manageable {
 	* returns
 	*  -
 	*/
-	function registerBlog(string name) public  returns (ShortBlog ) {
+	function registerBlog(string name) public  onlyManager() returns (ShortBlog ) {
+		
+		//Start of user code BlogRegistry.function.registerBlog_string
 		 ShortBlog b = new ShortBlog(name);
+		 b.changeOwner(msg.sender);
 		 blogs[blogCount] =b ;
 		 names[blogCount] = name;
 		 blogCount++;
 		 return b;
-		
-		//Start of user code BlogRegistry.function.registerBlog
-		//TODO: implement
 		//End of user code
 	}
 	

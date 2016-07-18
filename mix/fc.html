@@ -1,0 +1,117 @@
+<!doctype>
+<html>
+<head>
+
+<script type='text/javascript' src="package/compilation/party.sol.js">
+</script>
+<script type='text/javascript' src="package/compilation/members.sol.js">
+</script>
+<script type='text/javascript' src="package/compilation/publishing.sol.js">
+</script>
+
+<script type='text/javascript' src="js/party-main.js">
+</script>
+<script type='text/javascript' src="js/publishing-main.js">
+</script>
+<script type='text/javascript' src="js/members-main.js">
+</script>
+<link href="style/dapp-styles.css" media="all" rel="stylesheet" />
+<!-- start of style -->
+<style>
+.contract {
+	border-style: solid;
+	border-width: 1px;
+}
+
+.contract_attributes {
+	border-style: solid;
+	border-width: 1px;
+}
+</style>
+</head>
+<body bgcolor='#E6E6FA'>
+	<h1>Sample Interface for Party</h1>
+
+	<div class="row clear">
+		<div class="col col-1-2 ">
+			<div class="dapp-container">
+				partyContainer
+				<div id="partyContainer"></div>
+			</div>
+			<div class="dapp-container">
+				memberRegistry
+				<div id="memberRegistryContainer"></div>
+			</div>
+		</div>
+		<div class="col col-1-2 ">
+			<div class="dapp-container">
+				ShortBlogContainer
+				<div id="shortBlogContainer"></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="dapp-container">
+		FoundationConferenceC
+		<div id="FCContainer"></div>
+	</div>
+			
+	<script type='text/javascript'>
+	web3.eth.defaultAccount = web3.eth.accounts[0];
+	var ShortBlogContract = web3.eth.contract(JSON.parse(ShortBlog.abi));
+	var KUEKeNPartyContract = web3.eth.contract(JSON.parse(KUEKeNParty.abi));
+	var FoundationConferenceContract = web3.eth.contract(JSON.parse(FoundationConference.abi));	
+	var OrganContract = web3.eth.contract(JSON.parse(Organ.abi));	
+	var MemberRegistryContract = web3.eth.contract(JSON.parse(MemberRegistry.abi));	
+	
+	//var kp='';
+	var KUEKeNParty_instance = KUEKeNPartyContract.at(contracts['KUEKeNParty'].address);
+	//var KUEKeNParty_instance = KUEKeNPartyContract.at(kp);
+	
+	var o = KUEKeNParty_instance.organs(0);
+	var fc = FoundationConferenceContract.at(o);
+	var b1 = fc.getOrganBlog();	
+	var b2 = fc.getFunctionBlogAddress(0);
+	var b3 = fc.getFunctionBlogAddress(1);
+	
+	var sb1 = ShortBlogContract.at(b1);
+	var sb2 = ShortBlogContract.at(b2);
+	var sb3 = ShortBlogContract.at(b3);
+	
+	var mr = MemberRegistryContract.at(fc.memberRegistry());
+		
+	var bgm = new PartyGuiMananger('partyContainer');
+	bgm.addManager(KUEKeNParty_instance);
+	bgm.displayGui();
+
+	var bgm = new FoundationConferenceGuiMananger('FCContainer');
+	bgm.addManager(fc);
+// 		bgm.addManager(fc2);
+// 		bgm.addManager(fc3);
+	bgm.displayGui();
+		
+	var sbm = new ShortBlogGuiMananger('shortBlogContainer');
+	var b1 = fc.getOrganBlog();	
+	var sb1 = ShortBlogContract.at(b1);
+	sbm.addManager(sb1);
+	
+	for (i = 0; i < fc.lastFunctionId(); i++) {
+		var b = fc.getFunctionBlogAddress(i);
+		var sb = ShortBlogContract.at(b);
+		sbm.addManager(sb);
+	} 
+ 	sbm.displayGui();
+ 		
+	var bgm = new MemberRegistryGuiMananger('memberRegistryContainer');
+	bgm.addManager(mr);
+	bgm.displayGui();
+		
+	var res = fc.publishMessage.sendTransaction("Organ message1","rrrr","ecce",{value:0,gas:200000});
+	console.log("transaction fc:"+res);
+	var res = fc.publishMessage.sendTransaction("Organ message","rrrr","ecce",{value:0,gas:200000});
+	console.log("transaction fc:"+res);
+
+	</script>
+
+</body>
+</html>
