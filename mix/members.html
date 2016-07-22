@@ -10,6 +10,10 @@
 <script type='text/javascript' src="js/members-main.js">
 </script>
 
+<!-- Start of user code custom_members_scripts --> 
+
+<!-- End of user code -->
+
 <!-- start of style -->
 <style>
 .contract {
@@ -32,138 +36,6 @@
 </head>
 <body bgcolor='#E6E6FA'>
 	<h1>Sample Interface for members</h1>
-<!-- gui for MemberRegistry_contract -->
-<div class="contract" id="MemberRegistry_contract">
-MemberRegistry:
-  <input type="text" id="MemberRegistry_address"> <button id="MemberRegistryController.setAddress" onclick="MemberRegistryController.setAddress()">change MemberRegistry Address</button>
-  <div class="contract_attributes" id="MemberRegistry_contract_attributes"> attributes:
-    <div class="contract_attribute" id="MemberRegistry_contract_attribute_mangerCount"> mangerCount:
-      <div class="contract_attribute_value" id="MemberRegistry_mangerCount_value"> </div>
-    </div>
-    <div class="contract_attribute" id="MemberRegistry_contract_attribute_partyMemberCount"> partyMemberCount:
-      <div class="contract_attribute_value" id="MemberRegistry_partyMemberCount_value"> </div>
-    </div>
-    <div class="contract_attribute" id="MemberRegistry_contract_attribute_activeMemberCount"> activeMemberCount:
-      <div class="contract_attribute_value" id="MemberRegistry_activeMemberCount_value"> </div>
-    </div>
-
-<div class="Value_Mapping" id="MemberRegistry_contract_attribute_managers">mapping  managers:
-		<input type="text" id="MemberRegistry_contract_attribute_managers_input">(address)
-    	<div class="Mapping_value" id="MemberRegistry_contract_attribute_address"> bool:
-      		<div class="contract_attribute_value" id="MemberRegistry_managers_value"> </div>
-    	</div>
-  </div>
-<!--struct -->
-<div class="Struct_Mapping" id="Struc_MemberRegistry_contract_attribute_partyMembers">struc mapping  partyMembers:
-		<input type="number" id="MemberRegistry_contract_attribute_partyMembers_input">(uint)
-    	<div class="Struct_attribute" id="MemberRegistry_contract_attribute_partyMembers_name"> name:
-      		<div class="Struct_attribute_value" id="MemberRegistry_partyMembers_name_value"> </div>
-    	</div>
-    	<div class="Struct_attribute" id="MemberRegistry_contract_attribute_partyMembers_id"> id:
-      		<div class="Struct_attribute_value" id="MemberRegistry_partyMembers_id_value"> </div>
-    	</div>
-    	<div class="Struct_attribute" id="MemberRegistry_contract_attribute_partyMembers_member"> member:
-      		<div class="Struct_attribute_value" id="MemberRegistry_partyMembers_member_value"> </div>
-    	</div>
-    	<div class="Struct_attribute" id="MemberRegistry_contract_attribute_partyMembers_state"> state:
-      		<div class="Struct_attribute_value" id="MemberRegistry_partyMembers_state_value"> </div>
-    	</div>
-  </div>
-<!--struct -->
-<div class="Struct_Mapping" id="Struc_MemberRegistry_contract_attribute_memberAddress">struc mapping  memberAddress:
-		<input type="text" id="MemberRegistry_contract_attribute_memberAddress_input">(address)
-    	<div class="Struct_attribute" id="MemberRegistry_contract_attribute_memberAddress_name"> name:
-      		<div class="Struct_attribute_value" id="MemberRegistry_memberAddress_name_value"> </div>
-    	</div>
-    	<div class="Struct_attribute" id="MemberRegistry_contract_attribute_memberAddress_id"> id:
-      		<div class="Struct_attribute_value" id="MemberRegistry_memberAddress_id_value"> </div>
-    	</div>
-    	<div class="Struct_attribute" id="MemberRegistry_contract_attribute_memberAddress_member"> member:
-      		<div class="Struct_attribute_value" id="MemberRegistry_memberAddress_member_value"> </div>
-    	</div>
-    	<div class="Struct_attribute" id="MemberRegistry_contract_attribute_memberAddress_state"> state:
-      		<div class="Struct_attribute_value" id="MemberRegistry_memberAddress_state_value"> </div>
-    	</div>
-  </div>
-    <button id="MemberRegistry_updateAttributes" onclick="MemberRegistryController._updateAttributes()">update MemberRegistry attributes</button>
-  </div>
-  <div class="function_execution" id="MemberRegistry_contract_function_MemberRegistry_addMember_string_address">
-MemberRegistry_addMember:
-	  <div class="function_parameter">name<input type="text" id="MemberRegistry_addMember_string_address_name"></div>
-	  <div class="function_parameter">_memberAddress<input type="text" id="MemberRegistry_addMember_string_address__memberAddress"></div>
-	<button id="MemberRegistryController.MemberRegistry_addMember_string_address" onclick="MemberRegistryController.MemberRegistry_addMember_string_address()">execute MemberRegistry_addMember</button>
-	<div class="function_result" id="MemberRegistry_addMember_string_address_res"></div>
-  </div>
-  <div class="function_execution" id="MemberRegistry_contract_function_Manageable_addManager_address">
-MemberRegistry_addManager:
-	  <div class="function_parameter">_newManagerAddress<input type="text" id="Manageable_addManager_address__newManagerAddress"></div>
-	<button id="MemberRegistryController.Manageable_addManager_address" onclick="MemberRegistryController.Manageable_addManager_address()">execute MemberRegistry_addManager</button>
-	<div class="function_result" id="Manageable_addManager_address_res"></div>
-  </div>
-  <div class="function_execution" id="MemberRegistry_contract_function_MemberRegistry_unregisterMember_uint">
-MemberRegistry_unregisterMember:
-	  <div class="function_parameter">id<input type="number" id="MemberRegistry_unregisterMember_uint_id"></div>
-	<button id="MemberRegistryController.MemberRegistry_unregisterMember_uint" onclick="MemberRegistryController.MemberRegistry_unregisterMember_uint()">execute MemberRegistry_unregisterMember</button>
-	<div class="function_result" id="MemberRegistry_unregisterMember_uint_res"></div>
-  </div>
-  <div class="function_execution" id="MemberRegistry_contract_function_MemberRegistry_getMemberCount">
-MemberRegistry_getMemberCount:
-	<button id="MemberRegistryController.MemberRegistry_getMemberCount" onclick="MemberRegistryController.MemberRegistry_getMemberCount()">execute MemberRegistry_getMemberCount</button>
-	<div class="function_result" id="MemberRegistry_getMemberCount_res"></div>
-  </div>
-  <div class="function_execution" id="MemberRegistry_contract_function_Manageable_removeManager_address">
-MemberRegistry_removeManager:
-	  <div class="function_parameter">_managerAddress<input type="text" id="Manageable_removeManager_address__managerAddress"></div>
-	<button id="MemberRegistryController.Manageable_removeManager_address" onclick="MemberRegistryController.Manageable_removeManager_address()">execute MemberRegistry_removeManager</button>
-	<div class="function_result" id="Manageable_removeManager_address_res"></div>
-  </div>
-  <div class="function_execution" id="MemberRegistry_contract_function_MemberRegistry_isActiveMember_address">
-MemberRegistry_isActiveMember:
-	  <div class="function_parameter">_memberAdress<input type="text" id="MemberRegistry_isActiveMember_address__memberAdress"></div>
-	<button id="MemberRegistryController.MemberRegistry_isActiveMember_address" onclick="MemberRegistryController.MemberRegistry_isActiveMember_address()">execute MemberRegistry_isActiveMember</button>
-	<div class="function_result" id="MemberRegistry_isActiveMember_address_res"></div>
-  </div>
-  <div class="function_execution" id="MemberRegistry_contract_function_Manageable_isManager_address">
-MemberRegistry_isManager:
-	  <div class="function_parameter">_managerAddress<input type="text" id="Manageable_isManager_address__managerAddress"></div>
-	<button id="MemberRegistryController.Manageable_isManager_address" onclick="MemberRegistryController.Manageable_isManager_address()">execute MemberRegistry_isManager</button>
-	<div class="function_result" id="Manageable_isManager_address_res"></div>
-  </div>
-  <div class="function_execution" id="MemberRegistry_contract_function_MemberRegistry_changeMemberAddress_uint_address">
-MemberRegistry_changeMemberAddress:
-	  <div class="function_parameter">id<input type="number" id="MemberRegistry_changeMemberAddress_uint_address_id"></div>
-	  <div class="function_parameter">_newMemberAddress<input type="text" id="MemberRegistry_changeMemberAddress_uint_address__newMemberAddress"></div>
-	<button id="MemberRegistryController.MemberRegistry_changeMemberAddress_uint_address" onclick="MemberRegistryController.MemberRegistry_changeMemberAddress_uint_address()">execute MemberRegistry_changeMemberAddress</button>
-	<div class="function_result" id="MemberRegistry_changeMemberAddress_uint_address_res"></div>
-  </div>
-  <div class="function_execution" id="MemberRegistry_contract_function_MemberRegistry_getMemberData_address">
-MemberRegistry_getMemberData:
-	  <div class="function_parameter">_address<input type="text" id="MemberRegistry_getMemberData_address__address"></div>
-	<button id="MemberRegistryController.MemberRegistry_getMemberData_address" onclick="MemberRegistryController.MemberRegistry_getMemberData_address()">execute MemberRegistry_getMemberData</button>
-	<div class="function_result" id="MemberRegistry_getMemberData_address_res"></div>
-  </div>
-  <div class="function_execution" id="MemberRegistry_contract_function_MemberRegistry_publishMemberEvent_address_uint">
-MemberRegistry_publishMemberEvent:
-	  <div class="function_parameter">mAddress<input type="text" id="MemberRegistry_publishMemberEvent_address_uint_mAddress"></div>
-	  <div class="function_parameter">eventType<input type="number" id="MemberRegistry_publishMemberEvent_address_uint_eventType"></div>
-	<button id="MemberRegistryController.MemberRegistry_publishMemberEvent_address_uint" onclick="MemberRegistryController.MemberRegistry_publishMemberEvent_address_uint()">execute MemberRegistry_publishMemberEvent</button>
-	<div class="function_result" id="MemberRegistry_publishMemberEvent_address_uint_res"></div>
-  </div>
-
-</div>
-<!-- gui for MemberAware_contract -->
-<div class="contract" id="MemberAware_contract">
-MemberAware:
-  <input type="text" id="MemberAware_address"> <button id="MemberAwareController.setAddress" onclick="MemberAwareController.setAddress()">change MemberAware Address</button>
-  <div class="contract_attributes" id="MemberAware_contract_attributes"> attributes:
-    <div class="contract_attribute" id="MemberAware_contract_attribute_memberRegistry"> memberRegistry:
-      <div class="contract_attribute_value" id="MemberAware_memberRegistry_value"> </div>
-    </div>
-
-    <button id="MemberAware_updateAttributes" onclick="MemberAwareController._updateAttributes()">update MemberAware attributes</button>
-  </div>
-
-</div>
 <div class="contract">MemberRegistry
 <div id="MemberRegistry_gui" ></div>
 </div>
@@ -176,49 +48,17 @@ MemberAware:
 <div class="contract">test : MemberAware
 <div id="TestMemberAware_gui" ></div>
 </div>
+<div class="contract">test : members
+<div id="Members-Gui" ></div>
+</div>
 
 <script type='text/javascript'>
-var  defaultMemberRegistryController  = new MemberRegistryController();
-defaultMemberRegistryController.bindGui();
 
-MemberRegistryGui  = new MemberRegistryGuiFactory();
-if(contracts['MemberRegistry']!=undefined){
-  	defaultMemberRegistryController.MemberRegistry_instance = contracts['MemberRegistry'].contract;
-  	document.getElementById('MemberRegistry_address').value = contracts['MemberRegistry'].contract.address; 
-  
-	defaultMemberRegistryController.bindGui();
-	defaultMemberRegistryController._updateAttributes();
-  
-}
-//MemberRegistryGui.placeDefaultGui();
-//var  defaultMemberRegistryModel  = new MemberRegistryModel('Test');
-//defaultMemberRegistryModel.create();
-MemberRegistryGui.prefix='Test';
-MemberRegistryGui.placeDefaultGui();
-testMemberRegistryController  = new MemberRegistryController();
-testMemberRegistryController.prefix='Test';
-testMemberRegistryController.bindGui();
-
-var  defaultMemberAwareController  = new MemberAwareController();
-defaultMemberAwareController.bindGui();
-
-MemberAwareGui  = new MemberAwareGuiFactory();
-if(contracts['MemberAware']!=undefined){
-  	defaultMemberAwareController.MemberAware_instance = contracts['MemberAware'].contract;
-  	document.getElementById('MemberAware_address').value = contracts['MemberAware'].contract.address; 
-  
-	defaultMemberAwareController.bindGui();
-	defaultMemberAwareController._updateAttributes();
-  
-}
-//MemberAwareGui.placeDefaultGui();
-//var  defaultMemberAwareModel  = new MemberAwareModel('Test');
-//defaultMemberAwareModel.create();
-MemberAwareGui.prefix='Test';
-MemberAwareGui.placeDefaultGui();
-testMemberAwareController  = new MemberAwareController();
-testMemberAwareController.prefix='Test';
-testMemberAwareController.bindGui();
+var c = new MembersPage('Members-Gui');
+//Start of user code page_Members_js_functions
+		//TODO: implement
+//End of user code
+c.createDefaultGui();
 
 </script>
 

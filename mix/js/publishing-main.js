@@ -1,6 +1,7 @@
 
 var ShortBlogContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"messageCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"lastMessageDate","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "messages","outputs": [
@@ -57,6 +58,7 @@ var ShortBlogContract = web3.eth.contract([
 ] );   
 
 var BlogRegistryContract = web3.eth.contract([
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"blogCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "blogs","outputs": [
 { "name": "", "type": "address"}
@@ -112,8 +114,11 @@ function ShortBlogGuiFactory() {
 	
 // default Gui
 this.placeDefaultGui=function() {
-//	console.log(this.prefix+' place gui');
-	document.getElementById(this.prefix+'ShortBlog_gui').innerHTML = this.createDefaultGui();
+	var e = document.getElementById(this.prefix+'ShortBlog_gui');
+	if(e!=null)
+		e.innerHTML = this.createDefaultGui();
+	else
+		console.log(this.prefix+'ShortBlog_gui not found');
 }
 // default Gui
 this.createDefaultGui=function() {
@@ -294,7 +299,7 @@ return 	'<!--struct -->'
 
 
 //print the contract div around
-this.createShortBlogSeletonGui=function(inner) {
+this.createSeletonGui=function(inner) {
 	return 	'<!-- gui for ShortBlog_contract -->'
 +	'	<div class="contract" id="'+this.prefix+'ShortBlog_contract">'
 + inner
@@ -303,8 +308,8 @@ this.createShortBlogSeletonGui=function(inner) {
 
 
 //eventguis
-this.createNewMessageLogDataGui = function(prefix, blockHash, blockNumber,
-message,messageId) {
+this.createNewMessageLogDataGui = function(prefix, blockHash, blockNumber
+,message,messageId) {
 		return '<ul class="dapp-account-list"><li > '
         +'<a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>'
 		+'<span>'+prefix+' ('+blockNumber+')</span>'
@@ -318,138 +323,133 @@ message,messageId) {
 // script for ShortBlog gui controller
 function ShortBlogController() {
 
-	this.ShortBlog_instance = undefined;
+	this.instance = undefined;
 	this.prefix='';
 	this.contractAddress = undefined; 
+	this.eventlogPrefix = '';
 	var self = this;
 
 // bind buttons
 	this.bindGui=function() {
 		var btn = document.getElementById(self.prefix+'ShortBlogController.setAddress');
-//	console.log('bind:' + self.prefix+' '+btn);
 		if(btn!=undefined)		
 			btn.onclick = this.setAddress;
 
 		var btn = document.getElementById(self.prefix+'ShortBlog_updateAttributes');
-//		console.log('bind update:' + self.prefix+' '+btn);
 		if(btn!=undefined)
 			btn.onclick = this._updateAttributes;
 		var btn = document.getElementById(self.prefix+'ShortBlogController.Owned_getOwner');
-//		console.log('bind:ShortBlog_getOwner ' + self.prefix+' '+btn+'  '+self.Owned_getOwner);//ShortBlog_getOwner);
 		if(btn!=undefined)
 			btn.onclick = this.Owned_getOwner;
 		var btn = document.getElementById(self.prefix+'ShortBlogController.Owned_changeOwner_address');
-//		console.log('bind:ShortBlog_changeOwner ' + self.prefix+' '+btn+'  '+self.Owned_changeOwner_address);//ShortBlog_changeOwner);
 		if(btn!=undefined)
 			btn.onclick = this.Owned_changeOwner_address;
 		var btn = document.getElementById(self.prefix+'ShortBlogController.ShortBlog_sendMessage_string_string_string');
-//		console.log('bind:ShortBlog_sendMessage ' + self.prefix+' '+btn+'  '+self.ShortBlog_sendMessage_string_string_string);//ShortBlog_sendMessage);
 		if(btn!=undefined)
 			btn.onclick = this.ShortBlog_sendMessage_string_string_string;
 		var btn = document.getElementById(self.prefix+'ShortBlogController.ShortBlog_ShortBlog_string');
-//		console.log('bind:ShortBlog_ShortBlog ' + self.prefix+' '+btn+'  '+self.ShortBlog_ShortBlog_string);//ShortBlog_ShortBlog);
 		if(btn!=undefined)
 			btn.onclick = this.ShortBlog_ShortBlog_string;
 		var btn = document.getElementById(self.prefix+'ShortBlogController.Owned_kill');
-//		console.log('bind:ShortBlog_kill ' + self.prefix+' '+btn+'  '+self.Owned_kill);//ShortBlog_kill);
 		if(btn!=undefined)
 			btn.onclick = this.Owned_kill;
 	}
 	// set function
 	this.setAddress=function() {
 	var _address = document.getElementById(self.prefix+'ShortBlog_address');
-//	console.log('setAddress:' + self.prefix+' '+_address);
+	if(_address==null)return;
+
 	self.ShortBlog_instance = ShortBlogContract.at(_address.value);
 	self.contractAddress = _address.value;
 	self._updateAttributes();
 }
 //update attributes
 this._updateAttributes=function () {
-if(this.ShortBlog_instance===null) return;
-//console.log('updateAttributes:' + self.prefix);
+if(this.instance===null) return;
 // update attributes
-	var messageCount_res = self.ShortBlog_instance.messageCount();
-//	console.log('get:messageCount' + self.prefix);
-
-	if(messageCount_res!=null)
-		document.getElementById(self.prefix+'ShortBlog_messageCount_value').innerText = messageCount_res;
-	var owner_res = self.ShortBlog_instance.owner();
-//	console.log('get:owner' + self.prefix);
-
-	if(owner_res!=null)
-		document.getElementById(self.prefix+'ShortBlog_owner_value').innerText = owner_res;
-	var lastMessageDate_res = self.ShortBlog_instance.lastMessageDate();
-//	console.log('get:lastMessageDate' + self.prefix);
-
-	if(lastMessageDate_res!=null)
-		document.getElementById(self.prefix+'ShortBlog_lastMessageDate_value').innerText = lastMessageDate_res;
-	var name_res = self.ShortBlog_instance.name();
-//	console.log('get:name' + self.prefix);
-
-	if(name_res!=null)
-		document.getElementById(self.prefix+'ShortBlog_name_value').innerText = name_res;
-//console.log('getStruct:messages' + self.prefix);
-	var _key = document.getElementById(self.prefix+'ShortBlog_contract_attribute_messages_input').value;
-	var messages_res = self.ShortBlog_instance.messages(_key);
-//console.log('result:messages' + messages_res+' key: '+_key);
+	var messageCount_res = self.instance.messageCount();
+	var e = document.getElementById(self.prefix+'ShortBlog_messageCount_value');
+	if(messageCount_res!=null && e!=null)
+		e.innerText = messageCount_res;
+	var owner_res = self.instance.owner();
+	var e = document.getElementById(self.prefix+'ShortBlog_owner_value');
+	if(owner_res!=null && e!=null)
+		e.innerText = owner_res;
+	var lastMessageDate_res = self.instance.lastMessageDate();
+	var e = document.getElementById(self.prefix+'ShortBlog_lastMessageDate_value');
+	if(lastMessageDate_res!=null && e!=null)
+		e.innerText = lastMessageDate_res;
+	var name_res = self.instance.name();
+	var e = document.getElementById(self.prefix+'ShortBlog_name_value');
+	if(name_res!=null && e!=null)
+		e.innerText = name_res;
+	var e = document.getElementById(self.prefix+'ShortBlog_contract_attribute_messages_input');
+if(e!=null){
+	var _key = e.value;
+	var messages_res = self.instance.messages(_key);
 	if(messages_res!=null){
-		document.getElementById(self.prefix+'ShortBlog_messages_message_value').innerText = messages_res[0];
-		document.getElementById(self.prefix+'ShortBlog_messages_date_value').innerText = messages_res[1];
-		document.getElementById(self.prefix+'ShortBlog_messages_id_value').innerText = messages_res[2];
-		document.getElementById(self.prefix+'ShortBlog_messages_sender_value').innerText = messages_res[3];
-		document.getElementById(self.prefix+'ShortBlog_messages_blockNumber_value').innerText = messages_res[4];
-		document.getElementById(self.prefix+'ShortBlog_messages_hashValue_value').innerText = messages_res[5];
-		document.getElementById(self.prefix+'ShortBlog_messages_externalResource_value').innerText = messages_res[6];
-	}
+	var e1 = document.getElementById(self.prefix+'ShortBlog_messages_message_value');
+	if(e1!=null)	
+		e1.innerText = messages_res[0];
+	var e1 = document.getElementById(self.prefix+'ShortBlog_messages_date_value');
+	if(e1!=null)	
+		e1.innerText = messages_res[1];
+	var e1 = document.getElementById(self.prefix+'ShortBlog_messages_id_value');
+	if(e1!=null)	
+		e1.innerText = messages_res[2];
+	var e1 = document.getElementById(self.prefix+'ShortBlog_messages_sender_value');
+	if(e1!=null)	
+		e1.innerText = messages_res[3];
+	var e1 = document.getElementById(self.prefix+'ShortBlog_messages_blockNumber_value');
+	if(e1!=null)	
+		e1.innerText = messages_res[4];
+	var e1 = document.getElementById(self.prefix+'ShortBlog_messages_hashValue_value');
+	if(e1!=null)	
+		e1.innerText = messages_res[5];
+	var e1 = document.getElementById(self.prefix+'ShortBlog_messages_externalResource_value');
+	if(e1!=null)	
+		e1.innerText = messages_res[6];
+	}}
 }
 
 //call functions
 //function ShortBlog_getOwner
 this.Owned_getOwner=function() {
-//console.log('function:getOwner' + self.prefix);
-//	console.log(':' +self.ShortBlog_instance+':');
-	var res = self.ShortBlog_instance.getOwner();
-	if(res!=null)
-		document.getElementById(self.prefix+'Owned_getOwner_res').innerText = res;
+	var res = self.instance.getOwner();
+	var e = document.getElementById(self.prefix+'Owned_getOwner_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function ShortBlog_changeOwner
 this.Owned_changeOwner_address=function() {
-//console.log('function:changeOwner' + self.prefix);
 	var e = document.getElementById(self.prefix+'Owned_changeOwner_address_newOwner');
-//	console.log(':' + self.prefix+'Owned_changeOwner_address_newOwner'+": "+e);
-	var param_newOwner = e.value;
-//	console.log(':' +self.ShortBlog_instance+':');
-	var res = self.ShortBlog_instance.changeOwner(param_newOwner);
+	if(e!=null)
+		var param_newOwner = e.value;
+	var res = self.instance.changeOwner(param_newOwner);
 }
 //function ShortBlog_sendMessage
 this.ShortBlog_sendMessage_string_string_string=function() {
-//console.log('function:sendMessage' + self.prefix);
 	var e = document.getElementById(self.prefix+'ShortBlog_sendMessage_string_string_string_message');
-//	console.log(':' + self.prefix+'ShortBlog_sendMessage_string_string_string_message'+": "+e);
-	var param_message = e.value;
+	if(e!=null)
+		var param_message = e.value;
 	var e = document.getElementById(self.prefix+'ShortBlog_sendMessage_string_string_string_hash');
-//	console.log(':' + self.prefix+'ShortBlog_sendMessage_string_string_string_hash'+": "+e);
-	var param_hash = e.value;
+	if(e!=null)
+		var param_hash = e.value;
 	var e = document.getElementById(self.prefix+'ShortBlog_sendMessage_string_string_string_er');
-//	console.log(':' + self.prefix+'ShortBlog_sendMessage_string_string_string_er'+": "+e);
-	var param_er = e.value;
-//	console.log(':' +self.ShortBlog_instance+':');
-	var res = self.ShortBlog_instance.sendMessage(param_message, param_hash, param_er);
+	if(e!=null)
+		var param_er = e.value;
+	var res = self.instance.sendMessage(param_message, param_hash, param_er);
 }
 //function ShortBlog_ShortBlog
 this.ShortBlog_ShortBlog_string=function() {
-//console.log('function:ShortBlog' + self.prefix);
 	var e = document.getElementById(self.prefix+'ShortBlog_ShortBlog_string__name');
-//	console.log(':' + self.prefix+'ShortBlog_ShortBlog_string__name'+": "+e);
-	var param__name = e.value;
-//	console.log(':' +self.ShortBlog_instance+':');
-	var res = self.ShortBlog_instance.ShortBlog(param__name);
+	if(e!=null)
+		var param__name = e.value;
+	var res = self.instance.ShortBlog(param__name);
 }
 //function ShortBlog_kill
 this.Owned_kill=function() {
-//console.log('function:kill' + self.prefix);
-//	console.log(':' +self.ShortBlog_instance+':');
-	var res = self.ShortBlog_instance.kill();
+	var res = self.instance.kill();
 }
 
 //delegated calls
@@ -457,51 +457,71 @@ this.Owned_kill=function() {
 }// end controller	
 
 
-// script for ShortBlog
-function ShortBlogModel(prefix) {
-	this.prefix = prefix;
-	this.guiFactory = new ShortBlogGuiFactory();
-	this.controller = new ShortBlogController();
-	this.guiFactory.prefix = prefix;
-	this.controller.prefix = prefix;
-}
-ShortBlogModel.prototype.create=function () {
-	this.guiFactory.placeDefaultGui();
-	this.controller._updateAttributes();
-}
-
-
-//class as GlueCode
+//class as GlueCode ShortBlogManager
 //uses prefix + 'GuiContainer'
-function ShortBlogManager(prefix,contract) {
+function ShortBlogManager(prefix,contract,containerId) {
 	this.prefix = prefix;
 	var self = this;
 	this.c = new ShortBlogController();
 	this.c.prefix=prefix;
-	this.c.ShortBlog_instance=contract;
+	this.c.instance=contract;
 	this.c.contractAddress = contract.address;
 	this.g = new ShortBlogGuiFactory();
 	this.g.prefix = prefix;
+	this.containerId = containerId;
 
 	this.addGui = function() {
-		var e = document.getElementById(this.prefix + 'GuiContainer');
-//console.log('addGui:' + this.prefix+ 'GuiContainer'+e);
+		var e = document.getElementById(this.containerId);
+		if(e==null)return;
 		var elemDiv = document.createElement('div');
 		elemDiv.id= this.prefix +'ShortBlog_gui';
 		e.appendChild(elemDiv);
-		this.g.placeDefaultGui();
-		document.getElementById(this.prefix+'ShortBlog_address').value = this.c.contractAddress;
+		elemDiv.innerHTML = this.createGui(this.g);
+		var e = document.getElementById(this.prefix+'ShortBlog_address');
+		if(e!=null)
+			e.value = this.c.contractAddress;
 		this.c.bindGui();
 	}	
 	this.clearGui = function(){
-		var e = document.getElementById(this.prefix + 'GuiContainer');
+		var e = document.getElementById(this.containerId);
 		e.innerHTML ='';
+	}
+	this.createGui = function(guifactory){
+		var txt ='';
+		txt = txt + guifactory.createDefaultGui();
+		return guifactory.createSeletonGui(txt);
+
+	}
+	this.createSmallGui = function(guifactory){
+		var txt ='';
+		txt = txt + guifactory.createAttributesGui();
+		return guifactory.createSeletonGui(txt);
+
 	}
 	this.updateGui = function(){
 		this.c._updateAttributes();
 	}
 	this.getContract = function(){
-		return this.c.ShortBlog_instance;
+		return this.c.instance;
+	}
+
+//watch events
+	this.watchEvents=function(){
+	var event_NewMessage = contract.NewMessage({},{fromBlock: 0});
+	event_NewMessage.watch(function(error,result){
+	if(!error){
+		var e = document.getElementById(self.eventlogPrefix+'eventLog');
+		var elemDiv = document.createElement('div');
+		elemDiv.id= result.blockNumber +'event';
+		e.appendChild(elemDiv);
+		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
+		elemDiv.innerHTML = '<div>'
+        +'<span>'+result.args.message+'</span>'
+        +'<span>'+result.args.messageId+'</span>'
+		+ '</div>';
+		}else
+		console.log(error);	
+	});
 	}
 
 }// end of manager
@@ -511,29 +531,33 @@ function ShortBlogGuiMananger(guiId){
 	this.managers=new Array();	//[];		
 	
 	this.addManager = function(contract) {
-//console.log('addManager:'+contract);
-		var m = new ShortBlogManager(contract.address,contract);
+		var m = new ShortBlogManager(contract.address,contract,this.prefix);
+		m.watchEvents();
 		this.managers.push(m);
 		//manager.addGui();
 	}
 			
 	this.clearGui = function(){
 		var e = document.getElementById(this.prefix);
-//console.log('clear gui:'+this.prefix+e);
 		if(e!==undefined)
 			e.innerHTML ='';
 	}
 			
 	this.displayGui = function(){
 		var e = document.getElementById(this.prefix);
-//console.log('displayGui:'+this.prefix +e);
 		if(e==undefined) return;
 		for (i in this.managers) {
+			var manager = this.managers[i] ;
 			var elemDiv = document.createElement('div');
-			elemDiv.id= this.managers[i].prefix + 'GuiContainer';//'ShortBlog_gui';
+			elemDiv.id= manager.prefix + 'GuiContainer';//'ShortBlog_gui';
 			e.appendChild(elemDiv);
-//console.log('add:'+elemDiv.id);
-			this.managers[i].addGui();
+			elemDiv.innerHTML = manager.createGui(manager.g);
+		}
+	}
+	this.displaySimpleGui = function(){
+		for (i in this.managers) {
+			var manager = this.managers[i] ;
+			manager.addGui();
 		}
 	}
 
@@ -545,14 +569,20 @@ function ShortBlogGuiMananger(guiId){
 	}
 }// end of gui mananger
 
+//Start of user code custom_ShortBlog_js
+//TODO: implement
+//End of user code
 //gui factory BlogRegistry
 function BlogRegistryGuiFactory() {
 	this.prefix='';
 	
 // default Gui
 this.placeDefaultGui=function() {
-//	console.log(this.prefix+' place gui');
-	document.getElementById(this.prefix+'BlogRegistry_gui').innerHTML = this.createDefaultGui();
+	var e = document.getElementById(this.prefix+'BlogRegistry_gui');
+	if(e!=null)
+		e.innerHTML = this.createDefaultGui();
+	else
+		console.log(this.prefix+'BlogRegistry_gui not found');
 }
 // default Gui
 this.createDefaultGui=function() {
@@ -670,7 +700,7 @@ return 	'  <div class="function_execution" id="'+this.prefix+'BlogRegistry_contr
 
 
 //print the contract div around
-this.createBlogRegistrySeletonGui=function(inner) {
+this.createSeletonGui=function(inner) {
 	return 	'<!-- gui for BlogRegistry_contract -->'
 +	'	<div class="contract" id="'+this.prefix+'BlogRegistry_contract">'
 + inner
@@ -684,133 +714,125 @@ this.createBlogRegistrySeletonGui=function(inner) {
 // script for BlogRegistry gui controller
 function BlogRegistryController() {
 
-	this.BlogRegistry_instance = undefined;
+	this.instance = undefined;
 	this.prefix='';
 	this.contractAddress = undefined; 
+	this.eventlogPrefix = '';
 	var self = this;
 
 // bind buttons
 	this.bindGui=function() {
 		var btn = document.getElementById(self.prefix+'BlogRegistryController.setAddress');
-//	console.log('bind:' + self.prefix+' '+btn);
 		if(btn!=undefined)		
 			btn.onclick = this.setAddress;
 
 		var btn = document.getElementById(self.prefix+'BlogRegistry_updateAttributes');
-//		console.log('bind update:' + self.prefix+' '+btn);
 		if(btn!=undefined)
 			btn.onclick = this._updateAttributes;
 		var btn = document.getElementById(self.prefix+'BlogRegistryController.BlogRegistry_registerBlog_string');
-//		console.log('bind:BlogRegistry_registerBlog ' + self.prefix+' '+btn+'  '+self.BlogRegistry_registerBlog_string);//BlogRegistry_registerBlog);
 		if(btn!=undefined)
 			btn.onclick = this.BlogRegistry_registerBlog_string;
 		var btn = document.getElementById(self.prefix+'BlogRegistryController.Manageable_addManager_address');
-//		console.log('bind:BlogRegistry_addManager ' + self.prefix+' '+btn+'  '+self.Manageable_addManager_address);//BlogRegistry_addManager);
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_addManager_address;
 		var btn = document.getElementById(self.prefix+'BlogRegistryController.Manageable_removeManager_address');
-//		console.log('bind:BlogRegistry_removeManager ' + self.prefix+' '+btn+'  '+self.Manageable_removeManager_address);//BlogRegistry_removeManager);
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_removeManager_address;
 		var btn = document.getElementById(self.prefix+'BlogRegistryController.Manageable_isManager_address');
-//		console.log('bind:BlogRegistry_isManager ' + self.prefix+' '+btn+'  '+self.Manageable_isManager_address);//BlogRegistry_isManager);
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_isManager_address;
 	}
 	// set function
 	this.setAddress=function() {
 	var _address = document.getElementById(self.prefix+'BlogRegistry_address');
-//	console.log('setAddress:' + self.prefix+' '+_address);
+	if(_address==null)return;
+
 	self.BlogRegistry_instance = BlogRegistryContract.at(_address.value);
 	self.contractAddress = _address.value;
 	self._updateAttributes();
 }
 //update attributes
 this._updateAttributes=function () {
-if(this.BlogRegistry_instance===null) return;
-//console.log('updateAttributes:' + self.prefix);
+if(this.instance===null) return;
 // update attributes
-	var mangerCount_res = self.BlogRegistry_instance.mangerCount();
-//	console.log('get:mangerCount' + self.prefix);
-
-	if(mangerCount_res!=null)
-		document.getElementById(self.prefix+'BlogRegistry_mangerCount_value').innerText = mangerCount_res;
-	var blogCount_res = self.BlogRegistry_instance.blogCount();
-//	console.log('get:blogCount' + self.prefix);
-
-	if(blogCount_res!=null)
-		document.getElementById(self.prefix+'BlogRegistry_blogCount_value').innerText = blogCount_res;
-//console.log('getStruct:blogs' + self.prefix);
-	var _key = document.getElementById(self.prefix+'BlogRegistry_contract_attribute_blogs_input').value;
-	var blogs_res = self.BlogRegistry_instance.blogs(_key);
-//console.log('result:blogs' + blogs_res+' key: '+_key);
+	var mangerCount_res = self.instance.mangerCount();
+	var e = document.getElementById(self.prefix+'BlogRegistry_mangerCount_value');
+	if(mangerCount_res!=null && e!=null)
+		e.innerText = mangerCount_res;
+	var blogCount_res = self.instance.blogCount();
+	var e = document.getElementById(self.prefix+'BlogRegistry_blogCount_value');
+	if(blogCount_res!=null && e!=null)
+		e.innerText = blogCount_res;
+var e = document.getElementById(self.prefix+'BlogRegistry_contract_attribute_blogs_input');
+if(e!=null){
+	var _key = e.value;
+	var blogs_res = self.instance.blogs(_key);
 	if(blogs_res!=null){
-		document.getElementById(self.prefix+'BlogRegistry_blogs_value').innerText = blogs_res;
-	}
-//console.log('getStruct:managers' + self.prefix);
-	var _key = document.getElementById(self.prefix+'BlogRegistry_contract_attribute_managers_input').value;
-	var managers_res = self.BlogRegistry_instance.managers(_key);
-//console.log('result:managers' + managers_res+' key: '+_key);
+		var e1 = document.getElementById(self.prefix+'BlogRegistry_blogs_value');
+		if(e1!=null)	
+			e1.innerText = blogs_res;
+	}}
+var e = document.getElementById(self.prefix+'BlogRegistry_contract_attribute_managers_input');
+if(e!=null){
+	var _key = e.value;
+	var managers_res = self.instance.managers(_key);
 	if(managers_res!=null){
-		document.getElementById(self.prefix+'BlogRegistry_managers_value').innerText = managers_res;
-	}
-//console.log('getStruct:names' + self.prefix);
-	var _key = document.getElementById(self.prefix+'BlogRegistry_contract_attribute_names_input').value;
-	var names_res = self.BlogRegistry_instance.names(_key);
-//console.log('result:names' + names_res+' key: '+_key);
+		var e1 = document.getElementById(self.prefix+'BlogRegistry_managers_value');
+		if(e1!=null)	
+			e1.innerText = managers_res;
+	}}
+var e = document.getElementById(self.prefix+'BlogRegistry_contract_attribute_names_input');
+if(e!=null){
+	var _key = e.value;
+	var names_res = self.instance.names(_key);
 	if(names_res!=null){
-		document.getElementById(self.prefix+'BlogRegistry_names_value').innerText = names_res;
-	}
+		var e1 = document.getElementById(self.prefix+'BlogRegistry_names_value');
+		if(e1!=null)	
+			e1.innerText = names_res;
+	}}
 }
 
 //call functions
 //function BlogRegistry_canAccess
 this.Manageable_canAccess=function() {
-//console.log('function:canAccess' + self.prefix);
-//	console.log(':' +self.BlogRegistry_instance+':');
-	var res = self.BlogRegistry_instance.canAccess();
-	if(res!=null)
-		document.getElementById(self.prefix+'Manageable_canAccess_res').innerText = res;
+	var res = self.instance.canAccess();
+	var e = document.getElementById(self.prefix+'Manageable_canAccess_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function BlogRegistry_registerBlog
 this.BlogRegistry_registerBlog_string=function() {
-//console.log('function:registerBlog' + self.prefix);
 	var e = document.getElementById(self.prefix+'BlogRegistry_registerBlog_string_name');
-//	console.log(':' + self.prefix+'BlogRegistry_registerBlog_string_name'+": "+e);
-	var param_name = e.value;
-//	console.log(':' +self.BlogRegistry_instance+':');
-	var res = self.BlogRegistry_instance.registerBlog(param_name);
-	if(res!=null)
-		document.getElementById(self.prefix+'BlogRegistry_registerBlog_string_res').innerText = res;
+	if(e!=null)
+		var param_name = e.value;
+	var res = self.instance.registerBlog(param_name);
+	var e = document.getElementById(self.prefix+'BlogRegistry_registerBlog_string_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function BlogRegistry_addManager
 this.Manageable_addManager_address=function() {
-//console.log('function:addManager' + self.prefix);
 	var e = document.getElementById(self.prefix+'Manageable_addManager_address__newManagerAddress');
-//	console.log(':' + self.prefix+'Manageable_addManager_address__newManagerAddress'+": "+e);
-	var param__newManagerAddress = e.value;
-//	console.log(':' +self.BlogRegistry_instance+':');
-	var res = self.BlogRegistry_instance.addManager(param__newManagerAddress);
+	if(e!=null)
+		var param__newManagerAddress = e.value;
+	var res = self.instance.addManager(param__newManagerAddress);
 }
 //function BlogRegistry_removeManager
 this.Manageable_removeManager_address=function() {
-//console.log('function:removeManager' + self.prefix);
 	var e = document.getElementById(self.prefix+'Manageable_removeManager_address__managerAddress');
-//	console.log(':' + self.prefix+'Manageable_removeManager_address__managerAddress'+": "+e);
-	var param__managerAddress = e.value;
-//	console.log(':' +self.BlogRegistry_instance+':');
-	var res = self.BlogRegistry_instance.removeManager(param__managerAddress);
+	if(e!=null)
+		var param__managerAddress = e.value;
+	var res = self.instance.removeManager(param__managerAddress);
 }
 //function BlogRegistry_isManager
 this.Manageable_isManager_address=function() {
-//console.log('function:isManager' + self.prefix);
 	var e = document.getElementById(self.prefix+'Manageable_isManager_address__managerAddress');
-//	console.log(':' + self.prefix+'Manageable_isManager_address__managerAddress'+": "+e);
-	var param__managerAddress = e.value;
-//	console.log(':' +self.BlogRegistry_instance+':');
-	var res = self.BlogRegistry_instance.isManager(param__managerAddress);
-	if(res!=null)
-		document.getElementById(self.prefix+'Manageable_isManager_address_res').innerText = res;
+	if(e!=null)
+		var param__managerAddress = e.value;
+	var res = self.instance.isManager(param__managerAddress);
+	var e = document.getElementById(self.prefix+'Manageable_isManager_address_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 
 //delegated calls
@@ -818,51 +840,56 @@ this.Manageable_isManager_address=function() {
 }// end controller	
 
 
-// script for BlogRegistry
-function BlogRegistryModel(prefix) {
-	this.prefix = prefix;
-	this.guiFactory = new BlogRegistryGuiFactory();
-	this.controller = new BlogRegistryController();
-	this.guiFactory.prefix = prefix;
-	this.controller.prefix = prefix;
-}
-BlogRegistryModel.prototype.create=function () {
-	this.guiFactory.placeDefaultGui();
-	this.controller._updateAttributes();
-}
-
-
-//class as GlueCode
+//class as GlueCode BlogRegistryManager
 //uses prefix + 'GuiContainer'
-function BlogRegistryManager(prefix,contract) {
+function BlogRegistryManager(prefix,contract,containerId) {
 	this.prefix = prefix;
 	var self = this;
 	this.c = new BlogRegistryController();
 	this.c.prefix=prefix;
-	this.c.BlogRegistry_instance=contract;
+	this.c.instance=contract;
 	this.c.contractAddress = contract.address;
 	this.g = new BlogRegistryGuiFactory();
 	this.g.prefix = prefix;
+	this.containerId = containerId;
 
 	this.addGui = function() {
-		var e = document.getElementById(this.prefix + 'GuiContainer');
-//console.log('addGui:' + this.prefix+ 'GuiContainer'+e);
+		var e = document.getElementById(this.containerId);
+		if(e==null)return;
 		var elemDiv = document.createElement('div');
 		elemDiv.id= this.prefix +'BlogRegistry_gui';
 		e.appendChild(elemDiv);
-		this.g.placeDefaultGui();
-		document.getElementById(this.prefix+'BlogRegistry_address').value = this.c.contractAddress;
+		elemDiv.innerHTML = this.createGui(this.g);
+		var e = document.getElementById(this.prefix+'BlogRegistry_address');
+		if(e!=null)
+			e.value = this.c.contractAddress;
 		this.c.bindGui();
 	}	
 	this.clearGui = function(){
-		var e = document.getElementById(this.prefix + 'GuiContainer');
+		var e = document.getElementById(this.containerId);
 		e.innerHTML ='';
+	}
+	this.createGui = function(guifactory){
+		var txt ='';
+		txt = txt + guifactory.createDefaultGui();
+		return guifactory.createSeletonGui(txt);
+
+	}
+	this.createSmallGui = function(guifactory){
+		var txt ='';
+		txt = txt + guifactory.createAttributesGui();
+		return guifactory.createSeletonGui(txt);
+
 	}
 	this.updateGui = function(){
 		this.c._updateAttributes();
 	}
 	this.getContract = function(){
-		return this.c.BlogRegistry_instance;
+		return this.c.instance;
+	}
+
+//watch events
+	this.watchEvents=function(){
 	}
 
 }// end of manager
@@ -872,29 +899,33 @@ function BlogRegistryGuiMananger(guiId){
 	this.managers=new Array();	//[];		
 	
 	this.addManager = function(contract) {
-//console.log('addManager:'+contract);
-		var m = new BlogRegistryManager(contract.address,contract);
+		var m = new BlogRegistryManager(contract.address,contract,this.prefix);
+		m.watchEvents();
 		this.managers.push(m);
 		//manager.addGui();
 	}
 			
 	this.clearGui = function(){
 		var e = document.getElementById(this.prefix);
-//console.log('clear gui:'+this.prefix+e);
 		if(e!==undefined)
 			e.innerHTML ='';
 	}
 			
 	this.displayGui = function(){
 		var e = document.getElementById(this.prefix);
-//console.log('displayGui:'+this.prefix +e);
 		if(e==undefined) return;
 		for (i in this.managers) {
+			var manager = this.managers[i] ;
 			var elemDiv = document.createElement('div');
-			elemDiv.id= this.managers[i].prefix + 'GuiContainer';//'BlogRegistry_gui';
+			elemDiv.id= manager.prefix + 'GuiContainer';//'BlogRegistry_gui';
 			e.appendChild(elemDiv);
-//console.log('add:'+elemDiv.id);
-			this.managers[i].addGui();
+			elemDiv.innerHTML = manager.createGui(manager.g);
+		}
+	}
+	this.displaySimpleGui = function(){
+		for (i in this.managers) {
+			var manager = this.managers[i] ;
+			manager.addGui();
 		}
 	}
 
@@ -906,3 +937,30 @@ function BlogRegistryGuiMananger(guiId){
 	}
 }// end of gui mananger
 
+//Start of user code custom_BlogRegistry_js
+//TODO: implement
+//End of user code
+//the page Object fro the PublishingPage.
+function PublishingPage(prefix) {
+	this.prefix=prefix;
+	//Start of user code page_publishing_attributes
+		//TODO: implement
+	//End of user code
+
+	
+// default Gui
+this.placeDefaultGui=function() {
+this.createDefaultGui();
+
+}
+// default Gui
+this.createDefaultGui=function() {
+	//Start of user code page_Publishing_create_default_gui_functions
+		//TODO: implement
+	//End of user code
+}
+	//Start of user code page_Publishing_functions
+		//TODO: implement
+	//End of user code
+
+}// end of PublishingPage

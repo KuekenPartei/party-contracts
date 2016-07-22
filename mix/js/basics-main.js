@@ -128,8 +128,11 @@ function OwnedGuiFactory() {
 	
 // default Gui
 this.placeDefaultGui=function() {
-//	console.log(this.prefix+' place gui');
-	document.getElementById(this.prefix+'Owned_gui').innerHTML = this.createDefaultGui();
+	var e = document.getElementById(this.prefix+'Owned_gui');
+	if(e!=null)
+		e.innerHTML = this.createDefaultGui();
+	else
+		console.log(this.prefix+'Owned_gui not found');
 }
 // default Gui
 this.createDefaultGui=function() {
@@ -204,7 +207,7 @@ return 	'  <div class="function_execution" id="'+this.prefix+'Owned_contract_fun
 
 
 //print the contract div around
-this.createOwnedSeletonGui=function(inner) {
+this.createSeletonGui=function(inner) {
 	return 	'<!-- gui for Owned_contract -->'
 +	'	<div class="contract" id="'+this.prefix+'Owned_contract">'
 + inner
@@ -218,78 +221,68 @@ this.createOwnedSeletonGui=function(inner) {
 // script for Owned gui controller
 function OwnedController() {
 
-	this.Owned_instance = undefined;
+	this.instance = undefined;
 	this.prefix='';
 	this.contractAddress = undefined; 
+	this.eventlogPrefix = '';
 	var self = this;
 
 // bind buttons
 	this.bindGui=function() {
 		var btn = document.getElementById(self.prefix+'OwnedController.setAddress');
-//	console.log('bind:' + self.prefix+' '+btn);
 		if(btn!=undefined)		
 			btn.onclick = this.setAddress;
 
 		var btn = document.getElementById(self.prefix+'Owned_updateAttributes');
-//		console.log('bind update:' + self.prefix+' '+btn);
 		if(btn!=undefined)
 			btn.onclick = this._updateAttributes;
 		var btn = document.getElementById(self.prefix+'OwnedController.Owned_getOwner');
-//		console.log('bind:Owned_getOwner ' + self.prefix+' '+btn+'  '+self.Owned_getOwner);//Owned_getOwner);
 		if(btn!=undefined)
 			btn.onclick = this.Owned_getOwner;
 		var btn = document.getElementById(self.prefix+'OwnedController.Owned_changeOwner_address');
-//		console.log('bind:Owned_changeOwner ' + self.prefix+' '+btn+'  '+self.Owned_changeOwner_address);//Owned_changeOwner);
 		if(btn!=undefined)
 			btn.onclick = this.Owned_changeOwner_address;
 		var btn = document.getElementById(self.prefix+'OwnedController.Owned_kill');
-//		console.log('bind:Owned_kill ' + self.prefix+' '+btn+'  '+self.Owned_kill);//Owned_kill);
 		if(btn!=undefined)
 			btn.onclick = this.Owned_kill;
 	}
 	// set function
 	this.setAddress=function() {
 	var _address = document.getElementById(self.prefix+'Owned_address');
-//	console.log('setAddress:' + self.prefix+' '+_address);
+	if(_address==null)return;
+
 	self.Owned_instance = OwnedContract.at(_address.value);
 	self.contractAddress = _address.value;
 	self._updateAttributes();
 }
 //update attributes
 this._updateAttributes=function () {
-if(this.Owned_instance===null) return;
-//console.log('updateAttributes:' + self.prefix);
+if(this.instance===null) return;
 // update attributes
-	var owner_res = self.Owned_instance.owner();
-//	console.log('get:owner' + self.prefix);
-
-	if(owner_res!=null)
-		document.getElementById(self.prefix+'Owned_owner_value').innerText = owner_res;
+	var owner_res = self.instance.owner();
+	var e = document.getElementById(self.prefix+'Owned_owner_value');
+	if(owner_res!=null && e!=null)
+		e.innerText = owner_res;
 }
 
 //call functions
 //function Owned_getOwner
 this.Owned_getOwner=function() {
-//console.log('function:getOwner' + self.prefix);
-//	console.log(':' +self.Owned_instance+':');
-	var res = self.Owned_instance.getOwner();
-	if(res!=null)
-		document.getElementById(self.prefix+'Owned_getOwner_res').innerText = res;
+	var res = self.instance.getOwner();
+	var e = document.getElementById(self.prefix+'Owned_getOwner_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function Owned_changeOwner
 this.Owned_changeOwner_address=function() {
-//console.log('function:changeOwner' + self.prefix);
 	var e = document.getElementById(self.prefix+'Owned_changeOwner_address_newOwner');
-//	console.log(':' + self.prefix+'Owned_changeOwner_address_newOwner'+": "+e);
-	var param_newOwner = e.value;
-//	console.log(':' +self.Owned_instance+':');
-	var res = self.Owned_instance.changeOwner(param_newOwner);
+	if(e!=null)
+		var param_newOwner = e.value;
+	var res = self.instance.changeOwner(param_newOwner);
 }
 //function Owned_kill
 this.Owned_kill=function() {
-//console.log('function:kill' + self.prefix);
-//	console.log(':' +self.Owned_instance+':');
-	var res = self.Owned_instance.kill();
+	var res = self.instance.kill();
 }
 
 //delegated calls
@@ -297,51 +290,56 @@ this.Owned_kill=function() {
 }// end controller	
 
 
-// script for Owned
-function OwnedModel(prefix) {
-	this.prefix = prefix;
-	this.guiFactory = new OwnedGuiFactory();
-	this.controller = new OwnedController();
-	this.guiFactory.prefix = prefix;
-	this.controller.prefix = prefix;
-}
-OwnedModel.prototype.create=function () {
-	this.guiFactory.placeDefaultGui();
-	this.controller._updateAttributes();
-}
-
-
-//class as GlueCode
+//class as GlueCode OwnedManager
 //uses prefix + 'GuiContainer'
-function OwnedManager(prefix,contract) {
+function OwnedManager(prefix,contract,containerId) {
 	this.prefix = prefix;
 	var self = this;
 	this.c = new OwnedController();
 	this.c.prefix=prefix;
-	this.c.Owned_instance=contract;
+	this.c.instance=contract;
 	this.c.contractAddress = contract.address;
 	this.g = new OwnedGuiFactory();
 	this.g.prefix = prefix;
+	this.containerId = containerId;
 
 	this.addGui = function() {
-		var e = document.getElementById(this.prefix + 'GuiContainer');
-//console.log('addGui:' + this.prefix+ 'GuiContainer'+e);
+		var e = document.getElementById(this.containerId);
+		if(e==null)return;
 		var elemDiv = document.createElement('div');
 		elemDiv.id= this.prefix +'Owned_gui';
 		e.appendChild(elemDiv);
-		this.g.placeDefaultGui();
-		document.getElementById(this.prefix+'Owned_address').value = this.c.contractAddress;
+		elemDiv.innerHTML = this.createGui(this.g);
+		var e = document.getElementById(this.prefix+'Owned_address');
+		if(e!=null)
+			e.value = this.c.contractAddress;
 		this.c.bindGui();
 	}	
 	this.clearGui = function(){
-		var e = document.getElementById(this.prefix + 'GuiContainer');
+		var e = document.getElementById(this.containerId);
 		e.innerHTML ='';
+	}
+	this.createGui = function(guifactory){
+		var txt ='';
+		txt = txt + guifactory.createDefaultGui();
+		return guifactory.createSeletonGui(txt);
+
+	}
+	this.createSmallGui = function(guifactory){
+		var txt ='';
+		txt = txt + guifactory.createAttributesGui();
+		return guifactory.createSeletonGui(txt);
+
 	}
 	this.updateGui = function(){
 		this.c._updateAttributes();
 	}
 	this.getContract = function(){
-		return this.c.Owned_instance;
+		return this.c.instance;
+	}
+
+//watch events
+	this.watchEvents=function(){
 	}
 
 }// end of manager
@@ -351,29 +349,33 @@ function OwnedGuiMananger(guiId){
 	this.managers=new Array();	//[];		
 	
 	this.addManager = function(contract) {
-//console.log('addManager:'+contract);
-		var m = new OwnedManager(contract.address,contract);
+		var m = new OwnedManager(contract.address,contract,this.prefix);
+		m.watchEvents();
 		this.managers.push(m);
 		//manager.addGui();
 	}
 			
 	this.clearGui = function(){
 		var e = document.getElementById(this.prefix);
-//console.log('clear gui:'+this.prefix+e);
 		if(e!==undefined)
 			e.innerHTML ='';
 	}
 			
 	this.displayGui = function(){
 		var e = document.getElementById(this.prefix);
-//console.log('displayGui:'+this.prefix +e);
 		if(e==undefined) return;
 		for (i in this.managers) {
+			var manager = this.managers[i] ;
 			var elemDiv = document.createElement('div');
-			elemDiv.id= this.managers[i].prefix + 'GuiContainer';//'Owned_gui';
+			elemDiv.id= manager.prefix + 'GuiContainer';//'Owned_gui';
 			e.appendChild(elemDiv);
-//console.log('add:'+elemDiv.id);
-			this.managers[i].addGui();
+			elemDiv.innerHTML = manager.createGui(manager.g);
+		}
+	}
+	this.displaySimpleGui = function(){
+		for (i in this.managers) {
+			var manager = this.managers[i] ;
+			manager.addGui();
 		}
 	}
 
@@ -385,14 +387,20 @@ function OwnedGuiMananger(guiId){
 	}
 }// end of gui mananger
 
+//Start of user code custom_Owned_js
+//TODO: implement
+//End of user code
 //gui factory Manageable
 function ManageableGuiFactory() {
 	this.prefix='';
 	
 // default Gui
 this.placeDefaultGui=function() {
-//	console.log(this.prefix+' place gui');
-	document.getElementById(this.prefix+'Manageable_gui').innerHTML = this.createDefaultGui();
+	var e = document.getElementById(this.prefix+'Manageable_gui');
+	if(e!=null)
+		e.innerHTML = this.createDefaultGui();
+	else
+		console.log(this.prefix+'Manageable_gui not found');
 }
 // default Gui
 this.createDefaultGui=function() {
@@ -477,7 +485,7 @@ return 	'  <div class="function_execution" id="'+this.prefix+'Manageable_contrac
 
 
 //print the contract div around
-this.createManageableSeletonGui=function(inner) {
+this.createSeletonGui=function(inner) {
 	return 	'<!-- gui for Manageable_contract -->'
 +	'	<div class="contract" id="'+this.prefix+'Manageable_contract">'
 + inner
@@ -491,99 +499,90 @@ this.createManageableSeletonGui=function(inner) {
 // script for Manageable gui controller
 function ManageableController() {
 
-	this.Manageable_instance = undefined;
+	this.instance = undefined;
 	this.prefix='';
 	this.contractAddress = undefined; 
+	this.eventlogPrefix = '';
 	var self = this;
 
 // bind buttons
 	this.bindGui=function() {
 		var btn = document.getElementById(self.prefix+'ManageableController.setAddress');
-//	console.log('bind:' + self.prefix+' '+btn);
 		if(btn!=undefined)		
 			btn.onclick = this.setAddress;
 
 		var btn = document.getElementById(self.prefix+'Manageable_updateAttributes');
-//		console.log('bind update:' + self.prefix+' '+btn);
 		if(btn!=undefined)
 			btn.onclick = this._updateAttributes;
 		var btn = document.getElementById(self.prefix+'ManageableController.Manageable_addManager_address');
-//		console.log('bind:Manageable_addManager ' + self.prefix+' '+btn+'  '+self.Manageable_addManager_address);//Manageable_addManager);
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_addManager_address;
 		var btn = document.getElementById(self.prefix+'ManageableController.Manageable_removeManager_address');
-//		console.log('bind:Manageable_removeManager ' + self.prefix+' '+btn+'  '+self.Manageable_removeManager_address);//Manageable_removeManager);
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_removeManager_address;
 		var btn = document.getElementById(self.prefix+'ManageableController.Manageable_isManager_address');
-//		console.log('bind:Manageable_isManager ' + self.prefix+' '+btn+'  '+self.Manageable_isManager_address);//Manageable_isManager);
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_isManager_address;
 	}
 	// set function
 	this.setAddress=function() {
 	var _address = document.getElementById(self.prefix+'Manageable_address');
-//	console.log('setAddress:' + self.prefix+' '+_address);
+	if(_address==null)return;
+
 	self.Manageable_instance = ManageableContract.at(_address.value);
 	self.contractAddress = _address.value;
 	self._updateAttributes();
 }
 //update attributes
 this._updateAttributes=function () {
-if(this.Manageable_instance===null) return;
-//console.log('updateAttributes:' + self.prefix);
+if(this.instance===null) return;
 // update attributes
-	var mangerCount_res = self.Manageable_instance.mangerCount();
-//	console.log('get:mangerCount' + self.prefix);
-
-	if(mangerCount_res!=null)
-		document.getElementById(self.prefix+'Manageable_mangerCount_value').innerText = mangerCount_res;
-//console.log('getStruct:managers' + self.prefix);
-	var _key = document.getElementById(self.prefix+'Manageable_contract_attribute_managers_input').value;
-	var managers_res = self.Manageable_instance.managers(_key);
-//console.log('result:managers' + managers_res+' key: '+_key);
+	var mangerCount_res = self.instance.mangerCount();
+	var e = document.getElementById(self.prefix+'Manageable_mangerCount_value');
+	if(mangerCount_res!=null && e!=null)
+		e.innerText = mangerCount_res;
+var e = document.getElementById(self.prefix+'Manageable_contract_attribute_managers_input');
+if(e!=null){
+	var _key = e.value;
+	var managers_res = self.instance.managers(_key);
 	if(managers_res!=null){
-		document.getElementById(self.prefix+'Manageable_managers_value').innerText = managers_res;
-	}
+		var e1 = document.getElementById(self.prefix+'Manageable_managers_value');
+		if(e1!=null)	
+			e1.innerText = managers_res;
+	}}
 }
 
 //call functions
 //function Manageable_canAccess
 this.Manageable_canAccess=function() {
-//console.log('function:canAccess' + self.prefix);
-//	console.log(':' +self.Manageable_instance+':');
-	var res = self.Manageable_instance.canAccess();
-	if(res!=null)
-		document.getElementById(self.prefix+'Manageable_canAccess_res').innerText = res;
+	var res = self.instance.canAccess();
+	var e = document.getElementById(self.prefix+'Manageable_canAccess_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function Manageable_addManager
 this.Manageable_addManager_address=function() {
-//console.log('function:addManager' + self.prefix);
 	var e = document.getElementById(self.prefix+'Manageable_addManager_address__newManagerAddress');
-//	console.log(':' + self.prefix+'Manageable_addManager_address__newManagerAddress'+": "+e);
-	var param__newManagerAddress = e.value;
-//	console.log(':' +self.Manageable_instance+':');
-	var res = self.Manageable_instance.addManager(param__newManagerAddress);
+	if(e!=null)
+		var param__newManagerAddress = e.value;
+	var res = self.instance.addManager(param__newManagerAddress);
 }
 //function Manageable_removeManager
 this.Manageable_removeManager_address=function() {
-//console.log('function:removeManager' + self.prefix);
 	var e = document.getElementById(self.prefix+'Manageable_removeManager_address__managerAddress');
-//	console.log(':' + self.prefix+'Manageable_removeManager_address__managerAddress'+": "+e);
-	var param__managerAddress = e.value;
-//	console.log(':' +self.Manageable_instance+':');
-	var res = self.Manageable_instance.removeManager(param__managerAddress);
+	if(e!=null)
+		var param__managerAddress = e.value;
+	var res = self.instance.removeManager(param__managerAddress);
 }
 //function Manageable_isManager
 this.Manageable_isManager_address=function() {
-//console.log('function:isManager' + self.prefix);
 	var e = document.getElementById(self.prefix+'Manageable_isManager_address__managerAddress');
-//	console.log(':' + self.prefix+'Manageable_isManager_address__managerAddress'+": "+e);
-	var param__managerAddress = e.value;
-//	console.log(':' +self.Manageable_instance+':');
-	var res = self.Manageable_instance.isManager(param__managerAddress);
-	if(res!=null)
-		document.getElementById(self.prefix+'Manageable_isManager_address_res').innerText = res;
+	if(e!=null)
+		var param__managerAddress = e.value;
+	var res = self.instance.isManager(param__managerAddress);
+	var e = document.getElementById(self.prefix+'Manageable_isManager_address_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 
 //delegated calls
@@ -591,51 +590,56 @@ this.Manageable_isManager_address=function() {
 }// end controller	
 
 
-// script for Manageable
-function ManageableModel(prefix) {
-	this.prefix = prefix;
-	this.guiFactory = new ManageableGuiFactory();
-	this.controller = new ManageableController();
-	this.guiFactory.prefix = prefix;
-	this.controller.prefix = prefix;
-}
-ManageableModel.prototype.create=function () {
-	this.guiFactory.placeDefaultGui();
-	this.controller._updateAttributes();
-}
-
-
-//class as GlueCode
+//class as GlueCode ManageableManager
 //uses prefix + 'GuiContainer'
-function ManageableManager(prefix,contract) {
+function ManageableManager(prefix,contract,containerId) {
 	this.prefix = prefix;
 	var self = this;
 	this.c = new ManageableController();
 	this.c.prefix=prefix;
-	this.c.Manageable_instance=contract;
+	this.c.instance=contract;
 	this.c.contractAddress = contract.address;
 	this.g = new ManageableGuiFactory();
 	this.g.prefix = prefix;
+	this.containerId = containerId;
 
 	this.addGui = function() {
-		var e = document.getElementById(this.prefix + 'GuiContainer');
-//console.log('addGui:' + this.prefix+ 'GuiContainer'+e);
+		var e = document.getElementById(this.containerId);
+		if(e==null)return;
 		var elemDiv = document.createElement('div');
 		elemDiv.id= this.prefix +'Manageable_gui';
 		e.appendChild(elemDiv);
-		this.g.placeDefaultGui();
-		document.getElementById(this.prefix+'Manageable_address').value = this.c.contractAddress;
+		elemDiv.innerHTML = this.createGui(this.g);
+		var e = document.getElementById(this.prefix+'Manageable_address');
+		if(e!=null)
+			e.value = this.c.contractAddress;
 		this.c.bindGui();
 	}	
 	this.clearGui = function(){
-		var e = document.getElementById(this.prefix + 'GuiContainer');
+		var e = document.getElementById(this.containerId);
 		e.innerHTML ='';
+	}
+	this.createGui = function(guifactory){
+		var txt ='';
+		txt = txt + guifactory.createDefaultGui();
+		return guifactory.createSeletonGui(txt);
+
+	}
+	this.createSmallGui = function(guifactory){
+		var txt ='';
+		txt = txt + guifactory.createAttributesGui();
+		return guifactory.createSeletonGui(txt);
+
 	}
 	this.updateGui = function(){
 		this.c._updateAttributes();
 	}
 	this.getContract = function(){
-		return this.c.Manageable_instance;
+		return this.c.instance;
+	}
+
+//watch events
+	this.watchEvents=function(){
 	}
 
 }// end of manager
@@ -645,29 +649,33 @@ function ManageableGuiMananger(guiId){
 	this.managers=new Array();	//[];		
 	
 	this.addManager = function(contract) {
-//console.log('addManager:'+contract);
-		var m = new ManageableManager(contract.address,contract);
+		var m = new ManageableManager(contract.address,contract,this.prefix);
+		m.watchEvents();
 		this.managers.push(m);
 		//manager.addGui();
 	}
 			
 	this.clearGui = function(){
 		var e = document.getElementById(this.prefix);
-//console.log('clear gui:'+this.prefix+e);
 		if(e!==undefined)
 			e.innerHTML ='';
 	}
 			
 	this.displayGui = function(){
 		var e = document.getElementById(this.prefix);
-//console.log('displayGui:'+this.prefix +e);
 		if(e==undefined) return;
 		for (i in this.managers) {
+			var manager = this.managers[i] ;
 			var elemDiv = document.createElement('div');
-			elemDiv.id= this.managers[i].prefix + 'GuiContainer';//'Manageable_gui';
+			elemDiv.id= manager.prefix + 'GuiContainer';//'Manageable_gui';
 			e.appendChild(elemDiv);
-//console.log('add:'+elemDiv.id);
-			this.managers[i].addGui();
+			elemDiv.innerHTML = manager.createGui(manager.g);
+		}
+	}
+	this.displaySimpleGui = function(){
+		for (i in this.managers) {
+			var manager = this.managers[i] ;
+			manager.addGui();
 		}
 	}
 
@@ -679,14 +687,20 @@ function ManageableGuiMananger(guiId){
 	}
 }// end of gui mananger
 
+//Start of user code custom_Manageable_js
+//TODO: implement
+//End of user code
 //gui factory Multiowned
 function MultiownedGuiFactory() {
 	this.prefix='';
 	
 // default Gui
 this.placeDefaultGui=function() {
-//	console.log(this.prefix+' place gui');
-	document.getElementById(this.prefix+'Multiowned_gui').innerHTML = this.createDefaultGui();
+	var e = document.getElementById(this.prefix+'Multiowned_gui');
+	if(e!=null)
+		e.innerHTML = this.createDefaultGui();
+	else
+		console.log(this.prefix+'Multiowned_gui not found');
 }
 // default Gui
 this.createDefaultGui=function() {
@@ -828,7 +842,7 @@ return 	'<!--struct -->'
 }
 
 //print the contract div around
-this.createMultiownedSeletonGui=function(inner) {
+this.createSeletonGui=function(inner) {
 	return 	'<!-- gui for Multiowned_contract -->'
 +	'	<div class="contract" id="'+this.prefix+'Multiowned_contract">'
 + inner
@@ -837,8 +851,8 @@ this.createMultiownedSeletonGui=function(inner) {
 
 
 //eventguis
-this.createConfirmationLogDataGui = function(prefix, blockHash, blockNumber,
-owner,operation) {
+this.createConfirmationLogDataGui = function(prefix, blockHash, blockNumber
+,owner,operation) {
 		return '<ul class="dapp-account-list"><li > '
         +'<a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>'
 		+'<span>'+prefix+' ('+blockNumber+')</span>'
@@ -847,8 +861,8 @@ owner,operation) {
         +' </li>'
         ;
 }
-this.createRevokeLogDataGui = function(prefix, blockHash, blockNumber,
-owner,operation) {
+this.createRevokeLogDataGui = function(prefix, blockHash, blockNumber
+,owner,operation) {
 		return '<ul class="dapp-account-list"><li > '
         +'<a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>'
 		+'<span>'+prefix+' ('+blockNumber+')</span>'
@@ -857,8 +871,8 @@ owner,operation) {
         +' </li>'
         ;
 }
-this.createOwnerChangedLogDataGui = function(prefix, blockHash, blockNumber,
-oldOwner,newOwner) {
+this.createOwnerChangedLogDataGui = function(prefix, blockHash, blockNumber
+,oldOwner,newOwner) {
 		return '<ul class="dapp-account-list"><li > '
         +'<a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>'
 		+'<span>'+prefix+' ('+blockNumber+')</span>'
@@ -867,8 +881,8 @@ oldOwner,newOwner) {
         +' </li>'
         ;
 }
-this.createOwnerAddedLogDataGui = function(prefix, blockHash, blockNumber,
-newOwner) {
+this.createOwnerAddedLogDataGui = function(prefix, blockHash, blockNumber
+,newOwner) {
 		return '<ul class="dapp-account-list"><li > '
         +'<a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>'
 		+'<span>'+prefix+' ('+blockNumber+')</span>'
@@ -876,8 +890,8 @@ newOwner) {
         +' </li>'
         ;
 }
-this.createOwnerRemovedLogDataGui = function(prefix, blockHash, blockNumber,
-oldOwner) {
+this.createOwnerRemovedLogDataGui = function(prefix, blockHash, blockNumber
+,oldOwner) {
 		return '<ul class="dapp-account-list"><li > '
         +'<a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>'
 		+'<span>'+prefix+' ('+blockNumber+')</span>'
@@ -885,8 +899,8 @@ oldOwner) {
         +' </li>'
         ;
 }
-this.createRequirementChangedLogDataGui = function(prefix, blockHash, blockNumber,
-newRequirement) {
+this.createRequirementChangedLogDataGui = function(prefix, blockHash, blockNumber
+,newRequirement) {
 		return '<ul class="dapp-account-list"><li > '
         +'<a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>'
 		+'<span>'+prefix+' ('+blockNumber+')</span>'
@@ -899,191 +913,175 @@ newRequirement) {
 // script for Multiowned gui controller
 function MultiownedController() {
 
-	this.Multiowned_instance = undefined;
+	this.instance = undefined;
 	this.prefix='';
 	this.contractAddress = undefined; 
+	this.eventlogPrefix = '';
 	var self = this;
 
 // bind buttons
 	this.bindGui=function() {
 		var btn = document.getElementById(self.prefix+'MultiownedController.setAddress');
-//	console.log('bind:' + self.prefix+' '+btn);
 		if(btn!=undefined)		
 			btn.onclick = this.setAddress;
 
 		var btn = document.getElementById(self.prefix+'Multiowned_updateAttributes');
-//		console.log('bind update:' + self.prefix+' '+btn);
 		if(btn!=undefined)
 			btn.onclick = this._updateAttributes;
 		var btn = document.getElementById(self.prefix+'MultiownedController.Multiowned_Multiowned_address_uint');
-//		console.log('bind:Multiowned_Multiowned ' + self.prefix+' '+btn+'  '+self.Multiowned_Multiowned_address_uint);//Multiowned_Multiowned);
 		if(btn!=undefined)
 			btn.onclick = this.Multiowned_Multiowned_address_uint;
 		var btn = document.getElementById(self.prefix+'MultiownedController.Multiowned_isOwner_address');
-//		console.log('bind:Multiowned_isOwner ' + self.prefix+' '+btn+'  '+self.Multiowned_isOwner_address);//Multiowned_isOwner);
 		if(btn!=undefined)
 			btn.onclick = this.Multiowned_isOwner_address;
 		var btn = document.getElementById(self.prefix+'MultiownedController.Multiowned_hasConfirmed_bytes32_address');
-//		console.log('bind:Multiowned_hasConfirmed ' + self.prefix+' '+btn+'  '+self.Multiowned_hasConfirmed_bytes32_address);//Multiowned_hasConfirmed);
 		if(btn!=undefined)
 			btn.onclick = this.Multiowned_hasConfirmed_bytes32_address;
 	}
 	// set function
 	this.setAddress=function() {
 	var _address = document.getElementById(self.prefix+'Multiowned_address');
-//	console.log('setAddress:' + self.prefix+' '+_address);
+	if(_address==null)return;
+
 	self.Multiowned_instance = MultiownedContract.at(_address.value);
 	self.contractAddress = _address.value;
 	self._updateAttributes();
 }
 //update attributes
 this._updateAttributes=function () {
-if(this.Multiowned_instance===null) return;
-//console.log('updateAttributes:' + self.prefix);
+if(this.instance===null) return;
 // update attributes
-	var m_required_res = self.Multiowned_instance.m_required();
-//	console.log('get:m_required' + self.prefix);
-
-	if(m_required_res!=null)
-		document.getElementById(self.prefix+'Multiowned_m_required_value').innerText = m_required_res;
-	var m_numOwners_res = self.Multiowned_instance.m_numOwners();
-//	console.log('get:m_numOwners' + self.prefix);
-
-	if(m_numOwners_res!=null)
-		document.getElementById(self.prefix+'Multiowned_m_numOwners_value').innerText = m_numOwners_res;
-	var m_owners_res = self.Multiowned_instance.m_owners();
-//	console.log('get:m_owners' + self.prefix);
-
-	if(m_owners_res!=null)
-		document.getElementById(self.prefix+'Multiowned_m_owners_value').innerText = m_owners_res;
-	var c_maxOwners_res = self.Multiowned_instance.c_maxOwners();
-//	console.log('get:c_maxOwners' + self.prefix);
-
-	if(c_maxOwners_res!=null)
-		document.getElementById(self.prefix+'Multiowned_c_maxOwners_value').innerText = c_maxOwners_res;
-	var m_pendingIndex_res = self.Multiowned_instance.m_pendingIndex();
-//	console.log('get:m_pendingIndex' + self.prefix);
-
-	if(m_pendingIndex_res!=null)
-		document.getElementById(self.prefix+'Multiowned_m_pendingIndex_value').innerText = m_pendingIndex_res;
-//console.log('getStruct:m_ownerIndex' + self.prefix);
-	var _key = document.getElementById(self.prefix+'Multiowned_contract_attribute_m_ownerIndex_input').value;
-	var m_ownerIndex_res = self.Multiowned_instance.m_ownerIndex(_key);
-//console.log('result:m_ownerIndex' + m_ownerIndex_res+' key: '+_key);
+	var m_required_res = self.instance.m_required();
+	var e = document.getElementById(self.prefix+'Multiowned_m_required_value');
+	if(m_required_res!=null && e!=null)
+		e.innerText = m_required_res;
+	var m_numOwners_res = self.instance.m_numOwners();
+	var e = document.getElementById(self.prefix+'Multiowned_m_numOwners_value');
+	if(m_numOwners_res!=null && e!=null)
+		e.innerText = m_numOwners_res;
+	var m_owners_res = self.instance.m_owners();
+	var e = document.getElementById(self.prefix+'Multiowned_m_owners_value');
+	if(m_owners_res!=null && e!=null)
+		e.innerText = m_owners_res;
+	var c_maxOwners_res = self.instance.c_maxOwners();
+	var e = document.getElementById(self.prefix+'Multiowned_c_maxOwners_value');
+	if(c_maxOwners_res!=null && e!=null)
+		e.innerText = c_maxOwners_res;
+	var m_pendingIndex_res = self.instance.m_pendingIndex();
+	var e = document.getElementById(self.prefix+'Multiowned_m_pendingIndex_value');
+	if(m_pendingIndex_res!=null && e!=null)
+		e.innerText = m_pendingIndex_res;
+var e = document.getElementById(self.prefix+'Multiowned_contract_attribute_m_ownerIndex_input');
+if(e!=null){
+	var _key = e.value;
+	var m_ownerIndex_res = self.instance.m_ownerIndex(_key);
 	if(m_ownerIndex_res!=null){
-		document.getElementById(self.prefix+'Multiowned_m_ownerIndex_value').innerText = m_ownerIndex_res;
-	}
-	var _key = document.getElementById(self.prefix+'Multiowned_contract_attribute_m_pending_input').value;
-	var m_pending_res = self.Multiowned_instance.m_pending(_key);
+		var e1 = document.getElementById(self.prefix+'Multiowned_m_ownerIndex_value');
+		if(e1!=null)	
+			e1.innerText = m_ownerIndex_res;
+	}}
+var e = document.getElementById(self.prefix+'Multiowned_contract_attribute_m_pending_input');
+if(e!=null){
+	var _key = e.value;
+	var m_pending_res = self.instance.m_pending(_key);
 	if(m_pending_res!=null){
-		document.getElementById(self.prefix+'Multiowned_m_pending_yetNeeded_value').innerText = m_pending_res[0];
-		document.getElementById(self.prefix+'Multiowned_m_pending_ownersDone_value').innerText = m_pending_res[1];
-		document.getElementById(self.prefix+'Multiowned_m_pending_index_value').innerText = m_pending_res[2];
-	}
+	var e1 = document.getElementById(self.prefix+'Multiowned_m_pending_yetNeeded_value');
+	if(e1!=null)	
+		e1.innerText = m_pending_res[0];
+	var e1 = document.getElementById(self.prefix+'Multiowned_m_pending_ownersDone_value');
+	if(e1!=null)	
+		e1.innerText = m_pending_res[1];
+	var e1 = document.getElementById(self.prefix+'Multiowned_m_pending_index_value');
+	if(e1!=null)	
+		e1.innerText = m_pending_res[2];
+	}}
 }
 
 //call functions
 //function Multiowned_Multiowned
 this.Multiowned_Multiowned_address_uint=function() {
-//console.log('function:Multiowned' + self.prefix);
 	var e = document.getElementById(self.prefix+'Multiowned_Multiowned_address_uint__owners');
-//	console.log(':' + self.prefix+'Multiowned_Multiowned_address_uint__owners'+": "+e);
-	var param__owners = e.value;
+	if(e!=null)
+		var param__owners = e.value;
 	var e = document.getElementById(self.prefix+'Multiowned_Multiowned_address_uint__required');
-//	console.log(':' + self.prefix+'Multiowned_Multiowned_address_uint__required'+": "+e);
-	var param__required = e.value;
-//	console.log(':' +self.Multiowned_instance+':');
-	var res = self.Multiowned_instance.Multiowned(param__owners, param__required);
+	if(e!=null)
+		var param__required = e.value;
+	var res = self.instance.Multiowned(param__owners, param__required);
 }
 //function Multiowned_clearPending
 this.Multiowned_clearPending=function() {
-//console.log('function:clearPending' + self.prefix);
-//	console.log(':' +self.Multiowned_instance+':');
-	var res = self.Multiowned_instance.clearPending();
+	var res = self.instance.clearPending();
 }
 //function Multiowned_revoke
 this.Multiowned_revoke_bytes32=function() {
-//console.log('function:revoke' + self.prefix);
 	var e = document.getElementById(self.prefix+'Multiowned_revoke_bytes32__operation');
-//	console.log(':' + self.prefix+'Multiowned_revoke_bytes32__operation'+": "+e);
-	var param__operation = e.value;
-//	console.log(':' +self.Multiowned_instance+':');
-	var res = self.Multiowned_instance.revoke(param__operation);
+	if(e!=null)
+		var param__operation = e.value;
+	var res = self.instance.revoke(param__operation);
 }
 //function Multiowned_changeOwner
 this.Multiowned_changeOwner_address_address=function() {
-//console.log('function:changeOwner' + self.prefix);
 	var e = document.getElementById(self.prefix+'Multiowned_changeOwner_address_address__from');
-//	console.log(':' + self.prefix+'Multiowned_changeOwner_address_address__from'+": "+e);
-	var param__from = e.value;
+	if(e!=null)
+		var param__from = e.value;
 	var e = document.getElementById(self.prefix+'Multiowned_changeOwner_address_address__to');
-//	console.log(':' + self.prefix+'Multiowned_changeOwner_address_address__to'+": "+e);
-	var param__to = e.value;
-//	console.log(':' +self.Multiowned_instance+':');
-	var res = self.Multiowned_instance.changeOwner(param__from, param__to);
+	if(e!=null)
+		var param__to = e.value;
+	var res = self.instance.changeOwner(param__from, param__to);
 }
 //function Multiowned_addOwner
 this.Multiowned_addOwner_address=function() {
-//console.log('function:addOwner' + self.prefix);
 	var e = document.getElementById(self.prefix+'Multiowned_addOwner_address__owner');
-//	console.log(':' + self.prefix+'Multiowned_addOwner_address__owner'+": "+e);
-	var param__owner = e.value;
-//	console.log(':' +self.Multiowned_instance+':');
-	var res = self.Multiowned_instance.addOwner(param__owner);
+	if(e!=null)
+		var param__owner = e.value;
+	var res = self.instance.addOwner(param__owner);
 }
 //function Multiowned_removeOwner
 this.Multiowned_removeOwner_address=function() {
-//console.log('function:removeOwner' + self.prefix);
 	var e = document.getElementById(self.prefix+'Multiowned_removeOwner_address__owner');
-//	console.log(':' + self.prefix+'Multiowned_removeOwner_address__owner'+": "+e);
-	var param__owner = e.value;
-//	console.log(':' +self.Multiowned_instance+':');
-	var res = self.Multiowned_instance.removeOwner(param__owner);
+	if(e!=null)
+		var param__owner = e.value;
+	var res = self.instance.removeOwner(param__owner);
 }
 //function Multiowned_changeRequirement
 this.Multiowned_changeRequirement_uint=function() {
-//console.log('function:changeRequirement' + self.prefix);
 	var e = document.getElementById(self.prefix+'Multiowned_changeRequirement_uint__newRequired');
-//	console.log(':' + self.prefix+'Multiowned_changeRequirement_uint__newRequired'+": "+e);
-	var param__newRequired = e.value;
-//	console.log(':' +self.Multiowned_instance+':');
-	var res = self.Multiowned_instance.changeRequirement(param__newRequired);
+	if(e!=null)
+		var param__newRequired = e.value;
+	var res = self.instance.changeRequirement(param__newRequired);
 }
 //function Multiowned_isOwner
 this.Multiowned_isOwner_address=function() {
-//console.log('function:isOwner' + self.prefix);
 	var e = document.getElementById(self.prefix+'Multiowned_isOwner_address__addr');
-//	console.log(':' + self.prefix+'Multiowned_isOwner_address__addr'+": "+e);
-	var param__addr = e.value;
-//	console.log(':' +self.Multiowned_instance+':');
-	var res = self.Multiowned_instance.isOwner(param__addr);
-	if(res!=null)
-		document.getElementById(self.prefix+'Multiowned_isOwner_address_res').innerText = res;
+	if(e!=null)
+		var param__addr = e.value;
+	var res = self.instance.isOwner(param__addr);
+	var e = document.getElementById(self.prefix+'Multiowned_isOwner_address_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function Multiowned_hasConfirmed
 this.Multiowned_hasConfirmed_bytes32_address=function() {
-//console.log('function:hasConfirmed' + self.prefix);
 	var e = document.getElementById(self.prefix+'Multiowned_hasConfirmed_bytes32_address__operation');
-//	console.log(':' + self.prefix+'Multiowned_hasConfirmed_bytes32_address__operation'+": "+e);
-	var param__operation = e.value;
+	if(e!=null)
+		var param__operation = e.value;
 	var e = document.getElementById(self.prefix+'Multiowned_hasConfirmed_bytes32_address__owner');
-//	console.log(':' + self.prefix+'Multiowned_hasConfirmed_bytes32_address__owner'+": "+e);
-	var param__owner = e.value;
-//	console.log(':' +self.Multiowned_instance+':');
-	var res = self.Multiowned_instance.hasConfirmed(param__operation, param__owner);
-	if(res!=null)
-		document.getElementById(self.prefix+'Multiowned_hasConfirmed_bytes32_address_res').innerText = res;
+	if(e!=null)
+		var param__owner = e.value;
+	var res = self.instance.hasConfirmed(param__operation, param__owner);
+	var e = document.getElementById(self.prefix+'Multiowned_hasConfirmed_bytes32_address_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function Multiowned_confirmAndCheck
 this.Multiowned_confirmAndCheck_bytes32=function() {
-//console.log('function:confirmAndCheck' + self.prefix);
 	var e = document.getElementById(self.prefix+'Multiowned_confirmAndCheck_bytes32__operation');
-//	console.log(':' + self.prefix+'Multiowned_confirmAndCheck_bytes32__operation'+": "+e);
-	var param__operation = e.value;
-//	console.log(':' +self.Multiowned_instance+':');
-	var res = self.Multiowned_instance.confirmAndCheck(param__operation);
-	if(res!=null)
-		document.getElementById(self.prefix+'Multiowned_confirmAndCheck_bytes32_res').innerText = res;
+	if(e!=null)
+		var param__operation = e.value;
+	var res = self.instance.confirmAndCheck(param__operation);
+	var e = document.getElementById(self.prefix+'Multiowned_confirmAndCheck_bytes32_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 
 //delegated calls
@@ -1091,51 +1089,143 @@ this.Multiowned_confirmAndCheck_bytes32=function() {
 }// end controller	
 
 
-// script for Multiowned
-function MultiownedModel(prefix) {
-	this.prefix = prefix;
-	this.guiFactory = new MultiownedGuiFactory();
-	this.controller = new MultiownedController();
-	this.guiFactory.prefix = prefix;
-	this.controller.prefix = prefix;
-}
-MultiownedModel.prototype.create=function () {
-	this.guiFactory.placeDefaultGui();
-	this.controller._updateAttributes();
-}
-
-
-//class as GlueCode
+//class as GlueCode MultiownedManager
 //uses prefix + 'GuiContainer'
-function MultiownedManager(prefix,contract) {
+function MultiownedManager(prefix,contract,containerId) {
 	this.prefix = prefix;
 	var self = this;
 	this.c = new MultiownedController();
 	this.c.prefix=prefix;
-	this.c.Multiowned_instance=contract;
+	this.c.instance=contract;
 	this.c.contractAddress = contract.address;
 	this.g = new MultiownedGuiFactory();
 	this.g.prefix = prefix;
+	this.containerId = containerId;
 
 	this.addGui = function() {
-		var e = document.getElementById(this.prefix + 'GuiContainer');
-//console.log('addGui:' + this.prefix+ 'GuiContainer'+e);
+		var e = document.getElementById(this.containerId);
+		if(e==null)return;
 		var elemDiv = document.createElement('div');
 		elemDiv.id= this.prefix +'Multiowned_gui';
 		e.appendChild(elemDiv);
-		this.g.placeDefaultGui();
-		document.getElementById(this.prefix+'Multiowned_address').value = this.c.contractAddress;
+		elemDiv.innerHTML = this.createGui(this.g);
+		var e = document.getElementById(this.prefix+'Multiowned_address');
+		if(e!=null)
+			e.value = this.c.contractAddress;
 		this.c.bindGui();
 	}	
 	this.clearGui = function(){
-		var e = document.getElementById(this.prefix + 'GuiContainer');
+		var e = document.getElementById(this.containerId);
 		e.innerHTML ='';
+	}
+	this.createGui = function(guifactory){
+		var txt ='';
+		txt = txt + guifactory.createDefaultGui();
+		return guifactory.createSeletonGui(txt);
+
+	}
+	this.createSmallGui = function(guifactory){
+		var txt ='';
+		txt = txt + guifactory.createAttributesGui();
+		return guifactory.createSeletonGui(txt);
+
 	}
 	this.updateGui = function(){
 		this.c._updateAttributes();
 	}
 	this.getContract = function(){
-		return this.c.Multiowned_instance;
+		return this.c.instance;
+	}
+
+//watch events
+	this.watchEvents=function(){
+	var event_Confirmation = contract.Confirmation({},{fromBlock: 0});
+	event_Confirmation.watch(function(error,result){
+	if(!error){
+		var e = document.getElementById(self.eventlogPrefix+'eventLog');
+		var elemDiv = document.createElement('div');
+		elemDiv.id= result.blockNumber +'event';
+		e.appendChild(elemDiv);
+		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
+		elemDiv.innerHTML = '<div>'
+        +'<span>'+result.args.owner+'</span>'
+        +'<span>'+result.args.operation+'</span>'
+		+ '</div>';
+		}else
+		console.log(error);	
+	});
+	var event_Revoke = contract.Revoke({},{fromBlock: 0});
+	event_Revoke.watch(function(error,result){
+	if(!error){
+		var e = document.getElementById(self.eventlogPrefix+'eventLog');
+		var elemDiv = document.createElement('div');
+		elemDiv.id= result.blockNumber +'event';
+		e.appendChild(elemDiv);
+		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
+		elemDiv.innerHTML = '<div>'
+        +'<span>'+result.args.owner+'</span>'
+        +'<span>'+result.args.operation+'</span>'
+		+ '</div>';
+		}else
+		console.log(error);	
+	});
+	var event_OwnerChanged = contract.OwnerChanged({},{fromBlock: 0});
+	event_OwnerChanged.watch(function(error,result){
+	if(!error){
+		var e = document.getElementById(self.eventlogPrefix+'eventLog');
+		var elemDiv = document.createElement('div');
+		elemDiv.id= result.blockNumber +'event';
+		e.appendChild(elemDiv);
+		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
+		elemDiv.innerHTML = '<div>'
+        +'<span>'+result.args.oldOwner+'</span>'
+        +'<span>'+result.args.newOwner+'</span>'
+		+ '</div>';
+		}else
+		console.log(error);	
+	});
+	var event_OwnerAdded = contract.OwnerAdded({},{fromBlock: 0});
+	event_OwnerAdded.watch(function(error,result){
+	if(!error){
+		var e = document.getElementById(self.eventlogPrefix+'eventLog');
+		var elemDiv = document.createElement('div');
+		elemDiv.id= result.blockNumber +'event';
+		e.appendChild(elemDiv);
+		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
+		elemDiv.innerHTML = '<div>'
+        +'<span>'+result.args.newOwner+'</span>'
+		+ '</div>';
+		}else
+		console.log(error);	
+	});
+	var event_OwnerRemoved = contract.OwnerRemoved({},{fromBlock: 0});
+	event_OwnerRemoved.watch(function(error,result){
+	if(!error){
+		var e = document.getElementById(self.eventlogPrefix+'eventLog');
+		var elemDiv = document.createElement('div');
+		elemDiv.id= result.blockNumber +'event';
+		e.appendChild(elemDiv);
+		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
+		elemDiv.innerHTML = '<div>'
+        +'<span>'+result.args.oldOwner+'</span>'
+		+ '</div>';
+		}else
+		console.log(error);	
+	});
+	var event_RequirementChanged = contract.RequirementChanged({},{fromBlock: 0});
+	event_RequirementChanged.watch(function(error,result){
+	if(!error){
+		var e = document.getElementById(self.eventlogPrefix+'eventLog');
+		var elemDiv = document.createElement('div');
+		elemDiv.id= result.blockNumber +'event';
+		e.appendChild(elemDiv);
+		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
+		elemDiv.innerHTML = '<div>'
+        +'<span>'+result.args.newRequirement+'</span>'
+		+ '</div>';
+		}else
+		console.log(error);	
+	});
 	}
 
 }// end of manager
@@ -1145,29 +1235,33 @@ function MultiownedGuiMananger(guiId){
 	this.managers=new Array();	//[];		
 	
 	this.addManager = function(contract) {
-//console.log('addManager:'+contract);
-		var m = new MultiownedManager(contract.address,contract);
+		var m = new MultiownedManager(contract.address,contract,this.prefix);
+		m.watchEvents();
 		this.managers.push(m);
 		//manager.addGui();
 	}
 			
 	this.clearGui = function(){
 		var e = document.getElementById(this.prefix);
-//console.log('clear gui:'+this.prefix+e);
 		if(e!==undefined)
 			e.innerHTML ='';
 	}
 			
 	this.displayGui = function(){
 		var e = document.getElementById(this.prefix);
-//console.log('displayGui:'+this.prefix +e);
 		if(e==undefined) return;
 		for (i in this.managers) {
+			var manager = this.managers[i] ;
 			var elemDiv = document.createElement('div');
-			elemDiv.id= this.managers[i].prefix + 'GuiContainer';//'Multiowned_gui';
+			elemDiv.id= manager.prefix + 'GuiContainer';//'Multiowned_gui';
 			e.appendChild(elemDiv);
-//console.log('add:'+elemDiv.id);
-			this.managers[i].addGui();
+			elemDiv.innerHTML = manager.createGui(manager.g);
+		}
+	}
+	this.displaySimpleGui = function(){
+		for (i in this.managers) {
+			var manager = this.managers[i] ;
+			manager.addGui();
 		}
 	}
 
@@ -1179,3 +1273,30 @@ function MultiownedGuiMananger(guiId){
 	}
 }// end of gui mananger
 
+//Start of user code custom_Multiowned_js
+//TODO: implement
+//End of user code
+//the page Object fro the BasicsPage.
+function BasicsPage(prefix) {
+	this.prefix=prefix;
+	//Start of user code page_basics_attributes
+		//TODO: implement
+	//End of user code
+
+	
+// default Gui
+this.placeDefaultGui=function() {
+this.createDefaultGui();
+
+}
+// default Gui
+this.createDefaultGui=function() {
+	//Start of user code page_Basics_create_default_gui_functions
+		//TODO: implement
+	//End of user code
+}
+	//Start of user code page_Basics_functions
+		//TODO: implement
+	//End of user code
+
+}// end of BasicsPage

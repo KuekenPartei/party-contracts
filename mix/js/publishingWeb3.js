@@ -1,6 +1,7 @@
 
 var ShortBlogContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"messageCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"lastMessageDate","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "messages","outputs": [
@@ -57,6 +58,7 @@ var ShortBlogContract = web3.eth.contract([
 ] );   
 
 var BlogRegistryContract = web3.eth.contract([
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"blogCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "blogs","outputs": [
 { "name": "", "type": "address"}

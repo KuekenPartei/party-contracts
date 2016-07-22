@@ -106,6 +106,8 @@ contract Manageable {
 	
 	
 	function addManager(address _newManagerAddress) public  onlyManager  {
+		 
+		
 		//Start of user code Manageable.function.addManager_address
 		if(!managers[_newManagerAddress])
 			mangerCount++;
@@ -116,6 +118,8 @@ contract Manageable {
 	
 	
 	function removeManager(address _managerAddress) public  onlyManager  {
+		 
+		
 		//Start of user code Manageable.function.removeManager_address
 		if(managers[_managerAddress])
 			mangerCount--;

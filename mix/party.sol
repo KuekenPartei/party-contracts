@@ -277,7 +277,7 @@ contract KUEKeNParty is Party {
 //		blogregistry = new BlogRegistry();
 		
 		FoundationConference organ = FoundationConference(fc);
-		organs[organCount] = organ;
+		organs[organCount] = FoundationConference(fc);
 		organ.setOrganName("Gruendungsversammlung");
 		organ.setMemberRegistry(memberRegistry);
 		organ.setBlogRegistry(br);

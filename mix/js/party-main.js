@@ -1,10 +1,11 @@
 
 var OrganContract = web3.eth.contract([
+{"constant":true,"inputs":[],"name":"memberRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"organName","outputs":[{"name":"","type":"string"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"lastFunctionId","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"blogRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"isActive","outputs":[{"name":"","type":"bool"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"organBlog","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"ballotCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "organFunctions","outputs": [
 { "name": "currentMember", "type": "address"}
@@ -110,7 +111,7 @@ var OrganContract = web3.eth.contract([
 ] );   
 
 var PartyContract = web3.eth.contract([
-{"constant":true,"inputs":[],"name":"memberRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"constitutionHash","outputs":[{"name":"","type":"string"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"organCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"blogregistry","outputs":[{"name":"","type":"address"}],"type":"function"},
@@ -165,6 +166,10 @@ var PartyContract = web3.eth.contract([
 ] );   
 
 var KUEKeNPartyContract = web3.eth.contract([
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"constitutionHash","outputs":[{"name":"","type":"string"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"organCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"blogregistry","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
@@ -226,9 +231,15 @@ var KUEKeNPartyContract = web3.eth.contract([
 ] );   
 
 var ConferenceContract = web3.eth.contract([
-{"constant":true,"inputs":[],"name":"accreditation","outputs":[{"name":"","type":"address"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"memberRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"accreditatedMembers","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"organName","outputs":[{"name":"","type":"string"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"date","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"lastFunctionId","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"blogRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"isActive","outputs":[{"name":"","type":"bool"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"ballotCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "organFunctions","outputs": [
 { "name": "currentMember", "type": "address"}
 ,{ "name": "functionName", "type": "string"}
@@ -337,6 +348,15 @@ var ConferenceContract = web3.eth.contract([
 ] );   
 
 var FoundationConferenceContract = web3.eth.contract([
+{"constant":true,"inputs":[],"name":"memberRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"accreditatedMembers","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"organName","outputs":[{"name":"","type":"string"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"date","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"lastFunctionId","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"blogRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"isActive","outputs":[{"name":"","type":"bool"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"ballotCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "organFunctions","outputs": [
 { "name": "currentMember", "type": "address"}
 ,{ "name": "functionName", "type": "string"}
@@ -448,8 +468,11 @@ function OrganGuiFactory() {
 	
 // default Gui
 this.placeDefaultGui=function() {
-//	console.log(this.prefix+' place gui');
-	document.getElementById(this.prefix+'Organ_gui').innerHTML = this.createDefaultGui();
+	var e = document.getElementById(this.prefix+'Organ_gui');
+	if(e!=null)
+		e.innerHTML = this.createDefaultGui();
+	else
+		console.log(this.prefix+'Organ_gui not found');
 }
 // default Gui
 this.createDefaultGui=function() {
@@ -750,7 +773,7 @@ return 	'<!--struct -->'
 
 
 //print the contract div around
-this.createOrganSeletonGui=function(inner) {
+this.createSeletonGui=function(inner) {
 	return 	'<!-- gui for Organ_contract -->'
 +	'	<div class="contract" id="'+this.prefix+'Organ_contract">'
 + inner
@@ -759,8 +782,8 @@ this.createOrganSeletonGui=function(inner) {
 
 
 //eventguis
-this.createFunctionMemberChangeLogDataGui = function(prefix, blockHash, blockNumber,
-oldMember,functionId,newMember) {
+this.createFunctionMemberChangeLogDataGui = function(prefix, blockHash, blockNumber
+,oldMember,functionId,newMember) {
 		return '<ul class="dapp-account-list"><li > '
         +'<a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>'
 		+'<span>'+prefix+' ('+blockNumber+')</span>'
@@ -775,274 +798,252 @@ oldMember,functionId,newMember) {
 // script for Organ gui controller
 function OrganController() {
 
-	this.Organ_instance = undefined;
+	this.instance = undefined;
 	this.prefix='';
 	this.contractAddress = undefined; 
+	this.eventlogPrefix = '';
 	var self = this;
 
 // bind buttons
 	this.bindGui=function() {
 		var btn = document.getElementById(self.prefix+'OrganController.setAddress');
-//	console.log('bind:' + self.prefix+' '+btn);
 		if(btn!=undefined)		
 			btn.onclick = this.setAddress;
 
 		var btn = document.getElementById(self.prefix+'Organ_updateAttributes');
-//		console.log('bind update:' + self.prefix+' '+btn);
 		if(btn!=undefined)
 			btn.onclick = this._updateAttributes;
 		var btn = document.getElementById(self.prefix+'OrganController.Organ_changeMember_uint_address');
-//		console.log('bind:Organ_changeMember ' + self.prefix+' '+btn+'  '+self.Organ_changeMember_uint_address);//Organ_changeMember);
 		if(btn!=undefined)
 			btn.onclick = this.Organ_changeMember_uint_address;
 		var btn = document.getElementById(self.prefix+'OrganController.Manageable_addManager_address');
-//		console.log('bind:Organ_addManager ' + self.prefix+' '+btn+'  '+self.Manageable_addManager_address);//Organ_addManager);
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_addManager_address;
 		var btn = document.getElementById(self.prefix+'OrganController.Organ_createFunction_string_string');
-//		console.log('bind:Organ_createFunction ' + self.prefix+' '+btn+'  '+self.Organ_createFunction_string_string);//Organ_createFunction);
 		if(btn!=undefined)
 			btn.onclick = this.Organ_createFunction_string_string;
 		var btn = document.getElementById(self.prefix+'OrganController.Manageable_removeManager_address');
-//		console.log('bind:Organ_removeManager ' + self.prefix+' '+btn+'  '+self.Manageable_removeManager_address);//Organ_removeManager);
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_removeManager_address;
 		var btn = document.getElementById(self.prefix+'OrganController.Organ_initalizeOrgan');
-//		console.log('bind:Organ_initalizeOrgan ' + self.prefix+' '+btn+'  '+self.Organ_initalizeOrgan);//Organ_initalizeOrgan);
 		if(btn!=undefined)
 			btn.onclick = this.Organ_initalizeOrgan;
 		var btn = document.getElementById(self.prefix+'OrganController.Manageable_isManager_address');
-//		console.log('bind:Organ_isManager ' + self.prefix+' '+btn+'  '+self.Manageable_isManager_address);//Organ_isManager);
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_isManager_address;
 		var btn = document.getElementById(self.prefix+'OrganController.Organ_publishFunctionMessage_uint_string_string_string');
-//		console.log('bind:Organ_publishFunctionMessage ' + self.prefix+' '+btn+'  '+self.Organ_publishFunctionMessage_uint_string_string_string);//Organ_publishFunctionMessage);
 		if(btn!=undefined)
 			btn.onclick = this.Organ_publishFunctionMessage_uint_string_string_string;
 		var btn = document.getElementById(self.prefix+'OrganController.Organ_createBallot_string_bytes32');
-//		console.log('bind:Organ_createBallot ' + self.prefix+' '+btn+'  '+self.Organ_createBallot_string_bytes32);//Organ_createBallot);
 		if(btn!=undefined)
 			btn.onclick = this.Organ_createBallot_string_bytes32;
 		var btn = document.getElementById(self.prefix+'OrganController.Organ_getFunctionBlogAddress_uint');
-//		console.log('bind:Organ_getFunctionBlogAddress ' + self.prefix+' '+btn+'  '+self.Organ_getFunctionBlogAddress_uint);//Organ_getFunctionBlogAddress);
 		if(btn!=undefined)
 			btn.onclick = this.Organ_getFunctionBlogAddress_uint;
 		var btn = document.getElementById(self.prefix+'OrganController.Organ_getLastBallot');
-//		console.log('bind:Organ_getLastBallot ' + self.prefix+' '+btn+'  '+self.Organ_getLastBallot);//Organ_getLastBallot);
 		if(btn!=undefined)
 			btn.onclick = this.Organ_getLastBallot;
 		var btn = document.getElementById(self.prefix+'OrganController.Organ_getOrganBlog');
-//		console.log('bind:Organ_getOrganBlog ' + self.prefix+' '+btn+'  '+self.Organ_getOrganBlog);//Organ_getOrganBlog);
 		if(btn!=undefined)
 			btn.onclick = this.Organ_getOrganBlog;
 	}
 	// set function
 	this.setAddress=function() {
 	var _address = document.getElementById(self.prefix+'Organ_address');
-//	console.log('setAddress:' + self.prefix+' '+_address);
+	if(_address==null)return;
+
 	self.Organ_instance = OrganContract.at(_address.value);
 	self.contractAddress = _address.value;
 	self._updateAttributes();
 }
 //update attributes
 this._updateAttributes=function () {
-if(this.Organ_instance===null) return;
-//console.log('updateAttributes:' + self.prefix);
+if(this.instance===null) return;
 // update attributes
-	var memberRegistry_res = self.Organ_instance.memberRegistry();
-//	console.log('get:memberRegistry' + self.prefix);
-
-	if(memberRegistry_res!=null)
-		document.getElementById(self.prefix+'Organ_memberRegistry_value').innerText = memberRegistry_res;
-	var mangerCount_res = self.Organ_instance.mangerCount();
-//	console.log('get:mangerCount' + self.prefix);
-
-	if(mangerCount_res!=null)
-		document.getElementById(self.prefix+'Organ_mangerCount_value').innerText = mangerCount_res;
-	var organName_res = self.Organ_instance.organName();
-//	console.log('get:organName' + self.prefix);
-
-	if(organName_res!=null)
-		document.getElementById(self.prefix+'Organ_organName_value').innerText = organName_res;
-	var lastFunctionId_res = self.Organ_instance.lastFunctionId();
-//	console.log('get:lastFunctionId' + self.prefix);
-
-	if(lastFunctionId_res!=null)
-		document.getElementById(self.prefix+'Organ_lastFunctionId_value').innerText = lastFunctionId_res;
-	var blogRegistry_res = self.Organ_instance.blogRegistry();
-//	console.log('get:blogRegistry' + self.prefix);
-
-	if(blogRegistry_res!=null)
-		document.getElementById(self.prefix+'Organ_blogRegistry_value').innerText = blogRegistry_res;
-	var isActive_res = self.Organ_instance.isActive();
-//	console.log('get:isActive' + self.prefix);
-
-	if(isActive_res!=null)
-		document.getElementById(self.prefix+'Organ_isActive_value').innerText = isActive_res;
-	var ballotCount_res = self.Organ_instance.ballotCount();
-//	console.log('get:ballotCount' + self.prefix);
-
-	if(ballotCount_res!=null)
-		document.getElementById(self.prefix+'Organ_ballotCount_value').innerText = ballotCount_res;
-//console.log('getStruct:managers' + self.prefix);
-	var _key = document.getElementById(self.prefix+'Organ_contract_attribute_managers_input').value;
-	var managers_res = self.Organ_instance.managers(_key);
-//console.log('result:managers' + managers_res+' key: '+_key);
+	var memberRegistry_res = self.instance.memberRegistry();
+	var e = document.getElementById(self.prefix+'Organ_memberRegistry_value');
+	if(memberRegistry_res!=null && e!=null)
+		e.innerText = memberRegistry_res;
+	var mangerCount_res = self.instance.mangerCount();
+	var e = document.getElementById(self.prefix+'Organ_mangerCount_value');
+	if(mangerCount_res!=null && e!=null)
+		e.innerText = mangerCount_res;
+	var organName_res = self.instance.organName();
+	var e = document.getElementById(self.prefix+'Organ_organName_value');
+	if(organName_res!=null && e!=null)
+		e.innerText = organName_res;
+	var lastFunctionId_res = self.instance.lastFunctionId();
+	var e = document.getElementById(self.prefix+'Organ_lastFunctionId_value');
+	if(lastFunctionId_res!=null && e!=null)
+		e.innerText = lastFunctionId_res;
+	var blogRegistry_res = self.instance.blogRegistry();
+	var e = document.getElementById(self.prefix+'Organ_blogRegistry_value');
+	if(blogRegistry_res!=null && e!=null)
+		e.innerText = blogRegistry_res;
+	var isActive_res = self.instance.isActive();
+	var e = document.getElementById(self.prefix+'Organ_isActive_value');
+	if(isActive_res!=null && e!=null)
+		e.innerText = isActive_res;
+	var ballotCount_res = self.instance.ballotCount();
+	var e = document.getElementById(self.prefix+'Organ_ballotCount_value');
+	if(ballotCount_res!=null && e!=null)
+		e.innerText = ballotCount_res;
+var e = document.getElementById(self.prefix+'Organ_contract_attribute_managers_input');
+if(e!=null){
+	var _key = e.value;
+	var managers_res = self.instance.managers(_key);
 	if(managers_res!=null){
-		document.getElementById(self.prefix+'Organ_managers_value').innerText = managers_res;
-	}
-//console.log('getStruct:organFunctions' + self.prefix);
-	var _key = document.getElementById(self.prefix+'Organ_contract_attribute_organFunctions_input').value;
-	var organFunctions_res = self.Organ_instance.organFunctions(_key);
-//console.log('result:organFunctions' + organFunctions_res+' key: '+_key);
+		var e1 = document.getElementById(self.prefix+'Organ_managers_value');
+		if(e1!=null)	
+			e1.innerText = managers_res;
+	}}
+	var e = document.getElementById(self.prefix+'Organ_contract_attribute_organFunctions_input');
+if(e!=null){
+	var _key = e.value;
+	var organFunctions_res = self.instance.organFunctions(_key);
 	if(organFunctions_res!=null){
-		document.getElementById(self.prefix+'Organ_organFunctions_currentMember_value').innerText = organFunctions_res[0];
-		document.getElementById(self.prefix+'Organ_organFunctions_functionName_value').innerText = organFunctions_res[1];
-		document.getElementById(self.prefix+'Organ_organFunctions_id_value').innerText = organFunctions_res[2];
-		document.getElementById(self.prefix+'Organ_organFunctions_constitutionHash_value').innerText = organFunctions_res[3];
-		document.getElementById(self.prefix+'Organ_organFunctions_lastMemberChanged_value').innerText = organFunctions_res[4];
-		document.getElementById(self.prefix+'Organ_organFunctions_lastConstitutionHashChanged_value').innerText = organFunctions_res[5];
-		document.getElementById(self.prefix+'Organ_organFunctions_publisher_value').innerText = organFunctions_res[6];
-	}
+	var e1 = document.getElementById(self.prefix+'Organ_organFunctions_currentMember_value');
+	if(e1!=null)	
+		e1.innerText = organFunctions_res[0];
+	var e1 = document.getElementById(self.prefix+'Organ_organFunctions_functionName_value');
+	if(e1!=null)	
+		e1.innerText = organFunctions_res[1];
+	var e1 = document.getElementById(self.prefix+'Organ_organFunctions_id_value');
+	if(e1!=null)	
+		e1.innerText = organFunctions_res[2];
+	var e1 = document.getElementById(self.prefix+'Organ_organFunctions_constitutionHash_value');
+	if(e1!=null)	
+		e1.innerText = organFunctions_res[3];
+	var e1 = document.getElementById(self.prefix+'Organ_organFunctions_lastMemberChanged_value');
+	if(e1!=null)	
+		e1.innerText = organFunctions_res[4];
+	var e1 = document.getElementById(self.prefix+'Organ_organFunctions_lastConstitutionHashChanged_value');
+	if(e1!=null)	
+		e1.innerText = organFunctions_res[5];
+	var e1 = document.getElementById(self.prefix+'Organ_organFunctions_publisher_value');
+	if(e1!=null)	
+		e1.innerText = organFunctions_res[6];
+	}}
 }
 
 //call functions
 //function Organ_canAccess
 this.Manageable_canAccess=function() {
-//console.log('function:canAccess' + self.prefix);
-//	console.log(':' +self.Organ_instance+':');
-	var res = self.Organ_instance.canAccess();
-	if(res!=null)
-		document.getElementById(self.prefix+'Manageable_canAccess_res').innerText = res;
+	var res = self.instance.canAccess();
+	var e = document.getElementById(self.prefix+'Manageable_canAccess_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function Organ_changeMember
 this.Organ_changeMember_uint_address=function() {
-//console.log('function:changeMember' + self.prefix);
 	var e = document.getElementById(self.prefix+'Organ_changeMember_uint_address__id');
-//	console.log(':' + self.prefix+'Organ_changeMember_uint_address__id'+": "+e);
-	var param__id = e.value;
+	if(e!=null)
+		var param__id = e.value;
 	var e = document.getElementById(self.prefix+'Organ_changeMember_uint_address__address');
-//	console.log(':' + self.prefix+'Organ_changeMember_uint_address__address'+": "+e);
-	var param__address = e.value;
-//	console.log(':' +self.Organ_instance+':');
-	var res = self.Organ_instance.changeMember(param__id, param__address);
+	if(e!=null)
+		var param__address = e.value;
+	var res = self.instance.changeMember(param__id, param__address);
 }
 //function Organ_isMember
 this.MemberAware_isMember_address=function() {
-//console.log('function:isMember' + self.prefix);
 	var e = document.getElementById(self.prefix+'MemberAware_isMember_address__address');
-//	console.log(':' + self.prefix+'MemberAware_isMember_address__address'+": "+e);
-	var param__address = e.value;
-//	console.log(':' +self.Organ_instance+':');
-	var res = self.Organ_instance.isMember(param__address);
-	if(res!=null)
-		document.getElementById(self.prefix+'MemberAware_isMember_address_res').innerText = res;
+	if(e!=null)
+		var param__address = e.value;
+	var res = self.instance.isMember(param__address);
+	var e = document.getElementById(self.prefix+'MemberAware_isMember_address_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function Organ_addManager
 this.Manageable_addManager_address=function() {
-//console.log('function:addManager' + self.prefix);
 	var e = document.getElementById(self.prefix+'Manageable_addManager_address__newManagerAddress');
-//	console.log(':' + self.prefix+'Manageable_addManager_address__newManagerAddress'+": "+e);
-	var param__newManagerAddress = e.value;
-//	console.log(':' +self.Organ_instance+':');
-	var res = self.Organ_instance.addManager(param__newManagerAddress);
+	if(e!=null)
+		var param__newManagerAddress = e.value;
+	var res = self.instance.addManager(param__newManagerAddress);
 }
 //function Organ_createFunction
 this.Organ_createFunction_string_string=function() {
-//console.log('function:createFunction' + self.prefix);
 	var e = document.getElementById(self.prefix+'Organ_createFunction_string_string__functionName');
-//	console.log(':' + self.prefix+'Organ_createFunction_string_string__functionName'+": "+e);
-	var param__functionName = e.value;
+	if(e!=null)
+		var param__functionName = e.value;
 	var e = document.getElementById(self.prefix+'Organ_createFunction_string_string__constittiutionHash');
-//	console.log(':' + self.prefix+'Organ_createFunction_string_string__constittiutionHash'+": "+e);
-	var param__constittiutionHash = e.value;
-//	console.log(':' +self.Organ_instance+':');
-	var res = self.Organ_instance.createFunction(param__functionName, param__constittiutionHash);
+	if(e!=null)
+		var param__constittiutionHash = e.value;
+	var res = self.instance.createFunction(param__functionName, param__constittiutionHash);
 }
 //function Organ_removeManager
 this.Manageable_removeManager_address=function() {
-//console.log('function:removeManager' + self.prefix);
 	var e = document.getElementById(self.prefix+'Manageable_removeManager_address__managerAddress');
-//	console.log(':' + self.prefix+'Manageable_removeManager_address__managerAddress'+": "+e);
-	var param__managerAddress = e.value;
-//	console.log(':' +self.Organ_instance+':');
-	var res = self.Organ_instance.removeManager(param__managerAddress);
+	if(e!=null)
+		var param__managerAddress = e.value;
+	var res = self.instance.removeManager(param__managerAddress);
 }
 //function Organ_initalizeOrgan
 this.Organ_initalizeOrgan=function() {
-//console.log('function:initalizeOrgan' + self.prefix);
-//	console.log(':' +self.Organ_instance+':');
-	var res = self.Organ_instance.initalizeOrgan();
+	var res = self.instance.initalizeOrgan();
 }
 //function Organ_isManager
 this.Manageable_isManager_address=function() {
-//console.log('function:isManager' + self.prefix);
 	var e = document.getElementById(self.prefix+'Manageable_isManager_address__managerAddress');
-//	console.log(':' + self.prefix+'Manageable_isManager_address__managerAddress'+": "+e);
-	var param__managerAddress = e.value;
-//	console.log(':' +self.Organ_instance+':');
-	var res = self.Organ_instance.isManager(param__managerAddress);
-	if(res!=null)
-		document.getElementById(self.prefix+'Manageable_isManager_address_res').innerText = res;
+	if(e!=null)
+		var param__managerAddress = e.value;
+	var res = self.instance.isManager(param__managerAddress);
+	var e = document.getElementById(self.prefix+'Manageable_isManager_address_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function Organ_publishFunctionMessage
 this.Organ_publishFunctionMessage_uint_string_string_string=function() {
-//console.log('function:publishFunctionMessage' + self.prefix);
 	var e = document.getElementById(self.prefix+'Organ_publishFunctionMessage_uint_string_string_string_id');
-//	console.log(':' + self.prefix+'Organ_publishFunctionMessage_uint_string_string_string_id'+": "+e);
-	var param_id = e.value;
+	if(e!=null)
+		var param_id = e.value;
 	var e = document.getElementById(self.prefix+'Organ_publishFunctionMessage_uint_string_string_string_message');
-//	console.log(':' + self.prefix+'Organ_publishFunctionMessage_uint_string_string_string_message'+": "+e);
-	var param_message = e.value;
+	if(e!=null)
+		var param_message = e.value;
 	var e = document.getElementById(self.prefix+'Organ_publishFunctionMessage_uint_string_string_string_hash');
-//	console.log(':' + self.prefix+'Organ_publishFunctionMessage_uint_string_string_string_hash'+": "+e);
-	var param_hash = e.value;
+	if(e!=null)
+		var param_hash = e.value;
 	var e = document.getElementById(self.prefix+'Organ_publishFunctionMessage_uint_string_string_string_er');
-//	console.log(':' + self.prefix+'Organ_publishFunctionMessage_uint_string_string_string_er'+": "+e);
-	var param_er = e.value;
-//	console.log(':' +self.Organ_instance+':');
-	var res = self.Organ_instance.publishFunctionMessage(param_id, param_message, param_hash, param_er);
+	if(e!=null)
+		var param_er = e.value;
+	var res = self.instance.publishFunctionMessage(param_id, param_message, param_hash, param_er);
 }
 //function Organ_createBallot
 this.Organ_createBallot_string_bytes32=function() {
-//console.log('function:createBallot' + self.prefix);
 	var e = document.getElementById(self.prefix+'Organ_createBallot_string_bytes32_name');
-//	console.log(':' + self.prefix+'Organ_createBallot_string_bytes32_name'+": "+e);
-	var param_name = e.value;
+	if(e!=null)
+		var param_name = e.value;
 	var e = document.getElementById(self.prefix+'Organ_createBallot_string_bytes32_proposalNames');
-//	console.log(':' + self.prefix+'Organ_createBallot_string_bytes32_proposalNames'+": "+e);
-	var param_proposalNames = e.value;
-//	console.log(':' +self.Organ_instance+':');
-	var res = self.Organ_instance.createBallot(param_name, param_proposalNames);
-	if(res!=null)
-		document.getElementById(self.prefix+'Organ_createBallot_string_bytes32_res').innerText = res;
+	if(e!=null)
+		var param_proposalNames = e.value;
+	var res = self.instance.createBallot(param_name, param_proposalNames);
+	var e = document.getElementById(self.prefix+'Organ_createBallot_string_bytes32_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function Organ_getFunctionBlogAddress
 this.Organ_getFunctionBlogAddress_uint=function() {
-//console.log('function:getFunctionBlogAddress' + self.prefix);
 	var e = document.getElementById(self.prefix+'Organ_getFunctionBlogAddress_uint_id');
-//	console.log(':' + self.prefix+'Organ_getFunctionBlogAddress_uint_id'+": "+e);
-	var param_id = e.value;
-//	console.log(':' +self.Organ_instance+':');
-	var res = self.Organ_instance.getFunctionBlogAddress(param_id);
-	if(res!=null)
-		document.getElementById(self.prefix+'Organ_getFunctionBlogAddress_uint_res').innerText = res;
+	if(e!=null)
+		var param_id = e.value;
+	var res = self.instance.getFunctionBlogAddress(param_id);
+	var e = document.getElementById(self.prefix+'Organ_getFunctionBlogAddress_uint_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function Organ_getLastBallot
 this.Organ_getLastBallot=function() {
-//console.log('function:getLastBallot' + self.prefix);
-//	console.log(':' +self.Organ_instance+':');
-	var res = self.Organ_instance.getLastBallot();
-	if(res!=null)
-		document.getElementById(self.prefix+'Organ_getLastBallot_res').innerText = res;
+	var res = self.instance.getLastBallot();
+	var e = document.getElementById(self.prefix+'Organ_getLastBallot_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function Organ_getOrganBlog
 this.Organ_getOrganBlog=function() {
-//console.log('function:getOrganBlog' + self.prefix);
-//	console.log(':' +self.Organ_instance+':');
-	var res = self.Organ_instance.getOrganBlog();
-	if(res!=null)
-		document.getElementById(self.prefix+'Organ_getOrganBlog_res').innerText = res;
+	var res = self.instance.getOrganBlog();
+	var e = document.getElementById(self.prefix+'Organ_getOrganBlog_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 
 //delegated calls
@@ -1050,51 +1051,72 @@ this.Organ_getOrganBlog=function() {
 }// end controller	
 
 
-// script for Organ
-function OrganModel(prefix) {
-	this.prefix = prefix;
-	this.guiFactory = new OrganGuiFactory();
-	this.controller = new OrganController();
-	this.guiFactory.prefix = prefix;
-	this.controller.prefix = prefix;
-}
-OrganModel.prototype.create=function () {
-	this.guiFactory.placeDefaultGui();
-	this.controller._updateAttributes();
-}
-
-
-//class as GlueCode
+//class as GlueCode OrganManager
 //uses prefix + 'GuiContainer'
-function OrganManager(prefix,contract) {
+function OrganManager(prefix,contract,containerId) {
 	this.prefix = prefix;
 	var self = this;
 	this.c = new OrganController();
 	this.c.prefix=prefix;
-	this.c.Organ_instance=contract;
+	this.c.instance=contract;
 	this.c.contractAddress = contract.address;
 	this.g = new OrganGuiFactory();
 	this.g.prefix = prefix;
+	this.containerId = containerId;
 
 	this.addGui = function() {
-		var e = document.getElementById(this.prefix + 'GuiContainer');
-//console.log('addGui:' + this.prefix+ 'GuiContainer'+e);
+		var e = document.getElementById(this.containerId);
+		if(e==null)return;
 		var elemDiv = document.createElement('div');
 		elemDiv.id= this.prefix +'Organ_gui';
 		e.appendChild(elemDiv);
-		this.g.placeDefaultGui();
-		document.getElementById(this.prefix+'Organ_address').value = this.c.contractAddress;
+		elemDiv.innerHTML = this.createGui(this.g);
+		var e = document.getElementById(this.prefix+'Organ_address');
+		if(e!=null)
+			e.value = this.c.contractAddress;
 		this.c.bindGui();
 	}	
 	this.clearGui = function(){
-		var e = document.getElementById(this.prefix + 'GuiContainer');
+		var e = document.getElementById(this.containerId);
 		e.innerHTML ='';
+	}
+	this.createGui = function(guifactory){
+		var txt ='';
+		txt = txt + guifactory.createDefaultGui();
+		return guifactory.createSeletonGui(txt);
+
+	}
+	this.createSmallGui = function(guifactory){
+		var txt ='';
+		txt = txt + guifactory.createAttributesGui();
+		return guifactory.createSeletonGui(txt);
+
 	}
 	this.updateGui = function(){
 		this.c._updateAttributes();
 	}
 	this.getContract = function(){
-		return this.c.Organ_instance;
+		return this.c.instance;
+	}
+
+//watch events
+	this.watchEvents=function(){
+	var event_FunctionMemberChange = contract.FunctionMemberChange({},{fromBlock: 0});
+	event_FunctionMemberChange.watch(function(error,result){
+	if(!error){
+		var e = document.getElementById(self.eventlogPrefix+'eventLog');
+		var elemDiv = document.createElement('div');
+		elemDiv.id= result.blockNumber +'event';
+		e.appendChild(elemDiv);
+		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
+		elemDiv.innerHTML = '<div>'
+        +'<span>'+result.args.oldMember+'</span>'
+        +'<span>'+result.args.functionId+'</span>'
+        +'<span>'+result.args.newMember+'</span>'
+		+ '</div>';
+		}else
+		console.log(error);	
+	});
 	}
 
 }// end of manager
@@ -1104,29 +1126,33 @@ function OrganGuiMananger(guiId){
 	this.managers=new Array();	//[];		
 	
 	this.addManager = function(contract) {
-//console.log('addManager:'+contract);
-		var m = new OrganManager(contract.address,contract);
+		var m = new OrganManager(contract.address,contract,this.prefix);
+		m.watchEvents();
 		this.managers.push(m);
 		//manager.addGui();
 	}
 			
 	this.clearGui = function(){
 		var e = document.getElementById(this.prefix);
-//console.log('clear gui:'+this.prefix+e);
 		if(e!==undefined)
 			e.innerHTML ='';
 	}
 			
 	this.displayGui = function(){
 		var e = document.getElementById(this.prefix);
-//console.log('displayGui:'+this.prefix +e);
 		if(e==undefined) return;
 		for (i in this.managers) {
+			var manager = this.managers[i] ;
 			var elemDiv = document.createElement('div');
-			elemDiv.id= this.managers[i].prefix + 'GuiContainer';//'Organ_gui';
+			elemDiv.id= manager.prefix + 'GuiContainer';//'Organ_gui';
 			e.appendChild(elemDiv);
-//console.log('add:'+elemDiv.id);
-			this.managers[i].addGui();
+			elemDiv.innerHTML = manager.createGui(manager.g);
+		}
+	}
+	this.displaySimpleGui = function(){
+		for (i in this.managers) {
+			var manager = this.managers[i] ;
+			manager.addGui();
 		}
 	}
 
@@ -1138,14 +1164,20 @@ function OrganGuiMananger(guiId){
 	}
 }// end of gui mananger
 
+//Start of user code custom_Organ_js
+//TODO: implement
+//End of user code
 //gui factory Party
 function PartyGuiFactory() {
 	this.prefix='';
 	
 // default Gui
 this.placeDefaultGui=function() {
-//	console.log(this.prefix+' place gui');
-	document.getElementById(this.prefix+'Party_gui').innerHTML = this.createDefaultGui();
+	var e = document.getElementById(this.prefix+'Party_gui');
+	if(e!=null)
+		e.innerHTML = this.createDefaultGui();
+	else
+		console.log(this.prefix+'Party_gui not found');
 }
 // default Gui
 this.createDefaultGui=function() {
@@ -1282,7 +1314,7 @@ return 	'  <div class="function_execution" id="'+this.prefix+'Party_contract_fun
 
 
 //print the contract div around
-this.createPartySeletonGui=function(inner) {
+this.createSeletonGui=function(inner) {
 	return 	'<!-- gui for Party_contract -->'
 +	'	<div class="contract" id="'+this.prefix+'Party_contract">'
 + inner
@@ -1291,7 +1323,7 @@ this.createPartySeletonGui=function(inner) {
 
 
 //eventguis
-this.createConstiutionChangeLogDataGui = function(prefix, blockHash, blockNumber,
+this.createConstiutionChangeLogDataGui = function(prefix, blockHash, blockNumber
 ) {
 		return '<ul class="dapp-account-list"><li > '
         +'<a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>'
@@ -1304,142 +1336,128 @@ this.createConstiutionChangeLogDataGui = function(prefix, blockHash, blockNumber
 // script for Party gui controller
 function PartyController() {
 
-	this.Party_instance = undefined;
+	this.instance = undefined;
 	this.prefix='';
 	this.contractAddress = undefined; 
+	this.eventlogPrefix = '';
 	var self = this;
 
 // bind buttons
 	this.bindGui=function() {
 		var btn = document.getElementById(self.prefix+'PartyController.setAddress');
-//	console.log('bind:' + self.prefix+' '+btn);
 		if(btn!=undefined)		
 			btn.onclick = this.setAddress;
 
 		var btn = document.getElementById(self.prefix+'Party_updateAttributes');
-//		console.log('bind update:' + self.prefix+' '+btn);
 		if(btn!=undefined)
 			btn.onclick = this._updateAttributes;
 		var btn = document.getElementById(self.prefix+'PartyController.Party_Party');
-//		console.log('bind:Party_Party ' + self.prefix+' '+btn+'  '+self.Party_Party);//Party_Party);
 		if(btn!=undefined)
 			btn.onclick = this.Party_Party;
 		var btn = document.getElementById(self.prefix+'PartyController.Manageable_addManager_address');
-//		console.log('bind:Party_addManager ' + self.prefix+' '+btn+'  '+self.Manageable_addManager_address);//Party_addManager);
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_addManager_address;
 		var btn = document.getElementById(self.prefix+'PartyController.Party_createOrgan_string');
-//		console.log('bind:Party_createOrgan ' + self.prefix+' '+btn+'  '+self.Party_createOrgan_string);//Party_createOrgan);
 		if(btn!=undefined)
 			btn.onclick = this.Party_createOrgan_string;
 		var btn = document.getElementById(self.prefix+'PartyController.Manageable_removeManager_address');
-//		console.log('bind:Party_removeManager ' + self.prefix+' '+btn+'  '+self.Manageable_removeManager_address);//Party_removeManager);
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_removeManager_address;
 		var btn = document.getElementById(self.prefix+'PartyController.Manageable_isManager_address');
-//		console.log('bind:Party_isManager ' + self.prefix+' '+btn+'  '+self.Manageable_isManager_address);//Party_isManager);
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_isManager_address;
 	}
 	// set function
 	this.setAddress=function() {
 	var _address = document.getElementById(self.prefix+'Party_address');
-//	console.log('setAddress:' + self.prefix+' '+_address);
+	if(_address==null)return;
+
 	self.Party_instance = PartyContract.at(_address.value);
 	self.contractAddress = _address.value;
 	self._updateAttributes();
 }
 //update attributes
 this._updateAttributes=function () {
-if(this.Party_instance===null) return;
-//console.log('updateAttributes:' + self.prefix);
+if(this.instance===null) return;
 // update attributes
-	var mangerCount_res = self.Party_instance.mangerCount();
-//	console.log('get:mangerCount' + self.prefix);
-
-	if(mangerCount_res!=null)
-		document.getElementById(self.prefix+'Party_mangerCount_value').innerText = mangerCount_res;
-	var constitutionHash_res = self.Party_instance.constitutionHash();
-//	console.log('get:constitutionHash' + self.prefix);
-
-	if(constitutionHash_res!=null)
-		document.getElementById(self.prefix+'Party_constitutionHash_value').innerText = constitutionHash_res;
-	var organCount_res = self.Party_instance.organCount();
-//	console.log('get:organCount' + self.prefix);
-
-	if(organCount_res!=null)
-		document.getElementById(self.prefix+'Party_organCount_value').innerText = organCount_res;
-	var blogregistry_res = self.Party_instance.blogregistry();
-//	console.log('get:blogregistry' + self.prefix);
-
-	if(blogregistry_res!=null)
-		document.getElementById(self.prefix+'Party_blogregistry_value').innerText = blogregistry_res;
-//console.log('getStruct:managers' + self.prefix);
-	var _key = document.getElementById(self.prefix+'Party_contract_attribute_managers_input').value;
-	var managers_res = self.Party_instance.managers(_key);
-//console.log('result:managers' + managers_res+' key: '+_key);
+	var mangerCount_res = self.instance.mangerCount();
+	var e = document.getElementById(self.prefix+'Party_mangerCount_value');
+	if(mangerCount_res!=null && e!=null)
+		e.innerText = mangerCount_res;
+	var constitutionHash_res = self.instance.constitutionHash();
+	var e = document.getElementById(self.prefix+'Party_constitutionHash_value');
+	if(constitutionHash_res!=null && e!=null)
+		e.innerText = constitutionHash_res;
+	var organCount_res = self.instance.organCount();
+	var e = document.getElementById(self.prefix+'Party_organCount_value');
+	if(organCount_res!=null && e!=null)
+		e.innerText = organCount_res;
+	var blogregistry_res = self.instance.blogregistry();
+	var e = document.getElementById(self.prefix+'Party_blogregistry_value');
+	if(blogregistry_res!=null && e!=null)
+		e.innerText = blogregistry_res;
+var e = document.getElementById(self.prefix+'Party_contract_attribute_managers_input');
+if(e!=null){
+	var _key = e.value;
+	var managers_res = self.instance.managers(_key);
 	if(managers_res!=null){
-		document.getElementById(self.prefix+'Party_managers_value').innerText = managers_res;
-	}
+		var e1 = document.getElementById(self.prefix+'Party_managers_value');
+		if(e1!=null)	
+			e1.innerText = managers_res;
+	}}
+var e = document.getElementById(self.prefix+'Party_contract_attribute_organs_input');
+if(e!=null){
 	var _key = document.getElementById(self.prefix+'Party_contract_attribute_organs_input').value;
-	var organs_res = self.Party_instance.organs(_key);
+	var organs_res = self.instance.organs(_key);
 	if(organs_res!=null){
-		document.getElementById(self.prefix+'Party_organs_value').innerText = organs_res;
-	}
+		var e1 = document.getElementById(self.prefix+'Party_organs_value');
+		if(e1!=null)	
+			e1.innerText = organs_res;
+	}}
 }
 
 //call functions
 //function Party_Party
 this.Party_Party=function() {
-//console.log('function:Party' + self.prefix);
-//	console.log(':' +self.Party_instance+':');
-	var res = self.Party_instance.Party();
+	var res = self.instance.Party();
 }
 //function Party_canAccess
 this.Manageable_canAccess=function() {
-//console.log('function:canAccess' + self.prefix);
-//	console.log(':' +self.Party_instance+':');
-	var res = self.Party_instance.canAccess();
-	if(res!=null)
-		document.getElementById(self.prefix+'Manageable_canAccess_res').innerText = res;
+	var res = self.instance.canAccess();
+	var e = document.getElementById(self.prefix+'Manageable_canAccess_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function Party_addManager
 this.Manageable_addManager_address=function() {
-//console.log('function:addManager' + self.prefix);
 	var e = document.getElementById(self.prefix+'Manageable_addManager_address__newManagerAddress');
-//	console.log(':' + self.prefix+'Manageable_addManager_address__newManagerAddress'+": "+e);
-	var param__newManagerAddress = e.value;
-//	console.log(':' +self.Party_instance+':');
-	var res = self.Party_instance.addManager(param__newManagerAddress);
+	if(e!=null)
+		var param__newManagerAddress = e.value;
+	var res = self.instance.addManager(param__newManagerAddress);
 }
 //function Party_createOrgan
 this.Party_createOrgan_string=function() {
-//console.log('function:createOrgan' + self.prefix);
 	var e = document.getElementById(self.prefix+'Party_createOrgan_string_organName');
-//	console.log(':' + self.prefix+'Party_createOrgan_string_organName'+": "+e);
-	var param_organName = e.value;
-//	console.log(':' +self.Party_instance+':');
-	var res = self.Party_instance.createOrgan(param_organName);
+	if(e!=null)
+		var param_organName = e.value;
+	var res = self.instance.createOrgan(param_organName);
 }
 //function Party_removeManager
 this.Manageable_removeManager_address=function() {
-//console.log('function:removeManager' + self.prefix);
 	var e = document.getElementById(self.prefix+'Manageable_removeManager_address__managerAddress');
-//	console.log(':' + self.prefix+'Manageable_removeManager_address__managerAddress'+": "+e);
-	var param__managerAddress = e.value;
-//	console.log(':' +self.Party_instance+':');
-	var res = self.Party_instance.removeManager(param__managerAddress);
+	if(e!=null)
+		var param__managerAddress = e.value;
+	var res = self.instance.removeManager(param__managerAddress);
 }
 //function Party_isManager
 this.Manageable_isManager_address=function() {
-//console.log('function:isManager' + self.prefix);
 	var e = document.getElementById(self.prefix+'Manageable_isManager_address__managerAddress');
-//	console.log(':' + self.prefix+'Manageable_isManager_address__managerAddress'+": "+e);
-	var param__managerAddress = e.value;
-//	console.log(':' +self.Party_instance+':');
-	var res = self.Party_instance.isManager(param__managerAddress);
-	if(res!=null)
-		document.getElementById(self.prefix+'Manageable_isManager_address_res').innerText = res;
+	if(e!=null)
+		var param__managerAddress = e.value;
+	var res = self.instance.isManager(param__managerAddress);
+	var e = document.getElementById(self.prefix+'Manageable_isManager_address_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 
 //delegated calls
@@ -1447,51 +1465,69 @@ this.Manageable_isManager_address=function() {
 }// end controller	
 
 
-// script for Party
-function PartyModel(prefix) {
-	this.prefix = prefix;
-	this.guiFactory = new PartyGuiFactory();
-	this.controller = new PartyController();
-	this.guiFactory.prefix = prefix;
-	this.controller.prefix = prefix;
-}
-PartyModel.prototype.create=function () {
-	this.guiFactory.placeDefaultGui();
-	this.controller._updateAttributes();
-}
-
-
-//class as GlueCode
+//class as GlueCode PartyManager
 //uses prefix + 'GuiContainer'
-function PartyManager(prefix,contract) {
+function PartyManager(prefix,contract,containerId) {
 	this.prefix = prefix;
 	var self = this;
 	this.c = new PartyController();
 	this.c.prefix=prefix;
-	this.c.Party_instance=contract;
+	this.c.instance=contract;
 	this.c.contractAddress = contract.address;
 	this.g = new PartyGuiFactory();
 	this.g.prefix = prefix;
+	this.containerId = containerId;
 
 	this.addGui = function() {
-		var e = document.getElementById(this.prefix + 'GuiContainer');
-//console.log('addGui:' + this.prefix+ 'GuiContainer'+e);
+		var e = document.getElementById(this.containerId);
+		if(e==null)return;
 		var elemDiv = document.createElement('div');
 		elemDiv.id= this.prefix +'Party_gui';
 		e.appendChild(elemDiv);
-		this.g.placeDefaultGui();
-		document.getElementById(this.prefix+'Party_address').value = this.c.contractAddress;
+		elemDiv.innerHTML = this.createGui(this.g);
+		var e = document.getElementById(this.prefix+'Party_address');
+		if(e!=null)
+			e.value = this.c.contractAddress;
 		this.c.bindGui();
 	}	
 	this.clearGui = function(){
-		var e = document.getElementById(this.prefix + 'GuiContainer');
+		var e = document.getElementById(this.containerId);
 		e.innerHTML ='';
+	}
+	this.createGui = function(guifactory){
+		var txt ='';
+		txt = txt + guifactory.createDefaultGui();
+		return guifactory.createSeletonGui(txt);
+
+	}
+	this.createSmallGui = function(guifactory){
+		var txt ='';
+		txt = txt + guifactory.createAttributesGui();
+		return guifactory.createSeletonGui(txt);
+
 	}
 	this.updateGui = function(){
 		this.c._updateAttributes();
 	}
 	this.getContract = function(){
-		return this.c.Party_instance;
+		return this.c.instance;
+	}
+
+//watch events
+	this.watchEvents=function(){
+	var event_ConstiutionChange = contract.ConstiutionChange({},{fromBlock: 0});
+	event_ConstiutionChange.watch(function(error,result){
+	if(!error){
+		var e = document.getElementById(self.eventlogPrefix+'eventLog');
+		var elemDiv = document.createElement('div');
+		elemDiv.id= result.blockNumber +'event';
+		e.appendChild(elemDiv);
+		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
+		elemDiv.innerHTML = '<div>'
+		+ '</div>';
+		}else
+		console.log(error);	
+	});
 	}
 
 }// end of manager
@@ -1501,29 +1537,33 @@ function PartyGuiMananger(guiId){
 	this.managers=new Array();	//[];		
 	
 	this.addManager = function(contract) {
-//console.log('addManager:'+contract);
-		var m = new PartyManager(contract.address,contract);
+		var m = new PartyManager(contract.address,contract,this.prefix);
+		m.watchEvents();
 		this.managers.push(m);
 		//manager.addGui();
 	}
 			
 	this.clearGui = function(){
 		var e = document.getElementById(this.prefix);
-//console.log('clear gui:'+this.prefix+e);
 		if(e!==undefined)
 			e.innerHTML ='';
 	}
 			
 	this.displayGui = function(){
 		var e = document.getElementById(this.prefix);
-//console.log('displayGui:'+this.prefix +e);
 		if(e==undefined) return;
 		for (i in this.managers) {
+			var manager = this.managers[i] ;
 			var elemDiv = document.createElement('div');
-			elemDiv.id= this.managers[i].prefix + 'GuiContainer';//'Party_gui';
+			elemDiv.id= manager.prefix + 'GuiContainer';//'Party_gui';
 			e.appendChild(elemDiv);
-//console.log('add:'+elemDiv.id);
-			this.managers[i].addGui();
+			elemDiv.innerHTML = manager.createGui(manager.g);
+		}
+	}
+	this.displaySimpleGui = function(){
+		for (i in this.managers) {
+			var manager = this.managers[i] ;
+			manager.addGui();
 		}
 	}
 
@@ -1535,14 +1575,20 @@ function PartyGuiMananger(guiId){
 	}
 }// end of gui mananger
 
+//Start of user code custom_Party_js
+//TODO: implement
+//End of user code
 //gui factory KUEKeNParty
 function KUEKeNPartyGuiFactory() {
 	this.prefix='';
 	
 // default Gui
 this.placeDefaultGui=function() {
-//	console.log(this.prefix+' place gui');
-	document.getElementById(this.prefix+'KUEKeNParty_gui').innerHTML = this.createDefaultGui();
+	var e = document.getElementById(this.prefix+'KUEKeNParty_gui');
+	if(e!=null)
+		e.innerHTML = this.createDefaultGui();
+	else
+		console.log(this.prefix+'KUEKeNParty_gui not found');
 }
 // default Gui
 this.createDefaultGui=function() {
@@ -1709,7 +1755,7 @@ return 	'  <div class="function_execution" id="'+this.prefix+'KUEKeNParty_contra
 
 
 //print the contract div around
-this.createKUEKeNPartySeletonGui=function(inner) {
+this.createSeletonGui=function(inner) {
 	return 	'<!-- gui for KUEKeNParty_contract -->'
 +	'	<div class="contract" id="'+this.prefix+'KUEKeNParty_contract">'
 + inner
@@ -1723,168 +1769,148 @@ this.createKUEKeNPartySeletonGui=function(inner) {
 // script for KUEKeNParty gui controller
 function KUEKeNPartyController() {
 
-	this.KUEKeNParty_instance = undefined;
+	this.instance = undefined;
 	this.prefix='';
 	this.contractAddress = undefined; 
+	this.eventlogPrefix = '';
 	var self = this;
 
 // bind buttons
 	this.bindGui=function() {
 		var btn = document.getElementById(self.prefix+'KUEKeNPartyController.setAddress');
-//	console.log('bind:' + self.prefix+' '+btn);
 		if(btn!=undefined)		
 			btn.onclick = this.setAddress;
 
 		var btn = document.getElementById(self.prefix+'KUEKeNParty_updateAttributes');
-//		console.log('bind update:' + self.prefix+' '+btn);
 		if(btn!=undefined)
 			btn.onclick = this._updateAttributes;
 		var btn = document.getElementById(self.prefix+'KUEKeNPartyController.KUEKeNParty_KUEKeNParty');
-//		console.log('bind:KUEKeNParty_KUEKeNParty ' + self.prefix+' '+btn+'  '+self.KUEKeNParty_KUEKeNParty);//KUEKeNParty_KUEKeNParty);
 		if(btn!=undefined)
 			btn.onclick = this.KUEKeNParty_KUEKeNParty;
 		var btn = document.getElementById(self.prefix+'KUEKeNPartyController.Party_Party');
-//		console.log('bind:KUEKeNParty_Party ' + self.prefix+' '+btn+'  '+self.Party_Party);//KUEKeNParty_Party);
 		if(btn!=undefined)
 			btn.onclick = this.Party_Party;
 		var btn = document.getElementById(self.prefix+'KUEKeNPartyController.Manageable_addManager_address');
-//		console.log('bind:KUEKeNParty_addManager ' + self.prefix+' '+btn+'  '+self.Manageable_addManager_address);//KUEKeNParty_addManager);
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_addManager_address;
 		var btn = document.getElementById(self.prefix+'KUEKeNPartyController.KUEKeNParty_boostrapParty_address_address');
-//		console.log('bind:KUEKeNParty_boostrapParty ' + self.prefix+' '+btn+'  '+self.KUEKeNParty_boostrapParty_address_address);//KUEKeNParty_boostrapParty);
 		if(btn!=undefined)
 			btn.onclick = this.KUEKeNParty_boostrapParty_address_address;
 		var btn = document.getElementById(self.prefix+'KUEKeNPartyController.Party_createOrgan_string');
-//		console.log('bind:KUEKeNParty_createOrgan ' + self.prefix+' '+btn+'  '+self.Party_createOrgan_string);//KUEKeNParty_createOrgan);
 		if(btn!=undefined)
 			btn.onclick = this.Party_createOrgan_string;
 		var btn = document.getElementById(self.prefix+'KUEKeNPartyController.Manageable_removeManager_address');
-//		console.log('bind:KUEKeNParty_removeManager ' + self.prefix+' '+btn+'  '+self.Manageable_removeManager_address);//KUEKeNParty_removeManager);
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_removeManager_address;
 		var btn = document.getElementById(self.prefix+'KUEKeNPartyController.Manageable_isManager_address');
-//		console.log('bind:KUEKeNParty_isManager ' + self.prefix+' '+btn+'  '+self.Manageable_isManager_address);//KUEKeNParty_isManager);
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_isManager_address;
 	}
 	// set function
 	this.setAddress=function() {
 	var _address = document.getElementById(self.prefix+'KUEKeNParty_address');
-//	console.log('setAddress:' + self.prefix+' '+_address);
+	if(_address==null)return;
+
 	self.KUEKeNParty_instance = KUEKeNPartyContract.at(_address.value);
 	self.contractAddress = _address.value;
 	self._updateAttributes();
 }
 //update attributes
 this._updateAttributes=function () {
-if(this.KUEKeNParty_instance===null) return;
-//console.log('updateAttributes:' + self.prefix);
+if(this.instance===null) return;
 // update attributes
-	var mangerCount_res = self.KUEKeNParty_instance.mangerCount();
-//	console.log('get:mangerCount' + self.prefix);
-
-	if(mangerCount_res!=null)
-		document.getElementById(self.prefix+'KUEKeNParty_mangerCount_value').innerText = mangerCount_res;
-	var constitutionHash_res = self.KUEKeNParty_instance.constitutionHash();
-//	console.log('get:constitutionHash' + self.prefix);
-
-	if(constitutionHash_res!=null)
-		document.getElementById(self.prefix+'KUEKeNParty_constitutionHash_value').innerText = constitutionHash_res;
-	var organCount_res = self.KUEKeNParty_instance.organCount();
-//	console.log('get:organCount' + self.prefix);
-
-	if(organCount_res!=null)
-		document.getElementById(self.prefix+'KUEKeNParty_organCount_value').innerText = organCount_res;
-	var blogregistry_res = self.KUEKeNParty_instance.blogregistry();
-//	console.log('get:blogregistry' + self.prefix);
-
-	if(blogregistry_res!=null)
-		document.getElementById(self.prefix+'KUEKeNParty_blogregistry_value').innerText = blogregistry_res;
-//console.log('getStruct:managers' + self.prefix);
-	var _key = document.getElementById(self.prefix+'KUEKeNParty_contract_attribute_managers_input').value;
-	var managers_res = self.KUEKeNParty_instance.managers(_key);
-//console.log('result:managers' + managers_res+' key: '+_key);
+	var mangerCount_res = self.instance.mangerCount();
+	var e = document.getElementById(self.prefix+'KUEKeNParty_mangerCount_value');
+	if(mangerCount_res!=null && e!=null)
+		e.innerText = mangerCount_res;
+	var constitutionHash_res = self.instance.constitutionHash();
+	var e = document.getElementById(self.prefix+'KUEKeNParty_constitutionHash_value');
+	if(constitutionHash_res!=null && e!=null)
+		e.innerText = constitutionHash_res;
+	var organCount_res = self.instance.organCount();
+	var e = document.getElementById(self.prefix+'KUEKeNParty_organCount_value');
+	if(organCount_res!=null && e!=null)
+		e.innerText = organCount_res;
+	var blogregistry_res = self.instance.blogregistry();
+	var e = document.getElementById(self.prefix+'KUEKeNParty_blogregistry_value');
+	if(blogregistry_res!=null && e!=null)
+		e.innerText = blogregistry_res;
+var e = document.getElementById(self.prefix+'KUEKeNParty_contract_attribute_managers_input');
+if(e!=null){
+	var _key = e.value;
+	var managers_res = self.instance.managers(_key);
 	if(managers_res!=null){
-		document.getElementById(self.prefix+'KUEKeNParty_managers_value').innerText = managers_res;
-	}
+		var e1 = document.getElementById(self.prefix+'KUEKeNParty_managers_value');
+		if(e1!=null)	
+			e1.innerText = managers_res;
+	}}
+var e = document.getElementById(self.prefix+'KUEKeNParty_contract_attribute_organs_input');
+if(e!=null){
 	var _key = document.getElementById(self.prefix+'KUEKeNParty_contract_attribute_organs_input').value;
-	var organs_res = self.KUEKeNParty_instance.organs(_key);
+	var organs_res = self.instance.organs(_key);
 	if(organs_res!=null){
-		document.getElementById(self.prefix+'KUEKeNParty_organs_value').innerText = organs_res;
-	}
+		var e1 = document.getElementById(self.prefix+'KUEKeNParty_organs_value');
+		if(e1!=null)	
+			e1.innerText = organs_res;
+	}}
 }
 
 //call functions
 //function KUEKeNParty_KUEKeNParty
 this.KUEKeNParty_KUEKeNParty=function() {
-//console.log('function:KUEKeNParty' + self.prefix);
-//	console.log(':' +self.KUEKeNParty_instance+':');
-	var res = self.KUEKeNParty_instance.KUEKeNParty();
+	var res = self.instance.KUEKeNParty();
 }
 //function KUEKeNParty_Party
 this.Party_Party=function() {
-//console.log('function:Party' + self.prefix);
-//	console.log(':' +self.KUEKeNParty_instance+':');
-	var res = self.KUEKeNParty_instance.Party();
+	var res = self.instance.Party();
 }
 //function KUEKeNParty_canAccess
 this.Manageable_canAccess=function() {
-//console.log('function:canAccess' + self.prefix);
-//	console.log(':' +self.KUEKeNParty_instance+':');
-	var res = self.KUEKeNParty_instance.canAccess();
-	if(res!=null)
-		document.getElementById(self.prefix+'Manageable_canAccess_res').innerText = res;
+	var res = self.instance.canAccess();
+	var e = document.getElementById(self.prefix+'Manageable_canAccess_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function KUEKeNParty_addManager
 this.Manageable_addManager_address=function() {
-//console.log('function:addManager' + self.prefix);
 	var e = document.getElementById(self.prefix+'Manageable_addManager_address__newManagerAddress');
-//	console.log(':' + self.prefix+'Manageable_addManager_address__newManagerAddress'+": "+e);
-	var param__newManagerAddress = e.value;
-//	console.log(':' +self.KUEKeNParty_instance+':');
-	var res = self.KUEKeNParty_instance.addManager(param__newManagerAddress);
+	if(e!=null)
+		var param__newManagerAddress = e.value;
+	var res = self.instance.addManager(param__newManagerAddress);
 }
 //function KUEKeNParty_boostrapParty
 this.KUEKeNParty_boostrapParty_address_address=function() {
-//console.log('function:boostrapParty' + self.prefix);
 	var e = document.getElementById(self.prefix+'KUEKeNParty_boostrapParty_address_address_fc');
-//	console.log(':' + self.prefix+'KUEKeNParty_boostrapParty_address_address_fc'+": "+e);
-	var param_fc = e.value;
+	if(e!=null)
+		var param_fc = e.value;
 	var e = document.getElementById(self.prefix+'KUEKeNParty_boostrapParty_address_address_br');
-//	console.log(':' + self.prefix+'KUEKeNParty_boostrapParty_address_address_br'+": "+e);
-	var param_br = e.value;
-//	console.log(':' +self.KUEKeNParty_instance+':');
-	var res = self.KUEKeNParty_instance.boostrapParty(param_fc, param_br);
+	if(e!=null)
+		var param_br = e.value;
+	var res = self.instance.boostrapParty(param_fc, param_br);
 }
 //function KUEKeNParty_createOrgan
 this.Party_createOrgan_string=function() {
-//console.log('function:createOrgan' + self.prefix);
 	var e = document.getElementById(self.prefix+'Party_createOrgan_string_organName');
-//	console.log(':' + self.prefix+'Party_createOrgan_string_organName'+": "+e);
-	var param_organName = e.value;
-//	console.log(':' +self.KUEKeNParty_instance+':');
-	var res = self.KUEKeNParty_instance.createOrgan(param_organName);
+	if(e!=null)
+		var param_organName = e.value;
+	var res = self.instance.createOrgan(param_organName);
 }
 //function KUEKeNParty_removeManager
 this.Manageable_removeManager_address=function() {
-//console.log('function:removeManager' + self.prefix);
 	var e = document.getElementById(self.prefix+'Manageable_removeManager_address__managerAddress');
-//	console.log(':' + self.prefix+'Manageable_removeManager_address__managerAddress'+": "+e);
-	var param__managerAddress = e.value;
-//	console.log(':' +self.KUEKeNParty_instance+':');
-	var res = self.KUEKeNParty_instance.removeManager(param__managerAddress);
+	if(e!=null)
+		var param__managerAddress = e.value;
+	var res = self.instance.removeManager(param__managerAddress);
 }
 //function KUEKeNParty_isManager
 this.Manageable_isManager_address=function() {
-//console.log('function:isManager' + self.prefix);
 	var e = document.getElementById(self.prefix+'Manageable_isManager_address__managerAddress');
-//	console.log(':' + self.prefix+'Manageable_isManager_address__managerAddress'+": "+e);
-	var param__managerAddress = e.value;
-//	console.log(':' +self.KUEKeNParty_instance+':');
-	var res = self.KUEKeNParty_instance.isManager(param__managerAddress);
-	if(res!=null)
-		document.getElementById(self.prefix+'Manageable_isManager_address_res').innerText = res;
+	if(e!=null)
+		var param__managerAddress = e.value;
+	var res = self.instance.isManager(param__managerAddress);
+	var e = document.getElementById(self.prefix+'Manageable_isManager_address_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 
 //delegated calls
@@ -1892,51 +1918,56 @@ this.Manageable_isManager_address=function() {
 }// end controller	
 
 
-// script for KUEKeNParty
-function KUEKeNPartyModel(prefix) {
-	this.prefix = prefix;
-	this.guiFactory = new KUEKeNPartyGuiFactory();
-	this.controller = new KUEKeNPartyController();
-	this.guiFactory.prefix = prefix;
-	this.controller.prefix = prefix;
-}
-KUEKeNPartyModel.prototype.create=function () {
-	this.guiFactory.placeDefaultGui();
-	this.controller._updateAttributes();
-}
-
-
-//class as GlueCode
+//class as GlueCode KUEKeNPartyManager
 //uses prefix + 'GuiContainer'
-function KUEKeNPartyManager(prefix,contract) {
+function KUEKeNPartyManager(prefix,contract,containerId) {
 	this.prefix = prefix;
 	var self = this;
 	this.c = new KUEKeNPartyController();
 	this.c.prefix=prefix;
-	this.c.KUEKeNParty_instance=contract;
+	this.c.instance=contract;
 	this.c.contractAddress = contract.address;
 	this.g = new KUEKeNPartyGuiFactory();
 	this.g.prefix = prefix;
+	this.containerId = containerId;
 
 	this.addGui = function() {
-		var e = document.getElementById(this.prefix + 'GuiContainer');
-//console.log('addGui:' + this.prefix+ 'GuiContainer'+e);
+		var e = document.getElementById(this.containerId);
+		if(e==null)return;
 		var elemDiv = document.createElement('div');
 		elemDiv.id= this.prefix +'KUEKeNParty_gui';
 		e.appendChild(elemDiv);
-		this.g.placeDefaultGui();
-		document.getElementById(this.prefix+'KUEKeNParty_address').value = this.c.contractAddress;
+		elemDiv.innerHTML = this.createGui(this.g);
+		var e = document.getElementById(this.prefix+'KUEKeNParty_address');
+		if(e!=null)
+			e.value = this.c.contractAddress;
 		this.c.bindGui();
 	}	
 	this.clearGui = function(){
-		var e = document.getElementById(this.prefix + 'GuiContainer');
+		var e = document.getElementById(this.containerId);
 		e.innerHTML ='';
+	}
+	this.createGui = function(guifactory){
+		var txt ='';
+		txt = txt + guifactory.createDefaultGui();
+		return guifactory.createSeletonGui(txt);
+
+	}
+	this.createSmallGui = function(guifactory){
+		var txt ='';
+		txt = txt + guifactory.createAttributesGui();
+		return guifactory.createSeletonGui(txt);
+
 	}
 	this.updateGui = function(){
 		this.c._updateAttributes();
 	}
 	this.getContract = function(){
-		return this.c.KUEKeNParty_instance;
+		return this.c.instance;
+	}
+
+//watch events
+	this.watchEvents=function(){
 	}
 
 }// end of manager
@@ -1946,29 +1977,33 @@ function KUEKeNPartyGuiMananger(guiId){
 	this.managers=new Array();	//[];		
 	
 	this.addManager = function(contract) {
-//console.log('addManager:'+contract);
-		var m = new KUEKeNPartyManager(contract.address,contract);
+		var m = new KUEKeNPartyManager(contract.address,contract,this.prefix);
+		m.watchEvents();
 		this.managers.push(m);
 		//manager.addGui();
 	}
 			
 	this.clearGui = function(){
 		var e = document.getElementById(this.prefix);
-//console.log('clear gui:'+this.prefix+e);
 		if(e!==undefined)
 			e.innerHTML ='';
 	}
 			
 	this.displayGui = function(){
 		var e = document.getElementById(this.prefix);
-//console.log('displayGui:'+this.prefix +e);
 		if(e==undefined) return;
 		for (i in this.managers) {
+			var manager = this.managers[i] ;
 			var elemDiv = document.createElement('div');
-			elemDiv.id= this.managers[i].prefix + 'GuiContainer';//'KUEKeNParty_gui';
+			elemDiv.id= manager.prefix + 'GuiContainer';//'KUEKeNParty_gui';
 			e.appendChild(elemDiv);
-//console.log('add:'+elemDiv.id);
-			this.managers[i].addGui();
+			elemDiv.innerHTML = manager.createGui(manager.g);
+		}
+	}
+	this.displaySimpleGui = function(){
+		for (i in this.managers) {
+			var manager = this.managers[i] ;
+			manager.addGui();
 		}
 	}
 
@@ -1980,14 +2015,20 @@ function KUEKeNPartyGuiMananger(guiId){
 	}
 }// end of gui mananger
 
+//Start of user code custom_KUEKeNParty_js
+//TODO: implement
+//End of user code
 //gui factory Conference
 function ConferenceGuiFactory() {
 	this.prefix='';
 	
 // default Gui
 this.placeDefaultGui=function() {
-//	console.log(this.prefix+' place gui');
-	document.getElementById(this.prefix+'Conference_gui').innerHTML = this.createDefaultGui();
+	var e = document.getElementById(this.prefix+'Conference_gui');
+	if(e!=null)
+		e.innerHTML = this.createDefaultGui();
+	else
+		console.log(this.prefix+'Conference_gui not found');
 }
 // default Gui
 this.createDefaultGui=function() {
@@ -2315,7 +2356,7 @@ return 	'<!--struct -->'
 
 
 //print the contract div around
-this.createConferenceSeletonGui=function(inner) {
+this.createSeletonGui=function(inner) {
 	return 	'<!-- gui for Conference_contract -->'
 +	'	<div class="contract" id="'+this.prefix+'Conference_contract">'
 + inner
@@ -2324,8 +2365,8 @@ this.createConferenceSeletonGui=function(inner) {
 
 
 //eventguis
-this.createMemberAccreditatedLogDataGui = function(prefix, blockHash, blockNumber,
-memberId,memberName,memberAddress) {
+this.createMemberAccreditatedLogDataGui = function(prefix, blockHash, blockNumber
+,memberId,memberName,memberAddress) {
 		return '<ul class="dapp-account-list"><li > '
         +'<a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>'
 		+'<span>'+prefix+' ('+blockNumber+')</span>'
@@ -2340,297 +2381,270 @@ memberId,memberName,memberAddress) {
 // script for Conference gui controller
 function ConferenceController() {
 
-	this.Conference_instance = undefined;
+	this.instance = undefined;
 	this.prefix='';
 	this.contractAddress = undefined; 
+	this.eventlogPrefix = '';
 	var self = this;
 
 // bind buttons
 	this.bindGui=function() {
 		var btn = document.getElementById(self.prefix+'ConferenceController.setAddress');
-//	console.log('bind:' + self.prefix+' '+btn);
 		if(btn!=undefined)		
 			btn.onclick = this.setAddress;
 
 		var btn = document.getElementById(self.prefix+'Conference_updateAttributes');
-//		console.log('bind update:' + self.prefix+' '+btn);
 		if(btn!=undefined)
 			btn.onclick = this._updateAttributes;
 		var btn = document.getElementById(self.prefix+'ConferenceController.Conference_accreditationMember_address');
-//		console.log('bind:Conference_accreditationMember ' + self.prefix+' '+btn+'  '+self.Conference_accreditationMember_address);//Conference_accreditationMember);
 		if(btn!=undefined)
 			btn.onclick = this.Conference_accreditationMember_address;
 		var btn = document.getElementById(self.prefix+'ConferenceController.Organ_changeMember_uint_address');
-//		console.log('bind:Conference_changeMember ' + self.prefix+' '+btn+'  '+self.Organ_changeMember_uint_address);//Conference_changeMember);
 		if(btn!=undefined)
 			btn.onclick = this.Organ_changeMember_uint_address;
 		var btn = document.getElementById(self.prefix+'ConferenceController.Manageable_addManager_address');
-//		console.log('bind:Conference_addManager ' + self.prefix+' '+btn+'  '+self.Manageable_addManager_address);//Conference_addManager);
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_addManager_address;
 		var btn = document.getElementById(self.prefix+'ConferenceController.Organ_createFunction_string_string');
-//		console.log('bind:Conference_createFunction ' + self.prefix+' '+btn+'  '+self.Organ_createFunction_string_string);//Conference_createFunction);
 		if(btn!=undefined)
 			btn.onclick = this.Organ_createFunction_string_string;
 		var btn = document.getElementById(self.prefix+'ConferenceController.Manageable_removeManager_address');
-//		console.log('bind:Conference_removeManager ' + self.prefix+' '+btn+'  '+self.Manageable_removeManager_address);//Conference_removeManager);
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_removeManager_address;
 		var btn = document.getElementById(self.prefix+'ConferenceController.Organ_initalizeOrgan');
-//		console.log('bind:Conference_initalizeOrgan ' + self.prefix+' '+btn+'  '+self.Organ_initalizeOrgan);//Conference_initalizeOrgan);
 		if(btn!=undefined)
 			btn.onclick = this.Organ_initalizeOrgan;
 		var btn = document.getElementById(self.prefix+'ConferenceController.Manageable_isManager_address');
-//		console.log('bind:Conference_isManager ' + self.prefix+' '+btn+'  '+self.Manageable_isManager_address);//Conference_isManager);
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_isManager_address;
 		var btn = document.getElementById(self.prefix+'ConferenceController.Organ_publishFunctionMessage_uint_string_string_string');
-//		console.log('bind:Conference_publishFunctionMessage ' + self.prefix+' '+btn+'  '+self.Organ_publishFunctionMessage_uint_string_string_string);//Conference_publishFunctionMessage);
 		if(btn!=undefined)
 			btn.onclick = this.Organ_publishFunctionMessage_uint_string_string_string;
 		var btn = document.getElementById(self.prefix+'ConferenceController.Organ_createBallot_string_bytes32');
-//		console.log('bind:Conference_createBallot ' + self.prefix+' '+btn+'  '+self.Organ_createBallot_string_bytes32);//Conference_createBallot);
 		if(btn!=undefined)
 			btn.onclick = this.Organ_createBallot_string_bytes32;
 		var btn = document.getElementById(self.prefix+'ConferenceController.Organ_getFunctionBlogAddress_uint');
-//		console.log('bind:Conference_getFunctionBlogAddress ' + self.prefix+' '+btn+'  '+self.Organ_getFunctionBlogAddress_uint);//Conference_getFunctionBlogAddress);
 		if(btn!=undefined)
 			btn.onclick = this.Organ_getFunctionBlogAddress_uint;
 		var btn = document.getElementById(self.prefix+'ConferenceController.Organ_getLastBallot');
-//		console.log('bind:Conference_getLastBallot ' + self.prefix+' '+btn+'  '+self.Organ_getLastBallot);//Conference_getLastBallot);
 		if(btn!=undefined)
 			btn.onclick = this.Organ_getLastBallot;
 		var btn = document.getElementById(self.prefix+'ConferenceController.Organ_getOrganBlog');
-//		console.log('bind:Conference_getOrganBlog ' + self.prefix+' '+btn+'  '+self.Organ_getOrganBlog);//Conference_getOrganBlog);
 		if(btn!=undefined)
 			btn.onclick = this.Organ_getOrganBlog;
 	}
 	// set function
 	this.setAddress=function() {
 	var _address = document.getElementById(self.prefix+'Conference_address');
-//	console.log('setAddress:' + self.prefix+' '+_address);
+	if(_address==null)return;
+
 	self.Conference_instance = ConferenceContract.at(_address.value);
 	self.contractAddress = _address.value;
 	self._updateAttributes();
 }
 //update attributes
 this._updateAttributes=function () {
-if(this.Conference_instance===null) return;
-//console.log('updateAttributes:' + self.prefix);
+if(this.instance===null) return;
 // update attributes
-	var memberRegistry_res = self.Conference_instance.memberRegistry();
-//	console.log('get:memberRegistry' + self.prefix);
-
-	if(memberRegistry_res!=null)
-		document.getElementById(self.prefix+'Conference_memberRegistry_value').innerText = memberRegistry_res;
-	var accreditatedMembers_res = self.Conference_instance.accreditatedMembers();
-//	console.log('get:accreditatedMembers' + self.prefix);
-
-	if(accreditatedMembers_res!=null)
-		document.getElementById(self.prefix+'Conference_accreditatedMembers_value').innerText = accreditatedMembers_res;
-	var mangerCount_res = self.Conference_instance.mangerCount();
-//	console.log('get:mangerCount' + self.prefix);
-
-	if(mangerCount_res!=null)
-		document.getElementById(self.prefix+'Conference_mangerCount_value').innerText = mangerCount_res;
-	var organName_res = self.Conference_instance.organName();
-//	console.log('get:organName' + self.prefix);
-
-	if(organName_res!=null)
-		document.getElementById(self.prefix+'Conference_organName_value').innerText = organName_res;
-	var date_res = self.Conference_instance.date();
-//	console.log('get:date' + self.prefix);
-
-	if(date_res!=null)
-		document.getElementById(self.prefix+'Conference_date_value').innerText = date_res;
-	var lastFunctionId_res = self.Conference_instance.lastFunctionId();
-//	console.log('get:lastFunctionId' + self.prefix);
-
-	if(lastFunctionId_res!=null)
-		document.getElementById(self.prefix+'Conference_lastFunctionId_value').innerText = lastFunctionId_res;
-	var blogRegistry_res = self.Conference_instance.blogRegistry();
-//	console.log('get:blogRegistry' + self.prefix);
-
-	if(blogRegistry_res!=null)
-		document.getElementById(self.prefix+'Conference_blogRegistry_value').innerText = blogRegistry_res;
-	var isActive_res = self.Conference_instance.isActive();
-//	console.log('get:isActive' + self.prefix);
-
-	if(isActive_res!=null)
-		document.getElementById(self.prefix+'Conference_isActive_value').innerText = isActive_res;
-	var ballotCount_res = self.Conference_instance.ballotCount();
-//	console.log('get:ballotCount' + self.prefix);
-
-	if(ballotCount_res!=null)
-		document.getElementById(self.prefix+'Conference_ballotCount_value').innerText = ballotCount_res;
-//console.log('getStruct:managers' + self.prefix);
-	var _key = document.getElementById(self.prefix+'Conference_contract_attribute_managers_input').value;
-	var managers_res = self.Conference_instance.managers(_key);
-//console.log('result:managers' + managers_res+' key: '+_key);
+	var memberRegistry_res = self.instance.memberRegistry();
+	var e = document.getElementById(self.prefix+'Conference_memberRegistry_value');
+	if(memberRegistry_res!=null && e!=null)
+		e.innerText = memberRegistry_res;
+	var accreditatedMembers_res = self.instance.accreditatedMembers();
+	var e = document.getElementById(self.prefix+'Conference_accreditatedMembers_value');
+	if(accreditatedMembers_res!=null && e!=null)
+		e.innerText = accreditatedMembers_res;
+	var mangerCount_res = self.instance.mangerCount();
+	var e = document.getElementById(self.prefix+'Conference_mangerCount_value');
+	if(mangerCount_res!=null && e!=null)
+		e.innerText = mangerCount_res;
+	var organName_res = self.instance.organName();
+	var e = document.getElementById(self.prefix+'Conference_organName_value');
+	if(organName_res!=null && e!=null)
+		e.innerText = organName_res;
+	var date_res = self.instance.date();
+	var e = document.getElementById(self.prefix+'Conference_date_value');
+	if(date_res!=null && e!=null)
+		e.innerText = date_res;
+	var lastFunctionId_res = self.instance.lastFunctionId();
+	var e = document.getElementById(self.prefix+'Conference_lastFunctionId_value');
+	if(lastFunctionId_res!=null && e!=null)
+		e.innerText = lastFunctionId_res;
+	var blogRegistry_res = self.instance.blogRegistry();
+	var e = document.getElementById(self.prefix+'Conference_blogRegistry_value');
+	if(blogRegistry_res!=null && e!=null)
+		e.innerText = blogRegistry_res;
+	var isActive_res = self.instance.isActive();
+	var e = document.getElementById(self.prefix+'Conference_isActive_value');
+	if(isActive_res!=null && e!=null)
+		e.innerText = isActive_res;
+	var ballotCount_res = self.instance.ballotCount();
+	var e = document.getElementById(self.prefix+'Conference_ballotCount_value');
+	if(ballotCount_res!=null && e!=null)
+		e.innerText = ballotCount_res;
+var e = document.getElementById(self.prefix+'Conference_contract_attribute_managers_input');
+if(e!=null){
+	var _key = e.value;
+	var managers_res = self.instance.managers(_key);
 	if(managers_res!=null){
-		document.getElementById(self.prefix+'Conference_managers_value').innerText = managers_res;
-	}
-//console.log('getStruct:organFunctions' + self.prefix);
-	var _key = document.getElementById(self.prefix+'Conference_contract_attribute_organFunctions_input').value;
-	var organFunctions_res = self.Conference_instance.organFunctions(_key);
-//console.log('result:organFunctions' + organFunctions_res+' key: '+_key);
+		var e1 = document.getElementById(self.prefix+'Conference_managers_value');
+		if(e1!=null)	
+			e1.innerText = managers_res;
+	}}
+	var e = document.getElementById(self.prefix+'Conference_contract_attribute_organFunctions_input');
+if(e!=null){
+	var _key = e.value;
+	var organFunctions_res = self.instance.organFunctions(_key);
 	if(organFunctions_res!=null){
-		document.getElementById(self.prefix+'Conference_organFunctions_currentMember_value').innerText = organFunctions_res[0];
-		document.getElementById(self.prefix+'Conference_organFunctions_functionName_value').innerText = organFunctions_res[1];
-		document.getElementById(self.prefix+'Conference_organFunctions_id_value').innerText = organFunctions_res[2];
-		document.getElementById(self.prefix+'Conference_organFunctions_constitutionHash_value').innerText = organFunctions_res[3];
-		document.getElementById(self.prefix+'Conference_organFunctions_lastMemberChanged_value').innerText = organFunctions_res[4];
-		document.getElementById(self.prefix+'Conference_organFunctions_lastConstitutionHashChanged_value').innerText = organFunctions_res[5];
-		document.getElementById(self.prefix+'Conference_organFunctions_publisher_value').innerText = organFunctions_res[6];
-	}
+	var e1 = document.getElementById(self.prefix+'Conference_organFunctions_currentMember_value');
+	if(e1!=null)	
+		e1.innerText = organFunctions_res[0];
+	var e1 = document.getElementById(self.prefix+'Conference_organFunctions_functionName_value');
+	if(e1!=null)	
+		e1.innerText = organFunctions_res[1];
+	var e1 = document.getElementById(self.prefix+'Conference_organFunctions_id_value');
+	if(e1!=null)	
+		e1.innerText = organFunctions_res[2];
+	var e1 = document.getElementById(self.prefix+'Conference_organFunctions_constitutionHash_value');
+	if(e1!=null)	
+		e1.innerText = organFunctions_res[3];
+	var e1 = document.getElementById(self.prefix+'Conference_organFunctions_lastMemberChanged_value');
+	if(e1!=null)	
+		e1.innerText = organFunctions_res[4];
+	var e1 = document.getElementById(self.prefix+'Conference_organFunctions_lastConstitutionHashChanged_value');
+	if(e1!=null)	
+		e1.innerText = organFunctions_res[5];
+	var e1 = document.getElementById(self.prefix+'Conference_organFunctions_publisher_value');
+	if(e1!=null)	
+		e1.innerText = organFunctions_res[6];
+	}}
 }
 
 //call functions
 //function Conference_accreditationMember
 this.Conference_accreditationMember_address=function() {
-//console.log('function:accreditationMember' + self.prefix);
 	var e = document.getElementById(self.prefix+'Conference_accreditationMember_address__address');
-//	console.log(':' + self.prefix+'Conference_accreditationMember_address__address'+": "+e);
-	var param__address = e.value;
-//	console.log(':' +self.Conference_instance+':');
-	var res = self.Conference_instance.accreditationMember(param__address);
+	if(e!=null)
+		var param__address = e.value;
+	var res = self.instance.accreditationMember(param__address);
 }
 //function Conference_canAccess
 this.Manageable_canAccess=function() {
-//console.log('function:canAccess' + self.prefix);
-//	console.log(':' +self.Conference_instance+':');
-	var res = self.Conference_instance.canAccess();
-	if(res!=null)
-		document.getElementById(self.prefix+'Manageable_canAccess_res').innerText = res;
+	var res = self.instance.canAccess();
+	var e = document.getElementById(self.prefix+'Manageable_canAccess_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function Conference_changeMember
 this.Organ_changeMember_uint_address=function() {
-//console.log('function:changeMember' + self.prefix);
 	var e = document.getElementById(self.prefix+'Organ_changeMember_uint_address__id');
-//	console.log(':' + self.prefix+'Organ_changeMember_uint_address__id'+": "+e);
-	var param__id = e.value;
+	if(e!=null)
+		var param__id = e.value;
 	var e = document.getElementById(self.prefix+'Organ_changeMember_uint_address__address');
-//	console.log(':' + self.prefix+'Organ_changeMember_uint_address__address'+": "+e);
-	var param__address = e.value;
-//	console.log(':' +self.Conference_instance+':');
-	var res = self.Conference_instance.changeMember(param__id, param__address);
+	if(e!=null)
+		var param__address = e.value;
+	var res = self.instance.changeMember(param__id, param__address);
 }
 //function Conference_isMember
 this.MemberAware_isMember_address=function() {
-//console.log('function:isMember' + self.prefix);
 	var e = document.getElementById(self.prefix+'MemberAware_isMember_address__address');
-//	console.log(':' + self.prefix+'MemberAware_isMember_address__address'+": "+e);
-	var param__address = e.value;
-//	console.log(':' +self.Conference_instance+':');
-	var res = self.Conference_instance.isMember(param__address);
-	if(res!=null)
-		document.getElementById(self.prefix+'MemberAware_isMember_address_res').innerText = res;
+	if(e!=null)
+		var param__address = e.value;
+	var res = self.instance.isMember(param__address);
+	var e = document.getElementById(self.prefix+'MemberAware_isMember_address_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function Conference_addManager
 this.Manageable_addManager_address=function() {
-//console.log('function:addManager' + self.prefix);
 	var e = document.getElementById(self.prefix+'Manageable_addManager_address__newManagerAddress');
-//	console.log(':' + self.prefix+'Manageable_addManager_address__newManagerAddress'+": "+e);
-	var param__newManagerAddress = e.value;
-//	console.log(':' +self.Conference_instance+':');
-	var res = self.Conference_instance.addManager(param__newManagerAddress);
+	if(e!=null)
+		var param__newManagerAddress = e.value;
+	var res = self.instance.addManager(param__newManagerAddress);
 }
 //function Conference_createFunction
 this.Organ_createFunction_string_string=function() {
-//console.log('function:createFunction' + self.prefix);
 	var e = document.getElementById(self.prefix+'Organ_createFunction_string_string__functionName');
-//	console.log(':' + self.prefix+'Organ_createFunction_string_string__functionName'+": "+e);
-	var param__functionName = e.value;
+	if(e!=null)
+		var param__functionName = e.value;
 	var e = document.getElementById(self.prefix+'Organ_createFunction_string_string__constittiutionHash');
-//	console.log(':' + self.prefix+'Organ_createFunction_string_string__constittiutionHash'+": "+e);
-	var param__constittiutionHash = e.value;
-//	console.log(':' +self.Conference_instance+':');
-	var res = self.Conference_instance.createFunction(param__functionName, param__constittiutionHash);
+	if(e!=null)
+		var param__constittiutionHash = e.value;
+	var res = self.instance.createFunction(param__functionName, param__constittiutionHash);
 }
 //function Conference_removeManager
 this.Manageable_removeManager_address=function() {
-//console.log('function:removeManager' + self.prefix);
 	var e = document.getElementById(self.prefix+'Manageable_removeManager_address__managerAddress');
-//	console.log(':' + self.prefix+'Manageable_removeManager_address__managerAddress'+": "+e);
-	var param__managerAddress = e.value;
-//	console.log(':' +self.Conference_instance+':');
-	var res = self.Conference_instance.removeManager(param__managerAddress);
+	if(e!=null)
+		var param__managerAddress = e.value;
+	var res = self.instance.removeManager(param__managerAddress);
 }
 //function Conference_initalizeOrgan
 this.Organ_initalizeOrgan=function() {
-//console.log('function:initalizeOrgan' + self.prefix);
-//	console.log(':' +self.Conference_instance+':');
-	var res = self.Conference_instance.initalizeOrgan();
+	var res = self.instance.initalizeOrgan();
 }
 //function Conference_isManager
 this.Manageable_isManager_address=function() {
-//console.log('function:isManager' + self.prefix);
 	var e = document.getElementById(self.prefix+'Manageable_isManager_address__managerAddress');
-//	console.log(':' + self.prefix+'Manageable_isManager_address__managerAddress'+": "+e);
-	var param__managerAddress = e.value;
-//	console.log(':' +self.Conference_instance+':');
-	var res = self.Conference_instance.isManager(param__managerAddress);
-	if(res!=null)
-		document.getElementById(self.prefix+'Manageable_isManager_address_res').innerText = res;
+	if(e!=null)
+		var param__managerAddress = e.value;
+	var res = self.instance.isManager(param__managerAddress);
+	var e = document.getElementById(self.prefix+'Manageable_isManager_address_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function Conference_publishFunctionMessage
 this.Organ_publishFunctionMessage_uint_string_string_string=function() {
-//console.log('function:publishFunctionMessage' + self.prefix);
 	var e = document.getElementById(self.prefix+'Organ_publishFunctionMessage_uint_string_string_string_id');
-//	console.log(':' + self.prefix+'Organ_publishFunctionMessage_uint_string_string_string_id'+": "+e);
-	var param_id = e.value;
+	if(e!=null)
+		var param_id = e.value;
 	var e = document.getElementById(self.prefix+'Organ_publishFunctionMessage_uint_string_string_string_message');
-//	console.log(':' + self.prefix+'Organ_publishFunctionMessage_uint_string_string_string_message'+": "+e);
-	var param_message = e.value;
+	if(e!=null)
+		var param_message = e.value;
 	var e = document.getElementById(self.prefix+'Organ_publishFunctionMessage_uint_string_string_string_hash');
-//	console.log(':' + self.prefix+'Organ_publishFunctionMessage_uint_string_string_string_hash'+": "+e);
-	var param_hash = e.value;
+	if(e!=null)
+		var param_hash = e.value;
 	var e = document.getElementById(self.prefix+'Organ_publishFunctionMessage_uint_string_string_string_er');
-//	console.log(':' + self.prefix+'Organ_publishFunctionMessage_uint_string_string_string_er'+": "+e);
-	var param_er = e.value;
-//	console.log(':' +self.Conference_instance+':');
-	var res = self.Conference_instance.publishFunctionMessage(param_id, param_message, param_hash, param_er);
+	if(e!=null)
+		var param_er = e.value;
+	var res = self.instance.publishFunctionMessage(param_id, param_message, param_hash, param_er);
 }
 //function Conference_createBallot
 this.Organ_createBallot_string_bytes32=function() {
-//console.log('function:createBallot' + self.prefix);
 	var e = document.getElementById(self.prefix+'Organ_createBallot_string_bytes32_name');
-//	console.log(':' + self.prefix+'Organ_createBallot_string_bytes32_name'+": "+e);
-	var param_name = e.value;
+	if(e!=null)
+		var param_name = e.value;
 	var e = document.getElementById(self.prefix+'Organ_createBallot_string_bytes32_proposalNames');
-//	console.log(':' + self.prefix+'Organ_createBallot_string_bytes32_proposalNames'+": "+e);
-	var param_proposalNames = e.value;
-//	console.log(':' +self.Conference_instance+':');
-	var res = self.Conference_instance.createBallot(param_name, param_proposalNames);
-	if(res!=null)
-		document.getElementById(self.prefix+'Organ_createBallot_string_bytes32_res').innerText = res;
+	if(e!=null)
+		var param_proposalNames = e.value;
+	var res = self.instance.createBallot(param_name, param_proposalNames);
+	var e = document.getElementById(self.prefix+'Organ_createBallot_string_bytes32_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function Conference_getFunctionBlogAddress
 this.Organ_getFunctionBlogAddress_uint=function() {
-//console.log('function:getFunctionBlogAddress' + self.prefix);
 	var e = document.getElementById(self.prefix+'Organ_getFunctionBlogAddress_uint_id');
-//	console.log(':' + self.prefix+'Organ_getFunctionBlogAddress_uint_id'+": "+e);
-	var param_id = e.value;
-//	console.log(':' +self.Conference_instance+':');
-	var res = self.Conference_instance.getFunctionBlogAddress(param_id);
-	if(res!=null)
-		document.getElementById(self.prefix+'Organ_getFunctionBlogAddress_uint_res').innerText = res;
+	if(e!=null)
+		var param_id = e.value;
+	var res = self.instance.getFunctionBlogAddress(param_id);
+	var e = document.getElementById(self.prefix+'Organ_getFunctionBlogAddress_uint_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function Conference_getLastBallot
 this.Organ_getLastBallot=function() {
-//console.log('function:getLastBallot' + self.prefix);
-//	console.log(':' +self.Conference_instance+':');
-	var res = self.Conference_instance.getLastBallot();
-	if(res!=null)
-		document.getElementById(self.prefix+'Organ_getLastBallot_res').innerText = res;
+	var res = self.instance.getLastBallot();
+	var e = document.getElementById(self.prefix+'Organ_getLastBallot_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function Conference_getOrganBlog
 this.Organ_getOrganBlog=function() {
-//console.log('function:getOrganBlog' + self.prefix);
-//	console.log(':' +self.Conference_instance+':');
-	var res = self.Conference_instance.getOrganBlog();
-	if(res!=null)
-		document.getElementById(self.prefix+'Organ_getOrganBlog_res').innerText = res;
+	var res = self.instance.getOrganBlog();
+	var e = document.getElementById(self.prefix+'Organ_getOrganBlog_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 
 //delegated calls
@@ -2638,51 +2652,72 @@ this.Organ_getOrganBlog=function() {
 }// end controller	
 
 
-// script for Conference
-function ConferenceModel(prefix) {
-	this.prefix = prefix;
-	this.guiFactory = new ConferenceGuiFactory();
-	this.controller = new ConferenceController();
-	this.guiFactory.prefix = prefix;
-	this.controller.prefix = prefix;
-}
-ConferenceModel.prototype.create=function () {
-	this.guiFactory.placeDefaultGui();
-	this.controller._updateAttributes();
-}
-
-
-//class as GlueCode
+//class as GlueCode ConferenceManager
 //uses prefix + 'GuiContainer'
-function ConferenceManager(prefix,contract) {
+function ConferenceManager(prefix,contract,containerId) {
 	this.prefix = prefix;
 	var self = this;
 	this.c = new ConferenceController();
 	this.c.prefix=prefix;
-	this.c.Conference_instance=contract;
+	this.c.instance=contract;
 	this.c.contractAddress = contract.address;
 	this.g = new ConferenceGuiFactory();
 	this.g.prefix = prefix;
+	this.containerId = containerId;
 
 	this.addGui = function() {
-		var e = document.getElementById(this.prefix + 'GuiContainer');
-//console.log('addGui:' + this.prefix+ 'GuiContainer'+e);
+		var e = document.getElementById(this.containerId);
+		if(e==null)return;
 		var elemDiv = document.createElement('div');
 		elemDiv.id= this.prefix +'Conference_gui';
 		e.appendChild(elemDiv);
-		this.g.placeDefaultGui();
-		document.getElementById(this.prefix+'Conference_address').value = this.c.contractAddress;
+		elemDiv.innerHTML = this.createGui(this.g);
+		var e = document.getElementById(this.prefix+'Conference_address');
+		if(e!=null)
+			e.value = this.c.contractAddress;
 		this.c.bindGui();
 	}	
 	this.clearGui = function(){
-		var e = document.getElementById(this.prefix + 'GuiContainer');
+		var e = document.getElementById(this.containerId);
 		e.innerHTML ='';
+	}
+	this.createGui = function(guifactory){
+		var txt ='';
+		txt = txt + guifactory.createDefaultGui();
+		return guifactory.createSeletonGui(txt);
+
+	}
+	this.createSmallGui = function(guifactory){
+		var txt ='';
+		txt = txt + guifactory.createAttributesGui();
+		return guifactory.createSeletonGui(txt);
+
 	}
 	this.updateGui = function(){
 		this.c._updateAttributes();
 	}
 	this.getContract = function(){
-		return this.c.Conference_instance;
+		return this.c.instance;
+	}
+
+//watch events
+	this.watchEvents=function(){
+	var event_MemberAccreditated = contract.MemberAccreditated({},{fromBlock: 0});
+	event_MemberAccreditated.watch(function(error,result){
+	if(!error){
+		var e = document.getElementById(self.eventlogPrefix+'eventLog');
+		var elemDiv = document.createElement('div');
+		elemDiv.id= result.blockNumber +'event';
+		e.appendChild(elemDiv);
+		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
+		elemDiv.innerHTML = '<div>'
+        +'<span>'+result.args.memberId+'</span>'
+        +'<span>'+result.args.memberName+'</span>'
+        +'<span>'+result.args.memberAddress+'</span>'
+		+ '</div>';
+		}else
+		console.log(error);	
+	});
 	}
 
 }// end of manager
@@ -2692,29 +2727,33 @@ function ConferenceGuiMananger(guiId){
 	this.managers=new Array();	//[];		
 	
 	this.addManager = function(contract) {
-//console.log('addManager:'+contract);
-		var m = new ConferenceManager(contract.address,contract);
+		var m = new ConferenceManager(contract.address,contract,this.prefix);
+		m.watchEvents();
 		this.managers.push(m);
 		//manager.addGui();
 	}
 			
 	this.clearGui = function(){
 		var e = document.getElementById(this.prefix);
-//console.log('clear gui:'+this.prefix+e);
 		if(e!==undefined)
 			e.innerHTML ='';
 	}
 			
 	this.displayGui = function(){
 		var e = document.getElementById(this.prefix);
-//console.log('displayGui:'+this.prefix +e);
 		if(e==undefined) return;
 		for (i in this.managers) {
+			var manager = this.managers[i] ;
 			var elemDiv = document.createElement('div');
-			elemDiv.id= this.managers[i].prefix + 'GuiContainer';//'Conference_gui';
+			elemDiv.id= manager.prefix + 'GuiContainer';//'Conference_gui';
 			e.appendChild(elemDiv);
-//console.log('add:'+elemDiv.id);
-			this.managers[i].addGui();
+			elemDiv.innerHTML = manager.createGui(manager.g);
+		}
+	}
+	this.displaySimpleGui = function(){
+		for (i in this.managers) {
+			var manager = this.managers[i] ;
+			manager.addGui();
 		}
 	}
 
@@ -2726,14 +2765,20 @@ function ConferenceGuiMananger(guiId){
 	}
 }// end of gui mananger
 
+//Start of user code custom_Conference_js
+//TODO: implement
+//End of user code
 //gui factory FoundationConference
 function FoundationConferenceGuiFactory() {
 	this.prefix='';
 	
 // default Gui
 this.placeDefaultGui=function() {
-//	console.log(this.prefix+' place gui');
-	document.getElementById(this.prefix+'FoundationConference_gui').innerHTML = this.createDefaultGui();
+	var e = document.getElementById(this.prefix+'FoundationConference_gui');
+	if(e!=null)
+		e.innerHTML = this.createDefaultGui();
+	else
+		console.log(this.prefix+'FoundationConference_gui not found');
 }
 // default Gui
 this.createDefaultGui=function() {
@@ -3061,7 +3106,7 @@ return 	'<!--struct -->'
 
 
 //print the contract div around
-this.createFoundationConferenceSeletonGui=function(inner) {
+this.createSeletonGui=function(inner) {
 	return 	'<!-- gui for FoundationConference_contract -->'
 +	'	<div class="contract" id="'+this.prefix+'FoundationConference_contract">'
 + inner
@@ -3075,297 +3120,270 @@ this.createFoundationConferenceSeletonGui=function(inner) {
 // script for FoundationConference gui controller
 function FoundationConferenceController() {
 
-	this.FoundationConference_instance = undefined;
+	this.instance = undefined;
 	this.prefix='';
 	this.contractAddress = undefined; 
+	this.eventlogPrefix = '';
 	var self = this;
 
 // bind buttons
 	this.bindGui=function() {
 		var btn = document.getElementById(self.prefix+'FoundationConferenceController.setAddress');
-//	console.log('bind:' + self.prefix+' '+btn);
 		if(btn!=undefined)		
 			btn.onclick = this.setAddress;
 
 		var btn = document.getElementById(self.prefix+'FoundationConference_updateAttributes');
-//		console.log('bind update:' + self.prefix+' '+btn);
 		if(btn!=undefined)
 			btn.onclick = this._updateAttributes;
 		var btn = document.getElementById(self.prefix+'FoundationConferenceController.Conference_accreditationMember_address');
-//		console.log('bind:FoundationConference_accreditationMember ' + self.prefix+' '+btn+'  '+self.Conference_accreditationMember_address);//FoundationConference_accreditationMember);
 		if(btn!=undefined)
 			btn.onclick = this.Conference_accreditationMember_address;
 		var btn = document.getElementById(self.prefix+'FoundationConferenceController.Organ_changeMember_uint_address');
-//		console.log('bind:FoundationConference_changeMember ' + self.prefix+' '+btn+'  '+self.Organ_changeMember_uint_address);//FoundationConference_changeMember);
 		if(btn!=undefined)
 			btn.onclick = this.Organ_changeMember_uint_address;
 		var btn = document.getElementById(self.prefix+'FoundationConferenceController.Manageable_addManager_address');
-//		console.log('bind:FoundationConference_addManager ' + self.prefix+' '+btn+'  '+self.Manageable_addManager_address);//FoundationConference_addManager);
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_addManager_address;
 		var btn = document.getElementById(self.prefix+'FoundationConferenceController.Organ_createFunction_string_string');
-//		console.log('bind:FoundationConference_createFunction ' + self.prefix+' '+btn+'  '+self.Organ_createFunction_string_string);//FoundationConference_createFunction);
 		if(btn!=undefined)
 			btn.onclick = this.Organ_createFunction_string_string;
 		var btn = document.getElementById(self.prefix+'FoundationConferenceController.Manageable_removeManager_address');
-//		console.log('bind:FoundationConference_removeManager ' + self.prefix+' '+btn+'  '+self.Manageable_removeManager_address);//FoundationConference_removeManager);
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_removeManager_address;
 		var btn = document.getElementById(self.prefix+'FoundationConferenceController.Organ_initalizeOrgan');
-//		console.log('bind:FoundationConference_initalizeOrgan ' + self.prefix+' '+btn+'  '+self.Organ_initalizeOrgan);//FoundationConference_initalizeOrgan);
 		if(btn!=undefined)
 			btn.onclick = this.Organ_initalizeOrgan;
 		var btn = document.getElementById(self.prefix+'FoundationConferenceController.Manageable_isManager_address');
-//		console.log('bind:FoundationConference_isManager ' + self.prefix+' '+btn+'  '+self.Manageable_isManager_address);//FoundationConference_isManager);
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_isManager_address;
 		var btn = document.getElementById(self.prefix+'FoundationConferenceController.Organ_publishFunctionMessage_uint_string_string_string');
-//		console.log('bind:FoundationConference_publishFunctionMessage ' + self.prefix+' '+btn+'  '+self.Organ_publishFunctionMessage_uint_string_string_string);//FoundationConference_publishFunctionMessage);
 		if(btn!=undefined)
 			btn.onclick = this.Organ_publishFunctionMessage_uint_string_string_string;
 		var btn = document.getElementById(self.prefix+'FoundationConferenceController.Organ_createBallot_string_bytes32');
-//		console.log('bind:FoundationConference_createBallot ' + self.prefix+' '+btn+'  '+self.Organ_createBallot_string_bytes32);//FoundationConference_createBallot);
 		if(btn!=undefined)
 			btn.onclick = this.Organ_createBallot_string_bytes32;
 		var btn = document.getElementById(self.prefix+'FoundationConferenceController.Organ_getFunctionBlogAddress_uint');
-//		console.log('bind:FoundationConference_getFunctionBlogAddress ' + self.prefix+' '+btn+'  '+self.Organ_getFunctionBlogAddress_uint);//FoundationConference_getFunctionBlogAddress);
 		if(btn!=undefined)
 			btn.onclick = this.Organ_getFunctionBlogAddress_uint;
 		var btn = document.getElementById(self.prefix+'FoundationConferenceController.Organ_getLastBallot');
-//		console.log('bind:FoundationConference_getLastBallot ' + self.prefix+' '+btn+'  '+self.Organ_getLastBallot);//FoundationConference_getLastBallot);
 		if(btn!=undefined)
 			btn.onclick = this.Organ_getLastBallot;
 		var btn = document.getElementById(self.prefix+'FoundationConferenceController.Organ_getOrganBlog');
-//		console.log('bind:FoundationConference_getOrganBlog ' + self.prefix+' '+btn+'  '+self.Organ_getOrganBlog);//FoundationConference_getOrganBlog);
 		if(btn!=undefined)
 			btn.onclick = this.Organ_getOrganBlog;
 	}
 	// set function
 	this.setAddress=function() {
 	var _address = document.getElementById(self.prefix+'FoundationConference_address');
-//	console.log('setAddress:' + self.prefix+' '+_address);
+	if(_address==null)return;
+
 	self.FoundationConference_instance = FoundationConferenceContract.at(_address.value);
 	self.contractAddress = _address.value;
 	self._updateAttributes();
 }
 //update attributes
 this._updateAttributes=function () {
-if(this.FoundationConference_instance===null) return;
-//console.log('updateAttributes:' + self.prefix);
+if(this.instance===null) return;
 // update attributes
-	var memberRegistry_res = self.FoundationConference_instance.memberRegistry();
-//	console.log('get:memberRegistry' + self.prefix);
-
-	if(memberRegistry_res!=null)
-		document.getElementById(self.prefix+'FoundationConference_memberRegistry_value').innerText = memberRegistry_res;
-	var accreditatedMembers_res = self.FoundationConference_instance.accreditatedMembers();
-//	console.log('get:accreditatedMembers' + self.prefix);
-
-	if(accreditatedMembers_res!=null)
-		document.getElementById(self.prefix+'FoundationConference_accreditatedMembers_value').innerText = accreditatedMembers_res;
-	var mangerCount_res = self.FoundationConference_instance.mangerCount();
-//	console.log('get:mangerCount' + self.prefix);
-
-	if(mangerCount_res!=null)
-		document.getElementById(self.prefix+'FoundationConference_mangerCount_value').innerText = mangerCount_res;
-	var organName_res = self.FoundationConference_instance.organName();
-//	console.log('get:organName' + self.prefix);
-
-	if(organName_res!=null)
-		document.getElementById(self.prefix+'FoundationConference_organName_value').innerText = organName_res;
-	var date_res = self.FoundationConference_instance.date();
-//	console.log('get:date' + self.prefix);
-
-	if(date_res!=null)
-		document.getElementById(self.prefix+'FoundationConference_date_value').innerText = date_res;
-	var lastFunctionId_res = self.FoundationConference_instance.lastFunctionId();
-//	console.log('get:lastFunctionId' + self.prefix);
-
-	if(lastFunctionId_res!=null)
-		document.getElementById(self.prefix+'FoundationConference_lastFunctionId_value').innerText = lastFunctionId_res;
-	var blogRegistry_res = self.FoundationConference_instance.blogRegistry();
-//	console.log('get:blogRegistry' + self.prefix);
-
-	if(blogRegistry_res!=null)
-		document.getElementById(self.prefix+'FoundationConference_blogRegistry_value').innerText = blogRegistry_res;
-	var isActive_res = self.FoundationConference_instance.isActive();
-//	console.log('get:isActive' + self.prefix);
-
-	if(isActive_res!=null)
-		document.getElementById(self.prefix+'FoundationConference_isActive_value').innerText = isActive_res;
-	var ballotCount_res = self.FoundationConference_instance.ballotCount();
-//	console.log('get:ballotCount' + self.prefix);
-
-	if(ballotCount_res!=null)
-		document.getElementById(self.prefix+'FoundationConference_ballotCount_value').innerText = ballotCount_res;
-//console.log('getStruct:managers' + self.prefix);
-	var _key = document.getElementById(self.prefix+'FoundationConference_contract_attribute_managers_input').value;
-	var managers_res = self.FoundationConference_instance.managers(_key);
-//console.log('result:managers' + managers_res+' key: '+_key);
+	var memberRegistry_res = self.instance.memberRegistry();
+	var e = document.getElementById(self.prefix+'FoundationConference_memberRegistry_value');
+	if(memberRegistry_res!=null && e!=null)
+		e.innerText = memberRegistry_res;
+	var accreditatedMembers_res = self.instance.accreditatedMembers();
+	var e = document.getElementById(self.prefix+'FoundationConference_accreditatedMembers_value');
+	if(accreditatedMembers_res!=null && e!=null)
+		e.innerText = accreditatedMembers_res;
+	var mangerCount_res = self.instance.mangerCount();
+	var e = document.getElementById(self.prefix+'FoundationConference_mangerCount_value');
+	if(mangerCount_res!=null && e!=null)
+		e.innerText = mangerCount_res;
+	var organName_res = self.instance.organName();
+	var e = document.getElementById(self.prefix+'FoundationConference_organName_value');
+	if(organName_res!=null && e!=null)
+		e.innerText = organName_res;
+	var date_res = self.instance.date();
+	var e = document.getElementById(self.prefix+'FoundationConference_date_value');
+	if(date_res!=null && e!=null)
+		e.innerText = date_res;
+	var lastFunctionId_res = self.instance.lastFunctionId();
+	var e = document.getElementById(self.prefix+'FoundationConference_lastFunctionId_value');
+	if(lastFunctionId_res!=null && e!=null)
+		e.innerText = lastFunctionId_res;
+	var blogRegistry_res = self.instance.blogRegistry();
+	var e = document.getElementById(self.prefix+'FoundationConference_blogRegistry_value');
+	if(blogRegistry_res!=null && e!=null)
+		e.innerText = blogRegistry_res;
+	var isActive_res = self.instance.isActive();
+	var e = document.getElementById(self.prefix+'FoundationConference_isActive_value');
+	if(isActive_res!=null && e!=null)
+		e.innerText = isActive_res;
+	var ballotCount_res = self.instance.ballotCount();
+	var e = document.getElementById(self.prefix+'FoundationConference_ballotCount_value');
+	if(ballotCount_res!=null && e!=null)
+		e.innerText = ballotCount_res;
+var e = document.getElementById(self.prefix+'FoundationConference_contract_attribute_managers_input');
+if(e!=null){
+	var _key = e.value;
+	var managers_res = self.instance.managers(_key);
 	if(managers_res!=null){
-		document.getElementById(self.prefix+'FoundationConference_managers_value').innerText = managers_res;
-	}
-//console.log('getStruct:organFunctions' + self.prefix);
-	var _key = document.getElementById(self.prefix+'FoundationConference_contract_attribute_organFunctions_input').value;
-	var organFunctions_res = self.FoundationConference_instance.organFunctions(_key);
-//console.log('result:organFunctions' + organFunctions_res+' key: '+_key);
+		var e1 = document.getElementById(self.prefix+'FoundationConference_managers_value');
+		if(e1!=null)	
+			e1.innerText = managers_res;
+	}}
+	var e = document.getElementById(self.prefix+'FoundationConference_contract_attribute_organFunctions_input');
+if(e!=null){
+	var _key = e.value;
+	var organFunctions_res = self.instance.organFunctions(_key);
 	if(organFunctions_res!=null){
-		document.getElementById(self.prefix+'FoundationConference_organFunctions_currentMember_value').innerText = organFunctions_res[0];
-		document.getElementById(self.prefix+'FoundationConference_organFunctions_functionName_value').innerText = organFunctions_res[1];
-		document.getElementById(self.prefix+'FoundationConference_organFunctions_id_value').innerText = organFunctions_res[2];
-		document.getElementById(self.prefix+'FoundationConference_organFunctions_constitutionHash_value').innerText = organFunctions_res[3];
-		document.getElementById(self.prefix+'FoundationConference_organFunctions_lastMemberChanged_value').innerText = organFunctions_res[4];
-		document.getElementById(self.prefix+'FoundationConference_organFunctions_lastConstitutionHashChanged_value').innerText = organFunctions_res[5];
-		document.getElementById(self.prefix+'FoundationConference_organFunctions_publisher_value').innerText = organFunctions_res[6];
-	}
+	var e1 = document.getElementById(self.prefix+'FoundationConference_organFunctions_currentMember_value');
+	if(e1!=null)	
+		e1.innerText = organFunctions_res[0];
+	var e1 = document.getElementById(self.prefix+'FoundationConference_organFunctions_functionName_value');
+	if(e1!=null)	
+		e1.innerText = organFunctions_res[1];
+	var e1 = document.getElementById(self.prefix+'FoundationConference_organFunctions_id_value');
+	if(e1!=null)	
+		e1.innerText = organFunctions_res[2];
+	var e1 = document.getElementById(self.prefix+'FoundationConference_organFunctions_constitutionHash_value');
+	if(e1!=null)	
+		e1.innerText = organFunctions_res[3];
+	var e1 = document.getElementById(self.prefix+'FoundationConference_organFunctions_lastMemberChanged_value');
+	if(e1!=null)	
+		e1.innerText = organFunctions_res[4];
+	var e1 = document.getElementById(self.prefix+'FoundationConference_organFunctions_lastConstitutionHashChanged_value');
+	if(e1!=null)	
+		e1.innerText = organFunctions_res[5];
+	var e1 = document.getElementById(self.prefix+'FoundationConference_organFunctions_publisher_value');
+	if(e1!=null)	
+		e1.innerText = organFunctions_res[6];
+	}}
 }
 
 //call functions
 //function FoundationConference_accreditationMember
 this.Conference_accreditationMember_address=function() {
-//console.log('function:accreditationMember' + self.prefix);
 	var e = document.getElementById(self.prefix+'Conference_accreditationMember_address__address');
-//	console.log(':' + self.prefix+'Conference_accreditationMember_address__address'+": "+e);
-	var param__address = e.value;
-//	console.log(':' +self.FoundationConference_instance+':');
-	var res = self.FoundationConference_instance.accreditationMember(param__address);
+	if(e!=null)
+		var param__address = e.value;
+	var res = self.instance.accreditationMember(param__address);
 }
 //function FoundationConference_canAccess
 this.Manageable_canAccess=function() {
-//console.log('function:canAccess' + self.prefix);
-//	console.log(':' +self.FoundationConference_instance+':');
-	var res = self.FoundationConference_instance.canAccess();
-	if(res!=null)
-		document.getElementById(self.prefix+'Manageable_canAccess_res').innerText = res;
+	var res = self.instance.canAccess();
+	var e = document.getElementById(self.prefix+'Manageable_canAccess_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function FoundationConference_changeMember
 this.Organ_changeMember_uint_address=function() {
-//console.log('function:changeMember' + self.prefix);
 	var e = document.getElementById(self.prefix+'Organ_changeMember_uint_address__id');
-//	console.log(':' + self.prefix+'Organ_changeMember_uint_address__id'+": "+e);
-	var param__id = e.value;
+	if(e!=null)
+		var param__id = e.value;
 	var e = document.getElementById(self.prefix+'Organ_changeMember_uint_address__address');
-//	console.log(':' + self.prefix+'Organ_changeMember_uint_address__address'+": "+e);
-	var param__address = e.value;
-//	console.log(':' +self.FoundationConference_instance+':');
-	var res = self.FoundationConference_instance.changeMember(param__id, param__address);
+	if(e!=null)
+		var param__address = e.value;
+	var res = self.instance.changeMember(param__id, param__address);
 }
 //function FoundationConference_isMember
 this.MemberAware_isMember_address=function() {
-//console.log('function:isMember' + self.prefix);
 	var e = document.getElementById(self.prefix+'MemberAware_isMember_address__address');
-//	console.log(':' + self.prefix+'MemberAware_isMember_address__address'+": "+e);
-	var param__address = e.value;
-//	console.log(':' +self.FoundationConference_instance+':');
-	var res = self.FoundationConference_instance.isMember(param__address);
-	if(res!=null)
-		document.getElementById(self.prefix+'MemberAware_isMember_address_res').innerText = res;
+	if(e!=null)
+		var param__address = e.value;
+	var res = self.instance.isMember(param__address);
+	var e = document.getElementById(self.prefix+'MemberAware_isMember_address_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function FoundationConference_addManager
 this.Manageable_addManager_address=function() {
-//console.log('function:addManager' + self.prefix);
 	var e = document.getElementById(self.prefix+'Manageable_addManager_address__newManagerAddress');
-//	console.log(':' + self.prefix+'Manageable_addManager_address__newManagerAddress'+": "+e);
-	var param__newManagerAddress = e.value;
-//	console.log(':' +self.FoundationConference_instance+':');
-	var res = self.FoundationConference_instance.addManager(param__newManagerAddress);
+	if(e!=null)
+		var param__newManagerAddress = e.value;
+	var res = self.instance.addManager(param__newManagerAddress);
 }
 //function FoundationConference_createFunction
 this.Organ_createFunction_string_string=function() {
-//console.log('function:createFunction' + self.prefix);
 	var e = document.getElementById(self.prefix+'Organ_createFunction_string_string__functionName');
-//	console.log(':' + self.prefix+'Organ_createFunction_string_string__functionName'+": "+e);
-	var param__functionName = e.value;
+	if(e!=null)
+		var param__functionName = e.value;
 	var e = document.getElementById(self.prefix+'Organ_createFunction_string_string__constittiutionHash');
-//	console.log(':' + self.prefix+'Organ_createFunction_string_string__constittiutionHash'+": "+e);
-	var param__constittiutionHash = e.value;
-//	console.log(':' +self.FoundationConference_instance+':');
-	var res = self.FoundationConference_instance.createFunction(param__functionName, param__constittiutionHash);
+	if(e!=null)
+		var param__constittiutionHash = e.value;
+	var res = self.instance.createFunction(param__functionName, param__constittiutionHash);
 }
 //function FoundationConference_removeManager
 this.Manageable_removeManager_address=function() {
-//console.log('function:removeManager' + self.prefix);
 	var e = document.getElementById(self.prefix+'Manageable_removeManager_address__managerAddress');
-//	console.log(':' + self.prefix+'Manageable_removeManager_address__managerAddress'+": "+e);
-	var param__managerAddress = e.value;
-//	console.log(':' +self.FoundationConference_instance+':');
-	var res = self.FoundationConference_instance.removeManager(param__managerAddress);
+	if(e!=null)
+		var param__managerAddress = e.value;
+	var res = self.instance.removeManager(param__managerAddress);
 }
 //function FoundationConference_initalizeOrgan
 this.Organ_initalizeOrgan=function() {
-//console.log('function:initalizeOrgan' + self.prefix);
-//	console.log(':' +self.FoundationConference_instance+':');
-	var res = self.FoundationConference_instance.initalizeOrgan();
+	var res = self.instance.initalizeOrgan();
 }
 //function FoundationConference_isManager
 this.Manageable_isManager_address=function() {
-//console.log('function:isManager' + self.prefix);
 	var e = document.getElementById(self.prefix+'Manageable_isManager_address__managerAddress');
-//	console.log(':' + self.prefix+'Manageable_isManager_address__managerAddress'+": "+e);
-	var param__managerAddress = e.value;
-//	console.log(':' +self.FoundationConference_instance+':');
-	var res = self.FoundationConference_instance.isManager(param__managerAddress);
-	if(res!=null)
-		document.getElementById(self.prefix+'Manageable_isManager_address_res').innerText = res;
+	if(e!=null)
+		var param__managerAddress = e.value;
+	var res = self.instance.isManager(param__managerAddress);
+	var e = document.getElementById(self.prefix+'Manageable_isManager_address_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function FoundationConference_publishFunctionMessage
 this.Organ_publishFunctionMessage_uint_string_string_string=function() {
-//console.log('function:publishFunctionMessage' + self.prefix);
 	var e = document.getElementById(self.prefix+'Organ_publishFunctionMessage_uint_string_string_string_id');
-//	console.log(':' + self.prefix+'Organ_publishFunctionMessage_uint_string_string_string_id'+": "+e);
-	var param_id = e.value;
+	if(e!=null)
+		var param_id = e.value;
 	var e = document.getElementById(self.prefix+'Organ_publishFunctionMessage_uint_string_string_string_message');
-//	console.log(':' + self.prefix+'Organ_publishFunctionMessage_uint_string_string_string_message'+": "+e);
-	var param_message = e.value;
+	if(e!=null)
+		var param_message = e.value;
 	var e = document.getElementById(self.prefix+'Organ_publishFunctionMessage_uint_string_string_string_hash');
-//	console.log(':' + self.prefix+'Organ_publishFunctionMessage_uint_string_string_string_hash'+": "+e);
-	var param_hash = e.value;
+	if(e!=null)
+		var param_hash = e.value;
 	var e = document.getElementById(self.prefix+'Organ_publishFunctionMessage_uint_string_string_string_er');
-//	console.log(':' + self.prefix+'Organ_publishFunctionMessage_uint_string_string_string_er'+": "+e);
-	var param_er = e.value;
-//	console.log(':' +self.FoundationConference_instance+':');
-	var res = self.FoundationConference_instance.publishFunctionMessage(param_id, param_message, param_hash, param_er);
+	if(e!=null)
+		var param_er = e.value;
+	var res = self.instance.publishFunctionMessage(param_id, param_message, param_hash, param_er);
 }
 //function FoundationConference_createBallot
 this.Organ_createBallot_string_bytes32=function() {
-//console.log('function:createBallot' + self.prefix);
 	var e = document.getElementById(self.prefix+'Organ_createBallot_string_bytes32_name');
-//	console.log(':' + self.prefix+'Organ_createBallot_string_bytes32_name'+": "+e);
-	var param_name = e.value;
+	if(e!=null)
+		var param_name = e.value;
 	var e = document.getElementById(self.prefix+'Organ_createBallot_string_bytes32_proposalNames');
-//	console.log(':' + self.prefix+'Organ_createBallot_string_bytes32_proposalNames'+": "+e);
-	var param_proposalNames = e.value;
-//	console.log(':' +self.FoundationConference_instance+':');
-	var res = self.FoundationConference_instance.createBallot(param_name, param_proposalNames);
-	if(res!=null)
-		document.getElementById(self.prefix+'Organ_createBallot_string_bytes32_res').innerText = res;
+	if(e!=null)
+		var param_proposalNames = e.value;
+	var res = self.instance.createBallot(param_name, param_proposalNames);
+	var e = document.getElementById(self.prefix+'Organ_createBallot_string_bytes32_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function FoundationConference_getFunctionBlogAddress
 this.Organ_getFunctionBlogAddress_uint=function() {
-//console.log('function:getFunctionBlogAddress' + self.prefix);
 	var e = document.getElementById(self.prefix+'Organ_getFunctionBlogAddress_uint_id');
-//	console.log(':' + self.prefix+'Organ_getFunctionBlogAddress_uint_id'+": "+e);
-	var param_id = e.value;
-//	console.log(':' +self.FoundationConference_instance+':');
-	var res = self.FoundationConference_instance.getFunctionBlogAddress(param_id);
-	if(res!=null)
-		document.getElementById(self.prefix+'Organ_getFunctionBlogAddress_uint_res').innerText = res;
+	if(e!=null)
+		var param_id = e.value;
+	var res = self.instance.getFunctionBlogAddress(param_id);
+	var e = document.getElementById(self.prefix+'Organ_getFunctionBlogAddress_uint_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function FoundationConference_getLastBallot
 this.Organ_getLastBallot=function() {
-//console.log('function:getLastBallot' + self.prefix);
-//	console.log(':' +self.FoundationConference_instance+':');
-	var res = self.FoundationConference_instance.getLastBallot();
-	if(res!=null)
-		document.getElementById(self.prefix+'Organ_getLastBallot_res').innerText = res;
+	var res = self.instance.getLastBallot();
+	var e = document.getElementById(self.prefix+'Organ_getLastBallot_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function FoundationConference_getOrganBlog
 this.Organ_getOrganBlog=function() {
-//console.log('function:getOrganBlog' + self.prefix);
-//	console.log(':' +self.FoundationConference_instance+':');
-	var res = self.FoundationConference_instance.getOrganBlog();
-	if(res!=null)
-		document.getElementById(self.prefix+'Organ_getOrganBlog_res').innerText = res;
+	var res = self.instance.getOrganBlog();
+	var e = document.getElementById(self.prefix+'Organ_getOrganBlog_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 
 //delegated calls
@@ -3373,51 +3391,56 @@ this.Organ_getOrganBlog=function() {
 }// end controller	
 
 
-// script for FoundationConference
-function FoundationConferenceModel(prefix) {
-	this.prefix = prefix;
-	this.guiFactory = new FoundationConferenceGuiFactory();
-	this.controller = new FoundationConferenceController();
-	this.guiFactory.prefix = prefix;
-	this.controller.prefix = prefix;
-}
-FoundationConferenceModel.prototype.create=function () {
-	this.guiFactory.placeDefaultGui();
-	this.controller._updateAttributes();
-}
-
-
-//class as GlueCode
+//class as GlueCode FoundationConferenceManager
 //uses prefix + 'GuiContainer'
-function FoundationConferenceManager(prefix,contract) {
+function FoundationConferenceManager(prefix,contract,containerId) {
 	this.prefix = prefix;
 	var self = this;
 	this.c = new FoundationConferenceController();
 	this.c.prefix=prefix;
-	this.c.FoundationConference_instance=contract;
+	this.c.instance=contract;
 	this.c.contractAddress = contract.address;
 	this.g = new FoundationConferenceGuiFactory();
 	this.g.prefix = prefix;
+	this.containerId = containerId;
 
 	this.addGui = function() {
-		var e = document.getElementById(this.prefix + 'GuiContainer');
-//console.log('addGui:' + this.prefix+ 'GuiContainer'+e);
+		var e = document.getElementById(this.containerId);
+		if(e==null)return;
 		var elemDiv = document.createElement('div');
 		elemDiv.id= this.prefix +'FoundationConference_gui';
 		e.appendChild(elemDiv);
-		this.g.placeDefaultGui();
-		document.getElementById(this.prefix+'FoundationConference_address').value = this.c.contractAddress;
+		elemDiv.innerHTML = this.createGui(this.g);
+		var e = document.getElementById(this.prefix+'FoundationConference_address');
+		if(e!=null)
+			e.value = this.c.contractAddress;
 		this.c.bindGui();
 	}	
 	this.clearGui = function(){
-		var e = document.getElementById(this.prefix + 'GuiContainer');
+		var e = document.getElementById(this.containerId);
 		e.innerHTML ='';
+	}
+	this.createGui = function(guifactory){
+		var txt ='';
+		txt = txt + guifactory.createDefaultGui();
+		return guifactory.createSeletonGui(txt);
+
+	}
+	this.createSmallGui = function(guifactory){
+		var txt ='';
+		txt = txt + guifactory.createAttributesGui();
+		return guifactory.createSeletonGui(txt);
+
 	}
 	this.updateGui = function(){
 		this.c._updateAttributes();
 	}
 	this.getContract = function(){
-		return this.c.FoundationConference_instance;
+		return this.c.instance;
+	}
+
+//watch events
+	this.watchEvents=function(){
 	}
 
 }// end of manager
@@ -3427,29 +3450,33 @@ function FoundationConferenceGuiMananger(guiId){
 	this.managers=new Array();	//[];		
 	
 	this.addManager = function(contract) {
-//console.log('addManager:'+contract);
-		var m = new FoundationConferenceManager(contract.address,contract);
+		var m = new FoundationConferenceManager(contract.address,contract,this.prefix);
+		m.watchEvents();
 		this.managers.push(m);
 		//manager.addGui();
 	}
 			
 	this.clearGui = function(){
 		var e = document.getElementById(this.prefix);
-//console.log('clear gui:'+this.prefix+e);
 		if(e!==undefined)
 			e.innerHTML ='';
 	}
 			
 	this.displayGui = function(){
 		var e = document.getElementById(this.prefix);
-//console.log('displayGui:'+this.prefix +e);
 		if(e==undefined) return;
 		for (i in this.managers) {
+			var manager = this.managers[i] ;
 			var elemDiv = document.createElement('div');
-			elemDiv.id= this.managers[i].prefix + 'GuiContainer';//'FoundationConference_gui';
+			elemDiv.id= manager.prefix + 'GuiContainer';//'FoundationConference_gui';
 			e.appendChild(elemDiv);
-//console.log('add:'+elemDiv.id);
-			this.managers[i].addGui();
+			elemDiv.innerHTML = manager.createGui(manager.g);
+		}
+	}
+	this.displaySimpleGui = function(){
+		for (i in this.managers) {
+			var manager = this.managers[i] ;
+			manager.addGui();
 		}
 	}
 
@@ -3461,3 +3488,36 @@ function FoundationConferenceGuiMananger(guiId){
 	}
 }// end of gui mananger
 
+//Start of user code custom_FoundationConference_js
+//TODO: implement
+//End of user code
+//the page Object fro the PartyPage.
+function PartyPage(prefix) {
+	this.prefix=prefix;
+	//Start of user code page_party_attributes
+	this.party = new KUEKeNPartyGuiMananger(prefix);
+	this.organ = new OrganGuiMananger(prefix);
+//	this.blog = new ShortBlogGuiMananger(prefix);
+	//End of user code
+
+	
+// default Gui
+this.placeDefaultGui=function() {
+this.createDefaultGui();
+
+}
+// default Gui
+this.createDefaultGui=function() {
+	//Start of user code page_Party_create_default_gui_functions
+	this.party.displaySimpleGui();
+	this.party.updateGui();
+	this.organ.displayGui();
+	this.organ.updateGui();
+//	this.blog.createDefaultGui();
+	//End of user code
+}
+	//Start of user code page_Party_functions
+		//TODO: implement
+	//End of user code
+
+}// end of PartyPage

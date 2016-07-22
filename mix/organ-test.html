@@ -1,6 +1,6 @@
 <!doctype>
 <html>
-<head><script src="deployment.js"></script>
+<head>
 
 <script type='text/javascript' src="js/members-main.js">
 </script>
@@ -76,22 +76,6 @@
 
 	<header class="dapp-header dapp-full-header">
 		<br/>
-			<nav>
-				<ul>
-					<li>
-					<a href="#" 
-						onclick="lmgf.changeMode('issue')"> <i
-							class="icon-arrow-down3"></i> <span>Issuer</span>
-					</a> <a href="#" onclick="lmgf.changeMode('manage')"> <i
-							class="icon-arrow-up2"></i> <span>Manager</span>
-					</a>
-					<a href="#" onclick="lmgf.changeMode('check')"> <i
-							class="icon-arrow-up1"></i> <span>Check</span>
-					</a>
-					</li>
-				</ul>
-			</nav>
-		<span>Issue, Manage or Check Licenses</span>
 	</header>
 
 	<div class="dapp-flex-content">
@@ -139,7 +123,7 @@
 	<script type='text/javascript'>
 	
 
-	//	web3.eth.defaultAccount = web3.eth.accounts[0];
+		web3.eth.defaultAccount = web3.eth.accounts[0];
 //    web3.eth.getAccounts(function(e,accounts){
 //         // Check if there are accounts available
 //         if (!e && accounts && accounts.length > 0) {
@@ -158,7 +142,7 @@
 //     });
 
    
-function OrganGui(prefix,contract) {
+function OrganGui(prefix,contract,mRC,blogdef) {
 		this.mode = 0;
 		
 		this.contract = contract;
@@ -173,34 +157,43 @@ function OrganGui(prefix,contract) {
 	   	this.memberRegistryGuiFactory = new MemberRegistryGuiFactory();
 	   	this.memberRegistryGuiFactory.prefix = prefix;
 	   	this.memberRegistryGuiController = new MemberRegistryController();
-	   	this.memberRegistryGuiController.prefix = prefix;	   	
+	   	this.memberRegistryGuiController.prefix = prefix;
+	   	this.memberRegistryGuiController.MemberRegistry_instance = mRC;
 	   	
 	   	this.blogGuiFactory = new ShortBlogGuiFactory();
 	   	this.blogGuiFactory.prefix = prefix;
 	   	this.blogs = new Array();
+	   	this.blogContractDefinition = blogdef;
 	   
 	   
 	   	
 	this.addBlog=function(contract){
+		var p = contract.address;
 		var blogGuiFactory = new ShortBlogGuiFactory();
-		blogGuiFactory.prefix = this.prefix;
+		blogGuiFactory.prefix = p;
 		var blogGuiController = new ShortBlogController();
-		blogGuiController.prefix = prefix;
+		blogGuiController.prefix = p;
+		blogGuiController.ShortBlog_instance = contract;
 		
-		blogData ={c:contract,bf:blogGuiFactory,bc:blogGuiController };
+		blogData ={bf:blogGuiFactory,bc:blogGuiController };
 		this.blogs.push(blogData);
 	}
 	   	
 	this.readDataFromContract=function(){
+		var sb = this.blogContractDefinition.at(contract.getOrganBlog());
+		this.addBlog(sb);
 		
-// 		var cc = this.contract.contractCount();
-// 		for (i = 0; i < cc; i++) {
-// 		}
+		var cc = this.contract.lastFunctionId();
+		for (i = 0; i < cc; i++) {
+			var badress = this.contract.getFunctionBlogAddress(i);
+			var sb = this.blogContractDefinition.at(contract.getOrganBlog());
+			this.addBlog(sb);
+		}
 	}
 	
 	this.createOrganGui=function(){
 		var txt = '';
-		txt = txt +this.blogGuiFactory.createAttributesGui();		
+		txt = txt +this.organGuiFactory.createAttributesGui();		
 		return this.blogGuiFactory.createShortBlogSeletonGui( txt );
 	}
 	
@@ -213,11 +206,25 @@ function OrganGui(prefix,contract) {
 	this.placeDefaultGui=function(){	   	 
    		this.readDataFromContract();	   		
    		document.getElementById(this.prefix+'organ_gui').innerHTML = this.createOrganGui();
-   		this.organGuiController._updateGui();
+   		this.organGuiController._updateAttributes();
    		
    		
-   		this.readDataFromContract();	   		
    		document.getElementById(this.prefix+'member_registry_gui').innerHTML = this.createMemberRegistryGui();
+//    		this.memberRegistryGuiController._updateAttributes();
+   		
+   		
+   		
+   		var e = document.getElementById(this.prefix+'blog_gui');
+   		e.innerHTML = '';
+
+   		for (i in this.blogs) {
+			var elemDiv = document.createElement('div');
+			e.appendChild(elemDiv);
+			elemDiv.innerHTML = this.blogs[i].bf.createAttributesGui();
+			//this.blogs[i].bc._updateAttributes();		
+			console.log('---->'+i);
+		}
+   		
 	}
 }
    
@@ -235,7 +242,9 @@ function OrganGui(prefix,contract) {
 
    var contract = contracts['FoundationConference'].contract;
    var address = contracts['FoundationConference'].address;
-   oGui = new OrganGui('',contract,address);
+   
+   var memberRegistryContract = contracts['MemberRegistry'].contract;
+   oGui = new OrganGui('',contract,memberRegistryContract,ShortBlogContract);
 	oGui.placeDefaultGui();
 	</script>
 

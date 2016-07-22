@@ -1,5 +1,6 @@
 
 var MemberRegistryContract = web3.eth.contract([
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"partyMemberCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"activeMemberCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "partyMembers","outputs": [

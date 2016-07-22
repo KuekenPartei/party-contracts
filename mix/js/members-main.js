@@ -1,5 +1,6 @@
 
 var MemberRegistryContract = web3.eth.contract([
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"partyMemberCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"activeMemberCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "partyMembers","outputs": [
@@ -113,8 +114,11 @@ function MemberRegistryGuiFactory() {
 	
 // default Gui
 this.placeDefaultGui=function() {
-//	console.log(this.prefix+' place gui');
-	document.getElementById(this.prefix+'MemberRegistry_gui').innerHTML = this.createDefaultGui();
+	var e = document.getElementById(this.prefix+'MemberRegistry_gui');
+	if(e!=null)
+		e.innerHTML = this.createDefaultGui();
+	else
+		console.log(this.prefix+'MemberRegistry_gui not found');
 }
 // default Gui
 this.createDefaultGui=function() {
@@ -392,7 +396,7 @@ return 	'<!--struct -->'
 
 
 //print the contract div around
-this.createMemberRegistrySeletonGui=function(inner) {
+this.createSeletonGui=function(inner) {
 	return 	'<!-- gui for MemberRegistry_contract -->'
 +	'	<div class="contract" id="'+this.prefix+'MemberRegistry_contract">'
 + inner
@@ -401,8 +405,8 @@ this.createMemberRegistrySeletonGui=function(inner) {
 
 
 //eventguis
-this.createMemberEventLogDataGui = function(prefix, blockHash, blockNumber,
-mAddress,eType,id,name,memberState) {
+this.createMemberEventLogDataGui = function(prefix, blockHash, blockNumber
+,mAddress,eType,id,name,memberState) {
 		return '<ul class="dapp-account-list"><li > '
         +'<a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>'
 		+'<span>'+prefix+' ('+blockNumber+')</span>'
@@ -419,232 +423,219 @@ mAddress,eType,id,name,memberState) {
 // script for MemberRegistry gui controller
 function MemberRegistryController() {
 
-	this.MemberRegistry_instance = undefined;
+	this.instance = undefined;
 	this.prefix='';
 	this.contractAddress = undefined; 
+	this.eventlogPrefix = '';
 	var self = this;
 
 // bind buttons
 	this.bindGui=function() {
 		var btn = document.getElementById(self.prefix+'MemberRegistryController.setAddress');
-//	console.log('bind:' + self.prefix+' '+btn);
 		if(btn!=undefined)		
 			btn.onclick = this.setAddress;
 
 		var btn = document.getElementById(self.prefix+'MemberRegistry_updateAttributes');
-//		console.log('bind update:' + self.prefix+' '+btn);
 		if(btn!=undefined)
 			btn.onclick = this._updateAttributes;
 		var btn = document.getElementById(self.prefix+'MemberRegistryController.MemberRegistry_addMember_string_address');
-//		console.log('bind:MemberRegistry_addMember ' + self.prefix+' '+btn+'  '+self.MemberRegistry_addMember_string_address);//MemberRegistry_addMember);
 		if(btn!=undefined)
 			btn.onclick = this.MemberRegistry_addMember_string_address;
 		var btn = document.getElementById(self.prefix+'MemberRegistryController.Manageable_addManager_address');
-//		console.log('bind:MemberRegistry_addManager ' + self.prefix+' '+btn+'  '+self.Manageable_addManager_address);//MemberRegistry_addManager);
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_addManager_address;
 		var btn = document.getElementById(self.prefix+'MemberRegistryController.MemberRegistry_unregisterMember_uint');
-//		console.log('bind:MemberRegistry_unregisterMember ' + self.prefix+' '+btn+'  '+self.MemberRegistry_unregisterMember_uint);//MemberRegistry_unregisterMember);
 		if(btn!=undefined)
 			btn.onclick = this.MemberRegistry_unregisterMember_uint;
 		var btn = document.getElementById(self.prefix+'MemberRegistryController.MemberRegistry_getMemberCount');
-//		console.log('bind:MemberRegistry_getMemberCount ' + self.prefix+' '+btn+'  '+self.MemberRegistry_getMemberCount);//MemberRegistry_getMemberCount);
 		if(btn!=undefined)
 			btn.onclick = this.MemberRegistry_getMemberCount;
 		var btn = document.getElementById(self.prefix+'MemberRegistryController.Manageable_removeManager_address');
-//		console.log('bind:MemberRegistry_removeManager ' + self.prefix+' '+btn+'  '+self.Manageable_removeManager_address);//MemberRegistry_removeManager);
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_removeManager_address;
 		var btn = document.getElementById(self.prefix+'MemberRegistryController.MemberRegistry_isActiveMember_address');
-//		console.log('bind:MemberRegistry_isActiveMember ' + self.prefix+' '+btn+'  '+self.MemberRegistry_isActiveMember_address);//MemberRegistry_isActiveMember);
 		if(btn!=undefined)
 			btn.onclick = this.MemberRegistry_isActiveMember_address;
 		var btn = document.getElementById(self.prefix+'MemberRegistryController.Manageable_isManager_address');
-//		console.log('bind:MemberRegistry_isManager ' + self.prefix+' '+btn+'  '+self.Manageable_isManager_address);//MemberRegistry_isManager);
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_isManager_address;
 		var btn = document.getElementById(self.prefix+'MemberRegistryController.MemberRegistry_changeMemberAddress_uint_address');
-//		console.log('bind:MemberRegistry_changeMemberAddress ' + self.prefix+' '+btn+'  '+self.MemberRegistry_changeMemberAddress_uint_address);//MemberRegistry_changeMemberAddress);
 		if(btn!=undefined)
 			btn.onclick = this.MemberRegistry_changeMemberAddress_uint_address;
 		var btn = document.getElementById(self.prefix+'MemberRegistryController.MemberRegistry_getMemberData_address');
-//		console.log('bind:MemberRegistry_getMemberData ' + self.prefix+' '+btn+'  '+self.MemberRegistry_getMemberData_address);//MemberRegistry_getMemberData);
 		if(btn!=undefined)
 			btn.onclick = this.MemberRegistry_getMemberData_address;
 		var btn = document.getElementById(self.prefix+'MemberRegistryController.MemberRegistry_publishMemberEvent_address_uint');
-//		console.log('bind:MemberRegistry_publishMemberEvent ' + self.prefix+' '+btn+'  '+self.MemberRegistry_publishMemberEvent_address_uint);//MemberRegistry_publishMemberEvent);
 		if(btn!=undefined)
 			btn.onclick = this.MemberRegistry_publishMemberEvent_address_uint;
 	}
 	// set function
 	this.setAddress=function() {
 	var _address = document.getElementById(self.prefix+'MemberRegistry_address');
-//	console.log('setAddress:' + self.prefix+' '+_address);
+	if(_address==null)return;
+
 	self.MemberRegistry_instance = MemberRegistryContract.at(_address.value);
 	self.contractAddress = _address.value;
 	self._updateAttributes();
 }
 //update attributes
 this._updateAttributes=function () {
-if(this.MemberRegistry_instance===null) return;
-//console.log('updateAttributes:' + self.prefix);
+if(this.instance===null) return;
 // update attributes
-	var mangerCount_res = self.MemberRegistry_instance.mangerCount();
-//	console.log('get:mangerCount' + self.prefix);
-
-	if(mangerCount_res!=null)
-		document.getElementById(self.prefix+'MemberRegistry_mangerCount_value').innerText = mangerCount_res;
-	var partyMemberCount_res = self.MemberRegistry_instance.partyMemberCount();
-//	console.log('get:partyMemberCount' + self.prefix);
-
-	if(partyMemberCount_res!=null)
-		document.getElementById(self.prefix+'MemberRegistry_partyMemberCount_value').innerText = partyMemberCount_res;
-	var activeMemberCount_res = self.MemberRegistry_instance.activeMemberCount();
-//	console.log('get:activeMemberCount' + self.prefix);
-
-	if(activeMemberCount_res!=null)
-		document.getElementById(self.prefix+'MemberRegistry_activeMemberCount_value').innerText = activeMemberCount_res;
-//console.log('getStruct:managers' + self.prefix);
-	var _key = document.getElementById(self.prefix+'MemberRegistry_contract_attribute_managers_input').value;
-	var managers_res = self.MemberRegistry_instance.managers(_key);
-//console.log('result:managers' + managers_res+' key: '+_key);
+	var mangerCount_res = self.instance.mangerCount();
+	var e = document.getElementById(self.prefix+'MemberRegistry_mangerCount_value');
+	if(mangerCount_res!=null && e!=null)
+		e.innerText = mangerCount_res;
+	var partyMemberCount_res = self.instance.partyMemberCount();
+	var e = document.getElementById(self.prefix+'MemberRegistry_partyMemberCount_value');
+	if(partyMemberCount_res!=null && e!=null)
+		e.innerText = partyMemberCount_res;
+	var activeMemberCount_res = self.instance.activeMemberCount();
+	var e = document.getElementById(self.prefix+'MemberRegistry_activeMemberCount_value');
+	if(activeMemberCount_res!=null && e!=null)
+		e.innerText = activeMemberCount_res;
+var e = document.getElementById(self.prefix+'MemberRegistry_contract_attribute_managers_input');
+if(e!=null){
+	var _key = e.value;
+	var managers_res = self.instance.managers(_key);
 	if(managers_res!=null){
-		document.getElementById(self.prefix+'MemberRegistry_managers_value').innerText = managers_res;
-	}
-//console.log('getStruct:partyMembers' + self.prefix);
-	var _key = document.getElementById(self.prefix+'MemberRegistry_contract_attribute_partyMembers_input').value;
-	var partyMembers_res = self.MemberRegistry_instance.partyMembers(_key);
-//console.log('result:partyMembers' + partyMembers_res+' key: '+_key);
+		var e1 = document.getElementById(self.prefix+'MemberRegistry_managers_value');
+		if(e1!=null)	
+			e1.innerText = managers_res;
+	}}
+	var e = document.getElementById(self.prefix+'MemberRegistry_contract_attribute_partyMembers_input');
+if(e!=null){
+	var _key = e.value;
+	var partyMembers_res = self.instance.partyMembers(_key);
 	if(partyMembers_res!=null){
-		document.getElementById(self.prefix+'MemberRegistry_partyMembers_name_value').innerText = partyMembers_res[0];
-		document.getElementById(self.prefix+'MemberRegistry_partyMembers_id_value').innerText = partyMembers_res[1];
-		document.getElementById(self.prefix+'MemberRegistry_partyMembers_member_value').innerText = partyMembers_res[2];
-		document.getElementById(self.prefix+'MemberRegistry_partyMembers_state_value').innerText = partyMembers_res[3];
-	}
-//console.log('getStruct:memberAddress' + self.prefix);
-	var _key = document.getElementById(self.prefix+'MemberRegistry_contract_attribute_memberAddress_input').value;
-	var memberAddress_res = self.MemberRegistry_instance.memberAddress(_key);
-//console.log('result:memberAddress' + memberAddress_res+' key: '+_key);
+	var e1 = document.getElementById(self.prefix+'MemberRegistry_partyMembers_name_value');
+	if(e1!=null)	
+		e1.innerText = partyMembers_res[0];
+	var e1 = document.getElementById(self.prefix+'MemberRegistry_partyMembers_id_value');
+	if(e1!=null)	
+		e1.innerText = partyMembers_res[1];
+	var e1 = document.getElementById(self.prefix+'MemberRegistry_partyMembers_member_value');
+	if(e1!=null)	
+		e1.innerText = partyMembers_res[2];
+	var e1 = document.getElementById(self.prefix+'MemberRegistry_partyMembers_state_value');
+	if(e1!=null)	
+		e1.innerText = partyMembers_res[3];
+	}}
+	var e = document.getElementById(self.prefix+'MemberRegistry_contract_attribute_memberAddress_input');
+if(e!=null){
+	var _key = e.value;
+	var memberAddress_res = self.instance.memberAddress(_key);
 	if(memberAddress_res!=null){
-		document.getElementById(self.prefix+'MemberRegistry_memberAddress_name_value').innerText = memberAddress_res[0];
-		document.getElementById(self.prefix+'MemberRegistry_memberAddress_id_value').innerText = memberAddress_res[1];
-		document.getElementById(self.prefix+'MemberRegistry_memberAddress_member_value').innerText = memberAddress_res[2];
-		document.getElementById(self.prefix+'MemberRegistry_memberAddress_state_value').innerText = memberAddress_res[3];
-	}
+	var e1 = document.getElementById(self.prefix+'MemberRegistry_memberAddress_name_value');
+	if(e1!=null)	
+		e1.innerText = memberAddress_res[0];
+	var e1 = document.getElementById(self.prefix+'MemberRegistry_memberAddress_id_value');
+	if(e1!=null)	
+		e1.innerText = memberAddress_res[1];
+	var e1 = document.getElementById(self.prefix+'MemberRegistry_memberAddress_member_value');
+	if(e1!=null)	
+		e1.innerText = memberAddress_res[2];
+	var e1 = document.getElementById(self.prefix+'MemberRegistry_memberAddress_state_value');
+	if(e1!=null)	
+		e1.innerText = memberAddress_res[3];
+	}}
 }
 
 //call functions
 //function MemberRegistry_addMember
 this.MemberRegistry_addMember_string_address=function() {
-//console.log('function:addMember' + self.prefix);
 	var e = document.getElementById(self.prefix+'MemberRegistry_addMember_string_address_name');
-//	console.log(':' + self.prefix+'MemberRegistry_addMember_string_address_name'+": "+e);
-	var param_name = e.value;
+	if(e!=null)
+		var param_name = e.value;
 	var e = document.getElementById(self.prefix+'MemberRegistry_addMember_string_address__memberAddress');
-//	console.log(':' + self.prefix+'MemberRegistry_addMember_string_address__memberAddress'+": "+e);
-	var param__memberAddress = e.value;
-//	console.log(':' +self.MemberRegistry_instance+':');
-	var res = self.MemberRegistry_instance.addMember(param_name, param__memberAddress);
+	if(e!=null)
+		var param__memberAddress = e.value;
+	var res = self.instance.addMember(param_name, param__memberAddress);
 }
 //function MemberRegistry_canAccess
 this.Manageable_canAccess=function() {
-//console.log('function:canAccess' + self.prefix);
-//	console.log(':' +self.MemberRegistry_instance+':');
-	var res = self.MemberRegistry_instance.canAccess();
-	if(res!=null)
-		document.getElementById(self.prefix+'Manageable_canAccess_res').innerText = res;
+	var res = self.instance.canAccess();
+	var e = document.getElementById(self.prefix+'Manageable_canAccess_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function MemberRegistry_addManager
 this.Manageable_addManager_address=function() {
-//console.log('function:addManager' + self.prefix);
 	var e = document.getElementById(self.prefix+'Manageable_addManager_address__newManagerAddress');
-//	console.log(':' + self.prefix+'Manageable_addManager_address__newManagerAddress'+": "+e);
-	var param__newManagerAddress = e.value;
-//	console.log(':' +self.MemberRegistry_instance+':');
-	var res = self.MemberRegistry_instance.addManager(param__newManagerAddress);
+	if(e!=null)
+		var param__newManagerAddress = e.value;
+	var res = self.instance.addManager(param__newManagerAddress);
 }
 //function MemberRegistry_unregisterMember
 this.MemberRegistry_unregisterMember_uint=function() {
-//console.log('function:unregisterMember' + self.prefix);
 	var e = document.getElementById(self.prefix+'MemberRegistry_unregisterMember_uint_id');
-//	console.log(':' + self.prefix+'MemberRegistry_unregisterMember_uint_id'+": "+e);
-	var param_id = e.value;
-//	console.log(':' +self.MemberRegistry_instance+':');
-	var res = self.MemberRegistry_instance.unregisterMember(param_id);
+	if(e!=null)
+		var param_id = e.value;
+	var res = self.instance.unregisterMember(param_id);
 }
 //function MemberRegistry_getMemberCount
 this.MemberRegistry_getMemberCount=function() {
-//console.log('function:getMemberCount' + self.prefix);
-//	console.log(':' +self.MemberRegistry_instance+':');
-	var res = self.MemberRegistry_instance.getMemberCount();
-	if(res!=null)
-		document.getElementById(self.prefix+'MemberRegistry_getMemberCount_res').innerText = res;
+	var res = self.instance.getMemberCount();
+	var e = document.getElementById(self.prefix+'MemberRegistry_getMemberCount_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function MemberRegistry_removeManager
 this.Manageable_removeManager_address=function() {
-//console.log('function:removeManager' + self.prefix);
 	var e = document.getElementById(self.prefix+'Manageable_removeManager_address__managerAddress');
-//	console.log(':' + self.prefix+'Manageable_removeManager_address__managerAddress'+": "+e);
-	var param__managerAddress = e.value;
-//	console.log(':' +self.MemberRegistry_instance+':');
-	var res = self.MemberRegistry_instance.removeManager(param__managerAddress);
+	if(e!=null)
+		var param__managerAddress = e.value;
+	var res = self.instance.removeManager(param__managerAddress);
 }
 //function MemberRegistry_isActiveMember
 this.MemberRegistry_isActiveMember_address=function() {
-//console.log('function:isActiveMember' + self.prefix);
 	var e = document.getElementById(self.prefix+'MemberRegistry_isActiveMember_address__memberAdress');
-//	console.log(':' + self.prefix+'MemberRegistry_isActiveMember_address__memberAdress'+": "+e);
-	var param__memberAdress = e.value;
-//	console.log(':' +self.MemberRegistry_instance+':');
-	var res = self.MemberRegistry_instance.isActiveMember(param__memberAdress);
-	if(res!=null)
-		document.getElementById(self.prefix+'MemberRegistry_isActiveMember_address_res').innerText = res;
+	if(e!=null)
+		var param__memberAdress = e.value;
+	var res = self.instance.isActiveMember(param__memberAdress);
+	var e = document.getElementById(self.prefix+'MemberRegistry_isActiveMember_address_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function MemberRegistry_isManager
 this.Manageable_isManager_address=function() {
-//console.log('function:isManager' + self.prefix);
 	var e = document.getElementById(self.prefix+'Manageable_isManager_address__managerAddress');
-//	console.log(':' + self.prefix+'Manageable_isManager_address__managerAddress'+": "+e);
-	var param__managerAddress = e.value;
-//	console.log(':' +self.MemberRegistry_instance+':');
-	var res = self.MemberRegistry_instance.isManager(param__managerAddress);
-	if(res!=null)
-		document.getElementById(self.prefix+'Manageable_isManager_address_res').innerText = res;
+	if(e!=null)
+		var param__managerAddress = e.value;
+	var res = self.instance.isManager(param__managerAddress);
+	var e = document.getElementById(self.prefix+'Manageable_isManager_address_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function MemberRegistry_changeMemberAddress
 this.MemberRegistry_changeMemberAddress_uint_address=function() {
-//console.log('function:changeMemberAddress' + self.prefix);
 	var e = document.getElementById(self.prefix+'MemberRegistry_changeMemberAddress_uint_address_id');
-//	console.log(':' + self.prefix+'MemberRegistry_changeMemberAddress_uint_address_id'+": "+e);
-	var param_id = e.value;
+	if(e!=null)
+		var param_id = e.value;
 	var e = document.getElementById(self.prefix+'MemberRegistry_changeMemberAddress_uint_address__newMemberAddress');
-//	console.log(':' + self.prefix+'MemberRegistry_changeMemberAddress_uint_address__newMemberAddress'+": "+e);
-	var param__newMemberAddress = e.value;
-//	console.log(':' +self.MemberRegistry_instance+':');
-	var res = self.MemberRegistry_instance.changeMemberAddress(param_id, param__newMemberAddress);
+	if(e!=null)
+		var param__newMemberAddress = e.value;
+	var res = self.instance.changeMemberAddress(param_id, param__newMemberAddress);
 }
 //function MemberRegistry_getMemberData
 this.MemberRegistry_getMemberData_address=function() {
-//console.log('function:getMemberData' + self.prefix);
 	var e = document.getElementById(self.prefix+'MemberRegistry_getMemberData_address__address');
-//	console.log(':' + self.prefix+'MemberRegistry_getMemberData_address__address'+": "+e);
-	var param__address = e.value;
-//	console.log(':' +self.MemberRegistry_instance+':');
-	var res = self.MemberRegistry_instance.getMemberData(param__address);
-	if(res!=null)
-		document.getElementById(self.prefix+'MemberRegistry_getMemberData_address_res').innerText = res;
+	if(e!=null)
+		var param__address = e.value;
+	var res = self.instance.getMemberData(param__address);
+	var e = document.getElementById(self.prefix+'MemberRegistry_getMemberData_address_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 //function MemberRegistry_publishMemberEvent
 this.MemberRegistry_publishMemberEvent_address_uint=function() {
-//console.log('function:publishMemberEvent' + self.prefix);
 	var e = document.getElementById(self.prefix+'MemberRegistry_publishMemberEvent_address_uint_mAddress');
-//	console.log(':' + self.prefix+'MemberRegistry_publishMemberEvent_address_uint_mAddress'+": "+e);
-	var param_mAddress = e.value;
+	if(e!=null)
+		var param_mAddress = e.value;
 	var e = document.getElementById(self.prefix+'MemberRegistry_publishMemberEvent_address_uint_eventType');
-//	console.log(':' + self.prefix+'MemberRegistry_publishMemberEvent_address_uint_eventType'+": "+e);
-	var param_eventType = e.value;
-//	console.log(':' +self.MemberRegistry_instance+':');
-	var res = self.MemberRegistry_instance.publishMemberEvent(param_mAddress, param_eventType);
+	if(e!=null)
+		var param_eventType = e.value;
+	var res = self.instance.publishMemberEvent(param_mAddress, param_eventType);
 }
 
 //delegated calls
@@ -652,51 +643,74 @@ this.MemberRegistry_publishMemberEvent_address_uint=function() {
 }// end controller	
 
 
-// script for MemberRegistry
-function MemberRegistryModel(prefix) {
-	this.prefix = prefix;
-	this.guiFactory = new MemberRegistryGuiFactory();
-	this.controller = new MemberRegistryController();
-	this.guiFactory.prefix = prefix;
-	this.controller.prefix = prefix;
-}
-MemberRegistryModel.prototype.create=function () {
-	this.guiFactory.placeDefaultGui();
-	this.controller._updateAttributes();
-}
-
-
-//class as GlueCode
+//class as GlueCode MemberRegistryManager
 //uses prefix + 'GuiContainer'
-function MemberRegistryManager(prefix,contract) {
+function MemberRegistryManager(prefix,contract,containerId) {
 	this.prefix = prefix;
 	var self = this;
 	this.c = new MemberRegistryController();
 	this.c.prefix=prefix;
-	this.c.MemberRegistry_instance=contract;
+	this.c.instance=contract;
 	this.c.contractAddress = contract.address;
 	this.g = new MemberRegistryGuiFactory();
 	this.g.prefix = prefix;
+	this.containerId = containerId;
 
 	this.addGui = function() {
-		var e = document.getElementById(this.prefix + 'GuiContainer');
-//console.log('addGui:' + this.prefix+ 'GuiContainer'+e);
+		var e = document.getElementById(this.containerId);
+		if(e==null)return;
 		var elemDiv = document.createElement('div');
 		elemDiv.id= this.prefix +'MemberRegistry_gui';
 		e.appendChild(elemDiv);
-		this.g.placeDefaultGui();
-		document.getElementById(this.prefix+'MemberRegistry_address').value = this.c.contractAddress;
+		elemDiv.innerHTML = this.createGui(this.g);
+		var e = document.getElementById(this.prefix+'MemberRegistry_address');
+		if(e!=null)
+			e.value = this.c.contractAddress;
 		this.c.bindGui();
 	}	
 	this.clearGui = function(){
-		var e = document.getElementById(this.prefix + 'GuiContainer');
+		var e = document.getElementById(this.containerId);
 		e.innerHTML ='';
+	}
+	this.createGui = function(guifactory){
+		var txt ='';
+		txt = txt + guifactory.createDefaultGui();
+		return guifactory.createSeletonGui(txt);
+
+	}
+	this.createSmallGui = function(guifactory){
+		var txt ='';
+		txt = txt + guifactory.createAttributesGui();
+		return guifactory.createSeletonGui(txt);
+
 	}
 	this.updateGui = function(){
 		this.c._updateAttributes();
 	}
 	this.getContract = function(){
-		return this.c.MemberRegistry_instance;
+		return this.c.instance;
+	}
+
+//watch events
+	this.watchEvents=function(){
+	var event_MemberEvent = contract.MemberEvent({},{fromBlock: 0});
+	event_MemberEvent.watch(function(error,result){
+	if(!error){
+		var e = document.getElementById(self.eventlogPrefix+'eventLog');
+		var elemDiv = document.createElement('div');
+		elemDiv.id= result.blockNumber +'event';
+		e.appendChild(elemDiv);
+		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
+		elemDiv.innerHTML = '<div>'
+        +'<span>'+result.args.mAddress+'</span>'
+        +'<span>'+result.args.eType+'</span>'
+        +'<span>'+result.args.id+'</span>'
+        +'<span>'+result.args.name+'</span>'
+        +'<span>'+result.args.memberState+'</span>'
+		+ '</div>';
+		}else
+		console.log(error);	
+	});
 	}
 
 }// end of manager
@@ -706,29 +720,33 @@ function MemberRegistryGuiMananger(guiId){
 	this.managers=new Array();	//[];		
 	
 	this.addManager = function(contract) {
-//console.log('addManager:'+contract);
-		var m = new MemberRegistryManager(contract.address,contract);
+		var m = new MemberRegistryManager(contract.address,contract,this.prefix);
+		m.watchEvents();
 		this.managers.push(m);
 		//manager.addGui();
 	}
 			
 	this.clearGui = function(){
 		var e = document.getElementById(this.prefix);
-//console.log('clear gui:'+this.prefix+e);
 		if(e!==undefined)
 			e.innerHTML ='';
 	}
 			
 	this.displayGui = function(){
 		var e = document.getElementById(this.prefix);
-//console.log('displayGui:'+this.prefix +e);
 		if(e==undefined) return;
 		for (i in this.managers) {
+			var manager = this.managers[i] ;
 			var elemDiv = document.createElement('div');
-			elemDiv.id= this.managers[i].prefix + 'GuiContainer';//'MemberRegistry_gui';
+			elemDiv.id= manager.prefix + 'GuiContainer';//'MemberRegistry_gui';
 			e.appendChild(elemDiv);
-//console.log('add:'+elemDiv.id);
-			this.managers[i].addGui();
+			elemDiv.innerHTML = manager.createGui(manager.g);
+		}
+	}
+	this.displaySimpleGui = function(){
+		for (i in this.managers) {
+			var manager = this.managers[i] ;
+			manager.addGui();
 		}
 	}
 
@@ -740,14 +758,20 @@ function MemberRegistryGuiMananger(guiId){
 	}
 }// end of gui mananger
 
+//Start of user code custom_MemberRegistry_js
+//TODO: implement
+//End of user code
 //gui factory MemberAware
 function MemberAwareGuiFactory() {
 	this.prefix='';
 	
 // default Gui
 this.placeDefaultGui=function() {
-//	console.log(this.prefix+' place gui');
-	document.getElementById(this.prefix+'MemberAware_gui').innerHTML = this.createDefaultGui();
+	var e = document.getElementById(this.prefix+'MemberAware_gui');
+	if(e!=null)
+		e.innerHTML = this.createDefaultGui();
+	else
+		console.log(this.prefix+'MemberAware_gui not found');
 }
 // default Gui
 this.createDefaultGui=function() {
@@ -781,7 +805,7 @@ this.createAttributesGui=function() {
 
 
 //print the contract div around
-this.createMemberAwareSeletonGui=function(inner) {
+this.createSeletonGui=function(inner) {
 	return 	'<!-- gui for MemberAware_contract -->'
 +	'	<div class="contract" id="'+this.prefix+'MemberAware_contract">'
 + inner
@@ -795,54 +819,51 @@ this.createMemberAwareSeletonGui=function(inner) {
 // script for MemberAware gui controller
 function MemberAwareController() {
 
-	this.MemberAware_instance = undefined;
+	this.instance = undefined;
 	this.prefix='';
 	this.contractAddress = undefined; 
+	this.eventlogPrefix = '';
 	var self = this;
 
 // bind buttons
 	this.bindGui=function() {
 		var btn = document.getElementById(self.prefix+'MemberAwareController.setAddress');
-//	console.log('bind:' + self.prefix+' '+btn);
 		if(btn!=undefined)		
 			btn.onclick = this.setAddress;
 
 		var btn = document.getElementById(self.prefix+'MemberAware_updateAttributes');
-//		console.log('bind update:' + self.prefix+' '+btn);
 		if(btn!=undefined)
 			btn.onclick = this._updateAttributes;
 	}
 	// set function
 	this.setAddress=function() {
 	var _address = document.getElementById(self.prefix+'MemberAware_address');
-//	console.log('setAddress:' + self.prefix+' '+_address);
+	if(_address==null)return;
+
 	self.MemberAware_instance = MemberAwareContract.at(_address.value);
 	self.contractAddress = _address.value;
 	self._updateAttributes();
 }
 //update attributes
 this._updateAttributes=function () {
-if(this.MemberAware_instance===null) return;
-//console.log('updateAttributes:' + self.prefix);
+if(this.instance===null) return;
 // update attributes
-	var memberRegistry_res = self.MemberAware_instance.memberRegistry();
-//	console.log('get:memberRegistry' + self.prefix);
-
-	if(memberRegistry_res!=null)
-		document.getElementById(self.prefix+'MemberAware_memberRegistry_value').innerText = memberRegistry_res;
+	var memberRegistry_res = self.instance.memberRegistry();
+	var e = document.getElementById(self.prefix+'MemberAware_memberRegistry_value');
+	if(memberRegistry_res!=null && e!=null)
+		e.innerText = memberRegistry_res;
 }
 
 //call functions
 //function MemberAware_isMember
 this.MemberAware_isMember_address=function() {
-//console.log('function:isMember' + self.prefix);
 	var e = document.getElementById(self.prefix+'MemberAware_isMember_address__address');
-//	console.log(':' + self.prefix+'MemberAware_isMember_address__address'+": "+e);
-	var param__address = e.value;
-//	console.log(':' +self.MemberAware_instance+':');
-	var res = self.MemberAware_instance.isMember(param__address);
-	if(res!=null)
-		document.getElementById(self.prefix+'MemberAware_isMember_address_res').innerText = res;
+	if(e!=null)
+		var param__address = e.value;
+	var res = self.instance.isMember(param__address);
+	var e = document.getElementById(self.prefix+'MemberAware_isMember_address_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 
 //delegated calls
@@ -850,51 +871,56 @@ this.MemberAware_isMember_address=function() {
 }// end controller	
 
 
-// script for MemberAware
-function MemberAwareModel(prefix) {
-	this.prefix = prefix;
-	this.guiFactory = new MemberAwareGuiFactory();
-	this.controller = new MemberAwareController();
-	this.guiFactory.prefix = prefix;
-	this.controller.prefix = prefix;
-}
-MemberAwareModel.prototype.create=function () {
-	this.guiFactory.placeDefaultGui();
-	this.controller._updateAttributes();
-}
-
-
-//class as GlueCode
+//class as GlueCode MemberAwareManager
 //uses prefix + 'GuiContainer'
-function MemberAwareManager(prefix,contract) {
+function MemberAwareManager(prefix,contract,containerId) {
 	this.prefix = prefix;
 	var self = this;
 	this.c = new MemberAwareController();
 	this.c.prefix=prefix;
-	this.c.MemberAware_instance=contract;
+	this.c.instance=contract;
 	this.c.contractAddress = contract.address;
 	this.g = new MemberAwareGuiFactory();
 	this.g.prefix = prefix;
+	this.containerId = containerId;
 
 	this.addGui = function() {
-		var e = document.getElementById(this.prefix + 'GuiContainer');
-//console.log('addGui:' + this.prefix+ 'GuiContainer'+e);
+		var e = document.getElementById(this.containerId);
+		if(e==null)return;
 		var elemDiv = document.createElement('div');
 		elemDiv.id= this.prefix +'MemberAware_gui';
 		e.appendChild(elemDiv);
-		this.g.placeDefaultGui();
-		document.getElementById(this.prefix+'MemberAware_address').value = this.c.contractAddress;
+		elemDiv.innerHTML = this.createGui(this.g);
+		var e = document.getElementById(this.prefix+'MemberAware_address');
+		if(e!=null)
+			e.value = this.c.contractAddress;
 		this.c.bindGui();
 	}	
 	this.clearGui = function(){
-		var e = document.getElementById(this.prefix + 'GuiContainer');
+		var e = document.getElementById(this.containerId);
 		e.innerHTML ='';
+	}
+	this.createGui = function(guifactory){
+		var txt ='';
+		txt = txt + guifactory.createDefaultGui();
+		return guifactory.createSeletonGui(txt);
+
+	}
+	this.createSmallGui = function(guifactory){
+		var txt ='';
+		txt = txt + guifactory.createAttributesGui();
+		return guifactory.createSeletonGui(txt);
+
 	}
 	this.updateGui = function(){
 		this.c._updateAttributes();
 	}
 	this.getContract = function(){
-		return this.c.MemberAware_instance;
+		return this.c.instance;
+	}
+
+//watch events
+	this.watchEvents=function(){
 	}
 
 }// end of manager
@@ -904,29 +930,33 @@ function MemberAwareGuiMananger(guiId){
 	this.managers=new Array();	//[];		
 	
 	this.addManager = function(contract) {
-//console.log('addManager:'+contract);
-		var m = new MemberAwareManager(contract.address,contract);
+		var m = new MemberAwareManager(contract.address,contract,this.prefix);
+		m.watchEvents();
 		this.managers.push(m);
 		//manager.addGui();
 	}
 			
 	this.clearGui = function(){
 		var e = document.getElementById(this.prefix);
-//console.log('clear gui:'+this.prefix+e);
 		if(e!==undefined)
 			e.innerHTML ='';
 	}
 			
 	this.displayGui = function(){
 		var e = document.getElementById(this.prefix);
-//console.log('displayGui:'+this.prefix +e);
 		if(e==undefined) return;
 		for (i in this.managers) {
+			var manager = this.managers[i] ;
 			var elemDiv = document.createElement('div');
-			elemDiv.id= this.managers[i].prefix + 'GuiContainer';//'MemberAware_gui';
+			elemDiv.id= manager.prefix + 'GuiContainer';//'MemberAware_gui';
 			e.appendChild(elemDiv);
-//console.log('add:'+elemDiv.id);
-			this.managers[i].addGui();
+			elemDiv.innerHTML = manager.createGui(manager.g);
+		}
+	}
+	this.displaySimpleGui = function(){
+		for (i in this.managers) {
+			var manager = this.managers[i] ;
+			manager.addGui();
 		}
 	}
 
@@ -938,3 +968,30 @@ function MemberAwareGuiMananger(guiId){
 	}
 }// end of gui mananger
 
+//Start of user code custom_MemberAware_js
+//TODO: implement
+//End of user code
+//the page Object fro the MembersPage.
+function MembersPage(prefix) {
+	this.prefix=prefix;
+	//Start of user code page_members_attributes
+		//TODO: implement
+	//End of user code
+
+	
+// default Gui
+this.placeDefaultGui=function() {
+this.createDefaultGui();
+
+}
+// default Gui
+this.createDefaultGui=function() {
+	//Start of user code page_Members_create_default_gui_functions
+		//TODO: implement
+	//End of user code
+}
+	//Start of user code page_Members_functions
+		//TODO: implement
+	//End of user code
+
+}// end of MembersPage

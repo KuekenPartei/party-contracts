@@ -55,8 +55,11 @@ function BallotGuiFactory() {
 	
 // default Gui
 this.placeDefaultGui=function() {
-//	console.log(this.prefix+' place gui');
-	document.getElementById(this.prefix+'Ballot_gui').innerHTML = this.createDefaultGui();
+	var e = document.getElementById(this.prefix+'Ballot_gui');
+	if(e!=null)
+		e.innerHTML = this.createDefaultGui();
+	else
+		console.log(this.prefix+'Ballot_gui not found');
 }
 // default Gui
 this.createDefaultGui=function() {
@@ -212,7 +215,7 @@ return 	'<!--struct -->'
 }
 
 //print the contract div around
-this.createBallotSeletonGui=function(inner) {
+this.createSeletonGui=function(inner) {
 	return 	'<!-- gui for Ballot_contract -->'
 +	'	<div class="contract" id="'+this.prefix+'Ballot_contract">'
 + inner
@@ -226,128 +229,120 @@ this.createBallotSeletonGui=function(inner) {
 // script for Ballot gui controller
 function BallotController() {
 
-	this.Ballot_instance = undefined;
+	this.instance = undefined;
 	this.prefix='';
 	this.contractAddress = undefined; 
+	this.eventlogPrefix = '';
 	var self = this;
 
 // bind buttons
 	this.bindGui=function() {
 		var btn = document.getElementById(self.prefix+'BallotController.setAddress');
-//	console.log('bind:' + self.prefix+' '+btn);
 		if(btn!=undefined)		
 			btn.onclick = this.setAddress;
 
 		var btn = document.getElementById(self.prefix+'Ballot_updateAttributes');
-//		console.log('bind update:' + self.prefix+' '+btn);
 		if(btn!=undefined)
 			btn.onclick = this._updateAttributes;
 		var btn = document.getElementById(self.prefix+'BallotController.Ballot_Ballot_string_bytes32');
-//		console.log('bind:Ballot_Ballot ' + self.prefix+' '+btn+'  '+self.Ballot_Ballot_string_bytes32);//Ballot_Ballot);
 		if(btn!=undefined)
 			btn.onclick = this.Ballot_Ballot_string_bytes32;
 		var btn = document.getElementById(self.prefix+'BallotController.Ballot_giveRightToVote_address');
-//		console.log('bind:Ballot_giveRightToVote ' + self.prefix+' '+btn+'  '+self.Ballot_giveRightToVote_address);//Ballot_giveRightToVote);
 		if(btn!=undefined)
 			btn.onclick = this.Ballot_giveRightToVote_address;
 		var btn = document.getElementById(self.prefix+'BallotController.Ballot_delegateTo_address');
-//		console.log('bind:Ballot_delegateTo ' + self.prefix+' '+btn+'  '+self.Ballot_delegateTo_address);//Ballot_delegateTo);
 		if(btn!=undefined)
 			btn.onclick = this.Ballot_delegateTo_address;
 		var btn = document.getElementById(self.prefix+'BallotController.Ballot_voteFor_uint');
-//		console.log('bind:Ballot_voteFor ' + self.prefix+' '+btn+'  '+self.Ballot_voteFor_uint);//Ballot_voteFor);
 		if(btn!=undefined)
 			btn.onclick = this.Ballot_voteFor_uint;
 		var btn = document.getElementById(self.prefix+'BallotController.Ballot_winningProposal');
-//		console.log('bind:Ballot_winningProposal ' + self.prefix+' '+btn+'  '+self.Ballot_winningProposal);//Ballot_winningProposal);
 		if(btn!=undefined)
 			btn.onclick = this.Ballot_winningProposal;
 	}
 	// set function
 	this.setAddress=function() {
 	var _address = document.getElementById(self.prefix+'Ballot_address');
-//	console.log('setAddress:' + self.prefix+' '+_address);
+	if(_address==null)return;
+
 	self.Ballot_instance = BallotContract.at(_address.value);
 	self.contractAddress = _address.value;
 	self._updateAttributes();
 }
 //update attributes
 this._updateAttributes=function () {
-if(this.Ballot_instance===null) return;
-//console.log('updateAttributes:' + self.prefix);
+if(this.instance===null) return;
 // update attributes
-	var chairperson_res = self.Ballot_instance.chairperson();
-//	console.log('get:chairperson' + self.prefix);
-
-	if(chairperson_res!=null)
-		document.getElementById(self.prefix+'Ballot_chairperson_value').innerText = chairperson_res;
-	var proposals_res = self.Ballot_instance.proposals();
-//	console.log('get:proposals' + self.prefix);
-
-	if(proposals_res!=null)
-		document.getElementById(self.prefix+'Ballot_proposals_value').innerText = proposals_res;
-	var ballotName_res = self.Ballot_instance.ballotName();
-//	console.log('get:ballotName' + self.prefix);
-
-	if(ballotName_res!=null)
-		document.getElementById(self.prefix+'Ballot_ballotName_value').innerText = ballotName_res;
-	var _key = document.getElementById(self.prefix+'Ballot_contract_attribute_voters_input').value;
-	var voters_res = self.Ballot_instance.voters(_key);
+	var chairperson_res = self.instance.chairperson();
+	var e = document.getElementById(self.prefix+'Ballot_chairperson_value');
+	if(chairperson_res!=null && e!=null)
+		e.innerText = chairperson_res;
+	var proposals_res = self.instance.proposals();
+	var e = document.getElementById(self.prefix+'Ballot_proposals_value');
+	if(proposals_res!=null && e!=null)
+		e.innerText = proposals_res;
+	var ballotName_res = self.instance.ballotName();
+	var e = document.getElementById(self.prefix+'Ballot_ballotName_value');
+	if(ballotName_res!=null && e!=null)
+		e.innerText = ballotName_res;
+var e = document.getElementById(self.prefix+'Ballot_contract_attribute_voters_input');
+if(e!=null){
+	var _key = e.value;
+	var voters_res = self.instance.voters(_key);
 	if(voters_res!=null){
-		document.getElementById(self.prefix+'Ballot_voters_weight_value').innerText = voters_res[0];
-		document.getElementById(self.prefix+'Ballot_voters_voted_value').innerText = voters_res[1];
-		document.getElementById(self.prefix+'Ballot_voters_delegate_value').innerText = voters_res[2];
-		document.getElementById(self.prefix+'Ballot_voters_vote_value').innerText = voters_res[3];
-	}
+	var e1 = document.getElementById(self.prefix+'Ballot_voters_weight_value');
+	if(e1!=null)	
+		e1.innerText = voters_res[0];
+	var e1 = document.getElementById(self.prefix+'Ballot_voters_voted_value');
+	if(e1!=null)	
+		e1.innerText = voters_res[1];
+	var e1 = document.getElementById(self.prefix+'Ballot_voters_delegate_value');
+	if(e1!=null)	
+		e1.innerText = voters_res[2];
+	var e1 = document.getElementById(self.prefix+'Ballot_voters_vote_value');
+	if(e1!=null)	
+		e1.innerText = voters_res[3];
+	}}
 }
 
 //call functions
 //function Ballot_Ballot
 this.Ballot_Ballot_string_bytes32=function() {
-//console.log('function:Ballot' + self.prefix);
 	var e = document.getElementById(self.prefix+'Ballot_Ballot_string_bytes32_name');
-//	console.log(':' + self.prefix+'Ballot_Ballot_string_bytes32_name'+": "+e);
-	var param_name = e.value;
+	if(e!=null)
+		var param_name = e.value;
 	var e = document.getElementById(self.prefix+'Ballot_Ballot_string_bytes32_proposalNames');
-//	console.log(':' + self.prefix+'Ballot_Ballot_string_bytes32_proposalNames'+": "+e);
-	var param_proposalNames = e.value;
-//	console.log(':' +self.Ballot_instance+':');
-	var res = self.Ballot_instance.Ballot(param_name, param_proposalNames);
+	if(e!=null)
+		var param_proposalNames = e.value;
+	var res = self.instance.Ballot(param_name, param_proposalNames);
 }
 //function Ballot_giveRightToVote
 this.Ballot_giveRightToVote_address=function() {
-//console.log('function:giveRightToVote' + self.prefix);
 	var e = document.getElementById(self.prefix+'Ballot_giveRightToVote_address_voter');
-//	console.log(':' + self.prefix+'Ballot_giveRightToVote_address_voter'+": "+e);
-	var param_voter = e.value;
-//	console.log(':' +self.Ballot_instance+':');
-	var res = self.Ballot_instance.giveRightToVote(param_voter);
+	if(e!=null)
+		var param_voter = e.value;
+	var res = self.instance.giveRightToVote(param_voter);
 }
 //function Ballot_delegateTo
 this.Ballot_delegateTo_address=function() {
-//console.log('function:delegateTo' + self.prefix);
 	var e = document.getElementById(self.prefix+'Ballot_delegateTo_address_to');
-//	console.log(':' + self.prefix+'Ballot_delegateTo_address_to'+": "+e);
-	var param_to = e.value;
-//	console.log(':' +self.Ballot_instance+':');
-	var res = self.Ballot_instance.delegateTo(param_to);
+	if(e!=null)
+		var param_to = e.value;
+	var res = self.instance.delegateTo(param_to);
 }
 //function Ballot_voteFor
 this.Ballot_voteFor_uint=function() {
-//console.log('function:voteFor' + self.prefix);
 	var e = document.getElementById(self.prefix+'Ballot_voteFor_uint_proposal');
-//	console.log(':' + self.prefix+'Ballot_voteFor_uint_proposal'+": "+e);
-	var param_proposal = e.value;
-//	console.log(':' +self.Ballot_instance+':');
-	var res = self.Ballot_instance.voteFor(param_proposal);
+	if(e!=null)
+		var param_proposal = e.value;
+	var res = self.instance.voteFor(param_proposal);
 }
 //function Ballot_winningProposal
 this.Ballot_winningProposal=function() {
-//console.log('function:winningProposal' + self.prefix);
-//	console.log(':' +self.Ballot_instance+':');
-	var res = self.Ballot_instance.winningProposal();
-	if(res!=null)
-		document.getElementById(self.prefix+'Ballot_winningProposal_res').innerText = res;
+	var res = self.instance.winningProposal();
+	var e = document.getElementById(self.prefix+'Ballot_winningProposal_res');
+	if(res!=null && e!=null)
+		e.innerText = res;
 }
 
 //delegated calls
@@ -355,51 +350,56 @@ this.Ballot_winningProposal=function() {
 }// end controller	
 
 
-// script for Ballot
-function BallotModel(prefix) {
-	this.prefix = prefix;
-	this.guiFactory = new BallotGuiFactory();
-	this.controller = new BallotController();
-	this.guiFactory.prefix = prefix;
-	this.controller.prefix = prefix;
-}
-BallotModel.prototype.create=function () {
-	this.guiFactory.placeDefaultGui();
-	this.controller._updateAttributes();
-}
-
-
-//class as GlueCode
+//class as GlueCode BallotManager
 //uses prefix + 'GuiContainer'
-function BallotManager(prefix,contract) {
+function BallotManager(prefix,contract,containerId) {
 	this.prefix = prefix;
 	var self = this;
 	this.c = new BallotController();
 	this.c.prefix=prefix;
-	this.c.Ballot_instance=contract;
+	this.c.instance=contract;
 	this.c.contractAddress = contract.address;
 	this.g = new BallotGuiFactory();
 	this.g.prefix = prefix;
+	this.containerId = containerId;
 
 	this.addGui = function() {
-		var e = document.getElementById(this.prefix + 'GuiContainer');
-//console.log('addGui:' + this.prefix+ 'GuiContainer'+e);
+		var e = document.getElementById(this.containerId);
+		if(e==null)return;
 		var elemDiv = document.createElement('div');
 		elemDiv.id= this.prefix +'Ballot_gui';
 		e.appendChild(elemDiv);
-		this.g.placeDefaultGui();
-		document.getElementById(this.prefix+'Ballot_address').value = this.c.contractAddress;
+		elemDiv.innerHTML = this.createGui(this.g);
+		var e = document.getElementById(this.prefix+'Ballot_address');
+		if(e!=null)
+			e.value = this.c.contractAddress;
 		this.c.bindGui();
 	}	
 	this.clearGui = function(){
-		var e = document.getElementById(this.prefix + 'GuiContainer');
+		var e = document.getElementById(this.containerId);
 		e.innerHTML ='';
+	}
+	this.createGui = function(guifactory){
+		var txt ='';
+		txt = txt + guifactory.createDefaultGui();
+		return guifactory.createSeletonGui(txt);
+
+	}
+	this.createSmallGui = function(guifactory){
+		var txt ='';
+		txt = txt + guifactory.createAttributesGui();
+		return guifactory.createSeletonGui(txt);
+
 	}
 	this.updateGui = function(){
 		this.c._updateAttributes();
 	}
 	this.getContract = function(){
-		return this.c.Ballot_instance;
+		return this.c.instance;
+	}
+
+//watch events
+	this.watchEvents=function(){
 	}
 
 }// end of manager
@@ -409,29 +409,33 @@ function BallotGuiMananger(guiId){
 	this.managers=new Array();	//[];		
 	
 	this.addManager = function(contract) {
-//console.log('addManager:'+contract);
-		var m = new BallotManager(contract.address,contract);
+		var m = new BallotManager(contract.address,contract,this.prefix);
+		m.watchEvents();
 		this.managers.push(m);
 		//manager.addGui();
 	}
 			
 	this.clearGui = function(){
 		var e = document.getElementById(this.prefix);
-//console.log('clear gui:'+this.prefix+e);
 		if(e!==undefined)
 			e.innerHTML ='';
 	}
 			
 	this.displayGui = function(){
 		var e = document.getElementById(this.prefix);
-//console.log('displayGui:'+this.prefix +e);
 		if(e==undefined) return;
 		for (i in this.managers) {
+			var manager = this.managers[i] ;
 			var elemDiv = document.createElement('div');
-			elemDiv.id= this.managers[i].prefix + 'GuiContainer';//'Ballot_gui';
+			elemDiv.id= manager.prefix + 'GuiContainer';//'Ballot_gui';
 			e.appendChild(elemDiv);
-//console.log('add:'+elemDiv.id);
-			this.managers[i].addGui();
+			elemDiv.innerHTML = manager.createGui(manager.g);
+		}
+	}
+	this.displaySimpleGui = function(){
+		for (i in this.managers) {
+			var manager = this.managers[i] ;
+			manager.addGui();
 		}
 	}
 
@@ -443,3 +447,30 @@ function BallotGuiMananger(guiId){
 	}
 }// end of gui mananger
 
+//Start of user code custom_Ballot_js
+//TODO: implement
+//End of user code
+//the page Object fro the VotingPage.
+function VotingPage(prefix) {
+	this.prefix=prefix;
+	//Start of user code page_voting_attributes
+		//TODO: implement
+	//End of user code
+
+	
+// default Gui
+this.placeDefaultGui=function() {
+this.createDefaultGui();
+
+}
+// default Gui
+this.createDefaultGui=function() {
+	//Start of user code page_Voting_create_default_gui_functions
+		//TODO: implement
+	//End of user code
+}
+	//Start of user code page_Voting_functions
+		//TODO: implement
+	//End of user code
+
+}// end of VotingPage
