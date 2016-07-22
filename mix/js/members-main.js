@@ -674,7 +674,9 @@ function MemberRegistryManager(prefix,contract,containerId) {
 	}
 	this.createGui = function(guifactory){
 		var txt ='';
+//Start of user code MemberRegistry_create_gui_js
 		txt = txt + guifactory.createDefaultGui();
+//End of user code
 		return guifactory.createSeletonGui(txt);
 
 	}
@@ -758,6 +760,12 @@ function MemberRegistryGuiMananger(guiId){
 	}
 }// end of gui mananger
 
+function MemberRegistryDeployment(guiId){
+//Start of user code MemberRegistry_deployment_js
+//TODO: implement
+//End of user code
+
+}
 //Start of user code custom_MemberRegistry_js
 //TODO: implement
 //End of user code
@@ -902,7 +910,9 @@ function MemberAwareManager(prefix,contract,containerId) {
 	}
 	this.createGui = function(guifactory){
 		var txt ='';
+//Start of user code MemberAware_create_gui_js
 		txt = txt + guifactory.createDefaultGui();
+//End of user code
 		return guifactory.createSeletonGui(txt);
 
 	}
@@ -968,6 +978,12 @@ function MemberAwareGuiMananger(guiId){
 	}
 }// end of gui mananger
 
+function MemberAwareDeployment(guiId){
+//Start of user code MemberAware_deployment_js
+//TODO: implement
+//End of user code
+
+}
 //Start of user code custom_MemberAware_js
 //TODO: implement
 //End of user code

@@ -381,7 +381,9 @@ function BallotManager(prefix,contract,containerId) {
 	}
 	this.createGui = function(guifactory){
 		var txt ='';
+//Start of user code Ballot_create_gui_js
 		txt = txt + guifactory.createDefaultGui();
+//End of user code
 		return guifactory.createSeletonGui(txt);
 
 	}
@@ -447,6 +449,12 @@ function BallotGuiMananger(guiId){
 	}
 }// end of gui mananger
 
+function BallotDeployment(guiId){
+//Start of user code Ballot_deployment_js
+//TODO: implement
+//End of user code
+
+}
 //Start of user code custom_Ballot_js
 //TODO: implement
 //End of user code

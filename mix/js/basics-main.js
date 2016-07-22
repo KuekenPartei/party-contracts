@@ -321,7 +321,9 @@ function OwnedManager(prefix,contract,containerId) {
 	}
 	this.createGui = function(guifactory){
 		var txt ='';
+//Start of user code Owned_create_gui_js
 		txt = txt + guifactory.createDefaultGui();
+//End of user code
 		return guifactory.createSeletonGui(txt);
 
 	}
@@ -387,6 +389,12 @@ function OwnedGuiMananger(guiId){
 	}
 }// end of gui mananger
 
+function OwnedDeployment(guiId){
+//Start of user code Owned_deployment_js
+//TODO: implement
+//End of user code
+
+}
 //Start of user code custom_Owned_js
 //TODO: implement
 //End of user code
@@ -621,7 +629,9 @@ function ManageableManager(prefix,contract,containerId) {
 	}
 	this.createGui = function(guifactory){
 		var txt ='';
+//Start of user code Manageable_create_gui_js
 		txt = txt + guifactory.createDefaultGui();
+//End of user code
 		return guifactory.createSeletonGui(txt);
 
 	}
@@ -687,6 +697,12 @@ function ManageableGuiMananger(guiId){
 	}
 }// end of gui mananger
 
+function ManageableDeployment(guiId){
+//Start of user code Manageable_deployment_js
+//TODO: implement
+//End of user code
+
+}
 //Start of user code custom_Manageable_js
 //TODO: implement
 //End of user code
@@ -1120,7 +1136,9 @@ function MultiownedManager(prefix,contract,containerId) {
 	}
 	this.createGui = function(guifactory){
 		var txt ='';
+//Start of user code Multiowned_create_gui_js
 		txt = txt + guifactory.createDefaultGui();
+//End of user code
 		return guifactory.createSeletonGui(txt);
 
 	}
@@ -1273,6 +1291,12 @@ function MultiownedGuiMananger(guiId){
 	}
 }// end of gui mananger
 
+function MultiownedDeployment(guiId){
+//Start of user code Multiowned_deployment_js
+//TODO: implement
+//End of user code
+
+}
 //Start of user code custom_Multiowned_js
 //TODO: implement
 //End of user code

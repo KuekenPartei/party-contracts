@@ -1082,7 +1082,9 @@ function OrganManager(prefix,contract,containerId) {
 	}
 	this.createGui = function(guifactory){
 		var txt ='';
+//Start of user code Organ_create_gui_js
 		txt = txt + guifactory.createDefaultGui();
+//End of user code
 		return guifactory.createSeletonGui(txt);
 
 	}
@@ -1164,6 +1166,12 @@ function OrganGuiMananger(guiId){
 	}
 }// end of gui mananger
 
+function OrganDeployment(guiId){
+//Start of user code Organ_deployment_js
+//TODO: implement
+//End of user code
+
+}
 //Start of user code custom_Organ_js
 //TODO: implement
 //End of user code
@@ -1496,7 +1504,9 @@ function PartyManager(prefix,contract,containerId) {
 	}
 	this.createGui = function(guifactory){
 		var txt ='';
+//Start of user code Party_create_gui_js
 		txt = txt + guifactory.createDefaultGui();
+//End of user code
 		return guifactory.createSeletonGui(txt);
 
 	}
@@ -1575,6 +1585,12 @@ function PartyGuiMananger(guiId){
 	}
 }// end of gui mananger
 
+function PartyDeployment(guiId){
+//Start of user code Party_deployment_js
+//TODO: implement
+//End of user code
+
+}
 //Start of user code custom_Party_js
 //TODO: implement
 //End of user code
@@ -1949,7 +1965,9 @@ function KUEKeNPartyManager(prefix,contract,containerId) {
 	}
 	this.createGui = function(guifactory){
 		var txt ='';
+//Start of user code KUEKeNParty_create_gui_js
 		txt = txt + guifactory.createDefaultGui();
+//End of user code
 		return guifactory.createSeletonGui(txt);
 
 	}
@@ -2015,6 +2033,12 @@ function KUEKeNPartyGuiMananger(guiId){
 	}
 }// end of gui mananger
 
+function KUEKeNPartyDeployment(guiId){
+//Start of user code KUEKeNParty_deployment_js
+//TODO: implement
+//End of user code
+
+}
 //Start of user code custom_KUEKeNParty_js
 //TODO: implement
 //End of user code
@@ -2683,7 +2707,9 @@ function ConferenceManager(prefix,contract,containerId) {
 	}
 	this.createGui = function(guifactory){
 		var txt ='';
+//Start of user code Conference_create_gui_js
 		txt = txt + guifactory.createDefaultGui();
+//End of user code
 		return guifactory.createSeletonGui(txt);
 
 	}
@@ -2765,6 +2791,12 @@ function ConferenceGuiMananger(guiId){
 	}
 }// end of gui mananger
 
+function ConferenceDeployment(guiId){
+//Start of user code Conference_deployment_js
+//TODO: implement
+//End of user code
+
+}
 //Start of user code custom_Conference_js
 //TODO: implement
 //End of user code
@@ -3422,7 +3454,9 @@ function FoundationConferenceManager(prefix,contract,containerId) {
 	}
 	this.createGui = function(guifactory){
 		var txt ='';
+//Start of user code FoundationConference_create_gui_js
 		txt = txt + guifactory.createDefaultGui();
+//End of user code
 		return guifactory.createSeletonGui(txt);
 
 	}
@@ -3488,6 +3522,12 @@ function FoundationConferenceGuiMananger(guiId){
 	}
 }// end of gui mananger
 
+function FoundationConferenceDeployment(guiId){
+//Start of user code FoundationConference_deployment_js
+//TODO: implement
+//End of user code
+
+}
 //Start of user code custom_FoundationConference_js
 //TODO: implement
 //End of user code

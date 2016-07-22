@@ -488,7 +488,9 @@ function ShortBlogManager(prefix,contract,containerId) {
 	}
 	this.createGui = function(guifactory){
 		var txt ='';
+//Start of user code ShortBlog_create_gui_js
 		txt = txt + guifactory.createDefaultGui();
+//End of user code
 		return guifactory.createSeletonGui(txt);
 
 	}
@@ -569,6 +571,12 @@ function ShortBlogGuiMananger(guiId){
 	}
 }// end of gui mananger
 
+function ShortBlogDeployment(guiId){
+//Start of user code ShortBlog_deployment_js
+//TODO: implement
+//End of user code
+
+}
 //Start of user code custom_ShortBlog_js
 //TODO: implement
 //End of user code
@@ -871,7 +879,9 @@ function BlogRegistryManager(prefix,contract,containerId) {
 	}
 	this.createGui = function(guifactory){
 		var txt ='';
+//Start of user code BlogRegistry_create_gui_js
 		txt = txt + guifactory.createDefaultGui();
+//End of user code
 		return guifactory.createSeletonGui(txt);
 
 	}
@@ -937,6 +947,12 @@ function BlogRegistryGuiMananger(guiId){
 	}
 }// end of gui mananger
 
+function BlogRegistryDeployment(guiId){
+//Start of user code BlogRegistry_deployment_js
+//TODO: implement
+//End of user code
+
+}
 //Start of user code custom_BlogRegistry_js
 //TODO: implement
 //End of user code
