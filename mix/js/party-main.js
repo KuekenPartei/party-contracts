@@ -2035,7 +2035,50 @@ function KUEKeNPartyGuiMananger(guiId){
 
 function KUEKeNPartyDeployment(guiId){
 //Start of user code KUEKeNParty_deployment_js
-//TODO: implement
+
+
+	this.deployContract=function(kpc,br,fc){
+		this.kpc =   kpc;
+		this.br = br;
+		this.fc = fc;
+		console.log('deploy-Basic');
+	}
+
+	// 
+	this.deployBasicContract=function(kpc,br,fc){
+		this.deployContract(kpc,br,fc);
+		console.log('deployContract-KUEKeNPartyDeployment');
+		//this.br.addManager(web3.eth.accounts[0]);
+		
+		var add = this.kpc.address;
+		console.log(this.br.mangerCount()+' addManager: '+this.kpc.address);
+		this.br.addManager(this.kpc.address);
+		this.br.addManager(this.fc.address);
+		this.fc.addManager(this.kpc.address);
+	}
+		
+
+	this.deployKP_1=function(kpc,br,fc){
+		this.deployBasicContract(kpc,br,fc);
+		console.log('deployKP_1');
+		console.log(fc.lastFunctionId()+' -->');
+
+		kpc.boostrapParty(this.fc.address,this.br.address);
+		fc.createFunction('Wahlleitung','hash');
+		console.log(fc.lastFunctionId()+' -->');
+		fc.createFunction('Versammlungsleitung1','hash');
+		console.log(fc.lastFunctionId()+' -->');
+		
+		
+//		kpc.createOrgan.sendTransaction('TestOrgan',{gas: 3700000});
+		
+		//this.br.addManager(web3.eth.accounts[0]);
+		
+		
+		
+	}
+
+	
 //End of user code
 
 }

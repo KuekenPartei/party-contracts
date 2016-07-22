@@ -13,6 +13,11 @@
 <!-- Start of user code custom_party_scripts --> 
 <script type='text/javascript' src="js/publishing-main.js">
 </script>
+<script type='text/javascript' src="package/compilation/party.sol.js">
+</script>
+<script type='text/javascript' src="package/compilation/publishing.sol.js">
+</script>
+
 
 <!-- End of user code -->
 
@@ -74,33 +79,53 @@
 
 <script type='text/javascript'>
 
+
+var deployer = new KUEKeNPartyDeployment('');
+var account = web3.eth.accounts[0];	
+web3.eth.defaultAccount = web3.eth.accounts[0];
+// deploy new contract	
+console.log('create: '+account);
+var kpc = contracts['KUEKeNParty'].contract;  
+// 	KUEKeNPartyContract.new(
+// 	{data: KUEKeNParty.codeHex,from: account, gas: 1000000});
+var br = contracts['BlogRegistry'].contract;  
+// 	BlogRegistryContract.new(
+// 		{data: BlogRegistry.codeHex,from: account, gas: 1000000});
+var fc = contracts['FoundationConference'].contract;  
+// 	FoundationConferenceContract.new(
+// 		{data: FoundationConference.codeHex ,from: account, gas: 1000000});
+
+deployer.deployKP_1(kpc,br,fc);
+
+
+
 var c = new PartyPage('Party-Gui');
-//Start of user code page_Party_js_functions
+// //Start of user code page_Party_js_functions
 c.blog = new ShortBlogGuiMananger('Party-Gui');
 
 var party = contracts['KUEKeNParty'].contract;//KUEKeNPartyContract.at(contracts['KUEKeNParty'].contract.address);
 c.party.addManager(party);
 
  
-for (var i = 0; i < party.organCount(); i++) {
-	var add = party.organs(i);
-	var organ = OrganContract.at(add);
-	c.organ.addManager(organ);
-	var add = organ.getOrganBlog();
-	console.log(i+': address: '+add+' '+organ.organName());
-	var blog = ShortBlogContract.at(add);
-	c.blog.addManager(blog);
-	console.log(i+': address: '+add+' '+organ.organName());
-	for (var i = 0; i < organ.lastFunctionId(); i++) {
-		var add = organ.getFunctionBlogAddress(i);
-		console.log(i+': address: '+add);
-// 		var add = organ.organFunctions(i);
-// 		console.log(i+': address: '+add[6]);
-// 		var blog = ShortBlogContract.at(add);
-// 		c.blog.addManager(blog);
+// for (var i = 0; i < party.organCount(); i++) {
+// 	var add = party.organs(i);
+// 	var organ = OrganContract.at(add);
+// 	c.organ.addManager(organ);
+// 	var add = organ.getOrganBlog();
+// 	console.log(i+': address: '+add+' '+organ.organName());
+// 	var blog = ShortBlogContract.at(add);
+// 	c.blog.addManager(blog);
+// 	console.log(i+': address: '+add+' '+organ.organName());
+// 	for (var i = 0; i < organ.lastFunctionId(); i++) {
+// 		var add = organ.getFunctionBlogAddress(i);
+// 		console.log(i+': address: '+add);
+// // 		var add = organ.organFunctions(i);
+// // 		console.log(i+': address: '+add[6]);
+// // 		var blog = ShortBlogContract.at(add);
+// // 		c.blog.addManager(blog);
 
-	}
-
+// 	}
+// }
 
 c.blog.displayGui();
 c.blog.updateGui();
