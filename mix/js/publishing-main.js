@@ -1448,8 +1448,14 @@ function BlogRegistryDeployment(guiId){
 function PublishingPage(prefix) {
 	this.prefix=prefix;
 	//Start of user code page_publishing_attributes
+<<<<<<< HEAD
 	this.br = new BlogRegistryGuiMananger(prefix);
 	this.sb = new ShortBlogGuiMananger(prefix);
+=======
+	this.registry = new BlogRegistryGuiMananger(prefix);
+	this.blogs = new ShortBlogGuiMananger(prefix);
+	
+>>>>>>> branch 'master' of https://github.com/KuekenPartei/party-contracts.git
 	//End of user code
 
 	
@@ -1465,12 +1471,37 @@ function PublishingPage(prefix) {
 **/
 this.createDefaultGui=function() {
 	//Start of user code page_Publishing_create_default_gui_functions
+<<<<<<< HEAD
 	this.br.displayGui(null);
 	this.sb.displayGui(null);
+=======
+	this.clearGui();
+	this.registry.displayGui();
+	this.registry.updateGui();
+	this.blogs.displayGui();
+	this.blogs.updateGui();
+	
+>>>>>>> branch 'master' of https://github.com/KuekenPartei/party-contracts.git
 	//End of user code
 }
 	//Start of user code page_Publishing_functions
-		//TODO: implement
+this.readDataFromContract=function() {
+	for (i in this.registry.managers) {
+		var manager = this.registry.managers[i];
+		var count = manager.c.instance.blogCount();
+		for (var int = 0; int < count; int++) {
+			var bAddress = manager.c.instance.blogs(int);
+			this.blogs.addManager(ShortBlogContract.at(bAddress));			
+		}
+	}
+	
+}
+
+this.clearGui=function(){
+	this.registry.clearGui();
+	this.blogs.clearGui();
+}
+
 	//End of user code
 
 }// end of PublishingPage
