@@ -128,18 +128,6 @@ _managerAddress|address|in|The address of the manager to work with
 
 ### structs:
 
-PendingState
-
-
-#### PendingState properties
-
-name|type|visiblity|delegate|doc
-----|----|----|----|----
-yetNeeded|uint|public||
-ownersDone|uint|public||
-index|uint|public||
-
-
 
 #### Multiowned properties
 

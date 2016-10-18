@@ -1,7 +1,65 @@
+// file header
+/**
+* A simple bean class around the contract.
+* The BallotModel.
+**/
+function BallotModel(contract) {
+this.contract = contract;
+	/**
+	* Getter for chairperson.
+	**/
+	this.getChairperson = function(){
+		return contract.chairperson(); 
+	}
+	/**
+	* Getter for proposals.
+	**/
+	this.getProposals = function(){
+		return contract.proposals(); 
+	}
+	/**
+	* Getter for ballotName.
+	**/
+	this.getBallotName = function(){
+		return contract.ballotName(); 
+	}
+	/**
+	* Call Ballot.
+	**/
+	this.Ballot = function(name,proposalNames){
+		return contract.Ballot(name,proposalNames); 
+	}
+	/**
+	* Call giveRightToVote.
+	**/
+	this.giveRightToVote = function(voter){
+		return contract.giveRightToVote(voter); 
+	}
+	/**
+	* Call delegateTo.
+	**/
+	this.delegateTo = function(to){
+		return contract.delegateTo(to); 
+	}
+	/**
+	* Call voteFor.
+	**/
+	this.voteFor = function(proposal){
+		return contract.voteFor(proposal); 
+	}
+	/**
+	* Call winningProposal.
+	**/
+	this.winningProposal = function(){
+		return contract.winningProposal(); 
+	}
+}// end of function BallotModel
+
 //test class for Ballot
 function TestBallot(contract) {
 	
 	this.test_instance = contract;
+	this.model = new BallotModel(contract);
 	this.prefix='';
 	this.messageBlockId = "testResult";
 	var self = this;
@@ -33,12 +91,26 @@ function TestBallot(contract) {
 		var e = document.getElementById(this.prefix+'-'+this.messageBlockId);
 		var elemDiv = document.createElement('div');
 		elemDiv.id= this.prefix+'-'+testName;
-		elemDiv.innerText = testMessage;
-		if(!state)
-			elemDiv.className = 'failed_state'
+		elemDiv.className='testRow';
+		elemDiv.text=testMessage;
+		var stateDiv = document.createElement('div');
+		if(state){
+			elemDiv.innerHTML = '<div class="pass_state">P</div><div class="testCell">'+testMessage+'</div>';
+		}else{
+			elemDiv.innerHTML = '<div class="failed_state">F</div><div class="testCell">'+testMessage+'</div>';
+		}
 		e.appendChild(elemDiv);
 	}
-	
+
+	//assertEquals
+	this.testAE=function(testName,testMessage,expected,value) {
+		if(expected==value)
+			this.printTest(testName, testMessage, true);
+		else
+			this.printTest(testName, testMessage+': expected '+expected+' got '+value, false);
+	}
+
+	//test the attributes after setup	
 	this.testAttributes=function() {
 	//Start of user code attributeTests_Ballot
 	//TODO: implement

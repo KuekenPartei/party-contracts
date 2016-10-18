@@ -1,7 +1,125 @@
+// file header
+/**
+* A simple bean class around the contract.
+* The OrganModel.
+**/
+function OrganModel(contract) {
+this.contract = contract;
+	/**
+	* Getter for memberRegistry.
+	**/
+	this.getMemberRegistry = function(){
+		return contract.memberRegistry(); 
+	}
+	/**
+	* Getter for mangerCount.
+	**/
+	this.getMangerCount = function(){
+		return contract.mangerCount(); 
+	}
+	/**
+	* Getter for organName.
+	**/
+	this.getOrganName = function(){
+		return contract.organName(); 
+	}
+	/**
+	* Getter for lastFunctionId.
+	**/
+	this.getLastFunctionId = function(){
+		return contract.lastFunctionId(); 
+	}
+	/**
+	* Getter for blogRegistry.
+	**/
+	this.getBlogRegistry = function(){
+		return contract.blogRegistry(); 
+	}
+	/**
+	* Getter for isActive.
+	**/
+	this.getIsActive = function(){
+		return contract.isActive(); 
+	}
+	/**
+	* Getter for ballotCount.
+	**/
+	this.getBallotCount = function(){
+		return contract.ballotCount(); 
+	}
+	/**
+	* Call changeMember.
+	**/
+	this.changeMember = function(_id,_address){
+		return contract.changeMember(_id,_address); 
+	}
+	/**
+	* Call addManager.
+	**/
+	this.addManager = function(_newManagerAddress){
+		return contract.addManager(_newManagerAddress); 
+	}
+	/**
+	* Call createFunction.
+	**/
+	this.createFunction = function(_functionName,_constittiutionHash){
+		return contract.createFunction(_functionName,_constittiutionHash); 
+	}
+	/**
+	* Call removeManager.
+	**/
+	this.removeManager = function(_managerAddress){
+		return contract.removeManager(_managerAddress); 
+	}
+	/**
+	* Call initalizeOrgan.
+	**/
+	this.initalizeOrgan = function(){
+		return contract.initalizeOrgan(); 
+	}
+	/**
+	* Call isManager.
+	**/
+	this.isManager = function(_managerAddress){
+		return contract.isManager(_managerAddress); 
+	}
+	/**
+	* Call publishFunctionMessage.
+	**/
+	this.publishFunctionMessage = function(id,message,hash,er){
+		return contract.publishFunctionMessage(id,message,hash,er); 
+	}
+	/**
+	* Call createBallot.
+	**/
+	this.createBallot = function(name,proposalNames){
+		return contract.createBallot(name,proposalNames); 
+	}
+	/**
+	* Call getFunctionBlogAddress.
+	**/
+	this.getFunctionBlogAddress = function(id){
+		return contract.getFunctionBlogAddress(id); 
+	}
+	/**
+	* Call getLastBallot.
+	**/
+	this.getLastBallot = function(){
+		return contract.getLastBallot(); 
+	}
+	/**
+	* Call getOrganBlog.
+	**/
+	this.getOrganBlog = function(){
+		return contract.getOrganBlog(); 
+	}
+}// end of function OrganModel
+
 //test class for Organ
 function TestOrgan(contract) {
 	
 	this.test_instance = contract;
+	this.model = new OrganModel(contract);
 	this.prefix='';
 	this.messageBlockId = "testResult";
 	var self = this;
@@ -39,15 +157,29 @@ function TestOrgan(contract) {
 		var e = document.getElementById(this.prefix+'-'+this.messageBlockId);
 		var elemDiv = document.createElement('div');
 		elemDiv.id= this.prefix+'-'+testName;
-		elemDiv.innerText = testMessage;
-		if(!state)
-			elemDiv.className = 'failed_state'
+		elemDiv.className='testRow';
+		elemDiv.text=testMessage;
+		var stateDiv = document.createElement('div');
+		if(state){
+			elemDiv.innerHTML = '<div class="pass_state">P</div><div class="testCell">'+testMessage+'</div>';
+		}else{
+			elemDiv.innerHTML = '<div class="failed_state">F</div><div class="testCell">'+testMessage+'</div>';
+		}
 		e.appendChild(elemDiv);
 	}
-	
+
+	//assertEquals
+	this.testAE=function(testName,testMessage,expected,value) {
+		if(expected==value)
+			this.printTest(testName, testMessage, true);
+		else
+			this.printTest(testName, testMessage+': expected '+expected+' got '+value, false);
+	}
+
+	//test the attributes after setup	
 	this.testAttributes=function() {
 	//Start of user code attributeTests_Organ
-	//TODO: implement
+	var lf = this.model.getLastFunctionId();
 	//End of user code
 	}
 
@@ -60,7 +192,7 @@ function TestOrgan(contract) {
 //	var p__address = '';
 //	var res = this.test_instance.changeMember( p__id, p__address);
 //	var state = res==="";		
-		this.printTest("testchangeMember", "executed: testOrgan_changeMember_uint_address", false);		
+		this.testAE("testchangeMember", "executed: testOrgan_changeMember_uint_address",true, false);		
 		//End of user code
 	}
 
@@ -72,7 +204,7 @@ function TestOrgan(contract) {
 //	var p__newManagerAddress = '';
 //	var res = this.test_instance.addManager( p__newManagerAddress);
 //	var state = res==="";		
-		this.printTest("testaddManager", "executed: testManageable_addManager_address", false);		
+		this.testAE("testaddManager", "executed: testManageable_addManager_address",true, false);		
 		//End of user code
 	}
 
@@ -85,7 +217,7 @@ function TestOrgan(contract) {
 //	var p__constittiutionHash = '';
 //	var res = this.test_instance.createFunction( p__functionName, p__constittiutionHash);
 //	var state = res==="";		
-		this.printTest("testcreateFunction", "executed: testOrgan_createFunction_string_string", false);		
+		this.testAE("testcreateFunction", "executed: testOrgan_createFunction_string_string",true, false);		
 		//End of user code
 	}
 
@@ -97,7 +229,7 @@ function TestOrgan(contract) {
 //	var p__managerAddress = '';
 //	var res = this.test_instance.removeManager( p__managerAddress);
 //	var state = res==="";		
-		this.printTest("testremoveManager", "executed: testManageable_removeManager_address", false);		
+		this.testAE("testremoveManager", "executed: testManageable_removeManager_address",true, false);		
 		//End of user code
 	}
 
@@ -108,7 +240,7 @@ function TestOrgan(contract) {
 //console.log('testOrgan_initalizeOrgan');
 //	var res = this.test_instance.initalizeOrgan();
 //	var state = res==="";		
-		this.printTest("testinitalizeOrgan", "executed: testOrgan_initalizeOrgan", false);		
+		this.testAE("testinitalizeOrgan", "executed: testOrgan_initalizeOrgan",true, false);		
 		//End of user code
 	}
 
@@ -120,7 +252,7 @@ function TestOrgan(contract) {
 //	var p__managerAddress = '';
 //	var res = this.test_instance.isManager( p__managerAddress);
 //	var state = res==="";		
-		this.printTest("testisManager", "executed: testManageable_isManager_address", false);		
+		this.testAE("testisManager", "executed: testManageable_isManager_address",true, false);		
 		//End of user code
 	}
 
@@ -135,7 +267,7 @@ function TestOrgan(contract) {
 //	var p_er = '';
 //	var res = this.test_instance.publishFunctionMessage( p_id, p_message, p_hash, p_er);
 //	var state = res==="";		
-		this.printTest("testpublishFunctionMessage", "executed: testOrgan_publishFunctionMessage_uint_string_string_string", false);		
+		this.testAE("testpublishFunctionMessage", "executed: testOrgan_publishFunctionMessage_uint_string_string_string",true, false);		
 		//End of user code
 	}
 
@@ -148,7 +280,7 @@ function TestOrgan(contract) {
 //	var p_proposalNames = '';
 //	var res = this.test_instance.createBallot( p_name, p_proposalNames);
 //	var state = res==="";		
-		this.printTest("testcreateBallot", "executed: testOrgan_createBallot_string_bytes32", false);		
+		this.testAE("testcreateBallot", "executed: testOrgan_createBallot_string_bytes32",true, false);		
 		//End of user code
 	}
 
@@ -160,7 +292,7 @@ function TestOrgan(contract) {
 //	var p_id = '';
 //	var res = this.test_instance.getFunctionBlogAddress( p_id);
 //	var state = res==="";		
-		this.printTest("testgetFunctionBlogAddress", "executed: testOrgan_getFunctionBlogAddress_uint", false);		
+		this.testAE("testgetFunctionBlogAddress", "executed: testOrgan_getFunctionBlogAddress_uint",true, false);		
 		//End of user code
 	}
 
@@ -171,7 +303,7 @@ function TestOrgan(contract) {
 //console.log('testOrgan_getLastBallot');
 //	var res = this.test_instance.getLastBallot();
 //	var state = res==="";		
-		this.printTest("testgetLastBallot", "executed: testOrgan_getLastBallot", false);		
+		this.testAE("testgetLastBallot", "executed: testOrgan_getLastBallot",true, false);		
 		//End of user code
 	}
 
@@ -182,7 +314,7 @@ function TestOrgan(contract) {
 //console.log('testOrgan_getOrganBlog');
 //	var res = this.test_instance.getOrganBlog();
 //	var state = res==="";		
-		this.printTest("testgetOrganBlog", "executed: testOrgan_getOrganBlog", false);		
+		this.testAE("testgetOrganBlog", "executed: testOrgan_getOrganBlog",true, false);		
 		//End of user code
 	}
 	this.customTests=function() {
@@ -191,10 +323,73 @@ function TestOrgan(contract) {
 		//End of user code
 	}
 }
+/**
+* A simple bean class around the contract.
+* The PartyModel.
+**/
+function PartyModel(contract) {
+this.contract = contract;
+	/**
+	* Getter for mangerCount.
+	**/
+	this.getMangerCount = function(){
+		return contract.mangerCount(); 
+	}
+	/**
+	* Getter for constitutionHash.
+	**/
+	this.getConstitutionHash = function(){
+		return contract.constitutionHash(); 
+	}
+	/**
+	* Getter for organCount.
+	**/
+	this.getOrganCount = function(){
+		return contract.organCount(); 
+	}
+	/**
+	* Getter for blogregistry.
+	**/
+	this.getBlogregistry = function(){
+		return contract.blogregistry(); 
+	}
+	/**
+	* Call Party.
+	**/
+	this.Party = function(){
+		return contract.Party(); 
+	}
+	/**
+	* Call addManager.
+	**/
+	this.addManager = function(_newManagerAddress){
+		return contract.addManager(_newManagerAddress); 
+	}
+	/**
+	* Call createOrgan.
+	**/
+	this.createOrgan = function(organName){
+		return contract.createOrgan(organName); 
+	}
+	/**
+	* Call removeManager.
+	**/
+	this.removeManager = function(_managerAddress){
+		return contract.removeManager(_managerAddress); 
+	}
+	/**
+	* Call isManager.
+	**/
+	this.isManager = function(_managerAddress){
+		return contract.isManager(_managerAddress); 
+	}
+}// end of function PartyModel
+
 //test class for Party
 function TestParty(contract) {
 	
 	this.test_instance = contract;
+	this.model = new PartyModel(contract);
 	this.prefix='';
 	this.messageBlockId = "testResult";
 	var self = this;
@@ -226,12 +421,26 @@ function TestParty(contract) {
 		var e = document.getElementById(this.prefix+'-'+this.messageBlockId);
 		var elemDiv = document.createElement('div');
 		elemDiv.id= this.prefix+'-'+testName;
-		elemDiv.innerText = testMessage;
-		if(!state)
-			elemDiv.className = 'failed_state'
+		elemDiv.className='testRow';
+		elemDiv.text=testMessage;
+		var stateDiv = document.createElement('div');
+		if(state){
+			elemDiv.innerHTML = '<div class="pass_state">P</div><div class="testCell">'+testMessage+'</div>';
+		}else{
+			elemDiv.innerHTML = '<div class="failed_state">F</div><div class="testCell">'+testMessage+'</div>';
+		}
 		e.appendChild(elemDiv);
 	}
-	
+
+	//assertEquals
+	this.testAE=function(testName,testMessage,expected,value) {
+		if(expected==value)
+			this.printTest(testName, testMessage, true);
+		else
+			this.printTest(testName, testMessage+': expected '+expected+' got '+value, false);
+	}
+
+	//test the attributes after setup	
 	this.testAttributes=function() {
 	//Start of user code attributeTests_Party
 	//TODO: implement
@@ -245,7 +454,7 @@ function TestParty(contract) {
 //console.log('testParty_Party');
 //	var res = this.test_instance.Party();
 //	var state = res==="";		
-		this.printTest("testParty", "executed: testParty_Party", false);		
+		this.testAE("testParty", "executed: testParty_Party",true, false);		
 		//End of user code
 	}
 
@@ -257,7 +466,7 @@ function TestParty(contract) {
 //	var p__newManagerAddress = '';
 //	var res = this.test_instance.addManager( p__newManagerAddress);
 //	var state = res==="";		
-		this.printTest("testaddManager", "executed: testManageable_addManager_address", false);		
+		this.testAE("testaddManager", "executed: testManageable_addManager_address",true, false);		
 		//End of user code
 	}
 
@@ -269,7 +478,7 @@ function TestParty(contract) {
 //	var p_organName = '';
 //	var res = this.test_instance.createOrgan( p_organName);
 //	var state = res==="";		
-		this.printTest("testcreateOrgan", "executed: testParty_createOrgan_string", false);		
+		this.testAE("testcreateOrgan", "executed: testParty_createOrgan_string",true, false);		
 		//End of user code
 	}
 
@@ -281,7 +490,7 @@ function TestParty(contract) {
 //	var p__managerAddress = '';
 //	var res = this.test_instance.removeManager( p__managerAddress);
 //	var state = res==="";		
-		this.printTest("testremoveManager", "executed: testManageable_removeManager_address", false);		
+		this.testAE("testremoveManager", "executed: testManageable_removeManager_address",true, false);		
 		//End of user code
 	}
 
@@ -293,7 +502,7 @@ function TestParty(contract) {
 //	var p__managerAddress = '';
 //	var res = this.test_instance.isManager( p__managerAddress);
 //	var state = res==="";		
-		this.printTest("testisManager", "executed: testManageable_isManager_address", false);		
+		this.testAE("testisManager", "executed: testManageable_isManager_address",true, false);		
 		//End of user code
 	}
 	this.customTests=function() {
@@ -302,10 +511,85 @@ function TestParty(contract) {
 		//End of user code
 	}
 }
+/**
+* A simple bean class around the contract.
+* The KUEKeNPartyModel.
+**/
+function KUEKeNPartyModel(contract) {
+this.contract = contract;
+	/**
+	* Getter for mangerCount.
+	**/
+	this.getMangerCount = function(){
+		return contract.mangerCount(); 
+	}
+	/**
+	* Getter for constitutionHash.
+	**/
+	this.getConstitutionHash = function(){
+		return contract.constitutionHash(); 
+	}
+	/**
+	* Getter for organCount.
+	**/
+	this.getOrganCount = function(){
+		return contract.organCount(); 
+	}
+	/**
+	* Getter for blogregistry.
+	**/
+	this.getBlogregistry = function(){
+		return contract.blogregistry(); 
+	}
+	/**
+	* Call KUEKeNParty.
+	**/
+	this.KUEKeNParty = function(){
+		return contract.KUEKeNParty(); 
+	}
+	/**
+	* Call Party.
+	**/
+	this.Party = function(){
+		return contract.Party(); 
+	}
+	/**
+	* Call addManager.
+	**/
+	this.addManager = function(_newManagerAddress){
+		return contract.addManager(_newManagerAddress); 
+	}
+	/**
+	* Call boostrapParty.
+	**/
+	this.boostrapParty = function(fc,br){
+		return contract.boostrapParty(fc,br); 
+	}
+	/**
+	* Call createOrgan.
+	**/
+	this.createOrgan = function(organName){
+		return contract.createOrgan(organName); 
+	}
+	/**
+	* Call removeManager.
+	**/
+	this.removeManager = function(_managerAddress){
+		return contract.removeManager(_managerAddress); 
+	}
+	/**
+	* Call isManager.
+	**/
+	this.isManager = function(_managerAddress){
+		return contract.isManager(_managerAddress); 
+	}
+}// end of function KUEKeNPartyModel
+
 //test class for KUEKeNParty
 function TestKUEKeNParty(contract) {
 	
 	this.test_instance = contract;
+	this.model = new KUEKeNPartyModel(contract);
 	this.prefix='';
 	this.messageBlockId = "testResult";
 	var self = this;
@@ -339,15 +623,31 @@ function TestKUEKeNParty(contract) {
 		var e = document.getElementById(this.prefix+'-'+this.messageBlockId);
 		var elemDiv = document.createElement('div');
 		elemDiv.id= this.prefix+'-'+testName;
-		elemDiv.innerText = testMessage;
-		if(!state)
-			elemDiv.className = 'failed_state'
+		elemDiv.className='testRow';
+		elemDiv.text=testMessage;
+		var stateDiv = document.createElement('div');
+		if(state){
+			elemDiv.innerHTML = '<div class="pass_state">P</div><div class="testCell">'+testMessage+'</div>';
+		}else{
+			elemDiv.innerHTML = '<div class="failed_state">F</div><div class="testCell">'+testMessage+'</div>';
+		}
 		e.appendChild(elemDiv);
 	}
-	
+
+	//assertEquals
+	this.testAE=function(testName,testMessage,expected,value) {
+		if(expected==value)
+			this.printTest(testName, testMessage, true);
+		else
+			this.printTest(testName, testMessage+': expected '+expected+' got '+value, false);
+	}
+
+	//test the attributes after setup	
 	this.testAttributes=function() {
 	//Start of user code attributeTests_KUEKeNParty
-	//TODO: implement
+		var count =	this.model.getOrganCount();
+		this.printTest("organcount", "organcount:"+count, count==0);
+
 	//End of user code
 	}
 
@@ -369,7 +669,7 @@ function TestKUEKeNParty(contract) {
 //console.log('testParty_Party');
 //	var res = this.test_instance.Party();
 //	var state = res==="";		
-		this.printTest("testParty", "executed: testParty_Party", false);		
+		this.testAE("testParty", "executed: testParty_Party",true, false);		
 		//End of user code
 	}
 
@@ -381,7 +681,7 @@ function TestKUEKeNParty(contract) {
 //	var p__newManagerAddress = '';
 //	var res = this.test_instance.addManager( p__newManagerAddress);
 //	var state = res==="";		
-		this.printTest("testaddManager", "executed: testManageable_addManager_address", false);		
+		this.testAE("testaddManager", "executed: testManageable_addManager_address",true, false);		
 		//End of user code
 	}
 
@@ -406,7 +706,7 @@ function TestKUEKeNParty(contract) {
 //	var p_organName = '';
 //	var res = this.test_instance.createOrgan( p_organName);
 //	var state = res==="";		
-		this.printTest("testcreateOrgan", "executed: testParty_createOrgan_string", false);		
+		this.testAE("testcreateOrgan", "executed: testParty_createOrgan_string",true, false);		
 		//End of user code
 	}
 
@@ -418,7 +718,7 @@ function TestKUEKeNParty(contract) {
 //	var p__managerAddress = '';
 //	var res = this.test_instance.removeManager( p__managerAddress);
 //	var state = res==="";		
-		this.printTest("testremoveManager", "executed: testManageable_removeManager_address", false);		
+		this.testAE("testremoveManager", "executed: testManageable_removeManager_address",true, false);		
 		//End of user code
 	}
 
@@ -430,7 +730,7 @@ function TestKUEKeNParty(contract) {
 //	var p__managerAddress = '';
 //	var res = this.test_instance.isManager( p__managerAddress);
 //	var state = res==="";		
-		this.printTest("testisManager", "executed: testManageable_isManager_address", false);		
+		this.testAE("testisManager", "executed: testManageable_isManager_address",true, false);		
 		//End of user code
 	}
 	this.customTests=function() {
@@ -439,10 +739,145 @@ function TestKUEKeNParty(contract) {
 		//End of user code
 	}
 }
+/**
+* A simple bean class around the contract.
+* The ConferenceModel.
+**/
+function ConferenceModel(contract) {
+this.contract = contract;
+	/**
+	* Getter for memberRegistry.
+	**/
+	this.getMemberRegistry = function(){
+		return contract.memberRegistry(); 
+	}
+	/**
+	* Getter for accreditatedMembers.
+	**/
+	this.getAccreditatedMembers = function(){
+		return contract.accreditatedMembers(); 
+	}
+	/**
+	* Getter for mangerCount.
+	**/
+	this.getMangerCount = function(){
+		return contract.mangerCount(); 
+	}
+	/**
+	* Getter for organName.
+	**/
+	this.getOrganName = function(){
+		return contract.organName(); 
+	}
+	/**
+	* Getter for date.
+	**/
+	this.getDate = function(){
+		return contract.date(); 
+	}
+	/**
+	* Getter for lastFunctionId.
+	**/
+	this.getLastFunctionId = function(){
+		return contract.lastFunctionId(); 
+	}
+	/**
+	* Getter for blogRegistry.
+	**/
+	this.getBlogRegistry = function(){
+		return contract.blogRegistry(); 
+	}
+	/**
+	* Getter for isActive.
+	**/
+	this.getIsActive = function(){
+		return contract.isActive(); 
+	}
+	/**
+	* Getter for ballotCount.
+	**/
+	this.getBallotCount = function(){
+		return contract.ballotCount(); 
+	}
+	/**
+	* Call accreditationMember.
+	**/
+	this.accreditationMember = function(_address){
+		return contract.accreditationMember(_address); 
+	}
+	/**
+	* Call changeMember.
+	**/
+	this.changeMember = function(_id,_address){
+		return contract.changeMember(_id,_address); 
+	}
+	/**
+	* Call addManager.
+	**/
+	this.addManager = function(_newManagerAddress){
+		return contract.addManager(_newManagerAddress); 
+	}
+	/**
+	* Call createFunction.
+	**/
+	this.createFunction = function(_functionName,_constittiutionHash){
+		return contract.createFunction(_functionName,_constittiutionHash); 
+	}
+	/**
+	* Call removeManager.
+	**/
+	this.removeManager = function(_managerAddress){
+		return contract.removeManager(_managerAddress); 
+	}
+	/**
+	* Call initalizeOrgan.
+	**/
+	this.initalizeOrgan = function(){
+		return contract.initalizeOrgan(); 
+	}
+	/**
+	* Call isManager.
+	**/
+	this.isManager = function(_managerAddress){
+		return contract.isManager(_managerAddress); 
+	}
+	/**
+	* Call publishFunctionMessage.
+	**/
+	this.publishFunctionMessage = function(id,message,hash,er){
+		return contract.publishFunctionMessage(id,message,hash,er); 
+	}
+	/**
+	* Call createBallot.
+	**/
+	this.createBallot = function(name,proposalNames){
+		return contract.createBallot(name,proposalNames); 
+	}
+	/**
+	* Call getFunctionBlogAddress.
+	**/
+	this.getFunctionBlogAddress = function(id){
+		return contract.getFunctionBlogAddress(id); 
+	}
+	/**
+	* Call getLastBallot.
+	**/
+	this.getLastBallot = function(){
+		return contract.getLastBallot(); 
+	}
+	/**
+	* Call getOrganBlog.
+	**/
+	this.getOrganBlog = function(){
+		return contract.getOrganBlog(); 
+	}
+}// end of function ConferenceModel
+
 //test class for Conference
 function TestConference(contract) {
 	
 	this.test_instance = contract;
+	this.model = new ConferenceModel(contract);
 	this.prefix='';
 	this.messageBlockId = "testResult";
 	var self = this;
@@ -481,12 +916,26 @@ function TestConference(contract) {
 		var e = document.getElementById(this.prefix+'-'+this.messageBlockId);
 		var elemDiv = document.createElement('div');
 		elemDiv.id= this.prefix+'-'+testName;
-		elemDiv.innerText = testMessage;
-		if(!state)
-			elemDiv.className = 'failed_state'
+		elemDiv.className='testRow';
+		elemDiv.text=testMessage;
+		var stateDiv = document.createElement('div');
+		if(state){
+			elemDiv.innerHTML = '<div class="pass_state">P</div><div class="testCell">'+testMessage+'</div>';
+		}else{
+			elemDiv.innerHTML = '<div class="failed_state">F</div><div class="testCell">'+testMessage+'</div>';
+		}
 		e.appendChild(elemDiv);
 	}
-	
+
+	//assertEquals
+	this.testAE=function(testName,testMessage,expected,value) {
+		if(expected==value)
+			this.printTest(testName, testMessage, true);
+		else
+			this.printTest(testName, testMessage+': expected '+expected+' got '+value, false);
+	}
+
+	//test the attributes after setup	
 	this.testAttributes=function() {
 	//Start of user code attributeTests_Conference
 	//TODO: implement
@@ -501,7 +950,7 @@ function TestConference(contract) {
 //	var p__address = '';
 //	var res = this.test_instance.accreditationMember( p__address);
 //	var state = res==="";		
-		this.printTest("testaccreditationMember", "executed: testConference_accreditationMember_address", false);		
+		this.testAE("testaccreditationMember", "executed: testConference_accreditationMember_address",true, false);		
 		//End of user code
 	}
 
@@ -514,7 +963,7 @@ function TestConference(contract) {
 //	var p__address = '';
 //	var res = this.test_instance.changeMember( p__id, p__address);
 //	var state = res==="";		
-		this.printTest("testchangeMember", "executed: testOrgan_changeMember_uint_address", false);		
+		this.testAE("testchangeMember", "executed: testOrgan_changeMember_uint_address",true, false);		
 		//End of user code
 	}
 
@@ -526,7 +975,7 @@ function TestConference(contract) {
 //	var p__newManagerAddress = '';
 //	var res = this.test_instance.addManager( p__newManagerAddress);
 //	var state = res==="";		
-		this.printTest("testaddManager", "executed: testManageable_addManager_address", false);		
+		this.testAE("testaddManager", "executed: testManageable_addManager_address",true, false);		
 		//End of user code
 	}
 
@@ -539,7 +988,7 @@ function TestConference(contract) {
 //	var p__constittiutionHash = '';
 //	var res = this.test_instance.createFunction( p__functionName, p__constittiutionHash);
 //	var state = res==="";		
-		this.printTest("testcreateFunction", "executed: testOrgan_createFunction_string_string", false);		
+		this.testAE("testcreateFunction", "executed: testOrgan_createFunction_string_string",true, false);		
 		//End of user code
 	}
 
@@ -551,7 +1000,7 @@ function TestConference(contract) {
 //	var p__managerAddress = '';
 //	var res = this.test_instance.removeManager( p__managerAddress);
 //	var state = res==="";		
-		this.printTest("testremoveManager", "executed: testManageable_removeManager_address", false);		
+		this.testAE("testremoveManager", "executed: testManageable_removeManager_address",true, false);		
 		//End of user code
 	}
 
@@ -562,7 +1011,7 @@ function TestConference(contract) {
 //console.log('testOrgan_initalizeOrgan');
 //	var res = this.test_instance.initalizeOrgan();
 //	var state = res==="";		
-		this.printTest("testinitalizeOrgan", "executed: testOrgan_initalizeOrgan", false);		
+		this.testAE("testinitalizeOrgan", "executed: testOrgan_initalizeOrgan",true, false);		
 		//End of user code
 	}
 
@@ -574,7 +1023,7 @@ function TestConference(contract) {
 //	var p__managerAddress = '';
 //	var res = this.test_instance.isManager( p__managerAddress);
 //	var state = res==="";		
-		this.printTest("testisManager", "executed: testManageable_isManager_address", false);		
+		this.testAE("testisManager", "executed: testManageable_isManager_address",true, false);		
 		//End of user code
 	}
 
@@ -589,7 +1038,7 @@ function TestConference(contract) {
 //	var p_er = '';
 //	var res = this.test_instance.publishFunctionMessage( p_id, p_message, p_hash, p_er);
 //	var state = res==="";		
-		this.printTest("testpublishFunctionMessage", "executed: testOrgan_publishFunctionMessage_uint_string_string_string", false);		
+		this.testAE("testpublishFunctionMessage", "executed: testOrgan_publishFunctionMessage_uint_string_string_string",true, false);		
 		//End of user code
 	}
 
@@ -602,7 +1051,7 @@ function TestConference(contract) {
 //	var p_proposalNames = '';
 //	var res = this.test_instance.createBallot( p_name, p_proposalNames);
 //	var state = res==="";		
-		this.printTest("testcreateBallot", "executed: testOrgan_createBallot_string_bytes32", false);		
+		this.testAE("testcreateBallot", "executed: testOrgan_createBallot_string_bytes32",true, false);		
 		//End of user code
 	}
 
@@ -614,7 +1063,7 @@ function TestConference(contract) {
 //	var p_id = '';
 //	var res = this.test_instance.getFunctionBlogAddress( p_id);
 //	var state = res==="";		
-		this.printTest("testgetFunctionBlogAddress", "executed: testOrgan_getFunctionBlogAddress_uint", false);		
+		this.testAE("testgetFunctionBlogAddress", "executed: testOrgan_getFunctionBlogAddress_uint",true, false);		
 		//End of user code
 	}
 
@@ -625,7 +1074,7 @@ function TestConference(contract) {
 //console.log('testOrgan_getLastBallot');
 //	var res = this.test_instance.getLastBallot();
 //	var state = res==="";		
-		this.printTest("testgetLastBallot", "executed: testOrgan_getLastBallot", false);		
+		this.testAE("testgetLastBallot", "executed: testOrgan_getLastBallot",true, false);		
 		//End of user code
 	}
 
@@ -636,7 +1085,7 @@ function TestConference(contract) {
 //console.log('testOrgan_getOrganBlog');
 //	var res = this.test_instance.getOrganBlog();
 //	var state = res==="";		
-		this.printTest("testgetOrganBlog", "executed: testOrgan_getOrganBlog", false);		
+		this.testAE("testgetOrganBlog", "executed: testOrgan_getOrganBlog",true, false);		
 		//End of user code
 	}
 	this.customTests=function() {
@@ -645,10 +1094,145 @@ function TestConference(contract) {
 		//End of user code
 	}
 }
+/**
+* A simple bean class around the contract.
+* The FoundationConferenceModel.
+**/
+function FoundationConferenceModel(contract) {
+this.contract = contract;
+	/**
+	* Getter for memberRegistry.
+	**/
+	this.getMemberRegistry = function(){
+		return contract.memberRegistry(); 
+	}
+	/**
+	* Getter for accreditatedMembers.
+	**/
+	this.getAccreditatedMembers = function(){
+		return contract.accreditatedMembers(); 
+	}
+	/**
+	* Getter for mangerCount.
+	**/
+	this.getMangerCount = function(){
+		return contract.mangerCount(); 
+	}
+	/**
+	* Getter for organName.
+	**/
+	this.getOrganName = function(){
+		return contract.organName(); 
+	}
+	/**
+	* Getter for date.
+	**/
+	this.getDate = function(){
+		return contract.date(); 
+	}
+	/**
+	* Getter for lastFunctionId.
+	**/
+	this.getLastFunctionId = function(){
+		return contract.lastFunctionId(); 
+	}
+	/**
+	* Getter for blogRegistry.
+	**/
+	this.getBlogRegistry = function(){
+		return contract.blogRegistry(); 
+	}
+	/**
+	* Getter for isActive.
+	**/
+	this.getIsActive = function(){
+		return contract.isActive(); 
+	}
+	/**
+	* Getter for ballotCount.
+	**/
+	this.getBallotCount = function(){
+		return contract.ballotCount(); 
+	}
+	/**
+	* Call accreditationMember.
+	**/
+	this.accreditationMember = function(_address){
+		return contract.accreditationMember(_address); 
+	}
+	/**
+	* Call changeMember.
+	**/
+	this.changeMember = function(_id,_address){
+		return contract.changeMember(_id,_address); 
+	}
+	/**
+	* Call addManager.
+	**/
+	this.addManager = function(_newManagerAddress){
+		return contract.addManager(_newManagerAddress); 
+	}
+	/**
+	* Call createFunction.
+	**/
+	this.createFunction = function(_functionName,_constittiutionHash){
+		return contract.createFunction(_functionName,_constittiutionHash); 
+	}
+	/**
+	* Call removeManager.
+	**/
+	this.removeManager = function(_managerAddress){
+		return contract.removeManager(_managerAddress); 
+	}
+	/**
+	* Call initalizeOrgan.
+	**/
+	this.initalizeOrgan = function(){
+		return contract.initalizeOrgan(); 
+	}
+	/**
+	* Call isManager.
+	**/
+	this.isManager = function(_managerAddress){
+		return contract.isManager(_managerAddress); 
+	}
+	/**
+	* Call publishFunctionMessage.
+	**/
+	this.publishFunctionMessage = function(id,message,hash,er){
+		return contract.publishFunctionMessage(id,message,hash,er); 
+	}
+	/**
+	* Call createBallot.
+	**/
+	this.createBallot = function(name,proposalNames){
+		return contract.createBallot(name,proposalNames); 
+	}
+	/**
+	* Call getFunctionBlogAddress.
+	**/
+	this.getFunctionBlogAddress = function(id){
+		return contract.getFunctionBlogAddress(id); 
+	}
+	/**
+	* Call getLastBallot.
+	**/
+	this.getLastBallot = function(){
+		return contract.getLastBallot(); 
+	}
+	/**
+	* Call getOrganBlog.
+	**/
+	this.getOrganBlog = function(){
+		return contract.getOrganBlog(); 
+	}
+}// end of function FoundationConferenceModel
+
 //test class for FoundationConference
 function TestFoundationConference(contract) {
 	
 	this.test_instance = contract;
+	this.model = new FoundationConferenceModel(contract);
 	this.prefix='';
 	this.messageBlockId = "testResult";
 	var self = this;
@@ -687,12 +1271,26 @@ function TestFoundationConference(contract) {
 		var e = document.getElementById(this.prefix+'-'+this.messageBlockId);
 		var elemDiv = document.createElement('div');
 		elemDiv.id= this.prefix+'-'+testName;
-		elemDiv.innerText = testMessage;
-		if(!state)
-			elemDiv.className = 'failed_state'
+		elemDiv.className='testRow';
+		elemDiv.text=testMessage;
+		var stateDiv = document.createElement('div');
+		if(state){
+			elemDiv.innerHTML = '<div class="pass_state">P</div><div class="testCell">'+testMessage+'</div>';
+		}else{
+			elemDiv.innerHTML = '<div class="failed_state">F</div><div class="testCell">'+testMessage+'</div>';
+		}
 		e.appendChild(elemDiv);
 	}
-	
+
+	//assertEquals
+	this.testAE=function(testName,testMessage,expected,value) {
+		if(expected==value)
+			this.printTest(testName, testMessage, true);
+		else
+			this.printTest(testName, testMessage+': expected '+expected+' got '+value, false);
+	}
+
+	//test the attributes after setup	
 	this.testAttributes=function() {
 	//Start of user code attributeTests_FoundationConference
 	//TODO: implement
@@ -707,7 +1305,7 @@ function TestFoundationConference(contract) {
 //	var p__address = '';
 //	var res = this.test_instance.accreditationMember( p__address);
 //	var state = res==="";		
-		this.printTest("testaccreditationMember", "executed: testConference_accreditationMember_address", false);		
+		this.testAE("testaccreditationMember", "executed: testConference_accreditationMember_address",true, false);		
 		//End of user code
 	}
 
@@ -720,7 +1318,7 @@ function TestFoundationConference(contract) {
 //	var p__address = '';
 //	var res = this.test_instance.changeMember( p__id, p__address);
 //	var state = res==="";		
-		this.printTest("testchangeMember", "executed: testOrgan_changeMember_uint_address", false);		
+		this.testAE("testchangeMember", "executed: testOrgan_changeMember_uint_address",true, false);		
 		//End of user code
 	}
 
@@ -732,7 +1330,7 @@ function TestFoundationConference(contract) {
 //	var p__newManagerAddress = '';
 //	var res = this.test_instance.addManager( p__newManagerAddress);
 //	var state = res==="";		
-		this.printTest("testaddManager", "executed: testManageable_addManager_address", false);		
+		this.testAE("testaddManager", "executed: testManageable_addManager_address",true, false);		
 		//End of user code
 	}
 
@@ -745,7 +1343,7 @@ function TestFoundationConference(contract) {
 //	var p__constittiutionHash = '';
 //	var res = this.test_instance.createFunction( p__functionName, p__constittiutionHash);
 //	var state = res==="";		
-		this.printTest("testcreateFunction", "executed: testOrgan_createFunction_string_string", false);		
+		this.testAE("testcreateFunction", "executed: testOrgan_createFunction_string_string",true, false);		
 		//End of user code
 	}
 
@@ -757,7 +1355,7 @@ function TestFoundationConference(contract) {
 //	var p__managerAddress = '';
 //	var res = this.test_instance.removeManager( p__managerAddress);
 //	var state = res==="";		
-		this.printTest("testremoveManager", "executed: testManageable_removeManager_address", false);		
+		this.testAE("testremoveManager", "executed: testManageable_removeManager_address",true, false);		
 		//End of user code
 	}
 
@@ -768,7 +1366,7 @@ function TestFoundationConference(contract) {
 //console.log('testOrgan_initalizeOrgan');
 //	var res = this.test_instance.initalizeOrgan();
 //	var state = res==="";		
-		this.printTest("testinitalizeOrgan", "executed: testOrgan_initalizeOrgan", false);		
+		this.testAE("testinitalizeOrgan", "executed: testOrgan_initalizeOrgan",true, false);		
 		//End of user code
 	}
 
@@ -780,7 +1378,7 @@ function TestFoundationConference(contract) {
 //	var p__managerAddress = '';
 //	var res = this.test_instance.isManager( p__managerAddress);
 //	var state = res==="";		
-		this.printTest("testisManager", "executed: testManageable_isManager_address", false);		
+		this.testAE("testisManager", "executed: testManageable_isManager_address",true, false);		
 		//End of user code
 	}
 
@@ -795,7 +1393,7 @@ function TestFoundationConference(contract) {
 //	var p_er = '';
 //	var res = this.test_instance.publishFunctionMessage( p_id, p_message, p_hash, p_er);
 //	var state = res==="";		
-		this.printTest("testpublishFunctionMessage", "executed: testOrgan_publishFunctionMessage_uint_string_string_string", false);		
+		this.testAE("testpublishFunctionMessage", "executed: testOrgan_publishFunctionMessage_uint_string_string_string",true, false);		
 		//End of user code
 	}
 
@@ -808,7 +1406,7 @@ function TestFoundationConference(contract) {
 //	var p_proposalNames = '';
 //	var res = this.test_instance.createBallot( p_name, p_proposalNames);
 //	var state = res==="";		
-		this.printTest("testcreateBallot", "executed: testOrgan_createBallot_string_bytes32", false);		
+		this.testAE("testcreateBallot", "executed: testOrgan_createBallot_string_bytes32",true, false);		
 		//End of user code
 	}
 
@@ -820,7 +1418,7 @@ function TestFoundationConference(contract) {
 //	var p_id = '';
 //	var res = this.test_instance.getFunctionBlogAddress( p_id);
 //	var state = res==="";		
-		this.printTest("testgetFunctionBlogAddress", "executed: testOrgan_getFunctionBlogAddress_uint", false);		
+		this.testAE("testgetFunctionBlogAddress", "executed: testOrgan_getFunctionBlogAddress_uint",true, false);		
 		//End of user code
 	}
 
@@ -831,7 +1429,7 @@ function TestFoundationConference(contract) {
 //console.log('testOrgan_getLastBallot');
 //	var res = this.test_instance.getLastBallot();
 //	var state = res==="";		
-		this.printTest("testgetLastBallot", "executed: testOrgan_getLastBallot", false);		
+		this.testAE("testgetLastBallot", "executed: testOrgan_getLastBallot",true, false);		
 		//End of user code
 	}
 
@@ -842,7 +1440,7 @@ function TestFoundationConference(contract) {
 //console.log('testOrgan_getOrganBlog');
 //	var res = this.test_instance.getOrganBlog();
 //	var state = res==="";		
-		this.printTest("testgetOrganBlog", "executed: testOrgan_getOrganBlog", false);		
+		this.testAE("testgetOrganBlog", "executed: testOrgan_getOrganBlog",true, false);		
 		//End of user code
 	}
 	this.customTests=function() {

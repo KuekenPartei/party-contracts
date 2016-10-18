@@ -1,10 +1,11 @@
-
+// file header
+// contractVariable for ShortBlog
 var ShortBlogContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"messageCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"lastMessageDate","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "messages","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "messages"}],"name": "messages","outputs": [
 { "name": "message", "type": "string"}
 ,{ "name": "date", "type": "uint"}
 ,{ "name": "id", "type": "uint"}
@@ -15,17 +16,15 @@ var ShortBlogContract = web3.eth.contract([
 ],"type": "function"	},
 //
 
+{"constant": true,"inputs": [{"name": "","type": "managers"}],"name": "managers","outputs": [
+{ "name": "", "type": "bool"}
+],"type": "function"	},
+//
+
   {
     "constant": false,
-    "inputs": [],    
-    "name": "getOwner",
-    "outputs": [{"name": "result","type": "address"}],
-    "type": "function"
-  }
-,  {
-    "constant": false,
-    "inputs": [{"name": "newOwner","type": "address"}],    
-    "name": "changeOwner",
+    "inputs": [{"name": "_newManagerAddress","type": "address"}],    
+    "name": "addManager",
     "outputs": [],
     "type": "function"
   }
@@ -38,46 +37,41 @@ var ShortBlogContract = web3.eth.contract([
   }
 ,  {
     "constant": false,
-    "inputs": [{"name": "_name","type": "string"}],    
-    "name": "ShortBlog",
+    "inputs": [{"name": "_managerAddress","type": "address"}],    
+    "name": "removeManager",
     "outputs": [],
     "type": "function"
   }
 ,  {
     "constant": false,
-    "inputs": [],    
-    "name": "kill",
-    "outputs": [],
+    "inputs": [{"name": "_managerAddress","type": "address"}],    
+    "name": "isManager",
+    "outputs": [{"name": "","type": "bool"}],
     "type": "function"
   }
  ,
   { "constant": true,
-    "inputs": [{"name": "message","type": "string"},{"name": "messageId","type": "uint"}],    
+    "inputs": [{"name": "message","type": "string"},{"name": "messageId","type": "uint"},{"name": "messageSender","type": "address"},{"name": "messageHashValue","type": "string"},{"name": "externalResource","type": "string"}],    
     "name": "NewMessage",
     "type": "event"  }
-] );   
-
+]);   
+// contractVariable for BlogRegistry
 var BlogRegistryContract = web3.eth.contract([
-{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"blogCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "blogs","outputs": [
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant": true,"inputs": [{"name": "","type": "blogs"}],"name": "blogs","outputs": [
 { "name": "", "type": "address"}
 ],"type": "function"	},
 //
 
-{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "names","outputs": [
-{ "name": "", "type": "string"}
-],"type": "function"	},
-//
-
-{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "managers"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
 //
 
   {
     "constant": false,
-    "inputs": [{"name": "name","type": "string"}],    
+    "inputs": [{"name": "_name","type": "string"}],    
     "name": "registerBlog",
     "outputs": [{"name": "","type": "address"}],
     "type": "function"
@@ -103,8 +97,11 @@ var BlogRegistryContract = web3.eth.contract([
     "outputs": [{"name": "","type": "bool"}],
     "type": "function"
   }
- 
-] );   
-
+ ,
+  { "constant": true,
+    "inputs": [{"name": "index","type": "uint"},{"name": "name","type": "string"},{"name": "blogAddress","type": "address"}],    
+    "name": "NewBlog",
+    "type": "event"  }
+]);   
 
 

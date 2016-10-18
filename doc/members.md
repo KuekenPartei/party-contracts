@@ -47,22 +47,6 @@ active|
 
 ### structs:
 
-Member
-A member can be active, inactive or deleted.
-It has an id assigned to it and a changeable address.
-
-
-
-#### Member properties
-
-name|type|visiblity|delegate|doc
-----|----|----|----|----
-name|string|public||
-id|uint|public||
-member|address|public||
-state|MemberState|public||
-
-
 
 #### MemberRegistry properties
 

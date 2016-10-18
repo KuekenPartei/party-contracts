@@ -1,7 +1,95 @@
+// file header
+/**
+* A simple bean class around the contract.
+* The MemberRegistryModel.
+**/
+function MemberRegistryModel(contract) {
+this.contract = contract;
+	/**
+	* Getter for mangerCount.
+	**/
+	this.getMangerCount = function(){
+		return contract.mangerCount(); 
+	}
+	/**
+	* Getter for partyMemberCount.
+	**/
+	this.getPartyMemberCount = function(){
+		return contract.partyMemberCount(); 
+	}
+	/**
+	* Getter for activeMemberCount.
+	**/
+	this.getActiveMemberCount = function(){
+		return contract.activeMemberCount(); 
+	}
+	/**
+	* Call addMember.
+	**/
+	this.addMember = function(name,_memberAddress){
+		return contract.addMember(name,_memberAddress); 
+	}
+	/**
+	* Call addManager.
+	**/
+	this.addManager = function(_newManagerAddress){
+		return contract.addManager(_newManagerAddress); 
+	}
+	/**
+	* Call unregisterMember.
+	**/
+	this.unregisterMember = function(id){
+		return contract.unregisterMember(id); 
+	}
+	/**
+	* Call getMemberCount.
+	**/
+	this.getMemberCount = function(){
+		return contract.getMemberCount(); 
+	}
+	/**
+	* Call removeManager.
+	**/
+	this.removeManager = function(_managerAddress){
+		return contract.removeManager(_managerAddress); 
+	}
+	/**
+	* Call isActiveMember.
+	**/
+	this.isActiveMember = function(_memberAdress){
+		return contract.isActiveMember(_memberAdress); 
+	}
+	/**
+	* Call isManager.
+	**/
+	this.isManager = function(_managerAddress){
+		return contract.isManager(_managerAddress); 
+	}
+	/**
+	* Call changeMemberAddress.
+	**/
+	this.changeMemberAddress = function(id,_newMemberAddress){
+		return contract.changeMemberAddress(id,_newMemberAddress); 
+	}
+	/**
+	* Call getMemberData.
+	**/
+	this.getMemberData = function(_address){
+		return contract.getMemberData(_address); 
+	}
+	/**
+	* Call publishMemberEvent.
+	**/
+	this.publishMemberEvent = function(mAddress,eventType){
+		return contract.publishMemberEvent(mAddress,eventType); 
+	}
+}// end of function MemberRegistryModel
+
 //test class for MemberRegistry
 function TestMemberRegistry(contract) {
 	
 	this.test_instance = contract;
+	this.model = new MemberRegistryModel(contract);
 	this.prefix='';
 	this.messageBlockId = "testResult";
 	var self = this;
@@ -38,12 +126,26 @@ function TestMemberRegistry(contract) {
 		var e = document.getElementById(this.prefix+'-'+this.messageBlockId);
 		var elemDiv = document.createElement('div');
 		elemDiv.id= this.prefix+'-'+testName;
-		elemDiv.innerText = testMessage;
-		if(!state)
-			elemDiv.className = 'failed_state'
+		elemDiv.className='testRow';
+		elemDiv.text=testMessage;
+		var stateDiv = document.createElement('div');
+		if(state){
+			elemDiv.innerHTML = '<div class="pass_state">P</div><div class="testCell">'+testMessage+'</div>';
+		}else{
+			elemDiv.innerHTML = '<div class="failed_state">F</div><div class="testCell">'+testMessage+'</div>';
+		}
 		e.appendChild(elemDiv);
 	}
-	
+
+	//assertEquals
+	this.testAE=function(testName,testMessage,expected,value) {
+		if(expected==value)
+			this.printTest(testName, testMessage, true);
+		else
+			this.printTest(testName, testMessage+': expected '+expected+' got '+value, false);
+	}
+
+	//test the attributes after setup	
 	this.testAttributes=function() {
 	//Start of user code attributeTests_MemberRegistry
 	var count =	this.test_instance.partyMemberCount();
@@ -214,10 +316,25 @@ function TestMemberRegistry(contract) {
 		//End of user code
 	}
 }
+/**
+* A simple bean class around the contract.
+* The MemberAwareModel.
+**/
+function MemberAwareModel(contract) {
+this.contract = contract;
+	/**
+	* Getter for memberRegistry.
+	**/
+	this.getMemberRegistry = function(){
+		return contract.memberRegistry(); 
+	}
+}// end of function MemberAwareModel
+
 //test class for MemberAware
 function TestMemberAware(contract) {
 	
 	this.test_instance = contract;
+	this.model = new MemberAwareModel(contract);
 	this.prefix='';
 	this.messageBlockId = "testResult";
 	var self = this;
@@ -244,12 +361,26 @@ function TestMemberAware(contract) {
 		var e = document.getElementById(this.prefix+'-'+this.messageBlockId);
 		var elemDiv = document.createElement('div');
 		elemDiv.id= this.prefix+'-'+testName;
-		elemDiv.innerText = testMessage;
-		if(!state)
-			elemDiv.className = 'failed_state'
+		elemDiv.className='testRow';
+		elemDiv.text=testMessage;
+		var stateDiv = document.createElement('div');
+		if(state){
+			elemDiv.innerHTML = '<div class="pass_state">P</div><div class="testCell">'+testMessage+'</div>';
+		}else{
+			elemDiv.innerHTML = '<div class="failed_state">F</div><div class="testCell">'+testMessage+'</div>';
+		}
 		e.appendChild(elemDiv);
 	}
-	
+
+	//assertEquals
+	this.testAE=function(testName,testMessage,expected,value) {
+		if(expected==value)
+			this.printTest(testName, testMessage, true);
+		else
+			this.printTest(testName, testMessage+': expected '+expected+' got '+value, false);
+	}
+
+	//test the attributes after setup	
 	this.testAttributes=function() {
 	//Start of user code attributeTests_MemberAware
 	//TODO: implement

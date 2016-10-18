@@ -1,9 +1,10 @@
-
+// file header
+// contractVariable for MemberRegistry
 var MemberRegistryContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"partyMemberCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"activeMemberCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "partyMembers","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "partyMembers"}],"name": "partyMembers","outputs": [
 { "name": "name", "type": "string"}
 ,{ "name": "id", "type": "uint"}
 ,{ "name": "member", "type": "address"}
@@ -11,7 +12,7 @@ var MemberRegistryContract = web3.eth.contract([
 ],"type": "function"	},
 //
 
-{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "memberAddress","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "memberAddress"}],"name": "memberAddress","outputs": [
 { "name": "name", "type": "string"}
 ,{ "name": "id", "type": "uint"}
 ,{ "name": "member", "type": "address"}
@@ -19,7 +20,7 @@ var MemberRegistryContract = web3.eth.contract([
 ],"type": "function"	},
 //
 
-{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "managers"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
 //
@@ -99,12 +100,11 @@ var MemberRegistryContract = web3.eth.contract([
     "inputs": [{"name": "mAddress","type": "address"},{"name": "eType","type": "EventType"},{"name": "id","type": "uint"},{"name": "name","type": "string"},{"name": "memberState","type": "MemberState"}],    
     "name": "MemberEvent",
     "type": "event"  }
-] );   
-
+]);   
+// contractVariable for MemberAware
 var MemberAwareContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"memberRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
  
-] );   
-
+]);   
 
 

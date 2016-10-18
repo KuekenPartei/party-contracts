@@ -1,8 +1,8 @@
-/**
+/*
 *
-* (c) KUEKeN
 *
-**/
+*/
+
 
 import "./basics.sol";
 import "./members.sol";
@@ -288,7 +288,7 @@ contract KUEKeNParty is Party {
 	}
 	
 	// Start of user code KUEKeNParty.operations
-	/**
+	/*
 	*  bootstrap2
 	*/
 	function bootstrap2() public {
@@ -345,7 +345,8 @@ contract FoundationConference is Conference {
 	// End of user code
 	
 	// Start of user code FoundationConference.operations
-	/**
+	
+	/*
 	*  initalizeOrgan
 	*/
 	function initalizeOrgan() public {

@@ -2,7 +2,7 @@
 <html>
 <head>
 <!--
-<script type='text/javascript' src="partyWeb3.js">
+<script type='text/javascript' src="js/partyWeb3.js">
 </script>
 -->
 
@@ -21,6 +21,7 @@
 .contract {
 	border-style: solid;
 	border-width: 1px;
+	margin-bottom: 4px;
 	} 
 .contract_attributes{
 	border-style: solid;
@@ -33,11 +34,20 @@
 .function_execution{}
 .function_parameter{}
 .function_result{}
+.eventRow{
+	display: table-row;
+	width: auto;
+}
+.eventValue{	
+	float: left; /*fix for  buggy browsers*/
+	display: table-column;
+}
 
 </style>
 </head>
 <body bgcolor='#E6E6FA'>
 	<h1>Sample Interface for party</h1>
+<!--
 <div class="contract">Organ
 <div id="Organ_gui" ></div>
 </div>
@@ -68,9 +78,16 @@
 <div class="contract">test : FoundationConference
 <div id="TestFoundationConference_gui" ></div>
 </div>
+-->
 <div class="contract">test : party
 <div id="Party-Gui" ></div>
 </div>
+<div id="eventLog" ></div>
+
+<!-- Start of user code custom_partyhtml --> 
+
+<!-- End of user code -->
+
 
 <script type='text/javascript'>
 
@@ -79,31 +96,33 @@ var c = new PartyPage('Party-Gui');
 c.blog = new ShortBlogGuiMananger('Party-Gui');
 
 var party = contracts['KUEKeNParty'].contract;//KUEKeNPartyContract.at(contracts['KUEKeNParty'].contract.address);
-c.party.addManager(party);
+c.bootstrap(party);
+
+c.createDefaultGui();
 
  
-for (var i = 0; i < party.organCount(); i++) {
-	var add = party.organs(i);
-	var organ = OrganContract.at(add);
-	c.organ.addManager(organ);
-	var add = organ.getOrganBlog();
-	console.log(i+': address: '+add+' '+organ.organName());
-	var blog = ShortBlogContract.at(add);
-	c.blog.addManager(blog);
-	console.log(i+': address: '+add+' '+organ.organName());
-	for (var i = 0; i < organ.lastFunctionId(); i++) {
-		var add = organ.getFunctionBlogAddress(i);
-		console.log(i+': address: '+add);
-// 		var add = organ.organFunctions(i);
-// 		console.log(i+': address: '+add[6]);
-// 		var blog = ShortBlogContract.at(add);
-// 		c.blog.addManager(blog);
+// for (var i = 0; i < party.organCount(); i++) {
+// 	var add = party.organs(i);
+// 	var organ = OrganContract.at(add);
+// 	c.organ.addManager(organ);
+// 	var add = organ.getOrganBlog();
+// 	console.log(i+': address: '+add+' '+organ.organName());
+// 	var blog = ShortBlogContract.at(add);
+// 	c.blog.addManager(blog);
+// 	console.log(i+': address: '+add+' '+organ.organName());
+// 	for (var y = 0; y < organ.lastFunctionId(); y++) {
+// 		var add = organ.getFunctionBlogAddress(y);
+// 		console.log(y+': address: '+add);
+// // 		var add = organ.organFunctions(i);
+// // 		console.log(i+': address: '+add[6]);
+// // 		var blog = ShortBlogContract.at(add);
+// // 		c.blog.addManager(blog);
 
-	}
+// 	}
+//}
 
-
-c.blog.displayGui();
-c.blog.updateGui();
+// c.blog.displayGui();
+// c.blog.updateGui();
 // c.organ.addManager(fc);
 //End of user code
 c.createDefaultGui();

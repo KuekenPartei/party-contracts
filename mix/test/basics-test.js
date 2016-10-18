@@ -1,7 +1,41 @@
+// file header
+/**
+* A simple bean class around the contract.
+* The OwnedModel.
+**/
+function OwnedModel(contract) {
+this.contract = contract;
+	/**
+	* Getter for owner.
+	**/
+	this.getOwner = function(){
+		return contract.owner(); 
+	}
+	/**
+	* Call getOwner.
+	**/
+	this.getOwner = function(){
+		return contract.getOwner(); 
+	}
+	/**
+	* Call changeOwner.
+	**/
+	this.changeOwner = function(newOwner){
+		return contract.changeOwner(newOwner); 
+	}
+	/**
+	* Call kill.
+	**/
+	this.kill = function(){
+		return contract.kill(); 
+	}
+}// end of function OwnedModel
+
 //test class for Owned
 function TestOwned(contract) {
 	
 	this.test_instance = contract;
+	this.model = new OwnedModel(contract);
 	this.prefix='';
 	this.messageBlockId = "testResult";
 	var self = this;
@@ -31,12 +65,26 @@ function TestOwned(contract) {
 		var e = document.getElementById(this.prefix+'-'+this.messageBlockId);
 		var elemDiv = document.createElement('div');
 		elemDiv.id= this.prefix+'-'+testName;
-		elemDiv.innerText = testMessage;
-		if(!state)
-			elemDiv.className = 'failed_state'
+		elemDiv.className='testRow';
+		elemDiv.text=testMessage;
+		var stateDiv = document.createElement('div');
+		if(state){
+			elemDiv.innerHTML = '<div class="pass_state">P</div><div class="testCell">'+testMessage+'</div>';
+		}else{
+			elemDiv.innerHTML = '<div class="failed_state">F</div><div class="testCell">'+testMessage+'</div>';
+		}
 		e.appendChild(elemDiv);
 	}
-	
+
+	//assertEquals
+	this.testAE=function(testName,testMessage,expected,value) {
+		if(expected==value)
+			this.printTest(testName, testMessage, true);
+		else
+			this.printTest(testName, testMessage+': expected '+expected+' got '+value, false);
+	}
+
+	//test the attributes after setup	
 	this.testAttributes=function() {
 	//Start of user code attributeTests_Owned
 	//TODO: implement
@@ -82,10 +130,43 @@ function TestOwned(contract) {
 		//End of user code
 	}
 }
+/**
+* A simple bean class around the contract.
+* The ManageableModel.
+**/
+function ManageableModel(contract) {
+this.contract = contract;
+	/**
+	* Getter for mangerCount.
+	**/
+	this.getMangerCount = function(){
+		return contract.mangerCount(); 
+	}
+	/**
+	* Call addManager.
+	**/
+	this.addManager = function(_newManagerAddress){
+		return contract.addManager(_newManagerAddress); 
+	}
+	/**
+	* Call removeManager.
+	**/
+	this.removeManager = function(_managerAddress){
+		return contract.removeManager(_managerAddress); 
+	}
+	/**
+	* Call isManager.
+	**/
+	this.isManager = function(_managerAddress){
+		return contract.isManager(_managerAddress); 
+	}
+}// end of function ManageableModel
+
 //test class for Manageable
 function TestManageable(contract) {
 	
 	this.test_instance = contract;
+	this.model = new ManageableModel(contract);
 	this.prefix='';
 	this.messageBlockId = "testResult";
 	var self = this;
@@ -115,12 +196,26 @@ function TestManageable(contract) {
 		var e = document.getElementById(this.prefix+'-'+this.messageBlockId);
 		var elemDiv = document.createElement('div');
 		elemDiv.id= this.prefix+'-'+testName;
-		elemDiv.innerText = testMessage;
-		if(!state)
-			elemDiv.className = 'failed_state'
+		elemDiv.className='testRow';
+		elemDiv.text=testMessage;
+		var stateDiv = document.createElement('div');
+		if(state){
+			elemDiv.innerHTML = '<div class="pass_state">P</div><div class="testCell">'+testMessage+'</div>';
+		}else{
+			elemDiv.innerHTML = '<div class="failed_state">F</div><div class="testCell">'+testMessage+'</div>';
+		}
 		e.appendChild(elemDiv);
 	}
-	
+
+	//assertEquals
+	this.testAE=function(testName,testMessage,expected,value) {
+		if(expected==value)
+			this.printTest(testName, testMessage, true);
+		else
+			this.printTest(testName, testMessage+': expected '+expected+' got '+value, false);
+	}
+
+	//test the attributes after setup	
 	this.testAttributes=function() {
 	//Start of user code attributeTests_Manageable
 	//TODO: implement
@@ -168,10 +263,67 @@ function TestManageable(contract) {
 		//End of user code
 	}
 }
+/**
+* A simple bean class around the contract.
+* The MultiownedModel.
+**/
+function MultiownedModel(contract) {
+this.contract = contract;
+	/**
+	* Getter for m_required.
+	**/
+	this.getM_required = function(){
+		return contract.m_required(); 
+	}
+	/**
+	* Getter for m_numOwners.
+	**/
+	this.getM_numOwners = function(){
+		return contract.m_numOwners(); 
+	}
+	/**
+	* Getter for m_owners.
+	**/
+	this.getM_owners = function(){
+		return contract.m_owners(); 
+	}
+	/**
+	* Getter for c_maxOwners.
+	**/
+	this.getC_maxOwners = function(){
+		return contract.c_maxOwners(); 
+	}
+	/**
+	* Getter for m_pendingIndex.
+	**/
+	this.getM_pendingIndex = function(){
+		return contract.m_pendingIndex(); 
+	}
+	/**
+	* Call Multiowned.
+	**/
+	this.Multiowned = function(_owners,_required){
+		return contract.Multiowned(_owners,_required); 
+	}
+	/**
+	* Call isOwner.
+	**/
+	this.isOwner = function(_addr){
+		return contract.isOwner(_addr); 
+	}
+	/**
+	* Call hasConfirmed.
+	**/
+	this.hasConfirmed = function(_operation,_owner){
+		return contract.hasConfirmed(_operation,_owner); 
+	}
+}// end of function MultiownedModel
+
 //test class for Multiowned
 function TestMultiowned(contract) {
 	
 	this.test_instance = contract;
+	this.model = new MultiownedModel(contract);
 	this.prefix='';
 	this.messageBlockId = "testResult";
 	var self = this;
@@ -201,12 +353,26 @@ function TestMultiowned(contract) {
 		var e = document.getElementById(this.prefix+'-'+this.messageBlockId);
 		var elemDiv = document.createElement('div');
 		elemDiv.id= this.prefix+'-'+testName;
-		elemDiv.innerText = testMessage;
-		if(!state)
-			elemDiv.className = 'failed_state'
+		elemDiv.className='testRow';
+		elemDiv.text=testMessage;
+		var stateDiv = document.createElement('div');
+		if(state){
+			elemDiv.innerHTML = '<div class="pass_state">P</div><div class="testCell">'+testMessage+'</div>';
+		}else{
+			elemDiv.innerHTML = '<div class="failed_state">F</div><div class="testCell">'+testMessage+'</div>';
+		}
 		e.appendChild(elemDiv);
 	}
-	
+
+	//assertEquals
+	this.testAE=function(testName,testMessage,expected,value) {
+		if(expected==value)
+			this.printTest(testName, testMessage, true);
+		else
+			this.printTest(testName, testMessage+': expected '+expected+' got '+value, false);
+	}
+
+	//test the attributes after setup	
 	this.testAttributes=function() {
 	//Start of user code attributeTests_Multiowned
 	//TODO: implement

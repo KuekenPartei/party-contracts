@@ -21,30 +21,6 @@ A simple ballot for voting on alternatives.
 
 ### structs:
 
-Voter
-
-
-#### Voter properties
-
-name|type|visiblity|delegate|doc
-----|----|----|----|----
-weight|uint|public||
-voted|bool|public||
-delegate|address|public||
-vote|uint|public||
-
-
-Proposal
-
-
-#### Proposal properties
-
-name|type|visiblity|delegate|doc
-----|----|----|----|----
-name|bytes32|public||
-voteCount|uint|public||
-
-
 
 #### Ballot properties
 

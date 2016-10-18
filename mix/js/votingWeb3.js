@@ -1,4 +1,5 @@
-
+// file header
+// contractVariable for Ballot
 var BallotContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"chairperson","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"proposals","outputs":[{"name":"","type":"Proposal"}],"type":"function"},
@@ -45,7 +46,6 @@ var BallotContract = web3.eth.contract([
     "type": "function"
   }
  
-] );   
-
+]);   
 
 

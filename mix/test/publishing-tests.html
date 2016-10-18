@@ -7,6 +7,7 @@
 .contract {
 	border-style: solid;
 	border-width: 1px;
+	margin-bottom: 4px;
 	} 
 .contract_attributes{
 	border-style: solid;
@@ -19,18 +20,49 @@
 .function_execution{}
 .function_parameter{}
 .function_result{}
-.failed_state{
+.eventRow{
+	display: table-row;
+	width: auto;
+}
+.eventValue{	
+	float: left; /*fix for  buggy browsers*/
+	display: table-column;
+}
+.testTable {
+	display: table;
+	width: auto;
+	border-spacing: 5px; /*cellspacing:poor IE support for  this*/
+	/* border-collapse:separate;*/
+}
+.testRow {
+	display: table-row;
+	width: auto;
+}
+.testCell {
+	float: left; /*fix for  buggy browsers*/
+	display: table-column;
+}
+.failed_state {
 	border-style: solid;
 	border-width: 1px;
+	border-color: red;
+	float: left;
+	display: table-column;
 }
-
+.pass_state {
+	border-style: solid;
+	border-width: 1px;
+	border-color: green;
+	float: left;
+	display: table-column;
+}
 </style>
 </head>
 <body bgcolor='#E6E6FA'>
 	<h1>Tests for publishing</h1>
 
 
-<div id="all-testResult" ></div>
+<div id="all-testResult" class="testTable"></div>
 <h1>Events</h1>
 <div id="eventLog" ></div>
 
@@ -56,9 +88,12 @@ event_NewMessage.watch(function(error,result){
 		elemDiv.id= result.blockNumber +'event';
 		e.appendChild(elemDiv);
 		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
-		elemDiv.innerHTML = '<div>'
-        +'<span>'+result.args.message+'</span>'
-        +'<span>'+result.args.messageId+'</span>'
+		elemDiv.innerHTML = '<div class="eventRow">'
+        +'<div class="eventValue">'+result.args.message+'</div>'
+        +'<div class="eventValue">'+result.args.messageId+'</div>'
+        +'<div class="eventValue">'+result.args.messageSender+'</div>'
+        +'<div class="eventValue">'+result.args.messageHashValue+'</div>'
+        +'<div class="eventValue">'+result.args.externalResource+'</div>'
 + '</div>';
 		}else
 		console.log(error);
@@ -73,6 +108,22 @@ if(contracts['BlogRegistry'] !=undefined){
 	var instance = new TestBlogRegistry(contract);
 	instance.prefix = 'all';
 
+var event_NewBlog = contract.NewBlog({},{fromBlock: 0});
+event_NewBlog.watch(function(error,result){
+	if(!error){
+		var e = document.getElementById('eventLog');
+		var elemDiv = document.createElement('div');
+		elemDiv.id= result.blockNumber +'event';
+		e.appendChild(elemDiv);
+		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
+		elemDiv.innerHTML = '<div class="eventRow">'
+        +'<div class="eventValue">'+result.args.index+'</div>'
+        +'<div class="eventValue">'+result.args.name+'</div>'
+        +'<div class="eventValue">'+result.args.blogAddress+'</div>'
++ '</div>';
+		}else
+		console.log(error);
+	});
 
 
 //console.log(instance+'-->');

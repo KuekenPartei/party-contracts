@@ -2,7 +2,7 @@
 <html>
 <head>
 <!--
-<script type='text/javascript' src="publishingWeb3.js">
+<script type='text/javascript' src="js/publishingWeb3.js">
 </script>
 -->
 
@@ -19,6 +19,7 @@
 .contract {
 	border-style: solid;
 	border-width: 1px;
+	margin-bottom: 4px;
 	} 
 .contract_attributes{
 	border-style: solid;
@@ -31,11 +32,20 @@
 .function_execution{}
 .function_parameter{}
 .function_result{}
+.eventRow{
+	display: table-row;
+	width: auto;
+}
+.eventValue{	
+	float: left; /*fix for  buggy browsers*/
+	display: table-column;
+}
 
 </style>
 </head>
 <body bgcolor='#E6E6FA'>
 	<h1>Sample Interface for publishing</h1>
+<!--
 <div class="contract">ShortBlog
 <div id="ShortBlog_gui" ></div>
 </div>
@@ -48,9 +58,16 @@
 <div class="contract">test : BlogRegistry
 <div id="TestBlogRegistry_gui" ></div>
 </div>
+-->
 <div class="contract">test : publishing
 <div id="Publishing-Gui" ></div>
 </div>
+<div id="eventLog" ></div>
+
+<!-- Start of user code custom_publishinghtml --> 
+
+<!-- End of user code -->
+
 
 <script type='text/javascript'>
 

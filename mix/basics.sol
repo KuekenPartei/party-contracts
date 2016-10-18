@@ -1,8 +1,8 @@
-/**
+/*
 *
-* (c) KUEKeN
 *
-**/
+*/
+
 /*
 * Collection of basic functionalities.
 */

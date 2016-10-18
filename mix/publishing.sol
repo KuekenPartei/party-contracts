@@ -1,8 +1,8 @@
-/**
+/*
 *
-* (c) KUEKeN
 *
-**/
+*/
+
 
 import "./basics.sol";
 
@@ -19,8 +19,10 @@ contract MessagePublisher {
 	function publishMessage(string message,string hash,string er) public  ;
 }
 
-
-contract ShortBlog is Owned {
+/*
+* A Short blog can save messages on the blockchain.
+*/
+contract ShortBlog is Manageable {
     /*
     * A message in the blog.
     */
@@ -42,32 +44,46 @@ contract ShortBlog is Owned {
 	//TODO: implement
 	// End of user code
 	
+	/*
+	* Called when a new message is posted.
+	* 
+	* message - The message.
+	* messageId -
+	* messageSender - The sender of the message.
+	* messageHashValue - The hash of the message.
+	* externalResource - The external resource (a link) to the message. 
+	*/
+	event NewMessage(string message,uint messageId,address messageSender,string messageHashValue,string externalResource);
 	
-	event NewMessage(string message,uint messageId);
 	
-	
-	
-	function sendMessage(string message,string hash,string er) public  onlyOwner()  {
-		 messages[messageCount].message=message;
-		 messages[messageCount].id=messageCount;
-		 messages[messageCount].date=now;
-		 //messages[messageCount].sender=owner;
-		 messages[messageCount].externalResource = er;
-		 messages[messageCount].hashValue = hash;
-		 messages[messageCount].blockNumber=block.number;
-		 NewMessage(message,messageCount);
-		 messageCount++;
-		
-		//Start of user code ShortBlog.function.sendMessage_string_string_string
-		//TODO: implement
+	function ShortBlog(string _name) public   {
+		//Start of user code ShortBlog.constructor.ShortBlog_string
+		//super();
+		name = _name;
 		//End of user code
 	}
 	
 	
-	
-	function ShortBlog(string _name) public   {
-		//Start of user code ShortBlog.function.ShortBlog_string
-		//TODO: implement
+	/*
+	* Send a message to the blog,
+	* 
+	* message - The message as string.
+	* hash - The hash of the external source.
+	* er - The link to the message.
+	*/
+	function sendMessage(string message,string hash,string er) public  onlyManager()  {
+		 
+		
+		//Start of user code ShortBlog.function.sendMessage_string_string_string
+		 messages[messageCount].message=message;
+		 messages[messageCount].id=messageCount;
+		 messages[messageCount].date=now;
+		 messages[messageCount].sender=msg.sender;
+		 messages[messageCount].externalResource = er;
+		 messages[messageCount].hashValue = hash;
+		 messages[messageCount].blockNumber=block.number;
+		 NewMessage(message,messageCount,msg.sender,hash,er);
+		 messageCount++;
 		//End of user code
 	}
 	
@@ -76,34 +92,37 @@ contract ShortBlog is Owned {
 	// End of user code
 }
 
-
+/*
+* The registry create new blogs.
+*/
 contract BlogRegistry is Manageable {
 
 	uint public blogCount;
 	mapping (uint=>ShortBlog)public blogs;
-	mapping (uint=>string)public names;
 	// Start of user code BlogRegistry.attributes
 	//TODO: implement
 	// End of user code
+	
+	
+	event NewBlog(uint index,string name,address blogAddress);
 	
 	
 	/*
 	* Register a blog under a name.
 	* returns 0 for ok and 1 else.
 	* 
-	* name -
+	* _name - The name of the blog.
 	* returns
 	*  -
 	*/
-	function registerBlog(string name) public  onlyManager() returns (ShortBlog ) {
+	function registerBlog(string _name) public  onlyManager() returns (ShortBlog ) {
 		
 		//Start of user code BlogRegistry.function.registerBlog_string
-		 ShortBlog b = new ShortBlog(name);
-		 b.changeOwner(msg.sender);
-		 blogs[blogCount] =b ;
-		 names[blogCount] = name;
-		 blogCount++;
-		 return b;
+		ShortBlog sb = new ShortBlog(_name);
+		blogs[blogCount] = sb;
+		NewBlog(blogCount,_name,blogs[blogCount]);
+		blogCount++;
+		return sb; 
 		//End of user code
 	}
 	
