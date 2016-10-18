@@ -1472,9 +1472,19 @@ this.createDefaultGui=function() {
 		var bAddress = result.args.blogAddress;
 		blogs.addManager(ShortBlogContract.at(bAddress));	
 		blogs.displayGui(null);
+		blogs.updateGui();
 	}
 
 	this.registry.eventCallback = this.eventHandle;
+	
+	this.blogEventHandle=function(result){
+		var a = new ShortBlogGuiFactory();
+		var txt = a.createNewMessageLogDataGui("", "", "", 
+				result.args.message, result.args.messageId, 
+				result.args.messageSender, result.args.messageHashValue, 
+				result.args.externalResource);
+	}
+	this.blogs.eventCallback = this.blogEventHandle;
 	
 	
 this.readDataFromContract=function() {
@@ -1486,12 +1496,13 @@ this.readDataFromContract=function() {
 			this.blogs.addManager(ShortBlogContract.at(bAddress));			
 		}
 	}
+}
 	
 
 
 this.clearGui=function(){
 	this.registry.clearGui();
-	this.blogs.clearGui();
+	this.blogs.clearGui();}
 
 
 	//End of user code
