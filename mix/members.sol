@@ -1,5 +1,7 @@
 /*
 *
+*(c) 2016 KUEKeN
+* Urs Zeidler
 *
 */
 
@@ -33,7 +35,6 @@ contract MemberRegistry is Manageable {
 	mapping (uint=>Member)public partyMembers;
 	mapping (address=>Member)public memberAddress;
 	// Start of user code MemberRegistry.attributes
-	//TODO: implement
 	// End of user code
 	
 	

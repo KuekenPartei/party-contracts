@@ -1,10 +1,15 @@
-// file header
+/**
+*
+*(c) 2016 KUEKeN
+* Urs Zeidler
+*
+**/
 // contractVariable for MemberRegistry
 var MemberRegistryContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"partyMemberCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"activeMemberCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "partyMembers"}],"name": "partyMembers","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "partyMembers","outputs": [
 { "name": "name", "type": "string"}
 ,{ "name": "id", "type": "uint"}
 ,{ "name": "member", "type": "address"}
@@ -12,7 +17,7 @@ var MemberRegistryContract = web3.eth.contract([
 ],"type": "function"	},
 //
 
-{"constant": true,"inputs": [{"name": "","type": "memberAddress"}],"name": "memberAddress","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "memberAddress","outputs": [
 { "name": "name", "type": "string"}
 ,{ "name": "id", "type": "uint"}
 ,{ "name": "member", "type": "address"}
@@ -20,7 +25,7 @@ var MemberRegistryContract = web3.eth.contract([
 ],"type": "function"	},
 //
 
-{"constant": true,"inputs": [{"name": "","type": "managers"}],"name": "managers","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
 //
@@ -68,7 +73,7 @@ var MemberRegistryContract = web3.eth.contract([
     "type": "function"
   }
 ,  {
-    "constant": false,
+    "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
@@ -543,23 +548,23 @@ function MemberRegistryGuiFactory() {
 	}
 
 
-//eventguis
+	//eventguis
 
 	/**
 	* Create a gui for the MemberEvent event.
-    * @inner - the inner text
+    * @prefix - a prefix
+	* @blockHash - the bolckhash 
+	* @blockNumber - the number of the block
 	*/
 	this.createMemberEventLogDataGui = function(prefix, blockHash, blockNumber
 	,mAddress	,eType	,id	,name	,memberState	) {
-		return '<ul class="dapp-account-list"><li > '
-        +'<a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>'
-		+'<span>'+prefix+' ('+blockNumber+')</span>'
-        +'<span>'+mAddress+'</span>'
-        +'<span>'+eType+'</span>'
-        +'<span>'+id+'</span>'
-        +'<span>'+name+'</span>'
-        +'<span>'+memberState+'</span>'
-        +' </li>';
+		return '<div class="eventRow">'
+        +'<div class="eventValue">'+mAddress+'</div>'
+        +'<div class="eventValue">'+eType+'</div>'
+        +'<div class="eventValue">'+id+'</div>'
+        +'<div class="eventValue">'+name+'</div>'
+        +'<div class="eventValue">'+memberState+'</div>'
+        +' </div>';
 	}
 
 }//end guifactory
@@ -919,6 +924,7 @@ function MemberRegistryManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
+	this.eventCallback = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -998,24 +1004,12 @@ function MemberRegistryManager(prefix,contract,containerId) {
 	this.watchEvents=function(){
 	var event_MemberEvent = contract.MemberEvent({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
+	var callback = this.eventCallback;
 	event_MemberEvent.watch(function(error,result){
 	if(!error){
-		var e = document.getElementById(elp+'eventLog');
-		if(e==null){
-			console.log(elp+'eventLog');
-			return;
-		}
-		var elemDiv = document.createElement('div');
-		elemDiv.id= result.blockNumber +'event';
-		e.appendChild(elemDiv);
-		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
-		elemDiv.innerHTML = '<div class="eventRow">'
-        +'<dic class="eventValue">'+result.args.mAddress+'</div>'
-        +'<dic class="eventValue">'+result.args.eType+'</div>'
-        +'<dic class="eventValue">'+result.args.id+'</div>'
-        +'<dic class="eventValue">'+result.args.name+'</div>'
-        +'<dic class="eventValue">'+result.args.memberState+'</div>'
-		+ '</div>';
+		if(callback!=null)
+			callback(result);
+
 		}else
 			console.log(error);	
 	});
@@ -1030,14 +1024,16 @@ function MemberRegistryGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
+	this.eventCallback = null;
 	
 	/**
 	* Add a contract to this manager.
-	* @namespace contract
+	* @contract the web3 contract instance
 	*/
 	this.addManager = function(contract) {
 		var m = new MemberRegistryManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
+		m.eventCallback = this.eventCallback;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;
@@ -1183,7 +1179,7 @@ function MemberAwareGuiFactory() {
 	}
 
 
-//eventguis
+	//eventguis
 
 }//end guifactory
 
@@ -1285,6 +1281,7 @@ function MemberAwareManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
+	this.eventCallback = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -1373,14 +1370,16 @@ function MemberAwareGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
+	this.eventCallback = null;
 	
 	/**
 	* Add a contract to this manager.
-	* @namespace contract
+	* @contract the web3 contract instance
 	*/
 	this.addManager = function(contract) {
 		var m = new MemberAwareManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
+		m.eventCallback = this.eventCallback;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;

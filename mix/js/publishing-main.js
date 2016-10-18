@@ -1,11 +1,16 @@
-// file header
+/**
+*
+*(c) 2016 KUEKeN
+* Urs Zeidler
+*
+**/
 // contractVariable for ShortBlog
 var ShortBlogContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"messageCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"lastMessageDate","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "messages"}],"name": "messages","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "messages","outputs": [
 { "name": "message", "type": "string"}
 ,{ "name": "date", "type": "uint"}
 ,{ "name": "id", "type": "uint"}
@@ -16,7 +21,7 @@ var ShortBlogContract = web3.eth.contract([
 ],"type": "function"	},
 //
 
-{"constant": true,"inputs": [{"name": "","type": "managers"}],"name": "managers","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
 //
@@ -43,7 +48,7 @@ var ShortBlogContract = web3.eth.contract([
     "type": "function"
   }
 ,  {
-    "constant": false,
+    "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
@@ -59,12 +64,12 @@ var ShortBlogContract = web3.eth.contract([
 var BlogRegistryContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"blogCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "blogs"}],"name": "blogs","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "blogs","outputs": [
 { "name": "", "type": "address"}
 ],"type": "function"	},
 //
 
-{"constant": true,"inputs": [{"name": "","type": "managers"}],"name": "managers","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
 //
@@ -91,7 +96,7 @@ var BlogRegistryContract = web3.eth.contract([
     "type": "function"
   }
 ,  {
-    "constant": false,
+    "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
@@ -382,23 +387,23 @@ function ShortBlogGuiFactory() {
 	}
 
 
-//eventguis
+	//eventguis
 
 	/**
 	* Create a gui for the NewMessage event.
-    * @inner - the inner text
+    * @prefix - a prefix
+	* @blockHash - the bolckhash 
+	* @blockNumber - the number of the block
 	*/
 	this.createNewMessageLogDataGui = function(prefix, blockHash, blockNumber
 	,message	,messageId	,messageSender	,messageHashValue	,externalResource	) {
-		return '<ul class="dapp-account-list"><li > '
-        +'<a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>'
-		+'<span>'+prefix+' ('+blockNumber+')</span>'
-        +'<span>'+message+'</span>'
-        +'<span>'+messageId+'</span>'
-        +'<span>'+messageSender+'</span>'
-        +'<span>'+messageHashValue+'</span>'
-        +'<span>'+externalResource+'</span>'
-        +' </li>';
+		return '<div class="eventRow">'
+        +'<div class="eventValue">'+message+'</div>'
+        +'<div class="eventValue">'+messageId+'</div>'
+        +'<div class="eventValue">'+messageSender+'</div>'
+        +'<div class="eventValue">'+messageHashValue+'</div>'
+        +'<div class="eventValue">'+externalResource+'</div>'
+        +' </div>';
 	}
 
 }//end guifactory
@@ -637,6 +642,7 @@ function ShortBlogManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
+	this.eventCallback = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -716,24 +722,12 @@ function ShortBlogManager(prefix,contract,containerId) {
 	this.watchEvents=function(){
 	var event_NewMessage = contract.NewMessage({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
+	var callback = this.eventCallback;
 	event_NewMessage.watch(function(error,result){
 	if(!error){
-		var e = document.getElementById(elp+'eventLog');
-		if(e==null){
-			console.log(elp+'eventLog');
-			return;
-		}
-		var elemDiv = document.createElement('div');
-		elemDiv.id= result.blockNumber +'event';
-		e.appendChild(elemDiv);
-		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
-		elemDiv.innerHTML = '<div class="eventRow">'
-        +'<dic class="eventValue">'+result.args.message+'</div>'
-        +'<dic class="eventValue">'+result.args.messageId+'</div>'
-        +'<dic class="eventValue">'+result.args.messageSender+'</div>'
-        +'<dic class="eventValue">'+result.args.messageHashValue+'</div>'
-        +'<dic class="eventValue">'+result.args.externalResource+'</div>'
-		+ '</div>';
+		if(callback!=null)
+			callback(result);
+
 		}else
 			console.log(error);	
 	});
@@ -748,14 +742,16 @@ function ShortBlogGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
+	this.eventCallback = null;
 	
 	/**
 	* Add a contract to this manager.
-	* @namespace contract
+	* @contract the web3 contract instance
 	*/
 	this.addManager = function(contract) {
 		var m = new ShortBlogManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
+		m.eventCallback = this.eventCallback;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;
@@ -1037,21 +1033,21 @@ function BlogRegistryGuiFactory() {
 	}
 
 
-//eventguis
+	//eventguis
 
 	/**
 	* Create a gui for the NewBlog event.
-    * @inner - the inner text
+    * @prefix - a prefix
+	* @blockHash - the bolckhash 
+	* @blockNumber - the number of the block
 	*/
 	this.createNewBlogLogDataGui = function(prefix, blockHash, blockNumber
 	,index	,name	,blogAddress	) {
-		return '<ul class="dapp-account-list"><li > '
-        +'<a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>'
-		+'<span>'+prefix+' ('+blockNumber+')</span>'
-        +'<span>'+index+'</span>'
-        +'<span>'+name+'</span>'
-        +'<span>'+blogAddress+'</span>'
-        +' </li>';
+		return '<div class="eventRow">'
+        +'<div class="eventValue">'+index+'</div>'
+        +'<div class="eventValue">'+name+'</div>'
+        +'<div class="eventValue">'+blogAddress+'</div>'
+        +' </div>';
 	}
 
 }//end guifactory
@@ -1253,6 +1249,7 @@ function BlogRegistryManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
+	this.eventCallback = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -1332,22 +1329,12 @@ function BlogRegistryManager(prefix,contract,containerId) {
 	this.watchEvents=function(){
 	var event_NewBlog = contract.NewBlog({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
+	var callback = this.eventCallback;
 	event_NewBlog.watch(function(error,result){
 	if(!error){
-		var e = document.getElementById(elp+'eventLog');
-		if(e==null){
-			console.log(elp+'eventLog');
-			return;
-		}
-		var elemDiv = document.createElement('div');
-		elemDiv.id= result.blockNumber +'event';
-		e.appendChild(elemDiv);
-		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
-		elemDiv.innerHTML = '<div class="eventRow">'
-        +'<dic class="eventValue">'+result.args.index+'</div>'
-        +'<dic class="eventValue">'+result.args.name+'</div>'
-        +'<dic class="eventValue">'+result.args.blogAddress+'</div>'
-		+ '</div>';
+		if(callback!=null)
+			callback(result);
+
 		}else
 			console.log(error);	
 	});
@@ -1362,14 +1349,16 @@ function BlogRegistryGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
+	this.eventCallback = null;
 	
 	/**
 	* Add a contract to this manager.
-	* @namespace contract
+	* @contract the web3 contract instance
 	*/
 	this.addManager = function(contract) {
 		var m = new BlogRegistryManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
+		m.eventCallback = this.eventCallback;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;
@@ -1448,14 +1437,9 @@ function BlogRegistryDeployment(guiId){
 function PublishingPage(prefix) {
 	this.prefix=prefix;
 	//Start of user code page_publishing_attributes
-<<<<<<< HEAD
-	this.br = new BlogRegistryGuiMananger(prefix);
-	this.sb = new ShortBlogGuiMananger(prefix);
-=======
-	this.registry = new BlogRegistryGuiMananger(prefix);
 	this.blogs = new ShortBlogGuiMananger(prefix);
-	
->>>>>>> branch 'master' of https://github.com/KuekenPartei/party-contracts.git
+	this.registry = new BlogRegistryGuiMananger(prefix);
+
 	//End of user code
 
 	
@@ -1471,20 +1455,28 @@ function PublishingPage(prefix) {
 **/
 this.createDefaultGui=function() {
 	//Start of user code page_Publishing_create_default_gui_functions
-<<<<<<< HEAD
-	this.br.displayGui(null);
-	this.sb.displayGui(null);
-=======
 	this.clearGui();
 	this.registry.displayGui();
 	this.registry.updateGui();
 	this.blogs.displayGui();
 	this.blogs.updateGui();
 	
->>>>>>> branch 'master' of https://github.com/KuekenPartei/party-contracts.git
+	var self = this;
+	blogs = this.blogs;
 	//End of user code
 }
 	//Start of user code page_Publishing_functions
+
+	this.eventHandle=function(result){
+		console.log('Event:'+result);
+		var bAddress = result.args.blogAddress;
+		blogs.addManager(ShortBlogContract.at(bAddress));	
+		blogs.displayGui(null);
+	}
+
+	this.registry.eventCallback = this.eventHandle;
+	
+	
 this.readDataFromContract=function() {
 	for (i in this.registry.managers) {
 		var manager = this.registry.managers[i];
@@ -1495,12 +1487,12 @@ this.readDataFromContract=function() {
 		}
 	}
 	
-}
+
 
 this.clearGui=function(){
 	this.registry.clearGui();
 	this.blogs.clearGui();
-}
+
 
 	//End of user code
 

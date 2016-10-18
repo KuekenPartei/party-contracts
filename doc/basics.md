@@ -51,10 +51,11 @@ newOwner|address|in|
 ## contract: Manageable
 
     overview:
+	constructor Manageable()
 	function canAccess() internal  returns (bool )
 	function addManager(address _newManagerAddress) public  onlyManager 
 	function removeManager(address _managerAddress) public  onlyManager 
-	function isManager(address _managerAddress) public  returns (bool )
+	function isManager(address _managerAddress) public   constant returns (bool )
 
 
 
@@ -77,6 +78,10 @@ name|type|mapsTo|visiblity|doc
 ----|----|----|----|----
 managers|address|bool|public|-
 
+#### Manageable.Manageable() public  
+
+
+
 #### Manageable.canAccess() internal  returns (bool )
 
 
@@ -98,7 +103,7 @@ name|type|direction|doc
 ----|----|----|----
 _managerAddress|address|in|The address of the manager to work with
 
-#### Manageable.isManager(address _managerAddress) public  returns (bool )
+#### Manageable.isManager(address _managerAddress) public   constant returns (bool )
 
 
 name|type|direction|doc
@@ -127,6 +132,18 @@ _managerAddress|address|in|The address of the manager to work with
 
 
 ### structs:
+
+PendingState
+
+
+#### PendingState properties
+
+name|type|visiblity|delegate|doc
+----|----|----|----|----
+yetNeeded|uint|public||
+ownersDone|uint|public||
+index|uint|public||
+
 
 
 #### Multiowned properties

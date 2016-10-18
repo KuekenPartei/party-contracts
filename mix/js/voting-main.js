@@ -1,4 +1,9 @@
-// file header
+/**
+*
+*(c) 2016 KUEKeN
+* Urs Zeidler
+*
+**/
 // contractVariable for Ballot
 var BallotContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"chairperson","outputs":[{"name":"","type":"address"}],"type":"function"},
@@ -312,7 +317,7 @@ function BallotGuiFactory() {
 	}
 
 
-//eventguis
+	//eventguis
 
 }//end guifactory
 
@@ -522,6 +527,7 @@ function BallotManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
+	this.eventCallback = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -610,14 +616,16 @@ function BallotGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
+	this.eventCallback = null;
 	
 	/**
 	* Add a contract to this manager.
-	* @namespace contract
+	* @contract the web3 contract instance
 	*/
 	this.addManager = function(contract) {
 		var m = new BallotManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
+		m.eventCallback = this.eventCallback;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;

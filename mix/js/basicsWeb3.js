@@ -1,4 +1,9 @@
-// file header
+/**
+*
+*(c) 2016 KUEKeN
+* Urs Zeidler
+*
+**/
 // contractVariable for Owned
 var OwnedContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"type":"function"},
@@ -28,7 +33,7 @@ var OwnedContract = web3.eth.contract([
 // contractVariable for Manageable
 var ManageableContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "managers"}],"name": "managers","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
 //
@@ -48,7 +53,7 @@ var ManageableContract = web3.eth.contract([
     "type": "function"
   }
 ,  {
-    "constant": false,
+    "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
@@ -63,7 +68,7 @@ var MultiownedContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"m_owners","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"c_maxOwners","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"m_pendingIndex","outputs":[{"name":"","type":"bytes32"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "m_ownerIndex"}],"name": "m_ownerIndex","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "m_ownerIndex","outputs": [
 { "name": "", "type": "uint"}
 ],"type": "function"	},
 //

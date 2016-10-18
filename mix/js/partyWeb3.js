@@ -1,4 +1,9 @@
-// file header
+/**
+*
+*(c) 2016 KUEKeN
+* Urs Zeidler
+*
+**/
 // contractVariable for Organ
 var OrganContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"memberRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
@@ -8,7 +13,7 @@ var OrganContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"blogRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"isActive","outputs":[{"name":"","type":"bool"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"ballotCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "organFunctions"}],"name": "organFunctions","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "organFunctions","outputs": [
 { "name": "currentMember", "type": "address"}
 ,{ "name": "functionName", "type": "string"}
 ,{ "name": "id", "type": "uint"}
@@ -19,7 +24,7 @@ var OrganContract = web3.eth.contract([
 ],"type": "function"	},
 //
 
-{"constant": true,"inputs": [{"name": "","type": "managers"}],"name": "managers","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
 //
@@ -63,7 +68,7 @@ var OrganContract = web3.eth.contract([
     "type": "function"
   }
 ,  {
-    "constant": false,
+    "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
@@ -116,7 +121,7 @@ var PartyContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"constitutionHash","outputs":[{"name":"","type":"string"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"organCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"blogregistry","outputs":[{"name":"","type":"address"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "managers"}],"name": "managers","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
 //
@@ -153,7 +158,7 @@ var PartyContract = web3.eth.contract([
     "type": "function"
   }
 ,  {
-    "constant": false,
+    "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
@@ -171,7 +176,7 @@ var KUEKeNPartyContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"constitutionHash","outputs":[{"name":"","type":"string"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"organCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"blogregistry","outputs":[{"name":"","type":"address"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "managers"}],"name": "managers","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
 //
@@ -222,7 +227,7 @@ var KUEKeNPartyContract = web3.eth.contract([
     "type": "function"
   }
 ,  {
-    "constant": false,
+    "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
@@ -241,7 +246,7 @@ var ConferenceContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"blogRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"isActive","outputs":[{"name":"","type":"bool"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"ballotCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "organFunctions"}],"name": "organFunctions","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "organFunctions","outputs": [
 { "name": "currentMember", "type": "address"}
 ,{ "name": "functionName", "type": "string"}
 ,{ "name": "id", "type": "uint"}
@@ -252,7 +257,7 @@ var ConferenceContract = web3.eth.contract([
 ],"type": "function"	},
 //
 
-{"constant": true,"inputs": [{"name": "","type": "managers"}],"name": "managers","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
 //
@@ -300,7 +305,7 @@ var ConferenceContract = web3.eth.contract([
     "type": "function"
   }
 ,  {
-    "constant": false,
+    "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
@@ -358,7 +363,7 @@ var FoundationConferenceContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"blogRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"isActive","outputs":[{"name":"","type":"bool"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"ballotCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "organFunctions"}],"name": "organFunctions","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "organFunctions","outputs": [
 { "name": "currentMember", "type": "address"}
 ,{ "name": "functionName", "type": "string"}
 ,{ "name": "id", "type": "uint"}
@@ -369,7 +374,7 @@ var FoundationConferenceContract = web3.eth.contract([
 ],"type": "function"	},
 //
 
-{"constant": true,"inputs": [{"name": "","type": "managers"}],"name": "managers","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
 //
@@ -417,7 +422,7 @@ var FoundationConferenceContract = web3.eth.contract([
     "type": "function"
   }
 ,  {
-    "constant": false,
+    "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],

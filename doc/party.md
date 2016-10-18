@@ -25,8 +25,8 @@
 	function getLastBallot() public   constant returns (address )
 	function getOrganBlog() public   constant returns (address )
 
-inherites: [Manageable](basics#contract-manageable)
-,[MemberAware](members#contract-memberaware)
+inherites: [MemberAware](members#contract-memberaware)
+,[Manageable](basics#contract-manageable)
 
 
 An organ is part of the party, defined in the constitution.
@@ -35,6 +35,26 @@ It is populated by functions party members.
 
 
 ### structs:
+
+OrganFunction
+The function definition.
+A function is defined in the constitution of the party.
+Normaly it is associated with a party member.
+
+
+
+#### OrganFunction properties
+
+name|type|visiblity|delegate|doc
+----|----|----|----|----
+currentMember|address|public||
+functionName|string|public||
+id|uint|public||
+constitutionHash|string|public||
+lastMemberChanged|uint|public||
+lastConstitutionHashChanged|uint|public||
+publisher|ShortBlog|public||
+
 
 
 #### Organ properties

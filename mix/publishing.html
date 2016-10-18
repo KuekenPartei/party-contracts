@@ -75,12 +75,12 @@ var c = new PublishingPage('Publishing-Gui');
 //Start of user code page_Publishing_js_functions
 		//TODO: implement
 
-web3.eth.defaultAccount = web3.eth.accounts[1];
+web3.eth.defaultAccount = web3.eth.accounts[0];
 
 var co = contracts['BlogRegistry'].contract;
 c.registry.addManager(co);
 
-c.readDataFromContract();
+//c.readDataFromContract();
 //End of user code
 c.createDefaultGui();
 

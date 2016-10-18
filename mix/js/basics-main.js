@@ -1,4 +1,9 @@
-// file header
+/**
+*
+*(c) 2016 KUEKeN
+* Urs Zeidler
+*
+**/
 // contractVariable for Owned
 var OwnedContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"type":"function"},
@@ -28,7 +33,7 @@ var OwnedContract = web3.eth.contract([
 // contractVariable for Manageable
 var ManageableContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "managers"}],"name": "managers","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
 //
@@ -48,7 +53,7 @@ var ManageableContract = web3.eth.contract([
     "type": "function"
   }
 ,  {
-    "constant": false,
+    "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
@@ -63,7 +68,7 @@ var MultiownedContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"m_owners","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"c_maxOwners","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"m_pendingIndex","outputs":[{"name":"","type":"bytes32"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "m_ownerIndex"}],"name": "m_ownerIndex","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "m_ownerIndex","outputs": [
 { "name": "", "type": "uint"}
 ],"type": "function"	},
 //
@@ -268,7 +273,7 @@ function OwnedGuiFactory() {
 	}
 
 
-//eventguis
+	//eventguis
 
 }//end guifactory
 
@@ -401,6 +406,7 @@ function OwnedManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
+	this.eventCallback = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -489,14 +495,16 @@ function OwnedGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
+	this.eventCallback = null;
 	
 	/**
 	* Add a contract to this manager.
-	* @namespace contract
+	* @contract the web3 contract instance
 	*/
 	this.addManager = function(contract) {
 		var m = new OwnedManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
+		m.eventCallback = this.eventCallback;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;
@@ -723,7 +731,7 @@ function ManageableGuiFactory() {
 	}
 
 
-//eventguis
+	//eventguis
 
 }//end guifactory
 
@@ -887,6 +895,7 @@ function ManageableManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
+	this.eventCallback = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -975,14 +984,16 @@ function ManageableGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
+	this.eventCallback = null;
 	
 	/**
 	* Add a contract to this manager.
-	* @namespace contract
+	* @contract the web3 contract instance
 	*/
 	this.addManager = function(contract) {
 		var m = new ManageableManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
+		m.eventCallback = this.eventCallback;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;
@@ -1045,6 +1056,18 @@ function ManageableGuiMananger(guiId){
 * Each constructor is available.
 **/
 function ManageableDeployment(guiId){
+
+	/**
+	* Construct Manageable.
+	**/
+	this.deployManageable_Manageable = function(account,code,providedGas,){
+//		var c = Manageable.new(_name,_url,_description,{
+//			from: account,
+//			data: code,
+//			gas:  providedGas
+//		});
+		return c;
+	}
 
 //Start of user code Manageable_deployment_js
 //TODO: implement
@@ -1294,87 +1317,87 @@ function MultiownedGuiFactory() {
 	}
 
 
-//eventguis
+	//eventguis
 
 	/**
 	* Create a gui for the Confirmation event.
-    * @inner - the inner text
+    * @prefix - a prefix
+	* @blockHash - the bolckhash 
+	* @blockNumber - the number of the block
 	*/
 	this.createConfirmationLogDataGui = function(prefix, blockHash, blockNumber
 	,owner	,operation	) {
-		return '<ul class="dapp-account-list"><li > '
-        +'<a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>'
-		+'<span>'+prefix+' ('+blockNumber+')</span>'
-        +'<span>'+owner+'</span>'
-        +'<span>'+operation+'</span>'
-        +' </li>';
+		return '<div class="eventRow">'
+        +'<div class="eventValue">'+owner+'</div>'
+        +'<div class="eventValue">'+operation+'</div>'
+        +' </div>';
 	}
 
 	/**
 	* Create a gui for the Revoke event.
-    * @inner - the inner text
+    * @prefix - a prefix
+	* @blockHash - the bolckhash 
+	* @blockNumber - the number of the block
 	*/
 	this.createRevokeLogDataGui = function(prefix, blockHash, blockNumber
 	,owner	,operation	) {
-		return '<ul class="dapp-account-list"><li > '
-        +'<a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>'
-		+'<span>'+prefix+' ('+blockNumber+')</span>'
-        +'<span>'+owner+'</span>'
-        +'<span>'+operation+'</span>'
-        +' </li>';
+		return '<div class="eventRow">'
+        +'<div class="eventValue">'+owner+'</div>'
+        +'<div class="eventValue">'+operation+'</div>'
+        +' </div>';
 	}
 
 	/**
 	* Create a gui for the OwnerChanged event.
-    * @inner - the inner text
+    * @prefix - a prefix
+	* @blockHash - the bolckhash 
+	* @blockNumber - the number of the block
 	*/
 	this.createOwnerChangedLogDataGui = function(prefix, blockHash, blockNumber
 	,oldOwner	,newOwner	) {
-		return '<ul class="dapp-account-list"><li > '
-        +'<a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>'
-		+'<span>'+prefix+' ('+blockNumber+')</span>'
-        +'<span>'+oldOwner+'</span>'
-        +'<span>'+newOwner+'</span>'
-        +' </li>';
+		return '<div class="eventRow">'
+        +'<div class="eventValue">'+oldOwner+'</div>'
+        +'<div class="eventValue">'+newOwner+'</div>'
+        +' </div>';
 	}
 
 	/**
 	* Create a gui for the OwnerAdded event.
-    * @inner - the inner text
+    * @prefix - a prefix
+	* @blockHash - the bolckhash 
+	* @blockNumber - the number of the block
 	*/
 	this.createOwnerAddedLogDataGui = function(prefix, blockHash, blockNumber
 	,newOwner	) {
-		return '<ul class="dapp-account-list"><li > '
-        +'<a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>'
-		+'<span>'+prefix+' ('+blockNumber+')</span>'
-        +'<span>'+newOwner+'</span>'
-        +' </li>';
+		return '<div class="eventRow">'
+        +'<div class="eventValue">'+newOwner+'</div>'
+        +' </div>';
 	}
 
 	/**
 	* Create a gui for the OwnerRemoved event.
-    * @inner - the inner text
+    * @prefix - a prefix
+	* @blockHash - the bolckhash 
+	* @blockNumber - the number of the block
 	*/
 	this.createOwnerRemovedLogDataGui = function(prefix, blockHash, blockNumber
 	,oldOwner	) {
-		return '<ul class="dapp-account-list"><li > '
-        +'<a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>'
-		+'<span>'+prefix+' ('+blockNumber+')</span>'
-        +'<span>'+oldOwner+'</span>'
-        +' </li>';
+		return '<div class="eventRow">'
+        +'<div class="eventValue">'+oldOwner+'</div>'
+        +' </div>';
 	}
 
 	/**
 	* Create a gui for the RequirementChanged event.
-    * @inner - the inner text
+    * @prefix - a prefix
+	* @blockHash - the bolckhash 
+	* @blockNumber - the number of the block
 	*/
 	this.createRequirementChangedLogDataGui = function(prefix, blockHash, blockNumber
 	,newRequirement	) {
-		return '<ul class="dapp-account-list"><li > '
-        +'<a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>'
-		+'<span>'+prefix+' ('+blockNumber+')</span>'
-        +'<span>'+newRequirement+'</span>'
-        +' </li>';
+		return '<div class="eventRow">'
+        +'<div class="eventValue">'+newRequirement+'</div>'
+        +' </div>';
 	}
 
 }//end guifactory
@@ -1675,6 +1698,7 @@ function MultiownedManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
+	this.eventCallback = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -1754,118 +1778,67 @@ function MultiownedManager(prefix,contract,containerId) {
 	this.watchEvents=function(){
 	var event_Confirmation = contract.Confirmation({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
+	var callback = this.eventCallback;
 	event_Confirmation.watch(function(error,result){
 	if(!error){
-		var e = document.getElementById(elp+'eventLog');
-		if(e==null){
-			console.log(elp+'eventLog');
-			return;
-		}
-		var elemDiv = document.createElement('div');
-		elemDiv.id= result.blockNumber +'event';
-		e.appendChild(elemDiv);
-		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
-		elemDiv.innerHTML = '<div class="eventRow">'
-        +'<dic class="eventValue">'+result.args.owner+'</div>'
-        +'<dic class="eventValue">'+result.args.operation+'</div>'
-		+ '</div>';
+		if(callback!=null)
+			callback(result);
+
 		}else
 			console.log(error);	
 	});
 	var event_Revoke = contract.Revoke({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
+	var callback = this.eventCallback;
 	event_Revoke.watch(function(error,result){
 	if(!error){
-		var e = document.getElementById(elp+'eventLog');
-		if(e==null){
-			console.log(elp+'eventLog');
-			return;
-		}
-		var elemDiv = document.createElement('div');
-		elemDiv.id= result.blockNumber +'event';
-		e.appendChild(elemDiv);
-		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
-		elemDiv.innerHTML = '<div class="eventRow">'
-        +'<dic class="eventValue">'+result.args.owner+'</div>'
-        +'<dic class="eventValue">'+result.args.operation+'</div>'
-		+ '</div>';
+		if(callback!=null)
+			callback(result);
+
 		}else
 			console.log(error);	
 	});
 	var event_OwnerChanged = contract.OwnerChanged({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
+	var callback = this.eventCallback;
 	event_OwnerChanged.watch(function(error,result){
 	if(!error){
-		var e = document.getElementById(elp+'eventLog');
-		if(e==null){
-			console.log(elp+'eventLog');
-			return;
-		}
-		var elemDiv = document.createElement('div');
-		elemDiv.id= result.blockNumber +'event';
-		e.appendChild(elemDiv);
-		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
-		elemDiv.innerHTML = '<div class="eventRow">'
-        +'<dic class="eventValue">'+result.args.oldOwner+'</div>'
-        +'<dic class="eventValue">'+result.args.newOwner+'</div>'
-		+ '</div>';
+		if(callback!=null)
+			callback(result);
+
 		}else
 			console.log(error);	
 	});
 	var event_OwnerAdded = contract.OwnerAdded({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
+	var callback = this.eventCallback;
 	event_OwnerAdded.watch(function(error,result){
 	if(!error){
-		var e = document.getElementById(elp+'eventLog');
-		if(e==null){
-			console.log(elp+'eventLog');
-			return;
-		}
-		var elemDiv = document.createElement('div');
-		elemDiv.id= result.blockNumber +'event';
-		e.appendChild(elemDiv);
-		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
-		elemDiv.innerHTML = '<div class="eventRow">'
-        +'<dic class="eventValue">'+result.args.newOwner+'</div>'
-		+ '</div>';
+		if(callback!=null)
+			callback(result);
+
 		}else
 			console.log(error);	
 	});
 	var event_OwnerRemoved = contract.OwnerRemoved({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
+	var callback = this.eventCallback;
 	event_OwnerRemoved.watch(function(error,result){
 	if(!error){
-		var e = document.getElementById(elp+'eventLog');
-		if(e==null){
-			console.log(elp+'eventLog');
-			return;
-		}
-		var elemDiv = document.createElement('div');
-		elemDiv.id= result.blockNumber +'event';
-		e.appendChild(elemDiv);
-		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
-		elemDiv.innerHTML = '<div class="eventRow">'
-        +'<dic class="eventValue">'+result.args.oldOwner+'</div>'
-		+ '</div>';
+		if(callback!=null)
+			callback(result);
+
 		}else
 			console.log(error);	
 	});
 	var event_RequirementChanged = contract.RequirementChanged({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
+	var callback = this.eventCallback;
 	event_RequirementChanged.watch(function(error,result){
 	if(!error){
-		var e = document.getElementById(elp+'eventLog');
-		if(e==null){
-			console.log(elp+'eventLog');
-			return;
-		}
-		var elemDiv = document.createElement('div');
-		elemDiv.id= result.blockNumber +'event';
-		e.appendChild(elemDiv);
-		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
-		elemDiv.innerHTML = '<div class="eventRow">'
-        +'<dic class="eventValue">'+result.args.newRequirement+'</div>'
-		+ '</div>';
+		if(callback!=null)
+			callback(result);
+
 		}else
 			console.log(error);	
 	});
@@ -1880,14 +1853,16 @@ function MultiownedGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
+	this.eventCallback = null;
 	
 	/**
 	* Add a contract to this manager.
-	* @namespace contract
+	* @contract the web3 contract instance
 	*/
 	this.addManager = function(contract) {
 		var m = new MultiownedManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
+		m.eventCallback = this.eventCallback;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;

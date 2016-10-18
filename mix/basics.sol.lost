@@ -228,3 +228,10 @@ Start of user code Multiowned.function.revoke
             Revoke(msg.sender, _operation);
         }
 		//End of user code
+
+Tue Oct 18 18:05:34 CEST 2016
+================================================================================
+Start of user code Constructor.Manageable
+		//TODO: implement
+		// deprecated use a normal function to model the constructor
+	    //End of user code

@@ -1,5 +1,7 @@
 /*
 *
+*(c) 2016 KUEKeN
+* Urs Zeidler
 *
 */
 
@@ -75,7 +77,6 @@ contract Manageable {
 	uint public mangerCount;
 	mapping (address=>bool)public managers;
 	// Start of user code Manageable.attributes
-	//TODO: implement
 	// End of user code
 	
 	modifier onlyManager
@@ -83,16 +84,15 @@ contract Manageable {
 	    if (!canAccess()) throw;
 	    _
 	}
-	//
-	// constructor for Manageable
-	//
-	function Manageable(){
+	
+	
+	function Manageable() public   {
+		//Start of user code Manageable.constructor.Manageable
 	    managers[msg.sender] = true;
-	    //Start of user code Constructor.Manageable
-		//TODO: implement
-		// deprecated use a normal function to model the constructor
-	    //End of user code
+		mangerCount++;
+		//End of user code
 	}
+	
 	
 	
 	function canAccess() internal  returns (bool ) {
@@ -129,9 +129,12 @@ contract Manageable {
 	
 	
 	
-	function isManager(address _managerAddress) public  returns (bool ) {
+	function isManager(address _managerAddress) public   constant returns (bool ) {
 		//Start of user code Manageable.function.isManager_address
-		return managers[_managerAddress];
+		if( managers[_managerAddress])
+			return true;
+		
+		return false;
 		//End of user code
 	}
 	

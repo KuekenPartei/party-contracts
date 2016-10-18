@@ -1,5 +1,7 @@
 /*
 *
+*(c) 2016 KUEKeN
+* Urs Zeidler
 *
 */
 

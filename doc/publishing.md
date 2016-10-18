@@ -21,6 +21,24 @@ A Short blog can save messages on the blockchain.
 
 ### structs:
 
+Message
+A message in the blog.
+
+
+
+#### Message properties
+
+name|type|visiblity|delegate|doc
+----|----|----|----|----
+message|string|public||
+date|uint|public||
+id|uint|public||
+sender|address|public||
+blockNumber|uint|public||
+hashValue|string|public||
+externalResource|string|public||
+
+
 
 #### ShortBlog properties
 

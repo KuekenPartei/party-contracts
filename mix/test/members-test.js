@@ -1,4 +1,9 @@
-// file header
+/**
+*
+*(c) 2016 KUEKeN
+* Urs Zeidler
+*
+**/
 /**
 * A simple bean class around the contract.
 * The MemberRegistryModel.

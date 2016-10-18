@@ -4,7 +4,7 @@
 {"constant":true,"inputs":[],"name":"m_owners","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"c_maxOwners","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"m_pendingIndex","outputs":[{"name":"","type":"bytes32"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "m_ownerIndex"}],"name": "m_ownerIndex","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "m_ownerIndex","outputs": [
 { "name": "", "type": "uint"}
 ],"type": "function"	},
 //

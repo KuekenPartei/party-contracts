@@ -245,6 +245,7 @@ A registered manager is an address mapped with true.</body>
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_LedxoKKuEeWvY9GWZZMftw"/>
           </ownedParameter>
         </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_A3uxsJVMEeaDuNCm-hgFIg" name="Manageable"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_aL0joCaUEea3KKhZ-vTw8A" name="Multiowned">
         <ownedRule xmi:type="uml:Constraint" xmi:id="_HwgpcCaVEea3KKhZ-vTw8A" name="onlyManyOwners">
@@ -953,7 +954,7 @@ returns 0 for ok and 1 else.</body>
   <Contracts:Function xmi:id="_OhphYM2FEeWqGaV8xrZGjQ" base_Operation="_OhUKOs2FEeWqGaV8xrZGjQ" returnType="constant"/>
   <Contracts:Function xmi:id="_OhqIcM2FEeWqGaV8xrZGjQ" functionCode="return memberAddress[_memberAdress].state == MemberState.active;" base_Operation="_OhUKPM2FEeWqGaV8xrZGjQ" returnType="constant"/>
   <Contracts:Struct xmi:id="_OhqvgM2FEeWqGaV8xrZGjQ" base_Class="_OhUKQ82FEeWqGaV8xrZGjQ"/>
-  <Contracts:Contract xmi:id="_j_Aa0M2FEeWqGaV8xrZGjQ" base_Class="_gzuKkM2FEeWqGaV8xrZGjQ" ConstructorCode="managers[msg.sender] = true;"/>
+  <Contracts:Contract xmi:id="_j_Aa0M2FEeWqGaV8xrZGjQ" base_Class="_gzuKkM2FEeWqGaV8xrZGjQ"/>
   <Contracts:Function xmi:id="_t9grUM2FEeWqGaV8xrZGjQ" functionCode="" base_Operation="_nkPcIM2FEeWqGaV8xrZGjQ"/>
   <Contracts:Contract xmi:id="_UDIXgM2GEeWqGaV8xrZGjQ" base_Class="_HcFXcM2GEeWqGaV8xrZGjQ"/>
   <Contracts:GetterSetter xmi:id="_afsLQM2GEeWqGaV8xrZGjQ" getter="false" base_Property="_VLDo4M2GEeWqGaV8xrZGjQ"/>
@@ -1077,7 +1078,8 @@ returns 0 for ok and 1 else.</body>
   <Contracts:Function xmi:id="_gVfacDPjEeaX2cAdiOKUjg" base_Operation="_Bei7cDPjEeaX2cAdiOKUjg" returnType="constant"/>
   <Contracts:Event xmi:id="_yCWSIDSxEeau9dH_RDsNPA" base_Operation="_D0moQDSxEeau9dH_RDsNPA"/>
   <Contracts:Function xmi:id="_DycPoDSyEeau9dH_RDsNPA" base_Operation="_9jAR4DSxEeau9dH_RDsNPA"/>
-  <Contracts:Function xmi:id="_lAYGQE0_EeadF69It2kUQA" base_Operation="_UcmK4E0_EeadF69It2kUQA"/>
+  <Contracts:Function xmi:id="_lAYGQE0_EeadF69It2kUQA" base_Operation="_UcmK4E0_EeadF69It2kUQA" returnType="constant"/>
   <Contracts:Event xmi:id="_b6LDMJRuEeaobaNbIqqYww" base_Operation="_CLKHUJRuEeaobaNbIqqYww"/>
   <Contracts:Constructor xmi:id="_lugYUJSgEear3-vFlnvs1A" base_Operation="_mdAyICUYEeapTNf89Lwepg"/>
+  <Contracts:Constructor xmi:id="_Ehd4gJVMEeaDuNCm-hgFIg" base_Operation="_A3uxsJVMEeaDuNCm-hgFIg"/>
 </xmi:XMI>

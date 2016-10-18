@@ -1,5 +1,7 @@
 /*
 *
+*(c) 2016 KUEKeN
+* Urs Zeidler
 *
 */
 
@@ -38,7 +40,6 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 	mapping (uint=>OrganFunction)public organFunctions;
 	mapping (uint=>Ballot)private ballots;
 	// Start of user code Organ.attributes
-	//TODO: implement
 	// End of user code
 	
 	modifier onlyIsFunction

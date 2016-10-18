@@ -1,4 +1,9 @@
-// file header
+/**
+*
+*(c) 2016 KUEKeN
+* Urs Zeidler
+*
+**/
 // contractVariable for Organ
 var OrganContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"memberRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
@@ -8,7 +13,7 @@ var OrganContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"blogRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"isActive","outputs":[{"name":"","type":"bool"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"ballotCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "organFunctions"}],"name": "organFunctions","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "organFunctions","outputs": [
 { "name": "currentMember", "type": "address"}
 ,{ "name": "functionName", "type": "string"}
 ,{ "name": "id", "type": "uint"}
@@ -19,7 +24,7 @@ var OrganContract = web3.eth.contract([
 ],"type": "function"	},
 //
 
-{"constant": true,"inputs": [{"name": "","type": "managers"}],"name": "managers","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
 //
@@ -63,7 +68,7 @@ var OrganContract = web3.eth.contract([
     "type": "function"
   }
 ,  {
-    "constant": false,
+    "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
@@ -116,7 +121,7 @@ var PartyContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"constitutionHash","outputs":[{"name":"","type":"string"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"organCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"blogregistry","outputs":[{"name":"","type":"address"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "managers"}],"name": "managers","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
 //
@@ -153,7 +158,7 @@ var PartyContract = web3.eth.contract([
     "type": "function"
   }
 ,  {
-    "constant": false,
+    "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
@@ -171,7 +176,7 @@ var KUEKeNPartyContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"constitutionHash","outputs":[{"name":"","type":"string"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"organCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"blogregistry","outputs":[{"name":"","type":"address"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "managers"}],"name": "managers","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
 //
@@ -222,7 +227,7 @@ var KUEKeNPartyContract = web3.eth.contract([
     "type": "function"
   }
 ,  {
-    "constant": false,
+    "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
@@ -241,7 +246,7 @@ var ConferenceContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"blogRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"isActive","outputs":[{"name":"","type":"bool"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"ballotCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "organFunctions"}],"name": "organFunctions","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "organFunctions","outputs": [
 { "name": "currentMember", "type": "address"}
 ,{ "name": "functionName", "type": "string"}
 ,{ "name": "id", "type": "uint"}
@@ -252,7 +257,7 @@ var ConferenceContract = web3.eth.contract([
 ],"type": "function"	},
 //
 
-{"constant": true,"inputs": [{"name": "","type": "managers"}],"name": "managers","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
 //
@@ -300,7 +305,7 @@ var ConferenceContract = web3.eth.contract([
     "type": "function"
   }
 ,  {
-    "constant": false,
+    "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
@@ -358,7 +363,7 @@ var FoundationConferenceContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"blogRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"isActive","outputs":[{"name":"","type":"bool"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"ballotCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "organFunctions"}],"name": "organFunctions","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "organFunctions","outputs": [
 { "name": "currentMember", "type": "address"}
 ,{ "name": "functionName", "type": "string"}
 ,{ "name": "id", "type": "uint"}
@@ -369,7 +374,7 @@ var FoundationConferenceContract = web3.eth.contract([
 ],"type": "function"	},
 //
 
-{"constant": true,"inputs": [{"name": "","type": "managers"}],"name": "managers","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
 //
@@ -417,7 +422,7 @@ var FoundationConferenceContract = web3.eth.contract([
     "type": "function"
   }
 ,  {
-    "constant": false,
+    "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
@@ -952,21 +957,21 @@ function OrganGuiFactory() {
 	}
 
 
-//eventguis
+	//eventguis
 
 	/**
 	* Create a gui for the FunctionMemberChange event.
-    * @inner - the inner text
+    * @prefix - a prefix
+	* @blockHash - the bolckhash 
+	* @blockNumber - the number of the block
 	*/
 	this.createFunctionMemberChangeLogDataGui = function(prefix, blockHash, blockNumber
 	,oldMember	,functionId	,newMember	) {
-		return '<ul class="dapp-account-list"><li > '
-        +'<a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>'
-		+'<span>'+prefix+' ('+blockNumber+')</span>'
-        +'<span>'+oldMember+'</span>'
-        +'<span>'+functionId+'</span>'
-        +'<span>'+newMember+'</span>'
-        +' </li>';
+		return '<div class="eventRow">'
+        +'<div class="eventValue">'+oldMember+'</div>'
+        +'<div class="eventValue">'+functionId+'</div>'
+        +'<div class="eventValue">'+newMember+'</div>'
+        +' </div>';
 	}
 
 }//end guifactory
@@ -1382,6 +1387,7 @@ function OrganManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
+	this.eventCallback = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -1461,22 +1467,12 @@ function OrganManager(prefix,contract,containerId) {
 	this.watchEvents=function(){
 	var event_FunctionMemberChange = contract.FunctionMemberChange({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
+	var callback = this.eventCallback;
 	event_FunctionMemberChange.watch(function(error,result){
 	if(!error){
-		var e = document.getElementById(elp+'eventLog');
-		if(e==null){
-			console.log(elp+'eventLog');
-			return;
-		}
-		var elemDiv = document.createElement('div');
-		elemDiv.id= result.blockNumber +'event';
-		e.appendChild(elemDiv);
-		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
-		elemDiv.innerHTML = '<div class="eventRow">'
-        +'<dic class="eventValue">'+result.args.oldMember+'</div>'
-        +'<dic class="eventValue">'+result.args.functionId+'</div>'
-        +'<dic class="eventValue">'+result.args.newMember+'</div>'
-		+ '</div>';
+		if(callback!=null)
+			callback(result);
+
 		}else
 			console.log(error);	
 	});
@@ -1491,14 +1487,16 @@ function OrganGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
+	this.eventCallback = null;
 	
 	/**
 	* Add a contract to this manager.
-	* @namespace contract
+	* @contract the web3 contract instance
 	*/
 	this.addManager = function(contract) {
 		var m = new OrganManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
+		m.eventCallback = this.eventCallback;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;
@@ -1815,18 +1813,18 @@ function PartyGuiFactory() {
 	}
 
 
-//eventguis
+	//eventguis
 
 	/**
 	* Create a gui for the ConstiutionChange event.
-    * @inner - the inner text
+    * @prefix - a prefix
+	* @blockHash - the bolckhash 
+	* @blockNumber - the number of the block
 	*/
 	this.createConstiutionChangeLogDataGui = function(prefix, blockHash, blockNumber
 	) {
-		return '<ul class="dapp-account-list"><li > '
-        +'<a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>'
-		+'<span>'+prefix+' ('+blockNumber+')</span>'
-        +' </li>';
+		return '<div class="eventRow">'
+        +' </div>';
 	}
 
 }//end guifactory
@@ -2050,6 +2048,7 @@ function PartyManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
+	this.eventCallback = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -2129,19 +2128,12 @@ function PartyManager(prefix,contract,containerId) {
 	this.watchEvents=function(){
 	var event_ConstiutionChange = contract.ConstiutionChange({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
+	var callback = this.eventCallback;
 	event_ConstiutionChange.watch(function(error,result){
 	if(!error){
-		var e = document.getElementById(elp+'eventLog');
-		if(e==null){
-			console.log(elp+'eventLog');
-			return;
-		}
-		var elemDiv = document.createElement('div');
-		elemDiv.id= result.blockNumber +'event';
-		e.appendChild(elemDiv);
-		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
-		elemDiv.innerHTML = '<div class="eventRow">'
-		+ '</div>';
+		if(callback!=null)
+			callback(result);
+
 		}else
 			console.log(error);	
 	});
@@ -2156,14 +2148,16 @@ function PartyGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
+	this.eventCallback = null;
 	
 	/**
 	* Add a contract to this manager.
-	* @namespace contract
+	* @contract the web3 contract instance
 	*/
 	this.addManager = function(contract) {
 		var m = new PartyManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
+		m.eventCallback = this.eventCallback;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;
@@ -2530,7 +2524,7 @@ function KUEKeNPartyGuiFactory() {
 	}
 
 
-//eventguis
+	//eventguis
 
 }//end guifactory
 
@@ -2789,6 +2783,7 @@ function KUEKeNPartyManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
+	this.eventCallback = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -2877,14 +2872,16 @@ function KUEKeNPartyGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
+	this.eventCallback = null;
 	
 	/**
 	* Add a contract to this manager.
-	* @namespace contract
+	* @contract the web3 contract instance
 	*/
 	this.addManager = function(contract) {
 		var m = new KUEKeNPartyManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
+		m.eventCallback = this.eventCallback;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;
@@ -2947,55 +2944,6 @@ function KUEKeNPartyGuiMananger(guiId){
 * Each constructor is available.
 **/
 function KUEKeNPartyDeployment(guiId){
-<<<<<<< HEAD
-=======
-//Start of user code KUEKeNParty_deployment_js
-
-
-	this.deployContract=function(kpc,br,fc){
-		this.kpc =   kpc;
-		this.br = br;
-		this.fc = fc;
-		console.log('deploy-Basic');
-	}
-
-	// 
-	this.deployBasicContract=function(kpc,br,fc){
-		this.deployContract(kpc,br,fc);
-		console.log('deployContract-KUEKeNPartyDeployment');
-		//this.br.addManager(web3.eth.accounts[0]);
-		
-		var add = this.kpc.address;
-		console.log(this.br.mangerCount()+' addManager: '+this.kpc.address);
-		this.br.addManager(this.kpc.address);
-		this.br.addManager(this.fc.address);
-		this.fc.addManager(this.kpc.address);
-	}
-		
-
-	this.deployKP_1=function(kpc,br,fc){
-		this.deployBasicContract(kpc,br,fc);
-		console.log('deployKP_1');
-		console.log(fc.lastFunctionId()+' -->');
-
-		kpc.boostrapParty(this.fc.address,this.br.address);
-		fc.createFunction('Wahlleitung','hash');
-		console.log(fc.lastFunctionId()+' -->');
-		fc.createFunction('Versammlungsleitung1','hash');
-		console.log(fc.lastFunctionId()+' -->');
-		
-		
-//		kpc.createOrgan.sendTransaction('TestOrgan',{gas: 3700000});
-		
-		//this.br.addManager(web3.eth.accounts[0]);
-		
-		
-		
-	}
-
-	
-//End of user code
->>>>>>> branch 'master' of https://github.com/KuekenPartei/party-contracts.git
 
 //Start of user code KUEKeNParty_deployment_js
 this.instance = contract;
@@ -3553,21 +3501,21 @@ function ConferenceGuiFactory() {
 	}
 
 
-//eventguis
+	//eventguis
 
 	/**
 	* Create a gui for the MemberAccreditated event.
-    * @inner - the inner text
+    * @prefix - a prefix
+	* @blockHash - the bolckhash 
+	* @blockNumber - the number of the block
 	*/
 	this.createMemberAccreditatedLogDataGui = function(prefix, blockHash, blockNumber
 	,memberId	,memberName	,memberAddress	) {
-		return '<ul class="dapp-account-list"><li > '
-        +'<a class="dapp-identicon dapp-small" style="background-image: url(identiconimage.png)"></a>'
-		+'<span>'+prefix+' ('+blockNumber+')</span>'
-        +'<span>'+memberId+'</span>'
-        +'<span>'+memberName+'</span>'
-        +'<span>'+memberAddress+'</span>'
-        +' </li>';
+		return '<div class="eventRow">'
+        +'<div class="eventValue">'+memberId+'</div>'
+        +'<div class="eventValue">'+memberName+'</div>'
+        +'<div class="eventValue">'+memberAddress+'</div>'
+        +' </div>';
 	}
 
 }//end guifactory
@@ -4013,6 +3961,7 @@ function ConferenceManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
+	this.eventCallback = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -4092,22 +4041,12 @@ function ConferenceManager(prefix,contract,containerId) {
 	this.watchEvents=function(){
 	var event_MemberAccreditated = contract.MemberAccreditated({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
+	var callback = this.eventCallback;
 	event_MemberAccreditated.watch(function(error,result){
 	if(!error){
-		var e = document.getElementById(elp+'eventLog');
-		if(e==null){
-			console.log(elp+'eventLog');
-			return;
-		}
-		var elemDiv = document.createElement('div');
-		elemDiv.id= result.blockNumber +'event';
-		e.appendChild(elemDiv);
-		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
-		elemDiv.innerHTML = '<div class="eventRow">'
-        +'<dic class="eventValue">'+result.args.memberId+'</div>'
-        +'<dic class="eventValue">'+result.args.memberName+'</div>'
-        +'<dic class="eventValue">'+result.args.memberAddress+'</div>'
-		+ '</div>';
+		if(callback!=null)
+			callback(result);
+
 		}else
 			console.log(error);	
 	});
@@ -4122,14 +4061,16 @@ function ConferenceGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
+	this.eventCallback = null;
 	
 	/**
 	* Add a contract to this manager.
-	* @namespace contract
+	* @contract the web3 contract instance
 	*/
 	this.addManager = function(contract) {
 		var m = new ConferenceManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
+		m.eventCallback = this.eventCallback;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;
@@ -4739,7 +4680,7 @@ function FoundationConferenceGuiFactory() {
 	}
 
 
-//eventguis
+	//eventguis
 
 }//end guifactory
 
@@ -5184,6 +5125,7 @@ function FoundationConferenceManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
+	this.eventCallback = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -5272,14 +5214,16 @@ function FoundationConferenceGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
+	this.eventCallback = null;
 	
 	/**
 	* Add a contract to this manager.
-	* @namespace contract
+	* @contract the web3 contract instance
 	*/
 	this.addManager = function(contract) {
 		var m = new FoundationConferenceManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
+		m.eventCallback = this.eventCallback;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;

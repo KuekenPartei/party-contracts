@@ -1,5 +1,7 @@
 /*
 *
+*(c) 2016 KUEKeN
+* Urs Zeidler
 *
 */
 
@@ -119,6 +121,7 @@ contract BlogRegistry is Manageable {
 		
 		//Start of user code BlogRegistry.function.registerBlog_string
 		ShortBlog sb = new ShortBlog(_name);
+		sb.addManager(msg.sender);
 		blogs[blogCount] = sb;
 		NewBlog(blogCount,_name,blogs[blogCount]);
 		blogCount++;
