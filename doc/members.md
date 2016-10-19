@@ -28,14 +28,6 @@ Also the contract to manage these member states.
 The registry is a Manageable contract so the writing methods can only accessed by a registered manager.
 
 
-### MemberRegistry enums: MemberState
-
-
-name|doc
-----|----|----
-deleted|
-inactive|
-active|
 ### MemberRegistry enums: EventType
 
 
@@ -44,6 +36,14 @@ name|doc
 memberStateChanged|
 accreditation|
 functionChange|
+### MemberRegistry enums: MemberState
+
+
+name|doc
+----|----|----
+deleted|
+inactive|
+active|
 
 ### structs:
 

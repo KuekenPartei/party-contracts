@@ -132,6 +132,7 @@ function TestShortBlog(contract) {
 		var test = false;		
 
 
+		this.testAE("testaddManager", "executed: testManageable_addManager_address",true, test);		
 		//End of user code
 	}
 
@@ -159,6 +160,7 @@ function TestShortBlog(contract) {
 		var test = false;		
 
 
+		this.testAE("testremoveManager", "executed: testManageable_removeManager_address",true, test);		
 		//End of user code
 	}
 
@@ -170,6 +172,7 @@ function TestShortBlog(contract) {
 		var test = false;		
 
 
+		this.testAE("testisManager", "executed: testManageable_isManager_address",true, test);		
 		//End of user code
 	}
 	this.customTests=function() {
@@ -321,10 +324,8 @@ function TestBlogRegistry(contract) {
 		//	var res = this.test_instance.addManager( p__newManagerAddress);
 		//Start of user code test_Manageable_addManager_address
 		//TODO : implement this
-		var test = false;		
-
-
-		this.testAE("testaddManager", "executed: testManageable_addManager_address",true, test);		
+		//var test = false;		
+		//this.testAE("testaddManager", "executed: testManageable_addManager_address",true, test);		
 		//End of user code
 	}
 
@@ -333,10 +334,8 @@ function TestBlogRegistry(contract) {
 		//	var res = this.test_instance.removeManager( p__managerAddress);
 		//Start of user code test_Manageable_removeManager_address
 		//TODO : implement this
-		var test = false;		
-
-
-		this.testAE("testremoveManager", "executed: testManageable_removeManager_address",true, test);		
+		//var test = false;		
+		//this.testAE("testremoveManager", "executed: testManageable_removeManager_address",true, test);		
 		//End of user code
 	}
 
@@ -345,10 +344,8 @@ function TestBlogRegistry(contract) {
 		//	var res = this.test_instance.isManager( p__managerAddress);
 		//Start of user code test_Manageable_isManager_address
 		//TODO : implement this
-		var test = false;		
-
-
-		this.testAE("testisManager", "executed: testManageable_isManager_address",true, test);		
+		//var test = false;		
+		//this.testAE("testisManager", "executed: testManageable_isManager_address",true, test);		
 		//End of user code
 	}
 	this.customTests=function() {
