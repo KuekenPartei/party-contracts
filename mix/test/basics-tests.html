@@ -90,6 +90,22 @@ if(contracts['Manageable'] !=undefined){
 	var instance = new TestManageable(contract);
 	instance.prefix = 'all';
 
+var event_ManagerChanged = contract.ManagerChanged({},{fromBlock: 0});
+event_ManagerChanged.watch(function(error,result){
+	if(!error){
+		var e = document.getElementById('eventLog');
+		var elemDiv = document.createElement('div');
+		elemDiv.id= result.blockNumber +'event';
+		e.appendChild(elemDiv);
+		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
+		elemDiv.innerHTML = '<div class="eventRow">'
+        +'<div class="eventValue">'+result.args._state+'</div>'
+        +'<div class="eventValue">'+result.args._address+'</div>'
+        +'<div class="eventValue">'+result.args._managerCount+'</div>'
++ '</div>';
+		}else
+		console.log(error);
+	});
 
 
 //console.log(instance+'-->');

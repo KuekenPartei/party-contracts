@@ -124,6 +124,7 @@ function TestBallot(contract) {
 
 	//Test for Ballot_Ballot_string_bytes32
 	this.testBallot_Ballot_string_bytes32=function() {
+		//	var res = this.test_instance.Ballot( p_name, p_proposalNames);
 		//Start of user code test_Ballot_Ballot_string_bytes32
 		//TODO: implement
 //console.log('testBallot_Ballot_string_bytes32');
@@ -137,6 +138,7 @@ function TestBallot(contract) {
 
 	//Test for Ballot_giveRightToVote_address
 	this.testBallot_giveRightToVote_address=function() {
+		//	var res = this.test_instance.giveRightToVote( p_voter);
 		//Start of user code test_Ballot_giveRightToVote_address
 		//TODO: implement
 //console.log('testBallot_giveRightToVote_address');
@@ -149,6 +151,7 @@ function TestBallot(contract) {
 
 	//Test for Ballot_delegateTo_address
 	this.testBallot_delegateTo_address=function() {
+		//	var res = this.test_instance.delegateTo( p_to);
 		//Start of user code test_Ballot_delegateTo_address
 		//TODO: implement
 //console.log('testBallot_delegateTo_address');
@@ -161,6 +164,7 @@ function TestBallot(contract) {
 
 	//Test for Ballot_voteFor_uint
 	this.testBallot_voteFor_uint=function() {
+		//	var res = this.test_instance.voteFor( p_proposal);
 		//Start of user code test_Ballot_voteFor_uint
 		//TODO: implement
 //console.log('testBallot_voteFor_uint');
@@ -173,6 +177,7 @@ function TestBallot(contract) {
 
 	//Test for Ballot_winningProposal
 	this.testBallot_winningProposal=function() {
+		//	var res = this.test_instance.winningProposal();
 		//Start of user code test_Ballot_winningProposal
 		//TODO: implement
 //console.log('testBallot_winningProposal');

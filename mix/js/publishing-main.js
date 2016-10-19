@@ -818,14 +818,14 @@ function ShortBlogDeployment(guiId){
 	/**
 	* Construct ShortBlog.
 	**/
-	this.deployShortBlog_ShortBlog_string = function(account,code,providedGas,_name){
+//	this.deployShortBlog_ShortBlog_string = function(account,code,providedGas,_name){
 //		var c = ShortBlog.new(_name,_url,_description,{
 //			from: account,
 //			data: code,
 //			gas:  providedGas
 //		});
-		return c;
-	}
+//		return c;
+//	}
 
 //Start of user code ShortBlog_deployment_js
 //TODO: implement
@@ -1496,7 +1496,7 @@ this.readDataFromContract=function() {
 			this.blogs.addManager(ShortBlogContract.at(bAddress));			
 		}
 	}
-}
+
 	
 
 

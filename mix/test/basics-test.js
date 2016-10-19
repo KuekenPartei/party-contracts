@@ -98,6 +98,7 @@ function TestOwned(contract) {
 
 	//Test for Owned_getOwner
 	this.testOwned_getOwner=function() {
+		//	var res = this.test_instance.getOwner();
 		//Start of user code test_Owned_getOwner
 		//TODO: implement
 //console.log('testOwned_getOwner');
@@ -109,6 +110,7 @@ function TestOwned(contract) {
 
 	//Test for Owned_changeOwner_address
 	this.testOwned_changeOwner_address=function() {
+		//	var res = this.test_instance.changeOwner( p_newOwner);
 		//Start of user code test_Owned_changeOwner_address
 		//TODO: implement
 //console.log('testOwned_changeOwner_address');
@@ -121,6 +123,7 @@ function TestOwned(contract) {
 
 	//Test for Owned_kill
 	this.testOwned_kill=function() {
+		//	var res = this.test_instance.kill();
 		//Start of user code test_Owned_kill
 		//TODO: implement
 //console.log('testOwned_kill');
@@ -223,43 +226,38 @@ function TestManageable(contract) {
 	//test the attributes after setup	
 	this.testAttributes=function() {
 	//Start of user code attributeTests_Manageable
-	//TODO: implement
+		this.testAE("testaddManager", "executed: attributes one manager",1, this.model.getMangerCount());	
 	//End of user code
 	}
 
 	//Test for Manageable_addManager_address
 	this.testManageable_addManager_address=function() {
+		//	var res = this.test_instance.addManager( p__newManagerAddress);
 		//Start of user code test_Manageable_addManager_address
-		//TODO: implement
-//console.log('testManageable_addManager_address');
-//	var p__newManagerAddress = '';
-//	var res = this.test_instance.addManager( p__newManagerAddress);
-//	var state = res==="";		
-		this.printTest("testaddManager", "executed: testManageable_addManager_address", false);		
+		var m = this.model.getMangerCount();
+		var p__newManagerAddress = web3.eth.accounts[1];
+		var res = this.test_instance.addManager( p__newManagerAddress);
+		this.testAE("testaddManager", "executed: testManageable_addManager_address",true, m<this.model.getMangerCount());		
 		//End of user code
 	}
 
 	//Test for Manageable_removeManager_address
 	this.testManageable_removeManager_address=function() {
+		//	var res = this.test_instance.removeManager( p__managerAddress);
 		//Start of user code test_Manageable_removeManager_address
-		//TODO: implement
-//console.log('testManageable_removeManager_address');
-//	var p__managerAddress = '';
-//	var res = this.test_instance.removeManager( p__managerAddress);
-//	var state = res==="";		
-		this.printTest("testremoveManager", "executed: testManageable_removeManager_address", false);		
+		var p__managerAddress = web3.eth.accounts[1];
+		var res = this.test_instance.removeManager( p__managerAddress);
+		this.testAE("testremoveManager", "executed: testManageable_removeManager_address",false, this.test_instance.isManager( p__managerAddress));
 		//End of user code
 	}
 
 	//Test for Manageable_isManager_address
 	this.testManageable_isManager_address=function() {
+		//	var res = this.test_instance.isManager( p__managerAddress);
 		//Start of user code test_Manageable_isManager_address
-		//TODO: implement
-//console.log('testManageable_isManager_address');
-//	var p__managerAddress = '';
-//	var res = this.test_instance.isManager( p__managerAddress);
-//	var state = res==="";		
-		this.printTest("testisManager", "executed: testManageable_isManager_address", false);		
+		var p__managerAddress = web3.eth.accounts[0];
+		var res = this.test_instance.removeManager( p__managerAddress);
+		this.testAE("testremoveManager", "executed: testManageable_isManager_address",false, this.test_instance.isManager( p__managerAddress));
 		//End of user code
 	}
 	this.customTests=function() {
@@ -386,6 +384,7 @@ function TestMultiowned(contract) {
 
 	//Test for Multiowned_Multiowned_address_uint
 	this.testMultiowned_Multiowned_address_uint=function() {
+		//	var res = this.test_instance.Multiowned( p__owners, p__required);
 		//Start of user code test_Multiowned_Multiowned_address_uint
 		//TODO: implement
 //console.log('testMultiowned_Multiowned_address_uint');
@@ -399,6 +398,7 @@ function TestMultiowned(contract) {
 
 	//Test for Multiowned_isOwner_address
 	this.testMultiowned_isOwner_address=function() {
+		//	var res = this.test_instance.isOwner( p__addr);
 		//Start of user code test_Multiowned_isOwner_address
 		//TODO: implement
 //console.log('testMultiowned_isOwner_address');
@@ -411,6 +411,7 @@ function TestMultiowned(contract) {
 
 	//Test for Multiowned_hasConfirmed_bytes32_address
 	this.testMultiowned_hasConfirmed_bytes32_address=function() {
+		//	var res = this.test_instance.hasConfirmed( p__operation, p__owner);
 		//Start of user code test_Multiowned_hasConfirmed_bytes32_address
 		//TODO: implement
 //console.log('testMultiowned_hasConfirmed_bytes32_address');

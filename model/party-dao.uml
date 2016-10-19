@@ -246,6 +246,20 @@ A registered manager is an address mapped with true.</body>
           </ownedParameter>
         </ownedOperation>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_A3uxsJVMEeaDuNCm-hgFIg" name="Manageable"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_jZ0WYJX0EeaCN_-XsTGglw" name="ManagerChanged">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_o8AzoJX0EeaCN_-XsTGglw" name="_state">
+            <ownedComment xmi:type="uml:Comment" xmi:id="_xp-CQJX0EeaCN_-XsTGglw">
+              <body>0 for add, 1 for remove</body>
+            </ownedComment>
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_nkaHgJX0EeaCN_-XsTGglw" name="_address">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_J0UQ8JX2EeaCN_-XsTGglw" name="_managerCount">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_aL0joCaUEea3KKhZ-vTw8A" name="Multiowned">
         <ownedRule xmi:type="uml:Constraint" xmi:id="_HwgpcCaVEea3KKhZ-vTw8A" name="onlyManyOwners">
@@ -431,9 +445,6 @@ It is populated by functions party members.</body>
         </ownedRule>
         <generalization xmi:type="uml:Generalization" xmi:id="_gIYCoB82Eea0ndjKa8R1Fg" general="_HcFXcM2GEeWqGaV8xrZGjQ"/>
         <generalization xmi:type="uml:Generalization" xmi:id="_qCALcB88Eea0ndjKa8R1Fg" general="_gzuKkM2FEeWqGaV8xrZGjQ"/>
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_0-PBwB83Eea0ndjKa8R1Fg" name="organFunctions">
-          <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
-        </ownedAttribute>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_1UPmoB86Eea0ndjKa8R1Fg" name="organName">
           <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
         </ownedAttribute>
@@ -449,7 +460,28 @@ It is populated by functions party members.</body>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_FACc8CJjEeaS_4eQUjWtCw" name="ballotCount">
           <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
         </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_2lkfwJXXEeaCN_-XsTGglw" name="organFunctions" visibility="protected" type="_ZJ-Z4JXWEeaCN_-XsTGglw" aggregation="composite" association="_2lV2QJXXEeaCN_-XsTGglw">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="__F4T8JXXEeaCN_-XsTGglw" value="1"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__F7-UJXXEeaCN_-XsTGglw" value="*"/>
+        </ownedAttribute>
         <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_pettUCWAEeapTNf89Lwepg" client="_YVNoUB82Eea0ndjKa8R1Fg" supplier="_qJN2cCGcEeaIoZ3vQYCn_Q" contract="_qJN2cCGcEeaIoZ3vQYCn_Q"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_SqQPoB9BEea0ndjKa8R1Fg" name="FunctionMemberChange">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_QIytkB9DEea0ndjKa8R1Fg" name="oldMember">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_TM5XwB9DEea0ndjKa8R1Fg" name="functionId">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_YXdYIB9DEea0ndjKa8R1Fg" name="newMember">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_0G_Y8JXhEeaCN_-XsTGglw" name="FunctionChange">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_61Ir8JXhEeaCN_-XsTGglw" name="_type">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_-uTV4JXhEeaCN_-XsTGglw" name="_function" type="_ZJ-Z4JXWEeaCN_-XsTGglw"/>
+        </ownedOperation>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_fkDl4B88Eea0ndjKa8R1Fg" name="changeMember">
           <ownedComment xmi:type="uml:Comment" xmi:id="_vEBXAB9AEea0ndjKa8R1Fg">
             <body>Change the member of the function.</body>
@@ -473,17 +505,6 @@ It is populated by functions party members.</body>
           </ownedParameter>
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_HZDBIB9BEea0ndjKa8R1Fg" name="_constittiutionHash">
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
-          </ownedParameter>
-        </ownedOperation>
-        <ownedOperation xmi:type="uml:Operation" xmi:id="_SqQPoB9BEea0ndjKa8R1Fg" name="FunctionMemberChange">
-          <ownedParameter xmi:type="uml:Parameter" xmi:id="_QIytkB9DEea0ndjKa8R1Fg" name="oldMember">
-            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
-          </ownedParameter>
-          <ownedParameter xmi:type="uml:Parameter" xmi:id="_TM5XwB9DEea0ndjKa8R1Fg" name="functionId">
-            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
-          </ownedParameter>
-          <ownedParameter xmi:type="uml:Parameter" xmi:id="_YXdYIB9DEea0ndjKa8R1Fg" name="newMember">
-            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
           </ownedParameter>
         </ownedOperation>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_maiMECAZEeaptIkV30WcIg" name="initalizeOrgan"/>
@@ -520,20 +541,6 @@ It is populated by functions party members.</body>
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
           </ownedParameter>
         </ownedOperation>
-        <ownedOperation xmi:type="uml:Operation" xmi:id="_im5LECJ5Eeal34PkzMsO3g" name="getFunctionBlogAddress">
-          <ownedComment xmi:type="uml:Comment" xmi:id="_CBeS4CKLEeaF8a6hSTN_zw">
-            <body>Get the address of the organ function blog.</body>
-          </ownedComment>
-          <ownedParameter xmi:type="uml:Parameter" xmi:id="_sMqLcCJ5Eeal34PkzMsO3g" name="id">
-            <ownedComment xmi:type="uml:Comment" xmi:id="_sMqLcSJ5Eeal34PkzMsO3g">
-              <body>The function id.</body>
-            </ownedComment>
-            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
-          </ownedParameter>
-          <ownedParameter xmi:type="uml:Parameter" xmi:id="_3ksasCJ5Eeal34PkzMsO3g" direction="return">
-            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
-          </ownedParameter>
-        </ownedOperation>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_JBICECKKEeaF8a6hSTN_zw" name="getLastBallot">
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_NibDACKKEeaF8a6hSTN_zw" direction="return">
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
@@ -544,32 +551,15 @@ It is populated by functions party members.</body>
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
           </ownedParameter>
         </ownedOperation>
-        <nestedClassifier xmi:type="uml:Class" xmi:id="_CiX8MB84Eea0ndjKa8R1Fg" name="OrganFunction">
-          <ownedComment xmi:type="uml:Comment" xmi:id="_dCOlgB9AEea0ndjKa8R1Fg">
-            <body>The function definition.
-A function is defined in the constitution of the party.
-Normaly it is associated with a party member.</body>
-          </ownedComment>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_3SXVoB85Eea0ndjKa8R1Fg" name="currentMember">
-            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_78e7YB85Eea0ndjKa8R1Fg" name="functionName">
-            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_xd1D0B88Eea0ndjKa8R1Fg" name="id">
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_an9eAJXaEeaCN_-XsTGglw" name="addOrganFunction">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_hfhLsJXaEeaCN_-XsTGglw" name="_of" type="_ZJ-Z4JXWEeaCN_-XsTGglw"/>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_fVOZMJXsEeaCN_-XsTGglw" name="getOrganFunction">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_jp1B8JXsEeaCN_-XsTGglw" name="_id">
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_70c8kB9AEea0ndjKa8R1Fg" name="constitutionHash">
-            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_sJgmUB9DEea0ndjKa8R1Fg" name="lastMemberChanged">
-            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_w3aqcB9EEea0ndjKa8R1Fg" name="lastConstitutionHashChanged">
-            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_1HgIIB9bEea0ndjKa8R1Fg" name="publisher" type="_4pPWAO82EeWU3MNrGPvZNA"/>
-        </nestedClassifier>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_nSTkgJXsEeaCN_-XsTGglw" type="_ZJ-Z4JXWEeaCN_-XsTGglw" direction="return"/>
+        </ownedOperation>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_kqDeEB82Eea0ndjKa8R1Fg" name="Party">
         <ownedComment xmi:type="uml:Comment" xmi:id="_Uztr8B9AEea0ndjKa8R1Fg">
@@ -587,9 +577,15 @@ Normaly it is associated with a party member.</body>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_7T_jsCAYEeaptIkV30WcIg" name="organCount">
           <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
         </ownedAttribute>
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_6Sk7QCAeEeax9s8SJwm0VA" name="blogregistry" visibility="public" type="_4pQkIO82EeWU3MNrGPvZNA" aggregation="composite" association="_6SgCwCAeEeax9s8SJwm0VA"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_6Sk7QCAeEeax9s8SJwm0VA" name="blogregistry" visibility="protected" type="_4pQkIO82EeWU3MNrGPvZNA" aggregation="composite" association="_6SgCwCAeEeax9s8SJwm0VA"/>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_JMKBsB86Eea0ndjKa8R1Fg" name="Party"/>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_LqoLEB9BEea0ndjKa8R1Fg" name="ConstiutionChange"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_6qxoUJXcEeaCN_-XsTGglw" name="OrganChanged">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="___m_AJXcEeaCN_-XsTGglw" name="_organ" type="_YVNoUB82Eea0ndjKa8R1Fg"/>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_Hnt_4JXdEeaCN_-XsTGglw" name="_changeType">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_Vf528CAZEeaptIkV30WcIg" name="createOrgan">
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_de_NYCAZEeaptIkV30WcIg" name="organName">
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
@@ -602,6 +598,12 @@ Normaly it is associated with a party member.</body>
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_mPQt0CJWEeaS_4eQUjWtCw" direction="return">
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
           </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_zzhrYJXWEeaCN_-XsTGglw" name="addOrgan">
+          <ownedComment xmi:type="uml:Comment" xmi:id="_kF6GgJXXEeaCN_-XsTGglw">
+            <body>Adds an organ to the party.</body>
+          </ownedComment>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_fjzNQJXXEeaCN_-XsTGglw" name="_organ" type="_YVNoUB82Eea0ndjKa8R1Fg"/>
         </ownedOperation>
       </packagedElement>
       <packagedElement xmi:type="uml:Association" xmi:id="_oJRW8B82Eea0ndjKa8R1Fg" memberEnd="_oJTzMB82Eea0ndjKa8R1Fg _oJWPcB82Eea0ndjKa8R1Fg">
@@ -686,6 +688,44 @@ In the first and only session.</body>
           <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_6SjtISAeEeax9s8SJwm0VA" key="nature" value="UML_Nature"/>
         </eAnnotations>
         <ownedEnd xmi:type="uml:Property" xmi:id="_6SliUCAeEeax9s8SJwm0VA" name="party" type="_kqDeEB82Eea0ndjKa8R1Fg" association="_6SgCwCAeEeax9s8SJwm0VA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_ZJ-Z4JXWEeaCN_-XsTGglw" name="OrganFunction">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_ZJ-Z4ZXWEeaCN_-XsTGglw">
+          <body>The function definition.
+A function is defined in the constitution of the party.
+Normaly it is associated with a party member.</body>
+        </ownedComment>
+        <generalization xmi:type="uml:Generalization" xmi:id="_OfkTYJXbEeaCN_-XsTGglw" general="_gzuKkM2FEeWqGaV8xrZGjQ"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_ZJ-Z4pXWEeaCN_-XsTGglw" name="currentMember">
+          <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_ZJ-Z45XWEeaCN_-XsTGglw" name="functionName">
+          <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_ZJ-Z5JXWEeaCN_-XsTGglw" name="id">
+          <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_ZJ-Z5ZXWEeaCN_-XsTGglw" name="constitutionHash">
+          <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_ZJ-Z5pXWEeaCN_-XsTGglw" name="lastMemberChanged">
+          <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_ZJ-Z55XWEeaCN_-XsTGglw" name="lastConstitutionHashChanged">
+          <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_ZJ-Z6JXWEeaCN_-XsTGglw" name="publisher" type="_4pPWAO82EeWU3MNrGPvZNA"/>
+        <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_qqClEJXbEeaCN_-XsTGglw" client="_ZJ-Z4JXWEeaCN_-XsTGglw" supplier="_qJN2cCGcEeaIoZ3vQYCn_Q" contract="_qJN2cCGcEeaIoZ3vQYCn_Q"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_cxRecJXbEeaCN_-XsTGglw" name="OrganFunction"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_2lV2QJXXEeaCN_-XsTGglw" memberEnd="_2lkfwJXXEeaCN_-XsTGglw _2llG0JXXEeaCN_-XsTGglw">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_2lYSgJXXEeaCN_-XsTGglw" source="org.eclipse.papyrus">
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_2lYSgZXXEeaCN_-XsTGglw" key="nature" value="UML_Nature"/>
+        </eAnnotations>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_2llG0JXXEeaCN_-XsTGglw" name="organ" type="_YVNoUB82Eea0ndjKa8R1Fg" association="_2lV2QJXXEeaCN_-XsTGglw">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_6fFvAJXXEeaCN_-XsTGglw" value="1"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_6fIyUJXXEeaCN_-XsTGglw" value="1"/>
+        </ownedEnd>
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_t3eckO82EeWU3MNrGPvZNA" name="publishing">
@@ -989,10 +1029,7 @@ returns 0 for ok and 1 else.</body>
   <Contracts:Import xmi:id="_qmgycPXWEeW3toBIpTL0QQ" base_PackageImport="_aeJ04On7EeWOi9aiZLczlg"/>
   <Contracts:Contract xmi:id="_ZUPcYB82Eea0ndjKa8R1Fg" base_Class="_YVNoUB82Eea0ndjKa8R1Fg"/>
   <Contracts:Contract xmi:id="_vgjGgB82Eea0ndjKa8R1Fg" base_Class="_kqDeEB82Eea0ndjKa8R1Fg"/>
-  <Contracts:Struct xmi:id="_GL4ZgB84Eea0ndjKa8R1Fg" base_Class="_CiX8MB84Eea0ndjKa8R1Fg"/>
-  <Contracts:Mapping xmi:id="_UajesB84Eea0ndjKa8R1Fg" base_Property="_0-PBwB83Eea0ndjKa8R1Fg" value="_CiX8MB84Eea0ndjKa8R1Fg"/>
   <Contracts:Function xmi:id="_l7LK4B86Eea0ndjKa8R1Fg" base_Operation="_j6IgMB86Eea0ndjKa8R1Fg"/>
-  <Contracts:Function xmi:id="_m83RYB86Eea0ndjKa8R1Fg" base_Operation="_JMKBsB86Eea0ndjKa8R1Fg"/>
   <Contracts:Contract xmi:id="_rAmMkB86Eea0ndjKa8R1Fg" base_Class="_dEfeEB86Eea0ndjKa8R1Fg"/>
   <Contracts:Function xmi:id="_gk4wwB88Eea0ndjKa8R1Fg" base_Operation="_fkDl4B88Eea0ndjKa8R1Fg">
     <modifiers xmi:type="Contracts:Modifier" xmi:id="_rUQdgB88Eea0ndjKa8R1Fg" parameter="" modifier="_8DcOwM2GEeWqGaV8xrZGjQ"/>
@@ -1033,7 +1070,6 @@ returns 0 for ok and 1 else.</body>
     <key xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
   </Contracts:KeyMapping>
   <Contracts:Function xmi:id="_TNST4CJlEeaS_4eQUjWtCw" base_Operation="_TNOCcCJlEeaS_4eQUjWtCw"/>
-  <Contracts:Function xmi:id="_uUurMCJ5Eeal34PkzMsO3g" base_Operation="_im5LECJ5Eeal34PkzMsO3g" returnType="constant"/>
   <Contracts:Function xmi:id="_O-rloCKKEeaF8a6hSTN_zw" base_Operation="_JBICECKKEeaF8a6hSTN_zw" returnType="constant"/>
   <Contracts:Function xmi:id="_PjeHwCMZEeauNLpqWVQR0w" base_Operation="_CwT-UCMZEeauNLpqWVQR0w"/>
   <Contracts:GetterSetter xmi:id="_RH7mQCPsEeav8bJTtJcnhw" base_Property="_UYWNUh86Eea0ndjKa8R1Fg"/>
@@ -1082,4 +1118,24 @@ returns 0 for ok and 1 else.</body>
   <Contracts:Event xmi:id="_b6LDMJRuEeaobaNbIqqYww" base_Operation="_CLKHUJRuEeaobaNbIqqYww"/>
   <Contracts:Constructor xmi:id="_lugYUJSgEear3-vFlnvs1A" base_Operation="_mdAyICUYEeapTNf89Lwepg"/>
   <Contracts:Constructor xmi:id="_Ehd4gJVMEeaDuNCm-hgFIg" base_Operation="_A3uxsJVMEeaDuNCm-hgFIg"/>
+  <Contracts:Contract xmi:id="_bmii8JXWEeaCN_-XsTGglw" base_Class="_ZJ-Z4JXWEeaCN_-XsTGglw"/>
+  <Contracts:Function xmi:id="_ZRHuQJXXEeaCN_-XsTGglw" base_Operation="_zzhrYJXWEeaCN_-XsTGglw">
+    <modifiers xmi:type="Contracts:Modifier" xmi:id="_mIwIAJXXEeaCN_-XsTGglw" parameter="" modifier="_8DcOwM2GEeWqGaV8xrZGjQ"/>
+  </Contracts:Function>
+  <Contracts:Constructor xmi:id="_wPj_8JXXEeaCN_-XsTGglw" base_Operation="_JMKBsB86Eea0ndjKa8R1Fg"/>
+  <Contracts:KeyMapping xmi:id="_atwO4JXYEeaCN_-XsTGglw" base_Property="_2lkfwJXXEeaCN_-XsTGglw">
+    <key xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+  </Contracts:KeyMapping>
+  <Contracts:Function xmi:id="_i5G00JXaEeaCN_-XsTGglw" base_Operation="_an9eAJXaEeaCN_-XsTGglw"/>
+  <Contracts:GetterSetter xmi:id="_G3-P4JXbEeaCN_-XsTGglw" getter="false" base_Property="_ZJ-Z6JXWEeaCN_-XsTGglw">
+    <modifiers xmi:type="Contracts:Modifier" xmi:id="_JKtukJXbEeaCN_-XsTGglw" parameter="" modifier="_8DcOwM2GEeWqGaV8xrZGjQ"/>
+  </Contracts:GetterSetter>
+  <Contracts:GetterSetter xmi:id="_UTjrQJXbEeaCN_-XsTGglw" getter="false" base_Property="_ZJ-Z4pXWEeaCN_-XsTGglw">
+    <modifiers xmi:type="Contracts:Modifier" xmi:id="_W-NToJXbEeaCN_-XsTGglw" parameter="" modifier="_8DcOwM2GEeWqGaV8xrZGjQ"/>
+  </Contracts:GetterSetter>
+  <Contracts:Constructor xmi:id="_htaBQJXbEeaCN_-XsTGglw" base_Operation="_cxRecJXbEeaCN_-XsTGglw"/>
+  <Contracts:Event xmi:id="_BvjSoJXdEeaCN_-XsTGglw" base_Operation="_6qxoUJXcEeaCN_-XsTGglw"/>
+  <Contracts:Event xmi:id="_BYRo0JXiEeaCN_-XsTGglw" base_Operation="_0G_Y8JXhEeaCN_-XsTGglw"/>
+  <Contracts:Function xmi:id="_oasv8JXsEeaCN_-XsTGglw" base_Operation="_fVOZMJXsEeaCN_-XsTGglw" returnType="constant"/>
+  <Contracts:Event xmi:id="_zhZd8JX0EeaCN_-XsTGglw" base_Operation="_jZ0WYJX0EeaCN_-XsTGglw"/>
 </xmi:XMI>

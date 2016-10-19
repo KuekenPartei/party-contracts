@@ -59,7 +59,11 @@ var ManageableContract = web3.eth.contract([
     "outputs": [{"name": "","type": "bool"}],
     "type": "function"
   }
- 
+ ,
+  { "constant": true,
+    "inputs": [{"name": "_state","type": "uint"},{"name": "_address","type": "address"},{"name": "_managerCount","type": "uint"}],    
+    "name": "ManagerChanged",
+    "type": "event"  }
 ]);   
 // contractVariable for Multiowned
 var MultiownedContract = web3.eth.contract([
@@ -733,6 +737,21 @@ function ManageableGuiFactory() {
 
 	//eventguis
 
+	/**
+	* Create a gui for the ManagerChanged event.
+    * @prefix - a prefix
+	* @blockHash - the bolckhash 
+	* @blockNumber - the number of the block
+	*/
+	this.createManagerChangedLogDataGui = function(prefix, blockHash, blockNumber
+	,_state	,_address	,_managerCount	) {
+		return '<div class="eventRow">'
+        +'<div class="eventValue">'+_state+'</div>'
+        +'<div class="eventValue">'+_address+'</div>'
+        +'<div class="eventValue">'+_managerCount+'</div>'
+        +' </div>';
+	}
+
 }//end guifactory
 
 /**
@@ -973,6 +992,17 @@ function ManageableManager(prefix,contract,containerId) {
 	* The events are stored in an element with the id this.eventlogPrefix+'eventLog'.
 	**/
 	this.watchEvents=function(){
+	var event_ManagerChanged = contract.ManagerChanged({},{fromBlock: 0});
+	var elp = this.eventlogPrefix;
+	var callback = this.eventCallback;
+	event_ManagerChanged.watch(function(error,result){
+	if(!error){
+		if(callback!=null)
+			callback(result);
+
+		}else
+			console.log(error);	
+	});
 	}
 
 }// end of manager
@@ -1060,14 +1090,14 @@ function ManageableDeployment(guiId){
 	/**
 	* Construct Manageable.
 	**/
-	this.deployManageable_Manageable = function(account,code,providedGas,){
+//	this.deployManageable_Manageable = function(account,code,providedGas,){
 //		var c = Manageable.new(_name,_url,_description,{
 //			from: account,
 //			data: code,
 //			gas:  providedGas
 //		});
-		return c;
-	}
+//		return c;
+//	}
 
 //Start of user code Manageable_deployment_js
 //TODO: implement

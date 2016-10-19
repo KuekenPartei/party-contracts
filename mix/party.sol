@@ -16,20 +16,6 @@ import "./voting.sol";
 * It is populated by functions party members.
 */
 contract Organ is Manageable,MemberAware,MessagePublisher {
-    /*
-    * The function definition.
-    * A function is defined in the constitution of the party.
-    * Normaly it is associated with a party member.
-    */
-    struct OrganFunction {
-    	address currentMember;
-    	string functionName;
-    	uint id;
-    	string constitutionHash;
-    	uint lastMemberChanged;
-    	uint lastConstitutionHashChanged;
-    	ShortBlog publisher;
-    }
 
 	string public organName;
 	uint public lastFunctionId;
@@ -37,8 +23,8 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 	bool public isActive;
 	ShortBlog internal organBlog;
 	uint public ballotCount;
-	mapping (uint=>OrganFunction)public organFunctions;
 	mapping (uint=>Ballot)private ballots;
+	mapping (uint=>OrganFunction)internal organFunctions;
 	// Start of user code Organ.attributes
 	// End of user code
 	
@@ -51,6 +37,9 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 	
 	
 	event FunctionMemberChange(address oldMember,uint functionId,address newMember);
+	
+	
+	event FunctionChange(uint _type,OrganFunction _function);
 	
 	
 	/*
@@ -76,11 +65,12 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 	*/
 	function changeMember(uint _id,address _address) public  onlyManager()  {
 		//Start of user code Organ.function.changeMember_uint_address
-//		if(!isMember(_address)) throw;
-		if(organFunctions[_id].id!= _id) throw;
+
+		//FunctionMemberChange(organFunctions[_id].currentMember,_id,_address);
 		
-		FunctionMemberChange(organFunctions[_id].currentMember,_id,_address);
-		organFunctions[_id].currentMember = _address;
+		 OrganFunction a = organFunctions[_id];
+		FunctionMemberChange(_address,_id,a);
+		organFunctions[_id].setCurrentMember(_address);
 		//End of user code
 	}
 	
@@ -93,10 +83,9 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 	*/
 	function createFunction(string _functionName,string _constittiutionHash) public  onlyManager()  {
 		//Start of user code Organ.function.createFunction_string_string
-		organFunctions[lastFunctionId].functionName = _functionName;
-		organFunctions[lastFunctionId].constitutionHash = _constittiutionHash;
-		organFunctions[lastFunctionId].lastConstitutionHashChanged = now;
-		organFunctions[lastFunctionId].publisher = blogRegistry.registerBlog(_functionName);
+//
+//		organFunctions[lastFunctionId].lastConstitutionHashChanged = now;
+		//organFunctions[lastFunctionId].publisher = blogRegistry.registerBlog(_functionName);
 		lastFunctionId++;
 		//End of user code
 	}
@@ -148,20 +137,6 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 	}
 	
 	
-	/*
-	* Get the address of the organ function blog.
-	* 
-	* id - The function id.
-	* returns
-	*  -
-	*/
-	function getFunctionBlogAddress(uint id) public   constant returns (address ) {
-		//Start of user code Organ.function.getFunctionBlogAddress_uint
-		return organFunctions[id].publisher;
-		//End of user code
-	}
-	
-	
 	
 	function getLastBallot() public   constant returns (address ) {
 		//Start of user code Organ.function.getLastBallot
@@ -174,6 +149,24 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 	function getOrganBlog() public   constant returns (address ) {
 		//Start of user code Organ.function.getOrganBlog
 		return organBlog;
+		//End of user code
+	}
+	
+	
+	
+	function addOrganFunction(OrganFunction _of) public   {
+		//Start of user code Organ.function.addOrganFunction_OrganFunction
+		organFunctions[lastFunctionId]=_of;
+		lastFunctionId++;
+		FunctionChange(1,_of);
+		//End of user code
+	}
+	
+	
+	
+	function getOrganFunction(uint _id) public   constant returns (OrganFunction ) {
+		//Start of user code Organ.function.getOrganFunction_uint
+		return organFunctions[_id];
 		//End of user code
 	}
 	
@@ -204,7 +197,7 @@ contract Party is Manageable {
 	MemberRegistry internal memberRegistry;
 	string public constitutionHash;
 	uint public organCount;
-	BlogRegistry public blogregistry;
+	BlogRegistry internal blogregistry;
 	mapping (uint=>Organ)public organs;
 	// Start of user code Party.attributes
 	//TODO: implement
@@ -214,10 +207,12 @@ contract Party is Manageable {
 	event ConstiutionChange();
 	
 	
+	event OrganChanged(Organ _organ,uint _changeType);
+	
 	
 	function Party() public   {
-		//Start of user code Party.function.Party
-		
+		//Start of user code Party.constructor.Party
+		//TODO: implement
 		//End of user code
 	}
 	
@@ -231,6 +226,18 @@ contract Party is Manageable {
 		organs[organCount].setBlogRegistry(blogregistry);
 		organs[organCount].initalizeOrgan();
 		organCount++;
+		//End of user code
+	}
+	
+	
+	/*
+	* Adds an organ to the party.
+	* 
+	* _organ -
+	*/
+	function addOrgan(Organ _organ) public  onlyManager()  {
+		//Start of user code Party.function.addOrgan_Organ
+		//TODO: implement
 		//End of user code
 	}
 	
@@ -355,6 +362,61 @@ contract FoundationConference is Conference {
 		isActive = true;
 //		createFunction("test","");
 	}
+	// End of user code
+}
+
+/*
+* The function definition.
+* A function is defined in the constitution of the party.
+* Normaly it is associated with a party member.
+*/
+contract OrganFunction is Manageable,MessagePublisher {
+
+	address public currentMember;
+	string public functionName;
+	uint public id;
+	string public constitutionHash;
+	uint public lastMemberChanged;
+	uint public lastConstitutionHashChanged;
+	ShortBlog public publisher;
+	// Start of user code OrganFunction.attributes
+	//TODO: implement
+	// End of user code
+	
+	
+	function OrganFunction() public   {
+		//Start of user code OrganFunction.constructor.OrganFunction
+		//TODO: implement
+		//End of user code
+	}
+	
+	
+	/*
+	* Publish the message to the blog.
+	* 
+	* message - The message to send.
+	* hash - The hash of the message.
+	* er - The external resource of the message.
+	*/
+	function publishMessage(string message,string hash,string er) public   {
+		 
+		
+		//Start of user code MessagePublisher.function.publishMessage_string_string_string
+		//TODO: implement
+		//End of user code
+	}
+	// setCurrentMember
+	function setCurrentMember (address aCurrentMember) onlyManager() {
+		currentMember = aCurrentMember;
+	}
+	
+	// setPublisher
+	function setPublisher (address aPublisher) onlyManager() {
+		publisher = ShortBlog(aPublisher);
+	}
+	
+	// Start of user code OrganFunction.operations
+	//TODO: implement
 	// End of user code
 }
 

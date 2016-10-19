@@ -126,18 +126,18 @@ function TestShortBlog(contract) {
 
 	//Test for Manageable_addManager_address
 	this.testManageable_addManager_address=function() {
+		//	var res = this.test_instance.addManager( p__newManagerAddress);
 		//Start of user code test_Manageable_addManager_address
-		var state = this.model.isManager(p__newManagerAddress);		
-		this.testAE("testaddManager", "executed: testManageable_addManager_address before",false,state );		
-		var p__newManagerAddress = web3.eth.accounts[2];
-		var res = this.test_instance.addManager( p__newManagerAddress);
-		var state = this.model.isManager(p__newManagerAddress);		
-		this.testAE("testaddManager", "executed: testManageable_addManager_address",true,state );		
+		//TODO : implement this
+		var test = false;		
+
+
 		//End of user code
 	}
 
 	//Test for ShortBlog_sendMessage_string_string_string
 	this.testShortBlog_sendMessage_string_string_string=function() {
+		//	var res = this.test_instance.sendMessage( p_message, p_hash, p_er);
 		//Start of user code test_ShortBlog_sendMessage_string_string_string
 		//TODO: implement
 		var p_message = 'A Test Message';
@@ -153,25 +153,23 @@ function TestShortBlog(contract) {
 
 	//Test for Manageable_removeManager_address
 	this.testManageable_removeManager_address=function() {
+		//	var res = this.test_instance.removeManager( p__managerAddress);
 		//Start of user code test_Manageable_removeManager_address
+		//TODO : implement this
+		var test = false;		
 
-		var state = this.model.getMangerCount();		
-		this.testAE("testremoveManager", "executed: testManageable_removeManager_address before",2,state );		
-		var p__newManagerAddress = web3.eth.accounts[2];
-		var res = this.test_instance.removeManager( p__newManagerAddress);
-		var state = this.model.getMangerCount();		
-		this.testAE("testremoveManager", "executed: testManageable_removeManager_address",1,state );		
+
 		//End of user code
 	}
 
 	//Test for Manageable_isManager_address
 	this.testManageable_isManager_address=function() {
+		//	var res = this.test_instance.isManager( p__managerAddress);
 		//Start of user code test_Manageable_isManager_address
-		
-		var _managerAddress = web3.eth.accounts[0];
-		var t1 = this.test_instance.isManager(_managerAddress);
-		var t2 = this.model.isManager(_managerAddress)
-		this.testAE("testisManager", "executed: testManageable_isManager_address"+t1+"  "+t2,true, t1);		
+		//TODO : implement this
+		var test = false;		
+
+
 		//End of user code
 	}
 	this.customTests=function() {
@@ -306,6 +304,7 @@ function TestBlogRegistry(contract) {
 
 	//Test for BlogRegistry_registerBlog_string
 	this.testBlogRegistry_registerBlog_string=function() {
+		//	var res = this.test_instance.registerBlog( p__name);
 		//Start of user code test_BlogRegistry_registerBlog_string
 		//TODO: implement
 		var count =	this.test_instance.blogCount();
@@ -319,37 +318,37 @@ function TestBlogRegistry(contract) {
 
 	//Test for Manageable_addManager_address
 	this.testManageable_addManager_address=function() {
+		//	var res = this.test_instance.addManager( p__newManagerAddress);
 		//Start of user code test_Manageable_addManager_address
-		var state = this.model.isManager(p__newManagerAddress);		
-		this.testAE("testaddManager", "executed: testManageable_addManager_address before",false,state );		
-		var p__newManagerAddress = web3.eth.accounts[2];
-		var res = this.test_instance.addManager( p__newManagerAddress);
-		var state = this.model.isManager(p__newManagerAddress);		
-		this.testAE("testaddManager", "executed: testManageable_addManager_address",true,state );		
+		//TODO : implement this
+		var test = false;		
+
+
+		this.testAE("testaddManager", "executed: testManageable_addManager_address",true, test);		
 		//End of user code
 	}
 
 	//Test for Manageable_removeManager_address
 	this.testManageable_removeManager_address=function() {
+		//	var res = this.test_instance.removeManager( p__managerAddress);
 		//Start of user code test_Manageable_removeManager_address
+		//TODO : implement this
+		var test = false;		
 
-		var state = this.model.getMangerCount();		
-		this.testAE("testremoveManager", "executed: testManageable_removeManager_address before",2,state );		
-		var p__newManagerAddress = web3.eth.accounts[2];
-		var res = this.test_instance.removeManager( p__newManagerAddress);
-		var state = this.model.getMangerCount();		
-		this.testAE("testremoveManager", "executed: testManageable_removeManager_address",1,state );		
+
+		this.testAE("testremoveManager", "executed: testManageable_removeManager_address",true, test);		
 		//End of user code
 	}
 
 	//Test for Manageable_isManager_address
 	this.testManageable_isManager_address=function() {
+		//	var res = this.test_instance.isManager( p__managerAddress);
 		//Start of user code test_Manageable_isManager_address
-		
-		var _managerAddress = web3.eth.accounts[0];
-		var t1 = this.test_instance.isManager(_managerAddress);
-		var t2 = this.model.isManager(_managerAddress)
-		this.testAE("testisManager", "executed: testManageable_isManager_address"+t1+"  "+t2,true, t1);		
+		//TODO : implement this
+		var test = false;		
+
+
+		this.testAE("testisManager", "executed: testManageable_isManager_address",true, test);		
 		//End of user code
 	}
 	this.customTests=function() {

@@ -111,6 +111,15 @@ name|type|direction|doc
 _managerAddress|address|in|The address of the manager to work with
 |bool|return|
 
+#### event ManagerChanged
+
+
+name|type|indexed|doc
+----|----|----|----
+_state|uint||0 for add, 1 for remove
+_address|address||
+_managerCount|uint||
+
 
 ## contract: Multiowned
 

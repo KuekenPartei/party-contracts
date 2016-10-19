@@ -59,7 +59,11 @@ var ManageableContract = web3.eth.contract([
     "outputs": [{"name": "","type": "bool"}],
     "type": "function"
   }
- 
+ ,
+  { "constant": true,
+    "inputs": [{"name": "_state","type": "uint"},{"name": "_address","type": "address"},{"name": "_managerCount","type": "uint"}],    
+    "name": "ManagerChanged",
+    "type": "event"  }
 ]);   
 // contractVariable for Multiowned
 var MultiownedContract = web3.eth.contract([

@@ -2,7 +2,6 @@
 {"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"constitutionHash","outputs":[{"name":"","type":"string"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"organCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"blogregistry","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
@@ -13,22 +12,8 @@
 ],"type": "function"	},
   {
     "constant": false,
-    "inputs": [],    
-    "name": "Party",
-    "outputs": [],
-    "type": "function"
-  }
-,  {
-    "constant": false,
     "inputs": [{"name": "_newManagerAddress","type": "address"}],    
     "name": "addManager",
-    "outputs": [],
-    "type": "function"
-  }
-,  {
-    "constant": false,
-    "inputs": [{"name": "organName","type": "string"}],    
-    "name": "createOrgan",
     "outputs": [],
     "type": "function"
   }
@@ -40,15 +25,33 @@
     "type": "function"
   }
 ,  {
+    "constant": false,
+    "inputs": [{"name": "organName","type": "string"}],    
+    "name": "createOrgan",
+    "outputs": [],
+    "type": "function"
+  }
+,  {
     "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
     "type": "function"
   }
+,  {
+    "constant": false,
+    "inputs": [{"name": "_organ","type": "address"}],    
+    "name": "addOrgan",
+    "outputs": [],
+    "type": "function"
+  }
  ,
   { "constant": true,
     "inputs": [],    
     "name": "ConstiutionChange",
+    "type": "event"  }
+,  { "constant": true,
+    "inputs": [{"name": "_organ","type": "address"},{"name": "_changeType","type": "uint"}],    
+    "name": "OrganChanged",
     "type": "event"  }
 ]

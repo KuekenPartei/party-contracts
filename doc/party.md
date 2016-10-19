@@ -11,6 +11,8 @@
 
 * [FoundationConference](#contract-foundationconference)
 
+* [OrganFunction](#contract-organfunction)
+
 
 ## contract: Organ
 
@@ -21,39 +23,18 @@
 	function initalizeOrgan() public  
 	function publishFunctionMessage(uint id,string message,string hash,string er) public  
 	function createBallot(string name,bytes32[] proposalNames) public  returns (uint )
-	function getFunctionBlogAddress(uint id) public   constant returns (address )
 	function getLastBallot() public   constant returns (address )
 	function getOrganBlog() public   constant returns (address )
+	function addOrganFunction(OrganFunction _of) public  
+	function getOrganFunction(uint _id) public   constant returns (OrganFunction )
 
-inherites: [MemberAware](members#contract-memberaware)
-,[Manageable](basics#contract-manageable)
+inherites: [Manageable](basics#contract-manageable)
+,[MemberAware](members#contract-memberaware)
 
 
 An organ is part of the party, defined in the constitution.
 It is populated by functions party members.
 
-
-
-### structs:
-
-OrganFunction
-The function definition.
-A function is defined in the constitution of the party.
-Normaly it is associated with a party member.
-
-
-
-#### OrganFunction properties
-
-name|type|visiblity|delegate|doc
-----|----|----|----|----
-currentMember|address|public||
-functionName|string|public||
-id|uint|public||
-constitutionHash|string|public||
-lastMemberChanged|uint|public||
-lastConstitutionHashChanged|uint|public||
-publisher|ShortBlog|public||
 
 
 
@@ -67,12 +48,7 @@ blogRegistry|BlogRegistry|public||
 isActive|bool|public||
 organBlog|ShortBlog|protected||
 ballotCount|uint|public||
-
-#### Organ mappings
-
-name|type|mapsTo|visiblity|doc
-----|----|----|----|----
-organFunctions|uint|OrganFunction|public|-
+-
 
 #### Organ.changeMember(uint _id,address _address) public  onlyManager() 
 
@@ -121,16 +97,6 @@ name|string|in|
 proposalNames|bytes32|in|
 |uint|return|
 
-#### Organ.getFunctionBlogAddress(uint id) public   constant returns (address )
-
-Get the address of the organ function blog.
-
-
-name|type|direction|doc
-----|----|----|----
-id|uint|in|The function id.
-|address|return|
-
 #### Organ.getLastBallot() public   constant returns (address )
 
 
@@ -145,6 +111,21 @@ name|type|direction|doc
 ----|----|----|----
 |address|return|
 
+#### Organ.addOrganFunction(OrganFunction _of) public  
+
+
+name|type|direction|doc
+----|----|----|----
+_of|OrganFunction|in|
+
+#### Organ.getOrganFunction(uint _id) public   constant returns (OrganFunction )
+
+
+name|type|direction|doc
+----|----|----|----
+_id|uint|in|
+|OrganFunction|return|
+
 #### event FunctionMemberChange
 
 
@@ -154,12 +135,21 @@ oldMember|address||
 functionId|uint||
 newMember|address||
 
+#### event FunctionChange
+
+
+name|type|indexed|doc
+----|----|----|----
+_type|uint||
+_function|OrganFunction||
+
 
 ## contract: Party
 
     overview:
-	function Party() public  
+	constructor Party()
 	function createOrgan(string organName) public  
+	function addOrgan(Organ _organ) public  onlyManager() 
 
 inherites: [Manageable](basics#contract-manageable)
 
@@ -176,7 +166,7 @@ name|type|visiblity|delegate|doc
 memberRegistry|MemberRegistry|protected||
 constitutionHash|string|public||
 organCount|uint|public||
-blogregistry|BlogRegistry|public||
+blogregistry|BlogRegistry|protected||
 -
 
 #### Party.Party() public  
@@ -190,9 +180,26 @@ name|type|direction|doc
 ----|----|----|----
 organName|string|in|
 
+#### Party.addOrgan(Organ _organ) public  onlyManager() 
+
+Adds an organ to the party.
+
+
+name|type|direction|doc
+----|----|----|----
+_organ|Organ|in|
+
 #### event ConstiutionChange
 
 
+
+#### event OrganChanged
+
+
+name|type|indexed|doc
+----|----|----|----
+_organ|Organ||
+_changeType|uint||
 
 
 ## contract: KUEKeNParty
@@ -276,5 +283,39 @@ In the first and only session.
 
 
 -
+
+
+## contract: OrganFunction
+
+    overview:
+	constructor OrganFunction()
+	abstract function publishMessage(string message,string hash,string er) public  
+
+inherites: [Manageable](basics#contract-manageable)
+
+
+The function definition.
+A function is defined in the constitution of the party.
+Normaly it is associated with a party member.
+
+
+
+
+#### OrganFunction properties
+
+name|type|visiblity|delegate|doc
+----|----|----|----|----
+currentMember|address|public||
+functionName|string|public||
+id|uint|public||
+constitutionHash|string|public||
+lastMemberChanged|uint|public||
+lastConstitutionHashChanged|uint|public||
+publisher|ShortBlog|public||
+-
+
+#### OrganFunction.OrganFunction() public  
+
+
 
 

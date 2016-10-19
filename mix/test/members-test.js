@@ -160,6 +160,7 @@ function TestMemberRegistry(contract) {
 
 	//Test for MemberRegistry_addMember_string_address
 	this.testMemberRegistry_addMember_string_address=function() {
+		//	var res = this.test_instance.addMember( p_name, p__memberAddress);
 		//Start of user code test_MemberRegistry_addMember_string_address
 		//TODO: implement
 		var count =	this.test_instance.partyMemberCount();
@@ -173,6 +174,7 @@ function TestMemberRegistry(contract) {
 
 	//Test for Manageable_addManager_address
 	this.testManageable_addManager_address=function() {
+		//	var res = this.test_instance.addManager( p__newManagerAddress);
 		//Start of user code test_Manageable_addManager_address
 		//TODO: implement
 		var count = this.test_instance.mangerCount();
@@ -186,6 +188,7 @@ function TestMemberRegistry(contract) {
 
 	//Test for MemberRegistry_unregisterMember_uint
 	this.testMemberRegistry_unregisterMember_uint=function() {
+		//	var res = this.test_instance.unregisterMember( p_id);
 		//Start of user code test_MemberRegistry_unregisterMember_uint
 		//TODO: implement
 //console.log('testMemberRegistry_unregisterMember_uint');
@@ -198,6 +201,7 @@ function TestMemberRegistry(contract) {
 
 	//Test for MemberRegistry_getMemberCount
 	this.testMemberRegistry_getMemberCount=function() {
+		//	var res = this.test_instance.getMemberCount();
 		//Start of user code test_MemberRegistry_getMemberCount
 		//TODO: implement
 		var count = this.test_instance.getMemberCount();
@@ -207,6 +211,7 @@ function TestMemberRegistry(contract) {
 
 	//Test for Manageable_removeManager_address
 	this.testManageable_removeManager_address=function() {
+		//	var res = this.test_instance.removeManager( p__managerAddress);
 		//Start of user code test_Manageable_removeManager_address
 		//TODO: implement
 		var p__managerAddress = web3.eth.accounts[0];
@@ -218,6 +223,7 @@ function TestMemberRegistry(contract) {
 
 	//Test for MemberRegistry_isActiveMember_address
 	this.testMemberRegistry_isActiveMember_address=function() {
+		//	var res = this.test_instance.isActiveMember( p__memberAdress);
 		//Start of user code test_MemberRegistry_isActiveMember_address
 		//TODO: implement
 		var p__memberAdress = web3.eth.accounts[1];
@@ -234,6 +240,7 @@ function TestMemberRegistry(contract) {
 
 	//Test for Manageable_isManager_address
 	this.testManageable_isManager_address=function() {
+		//	var res = this.test_instance.isManager( p__managerAddress);
 		//Start of user code test_Manageable_isManager_address
 		//TODO: implement
 //console.log('testManageable_isManager_address');
@@ -246,6 +253,7 @@ function TestMemberRegistry(contract) {
 
 	//Test for MemberRegistry_changeMemberAddress_uint_address
 	this.testMemberRegistry_changeMemberAddress_uint_address=function() {
+		//	var res = this.test_instance.changeMemberAddress( p_id, p__newMemberAddress);
 		//Start of user code test_MemberRegistry_changeMemberAddress_uint_address
 		//TODO: implement
 		var p_id = 0;
@@ -258,6 +266,7 @@ function TestMemberRegistry(contract) {
 
 	//Test for MemberRegistry_getMemberData_address
 	this.testMemberRegistry_getMemberData_address=function() {
+		//	var res = this.test_instance.getMemberData( p__address);
 		//Start of user code test_MemberRegistry_getMemberData_address
 		//TODO: implement
 //console.log('testMemberRegistry_getMemberData_address');
@@ -270,6 +279,7 @@ function TestMemberRegistry(contract) {
 
 	//Test for MemberRegistry_publishMemberEvent_address_uint
 	this.testMemberRegistry_publishMemberEvent_address_uint=function() {
+		//	var res = this.test_instance.publishMemberEvent( p_mAddress, p_eventType);
 		//Start of user code test_MemberRegistry_publishMemberEvent_address_uint
 		//TODO: implement
 		var p_mAddress = web3.eth.accounts[2];

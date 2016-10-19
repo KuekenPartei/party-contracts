@@ -86,10 +86,14 @@ contract Manageable {
 	}
 	
 	
+	event ManagerChanged(uint _state,address _address,uint _managerCount);
+	
+	
 	function Manageable() public   {
 		//Start of user code Manageable.constructor.Manageable
 	    managers[msg.sender] = true;
 		mangerCount++;
+		ManagerChanged(0,msg.sender,mangerCount);
 		//End of user code
 	}
 	
@@ -109,8 +113,11 @@ contract Manageable {
 		 
 		
 		//Start of user code Manageable.function.addManager_address
-		if(!managers[_newManagerAddress])
+		if(!managers[_newManagerAddress]){
 			mangerCount++;
+			ManagerChanged(0,_newManagerAddress,mangerCount);	
+		}
+		
 		managers[_newManagerAddress] = true;
 		//End of user code
 	}
@@ -121,8 +128,10 @@ contract Manageable {
 		 
 		
 		//Start of user code Manageable.function.removeManager_address
-		if(managers[_managerAddress])
+		if(managers[_managerAddress]){
 			mangerCount--;
+			ManagerChanged(1,_managerAddress,mangerCount);
+		}
 		managers[_managerAddress] = false;
 		//End of user code
 	}
