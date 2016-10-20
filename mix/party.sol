@@ -118,7 +118,7 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 	*/
 	function publishFunctionMessage(uint id,string message,string hash,string er) public   {
 		//Start of user code Organ.function.publishFunctionMessage_uint_string_string_string
-		//TODO: implement
+		organFunctions[id].publisher.sendMessage(message,hash,er);
 		//End of user code
 	}
 	

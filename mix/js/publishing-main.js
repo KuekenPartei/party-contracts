@@ -643,6 +643,7 @@ function ShortBlogManager(prefix,contract,containerId) {
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
 	this.eventCallback = null;
+	this.constract = contract;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -720,10 +721,12 @@ function ShortBlogManager(prefix,contract,containerId) {
 	* The events are stored in an element with the id this.eventlogPrefix+'eventLog'.
 	**/
 	this.watchEvents=function(){
-	var event_NewMessage = contract.NewMessage({},{fromBlock: 0});
+	console.log('watch for new messages'+this.constract);
+	var event_NewMessage = this.getContract().NewMessage({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
 	var callback = this.eventCallback;
 	event_NewMessage.watch(function(error,result){
+		console.log('watch events'+result);
 	if(!error){
 		if(callback!=null)
 			callback(result);
@@ -1327,7 +1330,8 @@ function BlogRegistryManager(prefix,contract,containerId) {
 	* The events are stored in an element with the id this.eventlogPrefix+'eventLog'.
 	**/
 	this.watchEvents=function(){
-	var event_NewBlog = contract.NewBlog({},{fromBlock: 0});
+		console.log('watch for new blogs'+contract);
+	var event_NewBlog = this.getContract().NewBlog({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
 	var callback = this.eventCallback;
 	event_NewBlog.watch(function(error,result){
@@ -1433,8 +1437,9 @@ function PublishingReadPage(prefix) {
 	this.registry = new BlogRegistryGuiMananger(prefix);
 	this.gf = new BlogRegistryGuiFactory();
 	this.shgf = new ShortBlogGuiFactory();
+	this.model = new BlogRegistryModel(null);
 	
-	self = this;
+	var self = this;
 	
 	this.setInnerHtml=function(txt,_id){
 		e = document.getElementById(_id);
@@ -1448,12 +1453,11 @@ function PublishingReadPage(prefix) {
 		
 	}
 	
+	
 	this.eventHandle=function(result){
-		console.log('Event:'+result);
+		console.log('add a new blog:'+result);
 		var bAddress = result.args.blogAddress;
-		blogs.addManager(ShortBlogContract.at(bAddress));	
-		//blogs.displayGui(null);
-		//blogs.updateGui();
+		self.blogs.addManager(ShortBlogContract.at(bAddress));
 		var txt = self.gf.createNewBlogLogDataGui("", "", "", result.args.index, result.args.name, result.args.blogAddress);
 		txt = self.shgf.createSeletonGui(txt);
 		self.setInnerHtml(txt, 'blogs-event');
@@ -1462,6 +1466,7 @@ function PublishingReadPage(prefix) {
 	this.registry.eventCallback = this.eventHandle;
 	
 	this.blogEventHandle=function(result){
+		console.log('Event1:'+result);
 		var txt = self.shgf.createNewMessageLogDataGui("", "", "", 
 				result.args.message, result.args.messageId, 
 				result.args.messageSender, result.args.messageHashValue, 
