@@ -17,8 +17,8 @@ import "./basics.sol";
 * The registry is a Manageable contract so the writing methods can only accessed by a registered manager.
 */
 contract MemberRegistry is Manageable {
-    enum EventType { memberStateChanged,accreditation,functionChange }
     enum MemberState { deleted,inactive,active }
+    enum EventType { memberStateChanged,accreditation,functionChange }
     /*
     * A member can be active, inactive or deleted.
     * It has an id assigned to it and a changeable address.

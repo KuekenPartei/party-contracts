@@ -552,7 +552,12 @@ It is populated by functions party members.</body>
           </ownedParameter>
         </ownedOperation>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_an9eAJXaEeaCN_-XsTGglw" name="addOrganFunction">
-          <ownedParameter xmi:type="uml:Parameter" xmi:id="_hfhLsJXaEeaCN_-XsTGglw" name="_of" type="_ZJ-Z4JXWEeaCN_-XsTGglw"/>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_hfhLsJXaEeaCN_-XsTGglw" name="_of">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_MY8asJbDEea1v6Qdf14Vtg" name="_name">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
         </ownedOperation>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_fVOZMJXsEeaCN_-XsTGglw" name="getOrganFunction">
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_jp1B8JXsEeaCN_-XsTGglw" name="_id">
@@ -603,7 +608,9 @@ It is populated by functions party members.</body>
           <ownedComment xmi:type="uml:Comment" xmi:id="_kF6GgJXXEeaCN_-XsTGglw">
             <body>Adds an organ to the party.</body>
           </ownedComment>
-          <ownedParameter xmi:type="uml:Parameter" xmi:id="_fjzNQJXXEeaCN_-XsTGglw" name="_organ" type="_YVNoUB82Eea0ndjKa8R1Fg"/>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_fjzNQJXXEeaCN_-XsTGglw" name="_organ">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
         </ownedOperation>
       </packagedElement>
       <packagedElement xmi:type="uml:Association" xmi:id="_oJRW8B82Eea0ndjKa8R1Fg" memberEnd="_oJTzMB82Eea0ndjKa8R1Fg _oJWPcB82Eea0ndjKa8R1Fg">
@@ -716,7 +723,19 @@ Normaly it is associated with a party member.</body>
         </ownedAttribute>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_ZJ-Z6JXWEeaCN_-XsTGglw" name="publisher" type="_4pPWAO82EeWU3MNrGPvZNA"/>
         <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_qqClEJXbEeaCN_-XsTGglw" client="_ZJ-Z4JXWEeaCN_-XsTGglw" supplier="_qJN2cCGcEeaIoZ3vQYCn_Q" contract="_qJN2cCGcEeaIoZ3vQYCn_Q"/>
-        <ownedOperation xmi:type="uml:Operation" xmi:id="_cxRecJXbEeaCN_-XsTGglw" name="OrganFunction"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_cxRecJXbEeaCN_-XsTGglw" name="OrganFunction">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_VgaHwJa-Eea1v6Qdf14Vtg" name="_name">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_YakLwJa-Eea1v6Qdf14Vtg" name="_ch">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_hImdcJa_Eea1v6Qdf14Vtg" name="getFunctioName">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_lzOZgJa_Eea1v6Qdf14Vtg" direction="return">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
       </packagedElement>
       <packagedElement xmi:type="uml:Association" xmi:id="_2lV2QJXXEeaCN_-XsTGglw" memberEnd="_2lkfwJXXEeaCN_-XsTGglw _2llG0JXXEeaCN_-XsTGglw">
         <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_2lYSgJXXEeaCN_-XsTGglw" source="org.eclipse.papyrus">
@@ -1138,4 +1157,6 @@ returns 0 for ok and 1 else.</body>
   <Contracts:Event xmi:id="_BYRo0JXiEeaCN_-XsTGglw" base_Operation="_0G_Y8JXhEeaCN_-XsTGglw"/>
   <Contracts:Function xmi:id="_oasv8JXsEeaCN_-XsTGglw" base_Operation="_fVOZMJXsEeaCN_-XsTGglw" returnType="constant"/>
   <Contracts:Event xmi:id="_zhZd8JX0EeaCN_-XsTGglw" base_Operation="_jZ0WYJX0EeaCN_-XsTGglw"/>
+  <Contracts:GetterSetter xmi:id="_CE5uIJa6Eea1v6Qdf14Vtg" getter="false" base_Property="_6Sk7QCAeEeax9s8SJwm0VA"/>
+  <Contracts:Function xmi:id="_m2a74Ja_Eea1v6Qdf14Vtg" base_Operation="_hImdcJa_Eea1v6Qdf14Vtg" returnType="constant"/>
 </xmi:XMI>

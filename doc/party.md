@@ -25,11 +25,11 @@
 	function createBallot(string name,bytes32[] proposalNames) public  returns (uint )
 	function getLastBallot() public   constant returns (address )
 	function getOrganBlog() public   constant returns (address )
-	function addOrganFunction(OrganFunction _of) public  
+	function addOrganFunction(address _of,string _name) public  
 	function getOrganFunction(uint _id) public   constant returns (OrganFunction )
 
-inherites: [Manageable](basics#contract-manageable)
-,[MemberAware](members#contract-memberaware)
+inherites: [MemberAware](members#contract-memberaware)
+,[Manageable](basics#contract-manageable)
 
 
 An organ is part of the party, defined in the constitution.
@@ -111,12 +111,13 @@ name|type|direction|doc
 ----|----|----|----
 |address|return|
 
-#### Organ.addOrganFunction(OrganFunction _of) public  
+#### Organ.addOrganFunction(address _of,string _name) public  
 
 
 name|type|direction|doc
 ----|----|----|----
-_of|OrganFunction|in|
+_of|address|in|
+_name|string|in|
 
 #### Organ.getOrganFunction(uint _id) public   constant returns (OrganFunction )
 
@@ -149,7 +150,7 @@ _function|OrganFunction||
     overview:
 	constructor Party()
 	function createOrgan(string organName) public  
-	function addOrgan(Organ _organ) public  onlyManager() 
+	function addOrgan(address _organ) public  onlyManager() 
 
 inherites: [Manageable](basics#contract-manageable)
 
@@ -180,14 +181,14 @@ name|type|direction|doc
 ----|----|----|----
 organName|string|in|
 
-#### Party.addOrgan(Organ _organ) public  onlyManager() 
+#### Party.addOrgan(address _organ) public  onlyManager() 
 
 Adds an organ to the party.
 
 
 name|type|direction|doc
 ----|----|----|----
-_organ|Organ|in|
+_organ|address|in|
 
 #### event ConstiutionChange
 
@@ -288,8 +289,9 @@ In the first and only session.
 ## contract: OrganFunction
 
     overview:
-	constructor OrganFunction()
+	constructor OrganFunction(string _name,string _ch)
 	abstract function publishMessage(string message,string hash,string er) public  
+	function getFunctioName() public   constant returns (string )
 
 inherites: [Manageable](basics#contract-manageable)
 
@@ -314,8 +316,19 @@ lastConstitutionHashChanged|uint|public||
 publisher|ShortBlog|public||
 -
 
-#### OrganFunction.OrganFunction() public  
+#### OrganFunction.OrganFunction(string _name,string _ch) public  
 
 
+name|type|doc
+----|----|----
+_name|string|
+_ch|string|
+
+#### OrganFunction.getFunctioName() public   constant returns (string )
+
+
+name|type|direction|doc
+----|----|----|----
+|string|return|
 
 

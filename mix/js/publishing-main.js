@@ -1427,7 +1427,59 @@ function BlogRegistryDeployment(guiId){
 //End of user code
 }
 //Start of user code custom_BlogRegistry_js
-//TODO: implement
+function PublishingReadPage(prefix) {
+	this.prefix=prefix;
+	this.blogs = new ShortBlogGuiMananger(prefix);
+	this.registry = new BlogRegistryGuiMananger(prefix);
+	this.gf = new BlogRegistryGuiFactory();
+	this.shgf = new ShortBlogGuiFactory();
+	
+	self = this;
+	
+	this.setInnerHtml=function(txt,_id){
+		e = document.getElementById(_id);
+		if(e!==undefined){
+			var elemDiv = document.createElement('div');
+			elemDiv.innerHTML = txt;
+			e.appendChild(elemDiv);
+
+		} else
+			console('element with id not found:'+id);
+		
+	}
+	
+	this.eventHandle=function(result){
+		console.log('Event:'+result);
+		var bAddress = result.args.blogAddress;
+		blogs.addManager(ShortBlogContract.at(bAddress));	
+		//blogs.displayGui(null);
+		//blogs.updateGui();
+		var txt = self.gf.createNewBlogLogDataGui("", "", "", result.args.index, result.args.name, result.args.blogAddress);
+		txt = self.shgf.createSeletonGui(txt);
+		self.setInnerHtml(txt, 'blogs-event');
+	}
+
+	this.registry.eventCallback = this.eventHandle;
+	
+	this.blogEventHandle=function(result){
+		var txt = self.shgf.createNewMessageLogDataGui("", "", "", 
+				result.args.message, result.args.messageId, 
+				result.args.messageSender, result.args.messageHashValue, 
+				result.args.externalResource);
+		txt = self.shgf.createSeletonGui(txt);
+		self.setInnerHtml(txt, 'entry-event');
+	}
+	this.blogs.eventCallback = this.blogEventHandle;
+	
+	/**
+	* Places the default gui in the page.
+	**/
+	this.placeDefaultGui=function() {
+	this.createDefaultGui();
+	}
+
+	
+}
 //End of user code
 
 /**
@@ -1495,7 +1547,7 @@ this.readDataFromContract=function() {
 			var bAddress = manager.c.instance.blogs(int);
 			this.blogs.addManager(ShortBlogContract.at(bAddress));			
 		}
-	}
+	}}
 
 	
 

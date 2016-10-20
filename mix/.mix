@@ -19,7 +19,7 @@
 	"registerContentHashTrHash": "",
 	"registerUrlBlockNumber": -1,
 	"registerUrlTrHash": "",
-	"startUrl": "/test/party-tests.html",
+	"startUrl": "/publishing.html",
 	"title": "party-dao",
 	"states": [
 		{
@@ -5074,6 +5074,1113 @@
 				"secret": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074"
 			},
 			"title": "OrganTest",
+			"transactions": [
+				{
+					"contractId": "Ballot",
+					"functionId": "Ballot",
+					"gas": {
+						"value": "250000"
+					},
+					"gasAuto": true,
+					"gasPrice": {
+						"unit": 18,
+						"value": "100000"
+					},
+					"isContractCreation": true,
+					"isFunctionCall": true,
+					"label": "Ballot.Ballot()",
+					"parameters": {},
+					"saveStatus": true,
+					"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+					"value": {
+						"unit": 18,
+						"value": "0"
+					}
+				},
+				{
+					"contractId": "BlogRegistry",
+					"functionId": "BlogRegistry",
+					"gas": {
+						"value": "250000"
+					},
+					"gasAuto": true,
+					"gasPrice": {
+						"unit": 18,
+						"value": "100000"
+					},
+					"isContractCreation": true,
+					"isFunctionCall": true,
+					"label": "BlogRegistry.BlogRegistry()",
+					"parameters": {},
+					"saveStatus": true,
+					"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+					"value": {
+						"unit": 18,
+						"value": "0"
+					}
+				},
+				{
+					"contractId": "Conference",
+					"functionId": "Conference",
+					"gas": {
+						"value": "250000"
+					},
+					"gasAuto": true,
+					"gasPrice": {
+						"unit": 18,
+						"value": "100000"
+					},
+					"isContractCreation": true,
+					"isFunctionCall": true,
+					"label": "Conference.Conference()",
+					"parameters": {},
+					"saveStatus": true,
+					"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+					"value": {
+						"unit": 18,
+						"value": "0"
+					}
+				},
+				{
+					"contractId": "FoundationConference",
+					"functionId": "FoundationConference",
+					"gas": {
+						"value": "250000"
+					},
+					"gasAuto": true,
+					"gasPrice": {
+						"unit": 18,
+						"value": "100000"
+					},
+					"isContractCreation": true,
+					"isFunctionCall": true,
+					"label": "FoundationConference.FoundationConference()",
+					"parameters": {},
+					"saveStatus": true,
+					"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+					"value": {
+						"unit": 18,
+						"value": "0"
+					}
+				},
+				{
+					"contractId": "KUEKeNParty",
+					"functionId": "KUEKeNParty",
+					"gas": {
+						"value": "250000"
+					},
+					"gasAuto": true,
+					"gasPrice": {
+						"unit": 18,
+						"value": "100000"
+					},
+					"isContractCreation": true,
+					"isFunctionCall": true,
+					"label": "KUEKeNParty.KUEKeNParty()",
+					"parameters": {},
+					"saveStatus": true,
+					"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+					"value": {
+						"unit": 18,
+						"value": "0"
+					}
+				},
+				{
+					"contractId": "Manageable",
+					"functionId": "Manageable",
+					"gas": {
+						"value": "250000"
+					},
+					"gasAuto": true,
+					"gasPrice": {
+						"unit": 18,
+						"value": "100000"
+					},
+					"isContractCreation": true,
+					"isFunctionCall": true,
+					"label": "Manageable.Manageable()",
+					"parameters": {},
+					"saveStatus": true,
+					"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+					"value": {
+						"unit": 18,
+						"value": "0"
+					}
+				},
+				{
+					"contractId": "MemberAware",
+					"functionId": "MemberAware",
+					"gas": {
+						"value": "250000"
+					},
+					"gasAuto": true,
+					"gasPrice": {
+						"unit": 18,
+						"value": "100000"
+					},
+					"isContractCreation": true,
+					"isFunctionCall": true,
+					"label": "MemberAware.MemberAware()",
+					"parameters": {},
+					"saveStatus": true,
+					"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+					"value": {
+						"unit": 18,
+						"value": "0"
+					}
+				},
+				{
+					"contractId": "MemberRegistry",
+					"functionId": "MemberRegistry",
+					"gas": {
+						"value": "250000"
+					},
+					"gasAuto": true,
+					"gasPrice": {
+						"unit": 18,
+						"value": "100000"
+					},
+					"isContractCreation": true,
+					"isFunctionCall": true,
+					"label": "MemberRegistry.MemberRegistry()",
+					"parameters": {},
+					"saveStatus": true,
+					"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+					"value": {
+						"unit": 18,
+						"value": "0"
+					}
+				},
+				{
+					"contractId": "Multiowned",
+					"functionId": "Multiowned",
+					"gas": {
+						"value": "250000"
+					},
+					"gasAuto": true,
+					"gasPrice": {
+						"unit": 18,
+						"value": "100000"
+					},
+					"isContractCreation": true,
+					"isFunctionCall": true,
+					"label": "Multiowned.Multiowned()",
+					"parameters": {},
+					"saveStatus": true,
+					"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+					"value": {
+						"unit": 18,
+						"value": "0"
+					}
+				},
+				{
+					"contractId": "Organ",
+					"functionId": "Organ",
+					"gas": {
+						"value": "250000"
+					},
+					"gasAuto": true,
+					"gasPrice": {
+						"unit": 18,
+						"value": "100000"
+					},
+					"isContractCreation": true,
+					"isFunctionCall": true,
+					"label": "Organ.Organ()",
+					"parameters": {},
+					"saveStatus": true,
+					"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+					"value": {
+						"unit": 18,
+						"value": "0"
+					}
+				},
+				{
+					"contractId": "OrganFunction",
+					"functionId": "OrganFunction",
+					"gas": {
+						"value": "250000"
+					},
+					"gasAuto": true,
+					"gasPrice": {
+						"unit": 18,
+						"value": "100000"
+					},
+					"isContractCreation": true,
+					"isFunctionCall": true,
+					"label": "OrganFunction.OrganFunction()",
+					"parameters": {},
+					"saveStatus": true,
+					"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+					"value": {
+						"unit": 18,
+						"value": "0"
+					}
+				},
+				{
+					"contractId": "Owned",
+					"functionId": "Owned",
+					"gas": {
+						"value": "250000"
+					},
+					"gasAuto": true,
+					"gasPrice": {
+						"unit": 18,
+						"value": "100000"
+					},
+					"isContractCreation": true,
+					"isFunctionCall": true,
+					"label": "Owned.Owned()",
+					"parameters": {},
+					"saveStatus": true,
+					"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+					"value": {
+						"unit": 18,
+						"value": "0"
+					}
+				},
+				{
+					"contractId": "Party",
+					"functionId": "Party",
+					"gas": {
+						"value": "250000"
+					},
+					"gasAuto": true,
+					"gasPrice": {
+						"unit": 18,
+						"value": "100000"
+					},
+					"isContractCreation": true,
+					"isFunctionCall": true,
+					"label": "Party.Party()",
+					"parameters": {},
+					"saveStatus": true,
+					"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+					"value": {
+						"unit": 18,
+						"value": "0"
+					}
+				},
+				{
+					"contractId": "ShortBlog",
+					"functionId": "ShortBlog",
+					"gas": {
+						"value": "250000"
+					},
+					"gasAuto": true,
+					"gasPrice": {
+						"unit": 18,
+						"value": "100000"
+					},
+					"isContractCreation": true,
+					"isFunctionCall": true,
+					"label": "ShortBlog.ShortBlog()",
+					"parameters": {},
+					"saveStatus": true,
+					"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+					"value": {
+						"unit": 18,
+						"value": "0"
+					}
+				}
+			]
+		},
+		{
+			"accounts": [
+				{
+					"address": "38f388fadf4a6a35c61c3f88194ec5ae162c8944",
+					"balance": {
+						"unit": 12,
+						"value": "1000000"
+					},
+					"name": "user1",
+					"secret": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074"
+				},
+				{
+					"address": "06400992be45bc64a52b5c55d3df84596d6cb4a1",
+					"balance": {
+						"unit": 12,
+						"value": "1000000"
+					},
+					"name": "user2",
+					"secret": "db95780d2f30ca8211eec37cc110cc58a2d4f9308dea00ede6717a585efa2eb7"
+				},
+				{
+					"address": "fa4b795b491cc1975e89f3c78972c3e2e827c882",
+					"balance": {
+						"unit": 12,
+						"value": "1000000"
+					},
+					"name": "user3",
+					"secret": "090f51d202f847d2468fc87fb06f92c469b8a1927b4aecea796b6831f1331382"
+				},
+				{
+					"address": "b0dcdc575ef06dc30aaea069d8043c9d463c931c",
+					"balance": {
+						"unit": 12,
+						"value": "1000000"
+					},
+					"name": "user4",
+					"secret": "e9bf58b523b4c94255cad51b3f7efdc85a0c970bf42f1d191c126bb6f49bfb9d"
+				}
+			],
+			"blocks": [
+				{
+					"hash": "",
+					"number": 1,
+					"status": "mined",
+					"transactions": [
+						{
+							"contractId": "BlogRegistry",
+							"functionId": "BlogRegistry",
+							"gas": {
+								"value": "250000"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": true,
+							"isFunctionCall": true,
+							"label": "BlogRegistry.BlogRegistry()",
+							"parameters": {},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						}
+					]
+				},
+				{
+					"hash": "",
+					"number": 2,
+					"status": "mined",
+					"transactions": [
+						{
+							"contractId": "KUEKeNParty",
+							"functionId": "KUEKeNParty",
+							"gas": {
+								"value": "2797417"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": true,
+							"isFunctionCall": true,
+							"label": "KUEKeNParty.KUEKeNParty()",
+							"parameters": {},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						}
+					]
+				},
+				{
+					"hash": "",
+					"number": 3,
+					"status": "mined",
+					"transactions": [
+						{
+							"contractId": "MemberRegistry",
+							"functionId": "MemberRegistry",
+							"gas": {
+								"value": "1536582"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": true,
+							"isFunctionCall": true,
+							"label": "MemberRegistry.MemberRegistry()",
+							"parameters": {},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						}
+					]
+				},
+				{
+					"hash": "",
+					"number": 4,
+					"status": "mined",
+					"transactions": [
+						{
+							"contractId": "<KUEKeNParty - 1>",
+							"functionId": "setMemberRegistry",
+							"gas": {
+								"value": "43038"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": false,
+							"isFunctionCall": true,
+							"label": "<KUEKeNParty - 1>.setMemberRegistry()",
+							"parameters": {
+								"aMemberRegistry": "0x78dfc5983baecf65f73e3de3a96cee24e6b7981e"
+							},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						}
+					]
+				},
+				{
+					"hash": "",
+					"number": 5,
+					"status": "mined",
+					"transactions": [
+						{
+							"contractId": "<KUEKeNParty - 1>",
+							"functionId": "setBlogregistry",
+							"gas": {
+								"value": "21625"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": false,
+							"isFunctionCall": true,
+							"label": "KUEKeNParty.setBlogregistry()",
+							"parameters": {
+								"0": "",
+								"_br": "0x",
+								"_managerAddress": "<BlogRegistry - 0>",
+								"aBlogregistry": "<BlogRegistry - 0>"
+							},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						}
+					]
+				},
+				{
+					"hash": "",
+					"number": 6,
+					"status": "mined",
+					"transactions": [
+						{
+							"contractId": "<BlogRegistry - 0>",
+							"functionId": "addManager",
+							"gas": {
+								"value": "50234"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": false,
+							"isFunctionCall": true,
+							"label": "<BlogRegistry - 0>.addManager()",
+							"parameters": {
+								"_newManagerAddress": "0xc069cb45291acafdd701e9341e7bf730255abbe1"
+							},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						},
+						{
+							"contractId": "<MemberRegistry - 2>",
+							"functionId": "addManager",
+							"gas": {
+								"value": "50300"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": false,
+							"isFunctionCall": true,
+							"label": "<MemberRegistry - 2>.addManager()",
+							"parameters": {
+								"_newManagerAddress": "0xc069cb45291acafdd701e9341e7bf730255abbe1"
+							},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						}
+					]
+				},
+				{
+					"hash": "",
+					"number": 7,
+					"status": "mined",
+					"transactions": [
+						{
+							"contractId": "FoundationConference",
+							"functionId": "FoundationConference",
+							"gas": {
+								"value": "1948785"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": true,
+							"isFunctionCall": true,
+							"label": "FoundationConference.FoundationConference()",
+							"parameters": {},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						}
+					]
+				},
+				{
+					"hash": "",
+					"number": 8,
+					"status": "mined",
+					"transactions": [
+						{
+							"contractId": "<FoundationConference - 3>",
+							"functionId": "setOrganName",
+							"gas": {
+								"value": "43845"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": false,
+							"isFunctionCall": true,
+							"label": "FoundationConference.setOrganName()",
+							"parameters": {
+								"_newManagerAddress": "<BlogRegistry - 0>",
+								"aOrganName": "Gruendungsveranstaltung"
+							},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						}
+					]
+				},
+				{
+					"hash": "",
+					"number": 9,
+					"status": "mined",
+					"transactions": [
+						{
+							"contractId": "<FoundationConference - 3>",
+							"functionId": "addManager",
+							"gas": {
+								"value": "50366"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": false,
+							"isFunctionCall": true,
+							"label": "FoundationConference.addManager()",
+							"parameters": {
+								"_newManagerAddress": "<KUEKeNParty - 1>",
+								"aOrganName": ""
+							},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						},
+						{
+							"contractId": "<KUEKeNParty - 1>",
+							"functionId": "addOrgan",
+							"gas": {
+								"value": "49927"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": false,
+							"isFunctionCall": true,
+							"label": "<KUEKeNParty - 1>.addOrgan()",
+							"parameters": {
+								"_organ": "0x90aa2f7488913ee736c54278edec53b9abe414a1"
+							},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						}
+					]
+				},
+				{
+					"hash": "",
+					"number": 10,
+					"status": "mined",
+					"transactions": [
+						{
+							"contractId": "<FoundationConference - 3>",
+							"functionId": "setBlogRegistry",
+							"gas": {
+								"value": "43192"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": false,
+							"isFunctionCall": true,
+							"label": "FoundationConference.setBlogRegistry()",
+							"parameters": {
+								"aBlogRegistry": "<BlogRegistry - 0>",
+								"_newManagerAddress": "<BlogRegistry - 0>",
+								"aOrganName": ""
+							},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						},
+						{
+							"contractId": "<BlogRegistry - 0>",
+							"functionId": "addManager",
+							"gas": {
+								"value": "50234"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": false,
+							"isFunctionCall": true,
+							"label": "<BlogRegistry - 0>.addManager()",
+							"parameters": {
+								"_newManagerAddress": "0x90aa2f7488913ee736c54278edec53b9abe414a1"
+							},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						}
+					]
+				},
+				{
+					"hash": "",
+					"number": 11,
+					"status": "mined",
+					"transactions": [
+						{
+							"contractId": "OrganFunction",
+							"functionId": "OrganFunction",
+							"gas": {
+								"value": "932432"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": true,
+							"isFunctionCall": true,
+							"label": "OrganFunction.OrganFunction()",
+							"parameters": {
+								"_name": "VersammlungsLeiter",
+								"_ch": "cdcdc"
+							},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						},
+						{
+							"contractId": "<OrganFunction - 4>",
+							"functionId": "addManager",
+							"gas": {
+								"value": "50256"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": false,
+							"isFunctionCall": true,
+							"label": "<OrganFunction - 4>.addManager()",
+							"parameters": {
+								"_newManagerAddress": "0x90aa2f7488913ee736c54278edec53b9abe414a1"
+							},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						}
+					]
+				},
+				{
+					"hash": "",
+					"number": 12,
+					"status": "mined",
+					"transactions": [
+						{
+							"contractId": "<FoundationConference - 3>",
+							"functionId": "addOrganFunction",
+							"gas": {
+								"value": "919861"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": false,
+							"isFunctionCall": true,
+							"label": "FoundationConference.addOrganFunction()",
+							"parameters": {
+								"0": "",
+								"_name": "VersammlungsLeiter",
+								"_of": "<OrganFunction - 4>",
+								"_newManagerAddress": "<BlogRegistry - 0>",
+								"aOrganName": ""
+							},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						}
+					]
+				},
+				{
+					"hash": "",
+					"number": 13,
+					"status": "mined",
+					"transactions": [
+						{
+							"contractId": "<FoundationConference - 3>",
+							"functionId": "createFunction",
+							"gas": {
+								"value": "29687"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": false,
+							"isFunctionCall": true,
+							"label": "FoundationConference.createFunction()",
+							"parameters": {
+								"_constittiutionHash": "dddddddd",
+								"_functionName": "Wahlleiter"
+							},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						}
+					]
+				},
+				{
+					"hash": "",
+					"number": 14,
+					"status": "mined",
+					"transactions": [
+						{
+							"contractId": "Organ",
+							"functionId": "Organ",
+							"gas": {
+								"value": "3107721"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": true,
+							"isFunctionCall": true,
+							"label": "Organ.Organ()",
+							"parameters": {},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						},
+						{
+							"contractId": "<Organ - 5>",
+							"functionId": "setOrganName",
+							"gas": {
+								"value": "42629"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": false,
+							"isFunctionCall": true,
+							"label": "<Organ - 5>.setOrganName()",
+							"parameters": {
+								"aOrganName": "BUVO"
+							},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						},
+						{
+							"contractId": "<Organ - 5>",
+							"functionId": "addManager",
+							"gas": {
+								"value": "50388"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": false,
+							"isFunctionCall": true,
+							"label": "Organ.addManager()",
+							"parameters": {
+								"_newManagerAddress": "<KUEKeNParty - 1>",
+								"aOrganName": ""
+							},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						}
+					]
+				},
+				{
+					"hash": "",
+					"number": 15,
+					"status": "mined",
+					"transactions": [
+						{
+							"contractId": "Organ",
+							"functionId": "Organ",
+							"gas": {
+								"value": "3107721"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": true,
+							"isFunctionCall": true,
+							"label": "Organ.Organ()",
+							"parameters": {
+								"name": "",
+								"proposalNames": ""
+							},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						}
+					]
+				},
+				{
+					"hash": "",
+					"number": 16,
+					"status": "mined",
+					"transactions": [
+						{
+							"contractId": "<KUEKeNParty - 1>",
+							"functionId": "addOrgan",
+							"gas": {
+								"value": "50938"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": false,
+							"isFunctionCall": true,
+							"label": "KUEKeNParty.addOrgan()",
+							"parameters": {
+								"_organ": "<Organ - 5>",
+								"_newManagerAddress": "<BlogRegistry - 0>",
+								"aBlogregistry": "<BlogRegistry - 0>"
+							},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						}
+					]
+				},
+				{
+					"hash": "",
+					"number": 17,
+					"status": "mined",
+					"transactions": [
+						{
+							"contractId": "<KUEKeNParty - 1>",
+							"functionId": "addOrgan",
+							"gas": {
+								"value": "250000"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": false,
+							"isFunctionCall": true,
+							"label": "KUEKeNParty.addOrgan()",
+							"parameters": {
+								"aBlogregistry": "<BlogRegistry - 0>",
+								"_organ": "<Organ - 6>"
+							},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						}
+					]
+				},
+				{
+					"hash": "",
+					"number": 18,
+					"status": "mined",
+					"transactions": [
+						{
+							"contractId": "<Organ - 5>",
+							"functionId": "publishMessage",
+							"gas": {
+								"value": "179753"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": false,
+							"isFunctionCall": true,
+							"label": "<Organ - 5>.publishMessage()",
+							"parameters": {
+								"er": "sxxss",
+								"hash": "xxsxs",
+								"message": "A Test message"
+							},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						},
+						{
+							"contractId": "<Organ - 6>",
+							"functionId": "createFunction",
+							"gas": {
+								"value": "1666921"
+							},
+							"gasAuto": true,
+							"gasPrice": {
+								"unit": 18,
+								"value": "100000"
+							},
+							"isContractCreation": false,
+							"isFunctionCall": true,
+							"label": "<Organ - 6>.createFunction()",
+							"parameters": {
+								"_constittiutionHash": "ccece",
+								"_functionName": "1Vorsitzender"
+							},
+							"saveStatus": true,
+							"sender": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074",
+							"value": {
+								"unit": 18,
+								"value": "0"
+							}
+						}
+					]
+				},
+				{
+					"hash": "",
+					"number": -1,
+					"status": "pending",
+					"transactions": []
+				}
+			],
+			"contracts": [],
+			"miner": {
+				"address": "38f388fadf4a6a35c61c3f88194ec5ae162c8944",
+				"balance": {
+					"objectName": "",
+					"value": "1000000",
+					"unit": 12
+				},
+				"name": "user1",
+				"secret": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074"
+			},
+			"title": "Setup_KUEKeN",
 			"transactions": [
 				{
 					"contractId": "Ballot",

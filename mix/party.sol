@@ -53,7 +53,7 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 		 
 		
 		//Start of user code MessagePublisher.function.publishMessage_string_string_string
-		//TODO: implement
+		organBlog.sendMessage(message,hash,er);
 		//End of user code
 	}
 	
@@ -83,10 +83,14 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 	*/
 	function createFunction(string _functionName,string _constittiutionHash) public  onlyManager()  {
 		//Start of user code Organ.function.createFunction_string_string
-//
-//		organFunctions[lastFunctionId].lastConstitutionHashChanged = now;
-		//organFunctions[lastFunctionId].publisher = blogRegistry.registerBlog(_functionName);
+		OrganFunction of1 = new OrganFunction(_functionName,_constittiutionHash);
+		organFunctions[lastFunctionId]=of1;
+		ShortBlog b = blogRegistry.registerBlog(_functionName);
+		of1.setPublisher(b);
 		lastFunctionId++;
+		of1.addManager(msg.sender);
+		FunctionChange(1,of1);
+
 		//End of user code
 	}
 	
@@ -154,11 +158,14 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 	
 	
 	
-	function addOrganFunction(OrganFunction _of) public   {
-		//Start of user code Organ.function.addOrganFunction_OrganFunction
-		organFunctions[lastFunctionId]=_of;
+	function addOrganFunction(address _of,string _name) public   {
+		//Start of user code Organ.function.addOrganFunction_address_string
+		OrganFunction of1 = OrganFunction(_of);
+		organFunctions[lastFunctionId]=of1;
+		ShortBlog b = blogRegistry.registerBlog(_name);
+		of1.setPublisher(b);
 		lastFunctionId++;
-		FunctionChange(1,_of);
+		FunctionChange(1,of1);
 		//End of user code
 	}
 	
@@ -235,9 +242,16 @@ contract Party is Manageable {
 	* 
 	* _organ -
 	*/
-	function addOrgan(Organ _organ) public  onlyManager()  {
-		//Start of user code Party.function.addOrgan_Organ
-		//TODO: implement
+	function addOrgan(address _organ) public  onlyManager()  {
+		//Start of user code Party.function.addOrgan_address
+		Organ o = Organ(_organ);
+		blogregistry.addManager(o);
+		o.setBlogRegistry(blogregistry);
+		o.setMemberRegistry(memberRegistry);	
+		o.initalizeOrgan();	
+		organs[organCount] = o;
+		OrganChanged(o,1);
+		organCount++; 
 		//End of user code
 	}
 	
@@ -248,6 +262,11 @@ contract Party is Manageable {
 	// setMemberRegistry
 	function setMemberRegistry (address aMemberRegistry) {
 		memberRegistry = MemberRegistry(aMemberRegistry);
+	}
+	
+	// setBlogregistry
+	function setBlogregistry (address aBlogregistry) {
+		blogregistry = BlogRegistry(aBlogregistry);
 	}
 	
 	// Start of user code Party.operations
@@ -269,10 +288,9 @@ contract KUEKeNParty is Party {
 	
 	function KUEKeNParty() public   {
 		//Start of user code KUEKeNParty.function.KUEKeNParty
-		memberRegistry = new MemberRegistry();
-		memberRegistry.addManager(msg.sender);
-		//blogregistry = new BlogRegistry();
-		addManager(msg.sender);
+		//memberRegistry = new MemberRegistry();
+		//memberRegistry.addManager(msg.sender);
+		//addManager(msg.sender);
 		//End of user code
 	}
 	
@@ -384,9 +402,11 @@ contract OrganFunction is Manageable,MessagePublisher {
 	// End of user code
 	
 	
-	function OrganFunction() public   {
-		//Start of user code OrganFunction.constructor.OrganFunction
-		//TODO: implement
+	function OrganFunction(string _name,string _ch) public   {
+		//Start of user code OrganFunction.constructor.OrganFunction_string_string
+		functionName = _name;
+		constitutionHash = _ch;
+		lastConstitutionHashChanged = now;
 		//End of user code
 	}
 	
@@ -405,6 +425,14 @@ contract OrganFunction is Manageable,MessagePublisher {
 		//TODO: implement
 		//End of user code
 	}
+	
+	
+	function getFunctioName() public   constant returns (string ) {
+		//Start of user code OrganFunction.function.getFunctioName
+		return functionName;
+		//End of user code
+	}
+	
 	// setCurrentMember
 	function setCurrentMember (address aCurrentMember) onlyManager() {
 		currentMember = aCurrentMember;
