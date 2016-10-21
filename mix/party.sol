@@ -50,9 +50,8 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 	* er - The external resource of the message.
 	*/
 	function publishMessage(string message,string hash,string er) public   {
-		 
-		
-		//Start of user code MessagePublisher.function.publishMessage_string_string_string
+		//Start of user code Organ.function.publishMessage_string_string_string
+		//TODO: shielder
 		organBlog.sendMessage(message,hash,er);
 		//End of user code
 	}
@@ -68,9 +67,10 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 
 		//FunctionMemberChange(organFunctions[_id].currentMember,_id,_address);
 		
-		 OrganFunction a = organFunctions[_id];
+		OrganFunction a = organFunctions[_id];
 		FunctionMemberChange(_address,_id,a);
 		organFunctions[_id].setCurrentMember(_address);
+		organBlog.sendMessage("change member","","");
 		//End of user code
 	}
 	
@@ -118,7 +118,9 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 	*/
 	function publishFunctionMessage(uint id,string message,string hash,string er) public   {
 		//Start of user code Organ.function.publishFunctionMessage_uint_string_string_string
-		organFunctions[id].publisher.sendMessage(message,hash,er);
+
+		OrganFunction of1 = organFunctions[id];
+		of1.publishMessage(message,hash,er);
 		//End of user code
 	}
 	
@@ -207,7 +209,6 @@ contract Party is Manageable {
 	BlogRegistry internal blogregistry;
 	mapping (uint=>Organ)public organs;
 	// Start of user code Party.attributes
-	//TODO: implement
 	// End of user code
 	
 	
@@ -219,7 +220,6 @@ contract Party is Manageable {
 	
 	function Party() public   {
 		//Start of user code Party.constructor.Party
-		//TODO: implement
 		//End of user code
 	}
 	
@@ -227,12 +227,15 @@ contract Party is Manageable {
 	
 	function createOrgan(string organName) public   {
 		//Start of user code Party.function.createOrgan_string
-		organs[organCount] = new Organ();
-		organs[organCount].setOrganName(organName);
-		organs[organCount].setMemberRegistry(memberRegistry);
-		organs[organCount].setBlogRegistry(blogregistry);
-		organs[organCount].initalizeOrgan();
-		organCount++;
+		Organ o = new Organ();
+		o.setOrganName(organName);
+		blogregistry.addManager(o);
+		o.setBlogRegistry(blogregistry);
+		o.setMemberRegistry(memberRegistry);	
+		o.initalizeOrgan();	
+		organs[organCount] = o;
+		OrganChanged(o,1);
+		organCount++; 
 		//End of user code
 	}
 	
@@ -270,7 +273,6 @@ contract Party is Manageable {
 	}
 	
 	// Start of user code Party.operations
-	//TODO: implement
 	// End of user code
 }
 
@@ -281,7 +283,6 @@ contract Party is Manageable {
 contract KUEKeNParty is Party {
 
 	// Start of user code KUEKeNParty.attributes
-	//TODO: implement
 	// End of user code
 	
 	
@@ -337,7 +338,6 @@ contract Conference is Organ {
 	uint public accreditatedMembers;
 	uint public date;
 	// Start of user code Conference.attributes
-	//TODO: implement
 	// End of user code
 	
 	
@@ -356,7 +356,6 @@ contract Conference is Organ {
 	}
 	
 	// Start of user code Conference.operations
-	//TODO: implement
 	// End of user code
 }
 
@@ -398,7 +397,6 @@ contract OrganFunction is Manageable,MessagePublisher {
 	uint public lastConstitutionHashChanged;
 	ShortBlog public publisher;
 	// Start of user code OrganFunction.attributes
-	//TODO: implement
 	// End of user code
 	
 	
@@ -419,10 +417,9 @@ contract OrganFunction is Manageable,MessagePublisher {
 	* er - The external resource of the message.
 	*/
 	function publishMessage(string message,string hash,string er) public   {
-		 
-		
-		//Start of user code MessagePublisher.function.publishMessage_string_string_string
-		//TODO: implement
+		//Start of user code OrganFunction.function.publishMessage_string_string_string
+		//TODO: shielder
+		publisher.sendMessage(message,hash,er);
 		//End of user code
 	}
 	

@@ -571,14 +571,25 @@ function OwnedGuiMananger(guiId){
 * Each constructor is available.
 **/
 function OwnedDeployment(guiId){
+	this.prefix = guiId;
+//Start of user code Owned_deployment_attributes_js
+//TODO: implement
+//End of user code
+
+	
+	/**
+	* The default deployer function.
+	**/
+	this.deployDefault = function(){
+		//Start of user code Owned_deployDefault
+		//TODO: implement
+		//End of user code
+	}
 
 //Start of user code Owned_deployment_js
 //TODO: implement
 //End of user code
 }
-//Start of user code custom_Owned_js
-//TODO: implement
-//End of user code
 /**
 * A simple bean class around the contract.
 * The ManageableModel.
@@ -992,7 +1003,7 @@ function ManageableManager(prefix,contract,containerId) {
 	* The events are stored in an element with the id this.eventlogPrefix+'eventLog'.
 	**/
 	this.watchEvents=function(){
-	var event_ManagerChanged = contract.ManagerChanged({},{fromBlock: 0});
+	var event_ManagerChanged = this.getContract().ManagerChanged({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
 	var callback = this.eventCallback;
 	event_ManagerChanged.watch(function(error,result){
@@ -1086,26 +1097,37 @@ function ManageableGuiMananger(guiId){
 * Each constructor is available.
 **/
 function ManageableDeployment(guiId){
+	this.prefix = guiId;
+//Start of user code Manageable_deployment_attributes_js
+//TODO: implement
+//End of user code
+
 
 	/**
 	* Construct Manageable.
 	**/
-//	this.deployManageable_Manageable = function(account,code,providedGas,){
-//		var c = Manageable.new(_name,_url,_description,{
+	this.deployManageable_Manageable = function(account, code, providedGas){
+//		var c = Manageable.new({
 //			from: account,
 //			data: code,
 //			gas:  providedGas
 //		});
-//		return c;
-//	}
+		return c;
+	}
+	
+	/**
+	* The default deployer function.
+	**/
+	this.deployDefault = function(){
+		//Start of user code Manageable_deployDefault
+		//TODO: implement
+		//End of user code
+	}
 
 //Start of user code Manageable_deployment_js
 //TODO: implement
 //End of user code
 }
-//Start of user code custom_Manageable_js
-//TODO: implement
-//End of user code
 /**
 * A simple bean class around the contract.
 * The MultiownedModel.
@@ -1806,7 +1828,7 @@ function MultiownedManager(prefix,contract,containerId) {
 	* The events are stored in an element with the id this.eventlogPrefix+'eventLog'.
 	**/
 	this.watchEvents=function(){
-	var event_Confirmation = contract.Confirmation({},{fromBlock: 0});
+	var event_Confirmation = this.getContract().Confirmation({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
 	var callback = this.eventCallback;
 	event_Confirmation.watch(function(error,result){
@@ -1817,7 +1839,7 @@ function MultiownedManager(prefix,contract,containerId) {
 		}else
 			console.log(error);	
 	});
-	var event_Revoke = contract.Revoke({},{fromBlock: 0});
+	var event_Revoke = this.getContract().Revoke({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
 	var callback = this.eventCallback;
 	event_Revoke.watch(function(error,result){
@@ -1828,7 +1850,7 @@ function MultiownedManager(prefix,contract,containerId) {
 		}else
 			console.log(error);	
 	});
-	var event_OwnerChanged = contract.OwnerChanged({},{fromBlock: 0});
+	var event_OwnerChanged = this.getContract().OwnerChanged({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
 	var callback = this.eventCallback;
 	event_OwnerChanged.watch(function(error,result){
@@ -1839,7 +1861,7 @@ function MultiownedManager(prefix,contract,containerId) {
 		}else
 			console.log(error);	
 	});
-	var event_OwnerAdded = contract.OwnerAdded({},{fromBlock: 0});
+	var event_OwnerAdded = this.getContract().OwnerAdded({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
 	var callback = this.eventCallback;
 	event_OwnerAdded.watch(function(error,result){
@@ -1850,7 +1872,7 @@ function MultiownedManager(prefix,contract,containerId) {
 		}else
 			console.log(error);	
 	});
-	var event_OwnerRemoved = contract.OwnerRemoved({},{fromBlock: 0});
+	var event_OwnerRemoved = this.getContract().OwnerRemoved({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
 	var callback = this.eventCallback;
 	event_OwnerRemoved.watch(function(error,result){
@@ -1861,7 +1883,7 @@ function MultiownedManager(prefix,contract,containerId) {
 		}else
 			console.log(error);	
 	});
-	var event_RequirementChanged = contract.RequirementChanged({},{fromBlock: 0});
+	var event_RequirementChanged = this.getContract().RequirementChanged({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
 	var callback = this.eventCallback;
 	event_RequirementChanged.watch(function(error,result){
@@ -1955,14 +1977,25 @@ function MultiownedGuiMananger(guiId){
 * Each constructor is available.
 **/
 function MultiownedDeployment(guiId){
+	this.prefix = guiId;
+//Start of user code Multiowned_deployment_attributes_js
+//TODO: implement
+//End of user code
+
+	
+	/**
+	* The default deployer function.
+	**/
+	this.deployDefault = function(){
+		//Start of user code Multiowned_deployDefault
+		//TODO: implement
+		//End of user code
+	}
 
 //Start of user code Multiowned_deployment_js
 //TODO: implement
 //End of user code
 }
-//Start of user code custom_Multiowned_js
-//TODO: implement
-//End of user code
 
 /**
 * A class to manage a single page dapp.
@@ -1995,3 +2028,7 @@ this.createDefaultGui=function() {
 	//End of user code
 
 }// end of BasicsPage
+
+//Start of user code Basics_custom_functions
+		//TODO: implement
+//End of user code

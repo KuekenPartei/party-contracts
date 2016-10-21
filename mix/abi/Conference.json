@@ -102,7 +102,7 @@
   }
 ,  {
     "constant": false,
-    "inputs": [{"name": "_of","type": "address"}],    
+    "inputs": [{"name": "_of","type": "address"},{"name": "_name","type": "string"}],    
     "name": "addOrganFunction",
     "outputs": [],
     "type": "function"

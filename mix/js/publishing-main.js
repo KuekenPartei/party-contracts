@@ -643,7 +643,6 @@ function ShortBlogManager(prefix,contract,containerId) {
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
 	this.eventCallback = null;
-	this.constract = contract;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -721,12 +720,10 @@ function ShortBlogManager(prefix,contract,containerId) {
 	* The events are stored in an element with the id this.eventlogPrefix+'eventLog'.
 	**/
 	this.watchEvents=function(){
-	console.log('watch for new messages'+this.constract);
 	var event_NewMessage = this.getContract().NewMessage({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
 	var callback = this.eventCallback;
 	event_NewMessage.watch(function(error,result){
-		console.log('watch events'+result);
 	if(!error){
 		if(callback!=null)
 			callback(result);
@@ -817,26 +814,37 @@ function ShortBlogGuiMananger(guiId){
 * Each constructor is available.
 **/
 function ShortBlogDeployment(guiId){
+	this.prefix = guiId;
+//Start of user code ShortBlog_deployment_attributes_js
+//TODO: implement
+//End of user code
+
 
 	/**
 	* Construct ShortBlog.
 	**/
-//	this.deployShortBlog_ShortBlog_string = function(account,code,providedGas,_name){
-//		var c = ShortBlog.new(_name,_url,_description,{
+	this.deployShortBlog_ShortBlog_string = function(account, code, providedGas, _name){
+//		var c = ShortBlog.new( _name,{
 //			from: account,
 //			data: code,
 //			gas:  providedGas
 //		});
-//		return c;
-//	}
+		return c;
+	}
+	
+	/**
+	* The default deployer function.
+	**/
+	this.deployDefault = function(){
+		//Start of user code ShortBlog_deployDefault
+		//TODO: implement
+		//End of user code
+	}
 
 //Start of user code ShortBlog_deployment_js
 //TODO: implement
 //End of user code
 }
-//Start of user code custom_ShortBlog_js
-//TODO: implement
-//End of user code
 /**
 * A simple bean class around the contract.
 * The BlogRegistryModel.
@@ -1330,7 +1338,6 @@ function BlogRegistryManager(prefix,contract,containerId) {
 	* The events are stored in an element with the id this.eventlogPrefix+'eventLog'.
 	**/
 	this.watchEvents=function(){
-		console.log('watch for new blogs'+contract);
 	var event_NewBlog = this.getContract().NewBlog({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
 	var callback = this.eventCallback;
@@ -1425,12 +1432,106 @@ function BlogRegistryGuiMananger(guiId){
 * Each constructor is available.
 **/
 function BlogRegistryDeployment(guiId){
+	this.prefix = guiId;
+//Start of user code BlogRegistry_deployment_attributes_js
+//TODO: implement
+//End of user code
+
+	
+	/**
+	* The default deployer function.
+	**/
+	this.deployDefault = function(){
+		//Start of user code BlogRegistry_deployDefault
+		//TODO: implement
+		//End of user code
+	}
 
 //Start of user code BlogRegistry_deployment_js
 //TODO: implement
 //End of user code
 }
-//Start of user code custom_BlogRegistry_js
+
+/**
+* A class to manage a single page dapp.
+* The PublishingPage object uses the managers to display the gui.
+**/
+function PublishingPage(prefix) {
+	this.prefix=prefix;
+	//Start of user code page_publishing_attributes
+	this.blogs = new ShortBlogGuiMananger(prefix);
+	this.registry = new BlogRegistryGuiMananger(prefix);
+
+	//End of user code
+
+	
+	/**
+	* Places the default gui in the page.
+	**/
+	this.placeDefaultGui=function() {
+	this.createDefaultGui();
+	}
+/**
+* Create the default Gui.
+* Use this method to customize the gui.
+**/
+this.createDefaultGui=function() {
+	//Start of user code page_Publishing_create_default_gui_functions
+	this.clearGui();
+	this.registry.displayGui();
+	this.registry.updateGui();
+	this.blogs.displayGui();
+	this.blogs.updateGui();
+	
+	var self = this;
+	blogs = this.blogs;
+	//End of user code
+}
+	//Start of user code page_Publishing_functions
+
+	this.eventHandle=function(result){
+		var bAddress = result.args.blogAddress;
+		var m = blogs.addManager(ShortBlogContract.at(bAddress));	
+		console.log('Event:'+m);
+		m.addGui();
+		m.updateGui();
+	}
+
+	this.registry.eventCallback = this.eventHandle;
+	
+	this.blogEventHandle=function(result){
+		var a = new ShortBlogGuiFactory();
+		var txt = a.createNewMessageLogDataGui("", "", "", 
+				result.args.message, result.args.messageId, 
+				result.args.messageSender, result.args.messageHashValue, 
+				result.args.externalResource);
+	}
+	this.blogs.eventCallback = this.blogEventHandle;
+	
+	
+this.readDataFromContract=function() {
+	for (i in this.registry.managers) {
+		var manager = this.registry.managers[i];
+		var count = manager.c.instance.blogCount();
+		for (var int = 0; int < count; int++) {
+			var bAddress = manager.c.instance.blogs(int);
+			this.blogs.addManager(ShortBlogContract.at(bAddress));			
+		}
+	}}
+
+	
+
+
+this.clearGui=function(){
+	this.registry.clearGui();
+	this.blogs.clearGui();}
+
+
+	//End of user code
+
+}// end of PublishingPage
+
+//Start of user code Publishing_custom_functions
 function PublishingReadPage(prefix) {
 	this.prefix=prefix;
 	this.blogs = new ShortBlogGuiMananger(prefix);
@@ -1481,87 +1582,11 @@ function PublishingReadPage(prefix) {
 	**/
 	this.placeDefaultGui=function() {
 	this.createDefaultGui();
-	}
-
-	
-}
-//End of user code
-
-/**
-* A class to manage a single page dapp.
-* The PublishingPage object uses the managers to display the gui.
-**/
-function PublishingPage(prefix) {
-	this.prefix=prefix;
-	//Start of user code page_publishing_attributes
-	this.blogs = new ShortBlogGuiMananger(prefix);
-	this.registry = new BlogRegistryGuiMananger(prefix);
-
-	//End of user code
-
-	
-	/**
-	* Places the default gui in the page.
-	**/
-	this.placeDefaultGui=function() {
-	this.createDefaultGui();
-	}
-/**
-* Create the default Gui.
-* Use this method to customize the gui.
-**/
-this.createDefaultGui=function() {
-	//Start of user code page_Publishing_create_default_gui_functions
-	this.clearGui();
-	this.registry.displayGui();
-	this.registry.updateGui();
-	this.blogs.displayGui();
-	this.blogs.updateGui();
-	
-	var self = this;
-	blogs = this.blogs;
-	//End of user code
-}
-	//Start of user code page_Publishing_functions
-
-	this.eventHandle=function(result){
-		console.log('Event:'+result);
-		var bAddress = result.args.blogAddress;
-		blogs.addManager(ShortBlogContract.at(bAddress));	
-		blogs.displayGui(null);
-		blogs.updateGui();
-	}
-
-	this.registry.eventCallback = this.eventHandle;
-	
-	this.blogEventHandle=function(result){
-		var a = new ShortBlogGuiFactory();
-		var txt = a.createNewMessageLogDataGui("", "", "", 
-				result.args.message, result.args.messageId, 
-				result.args.messageSender, result.args.messageHashValue, 
-				result.args.externalResource);
-	}
-	this.blogs.eventCallback = this.blogEventHandle;
 	
 	
-this.readDataFromContract=function() {
-	for (i in this.registry.managers) {
-		var manager = this.registry.managers[i];
-		var count = manager.c.instance.blogCount();
-		for (var int = 0; int < count; int++) {
-			var bAddress = manager.c.instance.blogs(int);
-			this.blogs.addManager(ShortBlogContract.at(bAddress));			
-		}
 	}}
 
 	
 
-
-this.clearGui=function(){
-	this.registry.clearGui();
-	this.blogs.clearGui();}
-
-
-	//End of user code
-
-}// end of PublishingPage
+// end
+//End of user code

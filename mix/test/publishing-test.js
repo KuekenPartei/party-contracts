@@ -127,12 +127,10 @@ function TestShortBlog(contract) {
 	//Test for Manageable_addManager_address
 	this.testManageable_addManager_address=function() {
 		//	var res = this.test_instance.addManager( p__newManagerAddress);
-		//Start of user code test_Manageable_addManager_address
+		//Start of user code test_ShortBlog_addManager_address
 		//TODO : implement this
-		var test = false;		
-
-
-		this.testAE("testaddManager", "executed: testManageable_addManager_address",true, test);		
+		//var test = false;		
+		//this.testAE("testaddManager", "executed: testShortBlog_addManager_address",true, test);		
 		//End of user code
 	}
 
@@ -155,24 +153,20 @@ function TestShortBlog(contract) {
 	//Test for Manageable_removeManager_address
 	this.testManageable_removeManager_address=function() {
 		//	var res = this.test_instance.removeManager( p__managerAddress);
-		//Start of user code test_Manageable_removeManager_address
+		//Start of user code test_ShortBlog_removeManager_address
 		//TODO : implement this
-		var test = false;		
-
-
-		this.testAE("testremoveManager", "executed: testManageable_removeManager_address",true, test);		
+		//var test = false;		
+		//this.testAE("testremoveManager", "executed: testShortBlog_removeManager_address",true, test);		
 		//End of user code
 	}
 
 	//Test for Manageable_isManager_address
 	this.testManageable_isManager_address=function() {
 		//	var res = this.test_instance.isManager( p__managerAddress);
-		//Start of user code test_Manageable_isManager_address
+		//Start of user code test_ShortBlog_isManager_address
 		//TODO : implement this
-		var test = false;		
-
-
-		this.testAE("testisManager", "executed: testManageable_isManager_address",true, test);		
+		//var test = false;		
+		//this.testAE("testisManager", "executed: testShortBlog_isManager_address",true, test);		
 		//End of user code
 	}
 	this.customTests=function() {
@@ -322,30 +316,30 @@ function TestBlogRegistry(contract) {
 	//Test for Manageable_addManager_address
 	this.testManageable_addManager_address=function() {
 		//	var res = this.test_instance.addManager( p__newManagerAddress);
-		//Start of user code test_Manageable_addManager_address
+		//Start of user code test_BlogRegistry_addManager_address
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testaddManager", "executed: testManageable_addManager_address",true, test);		
+		//this.testAE("testaddManager", "executed: testBlogRegistry_addManager_address",true, test);		
 		//End of user code
 	}
 
 	//Test for Manageable_removeManager_address
 	this.testManageable_removeManager_address=function() {
 		//	var res = this.test_instance.removeManager( p__managerAddress);
-		//Start of user code test_Manageable_removeManager_address
+		//Start of user code test_BlogRegistry_removeManager_address
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testremoveManager", "executed: testManageable_removeManager_address",true, test);		
+		//this.testAE("testremoveManager", "executed: testBlogRegistry_removeManager_address",true, test);		
 		//End of user code
 	}
 
 	//Test for Manageable_isManager_address
 	this.testManageable_isManager_address=function() {
 		//	var res = this.test_instance.isManager( p__managerAddress);
-		//Start of user code test_Manageable_isManager_address
+		//Start of user code test_BlogRegistry_isManager_address
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testisManager", "executed: testManageable_isManager_address",true, test);		
+		//this.testAE("testisManager", "executed: testBlogRegistry_isManager_address",true, test);		
 		//End of user code
 	}
 	this.customTests=function() {

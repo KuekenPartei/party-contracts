@@ -103,7 +103,7 @@ var OrganContract = web3.eth.contract([
   }
 ,  {
     "constant": false,
-    "inputs": [{"name": "_of","type": "address"}],    
+    "inputs": [{"name": "_of","type": "address"},{"name": "_name","type": "string"}],    
     "name": "addOrganFunction",
     "outputs": [],
     "type": "function"
@@ -345,7 +345,7 @@ var ConferenceContract = web3.eth.contract([
   }
 ,  {
     "constant": false,
-    "inputs": [{"name": "_of","type": "address"}],    
+    "inputs": [{"name": "_of","type": "address"},{"name": "_name","type": "string"}],    
     "name": "addOrganFunction",
     "outputs": [],
     "type": "function"
@@ -461,7 +461,7 @@ var FoundationConferenceContract = web3.eth.contract([
   }
 ,  {
     "constant": false,
-    "inputs": [{"name": "_of","type": "address"}],    
+    "inputs": [{"name": "_of","type": "address"},{"name": "_name","type": "string"}],    
     "name": "addOrganFunction",
     "outputs": [],
     "type": "function"
@@ -488,6 +488,13 @@ var OrganFunctionContract = web3.eth.contract([
     "inputs": [{"name": "_newManagerAddress","type": "address"}],    
     "name": "addManager",
     "outputs": [],
+    "type": "function"
+  }
+,  {
+    "constant": true,
+    "inputs": [],    
+    "name": "getFunctioName",
+    "outputs": [{"name": "","type": "string"}],
     "type": "function"
   }
 ,  {
@@ -625,8 +632,8 @@ this.contract = contract;
 	/**
 	* Call addOrganFunction.
 	**/
-	this.addOrganFunction = function(_of){
-		return contract.addOrganFunction(_of); 
+	this.addOrganFunction = function(_of,_name){
+		return contract.addOrganFunction(_of,_name); 
 	}
 }// end of function OrganModel
 
@@ -756,11 +763,12 @@ function OrganGuiFactory() {
 +		'			<button id="'+this.prefix+'OrganController.Organ_getOrganBlog" onclick="'+this.prefix+'OrganController.Organ_getOrganBlog()">execute Organ_getOrganBlog</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_getOrganBlog_res"></div>'
 +		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_addOrganFunction_OrganFunction">'
++		'		  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_addOrganFunction_address_string">'
 +		'		Organ_addOrganFunction:'
-+		'			  <div class="function_parameter">_of<input type="text" id="'+this.prefix+'Organ_addOrganFunction_OrganFunction__of"></div>'
-+		'			<button id="'+this.prefix+'OrganController.Organ_addOrganFunction_OrganFunction" onclick="'+this.prefix+'OrganController.Organ_addOrganFunction_OrganFunction()">execute Organ_addOrganFunction</button>'
-+		'			<div class="function_result" id="'+this.prefix+'Organ_addOrganFunction_OrganFunction_res"></div>'
++		'			  <div class="function_parameter">_of<input type="text" id="'+this.prefix+'Organ_addOrganFunction_address_string__of"></div>'
++		'			  <div class="function_parameter">_name<input type="text" id="'+this.prefix+'Organ_addOrganFunction_address_string__name"></div>'
++		'			<button id="'+this.prefix+'OrganController.Organ_addOrganFunction_address_string" onclick="'+this.prefix+'OrganController.Organ_addOrganFunction_address_string()">execute Organ_addOrganFunction</button>'
++		'			<div class="function_result" id="'+this.prefix+'Organ_addOrganFunction_address_string_res"></div>'
 +		'		  </div>'
 +		'		'
 +		'		</div>'
@@ -945,12 +953,13 @@ function OrganGuiFactory() {
 	/**
 	* Create the gui for the function addOrganFunction.
 	*/
-	this.createOrgan_addOrganFunction_OrganFunctionGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_addOrganFunction_OrganFunction">'
+	this.createOrgan_addOrganFunction_address_stringGui=function() {
+		return 		'  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_addOrganFunction_address_string">'
 +		'		Organ_addOrganFunction:'
-+		'			  <div class="function_parameter">_of<input type="text" id="'+this.prefix+'Organ_addOrganFunction_OrganFunction__of"></div>'
-+		'			<button id="'+this.prefix+'OrganController.Organ_addOrganFunction_OrganFunction" onclick="'+this.prefix+'OrganController.Organ_addOrganFunction_OrganFunction()">execute Organ_addOrganFunction</button>'
-+		'			<div class="function_result" id="'+this.prefix+'Organ_addOrganFunction_OrganFunction_res"></div>'
++		'			  <div class="function_parameter">_of<input type="text" id="'+this.prefix+'Organ_addOrganFunction_address_string__of"></div>'
++		'			  <div class="function_parameter">_name<input type="text" id="'+this.prefix+'Organ_addOrganFunction_address_string__name"></div>'
++		'			<button id="'+this.prefix+'OrganController.Organ_addOrganFunction_address_string" onclick="'+this.prefix+'OrganController.Organ_addOrganFunction_address_string()">execute Organ_addOrganFunction</button>'
++		'			<div class="function_result" id="'+this.prefix+'Organ_addOrganFunction_address_string_res"></div>'
 +		'		  </div>'
 ;
 	}
@@ -1018,7 +1027,7 @@ function OrganGuiFactory() {
 * self.prefix+'Organ_createBallot_string_bytes32 -
 * self.prefix+'Organ_getLastBallot -
 * self.prefix+'Organ_getOrganBlog -
-* self.prefix+'Organ_addOrganFunction_OrganFunction -
+* self.prefix+'Organ_addOrganFunction_address_string -
 */
 function OrganController() {
 
@@ -1086,10 +1095,10 @@ function OrganController() {
 		if(btn!=undefined)
 			btn.onclick = this.Organ_getOrganBlog;
 		else console.log('Organ_getOrganBlog widget not bound');
-		var btn = document.getElementById(self.prefix+'OrganController.Organ_addOrganFunction_OrganFunction');
+		var btn = document.getElementById(self.prefix+'OrganController.Organ_addOrganFunction_address_string');
 		if(btn!=undefined)
-			btn.onclick = this.Organ_addOrganFunction_OrganFunction;
-		else console.log('Organ_addOrganFunction_OrganFunction widget not bound');
+			btn.onclick = this.Organ_addOrganFunction_address_string;
+		else console.log('Organ_addOrganFunction_address_string widget not bound');
 	}
 
 	/**
@@ -1370,14 +1379,19 @@ function OrganController() {
 	/**
 	* Calls the contract function Organ_addOrganFunction.
 	*
-	* this.prefix+'Organ_addOrganFunction_OrganFunction__of' -
+	* this.prefix+'Organ_addOrganFunction_address_string__of' -
+	* this.prefix+'Organ_addOrganFunction_address_string__name' -
 	**/
-	this.Organ_addOrganFunction_OrganFunction=function() {
-		var e = document.getElementById(self.prefix+'Organ_addOrganFunction_OrganFunction__of');
+	this.Organ_addOrganFunction_address_string=function() {
+		var e = document.getElementById(self.prefix+'Organ_addOrganFunction_address_string__of');
 		if(e!=null)
 			var param__of = e.value;
-		else console.log(self.prefix+'Organ_addOrganFunction_OrganFunction__of not found');
-		var res = self.instance.addOrganFunction(param__of);
+		else console.log(self.prefix+'Organ_addOrganFunction_address_string__of not found');
+		var e = document.getElementById(self.prefix+'Organ_addOrganFunction_address_string__name');
+		if(e!=null)
+			var param__name = e.value;
+		else console.log(self.prefix+'Organ_addOrganFunction_address_string__name not found');
+		var res = self.instance.addOrganFunction(param__of, param__name);
 	}
 	
 //delegated calls
@@ -1479,7 +1493,7 @@ function OrganManager(prefix,contract,containerId) {
 	* The events are stored in an element with the id this.eventlogPrefix+'eventLog'.
 	**/
 	this.watchEvents=function(){
-	var event_FunctionMemberChange = contract.FunctionMemberChange({},{fromBlock: 0});
+	var event_FunctionMemberChange = this.getContract().FunctionMemberChange({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
 	var callback = this.eventCallback;
 	event_FunctionMemberChange.watch(function(error,result){
@@ -1490,7 +1504,7 @@ function OrganManager(prefix,contract,containerId) {
 		}else
 			console.log(error);	
 	});
-	var event_FunctionChange = contract.FunctionChange({},{fromBlock: 0});
+	var event_FunctionChange = this.getContract().FunctionChange({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
 	var callback = this.eventCallback;
 	event_FunctionChange.watch(function(error,result){
@@ -1584,14 +1598,25 @@ function OrganGuiMananger(guiId){
 * Each constructor is available.
 **/
 function OrganDeployment(guiId){
+	this.prefix = guiId;
+//Start of user code Organ_deployment_attributes_js
+//TODO: implement
+//End of user code
+
+	
+	/**
+	* The default deployer function.
+	**/
+	this.deployDefault = function(){
+		//Start of user code Organ_deployDefault
+		//TODO: implement
+		//End of user code
+	}
 
 //Start of user code Organ_deployment_js
 //TODO: implement
 //End of user code
 }
-//Start of user code custom_Organ_js
-//TODO: implement
-//End of user code
 /**
 * A simple bean class around the contract.
 * The PartyModel.
@@ -1723,11 +1748,11 @@ function PartyGuiFactory() {
 +		'			<button id="'+this.prefix+'PartyController.Manageable_isManager_address" onclick="'+this.prefix+'PartyController.Manageable_isManager_address()">execute Party_isManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_isManager_address_res"></div>'
 +		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Party_contract_function_Party_addOrgan_Organ">'
++		'		  <div class="function_execution" id="'+this.prefix+'Party_contract_function_Party_addOrgan_address">'
 +		'		Party_addOrgan:'
-+		'			  <div class="function_parameter">_organ<input type="text" id="'+this.prefix+'Party_addOrgan_Organ__organ"></div>'
-+		'			<button id="'+this.prefix+'PartyController.Party_addOrgan_Organ" onclick="'+this.prefix+'PartyController.Party_addOrgan_Organ()">execute Party_addOrgan</button>'
-+		'			<div class="function_result" id="'+this.prefix+'Party_addOrgan_Organ_res"></div>'
++		'			  <div class="function_parameter">_organ<input type="text" id="'+this.prefix+'Party_addOrgan_address__organ"></div>'
++		'			<button id="'+this.prefix+'PartyController.Party_addOrgan_address" onclick="'+this.prefix+'PartyController.Party_addOrgan_address()">execute Party_addOrgan</button>'
++		'			<div class="function_result" id="'+this.prefix+'Party_addOrgan_address_res"></div>'
 +		'		  </div>'
 +		'		'
 +		'		</div>'
@@ -1806,12 +1831,12 @@ function PartyGuiFactory() {
 	/**
 	* Create the gui for the function addOrgan.
 	*/
-	this.createParty_addOrgan_OrganGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Party_contract_function_Party_addOrgan_Organ">'
+	this.createParty_addOrgan_addressGui=function() {
+		return 		'  <div class="function_execution" id="'+this.prefix+'Party_contract_function_Party_addOrgan_address">'
 +		'		Party_addOrgan:'
-+		'			  <div class="function_parameter">_organ<input type="text" id="'+this.prefix+'Party_addOrgan_Organ__organ"></div>'
-+		'			<button id="'+this.prefix+'PartyController.Party_addOrgan_Organ" onclick="'+this.prefix+'PartyController.Party_addOrgan_Organ()">execute Party_addOrgan</button>'
-+		'			<div class="function_result" id="'+this.prefix+'Party_addOrgan_Organ_res"></div>'
++		'			  <div class="function_parameter">_organ<input type="text" id="'+this.prefix+'Party_addOrgan_address__organ"></div>'
++		'			<button id="'+this.prefix+'PartyController.Party_addOrgan_address" onclick="'+this.prefix+'PartyController.Party_addOrgan_address()">execute Party_addOrgan</button>'
++		'			<div class="function_result" id="'+this.prefix+'Party_addOrgan_address_res"></div>'
 +		'		  </div>'
 ;
 	}
@@ -1869,7 +1894,7 @@ function PartyGuiFactory() {
 * self.prefix+'Manageable_removeManager_address -
 * self.prefix+'Party_createOrgan_string -
 * self.prefix+'Manageable_isManager_address -
-* self.prefix+'Party_addOrgan_Organ -
+* self.prefix+'Party_addOrgan_address -
 */
 function PartyController() {
 
@@ -1909,10 +1934,10 @@ function PartyController() {
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_isManager_address;
 		else console.log('Manageable_isManager_address widget not bound');
-		var btn = document.getElementById(self.prefix+'PartyController.Party_addOrgan_Organ');
+		var btn = document.getElementById(self.prefix+'PartyController.Party_addOrgan_address');
 		if(btn!=undefined)
-			btn.onclick = this.Party_addOrgan_Organ;
-		else console.log('Party_addOrgan_Organ widget not bound');
+			btn.onclick = this.Party_addOrgan_address;
+		else console.log('Party_addOrgan_address widget not bound');
 	}
 
 	/**
@@ -2045,13 +2070,13 @@ function PartyController() {
 	/**
 	* Calls the contract function Party_addOrgan.
 	*
-	* this.prefix+'Party_addOrgan_Organ__organ' -
+	* this.prefix+'Party_addOrgan_address__organ' -
 	**/
-	this.Party_addOrgan_Organ=function() {
-		var e = document.getElementById(self.prefix+'Party_addOrgan_Organ__organ');
+	this.Party_addOrgan_address=function() {
+		var e = document.getElementById(self.prefix+'Party_addOrgan_address__organ');
 		if(e!=null)
 			var param__organ = e.value;
-		else console.log(self.prefix+'Party_addOrgan_Organ__organ not found');
+		else console.log(self.prefix+'Party_addOrgan_address__organ not found');
 		var res = self.instance.addOrgan(param__organ);
 	}
 	
@@ -2154,7 +2179,7 @@ function PartyManager(prefix,contract,containerId) {
 	* The events are stored in an element with the id this.eventlogPrefix+'eventLog'.
 	**/
 	this.watchEvents=function(){
-	var event_ConstiutionChange = contract.ConstiutionChange({},{fromBlock: 0});
+	var event_ConstiutionChange = this.getContract().ConstiutionChange({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
 	var callback = this.eventCallback;
 	event_ConstiutionChange.watch(function(error,result){
@@ -2165,7 +2190,7 @@ function PartyManager(prefix,contract,containerId) {
 		}else
 			console.log(error);	
 	});
-	var event_OrganChanged = contract.OrganChanged({},{fromBlock: 0});
+	var event_OrganChanged = this.getContract().OrganChanged({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
 	var callback = this.eventCallback;
 	event_OrganChanged.watch(function(error,result){
@@ -2259,26 +2284,37 @@ function PartyGuiMananger(guiId){
 * Each constructor is available.
 **/
 function PartyDeployment(guiId){
+	this.prefix = guiId;
+//Start of user code Party_deployment_attributes_js
+//TODO: implement
+//End of user code
+
 
 	/**
 	* Construct Party.
 	**/
-//	this.deployParty_Party = function(account,code,providedGas,){
-//		var c = Party.new(_name,_url,_description,{
+	this.deployParty_Party = function(account, code, providedGas){
+//		var c = Party.new({
 //			from: account,
 //			data: code,
 //			gas:  providedGas
 //		});
-//		return c;
-//	}
+		return c;
+	}
+	
+	/**
+	* The default deployer function.
+	**/
+	this.deployDefault = function(){
+		//Start of user code Party_deployDefault
+		//TODO: implement
+		//End of user code
+	}
 
 //Start of user code Party_deployment_js
 //TODO: implement
 //End of user code
 }
-//Start of user code custom_Party_js
-//TODO: implement
-//End of user code
 /**
 * A simple bean class around the contract.
 * The KUEKeNPartyModel.
@@ -2434,11 +2470,11 @@ function KUEKeNPartyGuiFactory() {
 +		'			<button id="'+this.prefix+'KUEKeNPartyController.Manageable_isManager_address" onclick="'+this.prefix+'KUEKeNPartyController.Manageable_isManager_address()">execute KUEKeNParty_isManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_isManager_address_res"></div>'
 +		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Party_addOrgan_Organ">'
++		'		  <div class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Party_addOrgan_address">'
 +		'		KUEKeNParty_addOrgan:'
-+		'			  <div class="function_parameter">_organ<input type="text" id="'+this.prefix+'Party_addOrgan_Organ__organ"></div>'
-+		'			<button id="'+this.prefix+'KUEKeNPartyController.Party_addOrgan_Organ" onclick="'+this.prefix+'KUEKeNPartyController.Party_addOrgan_Organ()">execute KUEKeNParty_addOrgan</button>'
-+		'			<div class="function_result" id="'+this.prefix+'Party_addOrgan_Organ_res"></div>'
++		'			  <div class="function_parameter">_organ<input type="text" id="'+this.prefix+'Party_addOrgan_address__organ"></div>'
++		'			<button id="'+this.prefix+'KUEKeNPartyController.Party_addOrgan_address" onclick="'+this.prefix+'KUEKeNPartyController.Party_addOrgan_address()">execute KUEKeNParty_addOrgan</button>'
++		'			<div class="function_result" id="'+this.prefix+'Party_addOrgan_address_res"></div>'
 +		'		  </div>'
 +		'		'
 +		'		</div>'
@@ -2543,12 +2579,12 @@ function KUEKeNPartyGuiFactory() {
 	/**
 	* Create the gui for the function addOrgan.
 	*/
-	this.createParty_addOrgan_OrganGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Party_addOrgan_Organ">'
+	this.createParty_addOrgan_addressGui=function() {
+		return 		'  <div class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Party_addOrgan_address">'
 +		'		KUEKeNParty_addOrgan:'
-+		'			  <div class="function_parameter">_organ<input type="text" id="'+this.prefix+'Party_addOrgan_Organ__organ"></div>'
-+		'			<button id="'+this.prefix+'KUEKeNPartyController.Party_addOrgan_Organ" onclick="'+this.prefix+'KUEKeNPartyController.Party_addOrgan_Organ()">execute KUEKeNParty_addOrgan</button>'
-+		'			<div class="function_result" id="'+this.prefix+'Party_addOrgan_Organ_res"></div>'
++		'			  <div class="function_parameter">_organ<input type="text" id="'+this.prefix+'Party_addOrgan_address__organ"></div>'
++		'			<button id="'+this.prefix+'KUEKeNPartyController.Party_addOrgan_address" onclick="'+this.prefix+'KUEKeNPartyController.Party_addOrgan_address()">execute KUEKeNParty_addOrgan</button>'
++		'			<div class="function_result" id="'+this.prefix+'Party_addOrgan_address_res"></div>'
 +		'		  </div>'
 ;
 	}
@@ -2582,7 +2618,7 @@ function KUEKeNPartyGuiFactory() {
 * self.prefix+'Manageable_removeManager_address -
 * self.prefix+'Party_createOrgan_string -
 * self.prefix+'Manageable_isManager_address -
-* self.prefix+'Party_addOrgan_Organ -
+* self.prefix+'Party_addOrgan_address -
 */
 function KUEKeNPartyController() {
 
@@ -2630,10 +2666,10 @@ function KUEKeNPartyController() {
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_isManager_address;
 		else console.log('Manageable_isManager_address widget not bound');
-		var btn = document.getElementById(self.prefix+'KUEKeNPartyController.Party_addOrgan_Organ');
+		var btn = document.getElementById(self.prefix+'KUEKeNPartyController.Party_addOrgan_address');
 		if(btn!=undefined)
-			btn.onclick = this.Party_addOrgan_Organ;
-		else console.log('Party_addOrgan_Organ widget not bound');
+			btn.onclick = this.Party_addOrgan_address;
+		else console.log('Party_addOrgan_address widget not bound');
 	}
 
 	/**
@@ -2792,13 +2828,13 @@ function KUEKeNPartyController() {
 	/**
 	* Calls the contract function KUEKeNParty_addOrgan.
 	*
-	* this.prefix+'Party_addOrgan_Organ__organ' -
+	* this.prefix+'Party_addOrgan_address__organ' -
 	**/
-	this.Party_addOrgan_Organ=function() {
-		var e = document.getElementById(self.prefix+'Party_addOrgan_Organ__organ');
+	this.Party_addOrgan_address=function() {
+		var e = document.getElementById(self.prefix+'Party_addOrgan_address__organ');
 		if(e!=null)
 			var param__organ = e.value;
-		else console.log(self.prefix+'Party_addOrgan_Organ__organ not found');
+		else console.log(self.prefix+'Party_addOrgan_address__organ not found');
 		var res = self.instance.addOrgan(param__organ);
 	}
 	
@@ -2984,6 +3020,20 @@ function KUEKeNPartyGuiMananger(guiId){
 * Each constructor is available.
 **/
 function KUEKeNPartyDeployment(guiId){
+	this.prefix = guiId;
+//Start of user code KUEKeNParty_deployment_attributes_js
+//TODO: implement
+//End of user code
+
+	
+	/**
+	* The default deployer function.
+	**/
+	this.deployDefault = function(){
+		//Start of user code KUEKeNParty_deployDefault
+		//TODO: implement
+		//End of user code
+	}
 
 //Start of user code KUEKeNParty_deployment_js
 	this.br = null;
@@ -3006,9 +3056,6 @@ this.createOrgan=function(name) {
 }
 //End of user code
 }
-//Start of user code custom_KUEKeNParty_js
-//TODO: implement
-//End of user code
 /**
 * A simple bean class around the contract.
 * The ConferenceModel.
@@ -3144,8 +3191,8 @@ this.contract = contract;
 	/**
 	* Call addOrganFunction.
 	**/
-	this.addOrganFunction = function(_of){
-		return contract.addOrganFunction(_of); 
+	this.addOrganFunction = function(_of,_name){
+		return contract.addOrganFunction(_of,_name); 
 	}
 }// end of function ConferenceModel
 
@@ -3287,11 +3334,12 @@ function ConferenceGuiFactory() {
 +		'			<button id="'+this.prefix+'ConferenceController.Organ_getOrganBlog" onclick="'+this.prefix+'ConferenceController.Organ_getOrganBlog()">execute Conference_getOrganBlog</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_getOrganBlog_res"></div>'
 +		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_addOrganFunction_OrganFunction">'
++		'		  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_addOrganFunction_address_string">'
 +		'		Conference_addOrganFunction:'
-+		'			  <div class="function_parameter">_of<input type="text" id="'+this.prefix+'Organ_addOrganFunction_OrganFunction__of"></div>'
-+		'			<button id="'+this.prefix+'ConferenceController.Organ_addOrganFunction_OrganFunction" onclick="'+this.prefix+'ConferenceController.Organ_addOrganFunction_OrganFunction()">execute Conference_addOrganFunction</button>'
-+		'			<div class="function_result" id="'+this.prefix+'Organ_addOrganFunction_OrganFunction_res"></div>'
++		'			  <div class="function_parameter">_of<input type="text" id="'+this.prefix+'Organ_addOrganFunction_address_string__of"></div>'
++		'			  <div class="function_parameter">_name<input type="text" id="'+this.prefix+'Organ_addOrganFunction_address_string__name"></div>'
++		'			<button id="'+this.prefix+'ConferenceController.Organ_addOrganFunction_address_string" onclick="'+this.prefix+'ConferenceController.Organ_addOrganFunction_address_string()">execute Conference_addOrganFunction</button>'
++		'			<div class="function_result" id="'+this.prefix+'Organ_addOrganFunction_address_string_res"></div>'
 +		'		  </div>'
 +		'		'
 +		'		</div>'
@@ -3495,12 +3543,13 @@ function ConferenceGuiFactory() {
 	/**
 	* Create the gui for the function addOrganFunction.
 	*/
-	this.createOrgan_addOrganFunction_OrganFunctionGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_addOrganFunction_OrganFunction">'
+	this.createOrgan_addOrganFunction_address_stringGui=function() {
+		return 		'  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_addOrganFunction_address_string">'
 +		'		Conference_addOrganFunction:'
-+		'			  <div class="function_parameter">_of<input type="text" id="'+this.prefix+'Organ_addOrganFunction_OrganFunction__of"></div>'
-+		'			<button id="'+this.prefix+'ConferenceController.Organ_addOrganFunction_OrganFunction" onclick="'+this.prefix+'ConferenceController.Organ_addOrganFunction_OrganFunction()">execute Conference_addOrganFunction</button>'
-+		'			<div class="function_result" id="'+this.prefix+'Organ_addOrganFunction_OrganFunction_res"></div>'
++		'			  <div class="function_parameter">_of<input type="text" id="'+this.prefix+'Organ_addOrganFunction_address_string__of"></div>'
++		'			  <div class="function_parameter">_name<input type="text" id="'+this.prefix+'Organ_addOrganFunction_address_string__name"></div>'
++		'			<button id="'+this.prefix+'ConferenceController.Organ_addOrganFunction_address_string" onclick="'+this.prefix+'ConferenceController.Organ_addOrganFunction_address_string()">execute Conference_addOrganFunction</button>'
++		'			<div class="function_result" id="'+this.prefix+'Organ_addOrganFunction_address_string_res"></div>'
 +		'		  </div>'
 ;
 	}
@@ -3555,7 +3604,7 @@ function ConferenceGuiFactory() {
 * self.prefix+'Organ_createBallot_string_bytes32 -
 * self.prefix+'Organ_getLastBallot -
 * self.prefix+'Organ_getOrganBlog -
-* self.prefix+'Organ_addOrganFunction_OrganFunction -
+* self.prefix+'Organ_addOrganFunction_address_string -
 */
 function ConferenceController() {
 
@@ -3627,10 +3676,10 @@ function ConferenceController() {
 		if(btn!=undefined)
 			btn.onclick = this.Organ_getOrganBlog;
 		else console.log('Organ_getOrganBlog widget not bound');
-		var btn = document.getElementById(self.prefix+'ConferenceController.Organ_addOrganFunction_OrganFunction');
+		var btn = document.getElementById(self.prefix+'ConferenceController.Organ_addOrganFunction_address_string');
 		if(btn!=undefined)
-			btn.onclick = this.Organ_addOrganFunction_OrganFunction;
-		else console.log('Organ_addOrganFunction_OrganFunction widget not bound');
+			btn.onclick = this.Organ_addOrganFunction_address_string;
+		else console.log('Organ_addOrganFunction_address_string widget not bound');
 	}
 
 	/**
@@ -3936,14 +3985,19 @@ function ConferenceController() {
 	/**
 	* Calls the contract function Conference_addOrganFunction.
 	*
-	* this.prefix+'Organ_addOrganFunction_OrganFunction__of' -
+	* this.prefix+'Organ_addOrganFunction_address_string__of' -
+	* this.prefix+'Organ_addOrganFunction_address_string__name' -
 	**/
-	this.Organ_addOrganFunction_OrganFunction=function() {
-		var e = document.getElementById(self.prefix+'Organ_addOrganFunction_OrganFunction__of');
+	this.Organ_addOrganFunction_address_string=function() {
+		var e = document.getElementById(self.prefix+'Organ_addOrganFunction_address_string__of');
 		if(e!=null)
 			var param__of = e.value;
-		else console.log(self.prefix+'Organ_addOrganFunction_OrganFunction__of not found');
-		var res = self.instance.addOrganFunction(param__of);
+		else console.log(self.prefix+'Organ_addOrganFunction_address_string__of not found');
+		var e = document.getElementById(self.prefix+'Organ_addOrganFunction_address_string__name');
+		if(e!=null)
+			var param__name = e.value;
+		else console.log(self.prefix+'Organ_addOrganFunction_address_string__name not found');
+		var res = self.instance.addOrganFunction(param__of, param__name);
 	}
 	
 //delegated calls
@@ -4045,7 +4099,7 @@ function ConferenceManager(prefix,contract,containerId) {
 	* The events are stored in an element with the id this.eventlogPrefix+'eventLog'.
 	**/
 	this.watchEvents=function(){
-	var event_MemberAccreditated = contract.MemberAccreditated({},{fromBlock: 0});
+	var event_MemberAccreditated = this.getContract().MemberAccreditated({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
 	var callback = this.eventCallback;
 	event_MemberAccreditated.watch(function(error,result){
@@ -4139,14 +4193,25 @@ function ConferenceGuiMananger(guiId){
 * Each constructor is available.
 **/
 function ConferenceDeployment(guiId){
+	this.prefix = guiId;
+//Start of user code Conference_deployment_attributes_js
+//TODO: implement
+//End of user code
+
+	
+	/**
+	* The default deployer function.
+	**/
+	this.deployDefault = function(){
+		//Start of user code Conference_deployDefault
+		//TODO: implement
+		//End of user code
+	}
 
 //Start of user code Conference_deployment_js
 //TODO: implement
 //End of user code
 }
-//Start of user code custom_Conference_js
-//TODO: implement
-//End of user code
 /**
 * A simple bean class around the contract.
 * The FoundationConferenceModel.
@@ -4282,8 +4347,8 @@ this.contract = contract;
 	/**
 	* Call addOrganFunction.
 	**/
-	this.addOrganFunction = function(_of){
-		return contract.addOrganFunction(_of); 
+	this.addOrganFunction = function(_of,_name){
+		return contract.addOrganFunction(_of,_name); 
 	}
 }// end of function FoundationConferenceModel
 
@@ -4425,11 +4490,12 @@ function FoundationConferenceGuiFactory() {
 +		'			<button id="'+this.prefix+'FoundationConferenceController.Organ_getOrganBlog" onclick="'+this.prefix+'FoundationConferenceController.Organ_getOrganBlog()">execute FoundationConference_getOrganBlog</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_getOrganBlog_res"></div>'
 +		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_addOrganFunction_OrganFunction">'
++		'		  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_addOrganFunction_address_string">'
 +		'		FoundationConference_addOrganFunction:'
-+		'			  <div class="function_parameter">_of<input type="text" id="'+this.prefix+'Organ_addOrganFunction_OrganFunction__of"></div>'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Organ_addOrganFunction_OrganFunction" onclick="'+this.prefix+'FoundationConferenceController.Organ_addOrganFunction_OrganFunction()">execute FoundationConference_addOrganFunction</button>'
-+		'			<div class="function_result" id="'+this.prefix+'Organ_addOrganFunction_OrganFunction_res"></div>'
++		'			  <div class="function_parameter">_of<input type="text" id="'+this.prefix+'Organ_addOrganFunction_address_string__of"></div>'
++		'			  <div class="function_parameter">_name<input type="text" id="'+this.prefix+'Organ_addOrganFunction_address_string__name"></div>'
++		'			<button id="'+this.prefix+'FoundationConferenceController.Organ_addOrganFunction_address_string" onclick="'+this.prefix+'FoundationConferenceController.Organ_addOrganFunction_address_string()">execute FoundationConference_addOrganFunction</button>'
++		'			<div class="function_result" id="'+this.prefix+'Organ_addOrganFunction_address_string_res"></div>'
 +		'		  </div>'
 +		'		'
 +		'		</div>'
@@ -4633,12 +4699,13 @@ function FoundationConferenceGuiFactory() {
 	/**
 	* Create the gui for the function addOrganFunction.
 	*/
-	this.createOrgan_addOrganFunction_OrganFunctionGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_addOrganFunction_OrganFunction">'
+	this.createOrgan_addOrganFunction_address_stringGui=function() {
+		return 		'  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_addOrganFunction_address_string">'
 +		'		FoundationConference_addOrganFunction:'
-+		'			  <div class="function_parameter">_of<input type="text" id="'+this.prefix+'Organ_addOrganFunction_OrganFunction__of"></div>'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Organ_addOrganFunction_OrganFunction" onclick="'+this.prefix+'FoundationConferenceController.Organ_addOrganFunction_OrganFunction()">execute FoundationConference_addOrganFunction</button>'
-+		'			<div class="function_result" id="'+this.prefix+'Organ_addOrganFunction_OrganFunction_res"></div>'
++		'			  <div class="function_parameter">_of<input type="text" id="'+this.prefix+'Organ_addOrganFunction_address_string__of"></div>'
++		'			  <div class="function_parameter">_name<input type="text" id="'+this.prefix+'Organ_addOrganFunction_address_string__name"></div>'
++		'			<button id="'+this.prefix+'FoundationConferenceController.Organ_addOrganFunction_address_string" onclick="'+this.prefix+'FoundationConferenceController.Organ_addOrganFunction_address_string()">execute FoundationConference_addOrganFunction</button>'
++		'			<div class="function_result" id="'+this.prefix+'Organ_addOrganFunction_address_string_res"></div>'
 +		'		  </div>'
 ;
 	}
@@ -4678,7 +4745,7 @@ function FoundationConferenceGuiFactory() {
 * self.prefix+'Organ_createBallot_string_bytes32 -
 * self.prefix+'Organ_getLastBallot -
 * self.prefix+'Organ_getOrganBlog -
-* self.prefix+'Organ_addOrganFunction_OrganFunction -
+* self.prefix+'Organ_addOrganFunction_address_string -
 */
 function FoundationConferenceController() {
 
@@ -4750,10 +4817,10 @@ function FoundationConferenceController() {
 		if(btn!=undefined)
 			btn.onclick = this.Organ_getOrganBlog;
 		else console.log('Organ_getOrganBlog widget not bound');
-		var btn = document.getElementById(self.prefix+'FoundationConferenceController.Organ_addOrganFunction_OrganFunction');
+		var btn = document.getElementById(self.prefix+'FoundationConferenceController.Organ_addOrganFunction_address_string');
 		if(btn!=undefined)
-			btn.onclick = this.Organ_addOrganFunction_OrganFunction;
-		else console.log('Organ_addOrganFunction_OrganFunction widget not bound');
+			btn.onclick = this.Organ_addOrganFunction_address_string;
+		else console.log('Organ_addOrganFunction_address_string widget not bound');
 	}
 
 	/**
@@ -5059,14 +5126,19 @@ function FoundationConferenceController() {
 	/**
 	* Calls the contract function FoundationConference_addOrganFunction.
 	*
-	* this.prefix+'Organ_addOrganFunction_OrganFunction__of' -
+	* this.prefix+'Organ_addOrganFunction_address_string__of' -
+	* this.prefix+'Organ_addOrganFunction_address_string__name' -
 	**/
-	this.Organ_addOrganFunction_OrganFunction=function() {
-		var e = document.getElementById(self.prefix+'Organ_addOrganFunction_OrganFunction__of');
+	this.Organ_addOrganFunction_address_string=function() {
+		var e = document.getElementById(self.prefix+'Organ_addOrganFunction_address_string__of');
 		if(e!=null)
 			var param__of = e.value;
-		else console.log(self.prefix+'Organ_addOrganFunction_OrganFunction__of not found');
-		var res = self.instance.addOrganFunction(param__of);
+		else console.log(self.prefix+'Organ_addOrganFunction_address_string__of not found');
+		var e = document.getElementById(self.prefix+'Organ_addOrganFunction_address_string__name');
+		if(e!=null)
+			var param__name = e.value;
+		else console.log(self.prefix+'Organ_addOrganFunction_address_string__name not found');
+		var res = self.instance.addOrganFunction(param__of, param__name);
 	}
 	
 //delegated calls
@@ -5251,14 +5323,25 @@ function FoundationConferenceGuiMananger(guiId){
 * Each constructor is available.
 **/
 function FoundationConferenceDeployment(guiId){
+	this.prefix = guiId;
+//Start of user code FoundationConference_deployment_attributes_js
+//TODO: implement
+//End of user code
+
+	
+	/**
+	* The default deployer function.
+	**/
+	this.deployDefault = function(){
+		//Start of user code FoundationConference_deployDefault
+		//TODO: implement
+		//End of user code
+	}
 
 //Start of user code FoundationConference_deployment_js
 //TODO: implement
 //End of user code
 }
-//Start of user code custom_FoundationConference_js
-//TODO: implement
-//End of user code
 /**
 * A simple bean class around the contract.
 * The OrganFunctionModel.
@@ -5318,6 +5401,12 @@ this.contract = contract;
 	**/
 	this.addManager = function(_newManagerAddress){
 		return contract.addManager(_newManagerAddress); 
+	}
+	/**
+	* Call getFunctioName.
+	**/
+	this.getFunctioName = function(){
+		return contract.getFunctioName(); 
 	}
 	/**
 	* Call removeManager.
@@ -5399,6 +5488,11 @@ function OrganFunctionGuiFactory() {
 +		'			<button id="'+this.prefix+'OrganFunctionController.Manageable_addManager_address" onclick="'+this.prefix+'OrganFunctionController.Manageable_addManager_address()">execute OrganFunction_addManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_addManager_address_res"></div>'
 +		'		  </div>'
++		'		  <div class="function_execution" id="'+this.prefix+'OrganFunction_contract_function_OrganFunction_getFunctioName">'
++		'		OrganFunction_getFunctioName:'
++		'			<button id="'+this.prefix+'OrganFunctionController.OrganFunction_getFunctioName" onclick="'+this.prefix+'OrganFunctionController.OrganFunction_getFunctioName()">execute OrganFunction_getFunctioName</button>'
++		'			<div class="function_result" id="'+this.prefix+'OrganFunction_getFunctioName_res"></div>'
++		'		  </div>'
 +		'		  <div class="function_execution" id="'+this.prefix+'OrganFunction_contract_function_Manageable_removeManager_address">'
 +		'		OrganFunction_removeManager:'
 +		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_removeManager_address__managerAddress"></div>'
@@ -5462,6 +5556,18 @@ function OrganFunctionGuiFactory() {
 	}
 
 	/**
+	* Create the gui for the function getFunctioName.
+	*/
+	this.createOrganFunction_getFunctioNameGui=function() {
+		return 		'  <div class="function_execution" id="'+this.prefix+'OrganFunction_contract_function_OrganFunction_getFunctioName">'
++		'		OrganFunction_getFunctioName:'
++		'			<button id="'+this.prefix+'OrganFunctionController.OrganFunction_getFunctioName" onclick="'+this.prefix+'OrganFunctionController.OrganFunction_getFunctioName()">execute OrganFunction_getFunctioName</button>'
++		'			<div class="function_result" id="'+this.prefix+'OrganFunction_getFunctioName_res"></div>'
++		'		  </div>'
+;
+	}
+
+	/**
 	* Create the gui for the function removeManager.
 	*/
 	this.createManageable_removeManager_addressGui=function() {
@@ -5511,6 +5617,7 @@ function OrganFunctionGuiFactory() {
 * self.prefix+'OrganFunctionController.setAddress' - 
 * self.prefix+'OrganFunction_updateAttributes'     - 
 * self.prefix+'Manageable_addManager_address -
+* self.prefix+'OrganFunction_getFunctioName -
 * self.prefix+'Manageable_removeManager_address -
 * self.prefix+'Manageable_isManager_address -
 */
@@ -5540,6 +5647,10 @@ function OrganFunctionController() {
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_addManager_address;
 		else console.log('Manageable_addManager_address widget not bound');
+		var btn = document.getElementById(self.prefix+'OrganFunctionController.OrganFunction_getFunctioName');
+		if(btn!=undefined)
+			btn.onclick = this.OrganFunction_getFunctioName;
+		else console.log('OrganFunction_getFunctioName widget not bound');
 		var btn = document.getElementById(self.prefix+'OrganFunctionController.Manageable_removeManager_address');
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_removeManager_address;
@@ -5653,6 +5764,17 @@ function OrganFunctionController() {
 			var param__newManagerAddress = e.value;
 		else console.log(self.prefix+'Manageable_addManager_address__newManagerAddress not found');
 		var res = self.instance.addManager(param__newManagerAddress);
+	}
+	
+	/**
+	* Calls the contract function OrganFunction_getFunctioName.
+	*
+	**/
+	this.OrganFunction_getFunctioName=function() {
+		var res = self.instance.getFunctioName();
+		var e = document.getElementById(self.prefix+'OrganFunction_getFunctioName_res');
+		if(res!=null && e!=null)
+			e.innerText = res;
 	}
 	
 	/**
@@ -5866,26 +5988,37 @@ function OrganFunctionGuiMananger(guiId){
 * Each constructor is available.
 **/
 function OrganFunctionDeployment(guiId){
+	this.prefix = guiId;
+//Start of user code OrganFunction_deployment_attributes_js
+//TODO: implement
+//End of user code
+
 
 	/**
 	* Construct OrganFunction.
 	**/
-//	this.deployOrganFunction_OrganFunction = function(account,code,providedGas,){
-//		var c = OrganFunction.new(_name,_url,_description,{
+	this.deployOrganFunction_OrganFunction_string_string = function(account, code, providedGas, _name, _ch){
+//		var c = OrganFunction.new( _name, _ch,{
 //			from: account,
 //			data: code,
 //			gas:  providedGas
 //		});
-//		return c;
-//	}
+		return c;
+	}
+	
+	/**
+	* The default deployer function.
+	**/
+	this.deployDefault = function(){
+		//Start of user code OrganFunction_deployDefault
+		//TODO: implement
+		//End of user code
+	}
 
 //Start of user code OrganFunction_deployment_js
 //TODO: implement
 //End of user code
 }
-//Start of user code custom_OrganFunction_js
-//TODO: implement
-//End of user code
 
 /**
 * A class to manage a single page dapp.
@@ -5937,3 +6070,7 @@ this.bootstrap=function(kp) {
 	//End of user code
 
 }// end of PartyPage
+
+//Start of user code Party_custom_functions
+		//TODO: implement
+//End of user code

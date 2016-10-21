@@ -121,8 +121,8 @@ this.contract = contract;
 	/**
 	* Call addOrganFunction.
 	**/
-	this.addOrganFunction = function(_of){
-		return contract.addOrganFunction(_of); 
+	this.addOrganFunction = function(_of,_name){
+		return contract.addOrganFunction(_of,_name); 
 	}
 }// end of function OrganModel
 
@@ -155,7 +155,7 @@ function TestOrgan(contract) {
 		this.testOrgan_createBallot_string_bytes32();
 		this.testOrgan_getLastBallot();
 		this.testOrgan_getOrganBlog();
-		this.testOrgan_addOrganFunction_OrganFunction();
+		this.testOrgan_addOrganFunction_address_string();
 		this.customTests();
 	
 		//Start of user code allTests_Organ
@@ -201,20 +201,18 @@ function TestOrgan(contract) {
 		//	var res = this.test_instance.getOrganFunction( p__id);
 		//Start of user code test_Organ_getOrganFunction_uint
 		//TODO : implement this
-
-
+		//var test = false;		
+		//this.testAE("testgetOrganFunction", "executed: testOrgan_getOrganFunction_uint",true, test);		
 		//End of user code
 	}
 
 	//Test for Manageable_addManager_address
 	this.testManageable_addManager_address=function() {
 		//	var res = this.test_instance.addManager( p__newManagerAddress);
-		//Start of user code test_Manageable_addManager_address
-		var m = this.model.getMangerCount();
-		this.model.addManager()
-		var p__newManagerAddress = web3.eth.accounts[1];
-		var res = this.test_instance.addManager( p__newManagerAddress);
-		this.testAE("testaddManager", "executed: testManageable_addManager_address",true, m<this.model.getMangerCount());		
+		//Start of user code test_Organ_addManager_address
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testaddManager", "executed: testOrgan_addManager_address",true, test);		
 		//End of user code
 	}
 
@@ -223,21 +221,18 @@ function TestOrgan(contract) {
 		//	var res = this.test_instance.changeMember( p__id, p__address);
 		//Start of user code test_Organ_changeMember_uint_address
 		//TODO : implement this
-		var test = false;		
-
-
-		this.testAE("testchangeMember", "executed: testOrgan_changeMember_uint_address",true, test);		
+		//var test = false;		
+		//this.testAE("testchangeMember", "executed: testOrgan_changeMember_uint_address",true, test);		
 		//End of user code
 	}
 
 	//Test for Manageable_removeManager_address
 	this.testManageable_removeManager_address=function() {
 		//	var res = this.test_instance.removeManager( p__managerAddress);
-		//Start of user code test_Manageable_removeManager_address
-		var p__managerAddress = web3.eth.accounts[1];
-		var res = this.test_instance.removeManager( p__managerAddress);
-		this.testAE("testremoveManager", "executed: testManageable_removeManager_address",false, this.test_instance.isManager( p__managerAddress));
-		this.test_instance.addManager( p__managerAddress);
+		//Start of user code test_Organ_removeManager_address
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testremoveManager", "executed: testOrgan_removeManager_address",true, test);		
 		//End of user code
 	}
 
@@ -245,16 +240,19 @@ function TestOrgan(contract) {
 	this.testOrgan_createFunction_string_string=function() {
 		//	var res = this.test_instance.createFunction( p__functionName, p__constittiutionHash);
 		//Start of user code test_Organ_createFunction_string_string
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testcreateFunction", "executed: testOrgan_createFunction_string_string",true, test);		
 		//End of user code
 	}
 
 	//Test for Manageable_isManager_address
 	this.testManageable_isManager_address=function() {
 		//	var res = this.test_instance.isManager( p__managerAddress);
-		//Start of user code test_Manageable_isManager_address
-		var p__managerAddress = web3.eth.accounts[1];
-		var res = this.test_instance.isManager( p__managerAddress);
-		this.testAE("testisManager", "executed: testManageable_isManager_address",true, res);		
+		//Start of user code test_Organ_isManager_address
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testisManager", "executed: testOrgan_isManager_address",true, test);		
 		//End of user code
 	}
 
@@ -262,6 +260,9 @@ function TestOrgan(contract) {
 	this.testOrgan_initalizeOrgan=function() {
 		//	var res = this.test_instance.initalizeOrgan();
 		//Start of user code test_Organ_initalizeOrgan
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testinitalizeOrgan", "executed: testOrgan_initalizeOrgan",true, test);		
 		//End of user code
 	}
 
@@ -269,6 +270,9 @@ function TestOrgan(contract) {
 	this.testOrgan_publishFunctionMessage_uint_string_string_string=function() {
 		//	var res = this.test_instance.publishFunctionMessage( p_id, p_message, p_hash, p_er);
 		//Start of user code test_Organ_publishFunctionMessage_uint_string_string_string
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testpublishFunctionMessage", "executed: testOrgan_publishFunctionMessage_uint_string_string_string",true, test);		
 		//End of user code
 	}
 
@@ -276,6 +280,9 @@ function TestOrgan(contract) {
 	this.testOrgan_createBallot_string_bytes32=function() {
 		//	var res = this.test_instance.createBallot( p_name, p_proposalNames);
 		//Start of user code test_Organ_createBallot_string_bytes32
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testcreateBallot", "executed: testOrgan_createBallot_string_bytes32",true, test);		
 		//End of user code
 	}
 
@@ -283,6 +290,9 @@ function TestOrgan(contract) {
 	this.testOrgan_getLastBallot=function() {
 		//	var res = this.test_instance.getLastBallot();
 		//Start of user code test_Organ_getLastBallot
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testgetLastBallot", "executed: testOrgan_getLastBallot",true, test);		
 		//End of user code
 	}
 
@@ -290,17 +300,19 @@ function TestOrgan(contract) {
 	this.testOrgan_getOrganBlog=function() {
 		//	var res = this.test_instance.getOrganBlog();
 		//Start of user code test_Organ_getOrganBlog
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testgetOrganBlog", "executed: testOrgan_getOrganBlog",true, test);		
 		//End of user code
 	}
 
-	//Test for Organ_addOrganFunction_OrganFunction
-	this.testOrgan_addOrganFunction_OrganFunction=function() {
-		//	var res = this.test_instance.addOrganFunction( p__of);
-		//Start of user code test_Organ_addOrganFunction_OrganFunction
-		var p__of = contracts['OrganFunction'].contract;
-		console.log('testOrgan_addOrganFunction_OrganFunction:'+p__of);
-		var res = this.test_instance.addOrganFunction( contracts['OrganFunction'].contract.address);
-		this.testAE("testaddOrganFunction", "executed: testOrgan_addOrganFunction_OrganFunction:",1, this.model.getLastFunctionId());		
+	//Test for Organ_addOrganFunction_address_string
+	this.testOrgan_addOrganFunction_address_string=function() {
+		//	var res = this.test_instance.addOrganFunction( p__of, p__name);
+		//Start of user code test_Organ_addOrganFunction_address_string
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testaddOrganFunction", "executed: testOrgan_addOrganFunction_address_string",true, test);		
 		//End of user code
 	}
 	this.customTests=function() {
@@ -396,7 +408,7 @@ function TestParty(contract) {
 		this.testManageable_removeManager_address();
 		this.testParty_createOrgan_string();
 		this.testManageable_isManager_address();
-		this.testParty_addOrgan_Organ();
+		this.testParty_addOrgan_address();
 		this.customTests();
 	
 		//Start of user code allTests_Party
@@ -439,20 +451,20 @@ function TestParty(contract) {
 	//Test for Manageable_addManager_address
 	this.testManageable_addManager_address=function() {
 		//	var res = this.test_instance.addManager( p__newManagerAddress);
-		//Start of user code test_Manageable_addManager_address
+		//Start of user code test_Party_addManager_address
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testaddManager", "executed: testManageable_addManager_address",true, test);		
+		//this.testAE("testaddManager", "executed: testParty_addManager_address",true, test);		
 		//End of user code
 	}
 
 	//Test for Manageable_removeManager_address
 	this.testManageable_removeManager_address=function() {
 		//	var res = this.test_instance.removeManager( p__managerAddress);
-		//Start of user code test_Manageable_removeManager_address
+		//Start of user code test_Party_removeManager_address
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testremoveManager", "executed: testManageable_removeManager_address",true, test);		
+		//this.testAE("testremoveManager", "executed: testParty_removeManager_address",true, test);		
 		//End of user code
 	}
 
@@ -460,23 +472,29 @@ function TestParty(contract) {
 	this.testParty_createOrgan_string=function() {
 		//	var res = this.test_instance.createOrgan( p_organName);
 		//Start of user code test_Party_createOrgan_string
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testcreateOrgan", "executed: testParty_createOrgan_string",true, test);		
 		//End of user code
 	}
 
 	//Test for Manageable_isManager_address
 	this.testManageable_isManager_address=function() {
 		//	var res = this.test_instance.isManager( p__managerAddress);
-		//Start of user code test_Manageable_isManager_address
+		//Start of user code test_Party_isManager_address
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testisManager", "executed: testManageable_isManager_address",true, test);		
+		//this.testAE("testisManager", "executed: testParty_isManager_address",true, test);		
 		//End of user code
 	}
 
-	//Test for Party_addOrgan_Organ
-	this.testParty_addOrgan_Organ=function() {
+	//Test for Party_addOrgan_address
+	this.testParty_addOrgan_address=function() {
 		//	var res = this.test_instance.addOrgan( p__organ);
-		//Start of user code test_Party_addOrgan_Organ
+		//Start of user code test_Party_addOrgan_address
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testaddOrgan", "executed: testParty_addOrgan_address",true, test);		
 		//End of user code
 	}
 	this.customTests=function() {
@@ -577,7 +595,7 @@ function TestKUEKeNParty(contract) {
 		this.testManageable_removeManager_address();
 		this.testParty_createOrgan_string();
 		this.testManageable_isManager_address();
-		this.testParty_addOrgan_Organ();
+		this.testParty_addOrgan_address();
 		this.customTests();
 	
 		//Start of user code allTests_KUEKeNParty
@@ -634,10 +652,10 @@ function TestKUEKeNParty(contract) {
 	//Test for Manageable_addManager_address
 	this.testManageable_addManager_address=function() {
 		//	var res = this.test_instance.addManager( p__newManagerAddress);
-		//Start of user code test_Manageable_addManager_address
+		//Start of user code test_KUEKeNParty_addManager_address
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testaddManager", "executed: testManageable_addManager_address",true, test);		
+		//this.testAE("testaddManager", "executed: testKUEKeNParty_addManager_address",true, test);		
 		//End of user code
 	}
 
@@ -658,40 +676,40 @@ function TestKUEKeNParty(contract) {
 	//Test for Manageable_removeManager_address
 	this.testManageable_removeManager_address=function() {
 		//	var res = this.test_instance.removeManager( p__managerAddress);
-		//Start of user code test_Manageable_removeManager_address
+		//Start of user code test_KUEKeNParty_removeManager_address
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testremoveManager", "executed: testManageable_removeManager_address",true, test);		
+		//this.testAE("testremoveManager", "executed: testKUEKeNParty_removeManager_address",true, test);		
 		//End of user code
 	}
 
 	//Test for Party_createOrgan_string
 	this.testParty_createOrgan_string=function() {
 		//	var res = this.test_instance.createOrgan( p_organName);
-		//Start of user code test_Party_createOrgan_string
+		//Start of user code test_KUEKeNParty_createOrgan_string
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testcreateOrgan", "executed: testParty_createOrgan_string",true, test);		
+		//this.testAE("testcreateOrgan", "executed: testKUEKeNParty_createOrgan_string",true, test);		
 		//End of user code
 	}
 
 	//Test for Manageable_isManager_address
 	this.testManageable_isManager_address=function() {
 		//	var res = this.test_instance.isManager( p__managerAddress);
-		//Start of user code test_Manageable_isManager_address
+		//Start of user code test_KUEKeNParty_isManager_address
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testisManager", "executed: testManageable_isManager_address",true, test);		
+		//this.testAE("testisManager", "executed: testKUEKeNParty_isManager_address",true, test);		
 		//End of user code
 	}
 
-	//Test for Party_addOrgan_Organ
-	this.testParty_addOrgan_Organ=function() {
+	//Test for Party_addOrgan_address
+	this.testParty_addOrgan_address=function() {
 		//	var res = this.test_instance.addOrgan( p__organ);
-		//Start of user code test_Party_addOrgan_Organ
+		//Start of user code test_KUEKeNParty_addOrgan_address
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testaddOrgan", "executed: testParty_addOrgan_Organ",true, test);		
+		//this.testAE("testaddOrgan", "executed: testKUEKeNParty_addOrgan_address",true, test);		
 		//End of user code
 	}
 	this.customTests=function() {
@@ -835,8 +853,8 @@ this.contract = contract;
 	/**
 	* Call addOrganFunction.
 	**/
-	this.addOrganFunction = function(_of){
-		return contract.addOrganFunction(_of); 
+	this.addOrganFunction = function(_of,_name){
+		return contract.addOrganFunction(_of,_name); 
 	}
 }// end of function ConferenceModel
 
@@ -870,7 +888,7 @@ function TestConference(contract) {
 		this.testOrgan_createBallot_string_bytes32();
 		this.testOrgan_getLastBallot();
 		this.testOrgan_getOrganBlog();
-		this.testOrgan_addOrganFunction_OrganFunction();
+		this.testOrgan_addOrganFunction_address_string();
 		this.customTests();
 	
 		//Start of user code allTests_Conference
@@ -915,130 +933,128 @@ function TestConference(contract) {
 		//	var res = this.test_instance.accreditationMember( p__address);
 		//Start of user code test_Conference_accreditationMember_address
 		//TODO : implement this
-		var test = false;		
-
-
-		this.testAE("testaccreditationMember", "executed: testConference_accreditationMember_address",true, test);		
+		//var test = false;		
+		//this.testAE("testaccreditationMember", "executed: testConference_accreditationMember_address",true, test);		
 		//End of user code
 	}
 
 	//Test for Organ_getOrganFunction_uint
 	this.testOrgan_getOrganFunction_uint=function() {
 		//	var res = this.test_instance.getOrganFunction( p__id);
-		//Start of user code test_Organ_getOrganFunction_uint
+		//Start of user code test_Conference_getOrganFunction_uint
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testgetOrganFunction", "executed: testOrgan_getOrganFunction_uint",true, test);		
+		//this.testAE("testgetOrganFunction", "executed: testConference_getOrganFunction_uint",true, test);		
 		//End of user code
 	}
 
 	//Test for Manageable_addManager_address
 	this.testManageable_addManager_address=function() {
 		//	var res = this.test_instance.addManager( p__newManagerAddress);
-		//Start of user code test_Manageable_addManager_address
+		//Start of user code test_Conference_addManager_address
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testaddManager", "executed: testManageable_addManager_address",true, test);		
+		//this.testAE("testaddManager", "executed: testConference_addManager_address",true, test);		
 		//End of user code
 	}
 
 	//Test for Organ_changeMember_uint_address
 	this.testOrgan_changeMember_uint_address=function() {
 		//	var res = this.test_instance.changeMember( p__id, p__address);
-		//Start of user code test_Organ_changeMember_uint_address
+		//Start of user code test_Conference_changeMember_uint_address
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testchangeMember", "executed: testOrgan_changeMember_uint_address",true, test);		
+		//this.testAE("testchangeMember", "executed: testConference_changeMember_uint_address",true, test);		
 		//End of user code
 	}
 
 	//Test for Manageable_removeManager_address
 	this.testManageable_removeManager_address=function() {
 		//	var res = this.test_instance.removeManager( p__managerAddress);
-		//Start of user code test_Manageable_removeManager_address
+		//Start of user code test_Conference_removeManager_address
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testremoveManager", "executed: testManageable_removeManager_address",true, test);		
+		//this.testAE("testremoveManager", "executed: testConference_removeManager_address",true, test);		
 		//End of user code
 	}
 
 	//Test for Organ_createFunction_string_string
 	this.testOrgan_createFunction_string_string=function() {
 		//	var res = this.test_instance.createFunction( p__functionName, p__constittiutionHash);
-		//Start of user code test_Organ_createFunction_string_string
+		//Start of user code test_Conference_createFunction_string_string
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testcreateFunction", "executed: testOrgan_createFunction_string_string",true, test);		
+		//this.testAE("testcreateFunction", "executed: testConference_createFunction_string_string",true, test);		
 		//End of user code
 	}
 
 	//Test for Manageable_isManager_address
 	this.testManageable_isManager_address=function() {
 		//	var res = this.test_instance.isManager( p__managerAddress);
-		//Start of user code test_Manageable_isManager_address
+		//Start of user code test_Conference_isManager_address
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testisManager", "executed: testManageable_isManager_address",true, test);		
+		//this.testAE("testisManager", "executed: testConference_isManager_address",true, test);		
 		//End of user code
 	}
 
 	//Test for Organ_initalizeOrgan
 	this.testOrgan_initalizeOrgan=function() {
 		//	var res = this.test_instance.initalizeOrgan();
-		//Start of user code test_Organ_initalizeOrgan
+		//Start of user code test_Conference_initalizeOrgan
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testinitalizeOrgan", "executed: testOrgan_initalizeOrgan",true, test);		
+		//this.testAE("testinitalizeOrgan", "executed: testConference_initalizeOrgan",true, test);		
 		//End of user code
 	}
 
 	//Test for Organ_publishFunctionMessage_uint_string_string_string
 	this.testOrgan_publishFunctionMessage_uint_string_string_string=function() {
 		//	var res = this.test_instance.publishFunctionMessage( p_id, p_message, p_hash, p_er);
-		//Start of user code test_Organ_publishFunctionMessage_uint_string_string_string
+		//Start of user code test_Conference_publishFunctionMessage_uint_string_string_string
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testpublishFunctionMessage", "executed: testOrgan_publishFunctionMessage_uint_string_string_string",true, test);		
+		//this.testAE("testpublishFunctionMessage", "executed: testConference_publishFunctionMessage_uint_string_string_string",true, test);		
 		//End of user code
 	}
 
 	//Test for Organ_createBallot_string_bytes32
 	this.testOrgan_createBallot_string_bytes32=function() {
 		//	var res = this.test_instance.createBallot( p_name, p_proposalNames);
-		//Start of user code test_Organ_createBallot_string_bytes32
+		//Start of user code test_Conference_createBallot_string_bytes32
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testcreateBallot", "executed: testOrgan_createBallot_string_bytes32",true, test);		
+		//this.testAE("testcreateBallot", "executed: testConference_createBallot_string_bytes32",true, test);		
 		//End of user code
 	}
 
 	//Test for Organ_getLastBallot
 	this.testOrgan_getLastBallot=function() {
 		//	var res = this.test_instance.getLastBallot();
-		//Start of user code test_Organ_getLastBallot
+		//Start of user code test_Conference_getLastBallot
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testgetLastBallot", "executed: testOrgan_getLastBallot",true, test);		
+		//this.testAE("testgetLastBallot", "executed: testConference_getLastBallot",true, test);		
 		//End of user code
 	}
 
 	//Test for Organ_getOrganBlog
 	this.testOrgan_getOrganBlog=function() {
 		//	var res = this.test_instance.getOrganBlog();
-		//Start of user code test_Organ_getOrganBlog
+		//Start of user code test_Conference_getOrganBlog
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testgetOrganBlog", "executed: testOrgan_getOrganBlog",true, test);		
+		//this.testAE("testgetOrganBlog", "executed: testConference_getOrganBlog",true, test);		
 		//End of user code
 	}
 
-	//Test for Organ_addOrganFunction_OrganFunction
-	this.testOrgan_addOrganFunction_OrganFunction=function() {
-		//	var res = this.test_instance.addOrganFunction( p__of);
-		//Start of user code test_Organ_addOrganFunction_OrganFunction
+	//Test for Organ_addOrganFunction_address_string
+	this.testOrgan_addOrganFunction_address_string=function() {
+		//	var res = this.test_instance.addOrganFunction( p__of, p__name);
+		//Start of user code test_Conference_addOrganFunction_address_string
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testaddOrganFunction", "executed: testOrgan_addOrganFunction_OrganFunction",true, test);		
+		//this.testAE("testaddOrganFunction", "executed: testConference_addOrganFunction_address_string",true, test);		
 		//End of user code
 	}
 	this.customTests=function() {
@@ -1182,8 +1198,8 @@ this.contract = contract;
 	/**
 	* Call addOrganFunction.
 	**/
-	this.addOrganFunction = function(_of){
-		return contract.addOrganFunction(_of); 
+	this.addOrganFunction = function(_of,_name){
+		return contract.addOrganFunction(_of,_name); 
 	}
 }// end of function FoundationConferenceModel
 
@@ -1217,7 +1233,7 @@ function TestFoundationConference(contract) {
 		this.testOrgan_createBallot_string_bytes32();
 		this.testOrgan_getLastBallot();
 		this.testOrgan_getOrganBlog();
-		this.testOrgan_addOrganFunction_OrganFunction();
+		this.testOrgan_addOrganFunction_address_string();
 		this.customTests();
 	
 		//Start of user code allTests_FoundationConference
@@ -1260,130 +1276,130 @@ function TestFoundationConference(contract) {
 	//Test for Conference_accreditationMember_address
 	this.testConference_accreditationMember_address=function() {
 		//	var res = this.test_instance.accreditationMember( p__address);
-		//Start of user code test_Conference_accreditationMember_address
+		//Start of user code test_FoundationConference_accreditationMember_address
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testaccreditationMember", "executed: testConference_accreditationMember_address",true, test);		
+		//this.testAE("testaccreditationMember", "executed: testFoundationConference_accreditationMember_address",true, test);		
 		//End of user code
 	}
 
 	//Test for Organ_getOrganFunction_uint
 	this.testOrgan_getOrganFunction_uint=function() {
 		//	var res = this.test_instance.getOrganFunction( p__id);
-		//Start of user code test_Organ_getOrganFunction_uint
+		//Start of user code test_FoundationConference_getOrganFunction_uint
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testgetOrganFunction", "executed: testOrgan_getOrganFunction_uint",true, test);		
+		//this.testAE("testgetOrganFunction", "executed: testFoundationConference_getOrganFunction_uint",true, test);		
 		//End of user code
 	}
 
 	//Test for Manageable_addManager_address
 	this.testManageable_addManager_address=function() {
 		//	var res = this.test_instance.addManager( p__newManagerAddress);
-		//Start of user code test_Manageable_addManager_address
+		//Start of user code test_FoundationConference_addManager_address
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testaddManager", "executed: testManageable_addManager_address",true, test);		
+		//this.testAE("testaddManager", "executed: testFoundationConference_addManager_address",true, test);		
 		//End of user code
 	}
 
 	//Test for Organ_changeMember_uint_address
 	this.testOrgan_changeMember_uint_address=function() {
 		//	var res = this.test_instance.changeMember( p__id, p__address);
-		//Start of user code test_Organ_changeMember_uint_address
+		//Start of user code test_FoundationConference_changeMember_uint_address
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testchangeMember", "executed: testOrgan_changeMember_uint_address",true, test);		
+		//this.testAE("testchangeMember", "executed: testFoundationConference_changeMember_uint_address",true, test);		
 		//End of user code
 	}
 
 	//Test for Manageable_removeManager_address
 	this.testManageable_removeManager_address=function() {
 		//	var res = this.test_instance.removeManager( p__managerAddress);
-		//Start of user code test_Manageable_removeManager_address
+		//Start of user code test_FoundationConference_removeManager_address
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testremoveManager", "executed: testManageable_removeManager_address",true, test);		
+		//this.testAE("testremoveManager", "executed: testFoundationConference_removeManager_address",true, test);		
 		//End of user code
 	}
 
 	//Test for Organ_createFunction_string_string
 	this.testOrgan_createFunction_string_string=function() {
 		//	var res = this.test_instance.createFunction( p__functionName, p__constittiutionHash);
-		//Start of user code test_Organ_createFunction_string_string
+		//Start of user code test_FoundationConference_createFunction_string_string
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testcreateFunction", "executed: testOrgan_createFunction_string_string",true, test);		
+		//this.testAE("testcreateFunction", "executed: testFoundationConference_createFunction_string_string",true, test);		
 		//End of user code
 	}
 
 	//Test for Manageable_isManager_address
 	this.testManageable_isManager_address=function() {
 		//	var res = this.test_instance.isManager( p__managerAddress);
-		//Start of user code test_Manageable_isManager_address
+		//Start of user code test_FoundationConference_isManager_address
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testisManager", "executed: testManageable_isManager_address",true, test);		
+		//this.testAE("testisManager", "executed: testFoundationConference_isManager_address",true, test);		
 		//End of user code
 	}
 
 	//Test for Organ_initalizeOrgan
 	this.testOrgan_initalizeOrgan=function() {
 		//	var res = this.test_instance.initalizeOrgan();
-		//Start of user code test_Organ_initalizeOrgan
+		//Start of user code test_FoundationConference_initalizeOrgan
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testinitalizeOrgan", "executed: testOrgan_initalizeOrgan",true, test);		
+		//this.testAE("testinitalizeOrgan", "executed: testFoundationConference_initalizeOrgan",true, test);		
 		//End of user code
 	}
 
 	//Test for Organ_publishFunctionMessage_uint_string_string_string
 	this.testOrgan_publishFunctionMessage_uint_string_string_string=function() {
 		//	var res = this.test_instance.publishFunctionMessage( p_id, p_message, p_hash, p_er);
-		//Start of user code test_Organ_publishFunctionMessage_uint_string_string_string
+		//Start of user code test_FoundationConference_publishFunctionMessage_uint_string_string_string
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testpublishFunctionMessage", "executed: testOrgan_publishFunctionMessage_uint_string_string_string",true, test);		
+		//this.testAE("testpublishFunctionMessage", "executed: testFoundationConference_publishFunctionMessage_uint_string_string_string",true, test);		
 		//End of user code
 	}
 
 	//Test for Organ_createBallot_string_bytes32
 	this.testOrgan_createBallot_string_bytes32=function() {
 		//	var res = this.test_instance.createBallot( p_name, p_proposalNames);
-		//Start of user code test_Organ_createBallot_string_bytes32
+		//Start of user code test_FoundationConference_createBallot_string_bytes32
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testcreateBallot", "executed: testOrgan_createBallot_string_bytes32",true, test);		
+		//this.testAE("testcreateBallot", "executed: testFoundationConference_createBallot_string_bytes32",true, test);		
 		//End of user code
 	}
 
 	//Test for Organ_getLastBallot
 	this.testOrgan_getLastBallot=function() {
 		//	var res = this.test_instance.getLastBallot();
-		//Start of user code test_Organ_getLastBallot
+		//Start of user code test_FoundationConference_getLastBallot
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testgetLastBallot", "executed: testOrgan_getLastBallot",true, test);		
+		//this.testAE("testgetLastBallot", "executed: testFoundationConference_getLastBallot",true, test);		
 		//End of user code
 	}
 
 	//Test for Organ_getOrganBlog
 	this.testOrgan_getOrganBlog=function() {
 		//	var res = this.test_instance.getOrganBlog();
-		//Start of user code test_Organ_getOrganBlog
+		//Start of user code test_FoundationConference_getOrganBlog
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testgetOrganBlog", "executed: testOrgan_getOrganBlog",true, test);		
+		//this.testAE("testgetOrganBlog", "executed: testFoundationConference_getOrganBlog",true, test);		
 		//End of user code
 	}
 
-	//Test for Organ_addOrganFunction_OrganFunction
-	this.testOrgan_addOrganFunction_OrganFunction=function() {
-		//	var res = this.test_instance.addOrganFunction( p__of);
-		//Start of user code test_Organ_addOrganFunction_OrganFunction
+	//Test for Organ_addOrganFunction_address_string
+	this.testOrgan_addOrganFunction_address_string=function() {
+		//	var res = this.test_instance.addOrganFunction( p__of, p__name);
+		//Start of user code test_FoundationConference_addOrganFunction_address_string
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testaddOrganFunction", "executed: testOrgan_addOrganFunction_OrganFunction",true, test);		
+		//this.testAE("testaddOrganFunction", "executed: testFoundationConference_addOrganFunction_address_string",true, test);		
 		//End of user code
 	}
 	this.customTests=function() {
@@ -1453,6 +1469,12 @@ this.contract = contract;
 		return contract.addManager(_newManagerAddress); 
 	}
 	/**
+	* Call getFunctioName.
+	**/
+	this.getFunctioName = function(){
+		return contract.getFunctioName(); 
+	}
+	/**
 	* Call removeManager.
 	**/
 	this.removeManager = function(_managerAddress){
@@ -1485,6 +1507,7 @@ function TestOrganFunction(contract) {
 		this.testSetup();
 		this.testAttributes();
 		this.testManageable_addManager_address();
+		this.testOrganFunction_getFunctioName();
 		this.testManageable_removeManager_address();
 		this.testManageable_isManager_address();
 		this.customTests();
@@ -1529,30 +1552,40 @@ function TestOrganFunction(contract) {
 	//Test for Manageable_addManager_address
 	this.testManageable_addManager_address=function() {
 		//	var res = this.test_instance.addManager( p__newManagerAddress);
-		//Start of user code test_Manageable_addManager_address
+		//Start of user code test_OrganFunction_addManager_address
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testaddManager", "executed: testManageable_addManager_address",true, test);		
+		//this.testAE("testaddManager", "executed: testOrganFunction_addManager_address",true, test);		
+		//End of user code
+	}
+
+	//Test for OrganFunction_getFunctioName
+	this.testOrganFunction_getFunctioName=function() {
+		//	var res = this.test_instance.getFunctioName();
+		//Start of user code test_OrganFunction_getFunctioName
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testgetFunctioName", "executed: testOrganFunction_getFunctioName",true, test);		
 		//End of user code
 	}
 
 	//Test for Manageable_removeManager_address
 	this.testManageable_removeManager_address=function() {
 		//	var res = this.test_instance.removeManager( p__managerAddress);
-		//Start of user code test_Manageable_removeManager_address
+		//Start of user code test_OrganFunction_removeManager_address
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testremoveManager", "executed: testManageable_removeManager_address",true, test);		
+		//this.testAE("testremoveManager", "executed: testOrganFunction_removeManager_address",true, test);		
 		//End of user code
 	}
 
 	//Test for Manageable_isManager_address
 	this.testManageable_isManager_address=function() {
 		//	var res = this.test_instance.isManager( p__managerAddress);
-		//Start of user code test_Manageable_isManager_address
+		//Start of user code test_OrganFunction_isManager_address
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testisManager", "executed: testManageable_isManager_address",true, test);		
+		//this.testAE("testisManager", "executed: testOrganFunction_isManager_address",true, test);		
 		//End of user code
 	}
 	this.customTests=function() {

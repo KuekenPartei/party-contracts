@@ -1,0 +1,61 @@
+
+Thu Oct 20 23:11:32 CEST 2016
+================================================================================
+Start of user code custom_ShortBlog_js
+//TODO: implement
+//End of user code
+Start of user code custom_BlogRegistry_js
+function PublishingReadPage(prefix) {
+	this.prefix=prefix;
+	this.blogs = new ShortBlogGuiMananger(prefix);
+	this.registry = new BlogRegistryGuiMananger(prefix);
+	this.gf = new BlogRegistryGuiFactory();
+	this.shgf = new ShortBlogGuiFactory();
+	
+	var self = this;
+	
+	this.setInnerHtml=function(txt,_id){
+		e = document.getElementById(_id);
+		if(e!==undefined){
+			var elemDiv = document.createElement('div');
+			elemDiv.innerHTML = txt;
+			e.appendChild(elemDiv);
+
+		} else
+			console('element with id not found:'+id);
+		
+	}
+	
+	
+	this.eventHandle=function(result){
+		console.log('add a new blog:'+result);
+		var bAddress = result.args.blogAddress;
+		self.blogs.addManager(ShortBlogContract.at(bAddress));
+		var txt = self.gf.createNewBlogLogDataGui("", "", "", result.args.index, result.args.name, result.args.blogAddress);
+		txt = self.shgf.createSeletonGui(txt);
+		self.setInnerHtml(txt, 'blogs-event');
+	}
+
+	this.registry.eventCallback = this.eventHandle;
+	
+	this.blogEventHandle=function(result){
+		console.log('Event1:'+result);
+		var txt = self.shgf.createNewMessageLogDataGui("", "", "", 
+				result.args.message, result.args.messageId, 
+				result.args.messageSender, result.args.messageHashValue, 
+				result.args.externalResource);
+		txt = self.shgf.createSeletonGui(txt);
+		self.setInnerHtml(txt, 'entry-event');
+	}
+	this.blogs.eventCallback = this.blogEventHandle;
+	
+	/**
+	* Places the default gui in the page.
+	**/
+	this.placeDefaultGui=function() {
+	this.createDefaultGui();
+	}
+
+	
+}
+//End of user code

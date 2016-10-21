@@ -80,7 +80,7 @@ var c = new PublishingPage('Publishing-Gui');
 web3.eth.defaultAccount = web3.eth.accounts[0];
 
 var co = contracts['BlogRegistry'].contract;
-//c.registry.addManager(co);
+c.registry.addManager(co);
 var r = new PublishingReadPage('Publishing-Gui');
 r.registry.addManager(co);
 

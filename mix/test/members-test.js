@@ -175,14 +175,10 @@ function TestMemberRegistry(contract) {
 	//Test for Manageable_addManager_address
 	this.testManageable_addManager_address=function() {
 		//	var res = this.test_instance.addManager( p__newManagerAddress);
-		//Start of user code test_Manageable_addManager_address
-		//TODO: implement
-		var count = this.test_instance.mangerCount();
-		var p__newManagerAddress = web3.eth.accounts[1];
-		var res = this.test_instance.addManager( p__newManagerAddress);
-		var count1 = this.test_instance.mangerCount();
-		var state = res!="";		
-		this.printTest("testaddManager", "executed: testManageable_addManager_address: "+res, count<count1);		
+		//Start of user code test_MemberRegistry_addManager_address
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testaddManager", "executed: testMemberRegistry_addManager_address",true, test);		
 		//End of user code
 	}
 
@@ -212,12 +208,10 @@ function TestMemberRegistry(contract) {
 	//Test for Manageable_removeManager_address
 	this.testManageable_removeManager_address=function() {
 		//	var res = this.test_instance.removeManager( p__managerAddress);
-		//Start of user code test_Manageable_removeManager_address
-		//TODO: implement
-		var p__managerAddress = web3.eth.accounts[0];
-		var res = this.test_instance.removeManager( p__managerAddress);
-		var state = res!="";		
-		this.printTest("testremoveManager", "executed: testManageable_removeManager_address: "+res, state);		
+		//Start of user code test_MemberRegistry_removeManager_address
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testremoveManager", "executed: testMemberRegistry_removeManager_address",true, test);		
 		//End of user code
 	}
 
@@ -241,13 +235,10 @@ function TestMemberRegistry(contract) {
 	//Test for Manageable_isManager_address
 	this.testManageable_isManager_address=function() {
 		//	var res = this.test_instance.isManager( p__managerAddress);
-		//Start of user code test_Manageable_isManager_address
-		//TODO: implement
-//console.log('testManageable_isManager_address');
-//	var p__managerAddress = '';
-//	var res = this.test_instance.isManager( p__managerAddress);
-//	var state = res==="";		
-		this.printTest("testisManager", "executed: testManageable_isManager_address", false);		
+		//Start of user code test_MemberRegistry_isManager_address
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testisManager", "executed: testMemberRegistry_isManager_address",true, test);		
 		//End of user code
 	}
 

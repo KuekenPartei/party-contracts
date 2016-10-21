@@ -1002,7 +1002,7 @@ function MemberRegistryManager(prefix,contract,containerId) {
 	* The events are stored in an element with the id this.eventlogPrefix+'eventLog'.
 	**/
 	this.watchEvents=function(){
-	var event_MemberEvent = contract.MemberEvent({},{fromBlock: 0});
+	var event_MemberEvent = this.getContract().MemberEvent({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
 	var callback = this.eventCallback;
 	event_MemberEvent.watch(function(error,result){
@@ -1096,14 +1096,25 @@ function MemberRegistryGuiMananger(guiId){
 * Each constructor is available.
 **/
 function MemberRegistryDeployment(guiId){
+	this.prefix = guiId;
+//Start of user code MemberRegistry_deployment_attributes_js
+//TODO: implement
+//End of user code
+
+	
+	/**
+	* The default deployer function.
+	**/
+	this.deployDefault = function(){
+		//Start of user code MemberRegistry_deployDefault
+		//TODO: implement
+		//End of user code
+	}
 
 //Start of user code MemberRegistry_deployment_js
 //TODO: implement
 //End of user code
 }
-//Start of user code custom_MemberRegistry_js
-//TODO: implement
-//End of user code
 /**
 * A simple bean class around the contract.
 * The MemberAwareModel.
@@ -1442,14 +1453,25 @@ function MemberAwareGuiMananger(guiId){
 * Each constructor is available.
 **/
 function MemberAwareDeployment(guiId){
+	this.prefix = guiId;
+//Start of user code MemberAware_deployment_attributes_js
+//TODO: implement
+//End of user code
+
+	
+	/**
+	* The default deployer function.
+	**/
+	this.deployDefault = function(){
+		//Start of user code MemberAware_deployDefault
+		//TODO: implement
+		//End of user code
+	}
 
 //Start of user code MemberAware_deployment_js
 //TODO: implement
 //End of user code
 }
-//Start of user code custom_MemberAware_js
-//TODO: implement
-//End of user code
 
 /**
 * A class to manage a single page dapp.
@@ -1482,3 +1504,7 @@ this.createDefaultGui=function() {
 	//End of user code
 
 }// end of MembersPage
+
+//Start of user code Members_custom_functions
+		//TODO: implement
+//End of user code

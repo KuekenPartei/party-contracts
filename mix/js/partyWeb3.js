@@ -103,7 +103,7 @@ var OrganContract = web3.eth.contract([
   }
 ,  {
     "constant": false,
-    "inputs": [{"name": "_of","type": "address"}],    
+    "inputs": [{"name": "_of","type": "address"},{"name": "_name","type": "string"}],    
     "name": "addOrganFunction",
     "outputs": [],
     "type": "function"
@@ -345,7 +345,7 @@ var ConferenceContract = web3.eth.contract([
   }
 ,  {
     "constant": false,
-    "inputs": [{"name": "_of","type": "address"}],    
+    "inputs": [{"name": "_of","type": "address"},{"name": "_name","type": "string"}],    
     "name": "addOrganFunction",
     "outputs": [],
     "type": "function"
@@ -461,7 +461,7 @@ var FoundationConferenceContract = web3.eth.contract([
   }
 ,  {
     "constant": false,
-    "inputs": [{"name": "_of","type": "address"}],    
+    "inputs": [{"name": "_of","type": "address"},{"name": "_name","type": "string"}],    
     "name": "addOrganFunction",
     "outputs": [],
     "type": "function"
@@ -488,6 +488,13 @@ var OrganFunctionContract = web3.eth.contract([
     "inputs": [{"name": "_newManagerAddress","type": "address"}],    
     "name": "addManager",
     "outputs": [],
+    "type": "function"
+  }
+,  {
+    "constant": true,
+    "inputs": [],    
+    "name": "getFunctioName",
+    "outputs": [{"name": "","type": "string"}],
     "type": "function"
   }
 ,  {

@@ -688,14 +688,25 @@ function BallotGuiMananger(guiId){
 * Each constructor is available.
 **/
 function BallotDeployment(guiId){
+	this.prefix = guiId;
+//Start of user code Ballot_deployment_attributes_js
+//TODO: implement
+//End of user code
+
+	
+	/**
+	* The default deployer function.
+	**/
+	this.deployDefault = function(){
+		//Start of user code Ballot_deployDefault
+		//TODO: implement
+		//End of user code
+	}
 
 //Start of user code Ballot_deployment_js
 //TODO: implement
 //End of user code
 }
-//Start of user code custom_Ballot_js
-//TODO: implement
-//End of user code
 
 /**
 * A class to manage a single page dapp.
@@ -728,3 +739,7 @@ this.createDefaultGui=function() {
 	//End of user code
 
 }// end of VotingPage
+
+//Start of user code Voting_custom_functions
+		//TODO: implement
+//End of user code

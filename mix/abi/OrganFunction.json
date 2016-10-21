@@ -20,6 +20,13 @@
     "type": "function"
   }
 ,  {
+    "constant": true,
+    "inputs": [],    
+    "name": "getFunctioName",
+    "outputs": [{"name": "","type": "string"}],
+    "type": "function"
+  }
+,  {
     "constant": false,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "removeManager",
