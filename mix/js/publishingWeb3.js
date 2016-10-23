@@ -19,42 +19,30 @@ var ShortBlogContract = web3.eth.contract([
 ,{ "name": "hashValue", "type": "string"}
 ,{ "name": "externalResource", "type": "string"}
 ],"type": "function"	},
-//
-
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
-//
-
-  {
-    "constant": false,
+{ "constant": false,
     "inputs": [{"name": "_newManagerAddress","type": "address"}],    
     "name": "addManager",
     "outputs": [],
-    "type": "function"
-  }
-,  {
-    "constant": false,
+    "type": "function" }
+,{ "constant": false,
     "inputs": [{"name": "message","type": "string"},{"name": "hash","type": "string"},{"name": "er","type": "string"}],    
     "name": "sendMessage",
     "outputs": [],
-    "type": "function"
-  }
-,  {
-    "constant": false,
+    "type": "function" }
+,{ "constant": false,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "removeManager",
     "outputs": [],
-    "type": "function"
-  }
-,  {
-    "constant": true,
+    "type": "function" }
+,{ "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
-    "type": "function"
-  }
- ,
+    "type": "function" }
+,
   { "constant": true,
     "inputs": [{"name": "message","type": "string"},{"name": "messageId","type": "uint"},{"name": "messageSender","type": "address"},{"name": "messageHashValue","type": "string"},{"name": "externalResource","type": "string"}],    
     "name": "NewMessage",
@@ -67,42 +55,30 @@ var BlogRegistryContract = web3.eth.contract([
 {"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "blogs","outputs": [
 { "name": "", "type": "address"}
 ],"type": "function"	},
-//
-
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
-//
-
-  {
-    "constant": false,
+{ "constant": false,
     "inputs": [{"name": "_name","type": "string"}],    
     "name": "registerBlog",
     "outputs": [{"name": "","type": "address"}],
-    "type": "function"
-  }
-,  {
-    "constant": false,
+    "type": "function" }
+,{ "constant": false,
     "inputs": [{"name": "_newManagerAddress","type": "address"}],    
     "name": "addManager",
     "outputs": [],
-    "type": "function"
-  }
-,  {
-    "constant": false,
+    "type": "function" }
+,{ "constant": false,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "removeManager",
     "outputs": [],
-    "type": "function"
-  }
-,  {
-    "constant": true,
+    "type": "function" }
+,{ "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
-    "type": "function"
-  }
- ,
+    "type": "function" }
+,
   { "constant": true,
     "inputs": [{"name": "index","type": "uint"},{"name": "name","type": "string"},{"name": "blogAddress","type": "address"}],    
     "name": "NewBlog",

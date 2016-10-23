@@ -19,42 +19,30 @@ var ShortBlogContract = web3.eth.contract([
 ,{ "name": "hashValue", "type": "string"}
 ,{ "name": "externalResource", "type": "string"}
 ],"type": "function"	},
-//
-
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
-//
-
-  {
-    "constant": false,
+{ "constant": false,
     "inputs": [{"name": "_newManagerAddress","type": "address"}],    
     "name": "addManager",
     "outputs": [],
-    "type": "function"
-  }
-,  {
-    "constant": false,
+    "type": "function" }
+,{ "constant": false,
     "inputs": [{"name": "message","type": "string"},{"name": "hash","type": "string"},{"name": "er","type": "string"}],    
     "name": "sendMessage",
     "outputs": [],
-    "type": "function"
-  }
-,  {
-    "constant": false,
+    "type": "function" }
+,{ "constant": false,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "removeManager",
     "outputs": [],
-    "type": "function"
-  }
-,  {
-    "constant": true,
+    "type": "function" }
+,{ "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
-    "type": "function"
-  }
- ,
+    "type": "function" }
+,
   { "constant": true,
     "inputs": [{"name": "message","type": "string"},{"name": "messageId","type": "uint"},{"name": "messageSender","type": "address"},{"name": "messageHashValue","type": "string"},{"name": "externalResource","type": "string"}],    
     "name": "NewMessage",
@@ -67,42 +55,30 @@ var BlogRegistryContract = web3.eth.contract([
 {"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "blogs","outputs": [
 { "name": "", "type": "address"}
 ],"type": "function"	},
-//
-
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
-//
-
-  {
-    "constant": false,
+{ "constant": false,
     "inputs": [{"name": "_name","type": "string"}],    
     "name": "registerBlog",
     "outputs": [{"name": "","type": "address"}],
-    "type": "function"
-  }
-,  {
-    "constant": false,
+    "type": "function" }
+,{ "constant": false,
     "inputs": [{"name": "_newManagerAddress","type": "address"}],    
     "name": "addManager",
     "outputs": [],
-    "type": "function"
-  }
-,  {
-    "constant": false,
+    "type": "function" }
+,{ "constant": false,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "removeManager",
     "outputs": [],
-    "type": "function"
-  }
-,  {
-    "constant": true,
+    "type": "function" }
+,{ "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
-    "type": "function"
-  }
- ,
+    "type": "function" }
+,
   { "constant": true,
     "inputs": [{"name": "index","type": "uint"},{"name": "name","type": "string"},{"name": "blogAddress","type": "address"}],    
     "name": "NewBlog",
@@ -139,6 +115,18 @@ this.contract = contract;
 	**/
 	this.getName = function(){
 		return contract.name(); 
+	}
+	/**
+	* Get the mapped value for a key.
+	*/
+	this.getManagers=function(key) {
+		return contract.managers(key);
+	}
+	/**
+	* Get the mapped value for a key.
+	*/
+	this.getMessages=function(key) {
+		return contract.messages(key);
 	}
 	/**
 	* Call addManager.
@@ -864,6 +852,18 @@ this.contract = contract;
 		return contract.mangerCount(); 
 	}
 	/**
+	* Get the mapped value for a key.
+	*/
+	this.getBlogs=function(key) {
+		return contract.blogs(key);
+	}
+	/**
+	* Get the mapped value for a key.
+	*/
+	this.getManagers=function(key) {
+		return contract.managers(key);
+	}
+	/**
 	* Call registerBlog.
 	**/
 	this.registerBlog = function(_name){
@@ -1461,6 +1461,8 @@ function PublishingPage(prefix) {
 	//Start of user code page_publishing_attributes
 	this.blogs = new ShortBlogGuiMananger(prefix);
 	this.registry = new BlogRegistryGuiMananger(prefix);
+	var self = this;
+	blogs = this.blogs;
 
 	//End of user code
 
@@ -1483,18 +1485,26 @@ this.createDefaultGui=function() {
 	this.blogs.displayGui();
 	this.blogs.updateGui();
 	
-	var self = this;
-	blogs = this.blogs;
+	this.sbguif = new ShortBlogGuiFactory();
+	
 	//End of user code
 }
 	//Start of user code page_Publishing_functions
 
 	this.eventHandle=function(result){
 		var bAddress = result.args.blogAddress;
-		var m = blogs.addManager(ShortBlogContract.at(bAddress));	
-		console.log('Event:'+m);
-		m.addGui();
-		m.updateGui();
+//		var m = blogs.addManager(ShortBlogContract.at(bAddress));	
+		console.log('Event:'+bAddress);
+		;
+		var event_NewMessage = ShortBlogContract.at(bAddress).NewMessage({},{fromBlock: 0});
+		event_NewMessage.watch(function(error,result){
+			if(!error){
+				
+					console.log(result);	
+			}});
+
+//		m.addGui();
+//		m.updateGui();
 	}
 
 	this.registry.eventCallback = this.eventHandle;
@@ -1515,11 +1525,39 @@ this.readDataFromContract=function() {
 		var count = manager.c.instance.blogCount();
 		for (var int = 0; int < count; int++) {
 			var bAddress = manager.c.instance.blogs(int);
-			this.blogs.addManager(ShortBlogContract.at(bAddress));			
+			console.log('added sb:'+bAddress);
+			this.blogs.addManager(ShortBlogContract.at(bAddress));
 		}
 	}}
 
+this.blogGui=function(guiF){
+	console.log('display user gui'+guiF.prefix);
 	
+	var txt = 		
+			'		    <div class="contract_attribute" id="'+guiF.prefix+'ShortBlog_contract_attribute_name">'
+	+		'		      <h3><div class="contract_attribute_value" id="'+guiF.prefix+'ShortBlog_name_value"> </div></h3>'
+	+		'		    </div>'
+	+'    <div class="contract_attribute" id="'+guiF.prefix+'ShortBlog_contract_attribute_messageCount"> messageCount:'
+	+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'ShortBlog_messageCount_value"> </span>'
+	+		'		    </div>'
+	+		'		    <div class="contract_attribute" id="'+guiF.prefix+'ShortBlog_contract_attribute_lastMessageDate"> lastMessageDate:'
+	+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'ShortBlog_lastMessageDate_value"> </span>'
+	+		'		    </div>'
+	+		'		    <div class="contract_attribute" id="'+guiF.prefix+'ShortBlog_contract_attribute_mangerCount"> mangerCount:'
+	+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'ShortBlog_mangerCount_value"> </span>'
+	+		'		    </div>'
+	+		'		'
+//	+guiF.createmessagesStructGui(guiF)
+//	+		'		    <button id="'+guiF.prefix+'ShortBlog_updateAttributes" onclick="'+guiF.prefix+'ShortBlogController._updateAttributes()">update ShortBlog attributes</button>'
+
+//+ guiF.createShortBlog_sendMessage_string_string_stringGui(guiF)
+		
+		//guiF.createAttributesGui()+
+	+'<div id="'+guiF.prefix+'eventLog" ></div>';
+	return guiF.createSeletonGui(txt); }
+
+//this.registry.guiFunction = this.displayUserGui;
+this.blogs.guiFunction = this.blogGui;
 
 
 this.clearGui=function(){
@@ -1544,13 +1582,12 @@ function PublishingReadPage(prefix) {
 	
 	this.setInnerHtml=function(txt,_id){
 		e = document.getElementById(_id);
-		if(e!==undefined){
+		if(e!==undefined && e!==null){
 			var elemDiv = document.createElement('div');
 			elemDiv.innerHTML = txt;
 			e.appendChild(elemDiv);
-
 		} else
-			console('element with id not found:'+id);
+			console.log('element with id not found:'+_id);
 		
 	}
 	
@@ -1558,7 +1595,7 @@ function PublishingReadPage(prefix) {
 	this.eventHandle=function(result){
 		console.log('add a new blog:'+result);
 		var bAddress = result.args.blogAddress;
-		self.blogs.addManager(ShortBlogContract.at(bAddress));
+//		self.blogs.addManager(ShortBlogContract.at(bAddress));
 		var txt = self.gf.createNewBlogLogDataGui("", "", "", result.args.index, result.args.name, result.args.blogAddress);
 		txt = self.shgf.createSeletonGui(txt);
 		self.setInnerHtml(txt, 'blogs-event');
@@ -1577,12 +1614,31 @@ function PublishingReadPage(prefix) {
 	}
 	this.blogs.eventCallback = this.blogEventHandle;
 	
+	
+	
+	this.readDataFromContract=function() {
+		for (i in this.registry.managers) {
+			var manager = this.registry.managers[i];
+			var count = manager.c.instance.blogCount();
+			for (var int = 0; int < count; int++) {
+				var bAddress = manager.c.instance.blogs(int);
+				console.log('added sb:'+bAddress);
+				this.blogs.addManager(ShortBlogContract.at(bAddress));
+				
+			}
+		}
+	}
+
+	
 	/**
 	* Places the default gui in the page.
 	**/
 	this.placeDefaultGui=function() {
-	this.createDefaultGui();
-	
+		//this.clearGui();
+		this.registry.displayGui();
+		this.registry.updateGui();
+		this.blogs.displayGui();
+		this.blogs.updateGui();
 	
 	}}
 

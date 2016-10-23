@@ -7,35 +7,27 @@
 {"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "m_ownerIndex","outputs": [
 { "name": "", "type": "uint"}
 ],"type": "function"	},
-//
-
 {"constant": true,"inputs": [{"name": "","type": "bytes32"}],"name": "m_pending","outputs": [
 { "name": "yetNeeded", "type": "uint"}
 ,{ "name": "ownersDone", "type": "uint"}
 ,{ "name": "index", "type": "uint"}
 ],"type": "function"	},
-  {
-    "constant": false,
+{ "constant": false,
     "inputs": [{"name": "_owners","type": "address"},{"name": "_required","type": "uint"}],    
     "name": "Multiowned",
     "outputs": [],
-    "type": "function"
-  }
-,  {
-    "constant": false,
+    "type": "function" }
+,{ "constant": false,
     "inputs": [{"name": "_addr","type": "address"}],    
     "name": "isOwner",
     "outputs": [{"name": "","type": "bool"}],
-    "type": "function"
-  }
-,  {
-    "constant": true,
+    "type": "function" }
+,{ "constant": true,
     "inputs": [{"name": "_operation","type": "bytes32"},{"name": "_owner","type": "address"}],    
     "name": "hasConfirmed",
     "outputs": [{"name": "","type": "bool"}],
-    "type": "function"
-  }
- ,
+    "type": "function" }
+,
   { "constant": true,
     "inputs": [{"name": "owner","type": "address"},{"name": "operation","type": "bytes32"}],    
     "name": "Confirmation",

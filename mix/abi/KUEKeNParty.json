@@ -5,59 +5,66 @@
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
-//
-
 {"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "organs","outputs": [
 { "name": "", "type": "address"}
 ],"type": "function"	},
-  {
-    "constant": false,
+{ "constant": false,
     "inputs": [],    
     "name": "KUEKeNParty",
     "outputs": [],
-    "type": "function"
-  }
-,  {
-    "constant": false,
+    "type": "function" }
+,{ "constant": false,
     "inputs": [{"name": "_newManagerAddress","type": "address"}],    
     "name": "addManager",
     "outputs": [],
-    "type": "function"
-  }
-,  {
-    "constant": false,
+    "type": "function" }
+,{ "constant": false,
     "inputs": [{"name": "fc","type": "address"},{"name": "br","type": "address"}],    
     "name": "boostrapParty",
     "outputs": [],
-    "type": "function"
-  }
-,  {
-    "constant": false,
+    "type": "function" }
+,{ "constant": false,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "removeManager",
     "outputs": [],
-    "type": "function"
-  }
-,  {
-    "constant": false,
+    "type": "function" }
+,{ "constant": false,
     "inputs": [{"name": "organName","type": "string"}],    
     "name": "createOrgan",
     "outputs": [],
-    "type": "function"
-  }
-,  {
-    "constant": true,
+    "type": "function" }
+,{ "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
-    "type": "function"
-  }
-,  {
-    "constant": false,
+    "type": "function" }
+,{ "constant": false,
     "inputs": [{"name": "_organ","type": "address"}],    
     "name": "addOrgan",
     "outputs": [],
+    "type": "function" }
+
+  ,{
+    "constant": true,
+    "inputs": [],    
+    "name": "getMemberRegistry",
+    "outputs": [{"name": "memberRegistry","type": "address"}],
     "type": "function"
   }
- 
+  ,{
+    "constant": false,
+    "inputs": [{"name": "aMemberRegistry","type": "address"}],    
+    "name": "setMemberRegistry",
+    "outputs": [],
+    "type": "function"
+  }
+
+  ,{
+    "constant": false,
+    "inputs": [{"name": "aBlogregistry","type": "address"}],    
+    "name": "setBlogregistry",
+    "outputs": [],
+    "type": "function"
+  }
+
 ]

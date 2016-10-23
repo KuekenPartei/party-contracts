@@ -28,8 +28,8 @@
 	function addOrganFunction(address _of,string _name) public  
 	function getOrganFunction(uint _id) public   constant returns (OrganFunction )
 
-inherites: [MemberAware](members#contract-memberaware)
-,[Manageable](basics#contract-manageable)
+inherites: [Manageable](basics#contract-manageable)
+,[MemberAware](members#contract-memberaware)
 
 
 An organ is part of the party, defined in the constitution.

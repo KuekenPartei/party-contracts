@@ -151,6 +151,12 @@ this.contract = contract;
 		return contract.mangerCount(); 
 	}
 	/**
+	* Get the mapped value for a key.
+	*/
+	this.getManagers=function(key) {
+		return contract.managers(key);
+	}
+	/**
 	* Call addManager.
 	**/
 	this.addManager = function(_newManagerAddress){
@@ -301,6 +307,18 @@ this.contract = contract;
 	**/
 	this.getM_pendingIndex = function(){
 		return contract.m_pendingIndex(); 
+	}
+	/**
+	* Get the mapped value for a key.
+	*/
+	this.getM_ownerIndex=function(key) {
+		return contract.m_ownerIndex(key);
+	}
+	/**
+	* Get the mapped value for a key.
+	*/
+	this.getM_pending=function(key) {
+		return contract.m_pending(key);
 	}
 	/**
 	* Call Multiowned.

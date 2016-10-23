@@ -11,6 +11,10 @@
 </script>
 
 <!-- Start of user code custom_party_scripts --> 
+<script type='text/javascript' src="js/publishing-main.js">
+</script>
+<script type='text/javascript' src="deployment.js">
+</script>
 
 <!-- End of user code -->
 
@@ -89,6 +93,8 @@
 <div id="eventLog" ></div>
 
 <!-- Start of user code custom_partyhtml --> 
+<div id="BlogRegistry-Gui" ></div>
+<div id="blogs-event" ></div>
 
 <!-- End of user code -->
 
@@ -97,8 +103,35 @@
 
 var c = new PartyPage('Party-Gui');
 //Start of user code page_Party_js_functions
-//web3.eth.defaultAccount = web3.eth.accounts[0] ;		
-//TODO: implement
+web3.eth.defaultAccount = web3.eth.accounts[0] ;		
+var co = contracts['KUEKeNParty'].contract;
+var br = contracts['BlogRegistry'].contract;
+
+var event = br.allEvents({}, {fromBlock: 16000000, toBlock: 'latest'})
+
+event.watch(function (err, result) {
+  if (err) console.log(err)
+  console.log(result)
+)
+
+var pp = new PublishingPage('BlogRegistry-Gui');
+blogEventHandle=function(result){
+	console.log('Event1:'+result);
+	var txt = self.shgf.createNewMessageLogDataGui("", "", "", 
+			result.args.message, result.args.messageId, 
+			result.args.messageSender, result.args.messageHashValue, 
+			result.args.externalResource);
+	txt = self.shgf.createSeletonGui(txt);
+	self.setInnerHtml(txt, 'entry-event');
+	};
+
+//pp.blogs.eventCallback = blogEventHandle;
+
+pp.registry.addManager(br);
+pp.readDataFromContract();
+
+c.bootstrap(co);
+pp.createDefaultGui();
 //End of user code
 c.createDefaultGui();
 

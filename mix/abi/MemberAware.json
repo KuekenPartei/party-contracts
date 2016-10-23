@@ -1,4 +1,12 @@
 [
 {"constant":true,"inputs":[],"name":"memberRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
- 
+
+  ,{
+    "constant": false,
+    "inputs": [{"name": "aMemberRegistry","type": "address"}],    
+    "name": "setMemberRegistry",
+    "outputs": [],
+    "type": "function"
+  }
+
 ]

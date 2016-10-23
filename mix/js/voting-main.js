@@ -15,42 +15,32 @@ var BallotContract = web3.eth.contract([
 ,{ "name": "delegate", "type": "address"}
 ,{ "name": "vote", "type": "uint"}
 ],"type": "function"	},
-  {
-    "constant": false,
+{ "constant": false,
     "inputs": [{"name": "name","type": "string"},{"name": "proposalNames","type": "bytes32"}],    
     "name": "Ballot",
     "outputs": [],
-    "type": "function"
-  }
-,  {
-    "constant": false,
+    "type": "function" }
+,{ "constant": false,
     "inputs": [{"name": "voter","type": "address"}],    
     "name": "giveRightToVote",
     "outputs": [],
-    "type": "function"
-  }
-,  {
-    "constant": false,
+    "type": "function" }
+,{ "constant": false,
     "inputs": [{"name": "to","type": "address"}],    
     "name": "delegateTo",
     "outputs": [],
-    "type": "function"
-  }
-,  {
-    "constant": false,
+    "type": "function" }
+,{ "constant": false,
     "inputs": [{"name": "proposal","type": "uint"}],    
     "name": "voteFor",
     "outputs": [],
-    "type": "function"
-  }
-,  {
-    "constant": false,
+    "type": "function" }
+,{ "constant": false,
     "inputs": [],    
     "name": "winningProposal",
     "outputs": [{"name": "winningProposal","type": "uint"}],
-    "type": "function"
-  }
- 
+    "type": "function" }
+
 ]);   
 
 
@@ -77,6 +67,12 @@ this.contract = contract;
 	**/
 	this.getBallotName = function(){
 		return contract.ballotName(); 
+	}
+	/**
+	* Get the mapped value for a key.
+	*/
+	this.getVoters=function(key) {
+		return contract.voters(key);
 	}
 	/**
 	* Call Ballot.

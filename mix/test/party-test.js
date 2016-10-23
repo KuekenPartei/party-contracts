@@ -53,6 +53,12 @@ this.contract = contract;
 		return contract.ballotCount(); 
 	}
 	/**
+	* Get the mapped value for a key.
+	*/
+	this.getManagers=function(key) {
+		return contract.managers(key);
+	}
+	/**
 	* Call getOrganFunction.
 	**/
 	this.getOrganFunction = function(_id){
@@ -355,6 +361,18 @@ this.contract = contract;
 		return contract.organCount(); 
 	}
 	/**
+	* Get the mapped value for a key.
+	*/
+	this.getManagers=function(key) {
+		return contract.managers(key);
+	}
+	/**
+	* Get the mapped value for a key.
+	*/
+	this.getOrgans=function(key) {
+		return contract.organs(key);
+	}
+	/**
 	* Call addManager.
 	**/
 	this.addManager = function(_newManagerAddress){
@@ -526,6 +544,18 @@ this.contract = contract;
 	**/
 	this.getOrganCount = function(){
 		return contract.organCount(); 
+	}
+	/**
+	* Get the mapped value for a key.
+	*/
+	this.getManagers=function(key) {
+		return contract.managers(key);
+	}
+	/**
+	* Get the mapped value for a key.
+	*/
+	this.getOrgans=function(key) {
+		return contract.organs(key);
 	}
 	/**
 	* Call KUEKeNParty.
@@ -777,6 +807,12 @@ this.contract = contract;
 	**/
 	this.getBallotCount = function(){
 		return contract.ballotCount(); 
+	}
+	/**
+	* Get the mapped value for a key.
+	*/
+	this.getManagers=function(key) {
+		return contract.managers(key);
 	}
 	/**
 	* Call accreditationMember.
@@ -1124,6 +1160,12 @@ this.contract = contract;
 		return contract.ballotCount(); 
 	}
 	/**
+	* Get the mapped value for a key.
+	*/
+	this.getManagers=function(key) {
+		return contract.managers(key);
+	}
+	/**
 	* Call accreditationMember.
 	**/
 	this.accreditationMember = function(_address){
@@ -1461,6 +1503,12 @@ this.contract = contract;
 	**/
 	this.getPublisher = function(){
 		return contract.publisher(); 
+	}
+	/**
+	* Get the mapped value for a key.
+	*/
+	this.getManagers=function(key) {
+		return contract.managers(key);
 	}
 	/**
 	* Call addManager.

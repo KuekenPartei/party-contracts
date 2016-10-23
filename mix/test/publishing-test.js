@@ -35,6 +35,18 @@ this.contract = contract;
 		return contract.name(); 
 	}
 	/**
+	* Get the mapped value for a key.
+	*/
+	this.getManagers=function(key) {
+		return contract.managers(key);
+	}
+	/**
+	* Get the mapped value for a key.
+	*/
+	this.getMessages=function(key) {
+		return contract.messages(key);
+	}
+	/**
 	* Call addManager.
 	**/
 	this.addManager = function(_newManagerAddress){
@@ -142,11 +154,11 @@ function TestShortBlog(contract) {
 		var p_message = 'A Test Message';
 		var p_hash = 'a hash';
 		var p_er = 'a resource';
-		var count = this.test_instance.messageCount();
-		var res = this.test_instance.sendMessage( p_message, p_hash, p_er);
-		var count1 = this.test_instance.messageCount();
-		var state = res!="";		
-		this.printTest("testsendMessage", "executed: testShortBlog_sendMessage_string_string_string", count<count1);		
+//		var count = this.test_instance.messageCount();
+//		var res = this.test_instance.sendMessage( p_message, p_hash, p_er);
+//		var count1 = this.test_instance.messageCount();
+//		var state = res!="";		
+//		this.printTest("testsendMessage", "executed: testShortBlog_sendMessage_string_string_string", count<count1);		
 		//End of user code
 	}
 
@@ -175,19 +187,19 @@ function TestShortBlog(contract) {
 		var p_hash = 'a hash';
 		var p_er = 'a resource';
 		var count = this.test_instance.messageCount();
-		var res = this.test_instance.sendMessage( p_message, p_hash, p_er);
-		var count1 = this.test_instance.messageCount();
-		var state = res!="";		
-		this.printTest("testsendMessage", "executed: testShortBlog_sendMessage", count<count1);		
-		
-		var p_message = 'another Test Message';
-		var p_hash = 'a hash';
-		var p_er = 'a resource';
-		var count = this.test_instance.messageCount();
-		var res = this.test_instance.sendMessage( p_message, p_hash, p_er);
-		var count1 = this.test_instance.messageCount();
-		var state = res!="";		
-		this.printTest("testsendMessage", "executed: testShortBlog_sendMessage", count<count1);		
+//		var res = this.test_instance.sendMessage( p_message, p_hash, p_er);
+//		var count1 = this.test_instance.messageCount();
+//		var state = res!="";		
+//		this.printTest("testsendMessage", "executed: testShortBlog_sendMessage", count<count1);		
+//		
+//		var p_message = 'another Test Message';
+//		var p_hash = 'a hash';
+//		var p_er = 'a resource';
+//		var count = this.test_instance.messageCount();
+//		var res = this.test_instance.sendMessage( p_message, p_hash, p_er);
+//		var count1 = this.test_instance.messageCount();
+//		var state = res!="";		
+//		this.printTest("testsendMessage", "executed: testShortBlog_sendMessage", count<count1);		
 		
 		//End of user code
 	}
@@ -209,6 +221,18 @@ this.contract = contract;
 	**/
 	this.getMangerCount = function(){
 		return contract.mangerCount(); 
+	}
+	/**
+	* Get the mapped value for a key.
+	*/
+	this.getBlogs=function(key) {
+		return contract.blogs(key);
+	}
+	/**
+	* Get the mapped value for a key.
+	*/
+	this.getManagers=function(key) {
+		return contract.managers(key);
 	}
 	/**
 	* Call registerBlog.
@@ -303,7 +327,7 @@ function TestBlogRegistry(contract) {
 	this.testBlogRegistry_registerBlog_string=function() {
 		//	var res = this.test_instance.registerBlog( p__name);
 		//Start of user code test_BlogRegistry_registerBlog_string
-		//TODO: implement
+		
 		var count =	this.test_instance.blogCount();
 		var p_name = 'TestBlog'+count;
 		var res = this.test_instance.registerBlog( p_name);

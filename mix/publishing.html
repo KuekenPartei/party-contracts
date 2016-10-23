@@ -81,10 +81,11 @@ web3.eth.defaultAccount = web3.eth.accounts[0];
 
 var co = contracts['BlogRegistry'].contract;
 c.registry.addManager(co);
-var r = new PublishingReadPage('Publishing-Gui');
-r.registry.addManager(co);
-
-//c.readDataFromContract();
+// var r = new PublishingReadPage('Publishing-Gui');
+// r.registry.addManager(co);
+// r.readDataFromContract();
+//r.placeDefaultGui();
+c.readDataFromContract();
 //End of user code
 c.createDefaultGui();
 

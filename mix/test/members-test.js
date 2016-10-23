@@ -29,6 +29,24 @@ this.contract = contract;
 		return contract.activeMemberCount(); 
 	}
 	/**
+	* Get the mapped value for a key.
+	*/
+	this.getManagers=function(key) {
+		return contract.managers(key);
+	}
+	/**
+	* Get the mapped value for a key.
+	*/
+	this.getPartyMembers=function(key) {
+		return contract.partyMembers(key);
+	}
+	/**
+	* Get the mapped value for a key.
+	*/
+	this.getMemberAddress=function(key) {
+		return contract.memberAddress(key);
+	}
+	/**
 	* Call addMember.
 	**/
 	this.addMember = function(name,_memberAddress){

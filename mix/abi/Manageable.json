@@ -3,30 +3,22 @@
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
-//
-
-  {
-    "constant": false,
+{ "constant": false,
     "inputs": [{"name": "_newManagerAddress","type": "address"}],    
     "name": "addManager",
     "outputs": [],
-    "type": "function"
-  }
-,  {
-    "constant": false,
+    "type": "function" }
+,{ "constant": false,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "removeManager",
     "outputs": [],
-    "type": "function"
-  }
-,  {
-    "constant": true,
+    "type": "function" }
+,{ "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
-    "type": "function"
-  }
- ,
+    "type": "function" }
+,
   { "constant": true,
     "inputs": [{"name": "_state","type": "uint"},{"name": "_address","type": "address"},{"name": "_managerCount","type": "uint"}],    
     "name": "ManagerChanged",

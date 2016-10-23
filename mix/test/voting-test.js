@@ -29,6 +29,12 @@ this.contract = contract;
 		return contract.ballotName(); 
 	}
 	/**
+	* Get the mapped value for a key.
+	*/
+	this.getVoters=function(key) {
+		return contract.voters(key);
+	}
+	/**
 	* Call Ballot.
 	**/
 	this.Ballot = function(name,proposalNames){
