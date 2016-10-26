@@ -1510,7 +1510,7 @@ function OrganManager(prefix,contract,containerId) {
 		var txt ='';
 //Start of user code Organ_create_gui_js
 		txt = txt + guifactory.createDefaultGui();
-//End of user code
+		// End of user code
 		return guifactory.createSeletonGui(txt);
 
 	}
@@ -1651,8 +1651,8 @@ function OrganGuiMananger(guiId){
 function OrganDeployment(guiId){
 	this.prefix = guiId;
 //Start of user code Organ_deployment_attributes_js
-//TODO: implement
-//End of user code
+	// TODO: implement
+	// End of user code
 
 	
 	/**
@@ -1660,13 +1660,13 @@ function OrganDeployment(guiId){
 	**/
 	this.deployDefault = function(){
 		//Start of user code Organ_deployDefault
-		//TODO: implement
-		//End of user code
+		// TODO: implement
+		// End of user code
 	}
 
 //Start of user code Organ_deployment_js
-//TODO: implement
-//End of user code
+	// TODO: implement
+	// End of user code
 }
 /**
 * A simple bean class around the contract.
@@ -2208,7 +2208,7 @@ function PartyManager(prefix,contract,containerId) {
 		var txt ='';
 //Start of user code Party_create_gui_js
 		txt = txt + guifactory.createDefaultGui();
-//End of user code
+		// End of user code
 		return guifactory.createSeletonGui(txt);
 
 	}
@@ -2349,8 +2349,8 @@ function PartyGuiMananger(guiId){
 function PartyDeployment(guiId){
 	this.prefix = guiId;
 //Start of user code Party_deployment_attributes_js
-//TODO: implement
-//End of user code
+	// TODO: implement
+	// End of user code
 
 
 	/**
@@ -2370,13 +2370,13 @@ function PartyDeployment(guiId){
 	**/
 	this.deployDefault = function(){
 		//Start of user code Party_deployDefault
-		//TODO: implement
-		//End of user code
+		// TODO: implement
+		// End of user code
 	}
 
 //Start of user code Party_deployment_js
-//TODO: implement
-//End of user code
+	// TODO: implement
+	// End of user code
 }
 /**
 * A simple bean class around the contract.
@@ -2978,7 +2978,7 @@ function KUEKeNPartyManager(prefix,contract,containerId) {
 		var txt ='';
 //Start of user code KUEKeNParty_create_gui_js
 		txt = txt + guifactory.createDefaultGui();
-//End of user code
+		// End of user code
 		return guifactory.createSeletonGui(txt);
 
 	}
@@ -3099,8 +3099,9 @@ function KUEKeNPartyDeployment(guiId){
 //Start of user code KUEKeNParty_deployment_attributes_js
 	this.br = null;
 	this.mr = null;
-	this.instance = KUEKeNPartyContract.at('0xeaefeb5cadc46f34d736529991059575bd989c77');
-//End of user code
+	this.instance = KUEKeNPartyContract
+			.at('0xeaefeb5cadc46f34d736529991059575bd989c77');
+	// End of user code
 
 	
 	/**
@@ -3108,27 +3109,25 @@ function KUEKeNPartyDeployment(guiId){
 	**/
 	this.deployDefault = function(){
 		//Start of user code KUEKeNParty_deployDefault
-		//TODO: implement
-		//End of user code
+		// TODO: implement
+		// End of user code
 	}
 
 //Start of user code KUEKeNParty_deployment_js
 
+	this.deploy = function() {
+		this.instance.setMemberRegistry(this.mr);
+		// this.instance.setBlogRegestry(this.br);
+		//	
+		// this.createOrgan("Buvo");
+		// this.createOrgan("Schiedgericht")
 
+	}
 
-this.deploy=function() {
-	this.instance.setMemberRegistry(this.mr);
-//	this.instance.setBlogRegestry(this.br);
-//	
-//	this.createOrgan("Buvo");
-//	this.createOrgan("Schiedgericht")
-	
-}
-
-this.createOrgan=function(name) {
-	this.instance.createOrgan(name);
-}
-//End of user code
+	this.createOrgan = function(name) {
+		this.instance.createOrgan(name);
+	}
+	// End of user code
 }
 /**
 * A simple bean class around the contract.
@@ -4145,7 +4144,7 @@ function ConferenceManager(prefix,contract,containerId) {
 		var txt ='';
 //Start of user code Conference_create_gui_js
 		txt = txt + guifactory.createDefaultGui();
-//End of user code
+		// End of user code
 		return guifactory.createSeletonGui(txt);
 
 	}
@@ -4275,8 +4274,8 @@ function ConferenceGuiMananger(guiId){
 function ConferenceDeployment(guiId){
 	this.prefix = guiId;
 //Start of user code Conference_deployment_attributes_js
-//TODO: implement
-//End of user code
+	// TODO: implement
+	// End of user code
 
 	
 	/**
@@ -4284,13 +4283,13 @@ function ConferenceDeployment(guiId){
 	**/
 	this.deployDefault = function(){
 		//Start of user code Conference_deployDefault
-		//TODO: implement
-		//End of user code
+		// TODO: implement
+		// End of user code
 	}
 
 //Start of user code Conference_deployment_js
-//TODO: implement
-//End of user code
+	// TODO: implement
+	// End of user code
 }
 /**
 * A simple bean class around the contract.
@@ -5292,7 +5291,7 @@ function FoundationConferenceManager(prefix,contract,containerId) {
 		var txt ='';
 //Start of user code FoundationConference_create_gui_js
 		txt = txt + guifactory.createDefaultGui();
-//End of user code
+		// End of user code
 		return guifactory.createSeletonGui(txt);
 
 	}
@@ -5411,8 +5410,8 @@ function FoundationConferenceGuiMananger(guiId){
 function FoundationConferenceDeployment(guiId){
 	this.prefix = guiId;
 //Start of user code FoundationConference_deployment_attributes_js
-//TODO: implement
-//End of user code
+	// TODO: implement
+	// End of user code
 
 	
 	/**
@@ -5420,13 +5419,13 @@ function FoundationConferenceDeployment(guiId){
 	**/
 	this.deployDefault = function(){
 		//Start of user code FoundationConference_deployDefault
-		//TODO: implement
-		//End of user code
+		// TODO: implement
+		// End of user code
 	}
 
 //Start of user code FoundationConference_deployment_js
-//TODO: implement
-//End of user code
+	// TODO: implement
+	// End of user code
 }
 /**
 * A simple bean class around the contract.
@@ -5963,7 +5962,7 @@ function OrganFunctionManager(prefix,contract,containerId) {
 		var txt ='';
 //Start of user code OrganFunction_create_gui_js
 		txt = txt + guifactory.createDefaultGui();
-//End of user code
+		// End of user code
 		return guifactory.createSeletonGui(txt);
 
 	}
@@ -6082,8 +6081,8 @@ function OrganFunctionGuiMananger(guiId){
 function OrganFunctionDeployment(guiId){
 	this.prefix = guiId;
 //Start of user code OrganFunction_deployment_attributes_js
-//TODO: implement
-//End of user code
+	// TODO: implement
+	// End of user code
 
 
 	/**
@@ -6103,13 +6102,13 @@ function OrganFunctionDeployment(guiId){
 	**/
 	this.deployDefault = function(){
 		//Start of user code OrganFunction_deployDefault
-		//TODO: implement
-		//End of user code
+		// TODO: implement
+		// End of user code
 	}
 
 //Start of user code OrganFunction_deployment_js
-//TODO: implement
-//End of user code
+	// TODO: implement
+	// End of user code
 }
 
 /**
@@ -6123,7 +6122,7 @@ function PartyPage(prefix) {
 	this.organ = new OrganGuiMananger(prefix);
 	this.organfunction = new OrganFunctionGuiMananger(prefix);
 
-	//End of user code
+	// End of user code
 
 	
 	/**
@@ -6138,40 +6137,129 @@ function PartyPage(prefix) {
 **/
 this.createDefaultGui=function() {
 	//Start of user code page_Party_create_default_gui_functions
-	this.party.displaySimpleGui();
-	this.party.updateGui();
-	this.organ.displaySimpleGui();
-	this.organ.updateGui();
-	this.organfunction.displaySimpleGui();
-	this.organfunction.updateGui();
-	
-//	this.blog.createDefaultGui();
-	//End of user code
+		this.party.displaySimpleGui();
+		this.party.updateGui();
+		this.organ.displaySimpleGui();
+		this.organ.updateGui();
+		this.organfunction.displaySimpleGui();
+		this.organfunction.updateGui();
+
+		// this.blog.createDefaultGui();
+		// End of user code
 }
 	//Start of user code page_Party_functions
-this.bootstrap=function(kp) {
-	this.party.addManager(kp);
-	this.pm = new KUEKeNPartyModel(kp);
-	var m = this.pm.getOrganCount();
-	for (i = 0; i < m; i++) {
-		var o = OrganContract.at(kp.organs(i));
-		this.organ.addManager(o);
-//		var om = new OrganModel(o);
-//		var ofc = om.getLastFunctionId();
-//		console.log('....'+ofc);
-//		for (var int = 0; int < ofc; int++) {
-//			var oof1 = OrganFunctionContract.at(om.getOrganFunction(int));
-//			console.log('....'+oof1+'#'+om.getOrganFunction(int));
-//			this.organfunction.addManager(oof1);
-//			
-//		}
-	} }
+	this.bootstrap = function(kp) {
+		this.party.addManager(kp);
+		this.pm = new KUEKeNPartyModel(kp);
+		var m = this.pm.getOrganCount();
+		for (i = 0; i < m; i++) {
+			var o = OrganContract.at(kp.organs(i));
+			this.organ.addManager(o);
+			// var om = new OrganModel(o);
+			// var ofc = om.getLastFunctionId();
+			// console.log('....'+ofc);
+			// for (var int = 0; int < ofc; int++) {
+			// var oof1 = OrganFunctionContract.at(om.getOrganFunction(int));
+			// console.log('....'+oof1+'#'+om.getOrganFunction(int));
+			// this.organfunction.addManager(oof1);
+			//			
+			// }
+		}
+	}
 
-
-	//End of user code
+	// End of user code
 
 }// end of PartyPage
 
 //Start of user code Party_custom_functions
 var deployer = new KUEKeNPartyDeployment("test");
+
+function KP() {
+	this.party = new KUEKeNPartyGuiMananger("KP");
+	this.organ = new OrganGuiMananger("Organ");
+	this.organfunction = new OrganFunctionGuiMananger("OF");
+	this.blogs = new ShortBlogGuiMananger("Blog");
+
+	this.bootstrap = function(kp) {
+		this.party.addManager(kp);
+		this.registerAllEvents(kp);
+		// this.pm = new KUEKeNPartyModel(kp);
+		var m = kp.organCount();
+		for (i = 0; i < m; i++) {
+			var o = OrganContract.at(kp.organs(i));
+			console.log('bootstrap:' + o.constructor.name);
+			this.registerAllEvents(o);
+			this.organ.addManager(o);
+			var sb = ShortBlogContract.at(o.getOrganBlog());
+			console.log('bootstrap sb:' + sb.constructor.name);
+			this.blogs.addManager(sb);
+			this.watchNewMessageEvents(sb);
+			this.registerAllEvents(sb);
+//			 var om = new OrganModel(o);
+//			 var ofc = om.getLastFunctionId();
+//			 console.log('....'+ofc);
+//			 for (var int = 0; int < ofc; int++) {
+//			 var oof1 = OrganFunctionContract.at(om.getOrganFunction(int));
+//			 console.log('....'+oof1+'#'+om.getOrganFunction(int));
+//			 this.organfunction.addManager(oof1);
+//			 this.watchNewMessageEvents(oof1);
+			 }
+		}
+	}
+
+	this.createDefaultGui = function() {
+		console.log('party');
+		this.party.displaySimpleGui();
+		this.party.updateGui();
+		console.log('organ');
+		this.organ.displaySimpleGui();
+		this.organ.updateGui();
+		console.log('OrganFunction')
+		this.organfunction.displaySimpleGui();
+		this.organfunction.updateGui();
+		console.log('blogs');
+		this.blogs.displaySimpleGui();
+		this.blogs.updateGui();
+	}
+
+	
+	this.registerAllEvents=function(contract){
+		console.log('register all events for:'+contract.address);
+		var event = contract.allEvents({}, {fromBlock: 0, toBlock: 'latest'})
+
+		event.watch(function (err, result) {
+		  if (err) console.log('error:'+err)
+		  
+		  for ( var m in result) {
+			  console.log('-->'+m.toString()+':'+result[m])
+			
+		}
+		})
+		
+	}
+	
+	/**
+	* Watch for the contract events.
+	* The events are stored in an element with the id this.eventlogPrefix+'eventLog'.
+	**/
+	this.watchNewMessageEvents=function(contract){
+	var event_NewMessage = contract.NewMessage({},{fromBlock: 0, toBlock: 'latest'});
+	event_NewMessage.watch(function(error,result){
+	if(!error){
+		  for ( var m in result) {
+			  console.log('NewMessage-->'+m.toString()+':'+result[m])
+			
+		}
+
+//		var gf = new ShortBlogGuiFactory('');
+//		gf.createNewMessageLogDataGui("", blockHash, blockNumber, message, messageId, messageSender, messageHashValue, externalResource)
+		}else
+			console.log(error);	
+	});
+	}
+
+	
+}
+
+
 //End of user code
