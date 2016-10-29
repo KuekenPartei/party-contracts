@@ -130,6 +130,12 @@ this.contract = contract;
 	this.addOrganFunction = function(_of,_name){
 		return contract.addOrganFunction(_of,_name); 
 	}
+	/**
+	* Call publishMessage.
+	**/
+	this.publishMessage = function(message,hash,er){
+		return contract.publishMessage(message,hash,er); 
+	}
 }// end of function OrganModel
 
 //test class for Organ
@@ -1533,6 +1539,12 @@ this.contract = contract;
 	**/
 	this.isManager = function(_managerAddress){
 		return contract.isManager(_managerAddress); 
+	}
+	/**
+	* Call publishMessage.
+	**/
+	this.publishMessage = function(message,hash,er){
+		return contract.publishMessage(message,hash,er); 
 	}
 }// end of function OrganFunctionModel
 

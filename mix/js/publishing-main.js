@@ -446,6 +446,7 @@ function ShortBlogController() {
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_isManager_address;
 		else console.log('Manageable_isManager_address widget not bound');
+
 	}
 
 	/**
@@ -494,17 +495,17 @@ function ShortBlogController() {
 		var e = document.getElementById(self.prefix+'ShortBlog_contract_attribute_managers_input');
 		if(e!=null){
 			var _key = e.value;
-			if(_key=='') return;
+			if(_key!='') {
 			var managers_res = self.instance.managers(_key);
 			if(managers_res!=null){
 				var e1 = document.getElementById(self.prefix+'ShortBlog_managers_value');
 				if(e1!=null)	
 					e1.innerText = managers_res;
-			}}
+			}}}
 		var e = document.getElementById(self.prefix+'ShortBlog_contract_attribute_messages_input');
 		if(e!=null){
 			var _key = e.value;
-			if(_key=='') return;
+			if(_key!='') {
 			var messages_res = self.instance.messages(_key);
 			if(messages_res!=null){
 			var e1 = document.getElementById(self.prefix+'ShortBlog_messages_message_value');
@@ -528,7 +529,7 @@ function ShortBlogController() {
 			var e1 = document.getElementById(self.prefix+'ShortBlog_messages_externalResource_value');
 			if(e1!=null)	
 				e1.innerText = messages_res[6];
-			}}
+			}}}
 	}
 
 	//call functions
@@ -610,7 +611,6 @@ function ShortBlogController() {
 	}
 	
 //delegated calls
-
 }// end controller	
 
 /**
@@ -1113,6 +1113,7 @@ function BlogRegistryController() {
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_isManager_address;
 		else console.log('Manageable_isManager_address widget not bound');
+
 	}
 
 	/**
@@ -1149,23 +1150,23 @@ function BlogRegistryController() {
 		var e = document.getElementById(self.prefix+'BlogRegistry_contract_attribute_blogs_input');
 		if(e!=null){
 			var _key = e.value;
-			if(_key=='') return;
+			if(_key!='') {
 			var blogs_res = self.instance.blogs(_key);
 			if(blogs_res!=null){
 				var e1 = document.getElementById(self.prefix+'BlogRegistry_blogs_value');
 				if(e1!=null)	
 					e1.innerText = blogs_res;
-			}}
+			}}}
 		var e = document.getElementById(self.prefix+'BlogRegistry_contract_attribute_managers_input');
 		if(e!=null){
 			var _key = e.value;
-			if(_key=='') return;
+			if(_key!='') {
 			var managers_res = self.instance.managers(_key);
 			if(managers_res!=null){
 				var e1 = document.getElementById(self.prefix+'BlogRegistry_managers_value');
 				if(e1!=null)	
 					e1.innerText = managers_res;
-			}}
+			}}}
 	}
 
 	//call functions
@@ -1240,7 +1241,6 @@ function BlogRegistryController() {
 	}
 	
 //delegated calls
-
 }// end controller	
 
 /**

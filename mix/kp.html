@@ -1,0 +1,120 @@
+<!doctype>
+<html>
+<head>
+<!--
+<script type='text/javascript' src="js/partyWeb3.js">
+</script>
+-->
+
+
+<script type='text/javascript' src="js/party-main.js">
+</script>
+
+<!-- Start of user code custom_party_scripts --> 
+<script type='text/javascript' src="js/publishing-main.js">
+</script>
+<script type='text/javascript' src="deployment.js">
+</script>
+
+<!-- End of user code -->
+
+<!-- start of style -->
+<style>
+.contract {
+	border-style: solid;
+	border-width: 1px;
+	margin-bottom: 4px;
+	} 
+.contract_attributes{
+	border-style: solid;
+	border-width: 1px;
+	} 
+.Struct_Mapping{}
+.Value_Mapping{}
+.contract_attribute{}
+.contract_attribute_value{}
+.function_execution{}
+.function_parameter{}
+.function_result{}
+.eventRow{
+	display: table-row;
+	width: auto;
+}
+.eventValue{	
+	float: left; /*fix for  buggy browsers*/
+	display: table-column;
+}
+
+</style>
+</head>
+<body bgcolor='#E6E6FA'>
+	<h1>Sample Interface for party</h1>
+<!--
+<div class="contract">Organ
+<div id="Organ_gui" ></div>
+</div>
+<div class="contract">Party
+<div id="Party_gui" ></div>
+</div>
+<div class="contract">KUEKeNParty
+<div id="KUEKeNParty_gui" ></div>
+</div>
+<div class="contract">Conference
+<div id="Conference_gui" ></div>
+</div>
+<div class="contract">FoundationConference
+<div id="FoundationConference_gui" ></div>
+</div>
+<div class="contract">OrganFunction
+<div id="OrganFunction_gui" ></div>
+</div>
+<div class="contract">test : Organ
+<div id="TestOrgan_gui" ></div>
+</div>
+<div class="contract">test : Party
+<div id="TestParty_gui" ></div>
+</div>
+<div class="contract">test : KUEKeNParty
+<div id="TestKUEKeNParty_gui" ></div>
+</div>
+<div class="contract">test : Conference
+<div id="TestConference_gui" ></div>
+</div>
+<div class="contract">test : FoundationConference
+<div id="TestFoundationConference_gui" ></div>
+</div>
+<div class="contract">test : OrganFunction
+<div id="TestOrganFunction_gui" ></div>
+</div>
+-->
+<div class="contract eventRow">test : party
+<div class="eventValue" id="KP" ></div>
+<div class="eventValue" id="Organ" ></div>
+<div class="eventValue" id="Blog" ></div>
+</div>
+<div id="eventLog" ></div>
+
+<!-- Start of user code custom_partyhtml --> 
+<div id="BlogRegistry-Gui" ></div>
+<div id="blogs-event" ></div>
+
+<!-- End of user code -->
+
+
+<script type='text/javascript'>
+
+var c = new KP('KP');
+//Start of user code page_Party_js_functions
+web3.eth.defaultAccount = web3.eth.accounts[0] ;		
+var co = contracts['KUEKeNParty'].contract;
+var br = contracts['BlogRegistry'].contract;
+
+
+c.bootstrap(co,br);
+//End of user code
+c.createDefaultGui();
+
+</script>
+
+</body>
+</html>

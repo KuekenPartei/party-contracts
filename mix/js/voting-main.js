@@ -372,6 +372,7 @@ function BallotController() {
 		if(btn!=undefined)
 			btn.onclick = this.Ballot_winningProposal;
 		else console.log('Ballot_winningProposal widget not bound');
+
 	}
 
 	/**
@@ -414,7 +415,7 @@ function BallotController() {
 		var e = document.getElementById(self.prefix+'Ballot_contract_attribute_voters_input');
 		if(e!=null){
 			var _key = e.value;
-			if(_key=='') return;
+			if(_key!=''){
 			var voters_res = self.instance.voters(_key);
 			if(voters_res!=null){
 			var e1 = document.getElementById(self.prefix+'Ballot_voters_weight_value');
@@ -429,7 +430,7 @@ function BallotController() {
 			var e1 = document.getElementById(self.prefix+'Ballot_voters_vote_value');
 			if(e1!=null)	
 				e1.innerText = voters_res[3];
-			}}
+			}}}
 	}
 
 	//call functions
@@ -503,7 +504,6 @@ function BallotController() {
 	}
 	
 //delegated calls
-
 }// end controller	
 
 /**

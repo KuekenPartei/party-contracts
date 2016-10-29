@@ -304,6 +304,7 @@ function OwnedController() {
 		if(btn!=undefined)
 			btn.onclick = this.Owned_kill;
 		else console.log('Owned_kill widget not bound');
+
 	}
 
 	/**
@@ -368,7 +369,6 @@ function OwnedController() {
 	}
 	
 //delegated calls
-
 }// end controller	
 
 /**
@@ -794,6 +794,7 @@ function ManageableController() {
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_isManager_address;
 		else console.log('Manageable_isManager_address widget not bound');
+
 	}
 
 	/**
@@ -824,13 +825,13 @@ function ManageableController() {
 		var e = document.getElementById(self.prefix+'Manageable_contract_attribute_managers_input');
 		if(e!=null){
 			var _key = e.value;
-			if(_key=='') return;
+			if(_key!='') {
 			var managers_res = self.instance.managers(_key);
 			if(managers_res!=null){
 				var e1 = document.getElementById(self.prefix+'Manageable_managers_value');
 				if(e1!=null)	
 					e1.innerText = managers_res;
-			}}
+			}}}
 	}
 
 	//call functions
@@ -889,7 +890,6 @@ function ManageableController() {
 	}
 	
 //delegated calls
-
 }// end controller	
 
 /**
@@ -1495,6 +1495,7 @@ function MultiownedController() {
 		if(btn!=undefined)
 			btn.onclick = this.Multiowned_hasConfirmed_bytes32_address;
 		else console.log('Multiowned_hasConfirmed_bytes32_address widget not bound');
+
 	}
 
 	/**
@@ -1549,17 +1550,17 @@ function MultiownedController() {
 		var e = document.getElementById(self.prefix+'Multiowned_contract_attribute_m_ownerIndex_input');
 		if(e!=null){
 			var _key = e.value;
-			if(_key=='') return;
+			if(_key!='') {
 			var m_ownerIndex_res = self.instance.m_ownerIndex(_key);
 			if(m_ownerIndex_res!=null){
 				var e1 = document.getElementById(self.prefix+'Multiowned_m_ownerIndex_value');
 				if(e1!=null)	
 					e1.innerText = m_ownerIndex_res;
-			}}
+			}}}
 		var e = document.getElementById(self.prefix+'Multiowned_contract_attribute_m_pending_input');
 		if(e!=null){
 			var _key = e.value;
-			if(_key=='') return;
+			if(_key!=''){
 			var m_pending_res = self.instance.m_pending(_key);
 			if(m_pending_res!=null){
 			var e1 = document.getElementById(self.prefix+'Multiowned_m_pending_yetNeeded_value');
@@ -1571,7 +1572,7 @@ function MultiownedController() {
 			var e1 = document.getElementById(self.prefix+'Multiowned_m_pending_index_value');
 			if(e1!=null)	
 				e1.innerText = m_pending_res[2];
-			}}
+			}}}
 	}
 
 	//call functions
@@ -1726,7 +1727,6 @@ function MultiownedController() {
 	}
 	
 //delegated calls
-
 }// end controller	
 
 /**

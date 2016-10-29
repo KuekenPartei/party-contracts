@@ -85,6 +85,7 @@ contract ShortBlog is Manageable {
 		 messages[messageCount].hashValue = hash;
 		 messages[messageCount].blockNumber=block.number;
 		 NewMessage(message,messageCount,msg.sender,hash,er);
+		 lastMessageDate= now;
 		 messageCount++;
 		//End of user code
 	}
@@ -123,7 +124,7 @@ contract BlogRegistry is Manageable {
 		ShortBlog sb = new ShortBlog(_name);
 		sb.addManager(msg.sender);
 		blogs[blogCount] = sb;
-		NewBlog(blogCount,_name,blogs[blogCount]);
+		NewBlog(blogCount,_name,sb);
 		blogCount++;
 		return sb; 
 		//End of user code

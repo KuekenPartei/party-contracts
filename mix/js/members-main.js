@@ -649,6 +649,7 @@ function MemberRegistryController() {
 		if(btn!=undefined)
 			btn.onclick = this.MemberRegistry_publishMemberEvent_address_uint;
 		else console.log('MemberRegistry_publishMemberEvent_address_uint widget not bound');
+
 	}
 
 	/**
@@ -691,17 +692,17 @@ function MemberRegistryController() {
 		var e = document.getElementById(self.prefix+'MemberRegistry_contract_attribute_managers_input');
 		if(e!=null){
 			var _key = e.value;
-			if(_key=='') return;
+			if(_key!='') {
 			var managers_res = self.instance.managers(_key);
 			if(managers_res!=null){
 				var e1 = document.getElementById(self.prefix+'MemberRegistry_managers_value');
 				if(e1!=null)	
 					e1.innerText = managers_res;
-			}}
+			}}}
 		var e = document.getElementById(self.prefix+'MemberRegistry_contract_attribute_partyMembers_input');
 		if(e!=null){
 			var _key = e.value;
-			if(_key=='') return;
+			if(_key!='') {
 			var partyMembers_res = self.instance.partyMembers(_key);
 			if(partyMembers_res!=null){
 			var e1 = document.getElementById(self.prefix+'MemberRegistry_partyMembers_name_value');
@@ -716,11 +717,11 @@ function MemberRegistryController() {
 			var e1 = document.getElementById(self.prefix+'MemberRegistry_partyMembers_state_value');
 			if(e1!=null)	
 				e1.innerText = partyMembers_res[3];
-			}}
+			}}}
 		var e = document.getElementById(self.prefix+'MemberRegistry_contract_attribute_memberAddress_input');
 		if(e!=null){
 			var _key = e.value;
-			if(_key=='') return;
+			if(_key!='') {
 			var memberAddress_res = self.instance.memberAddress(_key);
 			if(memberAddress_res!=null){
 			var e1 = document.getElementById(self.prefix+'MemberRegistry_memberAddress_name_value');
@@ -735,7 +736,7 @@ function MemberRegistryController() {
 			var e1 = document.getElementById(self.prefix+'MemberRegistry_memberAddress_state_value');
 			if(e1!=null)	
 				e1.innerText = memberAddress_res[3];
-			}}
+			}}}
 	}
 
 	//call functions
@@ -904,7 +905,6 @@ function MemberRegistryController() {
 	}
 	
 //delegated calls
-
 }// end controller	
 
 /**
@@ -1224,6 +1224,7 @@ function MemberAwareController() {
 		if(btn!=undefined)
 			btn.onclick = this._updateAttributes;
 		else console.log('_updateAttributes widget not bound');
+
 	}
 
 	/**
@@ -1272,7 +1273,6 @@ function MemberAwareController() {
 	}
 	
 //delegated calls
-
 }// end controller	
 
 /**

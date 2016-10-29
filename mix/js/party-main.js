@@ -686,6 +686,12 @@ this.contract = contract;
 	this.addOrganFunction = function(_of,_name){
 		return contract.addOrganFunction(_of,_name); 
 	}
+	/**
+	* Call publishMessage.
+	**/
+	this.publishMessage = function(message,hash,er){
+		return contract.publishMessage(message,hash,er); 
+	}
 }// end of function OrganModel
 
 /**
@@ -822,6 +828,14 @@ function OrganGuiFactory() {
 +		'			<div class="function_result" id="'+this.prefix+'Organ_addOrganFunction_address_string_res"></div>'
 +		'		  </div>'
 +		'		'
++		'		  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_MessagePublisher_publishMessage_string_string_string">'
++		'		Organ_publishMessage:'
++		'			  <div class="function_parameter">message<input type="text" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_message"></div>'
++		'			  <div class="function_parameter">hash<input type="text" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_hash"></div>'
++		'			  <div class="function_parameter">er<input type="text" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_er"></div>'
++		'			<button id="'+this.prefix+'OrganController.MessagePublisher_publishMessage_string_string_string" onclick="'+this.prefix+'OrganController.MessagePublisher_publishMessage_string_string_string()">execute Organ_publishMessage</button>'
++		'			<div class="function_result" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_res"></div>'
++		'		  </div>'
 +		'		</div>'
 ;
 	}
@@ -1016,6 +1030,21 @@ function OrganGuiFactory() {
 	}
 
 	/**
+	* Create the gui for the function publishMessage.
+	*/
+	this.createOrgan_publishMessage_string_string_stringGui=function() {
+		return 		'  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_MessagePublisher_publishMessage_string_string_string">'
++		'		Organ_publishMessage:'
++		'			  <div class="function_parameter">message<input type="text" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_message"></div>'
++		'			  <div class="function_parameter">hash<input type="text" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_hash"></div>'
++		'			  <div class="function_parameter">er<input type="text" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_er"></div>'
++		'			<button id="'+this.prefix+'OrganController.MessagePublisher_publishMessage_string_string_string" onclick="'+this.prefix+'OrganController.MessagePublisher_publishMessage_string_string_string()">execute Organ_publishMessage</button>'
++		'			<div class="function_result" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_res"></div>'
++		'		  </div>'
+;
+	}
+
+	/**
 	* Create a div with '@inner' as inner elements.
     * @inner - the inner text
 	*/
@@ -1150,6 +1179,12 @@ function OrganController() {
 		if(btn!=undefined)
 			btn.onclick = this.Organ_addOrganFunction_address_string;
 		else console.log('Organ_addOrganFunction_address_string widget not bound');
+		var btn = document.getElementById(self.prefix+'OrganController.MessagePublisher_publishMessage_string_string_string');
+		if(btn!=undefined)
+			btn.onclick = this.MessagePublisher_publishMessage_string_string_string;
+		else console.log('MessagePublisher_publishMessage_string_string_string widget not bound');
+
+
 	}
 
 	/**
@@ -1216,13 +1251,13 @@ function OrganController() {
 		var e = document.getElementById(self.prefix+'Organ_contract_attribute_managers_input');
 		if(e!=null){
 			var _key = e.value;
-			if(_key=='') return;
+			if(_key!='') {
 			var managers_res = self.instance.managers(_key);
 			if(managers_res!=null){
 				var e1 = document.getElementById(self.prefix+'Organ_managers_value');
 				if(e1!=null)	
 					e1.innerText = managers_res;
-			}}
+			}}}
 	}
 
 	//call functions
@@ -1445,8 +1480,30 @@ function OrganController() {
 		var res = self.instance.addOrganFunction(param__of, param__name);
 	}
 	
+	/**
+	* Calls the contract function Organ_publishMessage.
+	*
+	* this.prefix+'MessagePublisher_publishMessage_string_string_string_message' -
+	* this.prefix+'MessagePublisher_publishMessage_string_string_string_hash' -
+	* this.prefix+'MessagePublisher_publishMessage_string_string_string_er' -
+	**/
+	this.MessagePublisher_publishMessage_string_string_string=function() {
+		var e = document.getElementById(self.prefix+'MessagePublisher_publishMessage_string_string_string_message');
+		if(e!=null)
+			var param_message = e.value;
+		else console.log(self.prefix+'MessagePublisher_publishMessage_string_string_string_message not found');
+		var e = document.getElementById(self.prefix+'MessagePublisher_publishMessage_string_string_string_hash');
+		if(e!=null)
+			var param_hash = e.value;
+		else console.log(self.prefix+'MessagePublisher_publishMessage_string_string_string_hash not found');
+		var e = document.getElementById(self.prefix+'MessagePublisher_publishMessage_string_string_string_er');
+		if(e!=null)
+			var param_er = e.value;
+		else console.log(self.prefix+'MessagePublisher_publishMessage_string_string_string_er not found');
+		var res = self.instance.publishMessage(param_message, param_hash, param_er);
+	}
+	
 //delegated calls
-
 }// end controller	
 
 /**
@@ -2001,6 +2058,7 @@ function PartyController() {
 		if(btn!=undefined)
 			btn.onclick = this.Party_addOrgan_address;
 		else console.log('Party_addOrgan_address widget not bound');
+
 	}
 
 	/**
@@ -2043,23 +2101,23 @@ function PartyController() {
 		var e = document.getElementById(self.prefix+'Party_contract_attribute_managers_input');
 		if(e!=null){
 			var _key = e.value;
-			if(_key=='') return;
+			if(_key!='') {
 			var managers_res = self.instance.managers(_key);
 			if(managers_res!=null){
 				var e1 = document.getElementById(self.prefix+'Party_managers_value');
 				if(e1!=null)	
 					e1.innerText = managers_res;
-			}}
+			}}}
 		var e = document.getElementById(self.prefix+'Party_contract_attribute_organs_input');
 		if(e!=null){
 			var _key = document.getElementById(self.prefix+'Party_contract_attribute_organs_input').value;
-			if(_key=='') return;
+			if(_key!=''){
 			var organs_res = self.instance.organs(_key);
 			if(organs_res!=null){
 				var e1 = document.getElementById(self.prefix+'Party_organs_value');
 				if(e1!=null)	
 					e1.innerText = organs_res;
-			}}
+			}}}
 	}
 
 	//call functions
@@ -2144,7 +2202,6 @@ function PartyController() {
 	}
 	
 //delegated calls
-
 }// end controller	
 
 /**
@@ -2745,6 +2802,7 @@ function KUEKeNPartyController() {
 		if(btn!=undefined)
 			btn.onclick = this.Party_addOrgan_address;
 		else console.log('Party_addOrgan_address widget not bound');
+
 	}
 
 	/**
@@ -2787,23 +2845,23 @@ function KUEKeNPartyController() {
 		var e = document.getElementById(self.prefix+'KUEKeNParty_contract_attribute_managers_input');
 		if(e!=null){
 			var _key = e.value;
-			if(_key=='') return;
+			if(_key!='') {
 			var managers_res = self.instance.managers(_key);
 			if(managers_res!=null){
 				var e1 = document.getElementById(self.prefix+'KUEKeNParty_managers_value');
 				if(e1!=null)	
 					e1.innerText = managers_res;
-			}}
+			}}}
 		var e = document.getElementById(self.prefix+'KUEKeNParty_contract_attribute_organs_input');
 		if(e!=null){
 			var _key = document.getElementById(self.prefix+'KUEKeNParty_contract_attribute_organs_input').value;
-			if(_key=='') return;
+			if(_key!=''){
 			var organs_res = self.instance.organs(_key);
 			if(organs_res!=null){
 				var e1 = document.getElementById(self.prefix+'KUEKeNParty_organs_value');
 				if(e1!=null)	
 					e1.innerText = organs_res;
-			}}
+			}}}
 	}
 
 	//call functions
@@ -2914,7 +2972,6 @@ function KUEKeNPartyController() {
 	}
 	
 //delegated calls
-
 }// end controller	
 
 /**
@@ -3759,6 +3816,7 @@ function ConferenceController() {
 		if(btn!=undefined)
 			btn.onclick = this.Organ_addOrganFunction_address_string;
 		else console.log('Organ_addOrganFunction_address_string widget not bound');
+
 	}
 
 	/**
@@ -3837,13 +3895,13 @@ function ConferenceController() {
 		var e = document.getElementById(self.prefix+'Conference_contract_attribute_managers_input');
 		if(e!=null){
 			var _key = e.value;
-			if(_key=='') return;
+			if(_key!='') {
 			var managers_res = self.instance.managers(_key);
 			if(managers_res!=null){
 				var e1 = document.getElementById(self.prefix+'Conference_managers_value');
 				if(e1!=null)	
 					e1.innerText = managers_res;
-			}}
+			}}}
 	}
 
 	//call functions
@@ -4080,7 +4138,6 @@ function ConferenceController() {
 	}
 	
 //delegated calls
-
 }// end controller	
 
 /**
@@ -4906,6 +4963,7 @@ function FoundationConferenceController() {
 		if(btn!=undefined)
 			btn.onclick = this.Organ_addOrganFunction_address_string;
 		else console.log('Organ_addOrganFunction_address_string widget not bound');
+
 	}
 
 	/**
@@ -4984,13 +5042,13 @@ function FoundationConferenceController() {
 		var e = document.getElementById(self.prefix+'FoundationConference_contract_attribute_managers_input');
 		if(e!=null){
 			var _key = e.value;
-			if(_key=='') return;
+			if(_key!='') {
 			var managers_res = self.instance.managers(_key);
 			if(managers_res!=null){
 				var e1 = document.getElementById(self.prefix+'FoundationConference_managers_value');
 				if(e1!=null)	
 					e1.innerText = managers_res;
-			}}
+			}}}
 	}
 
 	//call functions
@@ -5227,7 +5285,6 @@ function FoundationConferenceController() {
 	}
 	
 //delegated calls
-
 }// end controller	
 
 /**
@@ -5511,6 +5568,12 @@ this.contract = contract;
 	this.isManager = function(_managerAddress){
 		return contract.isManager(_managerAddress); 
 	}
+	/**
+	* Call publishMessage.
+	**/
+	this.publishMessage = function(message,hash,er){
+		return contract.publishMessage(message,hash,er); 
+	}
 }// end of function OrganFunctionModel
 
 /**
@@ -5597,6 +5660,14 @@ function OrganFunctionGuiFactory() {
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_isManager_address_res"></div>'
 +		'		  </div>'
 +		'		'
++		'		  <div class="function_execution" id="'+this.prefix+'OrganFunction_contract_function_MessagePublisher_publishMessage_string_string_string">'
++		'		OrganFunction_publishMessage:'
++		'			  <div class="function_parameter">message<input type="text" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_message"></div>'
++		'			  <div class="function_parameter">hash<input type="text" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_hash"></div>'
++		'			  <div class="function_parameter">er<input type="text" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_er"></div>'
++		'			<button id="'+this.prefix+'OrganFunctionController.MessagePublisher_publishMessage_string_string_string" onclick="'+this.prefix+'OrganFunctionController.MessagePublisher_publishMessage_string_string_string()">execute OrganFunction_publishMessage</button>'
++		'			<div class="function_result" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_res"></div>'
++		'		  </div>'
 +		'		</div>'
 ;
 	}
@@ -5685,6 +5756,21 @@ function OrganFunctionGuiFactory() {
 	}
 
 	/**
+	* Create the gui for the function publishMessage.
+	*/
+	this.createOrganFunction_publishMessage_string_string_stringGui=function() {
+		return 		'  <div class="function_execution" id="'+this.prefix+'OrganFunction_contract_function_MessagePublisher_publishMessage_string_string_string">'
++		'		OrganFunction_publishMessage:'
++		'			  <div class="function_parameter">message<input type="text" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_message"></div>'
++		'			  <div class="function_parameter">hash<input type="text" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_hash"></div>'
++		'			  <div class="function_parameter">er<input type="text" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_er"></div>'
++		'			<button id="'+this.prefix+'OrganFunctionController.MessagePublisher_publishMessage_string_string_string" onclick="'+this.prefix+'OrganFunctionController.MessagePublisher_publishMessage_string_string_string()">execute OrganFunction_publishMessage</button>'
++		'			<div class="function_result" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_res"></div>'
++		'		  </div>'
+;
+	}
+
+	/**
 	* Create a div with '@inner' as inner elements.
     * @inner - the inner text
 	*/
@@ -5750,6 +5836,12 @@ function OrganFunctionController() {
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_isManager_address;
 		else console.log('Manageable_isManager_address widget not bound');
+		var btn = document.getElementById(self.prefix+'OrganFunctionController.MessagePublisher_publishMessage_string_string_string');
+		if(btn!=undefined)
+			btn.onclick = this.MessagePublisher_publishMessage_string_string_string;
+		else console.log('MessagePublisher_publishMessage_string_string_string widget not bound');
+
+
 	}
 
 	/**
@@ -5822,13 +5914,13 @@ function OrganFunctionController() {
 		var e = document.getElementById(self.prefix+'OrganFunction_contract_attribute_managers_input');
 		if(e!=null){
 			var _key = e.value;
-			if(_key=='') return;
+			if(_key!='') {
 			var managers_res = self.instance.managers(_key);
 			if(managers_res!=null){
 				var e1 = document.getElementById(self.prefix+'OrganFunction_managers_value');
 				if(e1!=null)	
 					e1.innerText = managers_res;
-			}}
+			}}}
 	}
 
 	//call functions
@@ -5897,8 +5989,30 @@ function OrganFunctionController() {
 			e.innerText = res;
 	}
 	
+	/**
+	* Calls the contract function OrganFunction_publishMessage.
+	*
+	* this.prefix+'MessagePublisher_publishMessage_string_string_string_message' -
+	* this.prefix+'MessagePublisher_publishMessage_string_string_string_hash' -
+	* this.prefix+'MessagePublisher_publishMessage_string_string_string_er' -
+	**/
+	this.MessagePublisher_publishMessage_string_string_string=function() {
+		var e = document.getElementById(self.prefix+'MessagePublisher_publishMessage_string_string_string_message');
+		if(e!=null)
+			var param_message = e.value;
+		else console.log(self.prefix+'MessagePublisher_publishMessage_string_string_string_message not found');
+		var e = document.getElementById(self.prefix+'MessagePublisher_publishMessage_string_string_string_hash');
+		if(e!=null)
+			var param_hash = e.value;
+		else console.log(self.prefix+'MessagePublisher_publishMessage_string_string_string_hash not found');
+		var e = document.getElementById(self.prefix+'MessagePublisher_publishMessage_string_string_string_er');
+		if(e!=null)
+			var param_er = e.value;
+		else console.log(self.prefix+'MessagePublisher_publishMessage_string_string_string_er not found');
+		var res = self.instance.publishMessage(param_message, param_hash, param_er);
+	}
+	
 //delegated calls
-
 }// end controller	
 
 /**
@@ -6008,6 +6122,7 @@ function OrganFunctionGuiMananger(guiId){
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
 	this.eventCallback = null;
+	this.managerMap = {};
 	
 	/**
 	* Add a contract to this manager.
@@ -6021,6 +6136,7 @@ function OrganFunctionGuiMananger(guiId){
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;
 		this.managers.push(m);
+		this.managerMap[contract.address] = m;
 		//manager.addGui();
 	}
 
@@ -6178,9 +6294,12 @@ function KP() {
 	this.party = new KUEKeNPartyGuiMananger("KP");
 	this.organ = new OrganGuiMananger("Organ");
 	this.organfunction = new OrganFunctionGuiMananger("OF");
+	this.registry = new BlogRegistryGuiMananger("BR");
 	this.blogs = new ShortBlogGuiMananger("Blog");
 
-	this.bootstrap = function(kp) {
+	this.bootstrap = function(kp,br) {
+		this.registerAllEvents(kp);
+		
 		this.party.addManager(kp);
 		this.registerAllEvents(kp);
 		// this.pm = new KUEKeNPartyModel(kp);
@@ -6203,9 +6322,17 @@ function KP() {
 //			 console.log('....'+oof1+'#'+om.getOrganFunction(int));
 //			 this.organfunction.addManager(oof1);
 //			 this.watchNewMessageEvents(oof1);
-			 }
+//			 }
 		}
 	}
+
+	this.organGuiSimple=function(guiF){
+//		var o = new OrganGuiFactory();
+		var txt = guiF.createAttributesGui()
+					+guiF.createOrgan_publishMessage_string_string_stringGui();
+		return guiF.createSeletonGui(txt);
+	}
+	this.organ.guiFunction = this.organGuiSimple;
 
 	this.createDefaultGui = function() {
 		console.log('party');
@@ -6256,10 +6383,7 @@ function KP() {
 		}else
 			console.log(error);	
 	});
-	}
-
-	
-}
+	}}// hack
 
 
 //End of user code
