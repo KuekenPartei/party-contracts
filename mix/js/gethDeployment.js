@@ -63,7 +63,7 @@ function setupKP(){
 	console.log('contracts[\'MemberRegistry\'].address = "'+mr.address+'";'); 
 	console.log('contracts[\'FoundationConference\'].address = "'+fc.address+'";'); 
 	console.log('contracts[\'Organ\'].address = "'+buvo.address+'";'); 
-	console.log('contracts[\'KUEKeNParty\'].address = "br.'+kp.address+'";'); // 'latest'
+	console.log('contracts[\'KUEKeNParty\'].address = "'+kp.address+'";'); // 'latest'
 
 	var kp_a = kp.address;
 	var fc_a = fc.address;

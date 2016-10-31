@@ -6301,6 +6301,111 @@ function setInnerHtml(txt,_id){
 		console.log('element with id not found:'+_id);}
 	
 
+function CustomGuis() {
+	this.shBlogGuiSimple=function(guiF){
+		var txt = '';//guiF.createAttributesGui();
+		txt = txt 
+		+		'		    <div class="contract_attribute" id="'+guiF.prefix+'ShortBlog_contract_attribute_name"> name:'
+		+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'ShortBlog_name_value"> </span>'
+		+		'		    </div>'
+		+'    <div class="contract_attribute" id="'+guiF.prefix+'ShortBlog_contract_attribute_messageCount"> messages '
+		+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'ShortBlog_messageCount_value"> </span>'
+		+		'		    </div>'
+		+		'		    <div class="contract_attribute" id="'+guiF.prefix+'ShortBlog_contract_attribute_lastMessageDate"> lastMessageDate:'
+		+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'ShortBlog_lastMessageDate_value"> </span>'
+		+		'		    </div>'
+		;
+		
+		txt = txt + '<div id="'+guiF.prefix+'-blogs-event" ></div>';
+		return guiF.createSeletonGui(txt);
+	}
+	this.organFGuiSimple=function(guiF){
+		var txt = guiF.createAttributesGui();
+		txt = txt + '<div id="'+guiF.prefix+'-Blog" ></div>';
+		return guiF.createSeletonGui(txt);
+	}
+	this.organGuiSimple=function(guiF){
+		var txt = guiF.createAttributesGui()
+					+guiF.createOrgan_publishMessage_string_string_stringGui();
+		txt = txt + '<div id="'+guiF.prefix+'-Blog" ></div>';
+		txt = txt + '<div id="'+guiF.prefix+'-OF" ></div>';
+		return guiF.createSeletonGui(txt);
+	}
+	
+}
+
+var customGui = new CustomGuis();
+
+function OrganGui(contract) {
+	this.prefix = contract.address;
+	this.organManager = new OrganManager(contract.address,contract,"Organ");
+	this.blog = new ShortBlogManager(contract.getOrganBlog(),ShortBlogContract.at(contract.getOrganBlog()),contract.address+"-Blog");
+	this.functions = {};
+	
+	this.organManager.guiFunction = customGui.organGuiSimple;
+	this.blog.guiFunction = customGui.shBlogGuiSimple;
+	
+	this.organFGuiSimple=function(guiF){
+		var txt = guiF.createAttributesGui();
+		txt = txt + '<div id="'+guiF.prefix+'-OF-Blog" ></div>';
+		txt = txt + '<div id="'+contract.address+'-OF" ></div>';
+		return guiF.createSeletonGui(txt);
+	}
+
+	
+	this.bootstrap = function(organ) {
+		var ofc = organ.lastFunctionId(); //om.getLastFunctionId();
+		for (var j = 0; j < ofc; j++) {
+			var oof1 = OrganFunctionContract.at(organ.getOrganFunction(j));
+			this.functions[oof1.address] = new OF(this.prefix,oof1);
+			this.functions[oof1.address].guiFunction = this.organFGuiSimple;
+		}
+		
+		this.organManager.watchEvents();
+		this.blog.watchEvents();
+
+	}
+
+	this.createDefaultGui = function() {
+		this.organManager.addGui(null);
+		this.blog.addGui(null)
+		this.organManager.updateGui();
+		this.blog.updateGui();
+		for ( var f in this.functions) {
+			this.functions[f].createDefaultGui();
+		}
+	}
+
+	this.bootstrap(contract);
+
+}
+
+function OF(ofprefix,contract) {
+	this.prefix = contract.address;
+	this.organfunction = new OrganFunctionManager(contract.address,contract,ofprefix+"-OF");
+	this.blog = new ShortBlogManager(contract.publisher(),ShortBlogContract.at(contract.publisher()),contract.address+"-Blog");
+	
+	this.organfunction.watchEvents();
+	this.blog.watchEvents();
+	
+	
+	//gui functions
+//	this.organFGuiSimple=function(guiF){
+//		var txt = guiF.createAttributesGui();
+//		txt = txt + '<div id="'+guiF.prefix+'-OF-Blog" ></div>';
+//		return guiF.createSeletonGui(txt);
+//	}
+	this.organfunction.guiFunction = customGui.organFGuiSimple;
+	this.blog.guiFunction = customGui.shBlogGuiSimple;
+	
+	this.createDefaultGui = function() {
+		this.organfunction.addGui(null);
+		this.blog.addGui(null)
+		this.organfunction.updateGui();
+		this.blog.updateGui();
+	}
+}
+
 
 
 function KP() {
@@ -6309,6 +6414,8 @@ function KP() {
 	this.organfunction = new OrganFunctionGuiMananger("OF");
 	this.registry = new BlogRegistryGuiMananger("BlogRegistry-Gui");
 	this.blogs = new ShortBlogGuiMananger("Blog");
+	this.of = {};
+	this.organs = {};
 	var self = this;
 
 	this.bootstrap = function(kp,br) {
@@ -6316,27 +6423,33 @@ function KP() {
 		this.registry.addManager(br);
 		
 		this.party.addManager(kp);
-		this.registerAllEvents(kp);
+//		this.registerAllEvents(kp);
 		var m = kp.organCount();
 		for (i = 0; i < m; i++) {
-			var o = OrganContract.at(kp.organs(i));
-			this.registerAllEvents(o);
-			this.organ.addManager(o);
-			var sb = ShortBlogContract.at(o.getOrganBlog());
-			this.blogs.addManager(sb);
-
-			var om = new OrganModel(o);
-			var ofc = o.lastFunctionId(); //om.getLastFunctionId();
-			for (var i = 0; i < ofc; i++) {
-				var oof1 = OrganFunctionContract.at(om.getOrganFunction(i));
-				this.organfunction.addManager(oof1);
-				this.blogs.addManager(ShortBlogContract.at(om.getOrganBlog()));
-			}
+			var oa = kp.organs(i);
+			var o = OrganContract.at(oa);
+			var o1 = new OrganGui(o);
+			this.organs[oa] = o1;
+			
+//			this.registerAllEvents(o);
+//			this.organ.addManager(o);
+//			var sb = ShortBlogContract.at(o.getOrganBlog());
+//			this.blogs.addManager(sb);
+//
+//			var om = new OrganModel(o);
+//			var ofc = o.lastFunctionId(); //om.getLastFunctionId();
+//			for (var j = 0; j < ofc; j++) {
+//				var oof1 = OrganFunctionContract.at(o.getOrganFunction(j));
+//				//this.organfunction.addManager(oof1);
+//				//this.blogs.addManager(ShortBlogContract.at(oof1.publisher()));
+//				this.of[oof1.address] = new OF(oof1);
+//			}
 		}
 	}
 
 	//event handlers
 	this.eventNewMessageHandle=function(result){
+		console.log('New Message');
 		var guiF = new ShortBlogGuiFactory();
 		var txt = guiF.createNewMessageLogDataGui("", "", "", result.args.message, result.args.messageId, result.args.messageSender, result.args.messageHashValue, result.args.externalResource);
 		txt = guiF.createSeletonGui(txt);
@@ -6353,7 +6466,7 @@ function KP() {
 		txt = guiF.createSeletonGui(txt);
 		setInnerHtml(txt, 'blogs-event');
 	}
-	this.registry.eventCallback = this.eventNewBlogHandle;
+	this.registry.eventNewBlog = this.eventNewBlogHandle;
 
 	//GUI functions
 	this.organGuiSimple=function(guiF){
@@ -6362,6 +6475,12 @@ function KP() {
 		return guiF.createSeletonGui(txt);
 	}
 	this.organ.guiFunction = this.organGuiSimple;
+	
+	this.organFGuiSimple=function(guiF){
+		var txt = guiF.createAttributesGui();
+		return guiF.createSeletonGui(txt);
+	}
+	this.organfunction.guiFunction = this.organFGuiSimple;
 
 	this.partyGuiSimple=function(guiF){
 		var txt = guiF.createAttributesGui()
@@ -6371,8 +6490,19 @@ function KP() {
 	this.party.guiFunction = this.partyGuiSimple;
 
 	this.shBlogGuiSimple=function(guiF){
-		var txt = guiF.createAttributesGui();
-		console.log('a-'+guiF.prefix);
+		var txt = '';//guiF.createAttributesGui();
+		txt = txt 
+		+		'		    <div class="contract_attribute" id="'+guiF.prefix+'ShortBlog_contract_attribute_name"> name:'
+		+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'ShortBlog_name_value"> </span>'
+		+		'		    </div>'
+		+'    <div class="contract_attribute" id="'+guiF.prefix+'ShortBlog_contract_attribute_messageCount"> messages '
+		+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'ShortBlog_messageCount_value"> </span>'
+		+		'		    </div>'
+		+		'		    <div class="contract_attribute" id="'+guiF.prefix+'ShortBlog_contract_attribute_lastMessageDate"> lastMessageDate:'
+		+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'ShortBlog_lastMessageDate_value"> </span>'
+		+		'		    </div>'
+		;
+		
 		txt = txt + '<div id="'+guiF.prefix+'-blogs-event" ></div>';
 		return guiF.createSeletonGui(txt);
 	}
@@ -6386,14 +6516,24 @@ function KP() {
 	this.createDefaultGui = function() {
 		this.party.displaySimpleGui();
 		this.party.updateGui();
-		this.organ.displaySimpleGui();
-		this.organ.updateGui();
-		this.organfunction.displaySimpleGui();
-		this.organfunction.updateGui();
-		this.blogs.displaySimpleGui();
-		this.blogs.updateGui();
+//		this.organ.displaySimpleGui();
+//		this.organ.updateGui();
+//		this.organfunction.displaySimpleGui();
+//		this.organfunction.updateGui();
+//		this.blogs.displaySimpleGui();
+//		this.blogs.updateGui();
 		this.registry.displaySimpleGui();
 		this.registry.updateGui();
+		
+		for ( var o in this.organs) {
+			this.organs[o].createDefaultGui();
+		}
+
+		
+//		for ( var w in this.of) {
+//			console.log('def gui:'+w);
+//			this.of[w].createDefaultGui();
+//		}
 	}
 
 	//register for all events at first
