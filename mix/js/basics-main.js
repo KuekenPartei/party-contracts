@@ -26,7 +26,7 @@ var OwnedContract = web3.eth.contract([
 ]);   
 // contractVariable for Manageable
 var ManageableContract = web3.eth.contract([
-{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
@@ -47,27 +47,27 @@ var ManageableContract = web3.eth.contract([
     "type": "function" }
 ,
   { "constant": true,
-    "inputs": [{"name": "_state","type": "uint"},{"name": "_address","type": "address"},{"name": "_managerCount","type": "uint"}],    
+    "inputs": [{"name": "_state","type": "uint256"},{"name": "_address","type": "address"},{"name": "_managerCount","type": "uint256"}],    
     "name": "ManagerChanged",
     "type": "event"  }
 ]);   
 // contractVariable for Multiowned
 var MultiownedContract = web3.eth.contract([
-{"constant":true,"inputs":[],"name":"m_required","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"m_numOwners","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"m_owners","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"c_maxOwners","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"m_required","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"m_numOwners","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"m_owners","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"c_maxOwners","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"m_pendingIndex","outputs":[{"name":"","type":"bytes32"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "m_ownerIndex","outputs": [
-{ "name": "", "type": "uint"}
+{"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "m_ownerIndex","outputs": [
+{ "name": "", "type": "uint256"}
 ],"type": "function"	},
 {"constant": true,"inputs": [{"name": "","type": "bytes32"}],"name": "m_pending","outputs": [
-{ "name": "yetNeeded", "type": "uint"}
-,{ "name": "ownersDone", "type": "uint"}
-,{ "name": "index", "type": "uint"}
+{ "name": "yetNeeded", "type": "uint256"}
+,{ "name": "ownersDone", "type": "uint256"}
+,{ "name": "index", "type": "uint256"}
 ],"type": "function"	},
 { "constant": false,
-    "inputs": [{"name": "_owners","type": "address"},{"name": "_required","type": "uint"}],    
+    "inputs": [{"name": "_owners","type": "address"},{"name": "_required","type": "uint256"}],    
     "name": "Multiowned",
     "outputs": [],
     "type": "function" }
@@ -103,7 +103,7 @@ var MultiownedContract = web3.eth.contract([
     "name": "OwnerRemoved",
     "type": "event"  }
 ,  { "constant": true,
-    "inputs": [{"name": "newRequirement","type": "uint"}],    
+    "inputs": [{"name": "newRequirement","type": "uint256"}],    
     "name": "RequirementChanged",
     "type": "event"  }
 ]);   
@@ -388,7 +388,6 @@ function OwnedManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
-	this.eventCallback = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -477,7 +476,7 @@ function OwnedGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
-	this.eventCallback = null;
+	this.managerMap = {};
 	
 	/**
 	* Add a contract to this manager.
@@ -486,12 +485,11 @@ function OwnedGuiMananger(guiId){
 	this.addManager = function(contract) {
 		var m = new OwnedManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
-		m.eventCallback = this.eventCallback;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;
 		this.managers.push(m);
-		//manager.addGui();
+		this.managerMap[contract.address] = m;
 	}
 
 	/**
@@ -909,7 +907,7 @@ function ManageableManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
-	this.eventCallback = null;
+	this.eventManagerChanged = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -989,7 +987,7 @@ function ManageableManager(prefix,contract,containerId) {
 	this.watchEvents=function(){
 	var event_ManagerChanged = this.getContract().ManagerChanged({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
-	var callback = this.eventCallback;
+	var callback = this.eventManagerChanged;
 	event_ManagerChanged.watch(function(error,result){
 	if(!error){
 		if(callback!=null)
@@ -1009,7 +1007,8 @@ function ManageableGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
-	this.eventCallback = null;
+	this.eventManagerChanged = null;
+	this.managerMap = {};
 	
 	/**
 	* Add a contract to this manager.
@@ -1018,12 +1017,12 @@ function ManageableGuiMananger(guiId){
 	this.addManager = function(contract) {
 		var m = new ManageableManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
-		m.eventCallback = this.eventCallback;
+		m.eventManagerChanged = this.eventManagerChanged;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;
 		this.managers.push(m);
-		//manager.addGui();
+		this.managerMap[contract.address] = m;
 	}
 
 	/**
@@ -1229,7 +1228,6 @@ function MultiownedGuiFactory() {
 +		'		      		<div class="contract_attribute_value" id="'+this.prefix+'Multiowned_m_ownerIndex_value"> </div>'
 +		'		    	</div>'
 +		'		  </div>'
-+		'		<!--struct -->'
 +		'		<div class="Struct_Mapping" id="'+this.prefix+'Struc_Multiowned_contract_attribute_m_pending">struc mapping  m_pending:'
 +		'				<input type="text" id="'+this.prefix+'Multiowned_contract_attribute_m_pending_input">(bytes32)'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'Multiowned_contract_attribute_m_pending_yetNeeded"> yetNeeded:'
@@ -1337,8 +1335,7 @@ function MultiownedGuiFactory() {
 	* Create the gui for the m_pending struct element.
 	*/
 	this.createm_pendingStructGui=function() {
-		return 		'<!--struct -->'
-+		'		<div class="Struct_Mapping" id="'+this.prefix+'Struc_Multiowned_contract_attribute_m_pending">struc mapping  m_pending:'
+		return 		'<div class="Struct_Mapping" id="'+this.prefix+'Struc_Multiowned_contract_attribute_m_pending">struc mapping  m_pending:'
 +		'				<input type="text" id="'+this.prefix+'Multiowned_contract_attribute_m_pending_input">(bytes32)'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'Multiowned_contract_attribute_m_pending_yetNeeded"> yetNeeded:'
 +		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'Multiowned_m_pending_yetNeeded_value"> </div>'
@@ -1446,6 +1443,22 @@ function MultiownedGuiFactory() {
 		return '<div class="eventRow">'
         +'<div class="eventValue">'+newRequirement+'</div>'
         +' </div>';
+	}
+	/**
+	* Create the gui for the function Struc Multiowned-m_pending.
+	*/
+	this.createStruc_Multiowned_contract_attribute_m_pendingGui=function(struct) {
+		return '<div class="Struct_Mapping" id='+this.prefix+'"Struc_Multiowned_contract_attribute_m_pending">'
+    		+'<div class="Struct_attribute" id='+this.prefix+'"Multiowned_contract_attribute_m_pending_yetNeeded"> yetNeeded:'
+      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"Multiowned_m_pending_yetNeeded_value">'+struct.yetNeeded()+'</div>'
+    		+'</div>'
+    		+'<div class="Struct_attribute" id='+this.prefix+'"Multiowned_contract_attribute_m_pending_ownersDone"> ownersDone:'
+      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"Multiowned_m_pending_ownersDone_value">'+struct.ownersDone()+'</div>'
+    		+'</div>'
+    		+'<div class="Struct_attribute" id='+this.prefix+'"Multiowned_contract_attribute_m_pending_index"> index:'
+      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"Multiowned_m_pending_index_value">'+struct.index()+'</div>'
+    		+'</div>'
+  		+'</div>';
 	}
 
 }//end guifactory
@@ -1746,7 +1759,12 @@ function MultiownedManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
-	this.eventCallback = null;
+	this.eventConfirmation = null;
+	this.eventRevoke = null;
+	this.eventOwnerChanged = null;
+	this.eventOwnerAdded = null;
+	this.eventOwnerRemoved = null;
+	this.eventRequirementChanged = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -1826,7 +1844,7 @@ function MultiownedManager(prefix,contract,containerId) {
 	this.watchEvents=function(){
 	var event_Confirmation = this.getContract().Confirmation({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
-	var callback = this.eventCallback;
+	var callback = this.eventConfirmation;
 	event_Confirmation.watch(function(error,result){
 	if(!error){
 		if(callback!=null)
@@ -1837,7 +1855,7 @@ function MultiownedManager(prefix,contract,containerId) {
 	});
 	var event_Revoke = this.getContract().Revoke({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
-	var callback = this.eventCallback;
+	var callback = this.eventRevoke;
 	event_Revoke.watch(function(error,result){
 	if(!error){
 		if(callback!=null)
@@ -1848,7 +1866,7 @@ function MultiownedManager(prefix,contract,containerId) {
 	});
 	var event_OwnerChanged = this.getContract().OwnerChanged({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
-	var callback = this.eventCallback;
+	var callback = this.eventOwnerChanged;
 	event_OwnerChanged.watch(function(error,result){
 	if(!error){
 		if(callback!=null)
@@ -1859,7 +1877,7 @@ function MultiownedManager(prefix,contract,containerId) {
 	});
 	var event_OwnerAdded = this.getContract().OwnerAdded({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
-	var callback = this.eventCallback;
+	var callback = this.eventOwnerAdded;
 	event_OwnerAdded.watch(function(error,result){
 	if(!error){
 		if(callback!=null)
@@ -1870,7 +1888,7 @@ function MultiownedManager(prefix,contract,containerId) {
 	});
 	var event_OwnerRemoved = this.getContract().OwnerRemoved({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
-	var callback = this.eventCallback;
+	var callback = this.eventOwnerRemoved;
 	event_OwnerRemoved.watch(function(error,result){
 	if(!error){
 		if(callback!=null)
@@ -1881,7 +1899,7 @@ function MultiownedManager(prefix,contract,containerId) {
 	});
 	var event_RequirementChanged = this.getContract().RequirementChanged({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
-	var callback = this.eventCallback;
+	var callback = this.eventRequirementChanged;
 	event_RequirementChanged.watch(function(error,result){
 	if(!error){
 		if(callback!=null)
@@ -1901,7 +1919,13 @@ function MultiownedGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
-	this.eventCallback = null;
+	this.eventConfirmation = null;
+	this.eventRevoke = null;
+	this.eventOwnerChanged = null;
+	this.eventOwnerAdded = null;
+	this.eventOwnerRemoved = null;
+	this.eventRequirementChanged = null;
+	this.managerMap = {};
 	
 	/**
 	* Add a contract to this manager.
@@ -1910,12 +1934,17 @@ function MultiownedGuiMananger(guiId){
 	this.addManager = function(contract) {
 		var m = new MultiownedManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
-		m.eventCallback = this.eventCallback;
+		m.eventConfirmation = this.eventConfirmation;
+		m.eventRevoke = this.eventRevoke;
+		m.eventOwnerChanged = this.eventOwnerChanged;
+		m.eventOwnerAdded = this.eventOwnerAdded;
+		m.eventOwnerRemoved = this.eventOwnerRemoved;
+		m.eventRequirementChanged = this.eventRequirementChanged;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;
 		this.managers.push(m);
-		//manager.addGui();
+		this.managerMap[contract.address] = m;
 	}
 
 	/**

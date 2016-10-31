@@ -8,22 +8,22 @@
 var OrganContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"memberRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"organName","outputs":[{"name":"","type":"string"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"lastFunctionId","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"lastFunctionId","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"blogRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"isActive","outputs":[{"name":"","type":"bool"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"ballotCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"ballotCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
-{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "ballots","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "ballots","outputs": [
 { "name": "", "type": "address"}
 ],"type": "function"	},
-{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "organFunctions","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "organFunctions","outputs": [
 { "name": "", "type": "address"}
 ],"type": "function"	},
 { "constant": true,
-    "inputs": [{"name": "_id","type": "uint"}],    
+    "inputs": [{"name": "_id","type": "uint256"}],    
     "name": "getOrganFunction",
     "outputs": [{"name": "","type": "address"}],
     "type": "function" }
@@ -33,7 +33,7 @@ var OrganContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,{ "constant": false,
-    "inputs": [{"name": "_id","type": "uint"},{"name": "_address","type": "address"}],    
+    "inputs": [{"name": "_id","type": "uint256"},{"name": "_address","type": "address"}],    
     "name": "changeMember",
     "outputs": [],
     "type": "function" }
@@ -58,14 +58,14 @@ var OrganContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,{ "constant": false,
-    "inputs": [{"name": "id","type": "uint"},{"name": "message","type": "string"},{"name": "hash","type": "string"},{"name": "er","type": "string"}],    
+    "inputs": [{"name": "id","type": "uint256"},{"name": "message","type": "string"},{"name": "hash","type": "string"},{"name": "er","type": "string"}],    
     "name": "publishFunctionMessage",
     "outputs": [],
     "type": "function" }
 ,{ "constant": false,
     "inputs": [{"name": "name","type": "string"},{"name": "proposalNames","type": "bytes32"}],    
     "name": "createBallot",
-    "outputs": [{"name": "","type": "uint"}],
+    "outputs": [{"name": "","type": "uint256"}],
     "type": "function" }
 ,{ "constant": true,
     "inputs": [],    
@@ -89,11 +89,11 @@ var OrganContract = web3.eth.contract([
     "type": "function" }
 ,
   { "constant": true,
-    "inputs": [{"name": "oldMember","type": "address"},{"name": "functionId","type": "uint"},{"name": "newMember","type": "address"}],    
+    "inputs": [{"name": "oldMember","type": "address"},{"name": "functionId","type": "uint256"},{"name": "newMember","type": "address"}],    
     "name": "FunctionMemberChange",
     "type": "event"  }
 ,  { "constant": true,
-    "inputs": [{"name": "_type","type": "uint"},{"name": "_function","type": "address"}],    
+    "inputs": [{"name": "_type","type": "uint256"},{"name": "_function","type": "address"}],    
     "name": "FunctionChange",
     "type": "event"  }
   ,{
@@ -130,13 +130,13 @@ var OrganContract = web3.eth.contract([
 ]);   
 // contractVariable for Party
 var PartyContract = web3.eth.contract([
-{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"constitutionHash","outputs":[{"name":"","type":"string"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"organCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"organCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
-{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "organs","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "organs","outputs": [
 { "name": "", "type": "address"}
 ],"type": "function"	},
 { "constant": false,
@@ -170,7 +170,7 @@ var PartyContract = web3.eth.contract([
     "name": "ConstiutionChange",
     "type": "event"  }
 ,  { "constant": true,
-    "inputs": [{"name": "_organ","type": "address"},{"name": "_changeType","type": "uint"}],    
+    "inputs": [{"name": "_organ","type": "address"},{"name": "_changeType","type": "uint256"}],    
     "name": "OrganChanged",
     "type": "event"  }
   ,{
@@ -199,13 +199,13 @@ var PartyContract = web3.eth.contract([
 ]);   
 // contractVariable for KUEKeNParty
 var KUEKeNPartyContract = web3.eth.contract([
-{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"constitutionHash","outputs":[{"name":"","type":"string"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"organCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"organCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
-{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "organs","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "organs","outputs": [
 { "name": "", "type": "address"}
 ],"type": "function"	},
 { "constant": false,
@@ -272,17 +272,17 @@ var KUEKeNPartyContract = web3.eth.contract([
 var ConferenceContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"memberRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"organName","outputs":[{"name":"","type":"string"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"accreditatedMembers","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"lastFunctionId","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"accreditatedMembers","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"lastFunctionId","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"blogRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"date","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"date","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"isActive","outputs":[{"name":"","type":"bool"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"ballotCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"ballotCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
-{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "organFunctions","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "organFunctions","outputs": [
 { "name": "", "type": "address"}
 ],"type": "function"	},
 { "constant": false,
@@ -291,7 +291,7 @@ var ConferenceContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,{ "constant": true,
-    "inputs": [{"name": "_id","type": "uint"}],    
+    "inputs": [{"name": "_id","type": "uint256"}],    
     "name": "getOrganFunction",
     "outputs": [{"name": "","type": "address"}],
     "type": "function" }
@@ -301,7 +301,7 @@ var ConferenceContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,{ "constant": false,
-    "inputs": [{"name": "_id","type": "uint"},{"name": "_address","type": "address"}],    
+    "inputs": [{"name": "_id","type": "uint256"},{"name": "_address","type": "address"}],    
     "name": "changeMember",
     "outputs": [],
     "type": "function" }
@@ -326,14 +326,14 @@ var ConferenceContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,{ "constant": false,
-    "inputs": [{"name": "id","type": "uint"},{"name": "message","type": "string"},{"name": "hash","type": "string"},{"name": "er","type": "string"}],    
+    "inputs": [{"name": "id","type": "uint256"},{"name": "message","type": "string"},{"name": "hash","type": "string"},{"name": "er","type": "string"}],    
     "name": "publishFunctionMessage",
     "outputs": [],
     "type": "function" }
 ,{ "constant": false,
     "inputs": [{"name": "name","type": "string"},{"name": "proposalNames","type": "bytes32"}],    
     "name": "createBallot",
-    "outputs": [{"name": "","type": "uint"}],
+    "outputs": [{"name": "","type": "uint256"}],
     "type": "function" }
 ,{ "constant": true,
     "inputs": [],    
@@ -352,7 +352,7 @@ var ConferenceContract = web3.eth.contract([
     "type": "function" }
 ,
   { "constant": true,
-    "inputs": [{"name": "memberId","type": "uint"},{"name": "memberName","type": "string"},{"name": "memberAddress","type": "address"}],    
+    "inputs": [{"name": "memberId","type": "uint256"},{"name": "memberName","type": "string"},{"name": "memberAddress","type": "address"}],    
     "name": "MemberAccreditated",
     "type": "event"  }
   ,{
@@ -391,17 +391,17 @@ var ConferenceContract = web3.eth.contract([
 var FoundationConferenceContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"memberRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"organName","outputs":[{"name":"","type":"string"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"accreditatedMembers","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"lastFunctionId","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"accreditatedMembers","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"lastFunctionId","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"blogRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"date","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"date","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"isActive","outputs":[{"name":"","type":"bool"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"ballotCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"ballotCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
-{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "organFunctions","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "organFunctions","outputs": [
 { "name": "", "type": "address"}
 ],"type": "function"	},
 { "constant": false,
@@ -410,7 +410,7 @@ var FoundationConferenceContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,{ "constant": true,
-    "inputs": [{"name": "_id","type": "uint"}],    
+    "inputs": [{"name": "_id","type": "uint256"}],    
     "name": "getOrganFunction",
     "outputs": [{"name": "","type": "address"}],
     "type": "function" }
@@ -420,7 +420,7 @@ var FoundationConferenceContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,{ "constant": false,
-    "inputs": [{"name": "_id","type": "uint"},{"name": "_address","type": "address"}],    
+    "inputs": [{"name": "_id","type": "uint256"},{"name": "_address","type": "address"}],    
     "name": "changeMember",
     "outputs": [],
     "type": "function" }
@@ -445,14 +445,14 @@ var FoundationConferenceContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,{ "constant": false,
-    "inputs": [{"name": "id","type": "uint"},{"name": "message","type": "string"},{"name": "hash","type": "string"},{"name": "er","type": "string"}],    
+    "inputs": [{"name": "id","type": "uint256"},{"name": "message","type": "string"},{"name": "hash","type": "string"},{"name": "er","type": "string"}],    
     "name": "publishFunctionMessage",
     "outputs": [],
     "type": "function" }
 ,{ "constant": false,
     "inputs": [{"name": "name","type": "string"},{"name": "proposalNames","type": "bytes32"}],    
     "name": "createBallot",
-    "outputs": [{"name": "","type": "uint"}],
+    "outputs": [{"name": "","type": "uint256"}],
     "type": "function" }
 ,{ "constant": true,
     "inputs": [],    
@@ -506,11 +506,11 @@ var FoundationConferenceContract = web3.eth.contract([
 var OrganFunctionContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"currentMember","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"functionName","outputs":[{"name":"","type":"string"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"id","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"id","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"constitutionHash","outputs":[{"name":"","type":"string"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"lastMemberChanged","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"lastConstitutionHashChanged","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"lastMemberChanged","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"lastConstitutionHashChanged","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"publisher","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}

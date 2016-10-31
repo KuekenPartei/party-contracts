@@ -6,18 +6,18 @@
 **/
 // contractVariable for MemberRegistry
 var MemberRegistryContract = web3.eth.contract([
-{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"partyMemberCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"activeMemberCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "partyMembers","outputs": [
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"partyMemberCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"activeMemberCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "partyMembers","outputs": [
 { "name": "name", "type": "string"}
-,{ "name": "id", "type": "uint"}
+,{ "name": "id", "type": "uint256"}
 ,{ "name": "member", "type": "address"}
 ,{ "name": "state", "type": "MemberState"}
 ],"type": "function"	},
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "memberAddress","outputs": [
 { "name": "name", "type": "string"}
-,{ "name": "id", "type": "uint"}
+,{ "name": "id", "type": "uint256"}
 ,{ "name": "member", "type": "address"}
 ,{ "name": "state", "type": "MemberState"}
 ],"type": "function"	},
@@ -35,14 +35,14 @@ var MemberRegistryContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,{ "constant": false,
-    "inputs": [{"name": "id","type": "uint"}],    
+    "inputs": [{"name": "id","type": "uint256"}],    
     "name": "unregisterMember",
     "outputs": [],
     "type": "function" }
 ,{ "constant": true,
     "inputs": [],    
     "name": "getMemberCount",
-    "outputs": [{"name": "","type": "uint"}],
+    "outputs": [{"name": "","type": "uint256"}],
     "type": "function" }
 ,{ "constant": false,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
@@ -60,23 +60,23 @@ var MemberRegistryContract = web3.eth.contract([
     "outputs": [{"name": "","type": "bool"}],
     "type": "function" }
 ,{ "constant": false,
-    "inputs": [{"name": "id","type": "uint"},{"name": "_newMemberAddress","type": "address"}],    
+    "inputs": [{"name": "id","type": "uint256"},{"name": "_newMemberAddress","type": "address"}],    
     "name": "changeMemberAddress",
     "outputs": [],
     "type": "function" }
 ,{ "constant": true,
     "inputs": [{"name": "_address","type": "address"}],    
     "name": "getMemberData",
-    "outputs": [{"name": "name","type": "string"},{"name": "id","type": "uint"}],
+    "outputs": [{"name": "name","type": "string"},{"name": "id","type": "uint256"}],
     "type": "function" }
 ,{ "constant": false,
-    "inputs": [{"name": "mAddress","type": "address"},{"name": "eventType","type": "uint"}],    
+    "inputs": [{"name": "mAddress","type": "address"},{"name": "eventType","type": "uint256"}],    
     "name": "publishMemberEvent",
     "outputs": [],
     "type": "function" }
 ,
   { "constant": true,
-    "inputs": [{"name": "mAddress","type": "address"},{"name": "eType","type": "EventType"},{"name": "id","type": "uint"},{"name": "name","type": "string"},{"name": "memberState","type": "MemberState"}],    
+    "inputs": [{"name": "mAddress","type": "address"},{"name": "eType","type": "EventType"},{"name": "id","type": "uint256"},{"name": "name","type": "string"},{"name": "memberState","type": "MemberState"}],    
     "name": "MemberEvent",
     "type": "event"  }
 ]);   

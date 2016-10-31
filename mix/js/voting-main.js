@@ -10,10 +10,10 @@ var BallotContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"proposals","outputs":[{"name":"","type":"Proposal"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"ballotName","outputs":[{"name":"","type":"string"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "voters","outputs": [
-{ "name": "weight", "type": "uint"}
+{ "name": "weight", "type": "uint256"}
 ,{ "name": "voted", "type": "bool"}
 ,{ "name": "delegate", "type": "address"}
-,{ "name": "vote", "type": "uint"}
+,{ "name": "vote", "type": "uint256"}
 ],"type": "function"	},
 { "constant": false,
     "inputs": [{"name": "name","type": "string"},{"name": "proposalNames","type": "bytes32"}],    
@@ -31,14 +31,14 @@ var BallotContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,{ "constant": false,
-    "inputs": [{"name": "proposal","type": "uint"}],    
+    "inputs": [{"name": "proposal","type": "uint256"}],    
     "name": "voteFor",
     "outputs": [],
     "type": "function" }
 ,{ "constant": false,
     "inputs": [],    
     "name": "winningProposal",
-    "outputs": [{"name": "winningProposal","type": "uint"}],
+    "outputs": [{"name": "winningProposal","type": "uint256"}],
     "type": "function" }
 
 ]);   
@@ -143,7 +143,6 @@ function BallotGuiFactory() {
 +		'		      <div class="contract_attribute_value" id="'+this.prefix+'Ballot_ballotName_value"> </div>'
 +		'		    </div>'
 +		'		'
-+		'		<!--struct -->'
 +		'		<div class="Struct_Mapping" id="'+this.prefix+'Struc_Ballot_contract_attribute_voters">struc mapping  voters:'
 +		'				<input type="text" id="'+this.prefix+'Ballot_contract_attribute_voters_input">(address)'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'Ballot_contract_attribute_voters_weight"> weight:'
@@ -282,8 +281,7 @@ function BallotGuiFactory() {
 	* Create the gui for the voters struct element.
 	*/
 	this.createvotersStructGui=function() {
-		return 		'<!--struct -->'
-+		'		<div class="Struct_Mapping" id="'+this.prefix+'Struc_Ballot_contract_attribute_voters">struc mapping  voters:'
+		return 		'<div class="Struct_Mapping" id="'+this.prefix+'Struc_Ballot_contract_attribute_voters">struc mapping  voters:'
 +		'				<input type="text" id="'+this.prefix+'Ballot_contract_attribute_voters_input">(address)'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'Ballot_contract_attribute_voters_weight"> weight:'
 +		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'Ballot_voters_weight_value"> </div>'
@@ -314,6 +312,25 @@ function BallotGuiFactory() {
 
 
 	//eventguis
+	/**
+	* Create the gui for the function Struc Ballot-voters.
+	*/
+	this.createStruc_Ballot_contract_attribute_votersGui=function(struct) {
+		return '<div class="Struct_Mapping" id='+this.prefix+'"Struc_Ballot_contract_attribute_voters">'
+    		+'<div class="Struct_attribute" id='+this.prefix+'"Ballot_contract_attribute_voters_weight"> weight:'
+      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"Ballot_voters_weight_value">'+struct.weight()+'</div>'
+    		+'</div>'
+    		+'<div class="Struct_attribute" id='+this.prefix+'"Ballot_contract_attribute_voters_voted"> voted:'
+      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"Ballot_voters_voted_value">'+struct.voted()+'</div>'
+    		+'</div>'
+    		+'<div class="Struct_attribute" id='+this.prefix+'"Ballot_contract_attribute_voters_delegate"> delegate:'
+      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"Ballot_voters_delegate_value">'+struct.delegate()+'</div>'
+    		+'</div>'
+    		+'<div class="Struct_attribute" id='+this.prefix+'"Ballot_contract_attribute_voters_vote"> vote:'
+      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"Ballot_voters_vote_value">'+struct.vote()+'</div>'
+    		+'</div>'
+  		+'</div>';
+	}
 
 }//end guifactory
 
@@ -523,7 +540,6 @@ function BallotManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
-	this.eventCallback = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -612,7 +628,7 @@ function BallotGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
-	this.eventCallback = null;
+	this.managerMap = {};
 	
 	/**
 	* Add a contract to this manager.
@@ -621,12 +637,11 @@ function BallotGuiMananger(guiId){
 	this.addManager = function(contract) {
 		var m = new BallotManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
-		m.eventCallback = this.eventCallback;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;
 		this.managers.push(m);
-		//manager.addGui();
+		this.managerMap[contract.address] = m;
 	}
 
 	/**

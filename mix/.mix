@@ -10,12 +10,11 @@
 	"deploymentTrHashes": "{\"BlogRegistry.BlogRegistry()\":\"0x74030257ff3eec730abe687bfbefb1958d54e74fd57cccdd76d656d4e52e98dc\"}",
 	"files": [],
 	"lastPackageDate": "",
-	"localPackageUrl": "",
 	"registerContentHashBlockNumber": -1,
 	"registerContentHashTrHash": "",
 	"registerUrlBlockNumber": -1,
 	"registerUrlTrHash": "",
-	"startUrl": "/publishing.html",
+	"startUrl": "/kp.html",
 	"title": "party-dao",
 	"states": [
 		{
@@ -4887,8 +4886,8 @@
 				{
 					"address": "38f388fadf4a6a35c61c3f88194ec5ae162c8944",
 					"balance": {
-						"unit": 12,
-						"value": "1000000"
+						"unit": 10,
+						"value": "1"
 					},
 					"name": "user1",
 					"secret": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074"
@@ -4896,8 +4895,8 @@
 				{
 					"address": "06400992be45bc64a52b5c55d3df84596d6cb4a1",
 					"balance": {
-						"unit": 12,
-						"value": "1000000"
+						"unit": 10,
+						"value": "1"
 					},
 					"name": "user2",
 					"secret": "db95780d2f30ca8211eec37cc110cc58a2d4f9308dea00ede6717a585efa2eb7"
@@ -4905,8 +4904,8 @@
 				{
 					"address": "fa4b795b491cc1975e89f3c78972c3e2e827c882",
 					"balance": {
-						"unit": 12,
-						"value": "1000000"
+						"unit": 10,
+						"value": "1"
 					},
 					"name": "user3",
 					"secret": "090f51d202f847d2468fc87fb06f92c469b8a1927b4aecea796b6831f1331382"
@@ -4914,8 +4913,8 @@
 				{
 					"address": "b0dcdc575ef06dc30aaea069d8043c9d463c931c",
 					"balance": {
-						"unit": 12,
-						"value": "1000000"
+						"unit": 10,
+						"value": "1"
 					},
 					"name": "user4",
 					"secret": "e9bf58b523b4c94255cad51b3f7efdc85a0c970bf42f1d191c126bb6f49bfb9d"
@@ -5730,8 +5729,10 @@
 				"address": "38f388fadf4a6a35c61c3f88194ec5ae162c8944",
 				"balance": {
 					"objectName": "",
-					"value": "1000000",
-					"unit": 12
+					"value": "1",
+					"unit": 10,
+					"value": "1",
+					"unit": 10
 				},
 				"name": "user1",
 				"secret": "cb73d9408c4720e230387d956eb0f829d8a4dd2c1055f96257167e14e7169074"

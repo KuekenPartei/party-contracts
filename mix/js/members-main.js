@@ -6,18 +6,18 @@
 **/
 // contractVariable for MemberRegistry
 var MemberRegistryContract = web3.eth.contract([
-{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"partyMemberCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"activeMemberCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "partyMembers","outputs": [
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"partyMemberCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"activeMemberCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "partyMembers","outputs": [
 { "name": "name", "type": "string"}
-,{ "name": "id", "type": "uint"}
+,{ "name": "id", "type": "uint256"}
 ,{ "name": "member", "type": "address"}
 ,{ "name": "state", "type": "MemberState"}
 ],"type": "function"	},
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "memberAddress","outputs": [
 { "name": "name", "type": "string"}
-,{ "name": "id", "type": "uint"}
+,{ "name": "id", "type": "uint256"}
 ,{ "name": "member", "type": "address"}
 ,{ "name": "state", "type": "MemberState"}
 ],"type": "function"	},
@@ -35,14 +35,14 @@ var MemberRegistryContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,{ "constant": false,
-    "inputs": [{"name": "id","type": "uint"}],    
+    "inputs": [{"name": "id","type": "uint256"}],    
     "name": "unregisterMember",
     "outputs": [],
     "type": "function" }
 ,{ "constant": true,
     "inputs": [],    
     "name": "getMemberCount",
-    "outputs": [{"name": "","type": "uint"}],
+    "outputs": [{"name": "","type": "uint256"}],
     "type": "function" }
 ,{ "constant": false,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
@@ -60,23 +60,23 @@ var MemberRegistryContract = web3.eth.contract([
     "outputs": [{"name": "","type": "bool"}],
     "type": "function" }
 ,{ "constant": false,
-    "inputs": [{"name": "id","type": "uint"},{"name": "_newMemberAddress","type": "address"}],    
+    "inputs": [{"name": "id","type": "uint256"},{"name": "_newMemberAddress","type": "address"}],    
     "name": "changeMemberAddress",
     "outputs": [],
     "type": "function" }
 ,{ "constant": true,
     "inputs": [{"name": "_address","type": "address"}],    
     "name": "getMemberData",
-    "outputs": [{"name": "name","type": "string"},{"name": "id","type": "uint"}],
+    "outputs": [{"name": "name","type": "string"},{"name": "id","type": "uint256"}],
     "type": "function" }
 ,{ "constant": false,
-    "inputs": [{"name": "mAddress","type": "address"},{"name": "eventType","type": "uint"}],    
+    "inputs": [{"name": "mAddress","type": "address"},{"name": "eventType","type": "uint256"}],    
     "name": "publishMemberEvent",
     "outputs": [],
     "type": "function" }
 ,
   { "constant": true,
-    "inputs": [{"name": "mAddress","type": "address"},{"name": "eType","type": "EventType"},{"name": "id","type": "uint"},{"name": "name","type": "string"},{"name": "memberState","type": "MemberState"}],    
+    "inputs": [{"name": "mAddress","type": "address"},{"name": "eType","type": "EventType"},{"name": "id","type": "uint256"},{"name": "name","type": "string"},{"name": "memberState","type": "MemberState"}],    
     "name": "MemberEvent",
     "type": "event"  }
 ]);   
@@ -242,7 +242,6 @@ function MemberRegistryGuiFactory() {
 +		'		      		<div class="contract_attribute_value" id="'+this.prefix+'MemberRegistry_managers_value"> </div>'
 +		'		    	</div>'
 +		'		  </div>'
-+		'		<!--struct -->'
 +		'		<div class="Struct_Mapping" id="'+this.prefix+'Struc_MemberRegistry_contract_attribute_partyMembers">struc mapping  partyMembers:'
 +		'				<input type="number" id="'+this.prefix+'MemberRegistry_contract_attribute_partyMembers_input">(uint)'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'MemberRegistry_contract_attribute_partyMembers_name"> name:'
@@ -258,7 +257,6 @@ function MemberRegistryGuiFactory() {
 +		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_partyMembers_state_value"> </div>'
 +		'		    	</div>'
 +		'		  </div>'
-+		'		<!--struct -->'
 +		'		<div class="Struct_Mapping" id="'+this.prefix+'Struc_MemberRegistry_contract_attribute_memberAddress">struc mapping  memberAddress:'
 +		'				<input type="text" id="'+this.prefix+'MemberRegistry_contract_attribute_memberAddress_input">(address)'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'MemberRegistry_contract_attribute_memberAddress_name"> name:'
@@ -495,8 +493,7 @@ function MemberRegistryGuiFactory() {
 	* Create the gui for the partyMembers struct element.
 	*/
 	this.createpartyMembersStructGui=function() {
-		return 		'<!--struct -->'
-+		'		<div class="Struct_Mapping" id="'+this.prefix+'Struc_MemberRegistry_contract_attribute_partyMembers">struc mapping  partyMembers:'
+		return 		'<div class="Struct_Mapping" id="'+this.prefix+'Struc_MemberRegistry_contract_attribute_partyMembers">struc mapping  partyMembers:'
 +		'				<input type="number" id="'+this.prefix+'MemberRegistry_contract_attribute_partyMembers_input">(uint)'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'MemberRegistry_contract_attribute_partyMembers_name"> name:'
 +		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_partyMembers_name_value"> </div>'
@@ -517,8 +514,7 @@ function MemberRegistryGuiFactory() {
 	* Create the gui for the memberAddress struct element.
 	*/
 	this.creatememberAddressStructGui=function() {
-		return 		'<!--struct -->'
-+		'		<div class="Struct_Mapping" id="'+this.prefix+'Struc_MemberRegistry_contract_attribute_memberAddress">struc mapping  memberAddress:'
+		return 		'<div class="Struct_Mapping" id="'+this.prefix+'Struc_MemberRegistry_contract_attribute_memberAddress">struc mapping  memberAddress:'
 +		'				<input type="text" id="'+this.prefix+'MemberRegistry_contract_attribute_memberAddress_input">(address)'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'MemberRegistry_contract_attribute_memberAddress_name"> name:'
 +		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_memberAddress_name_value"> </div>'
@@ -565,6 +561,44 @@ function MemberRegistryGuiFactory() {
         +'<div class="eventValue">'+name+'</div>'
         +'<div class="eventValue">'+memberState+'</div>'
         +' </div>';
+	}
+	/**
+	* Create the gui for the function Struc MemberRegistry-partyMembers.
+	*/
+	this.createStruc_MemberRegistry_contract_attribute_partyMembersGui=function(struct) {
+		return '<div class="Struct_Mapping" id='+this.prefix+'"Struc_MemberRegistry_contract_attribute_partyMembers">'
+    		+'<div class="Struct_attribute" id='+this.prefix+'"MemberRegistry_contract_attribute_partyMembers_name"> name:'
+      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"MemberRegistry_partyMembers_name_value">'+struct.name()+'</div>'
+    		+'</div>'
+    		+'<div class="Struct_attribute" id='+this.prefix+'"MemberRegistry_contract_attribute_partyMembers_id"> id:'
+      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"MemberRegistry_partyMembers_id_value">'+struct.id()+'</div>'
+    		+'</div>'
+    		+'<div class="Struct_attribute" id='+this.prefix+'"MemberRegistry_contract_attribute_partyMembers_member"> member:'
+      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"MemberRegistry_partyMembers_member_value">'+struct.member()+'</div>'
+    		+'</div>'
+    		+'<div class="Struct_attribute" id='+this.prefix+'"MemberRegistry_contract_attribute_partyMembers_state"> state:'
+      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"MemberRegistry_partyMembers_state_value">'+struct.state()+'</div>'
+    		+'</div>'
+  		+'</div>';
+	}
+	/**
+	* Create the gui for the function Struc MemberRegistry-memberAddress.
+	*/
+	this.createStruc_MemberRegistry_contract_attribute_memberAddressGui=function(struct) {
+		return '<div class="Struct_Mapping" id='+this.prefix+'"Struc_MemberRegistry_contract_attribute_memberAddress">'
+    		+'<div class="Struct_attribute" id='+this.prefix+'"MemberRegistry_contract_attribute_memberAddress_name"> name:'
+      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"MemberRegistry_memberAddress_name_value">'+struct.name()+'</div>'
+    		+'</div>'
+    		+'<div class="Struct_attribute" id='+this.prefix+'"MemberRegistry_contract_attribute_memberAddress_id"> id:'
+      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"MemberRegistry_memberAddress_id_value">'+struct.id()+'</div>'
+    		+'</div>'
+    		+'<div class="Struct_attribute" id='+this.prefix+'"MemberRegistry_contract_attribute_memberAddress_member"> member:'
+      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"MemberRegistry_memberAddress_member_value">'+struct.member()+'</div>'
+    		+'</div>'
+    		+'<div class="Struct_attribute" id='+this.prefix+'"MemberRegistry_contract_attribute_memberAddress_state"> state:'
+      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"MemberRegistry_memberAddress_state_value">'+struct.state()+'</div>'
+    		+'</div>'
+  		+'</div>';
 	}
 
 }//end guifactory
@@ -924,7 +958,7 @@ function MemberRegistryManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
-	this.eventCallback = null;
+	this.eventMemberEvent = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -1004,7 +1038,7 @@ function MemberRegistryManager(prefix,contract,containerId) {
 	this.watchEvents=function(){
 	var event_MemberEvent = this.getContract().MemberEvent({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
-	var callback = this.eventCallback;
+	var callback = this.eventMemberEvent;
 	event_MemberEvent.watch(function(error,result){
 	if(!error){
 		if(callback!=null)
@@ -1024,7 +1058,8 @@ function MemberRegistryGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
-	this.eventCallback = null;
+	this.eventMemberEvent = null;
+	this.managerMap = {};
 	
 	/**
 	* Add a contract to this manager.
@@ -1033,12 +1068,12 @@ function MemberRegistryGuiMananger(guiId){
 	this.addManager = function(contract) {
 		var m = new MemberRegistryManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
-		m.eventCallback = this.eventCallback;
+		m.eventMemberEvent = this.eventMemberEvent;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;
 		this.managers.push(m);
-		//manager.addGui();
+		this.managerMap[contract.address] = m;
 	}
 
 	/**
@@ -1292,7 +1327,6 @@ function MemberAwareManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
-	this.eventCallback = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -1381,7 +1415,7 @@ function MemberAwareGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
-	this.eventCallback = null;
+	this.managerMap = {};
 	
 	/**
 	* Add a contract to this manager.
@@ -1390,12 +1424,11 @@ function MemberAwareGuiMananger(guiId){
 	this.addManager = function(contract) {
 		var m = new MemberAwareManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
-		m.eventCallback = this.eventCallback;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;
 		this.managers.push(m);
-		//manager.addGui();
+		this.managerMap[contract.address] = m;
 	}
 
 	/**

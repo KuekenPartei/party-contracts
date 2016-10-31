@@ -6,16 +6,16 @@
 **/
 // contractVariable for ShortBlog
 var ShortBlogContract = web3.eth.contract([
-{"constant":true,"inputs":[],"name":"messageCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"lastMessageDate","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"messageCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"lastMessageDate","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "messages","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "messages","outputs": [
 { "name": "message", "type": "string"}
-,{ "name": "date", "type": "uint"}
-,{ "name": "id", "type": "uint"}
+,{ "name": "date", "type": "uint256"}
+,{ "name": "id", "type": "uint256"}
 ,{ "name": "sender", "type": "address"}
-,{ "name": "blockNumber", "type": "uint"}
+,{ "name": "blockNumber", "type": "uint256"}
 ,{ "name": "hashValue", "type": "string"}
 ,{ "name": "externalResource", "type": "string"}
 ],"type": "function"	},
@@ -44,15 +44,15 @@ var ShortBlogContract = web3.eth.contract([
     "type": "function" }
 ,
   { "constant": true,
-    "inputs": [{"name": "message","type": "string"},{"name": "messageId","type": "uint"},{"name": "messageSender","type": "address"},{"name": "messageHashValue","type": "string"},{"name": "externalResource","type": "string"}],    
+    "inputs": [{"name": "message","type": "string"},{"name": "messageId","type": "uint256"},{"name": "messageSender","type": "address"},{"name": "messageHashValue","type": "string"},{"name": "externalResource","type": "string"}],    
     "name": "NewMessage",
     "type": "event"  }
 ]);   
 // contractVariable for BlogRegistry
 var BlogRegistryContract = web3.eth.contract([
-{"constant":true,"inputs":[],"name":"blogCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "blogs","outputs": [
+{"constant":true,"inputs":[],"name":"blogCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "blogs","outputs": [
 { "name": "", "type": "address"}
 ],"type": "function"	},
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
@@ -80,7 +80,7 @@ var BlogRegistryContract = web3.eth.contract([
     "type": "function" }
 ,
   { "constant": true,
-    "inputs": [{"name": "index","type": "uint"},{"name": "name","type": "string"},{"name": "blogAddress","type": "address"}],    
+    "inputs": [{"name": "index","type": "uint256"},{"name": "name","type": "string"},{"name": "blogAddress","type": "address"}],    
     "name": "NewBlog",
     "type": "event"  }
 ]);   
@@ -200,7 +200,6 @@ function ShortBlogGuiFactory() {
 +		'		      		<div class="contract_attribute_value" id="'+this.prefix+'ShortBlog_managers_value"> </div>'
 +		'		    	</div>'
 +		'		  </div>'
-+		'		<!--struct -->'
 +		'		<div class="Struct_Mapping" id="'+this.prefix+'Struc_ShortBlog_contract_attribute_messages">struc mapping  messages:'
 +		'				<input type="number" id="'+this.prefix+'ShortBlog_contract_attribute_messages_input">(uint)'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'ShortBlog_contract_attribute_messages_message"> message:'
@@ -335,8 +334,7 @@ function ShortBlogGuiFactory() {
 	* Create the gui for the messages struct element.
 	*/
 	this.createmessagesStructGui=function() {
-		return 		'<!--struct -->'
-+		'		<div class="Struct_Mapping" id="'+this.prefix+'Struc_ShortBlog_contract_attribute_messages">struc mapping  messages:'
+		return 		'<div class="Struct_Mapping" id="'+this.prefix+'Struc_ShortBlog_contract_attribute_messages">struc mapping  messages:'
 +		'				<input type="number" id="'+this.prefix+'ShortBlog_contract_attribute_messages_input">(uint)'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'ShortBlog_contract_attribute_messages_message"> message:'
 +		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'ShortBlog_messages_message_value"> </div>'
@@ -392,6 +390,34 @@ function ShortBlogGuiFactory() {
         +'<div class="eventValue">'+messageHashValue+'</div>'
         +'<div class="eventValue">'+externalResource+'</div>'
         +' </div>';
+	}
+	/**
+	* Create the gui for the function Struc ShortBlog-messages.
+	*/
+	this.createStruc_ShortBlog_contract_attribute_messagesGui=function(struct) {
+		return '<div class="Struct_Mapping" id='+this.prefix+'"Struc_ShortBlog_contract_attribute_messages">'
+    		+'<div class="Struct_attribute" id='+this.prefix+'"ShortBlog_contract_attribute_messages_message"> message:'
+      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"ShortBlog_messages_message_value">'+struct.message()+'</div>'
+    		+'</div>'
+    		+'<div class="Struct_attribute" id='+this.prefix+'"ShortBlog_contract_attribute_messages_date"> date:'
+      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"ShortBlog_messages_date_value">'+struct.date()+'</div>'
+    		+'</div>'
+    		+'<div class="Struct_attribute" id='+this.prefix+'"ShortBlog_contract_attribute_messages_id"> id:'
+      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"ShortBlog_messages_id_value">'+struct.id()+'</div>'
+    		+'</div>'
+    		+'<div class="Struct_attribute" id='+this.prefix+'"ShortBlog_contract_attribute_messages_sender"> sender:'
+      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"ShortBlog_messages_sender_value">'+struct.sender()+'</div>'
+    		+'</div>'
+    		+'<div class="Struct_attribute" id='+this.prefix+'"ShortBlog_contract_attribute_messages_blockNumber"> blockNumber:'
+      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"ShortBlog_messages_blockNumber_value">'+struct.blockNumber()+'</div>'
+    		+'</div>'
+    		+'<div class="Struct_attribute" id='+this.prefix+'"ShortBlog_contract_attribute_messages_hashValue"> hashValue:'
+      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"ShortBlog_messages_hashValue_value">'+struct.hashValue()+'</div>'
+    		+'</div>'
+    		+'<div class="Struct_attribute" id='+this.prefix+'"ShortBlog_contract_attribute_messages_externalResource"> externalResource:'
+      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"ShortBlog_messages_externalResource_value">'+struct.externalResource()+'</div>'
+    		+'</div>'
+  		+'</div>';
 	}
 
 }//end guifactory
@@ -630,7 +656,8 @@ function ShortBlogManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
-	this.eventCallback = null;
+	this.eventNewMessage = null;
+	console.log('new Manager');
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -708,9 +735,10 @@ function ShortBlogManager(prefix,contract,containerId) {
 	* The events are stored in an element with the id this.eventlogPrefix+'eventLog'.
 	**/
 	this.watchEvents=function(){
+		console.log('-->'+this.getContract().address);
 	var event_NewMessage = this.getContract().NewMessage({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
-	var callback = this.eventCallback;
+	var callback = this.eventNewMessage;
 	event_NewMessage.watch(function(error,result){
 	if(!error){
 		if(callback!=null)
@@ -730,7 +758,8 @@ function ShortBlogGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
-	this.eventCallback = null;
+	this.eventNewMessage = null;
+	this.managerMap = {};
 	
 	/**
 	* Add a contract to this manager.
@@ -739,12 +768,12 @@ function ShortBlogGuiMananger(guiId){
 	this.addManager = function(contract) {
 		var m = new ShortBlogManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
-		m.eventCallback = this.eventCallback;
+		m.eventNewMessage = this.eventNewMessage;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;
 		this.managers.push(m);
-		//manager.addGui();
+		this.managerMap[contract.address] = m;
 	}
 
 	/**
@@ -1260,7 +1289,7 @@ function BlogRegistryManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
-	this.eventCallback = null;
+	this.eventNewBlog = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -1340,7 +1369,7 @@ function BlogRegistryManager(prefix,contract,containerId) {
 	this.watchEvents=function(){
 	var event_NewBlog = this.getContract().NewBlog({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
-	var callback = this.eventCallback;
+	var callback = this.eventNewBlog;
 	event_NewBlog.watch(function(error,result){
 	if(!error){
 		if(callback!=null)
@@ -1360,7 +1389,8 @@ function BlogRegistryGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
-	this.eventCallback = null;
+	this.eventNewBlog = null;
+	this.managerMap = {};
 	
 	/**
 	* Add a contract to this manager.
@@ -1369,12 +1399,12 @@ function BlogRegistryGuiMananger(guiId){
 	this.addManager = function(contract) {
 		var m = new BlogRegistryManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
-		m.eventCallback = this.eventCallback;
+		m.eventNewBlog = this.eventNewBlog;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;
 		this.managers.push(m);
-		//manager.addGui();
+		this.managerMap[contract.address] = m;
 	}
 
 	/**

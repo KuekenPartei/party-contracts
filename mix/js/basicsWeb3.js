@@ -26,7 +26,7 @@ var OwnedContract = web3.eth.contract([
 ]);   
 // contractVariable for Manageable
 var ManageableContract = web3.eth.contract([
-{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
@@ -47,27 +47,27 @@ var ManageableContract = web3.eth.contract([
     "type": "function" }
 ,
   { "constant": true,
-    "inputs": [{"name": "_state","type": "uint"},{"name": "_address","type": "address"},{"name": "_managerCount","type": "uint"}],    
+    "inputs": [{"name": "_state","type": "uint256"},{"name": "_address","type": "address"},{"name": "_managerCount","type": "uint256"}],    
     "name": "ManagerChanged",
     "type": "event"  }
 ]);   
 // contractVariable for Multiowned
 var MultiownedContract = web3.eth.contract([
-{"constant":true,"inputs":[],"name":"m_required","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"m_numOwners","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"m_owners","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"c_maxOwners","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"m_required","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"m_numOwners","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"m_owners","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"c_maxOwners","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"m_pendingIndex","outputs":[{"name":"","type":"bytes32"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "m_ownerIndex","outputs": [
-{ "name": "", "type": "uint"}
+{"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "m_ownerIndex","outputs": [
+{ "name": "", "type": "uint256"}
 ],"type": "function"	},
 {"constant": true,"inputs": [{"name": "","type": "bytes32"}],"name": "m_pending","outputs": [
-{ "name": "yetNeeded", "type": "uint"}
-,{ "name": "ownersDone", "type": "uint"}
-,{ "name": "index", "type": "uint"}
+{ "name": "yetNeeded", "type": "uint256"}
+,{ "name": "ownersDone", "type": "uint256"}
+,{ "name": "index", "type": "uint256"}
 ],"type": "function"	},
 { "constant": false,
-    "inputs": [{"name": "_owners","type": "address"},{"name": "_required","type": "uint"}],    
+    "inputs": [{"name": "_owners","type": "address"},{"name": "_required","type": "uint256"}],    
     "name": "Multiowned",
     "outputs": [],
     "type": "function" }
@@ -103,7 +103,7 @@ var MultiownedContract = web3.eth.contract([
     "name": "OwnerRemoved",
     "type": "event"  }
 ,  { "constant": true,
-    "inputs": [{"name": "newRequirement","type": "uint"}],    
+    "inputs": [{"name": "newRequirement","type": "uint256"}],    
     "name": "RequirementChanged",
     "type": "event"  }
 ]);   

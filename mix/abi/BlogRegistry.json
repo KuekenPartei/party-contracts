@@ -1,7 +1,7 @@
 [
-{"constant":true,"inputs":[],"name":"blogCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "blogs","outputs": [
+{"constant":true,"inputs":[],"name":"blogCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "blogs","outputs": [
 { "name": "", "type": "address"}
 ],"type": "function"	},
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
@@ -29,7 +29,7 @@
     "type": "function" }
 ,
   { "constant": true,
-    "inputs": [{"name": "index","type": "uint"},{"name": "name","type": "string"},{"name": "blogAddress","type": "address"}],    
+    "inputs": [{"name": "index","type": "uint256"},{"name": "name","type": "string"},{"name": "blogAddress","type": "address"}],    
     "name": "NewBlog",
     "type": "event"  }
 ]

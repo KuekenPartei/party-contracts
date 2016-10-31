@@ -8,22 +8,22 @@
 var OrganContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"memberRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"organName","outputs":[{"name":"","type":"string"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"lastFunctionId","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"lastFunctionId","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"blogRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"isActive","outputs":[{"name":"","type":"bool"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"ballotCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"ballotCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
-{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "ballots","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "ballots","outputs": [
 { "name": "", "type": "address"}
 ],"type": "function"	},
-{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "organFunctions","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "organFunctions","outputs": [
 { "name": "", "type": "address"}
 ],"type": "function"	},
 { "constant": true,
-    "inputs": [{"name": "_id","type": "uint"}],    
+    "inputs": [{"name": "_id","type": "uint256"}],    
     "name": "getOrganFunction",
     "outputs": [{"name": "","type": "address"}],
     "type": "function" }
@@ -33,7 +33,7 @@ var OrganContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,{ "constant": false,
-    "inputs": [{"name": "_id","type": "uint"},{"name": "_address","type": "address"}],    
+    "inputs": [{"name": "_id","type": "uint256"},{"name": "_address","type": "address"}],    
     "name": "changeMember",
     "outputs": [],
     "type": "function" }
@@ -58,14 +58,14 @@ var OrganContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,{ "constant": false,
-    "inputs": [{"name": "id","type": "uint"},{"name": "message","type": "string"},{"name": "hash","type": "string"},{"name": "er","type": "string"}],    
+    "inputs": [{"name": "id","type": "uint256"},{"name": "message","type": "string"},{"name": "hash","type": "string"},{"name": "er","type": "string"}],    
     "name": "publishFunctionMessage",
     "outputs": [],
     "type": "function" }
 ,{ "constant": false,
     "inputs": [{"name": "name","type": "string"},{"name": "proposalNames","type": "bytes32"}],    
     "name": "createBallot",
-    "outputs": [{"name": "","type": "uint"}],
+    "outputs": [{"name": "","type": "uint256"}],
     "type": "function" }
 ,{ "constant": true,
     "inputs": [],    
@@ -89,11 +89,11 @@ var OrganContract = web3.eth.contract([
     "type": "function" }
 ,
   { "constant": true,
-    "inputs": [{"name": "oldMember","type": "address"},{"name": "functionId","type": "uint"},{"name": "newMember","type": "address"}],    
+    "inputs": [{"name": "oldMember","type": "address"},{"name": "functionId","type": "uint256"},{"name": "newMember","type": "address"}],    
     "name": "FunctionMemberChange",
     "type": "event"  }
 ,  { "constant": true,
-    "inputs": [{"name": "_type","type": "uint"},{"name": "_function","type": "address"}],    
+    "inputs": [{"name": "_type","type": "uint256"},{"name": "_function","type": "address"}],    
     "name": "FunctionChange",
     "type": "event"  }
   ,{
@@ -130,13 +130,13 @@ var OrganContract = web3.eth.contract([
 ]);   
 // contractVariable for Party
 var PartyContract = web3.eth.contract([
-{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"constitutionHash","outputs":[{"name":"","type":"string"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"organCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"organCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
-{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "organs","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "organs","outputs": [
 { "name": "", "type": "address"}
 ],"type": "function"	},
 { "constant": false,
@@ -170,7 +170,7 @@ var PartyContract = web3.eth.contract([
     "name": "ConstiutionChange",
     "type": "event"  }
 ,  { "constant": true,
-    "inputs": [{"name": "_organ","type": "address"},{"name": "_changeType","type": "uint"}],    
+    "inputs": [{"name": "_organ","type": "address"},{"name": "_changeType","type": "uint256"}],    
     "name": "OrganChanged",
     "type": "event"  }
   ,{
@@ -199,13 +199,13 @@ var PartyContract = web3.eth.contract([
 ]);   
 // contractVariable for KUEKeNParty
 var KUEKeNPartyContract = web3.eth.contract([
-{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"constitutionHash","outputs":[{"name":"","type":"string"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"organCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"organCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
-{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "organs","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "organs","outputs": [
 { "name": "", "type": "address"}
 ],"type": "function"	},
 { "constant": false,
@@ -272,17 +272,17 @@ var KUEKeNPartyContract = web3.eth.contract([
 var ConferenceContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"memberRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"organName","outputs":[{"name":"","type":"string"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"accreditatedMembers","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"lastFunctionId","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"accreditatedMembers","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"lastFunctionId","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"blogRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"date","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"date","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"isActive","outputs":[{"name":"","type":"bool"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"ballotCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"ballotCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
-{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "organFunctions","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "organFunctions","outputs": [
 { "name": "", "type": "address"}
 ],"type": "function"	},
 { "constant": false,
@@ -291,7 +291,7 @@ var ConferenceContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,{ "constant": true,
-    "inputs": [{"name": "_id","type": "uint"}],    
+    "inputs": [{"name": "_id","type": "uint256"}],    
     "name": "getOrganFunction",
     "outputs": [{"name": "","type": "address"}],
     "type": "function" }
@@ -301,7 +301,7 @@ var ConferenceContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,{ "constant": false,
-    "inputs": [{"name": "_id","type": "uint"},{"name": "_address","type": "address"}],    
+    "inputs": [{"name": "_id","type": "uint256"},{"name": "_address","type": "address"}],    
     "name": "changeMember",
     "outputs": [],
     "type": "function" }
@@ -326,14 +326,14 @@ var ConferenceContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,{ "constant": false,
-    "inputs": [{"name": "id","type": "uint"},{"name": "message","type": "string"},{"name": "hash","type": "string"},{"name": "er","type": "string"}],    
+    "inputs": [{"name": "id","type": "uint256"},{"name": "message","type": "string"},{"name": "hash","type": "string"},{"name": "er","type": "string"}],    
     "name": "publishFunctionMessage",
     "outputs": [],
     "type": "function" }
 ,{ "constant": false,
     "inputs": [{"name": "name","type": "string"},{"name": "proposalNames","type": "bytes32"}],    
     "name": "createBallot",
-    "outputs": [{"name": "","type": "uint"}],
+    "outputs": [{"name": "","type": "uint256"}],
     "type": "function" }
 ,{ "constant": true,
     "inputs": [],    
@@ -352,7 +352,7 @@ var ConferenceContract = web3.eth.contract([
     "type": "function" }
 ,
   { "constant": true,
-    "inputs": [{"name": "memberId","type": "uint"},{"name": "memberName","type": "string"},{"name": "memberAddress","type": "address"}],    
+    "inputs": [{"name": "memberId","type": "uint256"},{"name": "memberName","type": "string"},{"name": "memberAddress","type": "address"}],    
     "name": "MemberAccreditated",
     "type": "event"  }
   ,{
@@ -391,17 +391,17 @@ var ConferenceContract = web3.eth.contract([
 var FoundationConferenceContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"memberRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"organName","outputs":[{"name":"","type":"string"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"accreditatedMembers","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"lastFunctionId","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"accreditatedMembers","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"lastFunctionId","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"blogRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"date","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"date","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"isActive","outputs":[{"name":"","type":"bool"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"ballotCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"ballotCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
-{"constant": true,"inputs": [{"name": "","type": "uint"}],"name": "organFunctions","outputs": [
+{"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "organFunctions","outputs": [
 { "name": "", "type": "address"}
 ],"type": "function"	},
 { "constant": false,
@@ -410,7 +410,7 @@ var FoundationConferenceContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,{ "constant": true,
-    "inputs": [{"name": "_id","type": "uint"}],    
+    "inputs": [{"name": "_id","type": "uint256"}],    
     "name": "getOrganFunction",
     "outputs": [{"name": "","type": "address"}],
     "type": "function" }
@@ -420,7 +420,7 @@ var FoundationConferenceContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,{ "constant": false,
-    "inputs": [{"name": "_id","type": "uint"},{"name": "_address","type": "address"}],    
+    "inputs": [{"name": "_id","type": "uint256"},{"name": "_address","type": "address"}],    
     "name": "changeMember",
     "outputs": [],
     "type": "function" }
@@ -445,14 +445,14 @@ var FoundationConferenceContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,{ "constant": false,
-    "inputs": [{"name": "id","type": "uint"},{"name": "message","type": "string"},{"name": "hash","type": "string"},{"name": "er","type": "string"}],    
+    "inputs": [{"name": "id","type": "uint256"},{"name": "message","type": "string"},{"name": "hash","type": "string"},{"name": "er","type": "string"}],    
     "name": "publishFunctionMessage",
     "outputs": [],
     "type": "function" }
 ,{ "constant": false,
     "inputs": [{"name": "name","type": "string"},{"name": "proposalNames","type": "bytes32"}],    
     "name": "createBallot",
-    "outputs": [{"name": "","type": "uint"}],
+    "outputs": [{"name": "","type": "uint256"}],
     "type": "function" }
 ,{ "constant": true,
     "inputs": [],    
@@ -506,11 +506,11 @@ var FoundationConferenceContract = web3.eth.contract([
 var OrganFunctionContract = web3.eth.contract([
 {"constant":true,"inputs":[],"name":"currentMember","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"functionName","outputs":[{"name":"","type":"string"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"id","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"id","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"constitutionHash","outputs":[{"name":"","type":"string"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"lastMemberChanged","outputs":[{"name":"","type":"uint"}],"type":"function"},
-{"constant":true,"inputs":[],"name":"lastConstitutionHashChanged","outputs":[{"name":"","type":"uint"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"lastMemberChanged","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"lastConstitutionHashChanged","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"publisher","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
@@ -1523,7 +1523,8 @@ function OrganManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
-	this.eventCallback = null;
+	this.eventFunctionMemberChange = null;
+	this.eventFunctionChange = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -1603,7 +1604,7 @@ function OrganManager(prefix,contract,containerId) {
 	this.watchEvents=function(){
 	var event_FunctionMemberChange = this.getContract().FunctionMemberChange({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
-	var callback = this.eventCallback;
+	var callback = this.eventFunctionMemberChange;
 	event_FunctionMemberChange.watch(function(error,result){
 	if(!error){
 		if(callback!=null)
@@ -1614,7 +1615,7 @@ function OrganManager(prefix,contract,containerId) {
 	});
 	var event_FunctionChange = this.getContract().FunctionChange({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
-	var callback = this.eventCallback;
+	var callback = this.eventFunctionChange;
 	event_FunctionChange.watch(function(error,result){
 	if(!error){
 		if(callback!=null)
@@ -1634,7 +1635,9 @@ function OrganGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
-	this.eventCallback = null;
+	this.eventFunctionMemberChange = null;
+	this.eventFunctionChange = null;
+	this.managerMap = {};
 	
 	/**
 	* Add a contract to this manager.
@@ -1643,12 +1646,13 @@ function OrganGuiMananger(guiId){
 	this.addManager = function(contract) {
 		var m = new OrganManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
-		m.eventCallback = this.eventCallback;
+		m.eventFunctionMemberChange = this.eventFunctionMemberChange;
+		m.eventFunctionChange = this.eventFunctionChange;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;
 		this.managers.push(m);
-		//manager.addGui();
+		this.managerMap[contract.address] = m;
 	}
 
 	/**
@@ -2221,7 +2225,8 @@ function PartyManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
-	this.eventCallback = null;
+	this.eventConstiutionChange = null;
+	this.eventOrganChanged = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -2301,7 +2306,7 @@ function PartyManager(prefix,contract,containerId) {
 	this.watchEvents=function(){
 	var event_ConstiutionChange = this.getContract().ConstiutionChange({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
-	var callback = this.eventCallback;
+	var callback = this.eventConstiutionChange;
 	event_ConstiutionChange.watch(function(error,result){
 	if(!error){
 		if(callback!=null)
@@ -2312,7 +2317,7 @@ function PartyManager(prefix,contract,containerId) {
 	});
 	var event_OrganChanged = this.getContract().OrganChanged({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
-	var callback = this.eventCallback;
+	var callback = this.eventOrganChanged;
 	event_OrganChanged.watch(function(error,result){
 	if(!error){
 		if(callback!=null)
@@ -2332,7 +2337,9 @@ function PartyGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
-	this.eventCallback = null;
+	this.eventConstiutionChange = null;
+	this.eventOrganChanged = null;
+	this.managerMap = {};
 	
 	/**
 	* Add a contract to this manager.
@@ -2341,12 +2348,13 @@ function PartyGuiMananger(guiId){
 	this.addManager = function(contract) {
 		var m = new PartyManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
-		m.eventCallback = this.eventCallback;
+		m.eventConstiutionChange = this.eventConstiutionChange;
+		m.eventOrganChanged = this.eventOrganChanged;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;
 		this.managers.push(m);
-		//manager.addGui();
+		this.managerMap[contract.address] = m;
 	}
 
 	/**
@@ -2991,7 +2999,6 @@ function KUEKeNPartyManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
-	this.eventCallback = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -3080,7 +3087,7 @@ function KUEKeNPartyGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
-	this.eventCallback = null;
+	this.managerMap = {};
 	
 	/**
 	* Add a contract to this manager.
@@ -3089,12 +3096,11 @@ function KUEKeNPartyGuiMananger(guiId){
 	this.addManager = function(contract) {
 		var m = new KUEKeNPartyManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
-		m.eventCallback = this.eventCallback;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;
 		this.managers.push(m);
-		//manager.addGui();
+		this.managerMap[contract.address] = m;
 	}
 
 	/**
@@ -4157,7 +4163,7 @@ function ConferenceManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
-	this.eventCallback = null;
+	this.eventMemberAccreditated = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -4237,7 +4243,7 @@ function ConferenceManager(prefix,contract,containerId) {
 	this.watchEvents=function(){
 	var event_MemberAccreditated = this.getContract().MemberAccreditated({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
-	var callback = this.eventCallback;
+	var callback = this.eventMemberAccreditated;
 	event_MemberAccreditated.watch(function(error,result){
 	if(!error){
 		if(callback!=null)
@@ -4257,7 +4263,8 @@ function ConferenceGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
-	this.eventCallback = null;
+	this.eventMemberAccreditated = null;
+	this.managerMap = {};
 	
 	/**
 	* Add a contract to this manager.
@@ -4266,12 +4273,12 @@ function ConferenceGuiMananger(guiId){
 	this.addManager = function(contract) {
 		var m = new ConferenceManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
-		m.eventCallback = this.eventCallback;
+		m.eventMemberAccreditated = this.eventMemberAccreditated;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;
 		this.managers.push(m);
-		//manager.addGui();
+		this.managerMap[contract.address] = m;
 	}
 
 	/**
@@ -5304,7 +5311,6 @@ function FoundationConferenceManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
-	this.eventCallback = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -5393,7 +5399,7 @@ function FoundationConferenceGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
-	this.eventCallback = null;
+	this.managerMap = {};
 	
 	/**
 	* Add a contract to this manager.
@@ -5402,12 +5408,11 @@ function FoundationConferenceGuiMananger(guiId){
 	this.addManager = function(contract) {
 		var m = new FoundationConferenceManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
-		m.eventCallback = this.eventCallback;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;
 		this.managers.push(m);
-		//manager.addGui();
+		this.managerMap[contract.address] = m;
 	}
 
 	/**
@@ -6032,7 +6037,6 @@ function OrganFunctionManager(prefix,contract,containerId) {
 	this.containerId = containerId;
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
-	this.eventCallback = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -6121,7 +6125,6 @@ function OrganFunctionGuiMananger(guiId){
 	this.prefix = guiId;
 	this.managers=new Array();	//[];		
 	this.guiFunction = null;
-	this.eventCallback = null;
 	this.managerMap = {};
 	
 	/**
@@ -6131,13 +6134,11 @@ function OrganFunctionGuiMananger(guiId){
 	this.addManager = function(contract) {
 		var m = new OrganFunctionManager(contract.address,contract,this.prefix);
 		m.eventlogPrefix = this.prefix;
-		m.eventCallback = this.eventCallback;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;
 		this.managers.push(m);
 		this.managerMap[contract.address] = m;
-		//manager.addGui();
 	}
 
 	/**
@@ -6290,66 +6291,112 @@ this.createDefaultGui=function() {
 //Start of user code Party_custom_functions
 var deployer = new KUEKeNPartyDeployment("test");
 
+function setInnerHtml(txt,_id){
+	var e = document.getElementById(_id);
+	if(e!==undefined && e!==null){
+		var elemDiv = document.createElement('div');
+		elemDiv.innerHTML = txt;
+		e.appendChild(elemDiv);
+	} else
+		console.log('element with id not found:'+_id);}
+	
+
+
+
 function KP() {
 	this.party = new KUEKeNPartyGuiMananger("KP");
 	this.organ = new OrganGuiMananger("Organ");
 	this.organfunction = new OrganFunctionGuiMananger("OF");
-	this.registry = new BlogRegistryGuiMananger("BR");
+	this.registry = new BlogRegistryGuiMananger("BlogRegistry-Gui");
 	this.blogs = new ShortBlogGuiMananger("Blog");
+	var self = this;
 
 	this.bootstrap = function(kp,br) {
-		this.registerAllEvents(kp);
+//		this.registerAllEvents(br);
+		this.registry.addManager(br);
 		
 		this.party.addManager(kp);
 		this.registerAllEvents(kp);
-		// this.pm = new KUEKeNPartyModel(kp);
 		var m = kp.organCount();
 		for (i = 0; i < m; i++) {
 			var o = OrganContract.at(kp.organs(i));
-			console.log('bootstrap:' + o.constructor.name);
 			this.registerAllEvents(o);
 			this.organ.addManager(o);
 			var sb = ShortBlogContract.at(o.getOrganBlog());
-			console.log('bootstrap sb:' + sb.constructor.name);
 			this.blogs.addManager(sb);
-			this.watchNewMessageEvents(sb);
-			this.registerAllEvents(sb);
-//			 var om = new OrganModel(o);
-//			 var ofc = om.getLastFunctionId();
-//			 console.log('....'+ofc);
-//			 for (var int = 0; int < ofc; int++) {
-//			 var oof1 = OrganFunctionContract.at(om.getOrganFunction(int));
-//			 console.log('....'+oof1+'#'+om.getOrganFunction(int));
-//			 this.organfunction.addManager(oof1);
-//			 this.watchNewMessageEvents(oof1);
-//			 }
+
+			var om = new OrganModel(o);
+			var ofc = o.lastFunctionId(); //om.getLastFunctionId();
+			for (var i = 0; i < ofc; i++) {
+				var oof1 = OrganFunctionContract.at(om.getOrganFunction(i));
+				this.organfunction.addManager(oof1);
+				this.blogs.addManager(ShortBlogContract.at(om.getOrganBlog()));
+			}
 		}
 	}
 
+	//event handlers
+	this.eventNewMessageHandle=function(result){
+		var guiF = new ShortBlogGuiFactory();
+		var txt = guiF.createNewMessageLogDataGui("", "", "", result.args.message, result.args.messageId, result.args.messageSender, result.args.messageHashValue, result.args.externalResource);
+		txt = guiF.createSeletonGui(txt);
+		setInnerHtml(txt, result.address+'-blogs-event');
+	}
+	this.blogs.eventNewMessage = this.eventNewMessageHandle;
+	
+	this.eventNewBlogHandle=function(result){
+		console.log('add a new blog:'+result);
+		var bAddress = result.args.blogAddress;
+//		self.blogs.addManager(ShortBlogContract.at(bAddress));
+		var guiF = new BlogRegistryGuiFactory();
+		var txt = guiF.createNewBlogLogDataGui("", "", "", result.args.index, result.args.name, result.args.blogAddress);
+		txt = guiF.createSeletonGui(txt);
+		setInnerHtml(txt, 'blogs-event');
+	}
+	this.registry.eventCallback = this.eventNewBlogHandle;
+
+	//GUI functions
 	this.organGuiSimple=function(guiF){
-//		var o = new OrganGuiFactory();
 		var txt = guiF.createAttributesGui()
 					+guiF.createOrgan_publishMessage_string_string_stringGui();
 		return guiF.createSeletonGui(txt);
 	}
 	this.organ.guiFunction = this.organGuiSimple;
 
-	this.createDefaultGui = function() {
-		console.log('party');
-		this.party.displaySimpleGui();
-		this.party.updateGui();
-		console.log('organ');
-		this.organ.displaySimpleGui();
-		this.organ.updateGui();
-		console.log('OrganFunction')
-		this.organfunction.displaySimpleGui();
-		this.organfunction.updateGui();
-		console.log('blogs');
-		this.blogs.displaySimpleGui();
-		this.blogs.updateGui();
+	this.partyGuiSimple=function(guiF){
+		var txt = guiF.createAttributesGui()
+					;//+guiF.createOrgan_publishMessage_string_string_stringGui();
+		return guiF.createSeletonGui(txt);
 	}
+	this.party.guiFunction = this.partyGuiSimple;
+
+	this.shBlogGuiSimple=function(guiF){
+		var txt = guiF.createAttributesGui();
+		console.log('a-'+guiF.prefix);
+		txt = txt + '<div id="'+guiF.prefix+'-blogs-event" ></div>';
+		return guiF.createSeletonGui(txt);
+	}
+	this.blogs.guiFunction = this.shBlogGuiSimple;
 
 	
+	
+	
+	//createStruc_ShortBlog_contract_attribute_messagesGui
+	
+	this.createDefaultGui = function() {
+		this.party.displaySimpleGui();
+		this.party.updateGui();
+		this.organ.displaySimpleGui();
+		this.organ.updateGui();
+		this.organfunction.displaySimpleGui();
+		this.organfunction.updateGui();
+		this.blogs.displaySimpleGui();
+		this.blogs.updateGui();
+		this.registry.displaySimpleGui();
+		this.registry.updateGui();
+	}
+
+	//register for all events at first
 	this.registerAllEvents=function(contract){
 		console.log('register all events for:'+contract.address);
 		var event = contract.allEvents({}, {fromBlock: 0, toBlock: 'latest'})
@@ -6358,10 +6405,10 @@ function KP() {
 		  if (err) console.log('error:'+err)
 		  
 		  for ( var m in result) {
-			  console.log('-->'+m.toString()+':'+result[m])
+			  console.log(contract.address+'-->'+m.toString()+':'+result[m])
 			
 		}
-		})
+		});
 		
 	}
 	
@@ -6377,9 +6424,10 @@ function KP() {
 			  console.log('NewMessage-->'+m.toString()+':'+result[m])
 			
 		}
-
-//		var gf = new ShortBlogGuiFactory('');
-//		gf.createNewMessageLogDataGui("", blockHash, blockNumber, message, messageId, messageSender, messageHashValue, externalResource)
+		  var guiF = new ShortBlogGuiFactory();
+		  var txt = guiF.createNewMessageLogDataGui("", "", "", result.args.message, result.args.messageId, result.args.messageSender, result.args.messageHashValue, result.args.externalResource);
+		  txt = guiF.createSeletonGui(txt);
+			setInnerHtml(txt, 'blogs-event');
 		}else
 			console.log(error);	
 	});

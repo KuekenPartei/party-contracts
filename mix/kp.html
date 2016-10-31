@@ -48,50 +48,20 @@
 </style>
 </head>
 <body bgcolor='#E6E6FA'>
-	<h1>Sample Interface for party</h1>
-<!--
-<div class="contract">Organ
-<div id="Organ_gui" ></div>
+	<h1>Sample Interface for the KUEKeN party</h1>
+
+<div class="contract eventRow">
+<div class="eventValue" id="KP" >Party</div>
+<div class="eventValue" id="Organ" >Organs</div>
 </div>
-<div class="contract">Party
-<div id="Party_gui" ></div>
-</div>
-<div class="contract">KUEKeNParty
-<div id="KUEKeNParty_gui" ></div>
-</div>
-<div class="contract">Conference
-<div id="Conference_gui" ></div>
-</div>
-<div class="contract">FoundationConference
-<div id="FoundationConference_gui" ></div>
-</div>
-<div class="contract">OrganFunction
-<div id="OrganFunction_gui" ></div>
-</div>
-<div class="contract">test : Organ
-<div id="TestOrgan_gui" ></div>
-</div>
-<div class="contract">test : Party
-<div id="TestParty_gui" ></div>
-</div>
-<div class="contract">test : KUEKeNParty
-<div id="TestKUEKeNParty_gui" ></div>
-</div>
-<div class="contract">test : Conference
-<div id="TestConference_gui" ></div>
-</div>
-<div class="contract">test : FoundationConference
-<div id="TestFoundationConference_gui" ></div>
-</div>
-<div class="contract">test : OrganFunction
-<div id="TestOrganFunction_gui" ></div>
-</div>
--->
-<div class="contract eventRow">test : party
+<div class="contract eventRow">
 <div class="eventValue" id="KP" ></div>
 <div class="eventValue" id="Organ" ></div>
-<div class="eventValue" id="Blog" ></div>
 </div>
+<h4>Organ Functions</h4>
+<div  id="OF" ></div>
+<h4>Blog Registry</h4>
+<div  id="Blog" ></div>
 <div id="eventLog" ></div>
 
 <!-- Start of user code custom_partyhtml --> 
@@ -104,14 +74,12 @@
 <script type='text/javascript'>
 
 var c = new KP('KP');
-//Start of user code page_Party_js_functions
 web3.eth.defaultAccount = web3.eth.accounts[0] ;		
 var co = contracts['KUEKeNParty'].contract;
 var br = contracts['BlogRegistry'].contract;
 
 
 c.bootstrap(co,br);
-//End of user code
 c.createDefaultGui();
 
 </script>
