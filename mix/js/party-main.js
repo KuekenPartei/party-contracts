@@ -6331,7 +6331,50 @@ function CustomGuis() {
 		txt = txt + '<div id="'+guiF.prefix+'-OF" ></div>';
 		return guiF.createSeletonGui(txt);
 	}
+	this.conferenceGuiSimple=function(guiF){
+		var txt = ''
+			+		'		    <h4 class="contract_attribute" id="'+guiF.prefix+'Conference_contract_attribute_organName">'
+			+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'Conference_organName_value"> </span>'
+			+		'		    </h4>'
+		+		'		    <div class="contract_attribute" id="'+guiF.prefix+'Conference_contract_attribute_accreditatedMembers"> accreditatedMembers:'
+		+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'Conference_accreditatedMembers_value"> </span>'
+		+		'		     at <span class="contract_attribute_value" id="'+guiF.prefix+'Conference_date_value"> </span>'
+		+		'		     active <span class="contract_attribute_value" id="'+guiF.prefix+'Conference_isActive_value"> </span>'
+		+		'		    </div>'
+		+		'		    <div class="contract_attribute" id="'+guiF.prefix+'Conference_contract_attribute_lastFunctionId"> lastFunctionId:'
+		+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'Conference_lastFunctionId_value"> </span>'
+		+		'		    </div>'
+		+		'		    <div class="contract_attribute" id="'+guiF.prefix+'Conference_contract_attribute_mangerCount"> mangerCount:'
+		+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'Conference_mangerCount_value"> </span>'
+		+		'		    </div>'
+		+		'		    <div class="contract_attribute" id="'+guiF.prefix+'Conference_contract_attribute_ballotCount"> ballotCount:'
+		+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'Conference_ballotCount_value"> </span>'
+		+		'		    </div>'
+		+'    <div class="contract_attribute" id="'+guiF.prefix+'Conference_contract_attribute_memberRegistry"> memberRegistry:'
+		+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'Conference_memberRegistry_value"> </span>'
+		+		'		    </div>'
+		+		'		';
+		txt = txt + '<div id="'+guiF.prefix+'-Blog" ></div>';
+		txt = txt + '<div id="'+guiF.prefix+'-OF" ></div>';
+		return guiF.createSeletonGui(txt);
+	}
 	
+	//event guis
+	this.eventNewMessageHandle=function(result){
+
+		console.log('New Message'+result);
+		for ( var m in result) {
+			console.log('-->'+m.toString()+':'+result[m])
+		}
+		for ( var m in result.args) {
+			console.log('args-->'+m.toString()+':'+result.args[m])
+		}
+		var guiF = new ShortBlogGuiFactory();
+		var txt = guiF.createNewMessageLogDataGui("", "", "", result.args.message, result.args.messageId, result.args.messageSender, result.args.messageHashValue, result.args.externalResource);
+		txt = guiF.createSeletonGui(txt);
+		setInnerHtml(txt, result.address+'-blogs-event');
+	}
+
 }
 
 var customGui = new CustomGuis();
@@ -6345,13 +6388,26 @@ function OrganGui(contract) {
 	this.organManager.guiFunction = customGui.organGuiSimple;
 	this.blog.guiFunction = customGui.shBlogGuiSimple;
 	
-	this.organFGuiSimple=function(guiF){
-		var txt = guiF.createAttributesGui();
-		txt = txt + '<div id="'+guiF.prefix+'-OF-Blog" ></div>';
-		txt = txt + '<div id="'+contract.address+'-OF" ></div>';
-		return guiF.createSeletonGui(txt);
-	}
+//	this.organFGuiSimple=function(guiF){
+//		var txt = guiF.createAttributesGui();
+//		txt = txt + '<div id="'+guiF.prefix+'-OF-Blog" ></div>';
+//		txt = txt + '<div id="'+contract.address+'-OF" ></div>';
+//		return guiF.createSeletonGui(txt);
+//	}
+	//register for all events at first
+	this.registerAllEvents=function(contract){
+		console.log('register all events for:'+contract.address);
+		var event = contract.allEvents({}, {fromBlock: 0, toBlock: 'latest'})
 
+		event.watch(function (err, result) {
+		  if (err) console.log('error:'+err)
+		  
+		  for ( var m in result) {
+			  console.log(contract.address+'-->'+m.toString()+':'+result[m])
+			
+		}
+		});
+	}
 	
 	this.bootstrap = function(organ) {
 		var ofc = organ.lastFunctionId(); //om.getLastFunctionId();
@@ -6360,10 +6416,11 @@ function OrganGui(contract) {
 			this.functions[oof1.address] = new OF(this.prefix,oof1);
 			this.functions[oof1.address].guiFunction = this.organFGuiSimple;
 		}
-		
+		this.blog.eventNewMessage = customGui.eventNewMessageHandle;
 		this.organManager.watchEvents();
 		this.blog.watchEvents();
-
+		
+		this.registerAllEvents(this.blog.c.instance);
 	}
 
 	this.createDefaultGui = function() {
@@ -6385,6 +6442,7 @@ function OF(ofprefix,contract) {
 	this.organfunction = new OrganFunctionManager(contract.address,contract,ofprefix+"-OF");
 	this.blog = new ShortBlogManager(contract.publisher(),ShortBlogContract.at(contract.publisher()),contract.address+"-Blog");
 	
+	this.blog.eventNewMessage = customGui.eventNewMessageHandle;
 	this.organfunction.watchEvents();
 	this.blog.watchEvents();
 	
