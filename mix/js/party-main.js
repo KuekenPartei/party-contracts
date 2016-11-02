@@ -88,12 +88,31 @@ var OrganContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,
-  { "constant": true,
-    "inputs": [{"name": "oldMember","type": "address"},{"name": "functionId","type": "uint256"},{"name": "newMember","type": "address"}],    
+  { "anonymous": false,
+    "inputs": 
+	[
+		{"indexed": false,
+		 "name": "oldMember",
+         "type": "address"}
+,		{"indexed": false,
+		 "name": "functionId",
+         "type": "uint256"}
+,		{"indexed": false,
+		 "name": "newMember",
+         "type": "address"}
+	],    
     "name": "FunctionMemberChange",
     "type": "event"  }
-,  { "constant": true,
-    "inputs": [{"name": "_type","type": "uint256"},{"name": "_function","type": "address"}],    
+,  { "anonymous": false,
+    "inputs": 
+	[
+		{"indexed": false,
+		 "name": "_type",
+         "type": "uint256"}
+,		{"indexed": false,
+		 "name": "_function",
+         "type": "address"}
+	],    
     "name": "FunctionChange",
     "type": "event"  }
   ,{
@@ -165,12 +184,22 @@ var PartyContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,
-  { "constant": true,
-    "inputs": [],    
+  { "anonymous": false,
+    "inputs": 
+	[
+	],    
     "name": "ConstiutionChange",
     "type": "event"  }
-,  { "constant": true,
-    "inputs": [{"name": "_organ","type": "address"},{"name": "_changeType","type": "uint256"}],    
+,  { "anonymous": false,
+    "inputs": 
+	[
+		{"indexed": false,
+		 "name": "_organ",
+         "type": "address"}
+,		{"indexed": false,
+		 "name": "_changeType",
+         "type": "uint256"}
+	],    
     "name": "OrganChanged",
     "type": "event"  }
   ,{
@@ -351,8 +380,19 @@ var ConferenceContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,
-  { "constant": true,
-    "inputs": [{"name": "memberId","type": "uint256"},{"name": "memberName","type": "string"},{"name": "memberAddress","type": "address"}],    
+  { "anonymous": false,
+    "inputs": 
+	[
+		{"indexed": false,
+		 "name": "memberId",
+         "type": "uint256"}
+,		{"indexed": false,
+		 "name": "memberName",
+         "type": "string"}
+,		{"indexed": false,
+		 "name": "memberAddress",
+         "type": "address"}
+	],    
     "name": "MemberAccreditated",
     "type": "event"  }
   ,{
@@ -6300,19 +6340,22 @@ function setInnerHtml(txt,_id){
 	} else
 		console.log('element with id not found:'+_id);}
 	
+function replaceInnerHtml(txt,_id){
+	var e = document.getElementById(_id);
+	if(e!==undefined && e!==null){
+		e.innerHTML = txt;
+	} else
+		console.log('element with id not found:'+_id);}
+	
 
 function CustomGuis() {
 	this.shBlogGuiSimple=function(guiF){
 		var txt = '';//guiF.createAttributesGui();
 		txt = txt 
-		+		'		    <div class="contract_attribute" id="'+guiF.prefix+'ShortBlog_contract_attribute_name"> name:'
-		+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'ShortBlog_name_value"> </span>'
-		+		'		    </div>'
-		+'    <div class="contract_attribute" id="'+guiF.prefix+'ShortBlog_contract_attribute_messageCount"> messages '
-		+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'ShortBlog_messageCount_value"> </span>'
-		+		'		    </div>'
-		+		'		    <div class="contract_attribute" id="'+guiF.prefix+'ShortBlog_contract_attribute_lastMessageDate"> lastMessageDate:'
-		+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'ShortBlog_lastMessageDate_value"> </span>'
+		+		'		    <div class="contract_attribute" > '
+		+		'		      <h6 class="contract_attribute_value" id="'+guiF.prefix+'ShortBlog_name_value"> </h6>'
+		+		'		      message <span class="contract_attribute_value" id="'+guiF.prefix+'ShortBlog_messageCount_value"> </span>'
+		+		'		      last message <span class="contract_attribute_value" id="'+guiF.prefix+'ShortBlog_lastMessageDate_value"> </span>'
 		+		'		    </div>'
 		;
 		
@@ -6324,6 +6367,33 @@ function CustomGuis() {
 		txt = txt + '<div id="'+guiF.prefix+'-Blog" ></div>';
 		return guiF.createSeletonGui(txt);
 	}
+	this.organFGuiSimple1=function(guiF){
+		var txt = 
+					'		    <div class="contract_attribute" id="'+guiF.prefix+'OrganFunction_contract_attribute_functionName">'
+			+		'		      <h4 class="contract_attribute_value" id="'+guiF.prefix+'OrganFunction_functionName_value"> </h4>'
+			+		'		    </div>'
+			+'    <div class="contract_attribute" > currentMember:'
+			+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'OrganFunction_currentMember_value"> </span>'
+			+		'		     changed <span class="contract_attribute_value" id="'+guiF.prefix+'OrganFunction_lastMemberChanged_value"> </span>'
+			+		'		     the id <span class="contract_attribute_value" id="'+guiF.prefix+'OrganFunction_id_value"> </span>'
+			+		'		    </div>'
+			+		'		    <div class="contract_attribute" > constitutionHash:'
+			+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'OrganFunction_constitutionHash_value"> </span>'
+			+		'		     last changed : <span class="contract_attribute_value" id="'+guiF.prefix+'OrganFunction_lastConstitutionHashChanged_value"> </span>'
+			+		'		    </div>'
+			+		'		    <div class="contract_attribute" id="'+guiF.prefix+'OrganFunction_contract_attribute_publisher"> blog address:'
+			+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'OrganFunction_publisher_value"> </span>'
+			+		'		    </div>'
+			+		'		'
+			;
+
+		txt = txt + '<div id="'+guiF.prefix+'-Blog" ></div>';
+		return guiF.createSeletonGui(txt);
+	}
+	
+	
+	
+	
 	this.organGuiSimple=function(guiF){
 		var txt = guiF.createAttributesGui()
 					+guiF.createOrgan_publishMessage_string_string_stringGui();
@@ -6359,21 +6429,42 @@ function CustomGuis() {
 		return guiF.createSeletonGui(txt);
 	}
 	
+	
+	
+	
 	//event guis
-	this.eventNewMessageHandle=function(result){
+	this.createNewMessageLogDataGui = function(prefix, blockHash, blockNumber
+			,message	,messageId	,messageSender	,messageHashValue	,externalResource	) {
+				return '<div class="eventRow">'
+				+'<div class="eventValue">message '+messageId+'</div>'
+				+'<div class="eventValue"> send by '+messageSender+'</div>'
+				 +' </div>'
+				 +'<div class="eventRow">'
+		        +'<div class="eventValue">'+message+'</div>'
+		        +' </div>'
+		        +'<div class="eventRow">'
+		        +'<div class="eventValue">hash '+messageHashValue+'</div>'
+		        +'<div class="eventValue"> external resource '+externalResource+'</div>'
+		        +' </div>';
+			}
 
-		console.log('New Message'+result);
-		for ( var m in result) {
-			console.log('-->'+m.toString()+':'+result[m])
-		}
-		for ( var m in result.args) {
-			console.log('args-->'+m.toString()+':'+result.args[m])
-		}
+	
+	this.eventNewMessageHandle=function(result){
+//
+//		console.log('New Message'+result);
+//		for ( var m in result) {
+//			console.log('-->'+m.toString()+':'+result[m])
+//		}
+//		for ( var m in result.args) {
+//			console.log('args-->'+m.toString()+':'+result.args[m])
+//		}
 		var guiF = new ShortBlogGuiFactory();
-		var txt = guiF.createNewMessageLogDataGui("", "", "", result.args.message, result.args.messageId, result.args.messageSender, result.args.messageHashValue, result.args.externalResource);
+		var txt = customGui.createNewMessageLogDataGui(result.address, result.blockhash, result.blockNumber, 
+				result.args.message, result.args.messageId, result.args.messageSender, result.args.messageHashValue, result.args.externalResource);
 		txt = guiF.createSeletonGui(txt);
 		setInnerHtml(txt, result.address+'-blogs-event');
 	}
+
 
 }
 
@@ -6420,7 +6511,7 @@ function OrganGui(contract) {
 		this.organManager.watchEvents();
 		this.blog.watchEvents();
 		
-		this.registerAllEvents(this.blog.c.instance);
+//		this.registerAllEvents(this.blog.c.instance);
 	}
 
 	this.createDefaultGui = function() {
@@ -6434,8 +6525,7 @@ function OrganGui(contract) {
 	}
 
 	this.bootstrap(contract);
-
-}
+}//end of OrganGui
 
 function OF(ofprefix,contract) {
 	this.prefix = contract.address;
@@ -6453,7 +6543,7 @@ function OF(ofprefix,contract) {
 //		txt = txt + '<div id="'+guiF.prefix+'-OF-Blog" ></div>';
 //		return guiF.createSeletonGui(txt);
 //	}
-	this.organfunction.guiFunction = customGui.organFGuiSimple;
+	this.organfunction.guiFunction = customGui.organFGuiSimple1;
 	this.blog.guiFunction = customGui.shBlogGuiSimple;
 	
 	this.createDefaultGui = function() {
@@ -6462,7 +6552,7 @@ function OF(ofprefix,contract) {
 		this.organfunction.updateGui();
 		this.blog.updateGui();
 	}
-}
+}// end of OF
 
 
 
@@ -6506,65 +6596,65 @@ function KP() {
 	}
 
 	//event handlers
-	this.eventNewMessageHandle=function(result){
-		console.log('New Message');
-		var guiF = new ShortBlogGuiFactory();
-		var txt = guiF.createNewMessageLogDataGui("", "", "", result.args.message, result.args.messageId, result.args.messageSender, result.args.messageHashValue, result.args.externalResource);
-		txt = guiF.createSeletonGui(txt);
-		setInnerHtml(txt, result.address+'-blogs-event');
-	}
-	this.blogs.eventNewMessage = this.eventNewMessageHandle;
-	
-	this.eventNewBlogHandle=function(result){
-		console.log('add a new blog:'+result);
-		var bAddress = result.args.blogAddress;
-//		self.blogs.addManager(ShortBlogContract.at(bAddress));
-		var guiF = new BlogRegistryGuiFactory();
-		var txt = guiF.createNewBlogLogDataGui("", "", "", result.args.index, result.args.name, result.args.blogAddress);
-		txt = guiF.createSeletonGui(txt);
-		setInnerHtml(txt, 'blogs-event');
-	}
-	this.registry.eventNewBlog = this.eventNewBlogHandle;
+//	this.eventNewMessageHandle=function(result){
+//		console.log('New Message');
+//		var guiF = new ShortBlogGuiFactory();
+//		var txt = guiF.createNewMessageLogDataGui("", "", "", result.args.message, result.args.messageId, result.args.messageSender, result.args.messageHashValue, result.args.externalResource);
+//		txt = guiF.createSeletonGui(txt);
+//		setInnerHtml(txt, result.address+'-blogs-event');
+//	}
+//	this.blogs.eventNewMessage = this.eventNewMessageHandle;
+//	
+//	this.eventNewBlogHandle=function(result){
+//		console.log('add a new blog:'+result);
+//		var bAddress = result.args.blogAddress;
+////		self.blogs.addManager(ShortBlogContract.at(bAddress));
+//		var guiF = new BlogRegistryGuiFactory();
+//		var txt = guiF.createNewBlogLogDataGui("", "", "", result.args.index, result.args.name, result.args.blogAddress);
+//		txt = guiF.createSeletonGui(txt);
+//		setInnerHtml(txt, 'blogs-event');
+//	}
+//	this.registry.eventNewBlog = this.eventNewBlogHandle;
 
 	//GUI functions
-	this.organGuiSimple=function(guiF){
-		var txt = guiF.createAttributesGui()
-					+guiF.createOrgan_publishMessage_string_string_stringGui();
-		return guiF.createSeletonGui(txt);
-	}
-	this.organ.guiFunction = this.organGuiSimple;
-	
-	this.organFGuiSimple=function(guiF){
-		var txt = guiF.createAttributesGui();
-		return guiF.createSeletonGui(txt);
-	}
-	this.organfunction.guiFunction = this.organFGuiSimple;
-
+//	this.organGuiSimple=function(guiF){
+//		var txt = guiF.createAttributesGui()
+//					+guiF.createOrgan_publishMessage_string_string_stringGui();
+//		return guiF.createSeletonGui(txt);
+//	}
+//	this.organ.guiFunction = this.organGuiSimple;
+//	
+//	this.organFGuiSimple=function(guiF){
+//		var txt = guiF.createAttributesGui();
+//		return guiF.createSeletonGui(txt);
+//	}
+//	this.organfunction.guiFunction = this.organFGuiSimple;
+//
 	this.partyGuiSimple=function(guiF){
 		var txt = guiF.createAttributesGui()
 					;//+guiF.createOrgan_publishMessage_string_string_stringGui();
 		return guiF.createSeletonGui(txt);
 	}
 	this.party.guiFunction = this.partyGuiSimple;
-
-	this.shBlogGuiSimple=function(guiF){
-		var txt = '';//guiF.createAttributesGui();
-		txt = txt 
-		+		'		    <div class="contract_attribute" id="'+guiF.prefix+'ShortBlog_contract_attribute_name"> name:'
-		+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'ShortBlog_name_value"> </span>'
-		+		'		    </div>'
-		+'    <div class="contract_attribute" id="'+guiF.prefix+'ShortBlog_contract_attribute_messageCount"> messages '
-		+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'ShortBlog_messageCount_value"> </span>'
-		+		'		    </div>'
-		+		'		    <div class="contract_attribute" id="'+guiF.prefix+'ShortBlog_contract_attribute_lastMessageDate"> lastMessageDate:'
-		+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'ShortBlog_lastMessageDate_value"> </span>'
-		+		'		    </div>'
-		;
-		
-		txt = txt + '<div id="'+guiF.prefix+'-blogs-event" ></div>';
-		return guiF.createSeletonGui(txt);
-	}
-	this.blogs.guiFunction = this.shBlogGuiSimple;
+//
+//	this.shBlogGuiSimple=function(guiF){
+//		var txt = '';//guiF.createAttributesGui();
+//		txt = txt 
+//		+		'		    <div class="contract_attribute" id="'+guiF.prefix+'ShortBlog_contract_attribute_name"> name:'
+//		+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'ShortBlog_name_value"> </span>'
+//		+		'		    </div>'
+//		+'    <div class="contract_attribute" id="'+guiF.prefix+'ShortBlog_contract_attribute_messageCount"> messages '
+//		+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'ShortBlog_messageCount_value"> </span>'
+//		+		'		    </div>'
+//		+		'		    <div class="contract_attribute" id="'+guiF.prefix+'ShortBlog_contract_attribute_lastMessageDate"> lastMessageDate:'
+//		+		'		      <span class="contract_attribute_value" id="'+guiF.prefix+'ShortBlog_lastMessageDate_value"> </span>'
+//		+		'		    </div>'
+//		;
+//		
+//		txt = txt + '<div id="'+guiF.prefix+'-blogs-event" ></div>';
+//		return guiF.createSeletonGui(txt);
+//	}
+//	this.blogs.guiFunction = this.shBlogGuiSimple;
 
 	
 	
@@ -6629,7 +6719,8 @@ function KP() {
 		}else
 			console.log(error);	
 	});
-	}}// hack
+	}
+}// end of KP
 
 
 //End of user code

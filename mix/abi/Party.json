@@ -34,12 +34,22 @@
     "outputs": [],
     "type": "function" }
 ,
-  { "constant": true,
-    "inputs": [],    
+  { "anonymous": false,
+    "inputs": 
+	[
+	],    
     "name": "ConstiutionChange",
     "type": "event"  }
-,  { "constant": true,
-    "inputs": [{"name": "_organ","type": "address"},{"name": "_changeType","type": "uint256"}],    
+,  { "anonymous": false,
+    "inputs": 
+	[
+		{"indexed": false,
+		 "name": "_organ",
+         "type": "address"}
+,		{"indexed": false,
+		 "name": "_changeType",
+         "type": "uint256"}
+	],    
     "name": "OrganChanged",
     "type": "event"  }
   ,{

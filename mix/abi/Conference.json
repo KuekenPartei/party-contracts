@@ -80,8 +80,19 @@
     "outputs": [],
     "type": "function" }
 ,
-  { "constant": true,
-    "inputs": [{"name": "memberId","type": "uint256"},{"name": "memberName","type": "string"},{"name": "memberAddress","type": "address"}],    
+  { "anonymous": false,
+    "inputs": 
+	[
+		{"indexed": false,
+		 "name": "memberId",
+         "type": "uint256"}
+,		{"indexed": false,
+		 "name": "memberName",
+         "type": "string"}
+,		{"indexed": false,
+		 "name": "memberAddress",
+         "type": "address"}
+	],    
     "name": "MemberAccreditated",
     "type": "event"  }
   ,{

@@ -46,8 +46,19 @@ var ManageableContract = web3.eth.contract([
     "outputs": [{"name": "","type": "bool"}],
     "type": "function" }
 ,
-  { "constant": true,
-    "inputs": [{"name": "_state","type": "uint256"},{"name": "_address","type": "address"},{"name": "_managerCount","type": "uint256"}],    
+  { "anonymous": false,
+    "inputs": 
+	[
+		{"indexed": false,
+		 "name": "_state",
+         "type": "uint256"}
+,		{"indexed": false,
+		 "name": "_address",
+         "type": "address"}
+,		{"indexed": false,
+		 "name": "_managerCount",
+         "type": "uint256"}
+	],    
     "name": "ManagerChanged",
     "type": "event"  }
 ]);   
@@ -82,28 +93,67 @@ var MultiownedContract = web3.eth.contract([
     "outputs": [{"name": "","type": "bool"}],
     "type": "function" }
 ,
-  { "constant": true,
-    "inputs": [{"name": "owner","type": "address"},{"name": "operation","type": "bytes32"}],    
+  { "anonymous": false,
+    "inputs": 
+	[
+		{"indexed": false,
+		 "name": "owner",
+         "type": "address"}
+,		{"indexed": false,
+		 "name": "operation",
+         "type": "bytes32"}
+	],    
     "name": "Confirmation",
     "type": "event"  }
-,  { "constant": true,
-    "inputs": [{"name": "owner","type": "address"},{"name": "operation","type": "bytes32"}],    
+,  { "anonymous": false,
+    "inputs": 
+	[
+		{"indexed": false,
+		 "name": "owner",
+         "type": "address"}
+,		{"indexed": false,
+		 "name": "operation",
+         "type": "bytes32"}
+	],    
     "name": "Revoke",
     "type": "event"  }
-,  { "constant": true,
-    "inputs": [{"name": "oldOwner","type": "address"},{"name": "newOwner","type": "address"}],    
+,  { "anonymous": false,
+    "inputs": 
+	[
+		{"indexed": false,
+		 "name": "oldOwner",
+         "type": "address"}
+,		{"indexed": false,
+		 "name": "newOwner",
+         "type": "address"}
+	],    
     "name": "OwnerChanged",
     "type": "event"  }
-,  { "constant": true,
-    "inputs": [{"name": "newOwner","type": "address"}],    
+,  { "anonymous": false,
+    "inputs": 
+	[
+		{"indexed": false,
+		 "name": "newOwner",
+         "type": "address"}
+	],    
     "name": "OwnerAdded",
     "type": "event"  }
-,  { "constant": true,
-    "inputs": [{"name": "oldOwner","type": "address"}],    
+,  { "anonymous": false,
+    "inputs": 
+	[
+		{"indexed": false,
+		 "name": "oldOwner",
+         "type": "address"}
+	],    
     "name": "OwnerRemoved",
     "type": "event"  }
-,  { "constant": true,
-    "inputs": [{"name": "newRequirement","type": "uint256"}],    
+,  { "anonymous": false,
+    "inputs": 
+	[
+		{"indexed": false,
+		 "name": "newRequirement",
+         "type": "uint256"}
+	],    
     "name": "RequirementChanged",
     "type": "event"  }
 ]);   

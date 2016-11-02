@@ -43,8 +43,25 @@ var ShortBlogContract = web3.eth.contract([
     "outputs": [{"name": "","type": "bool"}],
     "type": "function" }
 ,
-  { "constant": true,
-    "inputs": [{"name": "message","type": "string"},{"name": "messageId","type": "uint256"},{"name": "messageSender","type": "address"},{"name": "messageHashValue","type": "string"},{"name": "externalResource","type": "string"}],    
+  { "anonymous": false,
+    "inputs": 
+	[
+		{"indexed": false,
+		 "name": "message",
+         "type": "string"}
+,		{"indexed": false,
+		 "name": "messageId",
+         "type": "uint256"}
+,		{"indexed": false,
+		 "name": "messageSender",
+         "type": "address"}
+,		{"indexed": false,
+		 "name": "messageHashValue",
+         "type": "string"}
+,		{"indexed": false,
+		 "name": "externalResource",
+         "type": "string"}
+	],    
     "name": "NewMessage",
     "type": "event"  }
 ]);   
@@ -79,8 +96,19 @@ var BlogRegistryContract = web3.eth.contract([
     "outputs": [{"name": "","type": "bool"}],
     "type": "function" }
 ,
-  { "constant": true,
-    "inputs": [{"name": "index","type": "uint256"},{"name": "name","type": "string"},{"name": "blogAddress","type": "address"}],    
+  { "anonymous": false,
+    "inputs": 
+	[
+		{"indexed": false,
+		 "name": "index",
+         "type": "uint256"}
+,		{"indexed": false,
+		 "name": "name",
+         "type": "string"}
+,		{"indexed": false,
+		 "name": "blogAddress",
+         "type": "address"}
+	],    
     "name": "NewBlog",
     "type": "event"  }
 ]);   
@@ -657,7 +685,6 @@ function ShortBlogManager(prefix,contract,containerId) {
 	this.eventlogPrefix = '';
 	this.guiFunction = null;
 	this.eventNewMessage = null;
-	console.log('new Manager');
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -735,7 +762,6 @@ function ShortBlogManager(prefix,contract,containerId) {
 	* The events are stored in an element with the id this.eventlogPrefix+'eventLog'.
 	**/
 	this.watchEvents=function(){
-		console.log('-->'+this.getContract().address);
 	var event_NewMessage = this.getContract().NewMessage({},{fromBlock: 0});
 	var elp = this.eventlogPrefix;
 	var callback = this.eventNewMessage;

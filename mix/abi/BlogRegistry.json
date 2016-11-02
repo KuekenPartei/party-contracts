@@ -28,8 +28,19 @@
     "outputs": [{"name": "","type": "bool"}],
     "type": "function" }
 ,
-  { "constant": true,
-    "inputs": [{"name": "index","type": "uint256"},{"name": "name","type": "string"},{"name": "blogAddress","type": "address"}],    
+  { "anonymous": false,
+    "inputs": 
+	[
+		{"indexed": false,
+		 "name": "index",
+         "type": "uint256"}
+,		{"indexed": false,
+		 "name": "name",
+         "type": "string"}
+,		{"indexed": false,
+		 "name": "blogAddress",
+         "type": "address"}
+	],    
     "name": "NewBlog",
     "type": "event"  }
 ]

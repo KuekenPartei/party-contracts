@@ -36,8 +36,25 @@
     "outputs": [{"name": "","type": "bool"}],
     "type": "function" }
 ,
-  { "constant": true,
-    "inputs": [{"name": "message","type": "string"},{"name": "messageId","type": "uint256"},{"name": "messageSender","type": "address"},{"name": "messageHashValue","type": "string"},{"name": "externalResource","type": "string"}],    
+  { "anonymous": false,
+    "inputs": 
+	[
+		{"indexed": false,
+		 "name": "message",
+         "type": "string"}
+,		{"indexed": false,
+		 "name": "messageId",
+         "type": "uint256"}
+,		{"indexed": false,
+		 "name": "messageSender",
+         "type": "address"}
+,		{"indexed": false,
+		 "name": "messageHashValue",
+         "type": "string"}
+,		{"indexed": false,
+		 "name": "externalResource",
+         "type": "string"}
+	],    
     "name": "NewMessage",
     "type": "event"  }
 ]

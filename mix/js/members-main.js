@@ -75,8 +75,25 @@ var MemberRegistryContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,
-  { "constant": true,
-    "inputs": [{"name": "mAddress","type": "address"},{"name": "eType","type": "EventType"},{"name": "id","type": "uint256"},{"name": "name","type": "string"},{"name": "memberState","type": "MemberState"}],    
+  { "anonymous": false,
+    "inputs": 
+	[
+		{"indexed": false,
+		 "name": "mAddress",
+         "type": "address"}
+,		{"indexed": false,
+		 "name": "eType",
+         "type": "EventType"}
+,		{"indexed": false,
+		 "name": "id",
+         "type": "uint256"}
+,		{"indexed": false,
+		 "name": "name",
+         "type": "string"}
+,		{"indexed": false,
+		 "name": "memberState",
+         "type": "MemberState"}
+	],    
     "name": "MemberEvent",
     "type": "event"  }
 ]);   

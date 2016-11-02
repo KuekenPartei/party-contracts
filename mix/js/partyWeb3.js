@@ -88,12 +88,31 @@ var OrganContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,
-  { "constant": true,
-    "inputs": [{"name": "oldMember","type": "address"},{"name": "functionId","type": "uint256"},{"name": "newMember","type": "address"}],    
+  { "anonymous": false,
+    "inputs": 
+	[
+		{"indexed": false,
+		 "name": "oldMember",
+         "type": "address"}
+,		{"indexed": false,
+		 "name": "functionId",
+         "type": "uint256"}
+,		{"indexed": false,
+		 "name": "newMember",
+         "type": "address"}
+	],    
     "name": "FunctionMemberChange",
     "type": "event"  }
-,  { "constant": true,
-    "inputs": [{"name": "_type","type": "uint256"},{"name": "_function","type": "address"}],    
+,  { "anonymous": false,
+    "inputs": 
+	[
+		{"indexed": false,
+		 "name": "_type",
+         "type": "uint256"}
+,		{"indexed": false,
+		 "name": "_function",
+         "type": "address"}
+	],    
     "name": "FunctionChange",
     "type": "event"  }
   ,{
@@ -165,12 +184,22 @@ var PartyContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,
-  { "constant": true,
-    "inputs": [],    
+  { "anonymous": false,
+    "inputs": 
+	[
+	],    
     "name": "ConstiutionChange",
     "type": "event"  }
-,  { "constant": true,
-    "inputs": [{"name": "_organ","type": "address"},{"name": "_changeType","type": "uint256"}],    
+,  { "anonymous": false,
+    "inputs": 
+	[
+		{"indexed": false,
+		 "name": "_organ",
+         "type": "address"}
+,		{"indexed": false,
+		 "name": "_changeType",
+         "type": "uint256"}
+	],    
     "name": "OrganChanged",
     "type": "event"  }
   ,{
@@ -351,8 +380,19 @@ var ConferenceContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,
-  { "constant": true,
-    "inputs": [{"name": "memberId","type": "uint256"},{"name": "memberName","type": "string"},{"name": "memberAddress","type": "address"}],    
+  { "anonymous": false,
+    "inputs": 
+	[
+		{"indexed": false,
+		 "name": "memberId",
+         "type": "uint256"}
+,		{"indexed": false,
+		 "name": "memberName",
+         "type": "string"}
+,		{"indexed": false,
+		 "name": "memberAddress",
+         "type": "address"}
+	],    
     "name": "MemberAccreditated",
     "type": "event"  }
   ,{

@@ -19,8 +19,19 @@
     "outputs": [{"name": "","type": "bool"}],
     "type": "function" }
 ,
-  { "constant": true,
-    "inputs": [{"name": "_state","type": "uint256"},{"name": "_address","type": "address"},{"name": "_managerCount","type": "uint256"}],    
+  { "anonymous": false,
+    "inputs": 
+	[
+		{"indexed": false,
+		 "name": "_state",
+         "type": "uint256"}
+,		{"indexed": false,
+		 "name": "_address",
+         "type": "address"}
+,		{"indexed": false,
+		 "name": "_managerCount",
+         "type": "uint256"}
+	],    
     "name": "ManagerChanged",
     "type": "event"  }
 ]
