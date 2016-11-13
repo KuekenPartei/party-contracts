@@ -6469,12 +6469,14 @@ function CustomGuis() {
 }
 
 var customGui = new CustomGuis();
+var guis = {};
 
 function OrganGui(contract) {
 	this.prefix = contract.address;
 	this.organManager = new OrganManager(contract.address,contract,"Organ");
 	this.blog = new ShortBlogManager(contract.getOrganBlog(),ShortBlogContract.at(contract.getOrganBlog()),contract.address+"-Blog");
 	this.functions = {};
+	guis[contract.address] = this;
 	
 	this.organManager.guiFunction = customGui.organGuiSimple;
 	this.blog.guiFunction = customGui.shBlogGuiSimple;
@@ -6486,19 +6488,30 @@ function OrganGui(contract) {
 //		return guiF.createSeletonGui(txt);
 //	}
 	//register for all events at first
-	this.registerAllEvents=function(contract){
-		console.log('register all events for:'+contract.address);
-		var event = contract.allEvents({}, {fromBlock: 0, toBlock: 'latest'})
-
-		event.watch(function (err, result) {
-		  if (err) console.log('error:'+err)
-		  
-		  for ( var m in result) {
-			  console.log(contract.address+'-->'+m.toString()+':'+result[m])
-			
+//	this.registerAllEvents=function(contract){
+//		console.log('register all events for:'+contract.address);
+//		var event = contract.allEvents({}, {fromBlock: 0, toBlock: 'latest'})
+//
+//		event.watch(function (err, result) {
+//		  if (err) console.log('error:'+err)
+//		  
+//		  for ( var m in result) {
+//			  console.log(contract.address+'-->'+m.toString()+':'+result[m])
+//			
+//		}
+//		});
+//	}
+	
+	this.switchMode = function(mode) {
+		if(mode='manager'){
+			this.organManager.guiFunction = null;
+		}else{
+			this.organManager.guiFunction = customGui.organGuiSimple;
 		}
-		});
+		this.organManager.clearGui(null);
+		this.organManager.addGui(null);
 	}
+
 	
 	this.bootstrap = function(organ) {
 		var ofc = organ.lastFunctionId(); //om.getLastFunctionId();
@@ -6532,6 +6545,8 @@ function OF(ofprefix,contract) {
 	this.organfunction = new OrganFunctionManager(contract.address,contract,ofprefix+"-OF");
 	this.blog = new ShortBlogManager(contract.publisher(),ShortBlogContract.at(contract.publisher()),contract.address+"-Blog");
 	
+	guis[contract.address] = this;
+
 	this.blog.eventNewMessage = customGui.eventNewMessageHandle;
 	this.organfunction.watchEvents();
 	this.blog.watchEvents();
@@ -6566,9 +6581,21 @@ function KP() {
 	this.organs = {};
 	var self = this;
 
+	this.switchMode = function(mode) {
+		if(mode='manager'){
+			this.party.guiFunction = null;
+		}else{
+			this.party.guiFunction = this.partyGuiSimple;
+		}
+		this.party.clearGui(null);
+		this.party.displayGui(null);
+	}
+	
 	this.bootstrap = function(kp,br) {
 //		this.registerAllEvents(br);
 		this.registry.addManager(br);
+		guis[kp.address] = this;
+
 		
 		this.party.addManager(kp);
 //		this.registerAllEvents(kp);
@@ -6633,6 +6660,7 @@ function KP() {
 	this.partyGuiSimple=function(guiF){
 		var txt = guiF.createAttributesGui()
 					;//+guiF.createOrgan_publishMessage_string_string_stringGui();
+		txt=txt + '<div><a href="#" onclick="mode(\''+guiF.prefix+'\',\'ro\')"> readonly </a><a href="#" onclick="mode(\'manager\')"> manager </a> <div>';
 		return guiF.createSeletonGui(txt);
 	}
 	this.party.guiFunction = this.partyGuiSimple;

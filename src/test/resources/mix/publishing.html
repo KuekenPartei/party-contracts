@@ -1,0 +1,95 @@
+<!doctype>
+<html>
+<head>
+<!--
+<script type='text/javascript' src="js/publishingWeb3.js">
+</script>
+-->
+
+
+<script type='text/javascript' src="js/publishing-main.js">
+</script>
+
+<!-- Start of user code custom_publishing_scripts --> 
+
+<!-- End of user code -->
+
+<!-- start of style -->
+<style>
+.contract {
+	border-style: solid;
+	border-width: 1px;
+	margin-bottom: 4px;
+	} 
+.contract_attributes{
+	border-style: solid;
+	border-width: 1px;
+	} 
+.Struct_Mapping{}
+.Value_Mapping{}
+.contract_attribute{}
+.contract_attribute_value{}
+.function_execution{}
+.function_parameter{}
+.function_result{}
+.eventRow{
+	display: table-row;
+	width: auto;
+}
+.eventValue{	
+	float: left; /*fix for  buggy browsers*/
+	display: table-column;
+}
+
+</style>
+</head>
+<body bgcolor='#E6E6FA'>
+	<h1>Sample Interface for publishing</h1>
+<!--
+<div class="contract">ShortBlog
+<div id="ShortBlog_gui" ></div>
+</div>
+<div class="contract">BlogRegistry
+<div id="BlogRegistry_gui" ></div>
+</div>
+<div class="contract">test : ShortBlog
+<div id="TestShortBlog_gui" ></div>
+</div>
+<div class="contract">test : BlogRegistry
+<div id="TestBlogRegistry_gui" ></div>
+</div>
+-->
+<div class="contract">test : publishing
+<div id="Publishing-Gui" ></div>
+</div>
+<div id="eventLog" ></div>
+
+<!-- Start of user code custom_publishinghtml --> 
+<div id="blogs-event" ></div>
+<div id="entry-event" ></div>
+
+<!-- End of user code -->
+
+
+<script type='text/javascript'>
+
+var c = new PublishingPage('Publishing-Gui');
+//Start of user code page_Publishing_js_functions
+		//TODO: implement
+
+web3.eth.defaultAccount = web3.eth.accounts[0];
+
+var co = contracts['BlogRegistry'].contract;
+c.registry.addManager(co);
+// var r = new PublishingReadPage('Publishing-Gui');
+// r.registry.addManager(co);
+// r.readDataFromContract();
+//r.placeDefaultGui();
+c.readDataFromContract();
+//End of user code
+c.createDefaultGui();
+
+</script>
+
+</body>
+</html>

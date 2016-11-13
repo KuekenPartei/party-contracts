@@ -1,0 +1,216 @@
+<!doctype>
+<html>
+<head>
+<script type='text/javascript' src="basics-test.js">
+</script>
+<style>
+.contract {
+	border-style: solid;
+	border-width: 1px;
+	margin-bottom: 4px;
+	} 
+.contract_attributes{
+	border-style: solid;
+	border-width: 1px;
+	} 
+.Struct_Mapping{}
+.Value_Mapping{}
+.contract_attribute{}
+.contract_attribute_value{}
+.function_execution{}
+.function_parameter{}
+.function_result{}
+.eventRow{
+	display: table-row;
+	width: auto;
+}
+.eventValue{	
+	float: left; /*fix for  buggy browsers*/
+	display: table-column;
+}
+.testTable {
+	display: table;
+	width: auto;
+	border-spacing: 5px; /*cellspacing:poor IE support for  this*/
+	/* border-collapse:separate;*/
+}
+.testRow {
+	display: table-row;
+	width: auto;
+}
+.testCell {
+	float: left; /*fix for  buggy browsers*/
+	display: table-column;
+}
+.failed_state {
+	border-style: solid;
+	border-width: 1px;
+	border-color: red;
+	float: left;
+	display: table-column;
+}
+.pass_state {
+	border-style: solid;
+	border-width: 1px;
+	border-color: green;
+	float: left;
+	display: table-column;
+}
+</style>
+</head>
+<body bgcolor='#E6E6FA'>
+	<h1>Tests for basics</h1>
+
+
+<div id="all-testResult" class="testTable"></div>
+<h1>Events</h1>
+<div id="eventLog" ></div>
+
+<!--Start of user code Custom_html_basics -->
+	//TODO: implement
+<!--End of user code-->
+
+
+<script type='text/javascript'>
+
+web3.eth.defaultAccount = web3.eth.accounts[0];
+// execute all Owned tests if set 
+if(contracts['Owned'] !=undefined){
+	var contract = contracts['Owned'].contract;
+	var instance = new TestOwned(contract);
+	instance.prefix = 'all';
+
+
+
+//console.log(instance+'-->');
+	instance.allTests();
+}// execute all Manageable tests if set 
+if(contracts['Manageable'] !=undefined){
+	var contract = contracts['Manageable'].contract;
+	var instance = new TestManageable(contract);
+	instance.prefix = 'all';
+
+var event_ManagerChanged = contract.ManagerChanged({},{fromBlock: 0});
+event_ManagerChanged.watch(function(error,result){
+	if(!error){
+		var e = document.getElementById('eventLog');
+		var elemDiv = document.createElement('div');
+		elemDiv.id= result.blockNumber +'event';
+		e.appendChild(elemDiv);
+		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
+		elemDiv.innerHTML = '<div class="eventRow">'
+        +'<div class="eventValue">'+result.args._state+'</div>'
+        +'<div class="eventValue">'+result.args._address+'</div>'
+        +'<div class="eventValue">'+result.args._managerCount+'</div>'
++ '</div>';
+		}else
+		console.log(error);
+	});
+
+
+//console.log(instance+'-->');
+	instance.allTests();
+}// execute all Multiowned tests if set 
+if(contracts['Multiowned'] !=undefined){
+	var contract = contracts['Multiowned'].contract;
+	var instance = new TestMultiowned(contract);
+	instance.prefix = 'all';
+
+var event_Confirmation = contract.Confirmation({},{fromBlock: 0});
+event_Confirmation.watch(function(error,result){
+	if(!error){
+		var e = document.getElementById('eventLog');
+		var elemDiv = document.createElement('div');
+		elemDiv.id= result.blockNumber +'event';
+		e.appendChild(elemDiv);
+		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
+		elemDiv.innerHTML = '<div class="eventRow">'
+        +'<div class="eventValue">'+result.args.owner+'</div>'
+        +'<div class="eventValue">'+result.args.operation+'</div>'
++ '</div>';
+		}else
+		console.log(error);
+	});
+var event_Revoke = contract.Revoke({},{fromBlock: 0});
+event_Revoke.watch(function(error,result){
+	if(!error){
+		var e = document.getElementById('eventLog');
+		var elemDiv = document.createElement('div');
+		elemDiv.id= result.blockNumber +'event';
+		e.appendChild(elemDiv);
+		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
+		elemDiv.innerHTML = '<div class="eventRow">'
+        +'<div class="eventValue">'+result.args.owner+'</div>'
+        +'<div class="eventValue">'+result.args.operation+'</div>'
++ '</div>';
+		}else
+		console.log(error);
+	});
+var event_OwnerChanged = contract.OwnerChanged({},{fromBlock: 0});
+event_OwnerChanged.watch(function(error,result){
+	if(!error){
+		var e = document.getElementById('eventLog');
+		var elemDiv = document.createElement('div');
+		elemDiv.id= result.blockNumber +'event';
+		e.appendChild(elemDiv);
+		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
+		elemDiv.innerHTML = '<div class="eventRow">'
+        +'<div class="eventValue">'+result.args.oldOwner+'</div>'
+        +'<div class="eventValue">'+result.args.newOwner+'</div>'
++ '</div>';
+		}else
+		console.log(error);
+	});
+var event_OwnerAdded = contract.OwnerAdded({},{fromBlock: 0});
+event_OwnerAdded.watch(function(error,result){
+	if(!error){
+		var e = document.getElementById('eventLog');
+		var elemDiv = document.createElement('div');
+		elemDiv.id= result.blockNumber +'event';
+		e.appendChild(elemDiv);
+		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
+		elemDiv.innerHTML = '<div class="eventRow">'
+        +'<div class="eventValue">'+result.args.newOwner+'</div>'
++ '</div>';
+		}else
+		console.log(error);
+	});
+var event_OwnerRemoved = contract.OwnerRemoved({},{fromBlock: 0});
+event_OwnerRemoved.watch(function(error,result){
+	if(!error){
+		var e = document.getElementById('eventLog');
+		var elemDiv = document.createElement('div');
+		elemDiv.id= result.blockNumber +'event';
+		e.appendChild(elemDiv);
+		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
+		elemDiv.innerHTML = '<div class="eventRow">'
+        +'<div class="eventValue">'+result.args.oldOwner+'</div>'
++ '</div>';
+		}else
+		console.log(error);
+	});
+var event_RequirementChanged = contract.RequirementChanged({},{fromBlock: 0});
+event_RequirementChanged.watch(function(error,result){
+	if(!error){
+		var e = document.getElementById('eventLog');
+		var elemDiv = document.createElement('div');
+		elemDiv.id= result.blockNumber +'event';
+		e.appendChild(elemDiv);
+		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
+		elemDiv.innerHTML = '<div class="eventRow">'
+        +'<div class="eventValue">'+result.args.newRequirement+'</div>'
++ '</div>';
+		}else
+		console.log(error);
+	});
+
+
+//console.log(instance+'-->');
+	instance.allTests();
+}	//Start of user code moreCustomTests_basics
+	//TODO: implement
+	//End of user code
+
+</script>
+</body>
+</html>

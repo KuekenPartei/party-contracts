@@ -1,0 +1,252 @@
+<!doctype>
+<html>
+<head>
+
+<script type='text/javascript' src="js/members-main.js">
+</script>
+<script type='text/javascript' src="js/publishing-main.js">
+</script>
+<script type='text/javascript' src="js/party-main.js">
+</script>
+
+<!-- start of style -->
+<link href="style/dapp-styles.css" media="all" rel="stylesheet" />
+<style>
+.contract {
+
+	padding-bottom: 10px;
+}
+
+.contract_attributes {
+
+	border-top-style: solid;
+  	border-top-width: 1px;
+}
+
+.Struct_Mapping {
+	
+}
+
+.Value_Mapping {
+	
+}
+
+.contract_attribute {
+	
+}
+
+.contract_attribute_value {
+	display: inline;
+}
+
+.function_execution {
+	border-top-style: solid;
+  	border-top-width: 1px;
+  	width : 100%;
+	padding-bottom: 10px;
+}
+
+.function_parameter {
+	
+
+}
+
+.function_parameter_name{
+	margin-top: 24px;
+}
+.function_button{
+	margin-top: 10px;
+	margin-left: 25%;
+}
+
+.function_result {
+	
+}
+.simple_border {
+	border-top-style: solid;
+	border-top-width: 1px;
+	
+}
+</style>
+</head>
+<body bgcolor='#E6E6FA'>
+
+
+
+
+	<header class="dapp-header dapp-full-header">
+		<br/>
+	</header>
+
+	<div class="dapp-flex-content">
+
+		<!-- aside
+		<aside class="dapp-aside">
+		</aside>
+ -->
+		<!-- content-->
+		<main class="dapp-content">
+		<div class="dapp-container">
+			<div id="LicenseManager_gui1">  
+				<div class="dapp-progress">loading data from contract</div> 
+			</div>
+		</div>
+<div class="dapp-container">
+			<h3>Organ Gui</h3>
+			<div  class="dapp-container" id="organ_gui">  
+				<div class="dapp-progress">no data</div> 
+			</div>
+			<h3>Member Registry</h3>
+			<div  class="dapp-container" id="member_registry_gui">  
+				<div class="dapp-progress">no data</div> 
+			</div>
+			<h3>blog Gui</h3>
+			<div  class="dapp-container" id="base_blog_gui">  
+				<div class="dapp-progress">no data</div> 
+			</div>
+			<div  class="dapp-container" id="blog_gui">  
+				<div class="dapp-progress">no data</div> 
+			</div>
+
+</div>
+
+		</main>
+		<!-- actionbar -->
+		<aside class="dapp-actionbar">
+		</aside>
+
+	</div>
+
+
+
+
+	<script type='text/javascript'>
+	
+
+		web3.eth.defaultAccount = web3.eth.accounts[0];
+//    web3.eth.getAccounts(function(e,accounts){
+//         // Check if there are accounts available
+//         if (!e && accounts && accounts.length > 0) {
+//             // Create a dialog requesting the transaction
+//         	web3.eth.defaultAccount = web3.eth.accounts[0];
+
+//           } else {
+// //         if(mist!=undefined)
+//             mist.requestAccount(function(e, account) {
+//                 if(!e) {
+//                     // Create a dialog requesting the transaction
+//                     web3.eth.defaultAccount = account;
+//                 }
+//             });
+//         }
+//     });
+
+   
+function OrganGui(prefix,contract,mRC,blogdef) {
+		this.mode = 0;
+		
+		this.contract = contract;
+		this.address = contract.address;
+		this.prefix=prefix;
+	   	this.organGuiFactory = new OrganGuiFactory();	   	
+	   	this.organGuiFactory.prefix=prefix;	   	
+	   	this.organGuiController = new OrganController();
+	   	this.organGuiController.prefix = prefix;
+	   	this.organGuiController.Organ_instance = contract;
+	   	
+	   	this.memberRegistryGuiFactory = new MemberRegistryGuiFactory();
+	   	this.memberRegistryGuiFactory.prefix = prefix;
+	   	this.memberRegistryGuiController = new MemberRegistryController();
+	   	this.memberRegistryGuiController.prefix = prefix;
+	   	this.memberRegistryGuiController.MemberRegistry_instance = mRC;
+	   	
+	   	this.blogGuiFactory = new ShortBlogGuiFactory();
+	   	this.blogGuiFactory.prefix = prefix;
+	   	this.blogs = new Array();
+	   	this.blogContractDefinition = blogdef;
+	   
+	   
+	   	
+	this.addBlog=function(contract){
+		var p = contract.address;
+		var blogGuiFactory = new ShortBlogGuiFactory();
+		blogGuiFactory.prefix = p;
+		var blogGuiController = new ShortBlogController();
+		blogGuiController.prefix = p;
+		blogGuiController.ShortBlog_instance = contract;
+		
+		blogData ={bf:blogGuiFactory,bc:blogGuiController };
+		this.blogs.push(blogData);
+	}
+	   	
+	this.readDataFromContract=function(){
+		var sb = this.blogContractDefinition.at(contract.getOrganBlog());
+		this.addBlog(sb);
+		
+		var cc = this.contract.lastFunctionId();
+		for (i = 0; i < cc; i++) {
+			var badress = this.contract.getFunctionBlogAddress(i);
+			var sb = this.blogContractDefinition.at(contract.getOrganBlog());
+			this.addBlog(sb);
+		}
+	}
+	
+	this.createOrganGui=function(){
+		var txt = '';
+		txt = txt +this.organGuiFactory.createAttributesGui();		
+		return this.blogGuiFactory.createShortBlogSeletonGui( txt );
+	}
+	
+	this.createMemberRegistryGui=function(){
+		var txt = '';
+		txt = txt +this.memberRegistryGuiFactory.createAttributesGui();		
+		return this.blogGuiFactory.createShortBlogSeletonGui( txt );
+	}
+	
+	this.placeDefaultGui=function(){	   	 
+   		this.readDataFromContract();	   		
+   		document.getElementById(this.prefix+'organ_gui').innerHTML = this.createOrganGui();
+   		this.organGuiController._updateAttributes();
+   		
+   		
+   		document.getElementById(this.prefix+'member_registry_gui').innerHTML = this.createMemberRegistryGui();
+//    		this.memberRegistryGuiController._updateAttributes();
+   		
+   		
+   		
+   		var e = document.getElementById(this.prefix+'blog_gui');
+   		e.innerHTML = '';
+
+   		for (i in this.blogs) {
+			var elemDiv = document.createElement('div');
+			e.appendChild(elemDiv);
+			elemDiv.innerHTML = this.blogs[i].bf.createAttributesGui();
+			//this.blogs[i].bc._updateAttributes();		
+			console.log('---->'+i);
+		}
+   		
+	}
+}
+   
+//    var blogGui = new ShortBlogGuiFactory()
+//    blogGui.prefix = '';
+//    var gui = blogGui.createShortBlogSeletonGui( blogGui.createAttributesGui());
+   
+//    var organGui = new OrganGuiFactory();
+//    organGui.prefix='';
+   
+//    var contract= "";
+//    var address = "";
+
+
+
+   var contract = contracts['FoundationConference'].contract;
+   var address = contracts['FoundationConference'].address;
+   
+   var memberRegistryContract = contracts['MemberRegistry'].contract;
+   oGui = new OrganGui('',contract,memberRegistryContract,ShortBlogContract);
+	oGui.placeDefaultGui();
+	</script>
+
+</body>
+</html>

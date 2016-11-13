@@ -1,2 +1,5 @@
 /.settings/
 /bin/
+/target/
+/database/
+/logs/
