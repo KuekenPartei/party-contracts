@@ -59,7 +59,7 @@ contract MemberRegistry is Manageable {
 		
 		//Start of user code MemberRegistry.function.addMember_string_address
 		Member m = memberAddress[_memberAddress]; 
-		MemberEvent(_memberAddress,EventType.memberStateChanged,m.id,m.name,m.state);
+//		MemberEvent(_memberAddress,EventType.memberStateChanged,m.id,m.name,m.state);
 		//End of user code
 	}
 	
@@ -79,7 +79,7 @@ contract MemberRegistry is Manageable {
 		
 		//Start of user code MemberRegistry.function.unregisterMember_uint
 		Member m = partyMembers[id];
-		MemberEvent(m.member,EventType.memberStateChanged,m.id,m.name,m.state);
+//		MemberEvent(m.member,EventType.memberStateChanged,m.id,m.name,m.state);
 		//End of user code
 	}
 	
@@ -127,7 +127,7 @@ contract MemberRegistry is Manageable {
 		
 		//Start of user code MemberRegistry.function.changeMemberAddress_uint_address
 		Member m = partyMembers[id];
-		MemberEvent(m.member,EventType.memberStateChanged,m.id,m.name,m.state);
+//		MemberEvent(m.member,EventType.memberStateChanged,m.id,m.name,m.state);
 		//End of user code
 	}
 	
@@ -135,7 +135,8 @@ contract MemberRegistry is Manageable {
 	
 	function getMemberData(address _address) public   constant returns (string name,uint id) {
 		//Start of user code MemberRegistry.function.getMemberData_address
-		//TODO: implement
+		name = memberAddress[_address].name;
+		id = memberAddress[_address].id;
 		//End of user code
 	}
 	
@@ -144,7 +145,7 @@ contract MemberRegistry is Manageable {
 	function publishMemberEvent(address mAddress,uint eventType) public   {
 		//Start of user code MemberRegistry.function.publishMemberEvent_address_uint
 		Member m = memberAddress[mAddress]; 
-		MemberEvent(mAddress,EventType(eventType),m.id,m.name,m.state);
+//		MemberEvent(mAddress,EventType(eventType),m.id,m.name,m.state);
 		//End of user code
 	}
 	

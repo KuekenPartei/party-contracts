@@ -1,21 +1,20 @@
 package de.kueken.ethereum.party.basics;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.util.concurrent.CompletableFuture;
 
-import org.adridadou.ethereum.EthAccount;
-import org.adridadou.ethereum.EthAddress;
 import org.adridadou.ethereum.EthereumFacade;
-import org.adridadou.ethereum.SoliditySource;
 import org.adridadou.ethereum.provider.EthereumFacadeProvider;
 import org.adridadou.ethereum.provider.MainEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.MordenEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.RpcEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.StandaloneEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.TestnetEthereumFacadeProvider;
+import org.adridadou.ethereum.values.EthAccount;
+import org.adridadou.ethereum.values.EthAddress;
+import org.adridadou.ethereum.values.SoliditySource;
 import org.ethereum.crypto.ECKey;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -90,6 +89,11 @@ public class MultiownedTest{
                 .createContractProxy(contractSource, "Multiowned", address.get(), sender, Multiowned.class);
 		//End of user code
 	}
+
+	protected void setFixture(Multiowned f) {
+		this.fixture = f;
+	}
+
 
 
 

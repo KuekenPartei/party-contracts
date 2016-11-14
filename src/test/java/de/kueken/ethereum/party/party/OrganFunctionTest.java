@@ -1,29 +1,26 @@
 package de.kueken.ethereum.party.party;
 
-import static org.junit.Assert.*;
-
-import de.kueken.ethereum.party.basics.*;
-import de.kueken.ethereum.party.members.*;
-import de.kueken.ethereum.party.publishing.*;
-import de.kueken.ethereum.party.voting.*;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.util.concurrent.CompletableFuture;
 
-import org.adridadou.ethereum.EthAccount;
-import org.adridadou.ethereum.EthAddress;
 import org.adridadou.ethereum.EthereumFacade;
-import org.adridadou.ethereum.SoliditySource;
 import org.adridadou.ethereum.provider.EthereumFacadeProvider;
 import org.adridadou.ethereum.provider.MainEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.MordenEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.RpcEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.StandaloneEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.TestnetEthereumFacadeProvider;
+import org.adridadou.ethereum.values.EthAccount;
+import org.adridadou.ethereum.values.EthAddress;
+import org.adridadou.ethereum.values.SoliditySource;
 import org.ethereum.crypto.ECKey;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import de.kueken.ethereum.party.basics.ManageableTest;
 
 /**
  * Test for the OrganFunction contract.
@@ -99,6 +96,12 @@ public class OrganFunctionTest extends ManageableTest{
                 .createContractProxy(contractSource, "OrganFunction", address.get(), sender, OrganFunction.class);
 		//End of user code
 	}
+
+	protected void setFixture(OrganFunction f) {
+		this.fixture = f;
+		super.setFixture(f);
+	}
+
 
 	/**
 	 * Test the constructor for the OrganFunction contract.

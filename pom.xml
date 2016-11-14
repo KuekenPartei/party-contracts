@@ -8,7 +8,7 @@
 	  	<dependency>
 	  		<groupId>org.adridadou</groupId>
 	  		<artifactId>eth-contract-api</artifactId>
-	  		<version>0.9</version>
+	  		<version>0.11-SNAPSHOT</version>
 	  	</dependency>
 	    <dependency>
 	        <groupId>junit</groupId>

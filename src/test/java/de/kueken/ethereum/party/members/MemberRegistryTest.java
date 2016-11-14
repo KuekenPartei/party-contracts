@@ -1,26 +1,25 @@
 package de.kueken.ethereum.party.members;
 
-import static org.junit.Assert.*;
-
-import de.kueken.ethereum.party.basics.*;
-
 import java.io.File;
 import java.util.concurrent.CompletableFuture;
 
-import org.adridadou.ethereum.EthAccount;
-import org.adridadou.ethereum.EthAddress;
 import org.adridadou.ethereum.EthereumFacade;
-import org.adridadou.ethereum.SoliditySource;
 import org.adridadou.ethereum.provider.EthereumFacadeProvider;
 import org.adridadou.ethereum.provider.MainEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.MordenEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.RpcEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.StandaloneEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.TestnetEthereumFacadeProvider;
+import org.adridadou.ethereum.values.EthAccount;
+import org.adridadou.ethereum.values.EthAddress;
+import org.adridadou.ethereum.values.SoliditySource;
 import org.ethereum.crypto.ECKey;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import de.kueken.ethereum.party.basics.ManageableTest;
 
 /**
  * Test for the MemberRegistry contract.
@@ -88,10 +87,18 @@ public class MemberRegistryTest extends ManageableTest{
 		//Start of user code createFixture
         CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "MemberRegistry", sender);
         fixtureAddress = address.get();
-        fixture = ethereum
-                .createContractProxy(contractSource, "MemberRegistry", address.get(), sender, MemberRegistry.class);
-		//End of user code
+//        fixture = ethereum
+//                .createContractProxy(contractSource, "MemberRegistry", address.get(), sender, MemberRegistry.class);
+		setFixture(ethereum
+                .createContractProxy(contractSource, "MemberRegistry", address.get(), sender, MemberRegistry.class));
+        //End of user code
 	}
+
+	protected void setFixture(MemberRegistry f) {
+		this.fixture = f;
+		super.setFixture(f);
+	}
+
 
 
 
@@ -103,8 +110,11 @@ public class MemberRegistryTest extends ManageableTest{
 	@Test
 	public void testAddMember_string_address() throws Exception {
 		//Start of user code testAddMember_string_address
-		//TODO: implement this
-		fail("not implemented");
+		Assert.assertEquals(0, fixture.getMemberCount().intValue());
+		fixture.addMember("test1", "0x0001");
+		Assert.assertEquals(1, fixture.getMemberCount().intValue());
+		fixture.addMember("test2", "0x0002");
+		Assert.assertEquals(2, fixture.getMemberCount().intValue());
 		//End of user code
 	}
 	/**
@@ -115,8 +125,15 @@ public class MemberRegistryTest extends ManageableTest{
 	@Test
 	public void testUnregisterMember_uint() throws Exception {
 		//Start of user code testUnregisterMember_uint
-		//TODO: implement this
-		fail("not implemented");
+		Assert.assertEquals(0, fixture.getMemberCount().intValue());
+		fixture.addMember("test1", "0x0001");
+		Assert.assertEquals(1, fixture.getMemberCount().intValue());
+		fixture.addMember("test2", "0x0002");
+		Assert.assertEquals(2, fixture.getMemberCount().intValue());
+		
+		fixture.unregisterMember(1);
+		Assert.assertEquals(1, fixture.getMemberCount().intValue());
+		Assert.assertEquals(1, fixture.activeMemberCount().intValue());
 		//End of user code
 	}
 	/**
@@ -127,8 +144,10 @@ public class MemberRegistryTest extends ManageableTest{
 	@Test
 	public void testGetMemberCount() throws Exception {
 		//Start of user code testGetMemberCount
-		//TODO: implement this
-		fail("not implemented");
+		Assert.assertEquals(0, fixture.getMemberCount().intValue());
+		fixture.addMember("test1", "0x0001");
+		Assert.assertEquals(1, fixture.getMemberCount().intValue());
+		
 		//End of user code
 	}
 	/**
@@ -139,8 +158,12 @@ public class MemberRegistryTest extends ManageableTest{
 	@Test
 	public void testIsActiveMember_address() throws Exception {
 		//Start of user code testIsActiveMember_address
-		//TODO: implement this
-		fail("not implemented");
+		
+		String _memberAdress = "0x02";
+		Assert.assertFalse(fixture.isActiveMember(_memberAdress));
+		fixture.addMember("Test1", _memberAdress);
+		Assert.assertTrue(fixture.isActiveMember(_memberAdress));
+
 		//End of user code
 	}
 	/**
@@ -151,8 +174,18 @@ public class MemberRegistryTest extends ManageableTest{
 	@Test
 	public void testChangeMemberAddress_uint_address() throws Exception {
 		//Start of user code testChangeMemberAddress_uint_address
-		//TODO: implement this
-		fail("not implemented");
+		String _memberAdress = "0x02";
+		Assert.assertFalse(fixture.isActiveMember(_memberAdress));
+		fixture.addMember("Test1", _memberAdress);
+		Assert.assertTrue(fixture.isActiveMember(_memberAdress));
+		ReturnGetMemberData_string_uint memberData = fixture.getMemberData(_memberAdress);
+		Assert.assertEquals(0, memberData.getId().intValue());
+		Assert.assertEquals("Test1", memberData.getName());
+
+		fixture.changeMemberAddress(memberData.getId(), "0x03");
+		Assert.assertFalse(fixture.isActiveMember(_memberAdress));
+		Assert.assertTrue(fixture.isActiveMember("0x03"));
+		
 		//End of user code
 	}
 	/**
@@ -163,8 +196,13 @@ public class MemberRegistryTest extends ManageableTest{
 	@Test
 	public void testGetMemberData_address() throws Exception {
 		//Start of user code testGetMemberData_address
-		//TODO: implement this
-		fail("not implemented");
+		String _memberAdress = "0x02";
+		Assert.assertFalse(fixture.isActiveMember(_memberAdress));
+		fixture.addMember("Test1", _memberAdress);
+		Assert.assertTrue(fixture.isActiveMember(_memberAdress));
+		ReturnGetMemberData_string_uint memberData = fixture.getMemberData(_memberAdress);
+		Assert.assertEquals(0, memberData.getId().intValue());
+		Assert.assertEquals("Test1", memberData.getName());
 		//End of user code
 	}
 	/**
@@ -175,10 +213,12 @@ public class MemberRegistryTest extends ManageableTest{
 	@Test
 	public void testPublishMemberEvent_address_uint() throws Exception {
 		//Start of user code testPublishMemberEvent_address_uint
-		//TODO: implement this
-		fail("not implemented");
+		String _memberAdress = "0x02";
+		Assert.assertFalse(fixture.isActiveMember(_memberAdress));
+		fixture.addMember("Test1", _memberAdress);
+		fixture.publishMemberEvent(_memberAdress, 0);
 		//End of user code
 	}
-	//Start of user code customTests    
+	//Start of user code customTests 
 	//End of user code
 }

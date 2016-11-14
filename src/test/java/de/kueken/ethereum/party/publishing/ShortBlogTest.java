@@ -2,25 +2,26 @@ package de.kueken.ethereum.party.publishing;
 
 import static org.junit.Assert.*;
 
-import de.kueken.ethereum.party.basics.*;
-
 import java.io.File;
 import java.util.concurrent.CompletableFuture;
 
-import org.adridadou.ethereum.EthAccount;
-import org.adridadou.ethereum.EthAddress;
 import org.adridadou.ethereum.EthereumFacade;
-import org.adridadou.ethereum.SoliditySource;
 import org.adridadou.ethereum.provider.EthereumFacadeProvider;
 import org.adridadou.ethereum.provider.MainEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.MordenEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.RpcEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.StandaloneEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.TestnetEthereumFacadeProvider;
+import org.adridadou.ethereum.values.EthAccount;
+import org.adridadou.ethereum.values.EthAddress;
+import org.adridadou.ethereum.values.SoliditySource;
 import org.ethereum.crypto.ECKey;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import de.kueken.ethereum.party.basics.ManageableTest;
 
 /**
  * Test for the ShortBlog contract.
@@ -34,7 +35,7 @@ public class ShortBlogTest extends ManageableTest{
 	private EthAddress fixtureAddress;
 	private SoliditySource contractSource;
 	// Start of user code ShortBlogTest.attributes
-	//TODO: implement
+	private String senderAddressS = "5db10750e8caff27f906b41c71b3471057dd2004";
 	// End of user code
 
 	/**
@@ -75,6 +76,7 @@ public class ShortBlogTest extends ManageableTest{
 
         File contractSrc = new File(this.getClass().getResource("/mix/publishing.sol").toURI());
         contractSource = SoliditySource.from(contractSrc);
+        createFixture();
 		//End of user code
 	}
 
@@ -91,10 +93,16 @@ public class ShortBlogTest extends ManageableTest{
         CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "ShortBlog", sender
 				, _name);
         fixtureAddress = address.get();
-        fixture = ethereum
-                .createContractProxy(contractSource, "ShortBlog", address.get(), sender, ShortBlog.class);
+        setFixture(ethereum
+                .createContractProxy(contractSource, "ShortBlog", address.get(), sender, ShortBlog.class));
 		//End of user code
 	}
+
+	protected void setFixture(ShortBlog f) {
+		this.fixture = f;
+		super.setFixture(f);
+	}
+
 
 	/**
 	 * Test the constructor for the ShortBlog contract.
@@ -103,7 +111,6 @@ public class ShortBlogTest extends ManageableTest{
 	@Test
 	public void testConstructor_string() throws Exception {
 		//Start of user code testConstructor_string
-		//TODO: Set the constructor args
 		String _name = "_name";
 
         CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "ShortBlog", sender
@@ -111,7 +118,8 @@ public class ShortBlogTest extends ManageableTest{
         fixture = ethereum
                 .createContractProxy(contractSource, "ShortBlog", address.get(), sender, ShortBlog.class);
 
-		//TODO: test the constructor
+		Assert.assertEquals(_name, fixture.name());
+		Assert.assertEquals(0, fixture.messageCount().intValue());
 		//End of user code
 	}
 
@@ -124,10 +132,36 @@ public class ShortBlogTest extends ManageableTest{
 	@Test
 	public void testSendMessage_string_string_string() throws Exception {
 		//Start of user code testSendMessage_string_string_string
-		//TODO: implement this
-		fail("not implemented");
+		assertEquals(0, fixture.messageCount().intValue());		
+		fixture.sendMessage("test1", "h1", "er1");
+		assertEquals(1, fixture.messageCount().intValue());		
+		Integer lastMessageDate = fixture.lastMessageDate();
+
+		System.out.println("-->"+lastMessageDate);
 		//End of user code
 	}
 	//Start of user code customTests    
+	/**
+	 * Test method for  sendMessage(String message,String hash,String er).
+	 * see {@link ShortBlog#sendMessage( String, String, String)}
+	 * @throws Exception
+	 */
+	@Test
+	public void testSendMessage_No_Manager() throws Exception {
+		//Start of user code testSendMessage_string_string_string
+		assertEquals(0, fixture.messageCount().intValue());		
+		fixture.sendMessage("test1", "h1", "er1");
+		assertEquals(1, fixture.messageCount().intValue());		
+		
+		fixture.addManager("0x04");
+		assertEquals(2, fixture.mangerCount().intValue());
+		fixture.removeManager(senderAddressS);
+		assertEquals(1, fixture.mangerCount().intValue());
+		
+		fixture.sendMessage("test1", "h1", "er1");
+		assertEquals(1, fixture.messageCount().intValue());		
+		//End of user code
+	}
+
 	//End of user code
 }

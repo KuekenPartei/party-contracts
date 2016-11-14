@@ -2,25 +2,25 @@ package de.kueken.ethereum.party.publishing;
 
 import static org.junit.Assert.*;
 
-import de.kueken.ethereum.party.basics.*;
-
 import java.io.File;
 import java.util.concurrent.CompletableFuture;
 
-import org.adridadou.ethereum.EthAccount;
-import org.adridadou.ethereum.EthAddress;
 import org.adridadou.ethereum.EthereumFacade;
-import org.adridadou.ethereum.SoliditySource;
 import org.adridadou.ethereum.provider.EthereumFacadeProvider;
 import org.adridadou.ethereum.provider.MainEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.MordenEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.RpcEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.StandaloneEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.TestnetEthereumFacadeProvider;
+import org.adridadou.ethereum.values.EthAccount;
+import org.adridadou.ethereum.values.EthAddress;
+import org.adridadou.ethereum.values.SoliditySource;
 import org.ethereum.crypto.ECKey;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import de.kueken.ethereum.party.basics.ManageableTest;
 
 /**
  * Test for the BlogRegistry contract.
@@ -75,6 +75,7 @@ public class BlogRegistryTest extends ManageableTest{
 
         File contractSrc = new File(this.getClass().getResource("/mix/publishing.sol").toURI());
         contractSource = SoliditySource.from(contractSrc);
+        createFixture();
 		//End of user code
 	}
 
@@ -87,10 +88,16 @@ public class BlogRegistryTest extends ManageableTest{
 		//Start of user code createFixture
         CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "BlogRegistry", sender);
         fixtureAddress = address.get();
-        fixture = ethereum
-                .createContractProxy(contractSource, "BlogRegistry", address.get(), sender, BlogRegistry.class);
+        setFixture(ethereum
+                .createContractProxy(contractSource, "BlogRegistry", address.get(), sender, BlogRegistry.class));
 		//End of user code
 	}
+
+	protected void setFixture(BlogRegistry f) {
+		this.fixture = f;
+		super.setFixture(f);
+	}
+
 
 
 
@@ -102,8 +109,12 @@ public class BlogRegistryTest extends ManageableTest{
 	@Test
 	public void testRegisterBlog_string() throws Exception {
 		//Start of user code testRegisterBlog_string
-		//TODO: implement this
-		fail("not implemented");
+		
+		assertEquals(0, fixture.blogCount().intValue());		
+		fixture.registerBlog("ttt");
+		assertEquals(1, fixture.blogCount().intValue());	
+		String blogAddress = fixture.blogs(0);
+		System.out.println(blogAddress);
 		//End of user code
 	}
 	//Start of user code customTests    
