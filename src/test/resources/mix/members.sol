@@ -38,7 +38,7 @@ contract MemberRegistry is Manageable {
 	// End of user code
 	
 	
-	event MemberEvent(address mAddress,EventType eType,uint id,string name,MemberState memberState);
+//	event MemberEvent(address mAddress,EventType eType,uint id,string name,MemberState memberState);
 	
 	
 	/*
@@ -121,6 +121,8 @@ contract MemberRegistry is Manageable {
 	function changeMemberAddress(uint id,address _newMemberAddress) public  onlyManager()  {
 		 if(id>partyMemberCount) throw;
 		 if(partyMembers[id].state == MemberState.active){
+		 	address x = partyMembers[id].member;
+//		 	memberAddress[x] = 0;
 		 	partyMembers[id].member = _newMemberAddress;
 		 	memberAddress[_newMemberAddress] = partyMembers[id];
 		 }
