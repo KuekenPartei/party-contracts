@@ -51,7 +51,6 @@ console.log('');
 console.log('configure via setupKP() or check the deployment state via checkContracts()');
 
 
-
 // setup the kp
 function setupKP(){
 	console.log('checking contracts');

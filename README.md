@@ -18,8 +18,12 @@ The publishing [contracts](https://github.com/KuekenPartei/party-contracts/blob/
 
 ![](https://github.com/KuekenPartei/party-contracts/blob/master/doc/ClassDiagram-publishing.png)
 
+For each party part there is simple blog created which is the official publishing platform, as it is reliable, transparent, safe and uncensorable.   
+
 The basic contracts.
 
 ![](https://github.com/KuekenPartei/party-contracts/blob/master/doc/ClassDiagram-basics.png)
 
- find more documentation at [doc](https://github.com/KuekenPartei/party-contracts/blob/master/doc/)
+ Find more documentation at [doc](https://github.com/KuekenPartei/party-contracts/blob/master/doc/)
+ 
+ Find out more about the KUEKEN (http://kueken-partei.de/) it's only german by now.
