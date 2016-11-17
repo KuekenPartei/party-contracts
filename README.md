@@ -8,18 +8,18 @@ The old mix directory will be removed soon.
 
 The structure of the [party](https://github.com/KuekenPartei/party-contracts/blob/master/doc/party.md).
 
-![](https://github.com/KuekenPartei/party-contracts/blob/master/doc/ClassDiagram-party.PNG)
+![](https://github.com/KuekenPartei/party-contracts/blob/master/doc/ClassDiagram-party.png)
 
 The member [registry](https://github.com/KuekenPartei/party-contracts/blob/master/doc/members.md).
 
-![](https://github.com/KuekenPartei/party-contracts/blob/master/doc/ClassDiagram-members.PNG)
+![](https://github.com/KuekenPartei/party-contracts/blob/master/doc/ClassDiagram-members.png)
 
 The publishing [contracts](https://github.com/KuekenPartei/party-contracts/blob/master/doc/publishing.md).
 
-![](https://github.com/KuekenPartei/party-contracts/blob/master/doc/ClassDiagram-publishing.PNG)
+![](https://github.com/KuekenPartei/party-contracts/blob/master/doc/ClassDiagram-publishing.png)
 
 The basic contracts.
 
-![](https://github.com/KuekenPartei/party-contracts/blob/master/doc/ClassDiagram-basics.PNG)
+![](https://github.com/KuekenPartei/party-contracts/blob/master/doc/ClassDiagram-basics.png)
 
  find more documentation at [doc](https://github.com/KuekenPartei/party-contracts/blob/master/doc/)
