@@ -904,6 +904,18 @@ function OrganGuiFactory() {
 ;
 	}
 
+	this.createPlainGui=function(){
+		return this.createAttributesGui()
+				+ this.createManageable_addManager_addressGui()
+				+ this.createManageable_isManager_addressGui()
+				+ this.createManageable_removeManager_addressGui()
+				+ this.createOrgan_createFunction_string_stringGui()
+				+ this.createOrgan_addOrganFunction_address_stringGui()
+				+ this.createOrgan_changeMember_uint_addressGui()
+				;
+	}
+
+	
 	/**
 	* Create the gui for the function getOrganFunction.
 	*/
@@ -1928,6 +1940,18 @@ function PartyGuiFactory() {
 ;
 	}
 
+	this.createPlainGui=function(){
+		return this.createAttributesGui()
+				+ this.createManageable_addManager_addressGui()
+				+ this.createManageable_isManager_addressGui()
+				+ this.createManageable_removeManager_addressGui()
+				+ this.createParty_addOrgan_addressGui()
+				+ this.createParty_createOrgan_stringGui()
+				
+				;
+	}
+
+	
 	/**
 	* Create the gui for the attributes.
 	*/
@@ -5794,6 +5818,14 @@ function OrganFunctionGuiFactory() {
 ;
 	}
 
+	this.createPlainGui=function(){
+		return this.createAttributesGui()
+				+ this.createManageable_addManager_addressGui()
+				+ this.createManageable_isManager_addressGui()
+				+ this.createManageable_removeManager_addressGui()
+				;
+	}
+	
 	/**
 	* Create the gui for the function addManager.
 	*/
@@ -6446,14 +6478,30 @@ function CustomGuis() {
 		return guiF.createSeletonGui(txt);
 	}
 	
-	
-	
-	
 	this.organGuiSimple=function(guiF){
 		var txt = guiF.createAttributesGui()
 					+guiF.createOrgan_publishMessage_string_string_stringGui();
 		txt = txt + '<div id="'+guiF.prefix+'-Blog" ></div>';
 		txt = txt + '<div id="'+guiF.prefix+'-OF" ></div>';
+		txt =txt		+ '<div><a href="#" onclick="mode(\''+guiF.prefix+'\',\'ro\')"> readonly </a><a href="#" onclick="mode(\''+guiF.prefix+'\',\'manager\')"> manager </a> <div>'
+		return guiF.createSeletonGui(txt);
+	}
+	
+	
+	
+	this.organGui=function(guiF){
+		var txt = guiF.createAttributesGui()
+					+guiF.createOrgan_publishMessage_string_string_stringGui()
+					+ guiF.createManageable_addManager_addressGui()
+				+ guiF.createManageable_removeManager_addressGui()
+				+ guiF.createManageable_isManager_addressGui()
+				+ guiF.createOrgan_createFunction_string_stringGui()
+				+ guiF.createOrgan_addOrganFunction_address_stringGui()
+				+ guiF.createOrgan_changeMember_uint_addressGui()
+				;
+		txt = txt + '<div id="'+guiF.prefix+'-Blog" ></div>';
+		txt = txt + '<div id="'+guiF.prefix+'-OF" ></div>';
+		txt =txt		+ '<div><a href="#" onclick="mode(\''+guiF.prefix+'\',\'ro\')"> readonly </a><a href="#" onclick="mode(\''+guiF.prefix+'\',\'manager\')"> manager </a> <div>'
 		return guiF.createSeletonGui(txt);
 	}
 	this.conferenceGuiSimple=function(guiF){
@@ -6484,8 +6532,31 @@ function CustomGuis() {
 		return guiF.createSeletonGui(txt);
 	}
 	
-	
-	
+	this.createPartyGui=function(guiF){
+		var txt= guiF.createAttributesGui()
+				+ guiF.createManageable_addManager_addressGui()
+				+ guiF.createManageable_removeManager_addressGui()
+				+ guiF.createManageable_isManager_addressGui()
+				+ guiF.createParty_addOrgan_addressGui()
+				+ guiF.createParty_createOrgan_stringGui()
+				+ '<div><a href="#" onclick="mode(\''+guiF.prefix+'\',\'ro\')"> readonly </a><a href="#" onclick="mode(\''+guiF.prefix+'\',\'manager\')"> manager </a> <div>'
+				;
+		return guiF.createSeletonGui(txt);
+	}
+
+	this.partyGuiSimple=function(guiF){
+		var txt = guiF.createAttributesGui()
+					;//+guiF.createOrgan_publishMessage_string_string_stringGui();
+		txt=txt 
+		+ '<div><a href="#" onclick="mode(\''+guiF.prefix+'\',\'ro\')"> readonly </a><a href="#" onclick="mode(\''+guiF.prefix+'\',\'manager\')"> manager </a> <div>';
+		return guiF.createSeletonGui(txt);
+	}
+
+	this.modeSwitchElement=function(guiF){
+		var txt = '<div><a href="#" onclick="mode(\''+guiF.prefix+'\',\'ro\')"> readonly </a><a href="#" onclick="mode(\''+guiF.prefix+'\',\'manager\')"> manager </a> <div>';
+		return txt;
+	}
+
 	
 	//event guis
 	this.createNewMessageLogDataGui = function(prefix, blockHash, blockNumber
@@ -6559,12 +6630,12 @@ function OrganGui(contract) {
 	
 	this.switchMode = function(mode) {
 		if(mode='manager'){
-			this.organManager.guiFunction = null;
+			this.organManager.guiFunction = customGui.organGui;
 		}else{
 			this.organManager.guiFunction = customGui.organGuiSimple;
 		}
 		this.organManager.clearGui(null);
-		this.organManager.addGui(null);
+		this.createDefaultGui();
 	}
 
 	
@@ -6637,13 +6708,15 @@ function KP() {
 	var self = this;
 
 	this.switchMode = function(mode) {
-		if(mode='manager'){
-			this.party.guiFunction = null;
+		console.log('switch to mode:'+mode);
+		if(mode=='manager'){
+			this.party.guiFunction = customGui.createPartyGui;
 		}else{
-			this.party.guiFunction = this.partyGuiSimple;
+			this.party.guiFunction = customGui.partyGuiSimple;
 		}
 		this.party.clearGui(null);
 		this.party.displayGui(null);
+		this.party.updateGui();
 	}
 	
 	this.bootstrap = function(kp,br) {
@@ -6677,6 +6750,9 @@ function KP() {
 		}
 	}
 
+	this.party.guiFunction = customGui.partyGuiSimple;
+
+	
 	//event handlers
 //	this.eventNewMessageHandle=function(result){
 //		console.log('New Message');
@@ -6712,13 +6788,20 @@ function KP() {
 //	}
 //	this.organfunction.guiFunction = this.organFGuiSimple;
 //
-	this.partyGuiSimple=function(guiF){
-		var txt = guiF.createAttributesGui()
-					;//+guiF.createOrgan_publishMessage_string_string_stringGui();
-		txt=txt + '<div><a href="#" onclick="mode(\''+guiF.prefix+'\',\'ro\')"> readonly </a><a href="#" onclick="mode(\'manager\')"> manager </a> <div>';
-		return guiF.createSeletonGui(txt);
-	}
-	this.party.guiFunction = this.partyGuiSimple;
+//	this.partyGuiSimple=function(guiF){
+//		var txt = guiF.createAttributesGui()
+//					;//+guiF.createOrgan_publishMessage_string_string_stringGui();
+//		txt=txt + '<div><a href="#" onclick="mode(\''+guiF.prefix+'\',\'ro\')"> readonly </a><a href="#" onclick="mode(\'manager\')"> manager </a> <div>';
+//		return guiF.createSeletonGui(txt);
+//	}
+//	this.partyGuiSimple=function(guiF){
+//		var txt = guiF.createAttributesGui()
+//					;//+guiF.createOrgan_publishMessage_string_string_stringGui();
+//		txt=txt + '<div><a href="#" onclick="mode(\''+guiF.prefix+'\',\'ro\')"> readonly </a><a href="#" onclick="mode(\'manager\')"> manager </a> <div>';
+//		return guiF.createSeletonGui(txt);
+//	}
+	
+	
 //
 //	this.shBlogGuiSimple=function(guiF){
 //		var txt = '';//guiF.createAttributesGui();
