@@ -5,6 +5,20 @@ The project layout has changed according to (https://github.com/UrsZeidler/uml2s
 
 The old mix directory will be removed soon.
 
+The current testnet deplpoyment can be found here: http://testdapp.xn--klarmachen-ndert-5nb.de/k-party/www/kp.html (Note you need a ethereum browser like mist.)
+
+This instance has the following structure:
+
+* KUEKEN Party (instance KUKENParty)
+	* Gruendungsveranstaltung (instance FoundationConference)
+		* Versammlungsleiter 1 (instance OrganFunction)
+		* Versammlungsleiter 2 (instance OrganFunction)
+	* BUVO/Bundesvorstand (instance Organ)
+		* 1. Vorsitzede (instance OrganFunction)
+		* 2. Vorsitzede (instance OrganFunction)
+
+It also contains a member Registry and a BlogRegistry, each party part has a associated ShortBlog to publish messages.
+
 
 The structure of the [party](https://github.com/KuekenPartei/party-contracts/blob/master/doc/party.md).
 

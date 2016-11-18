@@ -91,8 +91,9 @@ c.createDefaultGui();
 
 
 function mode(id,mode) {
-	console.log('mode switched '+id+' '+mode);
-	c.switchMode(mode);
+	var g = guis[id];
+	console.log('mode switched '+id+' '+mode+' '+g);
+	g.switchMode(mode);
 }
 
 </script>
