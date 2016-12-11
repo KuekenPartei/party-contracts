@@ -203,11 +203,15 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 */
 contract Party is Manageable {
 
-	MemberRegistry internal memberRegistry;
+	string public name;
+	MemberRegistry public memberRegistry;
 	string public constitutionHash;
 	uint public organCount;
-	BlogRegistry internal blogregistry;
+	BlogRegistry public blogregistry;
+	Party public parent;
+	uint public subDivisionCount;
 	mapping (uint=>Organ)public organs;
+	mapping (uint=>Party)public subDivisions;
 	// Start of user code Party.attributes
 	// End of user code
 	
@@ -218,8 +222,16 @@ contract Party is Manageable {
 	event OrganChanged(Organ _organ,uint _changeType);
 	
 	
-	function Party() public   {
-		//Start of user code Party.constructor.Party
+	event DivisionChanged(address divisionAddress,address changer,uint state);
+	
+	/*
+	* Construct a new party or division.
+	* 
+	* _name -The name of the party or division.
+	*/
+	function Party(string _name) public   {
+		//Start of user code Party.constructor.Party_string
+		name = _name;
 		//End of user code
 	}
 	
@@ -258,6 +270,42 @@ contract Party is Manageable {
 		//End of user code
 	}
 	
+	
+	/*
+	* Add a subdivision of this party, the contrains are:
+	* the party must be a mananger of the subdivision
+	* the blogregistry must be the same
+	* the member regstry must be the same
+	* 
+	* _subDivision -
+	*/
+	function addSubDivision(address _subDivision) public   {
+		//Start of user code Party.function.addSubDivision_address
+		Party p = Party(_subDivision);
+		//check the constrains
+		if(!p.isManager(this)) throw;
+		if(p.blogregistry()!=blogregistry) throw;
+		if(p.memberRegistry()!=memberRegistry) throw;
+		if(p.parent()!= this) throw;
+		//TODO; a foundation conference should be done
+		
+		subDivisions[subDivisionCount] = p;
+		DivisionChanged(p,msg.sender,1);
+		subDivisionCount++;
+		
+		
+		//End of user code
+	}
+	
+	
+	
+	function removeSubDivision(uint _divisionId) public   {
+		//Start of user code Party.function.removeSubDivision_uint
+		Party p = subDivisions[_divisionId];
+		DivisionChanged(p,msg.sender,0);
+		//End of user code
+	}
+	
 	// getMemberRegistry
 	function getMemberRegistry() returns(MemberRegistry) {
 		return memberRegistry;
@@ -283,15 +331,13 @@ contract Party is Manageable {
 contract KUEKeNParty is Party {
 
 	// Start of user code KUEKeNParty.attributes
+	uint test;
 	// End of user code
 	
 	
-	
-	function KUEKeNParty() public   {
-		//Start of user code KUEKeNParty.function.KUEKeNParty
-		//memberRegistry = new MemberRegistry();
-		//memberRegistry.addManager(msg.sender);
-		//addManager(msg.sender);
+	function KUEKeNParty(string _name) Party(_name) public   {
+		//Start of user code KUEKeNParty.constructor.KUEKeNParty_string
+		//TODO: implement
 		//End of user code
 	}
 	

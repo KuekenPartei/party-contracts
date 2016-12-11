@@ -12,11 +12,36 @@
 import "./basics.sol";
 
 /*
+* The AccessRegistry can check if an address is a registred member.
+*/
+contract AccessRegistry {
+	
+	/*
+	* Check if the given adress is a registed active member.
+	* 
+	* _memberAdress -
+	* returns
+	*  -
+	*/
+	function isMember(address _memberAdress) public   constant returns (bool );
+	
+	
+	function getMemberAddress(uint id) public   constant returns (address _address);
+	
+	/*
+	* get the number of active members
+	* returns
+	*  -
+	*/
+	function getMemberCount() public   constant returns (uint );
+}
+
+/*
 * Holds the members and their states.
 * Also the contract to manage these member states.
 * The registry is a Manageable contract so the writing methods can only accessed by a registered manager.
 */
-contract MemberRegistry is Manageable {
+contract MemberRegistry is AccessRegistry,Manageable {
     enum MemberState { deleted,inactive,active }
     enum EventType { memberStateChanged,accreditation,functionChange }
     /*
@@ -38,51 +63,28 @@ contract MemberRegistry is Manageable {
 	// End of user code
 	
 	
-//	event MemberEvent(address mAddress,EventType eType,uint id,string name,MemberState memberState);
+	event MemberEvent(address mAddress,EventType eType,uint id,string name,MemberState memberState);
 	
 	
 	/*
-	* Add a member.
+	* Check if the given adress is a registed active member.
 	* 
-	* name -
-	* _memberAddress -
+	* _memberAdress -
+	* returns
+	*  -
 	*/
-	function addMember(string name,address _memberAddress) public  onlyManager()  {
-		 if(memberAddress[_memberAddress].id != 0) throw;
-		 partyMembers[partyMemberCount].id=partyMemberCount;
-		 partyMembers[partyMemberCount].member= _memberAddress;
-		 partyMembers[partyMemberCount].state = MemberState.active;
-		 partyMembers[partyMemberCount].name = name;
-		 memberAddress[_memberAddress] = partyMembers[partyMemberCount];
-		 partyMemberCount++;
-		 activeMemberCount++;			
-		
-		//Start of user code MemberRegistry.function.addMember_string_address
-		Member m = memberAddress[_memberAddress]; 
-//		MemberEvent(_memberAddress,EventType.memberStateChanged,m.id,m.name,m.state);
+	function isMember(address _memberAdress) public   constant returns (bool ) {
+		//Start of user code MemberRegistry.function.isMember_address
+		return memberAddress[_memberAdress].state == MemberState.active;
 		//End of user code
 	}
 	
 	
-	/*
-	* set the memberstate to inactive
-	* 
-	* id -
-	*/
-	function unregisterMember(uint id) public  onlyManager()  {
-		 if(id>partyMemberCount) throw;
-		 MemberState ms = partyMembers[id].state;
-		 if(ms==MemberState.active){
-		 	partyMembers[id].state = MemberState.inactive;
-		 	activeMemberCount--;
-		 }
-		
-		//Start of user code MemberRegistry.function.unregisterMember_uint
-		Member m = partyMembers[id];
-//		MemberEvent(m.member,EventType.memberStateChanged,m.id,m.name,m.state);
+	function getMemberAddress(uint id) public   constant returns (address _address) {
+		//Start of user code MemberRegistry.function.getMemberAddress_uint
+		//TODO: implement
 		//End of user code
 	}
-	
 	
 	/*
 	* get the number of active members
@@ -95,6 +97,54 @@ contract MemberRegistry is Manageable {
 		//End of user code
 	}
 	
+	/*
+	* Add a member.
+	* 
+	* name -
+	* _memberAddress -
+	*/
+	function addMember(string name,address _memberAddress) public  onlyManager()  {
+		 
+		
+		//Start of user code MemberRegistry.function.addMember_string_address
+		if(memberAddress[_memberAddress].id != 0) throw;
+
+		partyMembers[partyMemberCount].id=partyMemberCount;
+		partyMembers[partyMemberCount].member= _memberAddress;
+		partyMembers[partyMemberCount].state = MemberState.active;
+		partyMembers[partyMemberCount].name = name;
+		memberAddress[_memberAddress] = partyMembers[partyMemberCount];
+		partyMemberCount++;
+		activeMemberCount++;			
+		
+		Member m = memberAddress[_memberAddress]; 
+//		MemberEvent(_memberAddress,EventType.memberStateChanged,m.id,m.name,m.state);
+		//End of user code
+	}
+	
+	
+	/*
+	* set the memberstate to inactive
+	* 
+	* id -
+	*/
+	function unregisterMember(uint id) public  onlyManager()  {
+		 
+		
+		//Start of user code MemberRegistry.function.unregisterMember_uint
+		if(id>partyMemberCount) throw;
+		MemberState ms = partyMembers[id].state;
+		if(ms==MemberState.active){
+			partyMembers[id].state = MemberState.inactive;
+			activeMemberCount--;
+		}
+		
+		
+		Member m = partyMembers[id];
+//		MemberEvent(m.member,EventType.memberStateChanged,m.id,m.name,m.state);
+		//End of user code
+	}
+	
 	
 	/*
 	* Check if the given adress is a registed active member.
@@ -104,10 +154,10 @@ contract MemberRegistry is Manageable {
 	*  -
 	*/
 	function isActiveMember(address _memberAdress) public   constant returns (bool ) {
-		 return memberAddress[_memberAdress].state == MemberState.active;
+		 
 		
 		//Start of user code MemberRegistry.function.isActiveMember_address
-		//TODO: implement
+		return memberAddress[_memberAdress].state == MemberState.active;
 		//End of user code
 	}
 	
@@ -119,17 +169,14 @@ contract MemberRegistry is Manageable {
 	* _newMemberAddress -
 	*/
 	function changeMemberAddress(uint id,address _newMemberAddress) public  onlyManager()  {
+		//Start of user code MemberRegistry.function.changeMemberAddress_uint_address
 		 if(id>partyMemberCount) throw;
 		 if(partyMembers[id].state == MemberState.active){
-		 	address x = partyMembers[id].member;
-//		 	memberAddress[x] = 0;
+		 	address m1 = partyMembers[id].member;
 		 	partyMembers[id].member = _newMemberAddress;
 		 	memberAddress[_newMemberAddress] = partyMembers[id];
+		 	delete memberAddress[m1];
 		 }
-		
-		//Start of user code MemberRegistry.function.changeMemberAddress_uint_address
-		Member m = partyMembers[id];
-//		MemberEvent(m.member,EventType.memberStateChanged,m.id,m.name,m.state);
 		//End of user code
 	}
 	
