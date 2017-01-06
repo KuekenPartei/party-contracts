@@ -18,7 +18,16 @@
 .contract_attribute{}
 .contract_attribute_value{}
 .function_execution{}
-.function_parameter{}
+.function_parameter{
+	float: left;
+    width: 220px;
+	padding-top: 0.3em;
+}
+.function_input{
+	display : block;
+	margin-bottom: 0.8em;
+}
+.function_btn{}
 .function_result{}
 .eventRow{
 	display: table-row;
@@ -145,6 +154,22 @@ event_OrganChanged.watch(function(error,result){
 		elemDiv.innerHTML = '<div class="eventRow">'
         +'<div class="eventValue">'+result.args._organ+'</div>'
         +'<div class="eventValue">'+result.args._changeType+'</div>'
++ '</div>';
+		}else
+		console.log(error);
+	});
+var event_DivisionChanged = contract.DivisionChanged({},{fromBlock: 0});
+event_DivisionChanged.watch(function(error,result){
+	if(!error){
+		var e = document.getElementById('eventLog');
+		var elemDiv = document.createElement('div');
+		elemDiv.id= result.blockNumber +'event';
+		e.appendChild(elemDiv);
+		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
+		elemDiv.innerHTML = '<div class="eventRow">'
+        +'<div class="eventValue">'+result.args.divisionAddress+'</div>'
+        +'<div class="eventValue">'+result.args.changer+'</div>'
+        +'<div class="eventValue">'+result.args.state+'</div>'
 + '</div>';
 		}else
 		console.log(error);

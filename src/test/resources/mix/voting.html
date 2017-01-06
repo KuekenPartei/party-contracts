@@ -30,7 +30,16 @@
 .contract_attribute{}
 .contract_attribute_value{}
 .function_execution{}
-.function_parameter{}
+.function_parameter{
+	float: left;
+    width: 220px;
+	padding-top: 0.3em;
+}
+.function_input{
+	display : block;
+	margin-bottom: 0.8em;
+}
+.function_btn{}
 .function_result{}
 .eventRow{
 	display: table-row;
@@ -49,8 +58,20 @@
 <div class="contract">Ballot
 <div id="Ballot_gui" ></div>
 </div>
+<div class="contract">BasicBallot
+<div id="BasicBallot_gui" ></div>
+</div>
+<div class="contract">PublicBallot
+<div id="PublicBallot_gui" ></div>
+</div>
 <div class="contract">test : Ballot
 <div id="TestBallot_gui" ></div>
+</div>
+<div class="contract">test : BasicBallot
+<div id="TestBasicBallot_gui" ></div>
+</div>
+<div class="contract">test : PublicBallot
+<div id="TestPublicBallot_gui" ></div>
 </div>
 -->
 <div class="contract">test : voting

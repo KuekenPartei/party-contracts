@@ -1,5 +1,8 @@
 package de.kueken.ethereum.party.voting;
 
+import java.util.concurrent.CompletableFuture;
+import org.adridadou.ethereum.values.EthAddress;
+import de.kueken.ethereum.party.members.*;
 
 /**
 * A simple ballot for voting on alternatives.

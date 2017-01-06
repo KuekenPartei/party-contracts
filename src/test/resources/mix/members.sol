@@ -4,7 +4,7 @@
 * Urs Zeidler
 *
 */
-
+pragma solidity ^0.4.0;
 /*
 * (c) Urs Zeidler 2016
 * Contains the member contracts.
@@ -216,7 +216,7 @@ contract MemberAware {
 	modifier onlyMember
 	{
 	    if(!isMember(msg.sender)) throw;
-	    _
+	    _;
 	}
 	
 	

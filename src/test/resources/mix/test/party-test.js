@@ -344,10 +344,22 @@ function TestOrgan(contract) {
 function PartyModel(contract) {
 this.contract = contract;
 	/**
+	* Getter for name.
+	**/
+	this.getName = function(){
+		return contract.name(); 
+	}
+	/**
 	* Getter for mangerCount.
 	**/
 	this.getMangerCount = function(){
 		return contract.mangerCount(); 
+	}
+	/**
+	* Getter for memberRegistry.
+	**/
+	this.getMemberRegistry = function(){
+		return contract.memberRegistry(); 
 	}
 	/**
 	* Getter for constitutionHash.
@@ -362,6 +374,24 @@ this.contract = contract;
 		return contract.organCount(); 
 	}
 	/**
+	* Getter for blogregistry.
+	**/
+	this.getBlogregistry = function(){
+		return contract.blogregistry(); 
+	}
+	/**
+	* Getter for parent.
+	**/
+	this.getParent = function(){
+		return contract.parent(); 
+	}
+	/**
+	* Getter for subDivisionCount.
+	**/
+	this.getSubDivisionCount = function(){
+		return contract.subDivisionCount(); 
+	}
+	/**
 	* Get the mapped value for a key.
 	*/
 	this.getManagers=function(key) {
@@ -372,6 +402,12 @@ this.contract = contract;
 	*/
 	this.getOrgans=function(key) {
 		return contract.organs(key);
+	}
+	/**
+	* Get the mapped value for a key.
+	*/
+	this.getSubDivisions=function(key) {
+		return contract.subDivisions(key);
 	}
 	/**
 	* Call addManager.
@@ -386,22 +422,34 @@ this.contract = contract;
 		return contract.removeManager(_managerAddress); 
 	}
 	/**
-	* Call createOrgan.
-	**/
-	this.createOrgan = function(organName){
-		return contract.createOrgan(organName); 
-	}
-	/**
 	* Call isManager.
 	**/
 	this.isManager = function(_managerAddress){
 		return contract.isManager(_managerAddress); 
 	}
 	/**
+	* Call createOrgan.
+	**/
+	this.createOrgan = function(organName){
+		return contract.createOrgan(organName); 
+	}
+	/**
 	* Call addOrgan.
 	**/
 	this.addOrgan = function(_organ){
 		return contract.addOrgan(_organ); 
+	}
+	/**
+	* Call addSubDivision.
+	**/
+	this.addSubDivision = function(_subDivision){
+		return contract.addSubDivision(_subDivision); 
+	}
+	/**
+	* Call removeSubDivision.
+	**/
+	this.removeSubDivision = function(_divisionId){
+		return contract.removeSubDivision(_divisionId); 
 	}
 }// end of function PartyModel
 
@@ -425,9 +473,11 @@ function TestParty(contract) {
 		this.testAttributes();
 		this.testManageable_addManager_address();
 		this.testManageable_removeManager_address();
-		this.testParty_createOrgan_string();
 		this.testManageable_isManager_address();
+		this.testParty_createOrgan_string();
 		this.testParty_addOrgan_address();
+		this.testParty_addSubDivision_address();
+		this.testParty_removeSubDivision_uint();
 		this.customTests();
 	
 		//Start of user code allTests_Party
@@ -487,16 +537,6 @@ function TestParty(contract) {
 		//End of user code
 	}
 
-	//Test for Party_createOrgan_string
-	this.testParty_createOrgan_string=function() {
-		//	var res = this.test_instance.createOrgan( p_organName);
-		//Start of user code test_Party_createOrgan_string
-		//TODO : implement this
-		//var test = false;		
-		//this.testAE("testcreateOrgan", "executed: testParty_createOrgan_string",true, test);		
-		//End of user code
-	}
-
 	//Test for Manageable_isManager_address
 	this.testManageable_isManager_address=function() {
 		//	var res = this.test_instance.isManager( p__managerAddress);
@@ -507,6 +547,16 @@ function TestParty(contract) {
 		//End of user code
 	}
 
+	//Test for Party_createOrgan_string
+	this.testParty_createOrgan_string=function() {
+		//	var res = this.test_instance.createOrgan( p_organName);
+		//Start of user code test_Party_createOrgan_string
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testcreateOrgan", "executed: testParty_createOrgan_string",true, test);		
+		//End of user code
+	}
+
 	//Test for Party_addOrgan_address
 	this.testParty_addOrgan_address=function() {
 		//	var res = this.test_instance.addOrgan( p__organ);
@@ -514,6 +564,26 @@ function TestParty(contract) {
 		//TODO : implement this
 		//var test = false;		
 		//this.testAE("testaddOrgan", "executed: testParty_addOrgan_address",true, test);		
+		//End of user code
+	}
+
+	//Test for Party_addSubDivision_address
+	this.testParty_addSubDivision_address=function() {
+		//	var res = this.test_instance.addSubDivision( p__subDivision);
+		//Start of user code test_Party_addSubDivision_address
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testaddSubDivision", "executed: testParty_addSubDivision_address",true, test);		
+		//End of user code
+	}
+
+	//Test for Party_removeSubDivision_uint
+	this.testParty_removeSubDivision_uint=function() {
+		//	var res = this.test_instance.removeSubDivision( p__divisionId);
+		//Start of user code test_Party_removeSubDivision_uint
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testremoveSubDivision", "executed: testParty_removeSubDivision_uint",true, test);		
 		//End of user code
 	}
 	this.customTests=function() {
@@ -529,10 +599,22 @@ function TestParty(contract) {
 function KUEKeNPartyModel(contract) {
 this.contract = contract;
 	/**
+	* Getter for name.
+	**/
+	this.getName = function(){
+		return contract.name(); 
+	}
+	/**
 	* Getter for mangerCount.
 	**/
 	this.getMangerCount = function(){
 		return contract.mangerCount(); 
+	}
+	/**
+	* Getter for memberRegistry.
+	**/
+	this.getMemberRegistry = function(){
+		return contract.memberRegistry(); 
 	}
 	/**
 	* Getter for constitutionHash.
@@ -547,6 +629,24 @@ this.contract = contract;
 		return contract.organCount(); 
 	}
 	/**
+	* Getter for blogregistry.
+	**/
+	this.getBlogregistry = function(){
+		return contract.blogregistry(); 
+	}
+	/**
+	* Getter for parent.
+	**/
+	this.getParent = function(){
+		return contract.parent(); 
+	}
+	/**
+	* Getter for subDivisionCount.
+	**/
+	this.getSubDivisionCount = function(){
+		return contract.subDivisionCount(); 
+	}
+	/**
 	* Get the mapped value for a key.
 	*/
 	this.getManagers=function(key) {
@@ -559,10 +659,10 @@ this.contract = contract;
 		return contract.organs(key);
 	}
 	/**
-	* Call KUEKeNParty.
-	**/
-	this.KUEKeNParty = function(){
-		return contract.KUEKeNParty(); 
+	* Get the mapped value for a key.
+	*/
+	this.getSubDivisions=function(key) {
+		return contract.subDivisions(key);
 	}
 	/**
 	* Call addManager.
@@ -583,22 +683,34 @@ this.contract = contract;
 		return contract.removeManager(_managerAddress); 
 	}
 	/**
-	* Call createOrgan.
-	**/
-	this.createOrgan = function(organName){
-		return contract.createOrgan(organName); 
-	}
-	/**
 	* Call isManager.
 	**/
 	this.isManager = function(_managerAddress){
 		return contract.isManager(_managerAddress); 
 	}
 	/**
+	* Call createOrgan.
+	**/
+	this.createOrgan = function(organName){
+		return contract.createOrgan(organName); 
+	}
+	/**
 	* Call addOrgan.
 	**/
 	this.addOrgan = function(_organ){
 		return contract.addOrgan(_organ); 
+	}
+	/**
+	* Call addSubDivision.
+	**/
+	this.addSubDivision = function(_subDivision){
+		return contract.addSubDivision(_subDivision); 
+	}
+	/**
+	* Call removeSubDivision.
+	**/
+	this.removeSubDivision = function(_divisionId){
+		return contract.removeSubDivision(_divisionId); 
 	}
 }// end of function KUEKeNPartyModel
 
@@ -620,13 +732,14 @@ function TestKUEKeNParty(contract) {
 	this.allTests=function(){
 		this.testSetup();
 		this.testAttributes();
-		this.testKUEKeNParty_KUEKeNParty();
 		this.testManageable_addManager_address();
 		this.testKUEKeNParty_boostrapParty_address_address();
 		this.testManageable_removeManager_address();
-		this.testParty_createOrgan_string();
 		this.testManageable_isManager_address();
+		this.testParty_createOrgan_string();
 		this.testParty_addOrgan_address();
+		this.testParty_addSubDivision_address();
+		this.testParty_removeSubDivision_uint();
 		this.customTests();
 	
 		//Start of user code allTests_KUEKeNParty
@@ -668,18 +781,6 @@ function TestKUEKeNParty(contract) {
 	//End of user code
 	}
 
-	//Test for KUEKeNParty_KUEKeNParty
-	this.testKUEKeNParty_KUEKeNParty=function() {
-		//	var res = this.test_instance.KUEKeNParty();
-		//Start of user code test_KUEKeNParty_KUEKeNParty
-		//TODO: implement
-//console.log('testKUEKeNParty_KUEKeNParty');
-//	var res = this.test_instance.KUEKeNParty();
-//	var state = res==="";		
-		this.printTest("testKUEKeNParty", "executed: testKUEKeNParty_KUEKeNParty", false);		
-		//End of user code
-	}
-
 	//Test for Manageable_addManager_address
 	this.testManageable_addManager_address=function() {
 		//	var res = this.test_instance.addManager( p__newManagerAddress);
@@ -714,16 +815,6 @@ function TestKUEKeNParty(contract) {
 		//End of user code
 	}
 
-	//Test for Party_createOrgan_string
-	this.testParty_createOrgan_string=function() {
-		//	var res = this.test_instance.createOrgan( p_organName);
-		//Start of user code test_KUEKeNParty_createOrgan_string
-		//TODO : implement this
-		//var test = false;		
-		//this.testAE("testcreateOrgan", "executed: testKUEKeNParty_createOrgan_string",true, test);		
-		//End of user code
-	}
-
 	//Test for Manageable_isManager_address
 	this.testManageable_isManager_address=function() {
 		//	var res = this.test_instance.isManager( p__managerAddress);
@@ -734,6 +825,16 @@ function TestKUEKeNParty(contract) {
 		//End of user code
 	}
 
+	//Test for Party_createOrgan_string
+	this.testParty_createOrgan_string=function() {
+		//	var res = this.test_instance.createOrgan( p_organName);
+		//Start of user code test_KUEKeNParty_createOrgan_string
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testcreateOrgan", "executed: testKUEKeNParty_createOrgan_string",true, test);		
+		//End of user code
+	}
+
 	//Test for Party_addOrgan_address
 	this.testParty_addOrgan_address=function() {
 		//	var res = this.test_instance.addOrgan( p__organ);
@@ -741,6 +842,26 @@ function TestKUEKeNParty(contract) {
 		//TODO : implement this
 		//var test = false;		
 		//this.testAE("testaddOrgan", "executed: testKUEKeNParty_addOrgan_address",true, test);		
+		//End of user code
+	}
+
+	//Test for Party_addSubDivision_address
+	this.testParty_addSubDivision_address=function() {
+		//	var res = this.test_instance.addSubDivision( p__subDivision);
+		//Start of user code test_KUEKeNParty_addSubDivision_address
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testaddSubDivision", "executed: testKUEKeNParty_addSubDivision_address",true, test);		
+		//End of user code
+	}
+
+	//Test for Party_removeSubDivision_uint
+	this.testParty_removeSubDivision_uint=function() {
+		//	var res = this.test_instance.removeSubDivision( p__divisionId);
+		//Start of user code test_KUEKeNParty_removeSubDivision_uint
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testremoveSubDivision", "executed: testKUEKeNParty_removeSubDivision_uint",true, test);		
 		//End of user code
 	}
 	this.customTests=function() {

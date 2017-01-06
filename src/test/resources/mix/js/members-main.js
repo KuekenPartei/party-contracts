@@ -35,29 +35,24 @@ var MemberRegistryContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,{ "constant": true,
-    "inputs": [],    
-    "name": "getMemberCount",
-    "outputs": [{"name": "","type": "uint256"}],
+    "inputs": [{"name": "_memberAdress","type": "address"}],    
+    "name": "isActiveMember",
+    "outputs": [{"name": "","type": "bool"}],
     "type": "function" }
 ,{ "constant": false,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "removeManager",
     "outputs": [],
     "type": "function" }
-,{ "constant": true,
-    "inputs": [{"name": "_memberAdress","type": "address"}],    
-    "name": "isActiveMember",
-    "outputs": [{"name": "","type": "bool"}],
+,{ "constant": false,
+    "inputs": [{"name": "id","type": "uint256"},{"name": "_newMemberAddress","type": "address"}],    
+    "name": "changeMemberAddress",
+    "outputs": [],
     "type": "function" }
 ,{ "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
-    "type": "function" }
-,{ "constant": false,
-    "inputs": [{"name": "id","type": "uint256"},{"name": "_newMemberAddress","type": "address"}],    
-    "name": "changeMemberAddress",
-    "outputs": [],
     "type": "function" }
 ,{ "constant": true,
     "inputs": [{"name": "_address","type": "address"}],    
@@ -68,6 +63,21 @@ var MemberRegistryContract = web3.eth.contract([
     "inputs": [{"name": "mAddress","type": "address"},{"name": "eventType","type": "uint256"}],    
     "name": "publishMemberEvent",
     "outputs": [],
+    "type": "function" }
+,{ "constant": true,
+    "inputs": [{"name": "_memberAdress","type": "address"}],    
+    "name": "isMember",
+    "outputs": [{"name": "","type": "bool"}],
+    "type": "function" }
+,{ "constant": true,
+    "inputs": [{"name": "id","type": "uint256"}],    
+    "name": "getMemberAddress",
+    "outputs": [{"name": "_address","type": "address"}],
+    "type": "function" }
+,{ "constant": true,
+    "inputs": [],    
+    "name": "getMemberCount",
+    "outputs": [{"name": "","type": "uint256"}],
     "type": "function" }
 ,
   { "anonymous": false,
@@ -168,10 +178,10 @@ this.contract = contract;
 		return contract.unregisterMember(id); 
 	}
 	/**
-	* Call getMemberCount.
+	* Call isActiveMember.
 	**/
-	this.getMemberCount = function(){
-		return contract.getMemberCount(); 
+	this.isActiveMember = function(_memberAdress){
+		return contract.isActiveMember(_memberAdress); 
 	}
 	/**
 	* Call removeManager.
@@ -180,22 +190,16 @@ this.contract = contract;
 		return contract.removeManager(_managerAddress); 
 	}
 	/**
-	* Call isActiveMember.
+	* Call changeMemberAddress.
 	**/
-	this.isActiveMember = function(_memberAdress){
-		return contract.isActiveMember(_memberAdress); 
+	this.changeMemberAddress = function(id,_newMemberAddress){
+		return contract.changeMemberAddress(id,_newMemberAddress); 
 	}
 	/**
 	* Call isManager.
 	**/
 	this.isManager = function(_managerAddress){
 		return contract.isManager(_managerAddress); 
-	}
-	/**
-	* Call changeMemberAddress.
-	**/
-	this.changeMemberAddress = function(id,_newMemberAddress){
-		return contract.changeMemberAddress(id,_newMemberAddress); 
 	}
 	/**
 	* Call getMemberData.
@@ -208,6 +212,24 @@ this.contract = contract;
 	**/
 	this.publishMemberEvent = function(mAddress,eventType){
 		return contract.publishMemberEvent(mAddress,eventType); 
+	}
+	/**
+	* Call isMember.
+	**/
+	this.isMember = function(_memberAdress){
+		return contract.isMember(_memberAdress); 
+	}
+,	/**
+	* Call getMemberAddress.
+	**/
+	this.getMemberAddress = function(id){
+		return contract.getMemberAddress(id); 
+	}
+,	/**
+	* Call getMemberCount.
+	**/
+	this.getMemberCount = function(){
+		return contract.getMemberCount(); 
 	}
 }// end of function MemberRegistryModel
 
@@ -239,116 +261,170 @@ function MemberRegistryGuiFactory() {
 +		'		  <input type="text" id="'+this.prefix+'MemberRegistry_address"> <button id="'+this.prefix+'MemberRegistryController.setAddress" onclick="'+this.prefix+'MemberRegistryController.setAddress()">change MemberRegistry Address</button>'
 +		'		  <div class="contract_attributes" id="'+this.prefix+'MemberRegistry_contract_attributes"> attributes:'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'MemberRegistry_contract_attribute_mangerCount"> mangerCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'MemberRegistry_mangerCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'MemberRegistry_mangerCount_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'MemberRegistry_contract_attribute_partyMemberCount"> partyMemberCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'MemberRegistry_partyMemberCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'MemberRegistry_partyMemberCount_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'MemberRegistry_contract_attribute_activeMemberCount"> activeMemberCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'MemberRegistry_activeMemberCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'MemberRegistry_activeMemberCount_value"> </span>'
 +		'		    </div>'
 +		'		'
 +		'		<div class="Value_Mapping" id="'+this.prefix+'MemberRegistry_contract_attribute_managers">mapping  managers:'
-+		'				<input type="text" id="'+this.prefix+'MemberRegistry_contract_attribute_managers_input">(address)'
++		'				<input class="function_input" type="text" id="'+this.prefix+'MemberRegistry_contract_attribute_managers_input">(address)'
 +		'		    	<div class="Mapping_value" id="'+this.prefix+'MemberRegistry_contract_attribute_address"> bool:'
-+		'		      		<div class="contract_attribute_value" id="'+this.prefix+'MemberRegistry_managers_value"> </div>'
++		'		      		<span class="contract_attribute_value" id="'+this.prefix+'MemberRegistry_managers_value"> </span>'
 +		'		    	</div>'
 +		'		  </div>'
 +		'		<div class="Struct_Mapping" id="'+this.prefix+'Struc_MemberRegistry_contract_attribute_partyMembers">struc mapping  partyMembers:'
-+		'				<input type="number" id="'+this.prefix+'MemberRegistry_contract_attribute_partyMembers_input">(uint)'
++		'				<input class="function_input" type="number" id="'+this.prefix+'MemberRegistry_contract_attribute_partyMembers_input">(uint)'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'MemberRegistry_contract_attribute_partyMembers_name"> name:'
-+		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_partyMembers_name_value"> </div>'
++		'		      		<span class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_partyMembers_name_value"> </span>'
 +		'		    	</div>'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'MemberRegistry_contract_attribute_partyMembers_id"> id:'
-+		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_partyMembers_id_value"> </div>'
++		'		      		<span class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_partyMembers_id_value"> </span>'
 +		'		    	</div>'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'MemberRegistry_contract_attribute_partyMembers_member"> member:'
-+		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_partyMembers_member_value"> </div>'
++		'		      		<span class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_partyMembers_member_value"> </span>'
 +		'		    	</div>'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'MemberRegistry_contract_attribute_partyMembers_state"> state:'
-+		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_partyMembers_state_value"> </div>'
++		'		      		<span class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_partyMembers_state_value"> </span>'
 +		'		    	</div>'
 +		'		  </div>'
 +		'		<div class="Struct_Mapping" id="'+this.prefix+'Struc_MemberRegistry_contract_attribute_memberAddress">struc mapping  memberAddress:'
-+		'				<input type="text" id="'+this.prefix+'MemberRegistry_contract_attribute_memberAddress_input">(address)'
++		'				<input class="function_input" type="text" id="'+this.prefix+'MemberRegistry_contract_attribute_memberAddress_input">(address)'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'MemberRegistry_contract_attribute_memberAddress_name"> name:'
-+		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_memberAddress_name_value"> </div>'
++		'		      		<span class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_memberAddress_name_value"> </span>'
 +		'		    	</div>'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'MemberRegistry_contract_attribute_memberAddress_id"> id:'
-+		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_memberAddress_id_value"> </div>'
++		'		      		<span class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_memberAddress_id_value"> </span>'
 +		'		    	</div>'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'MemberRegistry_contract_attribute_memberAddress_member"> member:'
-+		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_memberAddress_member_value"> </div>'
++		'		      		<span class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_memberAddress_member_value"> </span>'
 +		'		    	</div>'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'MemberRegistry_contract_attribute_memberAddress_state"> state:'
-+		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_memberAddress_state_value"> </div>'
++		'		      		<span class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_memberAddress_state_value"> </span>'
 +		'		    	</div>'
 +		'		  </div>'
-+		'		    <button id="'+this.prefix+'MemberRegistry_updateAttributes" onclick="'+this.prefix+'MemberRegistryController._updateAttributes()">update MemberRegistry attributes</button>'
++		'		    <button class="function_btn" id="'+this.prefix+'MemberRegistry_updateAttributes" onclick="'+this.prefix+'MemberRegistryController._updateAttributes()">update MemberRegistry attributes</button>'
 +		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_MemberRegistry_addMember_string_address">'
-+		'		MemberRegistry_addMember:'
-+		'			  <div class="function_parameter">name<input type="text" id="'+this.prefix+'MemberRegistry_addMember_string_address_name"></div>'
-+		'			  <div class="function_parameter">_memberAddress<input type="text" id="'+this.prefix+'MemberRegistry_addMember_string_address__memberAddress"></div>'
-+		'			<button id="'+this.prefix+'MemberRegistryController.MemberRegistry_addMember_string_address" onclick="'+this.prefix+'MemberRegistryController.MemberRegistry_addMember_string_address()">execute MemberRegistry_addMember</button>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_MemberRegistry_addMember_string_address">'
++		'		<legend>addMember</legend>'
++		'			  <label class="function_parameter" for="MemberRegistry_addMember_string_address_name">name</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'MemberRegistry_addMember_string_address_name"'
++		'				  placeholder="name"/>'
++		'			  <label class="function_parameter" for="MemberRegistry_addMember_string_address__memberAddress">_memberAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'MemberRegistry_addMember_string_address__memberAddress"'
++		'				  placeholder="_memberAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MemberRegistryController.MemberRegistry_addMember_string_address" onclick="'+this.prefix+'MemberRegistryController.MemberRegistry_addMember_string_address()">addMember</button>'
 +		'			<div class="function_result" id="'+this.prefix+'MemberRegistry_addMember_string_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_Manageable_addManager_address">'
-+		'		MemberRegistry_addManager:'
-+		'			  <div class="function_parameter">_newManagerAddress<input type="text" id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"></div>'
-+		'			<button id="'+this.prefix+'MemberRegistryController.Manageable_addManager_address" onclick="'+this.prefix+'MemberRegistryController.Manageable_addManager_address()">execute MemberRegistry_addManager</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_Manageable_addManager_address">'
++		'		<legend>addManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_addManager_address__newManagerAddress">_newManagerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"'
++		'				  placeholder="_newManagerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MemberRegistryController.Manageable_addManager_address" onclick="'+this.prefix+'MemberRegistryController.Manageable_addManager_address()">addManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_addManager_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_MemberRegistry_unregisterMember_uint">'
-+		'		MemberRegistry_unregisterMember:'
-+		'			  <div class="function_parameter">id<input type="number" id="'+this.prefix+'MemberRegistry_unregisterMember_uint_id"></div>'
-+		'			<button id="'+this.prefix+'MemberRegistryController.MemberRegistry_unregisterMember_uint" onclick="'+this.prefix+'MemberRegistryController.MemberRegistry_unregisterMember_uint()">execute MemberRegistry_unregisterMember</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_MemberRegistry_unregisterMember_uint">'
++		'		<legend>unregisterMember</legend>'
++		'			  <label class="function_parameter" for="MemberRegistry_unregisterMember_uint_id">id</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'MemberRegistry_unregisterMember_uint_id"'
++		'				  placeholder="id"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MemberRegistryController.MemberRegistry_unregisterMember_uint" onclick="'+this.prefix+'MemberRegistryController.MemberRegistry_unregisterMember_uint()">unregisterMember</button>'
 +		'			<div class="function_result" id="'+this.prefix+'MemberRegistry_unregisterMember_uint_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_MemberRegistry_getMemberCount">'
-+		'		MemberRegistry_getMemberCount:'
-+		'			<button id="'+this.prefix+'MemberRegistryController.MemberRegistry_getMemberCount" onclick="'+this.prefix+'MemberRegistryController.MemberRegistry_getMemberCount()">execute MemberRegistry_getMemberCount</button>'
-+		'			<div class="function_result" id="'+this.prefix+'MemberRegistry_getMemberCount_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_Manageable_removeManager_address">'
-+		'		MemberRegistry_removeManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_removeManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'MemberRegistryController.Manageable_removeManager_address" onclick="'+this.prefix+'MemberRegistryController.Manageable_removeManager_address()">execute MemberRegistry_removeManager</button>'
-+		'			<div class="function_result" id="'+this.prefix+'Manageable_removeManager_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_MemberRegistry_isActiveMember_address">'
-+		'		MemberRegistry_isActiveMember:'
-+		'			  <div class="function_parameter">_memberAdress<input type="text" id="'+this.prefix+'MemberRegistry_isActiveMember_address__memberAdress"></div>'
-+		'			<button id="'+this.prefix+'MemberRegistryController.MemberRegistry_isActiveMember_address" onclick="'+this.prefix+'MemberRegistryController.MemberRegistry_isActiveMember_address()">execute MemberRegistry_isActiveMember</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_MemberRegistry_isActiveMember_address">'
++		'		<legend>isActiveMember</legend>'
++		'			  <label class="function_parameter" for="MemberRegistry_isActiveMember_address__memberAdress">_memberAdress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'MemberRegistry_isActiveMember_address__memberAdress"'
++		'				  placeholder="_memberAdress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MemberRegistryController.MemberRegistry_isActiveMember_address" onclick="'+this.prefix+'MemberRegistryController.MemberRegistry_isActiveMember_address()">isActiveMember</button>'
 +		'			<div class="function_result" id="'+this.prefix+'MemberRegistry_isActiveMember_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_Manageable_isManager_address">'
-+		'		MemberRegistry_isManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_isManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'MemberRegistryController.Manageable_isManager_address" onclick="'+this.prefix+'MemberRegistryController.Manageable_isManager_address()">execute MemberRegistry_isManager</button>'
-+		'			<div class="function_result" id="'+this.prefix+'Manageable_isManager_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_MemberRegistry_changeMemberAddress_uint_address">'
-+		'		MemberRegistry_changeMemberAddress:'
-+		'			  <div class="function_parameter">id<input type="number" id="'+this.prefix+'MemberRegistry_changeMemberAddress_uint_address_id"></div>'
-+		'			  <div class="function_parameter">_newMemberAddress<input type="text" id="'+this.prefix+'MemberRegistry_changeMemberAddress_uint_address__newMemberAddress"></div>'
-+		'			<button id="'+this.prefix+'MemberRegistryController.MemberRegistry_changeMemberAddress_uint_address" onclick="'+this.prefix+'MemberRegistryController.MemberRegistry_changeMemberAddress_uint_address()">execute MemberRegistry_changeMemberAddress</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_Manageable_removeManager_address">'
++		'		<legend>removeManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_removeManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_removeManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MemberRegistryController.Manageable_removeManager_address" onclick="'+this.prefix+'MemberRegistryController.Manageable_removeManager_address()">removeManager</button>'
++		'			<div class="function_result" id="'+this.prefix+'Manageable_removeManager_address_res"></div>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_MemberRegistry_changeMemberAddress_uint_address">'
++		'		<legend>changeMemberAddress</legend>'
++		'			  <label class="function_parameter" for="MemberRegistry_changeMemberAddress_uint_address_id">id</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'MemberRegistry_changeMemberAddress_uint_address_id"'
++		'				  placeholder="id"/>'
++		'			  <label class="function_parameter" for="MemberRegistry_changeMemberAddress_uint_address__newMemberAddress">_newMemberAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'MemberRegistry_changeMemberAddress_uint_address__newMemberAddress"'
++		'				  placeholder="_newMemberAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MemberRegistryController.MemberRegistry_changeMemberAddress_uint_address" onclick="'+this.prefix+'MemberRegistryController.MemberRegistry_changeMemberAddress_uint_address()">changeMemberAddress</button>'
 +		'			<div class="function_result" id="'+this.prefix+'MemberRegistry_changeMemberAddress_uint_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_MemberRegistry_getMemberData_address">'
-+		'		MemberRegistry_getMemberData:'
-+		'			  <div class="function_parameter">_address<input type="text" id="'+this.prefix+'MemberRegistry_getMemberData_address__address"></div>'
-+		'			<button id="'+this.prefix+'MemberRegistryController.MemberRegistry_getMemberData_address" onclick="'+this.prefix+'MemberRegistryController.MemberRegistry_getMemberData_address()">execute MemberRegistry_getMemberData</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_Manageable_isManager_address">'
++		'		<legend>isManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_isManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_isManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MemberRegistryController.Manageable_isManager_address" onclick="'+this.prefix+'MemberRegistryController.Manageable_isManager_address()">isManager</button>'
++		'			<div class="function_result" id="'+this.prefix+'Manageable_isManager_address_res"></div>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_MemberRegistry_getMemberData_address">'
++		'		<legend>getMemberData</legend>'
++		'			  <label class="function_parameter" for="MemberRegistry_getMemberData_address__address">_address</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'MemberRegistry_getMemberData_address__address"'
++		'				  placeholder="_address"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MemberRegistryController.MemberRegistry_getMemberData_address" onclick="'+this.prefix+'MemberRegistryController.MemberRegistry_getMemberData_address()">getMemberData</button>'
 +		'			<div class="function_result" id="'+this.prefix+'MemberRegistry_getMemberData_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_MemberRegistry_publishMemberEvent_address_uint">'
-+		'		MemberRegistry_publishMemberEvent:'
-+		'			  <div class="function_parameter">mAddress<input type="text" id="'+this.prefix+'MemberRegistry_publishMemberEvent_address_uint_mAddress"></div>'
-+		'			  <div class="function_parameter">eventType<input type="number" id="'+this.prefix+'MemberRegistry_publishMemberEvent_address_uint_eventType"></div>'
-+		'			<button id="'+this.prefix+'MemberRegistryController.MemberRegistry_publishMemberEvent_address_uint" onclick="'+this.prefix+'MemberRegistryController.MemberRegistry_publishMemberEvent_address_uint()">execute MemberRegistry_publishMemberEvent</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_MemberRegistry_publishMemberEvent_address_uint">'
++		'		<legend>publishMemberEvent</legend>'
++		'			  <label class="function_parameter" for="MemberRegistry_publishMemberEvent_address_uint_mAddress">mAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'MemberRegistry_publishMemberEvent_address_uint_mAddress"'
++		'				  placeholder="mAddress"/>'
++		'			  <label class="function_parameter" for="MemberRegistry_publishMemberEvent_address_uint_eventType">eventType</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'MemberRegistry_publishMemberEvent_address_uint_eventType"'
++		'				  placeholder="eventType"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MemberRegistryController.MemberRegistry_publishMemberEvent_address_uint" onclick="'+this.prefix+'MemberRegistryController.MemberRegistry_publishMemberEvent_address_uint()">publishMemberEvent</button>'
 +		'			<div class="function_result" id="'+this.prefix+'MemberRegistry_publishMemberEvent_address_uint_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 +		'		'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_AccessRegistry_isMember_address">'
++		'		<legend>isMember</legend>'
++		'			  <label class="function_parameter" for="AccessRegistry_isMember_address__memberAdress">_memberAdress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'AccessRegistry_isMember_address__memberAdress"'
++		'				  placeholder="_memberAdress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MemberRegistryController.AccessRegistry_isMember_address" onclick="'+this.prefix+'MemberRegistryController.AccessRegistry_isMember_address()">isMember</button>'
++		'			<div class="function_result" id="'+this.prefix+'AccessRegistry_isMember_address_res"></div>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_AccessRegistry_getMemberAddress_uint">'
++		'		<legend>getMemberAddress</legend>'
++		'			  <label class="function_parameter" for="AccessRegistry_getMemberAddress_uint_id">id</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'AccessRegistry_getMemberAddress_uint_id"'
++		'				  placeholder="id"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MemberRegistryController.AccessRegistry_getMemberAddress_uint" onclick="'+this.prefix+'MemberRegistryController.AccessRegistry_getMemberAddress_uint()">getMemberAddress</button>'
++		'			<div class="function_result" id="'+this.prefix+'AccessRegistry_getMemberAddress_uint_res"></div>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_AccessRegistry_getMemberCount">'
++		'		<legend>getMemberCount</legend>'
++		'			<button class="function_btn" id="'+this.prefix+'MemberRegistryController.AccessRegistry_getMemberCount" onclick="'+this.prefix+'MemberRegistryController.AccessRegistry_getMemberCount()">getMemberCount</button>'
++		'			<div class="function_result" id="'+this.prefix+'AccessRegistry_getMemberCount_res"></div>'
++		'		  </fieldset>'
 +		'		</div>'
 ;
 	}
@@ -358,29 +434,55 @@ function MemberRegistryGuiFactory() {
 	*/
 	this.createAttributesGui=function() {
 		return 		'    <div class="contract_attribute" id="'+this.prefix+'MemberRegistry_contract_attribute_mangerCount"> mangerCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'MemberRegistry_mangerCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'MemberRegistry_mangerCount_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'MemberRegistry_contract_attribute_partyMemberCount"> partyMemberCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'MemberRegistry_partyMemberCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'MemberRegistry_partyMemberCount_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'MemberRegistry_contract_attribute_activeMemberCount"> activeMemberCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'MemberRegistry_activeMemberCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'MemberRegistry_activeMemberCount_value"> </span>'
 +		'		    </div>'
 +		'		'
 ;
 	}
 
 	/**
+	* Create the gui.
+	*/
+	this.createPlainGui=function(){
+		return this.createAttributesGui()
+				+ this.createMemberRegistry_addMember_string_addressGui
+				+ this.createManageable_addManager_addressGui
+				+ this.createMemberRegistry_unregisterMember_uintGui
+				+ this.createMemberRegistry_isActiveMember_addressGui
+				+ this.createManageable_removeManager_addressGui
+				+ this.createMemberRegistry_changeMemberAddress_uint_addressGui
+				+ this.createManageable_isManager_addressGui
+				+ this.createMemberRegistry_getMemberData_addressGui
+				+ this.createMemberRegistry_publishMemberEvent_address_uintGui
+				+ this.createMemberRegistry_isMember_addressGui
+				+ this.createMemberRegistry_getMemberAddress_uintGui
+				+ this.createMemberRegistry_getMemberCountGui
+				;
+	}
+
+	/**
 	* Create the gui for the function addMember.
 	*/
 	this.createMemberRegistry_addMember_string_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_MemberRegistry_addMember_string_address">'
-+		'		MemberRegistry_addMember:'
-+		'			  <div class="function_parameter">name<input type="text" id="'+this.prefix+'MemberRegistry_addMember_string_address_name"></div>'
-+		'			  <div class="function_parameter">_memberAddress<input type="text" id="'+this.prefix+'MemberRegistry_addMember_string_address__memberAddress"></div>'
-+		'			<button id="'+this.prefix+'MemberRegistryController.MemberRegistry_addMember_string_address" onclick="'+this.prefix+'MemberRegistryController.MemberRegistry_addMember_string_address()">execute MemberRegistry_addMember</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_MemberRegistry_addMember_string_address">'
++		'		<legend>addMember</legend>'
++		'			  <label class="function_parameter" for="MemberRegistry_addMember_string_address_name">name</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'MemberRegistry_addMember_string_address_name"'
++		'				  placeholder="name"/>'
++		'			  <label class="function_parameter" for="MemberRegistry_addMember_string_address__memberAddress">_memberAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'MemberRegistry_addMember_string_address__memberAddress"'
++		'				  placeholder="_memberAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MemberRegistryController.MemberRegistry_addMember_string_address" onclick="'+this.prefix+'MemberRegistryController.MemberRegistry_addMember_string_address()">addMember</button>'
 +		'			<div class="function_result" id="'+this.prefix+'MemberRegistry_addMember_string_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -388,12 +490,15 @@ function MemberRegistryGuiFactory() {
 	* Create the gui for the function addManager.
 	*/
 	this.createManageable_addManager_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_Manageable_addManager_address">'
-+		'		MemberRegistry_addManager:'
-+		'			  <div class="function_parameter">_newManagerAddress<input type="text" id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"></div>'
-+		'			<button id="'+this.prefix+'MemberRegistryController.Manageable_addManager_address" onclick="'+this.prefix+'MemberRegistryController.Manageable_addManager_address()">execute MemberRegistry_addManager</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_Manageable_addManager_address">'
++		'		<legend>addManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_addManager_address__newManagerAddress">_newManagerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"'
++		'				  placeholder="_newManagerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MemberRegistryController.Manageable_addManager_address" onclick="'+this.prefix+'MemberRegistryController.Manageable_addManager_address()">addManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_addManager_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -401,37 +506,15 @@ function MemberRegistryGuiFactory() {
 	* Create the gui for the function unregisterMember.
 	*/
 	this.createMemberRegistry_unregisterMember_uintGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_MemberRegistry_unregisterMember_uint">'
-+		'		MemberRegistry_unregisterMember:'
-+		'			  <div class="function_parameter">id<input type="number" id="'+this.prefix+'MemberRegistry_unregisterMember_uint_id"></div>'
-+		'			<button id="'+this.prefix+'MemberRegistryController.MemberRegistry_unregisterMember_uint" onclick="'+this.prefix+'MemberRegistryController.MemberRegistry_unregisterMember_uint()">execute MemberRegistry_unregisterMember</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_MemberRegistry_unregisterMember_uint">'
++		'		<legend>unregisterMember</legend>'
++		'			  <label class="function_parameter" for="MemberRegistry_unregisterMember_uint_id">id</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'MemberRegistry_unregisterMember_uint_id"'
++		'				  placeholder="id"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MemberRegistryController.MemberRegistry_unregisterMember_uint" onclick="'+this.prefix+'MemberRegistryController.MemberRegistry_unregisterMember_uint()">unregisterMember</button>'
 +		'			<div class="function_result" id="'+this.prefix+'MemberRegistry_unregisterMember_uint_res"></div>'
-+		'		  </div>'
-;
-	}
-
-	/**
-	* Create the gui for the function getMemberCount.
-	*/
-	this.createMemberRegistry_getMemberCountGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_MemberRegistry_getMemberCount">'
-+		'		MemberRegistry_getMemberCount:'
-+		'			<button id="'+this.prefix+'MemberRegistryController.MemberRegistry_getMemberCount" onclick="'+this.prefix+'MemberRegistryController.MemberRegistry_getMemberCount()">execute MemberRegistry_getMemberCount</button>'
-+		'			<div class="function_result" id="'+this.prefix+'MemberRegistry_getMemberCount_res"></div>'
-+		'		  </div>'
-;
-	}
-
-	/**
-	* Create the gui for the function removeManager.
-	*/
-	this.createManageable_removeManager_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_Manageable_removeManager_address">'
-+		'		MemberRegistry_removeManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_removeManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'MemberRegistryController.Manageable_removeManager_address" onclick="'+this.prefix+'MemberRegistryController.Manageable_removeManager_address()">execute MemberRegistry_removeManager</button>'
-+		'			<div class="function_result" id="'+this.prefix+'Manageable_removeManager_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -439,25 +522,31 @@ function MemberRegistryGuiFactory() {
 	* Create the gui for the function isActiveMember.
 	*/
 	this.createMemberRegistry_isActiveMember_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_MemberRegistry_isActiveMember_address">'
-+		'		MemberRegistry_isActiveMember:'
-+		'			  <div class="function_parameter">_memberAdress<input type="text" id="'+this.prefix+'MemberRegistry_isActiveMember_address__memberAdress"></div>'
-+		'			<button id="'+this.prefix+'MemberRegistryController.MemberRegistry_isActiveMember_address" onclick="'+this.prefix+'MemberRegistryController.MemberRegistry_isActiveMember_address()">execute MemberRegistry_isActiveMember</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_MemberRegistry_isActiveMember_address">'
++		'		<legend>isActiveMember</legend>'
++		'			  <label class="function_parameter" for="MemberRegistry_isActiveMember_address__memberAdress">_memberAdress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'MemberRegistry_isActiveMember_address__memberAdress"'
++		'				  placeholder="_memberAdress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MemberRegistryController.MemberRegistry_isActiveMember_address" onclick="'+this.prefix+'MemberRegistryController.MemberRegistry_isActiveMember_address()">isActiveMember</button>'
 +		'			<div class="function_result" id="'+this.prefix+'MemberRegistry_isActiveMember_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
 	/**
-	* Create the gui for the function isManager.
+	* Create the gui for the function removeManager.
 	*/
-	this.createManageable_isManager_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_Manageable_isManager_address">'
-+		'		MemberRegistry_isManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_isManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'MemberRegistryController.Manageable_isManager_address" onclick="'+this.prefix+'MemberRegistryController.Manageable_isManager_address()">execute MemberRegistry_isManager</button>'
-+		'			<div class="function_result" id="'+this.prefix+'Manageable_isManager_address_res"></div>'
-+		'		  </div>'
+	this.createManageable_removeManager_addressGui=function() {
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_Manageable_removeManager_address">'
++		'		<legend>removeManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_removeManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_removeManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MemberRegistryController.Manageable_removeManager_address" onclick="'+this.prefix+'MemberRegistryController.Manageable_removeManager_address()">removeManager</button>'
++		'			<div class="function_result" id="'+this.prefix+'Manageable_removeManager_address_res"></div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -465,13 +554,35 @@ function MemberRegistryGuiFactory() {
 	* Create the gui for the function changeMemberAddress.
 	*/
 	this.createMemberRegistry_changeMemberAddress_uint_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_MemberRegistry_changeMemberAddress_uint_address">'
-+		'		MemberRegistry_changeMemberAddress:'
-+		'			  <div class="function_parameter">id<input type="number" id="'+this.prefix+'MemberRegistry_changeMemberAddress_uint_address_id"></div>'
-+		'			  <div class="function_parameter">_newMemberAddress<input type="text" id="'+this.prefix+'MemberRegistry_changeMemberAddress_uint_address__newMemberAddress"></div>'
-+		'			<button id="'+this.prefix+'MemberRegistryController.MemberRegistry_changeMemberAddress_uint_address" onclick="'+this.prefix+'MemberRegistryController.MemberRegistry_changeMemberAddress_uint_address()">execute MemberRegistry_changeMemberAddress</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_MemberRegistry_changeMemberAddress_uint_address">'
++		'		<legend>changeMemberAddress</legend>'
++		'			  <label class="function_parameter" for="MemberRegistry_changeMemberAddress_uint_address_id">id</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'MemberRegistry_changeMemberAddress_uint_address_id"'
++		'				  placeholder="id"/>'
++		'			  <label class="function_parameter" for="MemberRegistry_changeMemberAddress_uint_address__newMemberAddress">_newMemberAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'MemberRegistry_changeMemberAddress_uint_address__newMemberAddress"'
++		'				  placeholder="_newMemberAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MemberRegistryController.MemberRegistry_changeMemberAddress_uint_address" onclick="'+this.prefix+'MemberRegistryController.MemberRegistry_changeMemberAddress_uint_address()">changeMemberAddress</button>'
 +		'			<div class="function_result" id="'+this.prefix+'MemberRegistry_changeMemberAddress_uint_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
+;
+	}
+
+	/**
+	* Create the gui for the function isManager.
+	*/
+	this.createManageable_isManager_addressGui=function() {
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_Manageable_isManager_address">'
++		'		<legend>isManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_isManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_isManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MemberRegistryController.Manageable_isManager_address" onclick="'+this.prefix+'MemberRegistryController.Manageable_isManager_address()">isManager</button>'
++		'			<div class="function_result" id="'+this.prefix+'Manageable_isManager_address_res"></div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -479,12 +590,15 @@ function MemberRegistryGuiFactory() {
 	* Create the gui for the function getMemberData.
 	*/
 	this.createMemberRegistry_getMemberData_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_MemberRegistry_getMemberData_address">'
-+		'		MemberRegistry_getMemberData:'
-+		'			  <div class="function_parameter">_address<input type="text" id="'+this.prefix+'MemberRegistry_getMemberData_address__address"></div>'
-+		'			<button id="'+this.prefix+'MemberRegistryController.MemberRegistry_getMemberData_address" onclick="'+this.prefix+'MemberRegistryController.MemberRegistry_getMemberData_address()">execute MemberRegistry_getMemberData</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_MemberRegistry_getMemberData_address">'
++		'		<legend>getMemberData</legend>'
++		'			  <label class="function_parameter" for="MemberRegistry_getMemberData_address__address">_address</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'MemberRegistry_getMemberData_address__address"'
++		'				  placeholder="_address"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MemberRegistryController.MemberRegistry_getMemberData_address" onclick="'+this.prefix+'MemberRegistryController.MemberRegistry_getMemberData_address()">getMemberData</button>'
 +		'			<div class="function_result" id="'+this.prefix+'MemberRegistry_getMemberData_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -492,13 +606,63 @@ function MemberRegistryGuiFactory() {
 	* Create the gui for the function publishMemberEvent.
 	*/
 	this.createMemberRegistry_publishMemberEvent_address_uintGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_MemberRegistry_publishMemberEvent_address_uint">'
-+		'		MemberRegistry_publishMemberEvent:'
-+		'			  <div class="function_parameter">mAddress<input type="text" id="'+this.prefix+'MemberRegistry_publishMemberEvent_address_uint_mAddress"></div>'
-+		'			  <div class="function_parameter">eventType<input type="number" id="'+this.prefix+'MemberRegistry_publishMemberEvent_address_uint_eventType"></div>'
-+		'			<button id="'+this.prefix+'MemberRegistryController.MemberRegistry_publishMemberEvent_address_uint" onclick="'+this.prefix+'MemberRegistryController.MemberRegistry_publishMemberEvent_address_uint()">execute MemberRegistry_publishMemberEvent</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_MemberRegistry_publishMemberEvent_address_uint">'
++		'		<legend>publishMemberEvent</legend>'
++		'			  <label class="function_parameter" for="MemberRegistry_publishMemberEvent_address_uint_mAddress">mAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'MemberRegistry_publishMemberEvent_address_uint_mAddress"'
++		'				  placeholder="mAddress"/>'
++		'			  <label class="function_parameter" for="MemberRegistry_publishMemberEvent_address_uint_eventType">eventType</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'MemberRegistry_publishMemberEvent_address_uint_eventType"'
++		'				  placeholder="eventType"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MemberRegistryController.MemberRegistry_publishMemberEvent_address_uint" onclick="'+this.prefix+'MemberRegistryController.MemberRegistry_publishMemberEvent_address_uint()">publishMemberEvent</button>'
 +		'			<div class="function_result" id="'+this.prefix+'MemberRegistry_publishMemberEvent_address_uint_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
+;
+	}
+
+	/**
+	* Create the gui for the function isMember.
+	*/
+	this.createMemberRegistry_isMember_addressGui=function() {
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_AccessRegistry_isMember_address">'
++		'		<legend>isMember</legend>'
++		'			  <label class="function_parameter" for="AccessRegistry_isMember_address__memberAdress">_memberAdress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'AccessRegistry_isMember_address__memberAdress"'
++		'				  placeholder="_memberAdress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MemberRegistryController.AccessRegistry_isMember_address" onclick="'+this.prefix+'MemberRegistryController.AccessRegistry_isMember_address()">isMember</button>'
++		'			<div class="function_result" id="'+this.prefix+'AccessRegistry_isMember_address_res"></div>'
++		'		  </fieldset>'
+;
+	}
+,
+	/**
+	* Create the gui for the function getMemberAddress.
+	*/
+	this.createMemberRegistry_getMemberAddress_uintGui=function() {
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_AccessRegistry_getMemberAddress_uint">'
++		'		<legend>getMemberAddress</legend>'
++		'			  <label class="function_parameter" for="AccessRegistry_getMemberAddress_uint_id">id</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'AccessRegistry_getMemberAddress_uint_id"'
++		'				  placeholder="id"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MemberRegistryController.AccessRegistry_getMemberAddress_uint" onclick="'+this.prefix+'MemberRegistryController.AccessRegistry_getMemberAddress_uint()">getMemberAddress</button>'
++		'			<div class="function_result" id="'+this.prefix+'AccessRegistry_getMemberAddress_uint_res"></div>'
++		'		  </fieldset>'
+;
+	}
+,
+	/**
+	* Create the gui for the function getMemberCount.
+	*/
+	this.createMemberRegistry_getMemberCountGui=function() {
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'MemberRegistry_contract_function_AccessRegistry_getMemberCount">'
++		'		<legend>getMemberCount</legend>'
++		'			<button class="function_btn" id="'+this.prefix+'MemberRegistryController.AccessRegistry_getMemberCount" onclick="'+this.prefix+'MemberRegistryController.AccessRegistry_getMemberCount()">getMemberCount</button>'
++		'			<div class="function_result" id="'+this.prefix+'AccessRegistry_getMemberCount_res"></div>'
++		'		  </fieldset>'
 ;
 	}
 	/**
@@ -506,18 +670,18 @@ function MemberRegistryGuiFactory() {
 	*/
 	this.createpartyMembersStructGui=function() {
 		return 		'<div class="Struct_Mapping" id="'+this.prefix+'Struc_MemberRegistry_contract_attribute_partyMembers">struc mapping  partyMembers:'
-+		'				<input type="number" id="'+this.prefix+'MemberRegistry_contract_attribute_partyMembers_input">(uint)'
++		'				<input class="function_input" type="number" id="'+this.prefix+'MemberRegistry_contract_attribute_partyMembers_input">(uint)'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'MemberRegistry_contract_attribute_partyMembers_name"> name:'
-+		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_partyMembers_name_value"> </div>'
++		'		      		<span class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_partyMembers_name_value"> </span>'
 +		'		    	</div>'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'MemberRegistry_contract_attribute_partyMembers_id"> id:'
-+		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_partyMembers_id_value"> </div>'
++		'		      		<span class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_partyMembers_id_value"> </span>'
 +		'		    	</div>'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'MemberRegistry_contract_attribute_partyMembers_member"> member:'
-+		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_partyMembers_member_value"> </div>'
++		'		      		<span class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_partyMembers_member_value"> </span>'
 +		'		    	</div>'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'MemberRegistry_contract_attribute_partyMembers_state"> state:'
-+		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_partyMembers_state_value"> </div>'
++		'		      		<span class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_partyMembers_state_value"> </span>'
 +		'		    	</div>'
 +		'		  </div>'
 ;
@@ -527,18 +691,18 @@ function MemberRegistryGuiFactory() {
 	*/
 	this.creatememberAddressStructGui=function() {
 		return 		'<div class="Struct_Mapping" id="'+this.prefix+'Struc_MemberRegistry_contract_attribute_memberAddress">struc mapping  memberAddress:'
-+		'				<input type="text" id="'+this.prefix+'MemberRegistry_contract_attribute_memberAddress_input">(address)'
++		'				<input class="function_input" type="text" id="'+this.prefix+'MemberRegistry_contract_attribute_memberAddress_input">(address)'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'MemberRegistry_contract_attribute_memberAddress_name"> name:'
-+		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_memberAddress_name_value"> </div>'
++		'		      		<span class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_memberAddress_name_value"> </span>'
 +		'		    	</div>'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'MemberRegistry_contract_attribute_memberAddress_id"> id:'
-+		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_memberAddress_id_value"> </div>'
++		'		      		<span class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_memberAddress_id_value"> </span>'
 +		'		    	</div>'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'MemberRegistry_contract_attribute_memberAddress_member"> member:'
-+		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_memberAddress_member_value"> </div>'
++		'		      		<span class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_memberAddress_member_value"> </span>'
 +		'		    	</div>'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'MemberRegistry_contract_attribute_memberAddress_state"> state:'
-+		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_memberAddress_state_value"> </div>'
++		'		      		<span class="Struct_attribute_value" id="'+this.prefix+'MemberRegistry_memberAddress_state_value"> </span>'
 +		'		    	</div>'
 +		'		  </div>'
 ;
@@ -580,16 +744,16 @@ function MemberRegistryGuiFactory() {
 	this.createStruc_MemberRegistry_contract_attribute_partyMembersGui=function(struct) {
 		return '<div class="Struct_Mapping" id='+this.prefix+'"Struc_MemberRegistry_contract_attribute_partyMembers">'
     		+'<div class="Struct_attribute" id='+this.prefix+'"MemberRegistry_contract_attribute_partyMembers_name"> name:'
-      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"MemberRegistry_partyMembers_name_value">'+struct.name()+'</div>'
+      		+'	<span class="Struct_attribute_value" id='+this.prefix+'"MemberRegistry_partyMembers_name_value">'+struct.name()+'</span>'
     		+'</div>'
     		+'<div class="Struct_attribute" id='+this.prefix+'"MemberRegistry_contract_attribute_partyMembers_id"> id:'
-      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"MemberRegistry_partyMembers_id_value">'+struct.id()+'</div>'
+      		+'	<span class="Struct_attribute_value" id='+this.prefix+'"MemberRegistry_partyMembers_id_value">'+struct.id()+'</span>'
     		+'</div>'
     		+'<div class="Struct_attribute" id='+this.prefix+'"MemberRegistry_contract_attribute_partyMembers_member"> member:'
-      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"MemberRegistry_partyMembers_member_value">'+struct.member()+'</div>'
+      		+'	<span class="Struct_attribute_value" id='+this.prefix+'"MemberRegistry_partyMembers_member_value">'+struct.member()+'</span>'
     		+'</div>'
     		+'<div class="Struct_attribute" id='+this.prefix+'"MemberRegistry_contract_attribute_partyMembers_state"> state:'
-      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"MemberRegistry_partyMembers_state_value">'+struct.state()+'</div>'
+      		+'	<span class="Struct_attribute_value" id='+this.prefix+'"MemberRegistry_partyMembers_state_value">'+struct.state()+'</span>'
     		+'</div>'
   		+'</div>';
 	}
@@ -599,16 +763,16 @@ function MemberRegistryGuiFactory() {
 	this.createStruc_MemberRegistry_contract_attribute_memberAddressGui=function(struct) {
 		return '<div class="Struct_Mapping" id='+this.prefix+'"Struc_MemberRegistry_contract_attribute_memberAddress">'
     		+'<div class="Struct_attribute" id='+this.prefix+'"MemberRegistry_contract_attribute_memberAddress_name"> name:'
-      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"MemberRegistry_memberAddress_name_value">'+struct.name()+'</div>'
+      		+'	<span class="Struct_attribute_value" id='+this.prefix+'"MemberRegistry_memberAddress_name_value">'+struct.name()+'</span>'
     		+'</div>'
     		+'<div class="Struct_attribute" id='+this.prefix+'"MemberRegistry_contract_attribute_memberAddress_id"> id:'
-      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"MemberRegistry_memberAddress_id_value">'+struct.id()+'</div>'
+      		+'	<span class="Struct_attribute_value" id='+this.prefix+'"MemberRegistry_memberAddress_id_value">'+struct.id()+'</span>'
     		+'</div>'
     		+'<div class="Struct_attribute" id='+this.prefix+'"MemberRegistry_contract_attribute_memberAddress_member"> member:'
-      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"MemberRegistry_memberAddress_member_value">'+struct.member()+'</div>'
+      		+'	<span class="Struct_attribute_value" id='+this.prefix+'"MemberRegistry_memberAddress_member_value">'+struct.member()+'</span>'
     		+'</div>'
     		+'<div class="Struct_attribute" id='+this.prefix+'"MemberRegistry_contract_attribute_memberAddress_state"> state:'
-      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"MemberRegistry_memberAddress_state_value">'+struct.state()+'</div>'
+      		+'	<span class="Struct_attribute_value" id='+this.prefix+'"MemberRegistry_memberAddress_state_value">'+struct.state()+'</span>'
     		+'</div>'
   		+'</div>';
 	}
@@ -625,11 +789,10 @@ function MemberRegistryGuiFactory() {
 * self.prefix+'MemberRegistry_addMember_string_address -
 * self.prefix+'Manageable_addManager_address -
 * self.prefix+'MemberRegistry_unregisterMember_uint -
-* self.prefix+'MemberRegistry_getMemberCount -
-* self.prefix+'Manageable_removeManager_address -
 * self.prefix+'MemberRegistry_isActiveMember_address -
-* self.prefix+'Manageable_isManager_address -
+* self.prefix+'Manageable_removeManager_address -
 * self.prefix+'MemberRegistry_changeMemberAddress_uint_address -
+* self.prefix+'Manageable_isManager_address -
 * self.prefix+'MemberRegistry_getMemberData_address -
 * self.prefix+'MemberRegistry_publishMemberEvent_address_uint -
 */
@@ -667,26 +830,22 @@ function MemberRegistryController() {
 		if(btn!=undefined)
 			btn.onclick = this.MemberRegistry_unregisterMember_uint;
 		else console.log('MemberRegistry_unregisterMember_uint widget not bound');
-		var btn = document.getElementById(self.prefix+'MemberRegistryController.MemberRegistry_getMemberCount');
-		if(btn!=undefined)
-			btn.onclick = this.MemberRegistry_getMemberCount;
-		else console.log('MemberRegistry_getMemberCount widget not bound');
-		var btn = document.getElementById(self.prefix+'MemberRegistryController.Manageable_removeManager_address');
-		if(btn!=undefined)
-			btn.onclick = this.Manageable_removeManager_address;
-		else console.log('Manageable_removeManager_address widget not bound');
 		var btn = document.getElementById(self.prefix+'MemberRegistryController.MemberRegistry_isActiveMember_address');
 		if(btn!=undefined)
 			btn.onclick = this.MemberRegistry_isActiveMember_address;
 		else console.log('MemberRegistry_isActiveMember_address widget not bound');
-		var btn = document.getElementById(self.prefix+'MemberRegistryController.Manageable_isManager_address');
+		var btn = document.getElementById(self.prefix+'MemberRegistryController.Manageable_removeManager_address');
 		if(btn!=undefined)
-			btn.onclick = this.Manageable_isManager_address;
-		else console.log('Manageable_isManager_address widget not bound');
+			btn.onclick = this.Manageable_removeManager_address;
+		else console.log('Manageable_removeManager_address widget not bound');
 		var btn = document.getElementById(self.prefix+'MemberRegistryController.MemberRegistry_changeMemberAddress_uint_address');
 		if(btn!=undefined)
 			btn.onclick = this.MemberRegistry_changeMemberAddress_uint_address;
 		else console.log('MemberRegistry_changeMemberAddress_uint_address widget not bound');
+		var btn = document.getElementById(self.prefix+'MemberRegistryController.Manageable_isManager_address');
+		if(btn!=undefined)
+			btn.onclick = this.Manageable_isManager_address;
+		else console.log('Manageable_isManager_address widget not bound');
 		var btn = document.getElementById(self.prefix+'MemberRegistryController.MemberRegistry_getMemberData_address');
 		if(btn!=undefined)
 			btn.onclick = this.MemberRegistry_getMemberData_address;
@@ -695,6 +854,21 @@ function MemberRegistryController() {
 		if(btn!=undefined)
 			btn.onclick = this.MemberRegistry_publishMemberEvent_address_uint;
 		else console.log('MemberRegistry_publishMemberEvent_address_uint widget not bound');
+		var btn = document.getElementById(self.prefix+'MemberRegistryController.AccessRegistry_isMember_address');
+		if(btn!=undefined)
+			btn.onclick = this.AccessRegistry_isMember_address;
+		else console.log('AccessRegistry_isMember_address widget not bound');
+
+		var btn = document.getElementById(self.prefix+'MemberRegistryController.AccessRegistry_getMemberAddress_uint');
+		if(btn!=undefined)
+			btn.onclick = this.AccessRegistry_getMemberAddress_uint;
+		else console.log('AccessRegistry_getMemberAddress_uint widget not bound');
+
+		var btn = document.getElementById(self.prefix+'MemberRegistryController.AccessRegistry_getMemberCount');
+		if(btn!=undefined)
+			btn.onclick = this.AccessRegistry_getMemberCount;
+		else console.log('AccessRegistry_getMemberCount widget not bound');
+
 
 	}
 
@@ -843,12 +1017,17 @@ function MemberRegistryController() {
 	}
 	
 	/**
-	* Calls the contract function MemberRegistry_getMemberCount.
+	* Calls the contract function MemberRegistry_isActiveMember.
 	*
+	* this.prefix+'MemberRegistry_isActiveMember_address__memberAdress' -
 	**/
-	this.MemberRegistry_getMemberCount=function() {
-		var res = self.instance.getMemberCount();
-		var e = document.getElementById(self.prefix+'MemberRegistry_getMemberCount_res');
+	this.MemberRegistry_isActiveMember_address=function() {
+		var e = document.getElementById(self.prefix+'MemberRegistry_isActiveMember_address__memberAdress');
+		if(e!=null)
+			var param__memberAdress = e.value;
+		else console.log(self.prefix+'MemberRegistry_isActiveMember_address__memberAdress not found');
+		var res = self.instance.isActiveMember(param__memberAdress);
+		var e = document.getElementById(self.prefix+'MemberRegistry_isActiveMember_address_res');
 		if(res!=null && e!=null)
 			e.innerText = res;
 	}
@@ -867,19 +1046,21 @@ function MemberRegistryController() {
 	}
 	
 	/**
-	* Calls the contract function MemberRegistry_isActiveMember.
+	* Calls the contract function MemberRegistry_changeMemberAddress.
 	*
-	* this.prefix+'MemberRegistry_isActiveMember_address__memberAdress' -
+	* this.prefix+'MemberRegistry_changeMemberAddress_uint_address_id' -
+	* this.prefix+'MemberRegistry_changeMemberAddress_uint_address__newMemberAddress' -
 	**/
-	this.MemberRegistry_isActiveMember_address=function() {
-		var e = document.getElementById(self.prefix+'MemberRegistry_isActiveMember_address__memberAdress');
+	this.MemberRegistry_changeMemberAddress_uint_address=function() {
+		var e = document.getElementById(self.prefix+'MemberRegistry_changeMemberAddress_uint_address_id');
 		if(e!=null)
-			var param__memberAdress = e.value;
-		else console.log(self.prefix+'MemberRegistry_isActiveMember_address__memberAdress not found');
-		var res = self.instance.isActiveMember(param__memberAdress);
-		var e = document.getElementById(self.prefix+'MemberRegistry_isActiveMember_address_res');
-		if(res!=null && e!=null)
-			e.innerText = res;
+			var param_id = e.value;
+		else console.log(self.prefix+'MemberRegistry_changeMemberAddress_uint_address_id not found');
+		var e = document.getElementById(self.prefix+'MemberRegistry_changeMemberAddress_uint_address__newMemberAddress');
+		if(e!=null)
+			var param__newMemberAddress = e.value;
+		else console.log(self.prefix+'MemberRegistry_changeMemberAddress_uint_address__newMemberAddress not found');
+		var res = self.instance.changeMemberAddress(param_id, param__newMemberAddress);
 	}
 	
 	/**
@@ -896,24 +1077,6 @@ function MemberRegistryController() {
 		var e = document.getElementById(self.prefix+'Manageable_isManager_address_res');
 		if(res!=null && e!=null)
 			e.innerText = res;
-	}
-	
-	/**
-	* Calls the contract function MemberRegistry_changeMemberAddress.
-	*
-	* this.prefix+'MemberRegistry_changeMemberAddress_uint_address_id' -
-	* this.prefix+'MemberRegistry_changeMemberAddress_uint_address__newMemberAddress' -
-	**/
-	this.MemberRegistry_changeMemberAddress_uint_address=function() {
-		var e = document.getElementById(self.prefix+'MemberRegistry_changeMemberAddress_uint_address_id');
-		if(e!=null)
-			var param_id = e.value;
-		else console.log(self.prefix+'MemberRegistry_changeMemberAddress_uint_address_id not found');
-		var e = document.getElementById(self.prefix+'MemberRegistry_changeMemberAddress_uint_address__newMemberAddress');
-		if(e!=null)
-			var param__newMemberAddress = e.value;
-		else console.log(self.prefix+'MemberRegistry_changeMemberAddress_uint_address__newMemberAddress not found');
-		var res = self.instance.changeMemberAddress(param_id, param__newMemberAddress);
 	}
 	
 	/**
@@ -948,6 +1111,49 @@ function MemberRegistryController() {
 			var param_eventType = e.value;
 		else console.log(self.prefix+'MemberRegistry_publishMemberEvent_address_uint_eventType not found');
 		var res = self.instance.publishMemberEvent(param_mAddress, param_eventType);
+	}
+	
+	/**
+	* Calls the contract function MemberRegistry_isMember.
+	*
+	* this.prefix+'AccessRegistry_isMember_address__memberAdress' -
+	**/
+	this.AccessRegistry_isMember_address=function() {
+		var e = document.getElementById(self.prefix+'AccessRegistry_isMember_address__memberAdress');
+		if(e!=null)
+			var param__memberAdress = e.value;
+		else console.log(self.prefix+'AccessRegistry_isMember_address__memberAdress not found');
+		var res = self.instance.isMember(param__memberAdress);
+		var e = document.getElementById(self.prefix+'AccessRegistry_isMember_address_res');
+		if(res!=null && e!=null)
+			e.innerText = res;
+	}
+	
+	/**
+	* Calls the contract function MemberRegistry_getMemberAddress.
+	*
+	* this.prefix+'AccessRegistry_getMemberAddress_uint_id' -
+	**/
+	this.AccessRegistry_getMemberAddress_uint=function() {
+		var e = document.getElementById(self.prefix+'AccessRegistry_getMemberAddress_uint_id');
+		if(e!=null)
+			var param_id = e.value;
+		else console.log(self.prefix+'AccessRegistry_getMemberAddress_uint_id not found');
+		var res = self.instance.getMemberAddress(param_id);
+		var e = document.getElementById(self.prefix+'AccessRegistry_getMemberAddress_uint_res');
+		if(res!=null && e!=null)
+			e.innerText = res;
+	}
+	
+	/**
+	* Calls the contract function MemberRegistry_getMemberCount.
+	*
+	**/
+	this.AccessRegistry_getMemberCount=function() {
+		var res = self.instance.getMemberCount();
+		var e = document.getElementById(self.prefix+'AccessRegistry_getMemberCount_res');
+		if(res!=null && e!=null)
+			e.innerText = res;
 	}
 	
 //delegated calls
@@ -1214,10 +1420,10 @@ function MemberAwareGuiFactory() {
 +		'		  <input type="text" id="'+this.prefix+'MemberAware_address"> <button id="'+this.prefix+'MemberAwareController.setAddress" onclick="'+this.prefix+'MemberAwareController.setAddress()">change MemberAware Address</button>'
 +		'		  <div class="contract_attributes" id="'+this.prefix+'MemberAware_contract_attributes"> attributes:'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'MemberAware_contract_attribute_memberRegistry"> memberRegistry:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'MemberAware_memberRegistry_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'MemberAware_memberRegistry_value"> </span>'
 +		'		    </div>'
 +		'		'
-+		'		    <button id="'+this.prefix+'MemberAware_updateAttributes" onclick="'+this.prefix+'MemberAwareController._updateAttributes()">update MemberAware attributes</button>'
++		'		    <button class="function_btn" id="'+this.prefix+'MemberAware_updateAttributes" onclick="'+this.prefix+'MemberAwareController._updateAttributes()">update MemberAware attributes</button>'
 +		'		  </div>'
 +		'		'
 +		'		</div>'
@@ -1229,10 +1435,18 @@ function MemberAwareGuiFactory() {
 	*/
 	this.createAttributesGui=function() {
 		return 		'    <div class="contract_attribute" id="'+this.prefix+'MemberAware_contract_attribute_memberRegistry"> memberRegistry:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'MemberAware_memberRegistry_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'MemberAware_memberRegistry_value"> </span>'
 +		'		    </div>'
 +		'		'
 ;
+	}
+
+	/**
+	* Create the gui.
+	*/
+	this.createPlainGui=function(){
+		return this.createAttributesGui()
+				;
 	}
 
 	/**

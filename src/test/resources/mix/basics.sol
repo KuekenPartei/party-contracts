@@ -4,7 +4,7 @@
 * Urs Zeidler
 *
 */
-
+pragma solidity ^0.4.0;
 /*
 * Collection of basic functionalities.
 */
@@ -20,7 +20,7 @@ contract Owned {
 	modifier onlyOwner
 	{
 	    if (msg.sender != owner) return;
-	    _
+	    _;
 	}
 	//
 	// constructor for Owned
@@ -82,7 +82,7 @@ contract Manageable {
 	modifier onlyManager
 	{
 	    if (!canAccess()) throw;
-	    _
+	    _;
 	}
 	
 	
@@ -175,7 +175,7 @@ contract Multiowned {
 	modifier onlyManyOwners(bytes32 _operation)
 	{
 	    if (confirmAndCheck(_operation))
-	    _
+	    _;
 	}
 	
 	

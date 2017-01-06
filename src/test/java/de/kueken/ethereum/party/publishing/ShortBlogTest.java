@@ -2,26 +2,34 @@ package de.kueken.ethereum.party.publishing;
 
 import static org.junit.Assert.*;
 
+import de.kueken.ethereum.party.basics.*;
+
+import de.kueken.ethereum.party.publishing.ShortBlog.*;
+
+
 import java.io.File;
-import java.util.concurrent.CompletableFuture;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.stream.*;
+import java.math.*;
 
 import org.adridadou.ethereum.EthereumFacade;
-import org.adridadou.ethereum.provider.EthereumFacadeProvider;
+import org.adridadou.ethereum.keystore.*;
 import org.adridadou.ethereum.provider.MainEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.MordenEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.RpcEthereumFacadeProvider;
+import org.adridadou.ethereum.provider.RopstenEthereumFacadeProvider;
+import org.adridadou.ethereum.provider.GenericRpcEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.StandaloneEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.TestnetEthereumFacadeProvider;
 import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
 import org.adridadou.ethereum.values.SoliditySource;
+import org.adridadou.ethereum.values.config.ChainId;
 import org.ethereum.crypto.ECKey;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import de.kueken.ethereum.party.basics.ManageableTest;
+import de.kueken.ethereum.party.EthereumInstance;
 
 /**
  * Test for the ShortBlog contract.
@@ -44,26 +52,8 @@ public class ShortBlogTest extends ManageableTest{
 	 */
 	@BeforeClass
 	public static void setup() {
-		ECKey key = new ECKey();
-		sender = new EthAccount(key);
-		String property = System.getProperty("EthereumFacadeProvider");
-		EthereumFacadeProvider efp = new StandaloneEthereumFacadeProvider();
-		if(property!=null){
-			if (property.equalsIgnoreCase("main")) {
-				efp = new MainEthereumFacadeProvider();
-			}else if (property.equalsIgnoreCase("test")) {
-				efp = new TestnetEthereumFacadeProvider();
-			}else if (property.equalsIgnoreCase("morden")) {
-				efp = new MordenEthereumFacadeProvider();
-			}else if (property.equalsIgnoreCase("rcp")) {
-				RpcEthereumFacadeProvider rcp = new RpcEthereumFacadeProvider();
-				String url = System.getProperty("rcp-url");
-				ethereum = rcp.create(url);
-				return;//as this currently breaks the hierarchy
-			}
-		}
-		
-		ethereum = efp.create();//new EthereumFacade(bcProxy);
+		ethereum = EthereumInstance.getInstance().getEthereum();
+
 	}
 
 	/**
@@ -118,8 +108,8 @@ public class ShortBlogTest extends ManageableTest{
         fixture = ethereum
                 .createContractProxy(contractSource, "ShortBlog", address.get(), sender, ShortBlog.class);
 
-		Assert.assertEquals(_name, fixture.name());
-		Assert.assertEquals(0, fixture.messageCount().intValue());
+		assertEquals(_name, fixture.name());
+		assertEquals(0, fixture.messageCount().intValue());
 		//End of user code
 	}
 
@@ -148,7 +138,7 @@ public class ShortBlogTest extends ManageableTest{
 	 */
 	@Test
 	public void testSendMessage_No_Manager() throws Exception {
-		//Start of user code testSendMessage_string_string_string
+		
 		assertEquals(0, fixture.messageCount().intValue());		
 		fixture.sendMessage("test1", "h1", "er1");
 		assertEquals(1, fixture.messageCount().intValue());		
@@ -160,8 +150,7 @@ public class ShortBlogTest extends ManageableTest{
 		
 		fixture.sendMessage("test1", "h1", "er1");
 		assertEquals(1, fixture.messageCount().intValue());		
-		//End of user code
+		
 	}
-
 	//End of user code
 }

@@ -1,0 +1,299 @@
+<!doctype>
+<html>
+<head>
+
+<!-- start of style -->
+<style>
+.contract {
+	border-style: solid;
+	border-width: 1px;
+	margin-bottom: 4px;
+	} 
+.contract_attributes{
+	border-style: solid;
+	border-width: 1px;
+	} 
+.Struct_Mapping{}
+.Value_Mapping{}
+.contract_attribute{}
+.contract_attribute_value{}
+.function_execution{}
+.function_parameter{
+	float: left;
+    width: 220px;
+	padding-top: 0.3em;
+}
+.function_input{
+	display : block;
+	margin-bottom: 0.8em;
+}
+.function_btn{}
+.function_result{}
+.eventRow{
+	display: table-row;
+	width: auto;
+}
+.eventValue{	
+	float: left; /*fix for  buggy browsers*/
+	display: table-column;
+}
+
+</style>
+</head>
+<body bgcolor='#E6E6FA'>
+	<h1>Sample Interface for voting</h1>
+<!-- gui for Ballot_contract -->
+<div class="contract" id="Ballot_contract">
+Ballot:
+  <input type="text" id="Ballot_address"> <button id="BallotController.setAddress" onclick="BallotController.setAddress()">change Ballot Address</button>
+  <div class="contract_attributes" id="Ballot_contract_attributes"> attributes:
+    <div class="contract_attribute" id="Ballot_contract_attribute_chairperson"> chairperson:
+      <span class="contract_attribute_value" id="Ballot_chairperson_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Ballot_contract_attribute_proposals"> proposals:
+      <span class="contract_attribute_value" id="Ballot_proposals_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Ballot_contract_attribute_ballotName"> ballotName:
+      <span class="contract_attribute_value" id="Ballot_ballotName_value"> </span>
+    </div>
+
+<div class="Struct_Mapping" id="Struc_Ballot_contract_attribute_voters">struc mapping  voters:
+		<input class="function_input" type="text" id="Ballot_contract_attribute_voters_input">(address)
+    	<div class="Struct_attribute" id="Ballot_contract_attribute_voters_weight"> weight:
+      		<span class="Struct_attribute_value" id="Ballot_voters_weight_value"> </span>
+    	</div>
+    	<div class="Struct_attribute" id="Ballot_contract_attribute_voters_voted"> voted:
+      		<span class="Struct_attribute_value" id="Ballot_voters_voted_value"> </span>
+    	</div>
+    	<div class="Struct_attribute" id="Ballot_contract_attribute_voters_delegate"> delegate:
+      		<span class="Struct_attribute_value" id="Ballot_voters_delegate_value"> </span>
+    	</div>
+    	<div class="Struct_attribute" id="Ballot_contract_attribute_voters_vote"> vote:
+      		<span class="Struct_attribute_value" id="Ballot_voters_vote_value"> </span>
+    	</div>
+  </div>
+    <button class="function_btn" id="Ballot_updateAttributes" onclick="BallotController._updateAttributes()">update Ballot attributes</button>
+  </div>
+  <fieldset class="function_execution" id="Ballot_contract_function_Ballot_Ballot_string_bytes32">
+<legend>Ballot</legend>
+	  <label class="function_parameter" for="Ballot_Ballot_string_bytes32_name">name</label>
+		<input class="function_input" type="text" 
+          id="Ballot_Ballot_string_bytes32_name"
+		  placeholder="name"/>
+	  <label class="function_parameter" for="Ballot_Ballot_string_bytes32_proposalNames">proposalNames</label>
+		<input class="function_input" type="text" 
+          id="Ballot_Ballot_string_bytes32_proposalNames"
+		  placeholder="proposalNames"/>
+	<button class="function_btn" id="BallotController.Ballot_Ballot_string_bytes32" onclick="BallotController.Ballot_Ballot_string_bytes32()">Ballot</button>
+	<div class="function_result" id="Ballot_Ballot_string_bytes32_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Ballot_contract_function_Ballot_giveRightToVote_address">
+<legend>giveRightToVote</legend>
+	  <label class="function_parameter" for="Ballot_giveRightToVote_address_voter">voter</label>
+		<input class="function_input" type="text" 
+          id="Ballot_giveRightToVote_address_voter"
+		  placeholder="voter"/>
+	<button class="function_btn" id="BallotController.Ballot_giveRightToVote_address" onclick="BallotController.Ballot_giveRightToVote_address()">giveRightToVote</button>
+	<div class="function_result" id="Ballot_giveRightToVote_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Ballot_contract_function_Ballot_delegateTo_address">
+<legend>delegateTo</legend>
+	  <label class="function_parameter" for="Ballot_delegateTo_address_to">to</label>
+		<input class="function_input" type="text" 
+          id="Ballot_delegateTo_address_to"
+		  placeholder="to"/>
+	<button class="function_btn" id="BallotController.Ballot_delegateTo_address" onclick="BallotController.Ballot_delegateTo_address()">delegateTo</button>
+	<div class="function_result" id="Ballot_delegateTo_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Ballot_contract_function_Ballot_voteFor_uint">
+<legend>voteFor</legend>
+	  <label class="function_parameter" for="Ballot_voteFor_uint_proposal">proposal</label>
+		<input class="function_input" type="number" 
+          id="Ballot_voteFor_uint_proposal"
+		  placeholder="proposal"/>
+	<button class="function_btn" id="BallotController.Ballot_voteFor_uint" onclick="BallotController.Ballot_voteFor_uint()">voteFor</button>
+	<div class="function_result" id="Ballot_voteFor_uint_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Ballot_contract_function_Ballot_winningProposal">
+<legend>winningProposal</legend>
+	<button class="function_btn" id="BallotController.Ballot_winningProposal" onclick="BallotController.Ballot_winningProposal()">winningProposal</button>
+	<div class="function_result" id="Ballot_winningProposal_res"></div>
+  </fieldset>
+
+</div>
+<!-- gui for BasicBallot_contract -->
+<div class="contract" id="BasicBallot_contract">
+BasicBallot:
+  <input type="text" id="BasicBallot_address"> <button id="BasicBallotController.setAddress" onclick="BasicBallotController.setAddress()">change BasicBallot Address</button>
+  <div class="contract_attributes" id="BasicBallot_contract_attributes"> attributes:
+    <div class="contract_attribute" id="BasicBallot_contract_attribute_accessregistry"> accessregistry:
+      <span class="contract_attribute_value" id="BasicBallot_accessregistry_value"> </span>
+    </div>
+    <div class="contract_attribute" id="BasicBallot_contract_attribute_ballotStart"> ballotStart:
+      <span class="contract_attribute_value" id="BasicBallot_ballotStart_value"> </span>
+    </div>
+    <div class="contract_attribute" id="BasicBallot_contract_attribute_ballotEnd"> ballotEnd:
+      <span class="contract_attribute_value" id="BasicBallot_ballotEnd_value"> </span>
+    </div>
+    <div class="contract_attribute" id="BasicBallot_contract_attribute_ballotState"> ballotState:
+      <span class="contract_attribute_value" id="BasicBallot_ballotState_value"> </span>
+    </div>
+    <div class="contract_attribute" id="BasicBallot_contract_attribute_proposalCount"> proposalCount:
+      <span class="contract_attribute_value" id="BasicBallot_proposalCount_value"> </span>
+    </div>
+    <div class="contract_attribute" id="BasicBallot_contract_attribute_ballotName"> ballotName:
+      <span class="contract_attribute_value" id="BasicBallot_ballotName_value"> </span>
+    </div>
+    <div class="contract_attribute" id="BasicBallot_contract_attribute_ballotHash"> ballotHash:
+      <span class="contract_attribute_value" id="BasicBallot_ballotHash_value"> </span>
+    </div>
+
+<div class="Struct_Mapping" id="Struc_BasicBallot_contract_attribute_proposals">struc mapping  proposals:
+		<input class="function_input" type="number" id="BasicBallot_contract_attribute_proposals_input">(uint)
+    	<div class="Struct_attribute" id="BasicBallot_contract_attribute_proposals_name"> name:
+      		<span class="Struct_attribute_value" id="BasicBallot_proposals_name_value"> </span>
+    	</div>
+    	<div class="Struct_attribute" id="BasicBallot_contract_attribute_proposals_hash"> hash:
+      		<span class="Struct_attribute_value" id="BasicBallot_proposals_hash_value"> </span>
+    	</div>
+    	<div class="Struct_attribute" id="BasicBallot_contract_attribute_proposals_url"> url:
+      		<span class="Struct_attribute_value" id="BasicBallot_proposals_url_value"> </span>
+    	</div>
+    	<div class="Struct_attribute" id="BasicBallot_contract_attribute_proposals_member"> member:
+      		<span class="Struct_attribute_value" id="BasicBallot_proposals_member_value"> </span>
+    	</div>
+  </div>
+    <button class="function_btn" id="BasicBallot_updateAttributes" onclick="BasicBallotController._updateAttributes()">update BasicBallot attributes</button>
+  </div>
+  <fieldset class="function_execution" id="BasicBallot_contract_function_BasicBallot_addProposal_string_string_string_address">
+<legend>addProposal</legend>
+	  <label class="function_parameter" for="BasicBallot_addProposal_string_string_string_address__name">_name</label>
+		<input class="function_input" type="text" 
+          id="BasicBallot_addProposal_string_string_string_address__name"
+		  placeholder="_name"/>
+	  <label class="function_parameter" for="BasicBallot_addProposal_string_string_string_address__hash">_hash</label>
+		<input class="function_input" type="text" 
+          id="BasicBallot_addProposal_string_string_string_address__hash"
+		  placeholder="_hash"/>
+	  <label class="function_parameter" for="BasicBallot_addProposal_string_string_string_address__url">_url</label>
+		<input class="function_input" type="text" 
+          id="BasicBallot_addProposal_string_string_string_address__url"
+		  placeholder="_url"/>
+	  <label class="function_parameter" for="BasicBallot_addProposal_string_string_string_address__member">_member</label>
+		<input class="function_input" type="text" 
+          id="BasicBallot_addProposal_string_string_string_address__member"
+		  placeholder="_member"/>
+	<button class="function_btn" id="BasicBallotController.BasicBallot_addProposal_string_string_string_address" onclick="BasicBallotController.BasicBallot_addProposal_string_string_string_address()">addProposal</button>
+	<div class="function_result" id="BasicBallot_addProposal_string_string_string_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="BasicBallot_contract_function_BasicBallot_castVote_uint">
+<legend>castVote</legend>
+	  <label class="function_parameter" for="BasicBallot_castVote_uint__voteFor">_voteFor</label>
+		<input class="function_input" type="number" 
+          id="BasicBallot_castVote_uint__voteFor"
+		  placeholder="_voteFor"/>
+	<button class="function_btn" id="BasicBallotController.BasicBallot_castVote_uint" onclick="BasicBallotController.BasicBallot_castVote_uint()">castVote</button>
+	<div class="function_result" id="BasicBallot_castVote_uint_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="BasicBallot_contract_function_BasicBallot_startBallot">
+<legend>startBallot</legend>
+	<button class="function_btn" id="BasicBallotController.BasicBallot_startBallot" onclick="BasicBallotController.BasicBallot_startBallot()">startBallot</button>
+	<div class="function_result" id="BasicBallot_startBallot_res"></div>
+  </fieldset>
+
+</div>
+<!-- gui for PublicBallot_contract -->
+<div class="contract" id="PublicBallot_contract">
+PublicBallot:
+  <input type="text" id="PublicBallot_address"> <button id="PublicBallotController.setAddress" onclick="PublicBallotController.setAddress()">change PublicBallot Address</button>
+  <div class="contract_attributes" id="PublicBallot_contract_attributes"> attributes:
+    <div class="contract_attribute" id="PublicBallot_contract_attribute_accessregistry"> accessregistry:
+      <span class="contract_attribute_value" id="PublicBallot_accessregistry_value"> </span>
+    </div>
+    <div class="contract_attribute" id="PublicBallot_contract_attribute_ballotStart"> ballotStart:
+      <span class="contract_attribute_value" id="PublicBallot_ballotStart_value"> </span>
+    </div>
+    <div class="contract_attribute" id="PublicBallot_contract_attribute_ballotEnd"> ballotEnd:
+      <span class="contract_attribute_value" id="PublicBallot_ballotEnd_value"> </span>
+    </div>
+    <div class="contract_attribute" id="PublicBallot_contract_attribute_ballotState"> ballotState:
+      <span class="contract_attribute_value" id="PublicBallot_ballotState_value"> </span>
+    </div>
+    <div class="contract_attribute" id="PublicBallot_contract_attribute_proposalCount"> proposalCount:
+      <span class="contract_attribute_value" id="PublicBallot_proposalCount_value"> </span>
+    </div>
+    <div class="contract_attribute" id="PublicBallot_contract_attribute_ballotName"> ballotName:
+      <span class="contract_attribute_value" id="PublicBallot_ballotName_value"> </span>
+    </div>
+    <div class="contract_attribute" id="PublicBallot_contract_attribute_ballotHash"> ballotHash:
+      <span class="contract_attribute_value" id="PublicBallot_ballotHash_value"> </span>
+    </div>
+
+<div class="Struct_Mapping" id="Struc_PublicBallot_contract_attribute_proposals">struc mapping  proposals:
+		<input class="function_input" type="number" id="PublicBallot_contract_attribute_proposals_input">(uint)
+    	<div class="Struct_attribute" id="PublicBallot_contract_attribute_proposals_name"> name:
+      		<span class="Struct_attribute_value" id="PublicBallot_proposals_name_value"> </span>
+    	</div>
+    	<div class="Struct_attribute" id="PublicBallot_contract_attribute_proposals_hash"> hash:
+      		<span class="Struct_attribute_value" id="PublicBallot_proposals_hash_value"> </span>
+    	</div>
+    	<div class="Struct_attribute" id="PublicBallot_contract_attribute_proposals_url"> url:
+      		<span class="Struct_attribute_value" id="PublicBallot_proposals_url_value"> </span>
+    	</div>
+    	<div class="Struct_attribute" id="PublicBallot_contract_attribute_proposals_member"> member:
+      		<span class="Struct_attribute_value" id="PublicBallot_proposals_member_value"> </span>
+    	</div>
+  </div>
+    <button class="function_btn" id="PublicBallot_updateAttributes" onclick="PublicBallotController._updateAttributes()">update PublicBallot attributes</button>
+  </div>
+  <fieldset class="function_execution" id="PublicBallot_contract_function_BasicBallot_addProposal_string_string_string_address">
+<legend>addProposal</legend>
+	  <label class="function_parameter" for="BasicBallot_addProposal_string_string_string_address__name">_name</label>
+		<input class="function_input" type="text" 
+          id="BasicBallot_addProposal_string_string_string_address__name"
+		  placeholder="_name"/>
+	  <label class="function_parameter" for="BasicBallot_addProposal_string_string_string_address__hash">_hash</label>
+		<input class="function_input" type="text" 
+          id="BasicBallot_addProposal_string_string_string_address__hash"
+		  placeholder="_hash"/>
+	  <label class="function_parameter" for="BasicBallot_addProposal_string_string_string_address__url">_url</label>
+		<input class="function_input" type="text" 
+          id="BasicBallot_addProposal_string_string_string_address__url"
+		  placeholder="_url"/>
+	  <label class="function_parameter" for="BasicBallot_addProposal_string_string_string_address__member">_member</label>
+		<input class="function_input" type="text" 
+          id="BasicBallot_addProposal_string_string_string_address__member"
+		  placeholder="_member"/>
+	<button class="function_btn" id="PublicBallotController.BasicBallot_addProposal_string_string_string_address" onclick="PublicBallotController.BasicBallot_addProposal_string_string_string_address()">addProposal</button>
+	<div class="function_result" id="BasicBallot_addProposal_string_string_string_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="PublicBallot_contract_function_BasicBallot_castVote_uint">
+<legend>castVote</legend>
+	  <label class="function_parameter" for="BasicBallot_castVote_uint__voteFor">_voteFor</label>
+		<input class="function_input" type="number" 
+          id="BasicBallot_castVote_uint__voteFor"
+		  placeholder="_voteFor"/>
+	<button class="function_btn" id="PublicBallotController.BasicBallot_castVote_uint" onclick="PublicBallotController.BasicBallot_castVote_uint()">castVote</button>
+	<div class="function_result" id="BasicBallot_castVote_uint_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="PublicBallot_contract_function_BasicBallot_startBallot">
+<legend>startBallot</legend>
+	<button class="function_btn" id="PublicBallotController.BasicBallot_startBallot" onclick="PublicBallotController.BasicBallot_startBallot()">startBallot</button>
+	<div class="function_result" id="BasicBallot_startBallot_res"></div>
+  </fieldset>
+
+  <fieldset class="function_execution" id="PublicBallot_contract_function_BasicBallot_castVote_uint">
+<legend>castVote</legend>
+	  <label class="function_parameter" for="BasicBallot_castVote_uint__voteFor">_voteFor</label>
+		<input class="function_input" type="number" 
+          id="BasicBallot_castVote_uint__voteFor"
+		  placeholder="_voteFor"/>
+	<button class="function_btn" id="PublicBallotController.BasicBallot_castVote_uint" onclick="PublicBallotController.BasicBallot_castVote_uint()">castVote</button>
+	<div class="function_result" id="BasicBallot_castVote_uint_res"></div>
+  </fieldset>
+</div>
+
+<div id="eventLog" ></div>
+</body>
+</html>
+

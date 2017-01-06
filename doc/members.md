@@ -12,9 +12,11 @@ Contains the member contracts.
 ## contract: MemberRegistry
 
     overview:
+	abstract function isMember(address _memberAdress) public   constant returns (bool )
+	abstract function getMemberAddress(uint id) public   constant returns (address _address)
+	abstract function getMemberCount() public   constant returns (uint )
 	function addMember(string name,address _memberAddress) public  onlyManager() 
 	function unregisterMember(uint id) public  onlyManager() 
-	function getMemberCount() public   constant returns (uint )
 	function isActiveMember(address _memberAdress) public   constant returns (bool )
 	function changeMemberAddress(uint id,address _newMemberAddress) public  onlyManager() 
 	function getMemberData(address _address) public   constant returns (string name,uint id)
@@ -95,15 +97,6 @@ set the memberstate to inactive
 name|type|direction|doc
 ----|----|----|----
 id|uint|in|
-
-#### MemberRegistry.getMemberCount() public   constant returns (uint )
-
-get the number of active members
-
-
-name|type|direction|doc
-----|----|----|----
-|uint|return|
 
 #### MemberRegistry.isActiveMember(address _memberAdress) public   constant returns (bool )
 

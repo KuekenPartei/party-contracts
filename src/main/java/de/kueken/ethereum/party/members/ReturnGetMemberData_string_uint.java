@@ -1,5 +1,7 @@
 package de.kueken.ethereum.party.members;
 
+import de.kueken.ethereum.party.members.MemberRegistry.*;
+
 /**
  * The return value for the function getMemberData(String _address).
  *

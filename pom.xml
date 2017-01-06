@@ -8,7 +8,7 @@
 	  	<dependency>
 	  		<groupId>org.adridadou</groupId>
 	  		<artifactId>eth-contract-api</artifactId>
-	  		<version>0.11-SNAPSHOT</version>
+	  		<version>0.14-SNAPSHOT</version>
 	  	</dependency>
 	    <dependency>
 	        <groupId>junit</groupId>
@@ -16,6 +16,7 @@
 	        <version>4.12</version>
 	        <scope>test</scope>
 	    </dependency>
+	    
 	  </dependencies>
       <properties>
     	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

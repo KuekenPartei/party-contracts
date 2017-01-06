@@ -35,29 +35,24 @@ var MemberRegistryContract = web3.eth.contract([
     "outputs": [],
     "type": "function" }
 ,{ "constant": true,
-    "inputs": [],    
-    "name": "getMemberCount",
-    "outputs": [{"name": "","type": "uint256"}],
+    "inputs": [{"name": "_memberAdress","type": "address"}],    
+    "name": "isActiveMember",
+    "outputs": [{"name": "","type": "bool"}],
     "type": "function" }
 ,{ "constant": false,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "removeManager",
     "outputs": [],
     "type": "function" }
-,{ "constant": true,
-    "inputs": [{"name": "_memberAdress","type": "address"}],    
-    "name": "isActiveMember",
-    "outputs": [{"name": "","type": "bool"}],
+,{ "constant": false,
+    "inputs": [{"name": "id","type": "uint256"},{"name": "_newMemberAddress","type": "address"}],    
+    "name": "changeMemberAddress",
+    "outputs": [],
     "type": "function" }
 ,{ "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
-    "type": "function" }
-,{ "constant": false,
-    "inputs": [{"name": "id","type": "uint256"},{"name": "_newMemberAddress","type": "address"}],    
-    "name": "changeMemberAddress",
-    "outputs": [],
     "type": "function" }
 ,{ "constant": true,
     "inputs": [{"name": "_address","type": "address"}],    
@@ -68,6 +63,21 @@ var MemberRegistryContract = web3.eth.contract([
     "inputs": [{"name": "mAddress","type": "address"},{"name": "eventType","type": "uint256"}],    
     "name": "publishMemberEvent",
     "outputs": [],
+    "type": "function" }
+,{ "constant": true,
+    "inputs": [{"name": "_memberAdress","type": "address"}],    
+    "name": "isMember",
+    "outputs": [{"name": "","type": "bool"}],
+    "type": "function" }
+,{ "constant": true,
+    "inputs": [{"name": "id","type": "uint256"}],    
+    "name": "getMemberAddress",
+    "outputs": [{"name": "_address","type": "address"}],
+    "type": "function" }
+,{ "constant": true,
+    "inputs": [],    
+    "name": "getMemberCount",
+    "outputs": [{"name": "","type": "uint256"}],
     "type": "function" }
 ,
   { "anonymous": false,

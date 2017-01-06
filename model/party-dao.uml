@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Contracts="http:///schemas/Contracts/_Ig5nQIIsEeafK64Rq2tVkA/34" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http:///schemas/Contracts/_Ig5nQIIsEeafK64Rq2tVkA/34 pathmap://UML_PROFILE/solidity_profiles.uml#_Ig94sIIsEeafK64Rq2tVkA">
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Contracts="http:///schemas/Contracts/_rT2FgNC_Eea9y7gMoC2t4Q/36" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http:///schemas/Contracts/_rT2FgNC_Eea9y7gMoC2t4Q/36 pathmap://UML_PROFILE/solidity_profiles.uml#_rT6-ANC_Eea9y7gMoC2t4Q">
   <uml:Model xmi:id="_Te7JIM2EEeWqGaV8xrZGjQ" name="party-dao">
     <packagedElement xmi:type="uml:Package" xmi:id="_exlJIM2EEeWqGaV8xrZGjQ" name="uses-cases">
       <packagedElement xmi:type="uml:Package" xmi:id="_L7qJ4O7fEeWFFtOMC9We2w" name="manageable">
@@ -1161,15 +1161,15 @@ Collects the proposals and manages the state.</body>
       </packagedElement>
     </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_TmqI0M2EEeWqGaV8xrZGjQ">
-      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_2kowIJRtEeaobaNbIqqYww" source="PapyrusVersion">
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_2kpXMJRtEeaobaNbIqqYww" key="Version" value="0.0.35"/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_2kpXMZRtEeaobaNbIqqYww" key="Comment" value=""/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_2kpXMpRtEeaobaNbIqqYww" key="Copyright" value=""/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_2kpXM5RtEeaobaNbIqqYww" key="Date" value="2016-09-24"/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_2kpXNJRtEeaobaNbIqqYww" key="Author" value="Urs Zeidler"/>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_BM4jcNDCEeah-ZHVwaVZ0w" source="PapyrusVersion">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_BM4jcdDCEeah-ZHVwaVZ0w" key="Version" value="0.0.37"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_BM4jctDCEeah-ZHVwaVZ0w" key="Comment" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_BM4jc9DCEeah-ZHVwaVZ0w" key="Copyright" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_BM4jdNDCEeah-ZHVwaVZ0w" key="Date" value="2017-01-02"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_BM4jddDCEeah-ZHVwaVZ0w" key="Author" value="Urs Zeidler"/>
       </eAnnotations>
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_TmtMIM2EEeWqGaV8xrZGjQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <references xmi:type="ecore:EPackage" href="pathmap://UML_PROFILE/solidity_profiles.uml#_Ig94sIIsEeafK64Rq2tVkA"/>
+        <references xmi:type="ecore:EPackage" href="pathmap://UML_PROFILE/solidity_profiles.uml#_rT6-ANC_Eea9y7gMoC2t4Q"/>
       </eAnnotations>
       <appliedProfile xmi:type="uml:Profile" href="pathmap://UML_PROFILE/solidity_profiles.uml#_uCE5EKHREeWjOZ0I8ilEXA"/>
     </profileApplication>
@@ -1311,7 +1311,7 @@ Collects the proposals and manages the state.</body>
   <Contracts:Function xmi:id="_ZRHuQJXXEeaCN_-XsTGglw" base_Operation="_zzhrYJXWEeaCN_-XsTGglw">
     <modifiers xmi:type="Contracts:Modifier" xmi:id="_mIwIAJXXEeaCN_-XsTGglw" parameter="" modifier="_8DcOwM2GEeWqGaV8xrZGjQ"/>
   </Contracts:Function>
-  <Contracts:Constructor xmi:id="_wPj_8JXXEeaCN_-XsTGglw" base_Operation="_JMKBsB86Eea0ndjKa8R1Fg"/>
+  <Contracts:Constructor xmi:id="_wPj_8JXXEeaCN_-XsTGglw" base_Operation="_JMKBsB86Eea0ndjKa8R1Fg" superConstructor="Manageable()"/>
   <Contracts:KeyMapping xmi:id="_atwO4JXYEeaCN_-XsTGglw" base_Property="_2lkfwJXXEeaCN_-XsTGglw">
     <key xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
   </Contracts:KeyMapping>

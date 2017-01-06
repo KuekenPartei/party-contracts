@@ -3,3 +3,8 @@
 /target/
 /database/
 /logs/
+/database-ropsten/
+/testnetSampleDb/
+/cachedDag/
+/privateIntegration/
+/database-test/

@@ -4,7 +4,7 @@ admin.sleepBlocks(1);
 
 // unlock and create the contacts.
 var account = personal.listAccounts[0];
-personal.unlockAccount(account,"n",99000);
+personal.unlockAccount(account,"",99000);
 eth.defaultAccount = account;
 
 console.log(account+' unlocked'); 
@@ -34,6 +34,14 @@ console.log('create Buvo Organ');
 var buvo = OrganContract.new({from: account,data: Organ.codeHex,gas:  4000000});
 admin.sleepBlocks(1);
 console.log('state :'+web3.eth.getTransactionReceipt(br.transactionHash));
+
+//
+console.log('create Bundeskoordinationsrat Organ');
+var bundeskoordinationsrat = OrganContract.new({from: account,data: Organ.codeHex,gas:  4000000});
+admin.sleepBlocks(1);
+console.log('state :'+web3.eth.getTransactionReceipt(br.transactionHash));
+
+
 
 //
 console.log('create KUEKeNPartyContract');
@@ -70,16 +78,19 @@ function setupKP(){
 	console.log('configure kp:'+eth.blockNumber); 
 	fc.setOrganName.sendTransaction('Gruendungsveranstaltung',{from: account,gas: 2000000});
 	buvo.setOrganName.sendTransaction('BUVO',{from: account,gas: 2000000});
+	bundeskoordinationsrat.setOrganName.sendTransaction('Bundeskoordinationsrat',{from: account,gas: 2000000});
 
 	kp.constitutionHash.sendTransaction('party-constitution',{from: account});
 	admin.sleepBlocks(3);
 
-
+	
+	
 	console.log('add managers:'+eth.blockNumber); 
 	br.addManager.sendTransaction(kp_a,{from: account});
 	mr.addManager.sendTransaction(kp_a,{from: account});
 	fc.addManager.sendTransaction(kp_a,{from: account});
 	buvo.addManager.sendTransaction(kp_a,{from: account});
+	bundeskoordinationsrat.addManager.sendTransaction(kp_a,{from: account});
 	admin.sleepBlocks(3);
 
 	console.log('base configure:'+eth.blockNumber); 
@@ -93,13 +104,20 @@ function setupKP(){
 	kp.addOrgan.sendTransaction(fc_a,{from: account,gas: 2000000});
 	fc.createFunction.sendTransaction("Versammlungsleiter 1","",{from: account,gas: 2000000});
 	fc.createFunction.sendTransaction("Versammlungsleiter 2","",{from: account,gas: 2000000});
+	fc.createFunction.sendTransaction("Wahlleiter","",{from: account,gas: 2000000});
 	admin.sleepBlocks(3);
 
 //	add and configures the buvo
 	console.log('boostrap buvo ...2'+eth.blockNumber); 
 	kp.addOrgan.sendTransaction(buvo.address,{from: account,gas: 2000000});
 	buvo.createFunction.sendTransaction("1. Vorsitzede","",{from: account,gas: 2000000});
-	buvo.createFunction.sendTransaction("2. Vorsitzede","",{from: account,gas: 2000000});
+	buvo.createFunction.sendTransaction("Stellvertretener Vorsitzede","",{from: account,gas: 2000000});
+	buvo.createFunction.sendTransaction("Schatzmeister","",{from: account,gas: 2000000});
+	buvo.createFunction.sendTransaction("Stellvertretender Schatzmeister","",{from: account,gas: 2000000});
+	buvo.createFunction.sendTransaction("Generalsekretaer","",{from: account,gas: 2000000});
+	buvo.createFunction.sendTransaction("1. Stellvertretender Generalsekretaer","",{from: account,gas: 2000000});
+	buvo.createFunction.sendTransaction("2. Stellvertretender Generalsekretaer","",{from: account,gas: 2000000});
+	
 	admin.sleepBlocks(3);
 
 

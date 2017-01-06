@@ -1,5 +1,7 @@
 package de.kueken.ethereum.party.members;
 
+import java.util.concurrent.CompletableFuture;
+import org.adridadou.ethereum.values.EthAddress;
 import de.kueken.ethereum.party.basics.*;
 
 /**
@@ -8,12 +10,33 @@ import de.kueken.ethereum.party.basics.*;
 * The registry is a Manageable contract so the writing methods can only accessed by a registered manager.
 **/
 public interface MemberRegistry extends Manageable{
+    enum MemberState { deleted,inactive,active }
+    enum EventType { memberStateChanged,accreditation,functionChange }
 	
 	Integer partyMemberCount();
 	
 	Integer activeMemberCount();
 	
 	Boolean managers(String key);
+
+	/**
+	* Check if the given adress is a registed active member.
+	* 
+	* @param _memberAdress -
+	* @return
+	*  -
+	**/
+	Boolean isMember(String _memberAdress);
+
+	
+	String getMemberAddress(Integer id);
+
+	/**
+	* get the number of active members
+	* @return
+	*  -
+	**/
+	Integer getMemberCount();
 
 	/**
 	* Add a member.
@@ -28,12 +51,6 @@ public interface MemberRegistry extends Manageable{
 	* @param id -
 	**/
 	void unregisterMember(Integer id);
-	/**
-	* get the number of active members
-	* @return
-	*  -
-	**/
-	Integer getMemberCount();
 	/**
 	* Check if the given adress is a registed active member.
 	* 

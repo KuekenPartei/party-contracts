@@ -1,0 +1,233 @@
+<!doctype>
+<html>
+<head>
+
+<!-- start of style -->
+<style>
+.contract {
+	border-style: solid;
+	border-width: 1px;
+	margin-bottom: 4px;
+	} 
+.contract_attributes{
+	border-style: solid;
+	border-width: 1px;
+	} 
+.Struct_Mapping{}
+.Value_Mapping{}
+.contract_attribute{}
+.contract_attribute_value{}
+.function_execution{}
+.function_parameter{
+	float: left;
+    width: 220px;
+	padding-top: 0.3em;
+}
+.function_input{
+	display : block;
+	margin-bottom: 0.8em;
+}
+.function_btn{}
+.function_result{}
+.eventRow{
+	display: table-row;
+	width: auto;
+}
+.eventValue{	
+	float: left; /*fix for  buggy browsers*/
+	display: table-column;
+}
+
+</style>
+</head>
+<body bgcolor='#E6E6FA'>
+	<h1>Sample Interface for members</h1>
+<!-- gui for MemberRegistry_contract -->
+<div class="contract" id="MemberRegistry_contract">
+MemberRegistry:
+  <input type="text" id="MemberRegistry_address"> <button id="MemberRegistryController.setAddress" onclick="MemberRegistryController.setAddress()">change MemberRegistry Address</button>
+  <div class="contract_attributes" id="MemberRegistry_contract_attributes"> attributes:
+    <div class="contract_attribute" id="MemberRegistry_contract_attribute_mangerCount"> mangerCount:
+      <span class="contract_attribute_value" id="MemberRegistry_mangerCount_value"> </span>
+    </div>
+    <div class="contract_attribute" id="MemberRegistry_contract_attribute_partyMemberCount"> partyMemberCount:
+      <span class="contract_attribute_value" id="MemberRegistry_partyMemberCount_value"> </span>
+    </div>
+    <div class="contract_attribute" id="MemberRegistry_contract_attribute_activeMemberCount"> activeMemberCount:
+      <span class="contract_attribute_value" id="MemberRegistry_activeMemberCount_value"> </span>
+    </div>
+
+<div class="Value_Mapping" id="MemberRegistry_contract_attribute_managers">mapping  managers:
+		<input class="function_input" type="text" id="MemberRegistry_contract_attribute_managers_input">(address)
+    	<div class="Mapping_value" id="MemberRegistry_contract_attribute_address"> bool:
+      		<span class="contract_attribute_value" id="MemberRegistry_managers_value"> </span>
+    	</div>
+  </div>
+<div class="Struct_Mapping" id="Struc_MemberRegistry_contract_attribute_partyMembers">struc mapping  partyMembers:
+		<input class="function_input" type="number" id="MemberRegistry_contract_attribute_partyMembers_input">(uint)
+    	<div class="Struct_attribute" id="MemberRegistry_contract_attribute_partyMembers_name"> name:
+      		<span class="Struct_attribute_value" id="MemberRegistry_partyMembers_name_value"> </span>
+    	</div>
+    	<div class="Struct_attribute" id="MemberRegistry_contract_attribute_partyMembers_id"> id:
+      		<span class="Struct_attribute_value" id="MemberRegistry_partyMembers_id_value"> </span>
+    	</div>
+    	<div class="Struct_attribute" id="MemberRegistry_contract_attribute_partyMembers_member"> member:
+      		<span class="Struct_attribute_value" id="MemberRegistry_partyMembers_member_value"> </span>
+    	</div>
+    	<div class="Struct_attribute" id="MemberRegistry_contract_attribute_partyMembers_state"> state:
+      		<span class="Struct_attribute_value" id="MemberRegistry_partyMembers_state_value"> </span>
+    	</div>
+  </div>
+<div class="Struct_Mapping" id="Struc_MemberRegistry_contract_attribute_memberAddress">struc mapping  memberAddress:
+		<input class="function_input" type="text" id="MemberRegistry_contract_attribute_memberAddress_input">(address)
+    	<div class="Struct_attribute" id="MemberRegistry_contract_attribute_memberAddress_name"> name:
+      		<span class="Struct_attribute_value" id="MemberRegistry_memberAddress_name_value"> </span>
+    	</div>
+    	<div class="Struct_attribute" id="MemberRegistry_contract_attribute_memberAddress_id"> id:
+      		<span class="Struct_attribute_value" id="MemberRegistry_memberAddress_id_value"> </span>
+    	</div>
+    	<div class="Struct_attribute" id="MemberRegistry_contract_attribute_memberAddress_member"> member:
+      		<span class="Struct_attribute_value" id="MemberRegistry_memberAddress_member_value"> </span>
+    	</div>
+    	<div class="Struct_attribute" id="MemberRegistry_contract_attribute_memberAddress_state"> state:
+      		<span class="Struct_attribute_value" id="MemberRegistry_memberAddress_state_value"> </span>
+    	</div>
+  </div>
+    <button class="function_btn" id="MemberRegistry_updateAttributes" onclick="MemberRegistryController._updateAttributes()">update MemberRegistry attributes</button>
+  </div>
+  <fieldset class="function_execution" id="MemberRegistry_contract_function_MemberRegistry_addMember_string_address">
+<legend>addMember</legend>
+	  <label class="function_parameter" for="MemberRegistry_addMember_string_address_name">name</label>
+		<input class="function_input" type="text" 
+          id="MemberRegistry_addMember_string_address_name"
+		  placeholder="name"/>
+	  <label class="function_parameter" for="MemberRegistry_addMember_string_address__memberAddress">_memberAddress</label>
+		<input class="function_input" type="text" 
+          id="MemberRegistry_addMember_string_address__memberAddress"
+		  placeholder="_memberAddress"/>
+	<button class="function_btn" id="MemberRegistryController.MemberRegistry_addMember_string_address" onclick="MemberRegistryController.MemberRegistry_addMember_string_address()">addMember</button>
+	<div class="function_result" id="MemberRegistry_addMember_string_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="MemberRegistry_contract_function_Manageable_addManager_address">
+<legend>addManager</legend>
+	  <label class="function_parameter" for="Manageable_addManager_address__newManagerAddress">_newManagerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_addManager_address__newManagerAddress"
+		  placeholder="_newManagerAddress"/>
+	<button class="function_btn" id="MemberRegistryController.Manageable_addManager_address" onclick="MemberRegistryController.Manageable_addManager_address()">addManager</button>
+	<div class="function_result" id="Manageable_addManager_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="MemberRegistry_contract_function_MemberRegistry_unregisterMember_uint">
+<legend>unregisterMember</legend>
+	  <label class="function_parameter" for="MemberRegistry_unregisterMember_uint_id">id</label>
+		<input class="function_input" type="number" 
+          id="MemberRegistry_unregisterMember_uint_id"
+		  placeholder="id"/>
+	<button class="function_btn" id="MemberRegistryController.MemberRegistry_unregisterMember_uint" onclick="MemberRegistryController.MemberRegistry_unregisterMember_uint()">unregisterMember</button>
+	<div class="function_result" id="MemberRegistry_unregisterMember_uint_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="MemberRegistry_contract_function_MemberRegistry_isActiveMember_address">
+<legend>isActiveMember</legend>
+	  <label class="function_parameter" for="MemberRegistry_isActiveMember_address__memberAdress">_memberAdress</label>
+		<input class="function_input" type="text" 
+          id="MemberRegistry_isActiveMember_address__memberAdress"
+		  placeholder="_memberAdress"/>
+	<button class="function_btn" id="MemberRegistryController.MemberRegistry_isActiveMember_address" onclick="MemberRegistryController.MemberRegistry_isActiveMember_address()">isActiveMember</button>
+	<div class="function_result" id="MemberRegistry_isActiveMember_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="MemberRegistry_contract_function_Manageable_removeManager_address">
+<legend>removeManager</legend>
+	  <label class="function_parameter" for="Manageable_removeManager_address__managerAddress">_managerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_removeManager_address__managerAddress"
+		  placeholder="_managerAddress"/>
+	<button class="function_btn" id="MemberRegistryController.Manageable_removeManager_address" onclick="MemberRegistryController.Manageable_removeManager_address()">removeManager</button>
+	<div class="function_result" id="Manageable_removeManager_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="MemberRegistry_contract_function_MemberRegistry_changeMemberAddress_uint_address">
+<legend>changeMemberAddress</legend>
+	  <label class="function_parameter" for="MemberRegistry_changeMemberAddress_uint_address_id">id</label>
+		<input class="function_input" type="number" 
+          id="MemberRegistry_changeMemberAddress_uint_address_id"
+		  placeholder="id"/>
+	  <label class="function_parameter" for="MemberRegistry_changeMemberAddress_uint_address__newMemberAddress">_newMemberAddress</label>
+		<input class="function_input" type="text" 
+          id="MemberRegistry_changeMemberAddress_uint_address__newMemberAddress"
+		  placeholder="_newMemberAddress"/>
+	<button class="function_btn" id="MemberRegistryController.MemberRegistry_changeMemberAddress_uint_address" onclick="MemberRegistryController.MemberRegistry_changeMemberAddress_uint_address()">changeMemberAddress</button>
+	<div class="function_result" id="MemberRegistry_changeMemberAddress_uint_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="MemberRegistry_contract_function_Manageable_isManager_address">
+<legend>isManager</legend>
+	  <label class="function_parameter" for="Manageable_isManager_address__managerAddress">_managerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_isManager_address__managerAddress"
+		  placeholder="_managerAddress"/>
+	<button class="function_btn" id="MemberRegistryController.Manageable_isManager_address" onclick="MemberRegistryController.Manageable_isManager_address()">isManager</button>
+	<div class="function_result" id="Manageable_isManager_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="MemberRegistry_contract_function_MemberRegistry_getMemberData_address">
+<legend>getMemberData</legend>
+	  <label class="function_parameter" for="MemberRegistry_getMemberData_address__address">_address</label>
+		<input class="function_input" type="text" 
+          id="MemberRegistry_getMemberData_address__address"
+		  placeholder="_address"/>
+	<button class="function_btn" id="MemberRegistryController.MemberRegistry_getMemberData_address" onclick="MemberRegistryController.MemberRegistry_getMemberData_address()">getMemberData</button>
+	<div class="function_result" id="MemberRegistry_getMemberData_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="MemberRegistry_contract_function_MemberRegistry_publishMemberEvent_address_uint">
+<legend>publishMemberEvent</legend>
+	  <label class="function_parameter" for="MemberRegistry_publishMemberEvent_address_uint_mAddress">mAddress</label>
+		<input class="function_input" type="text" 
+          id="MemberRegistry_publishMemberEvent_address_uint_mAddress"
+		  placeholder="mAddress"/>
+	  <label class="function_parameter" for="MemberRegistry_publishMemberEvent_address_uint_eventType">eventType</label>
+		<input class="function_input" type="number" 
+          id="MemberRegistry_publishMemberEvent_address_uint_eventType"
+		  placeholder="eventType"/>
+	<button class="function_btn" id="MemberRegistryController.MemberRegistry_publishMemberEvent_address_uint" onclick="MemberRegistryController.MemberRegistry_publishMemberEvent_address_uint()">publishMemberEvent</button>
+	<div class="function_result" id="MemberRegistry_publishMemberEvent_address_uint_res"></div>
+  </fieldset>
+
+  <fieldset class="function_execution" id="MemberRegistry_contract_function_AccessRegistry_isMember_address">
+<legend>isMember</legend>
+	  <label class="function_parameter" for="AccessRegistry_isMember_address__memberAdress">_memberAdress</label>
+		<input class="function_input" type="text" 
+          id="AccessRegistry_isMember_address__memberAdress"
+		  placeholder="_memberAdress"/>
+	<button class="function_btn" id="MemberRegistryController.AccessRegistry_isMember_address" onclick="MemberRegistryController.AccessRegistry_isMember_address()">isMember</button>
+	<div class="function_result" id="AccessRegistry_isMember_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="MemberRegistry_contract_function_AccessRegistry_getMemberAddress_uint">
+<legend>getMemberAddress</legend>
+	  <label class="function_parameter" for="AccessRegistry_getMemberAddress_uint_id">id</label>
+		<input class="function_input" type="number" 
+          id="AccessRegistry_getMemberAddress_uint_id"
+		  placeholder="id"/>
+	<button class="function_btn" id="MemberRegistryController.AccessRegistry_getMemberAddress_uint" onclick="MemberRegistryController.AccessRegistry_getMemberAddress_uint()">getMemberAddress</button>
+	<div class="function_result" id="AccessRegistry_getMemberAddress_uint_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="MemberRegistry_contract_function_AccessRegistry_getMemberCount">
+<legend>getMemberCount</legend>
+	<button class="function_btn" id="MemberRegistryController.AccessRegistry_getMemberCount" onclick="MemberRegistryController.AccessRegistry_getMemberCount()">getMemberCount</button>
+	<div class="function_result" id="AccessRegistry_getMemberCount_res"></div>
+  </fieldset>
+</div>
+<!-- gui for MemberAware_contract -->
+<div class="contract" id="MemberAware_contract">
+MemberAware:
+  <input type="text" id="MemberAware_address"> <button id="MemberAwareController.setAddress" onclick="MemberAwareController.setAddress()">change MemberAware Address</button>
+  <div class="contract_attributes" id="MemberAware_contract_attributes"> attributes:
+    <div class="contract_attribute" id="MemberAware_contract_attribute_memberRegistry"> memberRegistry:
+      <span class="contract_attribute_value" id="MemberAware_memberRegistry_value"> </span>
+    </div>
+
+    <button class="function_btn" id="MemberAware_updateAttributes" onclick="MemberAwareController._updateAttributes()">update MemberAware attributes</button>
+  </div>
+
+</div>
+
+<div id="eventLog" ></div>
+</body>
+</html>
+

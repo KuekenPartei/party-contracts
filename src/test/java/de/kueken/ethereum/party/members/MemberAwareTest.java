@@ -1,21 +1,35 @@
 package de.kueken.ethereum.party.members;
 
+import static org.junit.Assert.*;
+
+import de.kueken.ethereum.party.basics.*;
+
+import de.kueken.ethereum.party.members.MemberAware.*;
+
+
 import java.io.File;
-import java.util.concurrent.CompletableFuture;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.stream.*;
+import java.math.*;
 
 import org.adridadou.ethereum.EthereumFacade;
-import org.adridadou.ethereum.provider.EthereumFacadeProvider;
+import org.adridadou.ethereum.keystore.*;
 import org.adridadou.ethereum.provider.MainEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.MordenEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.RpcEthereumFacadeProvider;
+import org.adridadou.ethereum.provider.RopstenEthereumFacadeProvider;
+import org.adridadou.ethereum.provider.GenericRpcEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.StandaloneEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.TestnetEthereumFacadeProvider;
 import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
 import org.adridadou.ethereum.values.SoliditySource;
+import org.adridadou.ethereum.values.config.ChainId;
 import org.ethereum.crypto.ECKey;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Test;
+
+import de.kueken.ethereum.party.EthereumInstance;
 
 /**
  * Test for the MemberAware contract.
@@ -38,26 +52,8 @@ public class MemberAwareTest{
 	 */
 	@BeforeClass
 	public static void setup() {
-		ECKey key = new ECKey();
-		sender = new EthAccount(key);
-		String property = System.getProperty("EthereumFacadeProvider");
-		EthereumFacadeProvider efp = new StandaloneEthereumFacadeProvider();
-		if(property!=null){
-			if (property.equalsIgnoreCase("main")) {
-				efp = new MainEthereumFacadeProvider();
-			}else if (property.equalsIgnoreCase("test")) {
-				efp = new TestnetEthereumFacadeProvider();
-			}else if (property.equalsIgnoreCase("morden")) {
-				efp = new MordenEthereumFacadeProvider();
-			}else if (property.equalsIgnoreCase("rcp")) {
-				RpcEthereumFacadeProvider rcp = new RpcEthereumFacadeProvider();
-				String url = System.getProperty("rcp-url");
-				ethereum = rcp.create(url);
-				return;//as this currently breaks the hierarchy
-			}
-		}
-		
-		ethereum = efp.create();//new EthereumFacade(bcProxy);
+		ethereum = EthereumInstance.getInstance().getEthereum();
+
 	}
 
 	/**

@@ -60,10 +60,10 @@ this.contract = contract;
 		return contract.unregisterMember(id); 
 	}
 	/**
-	* Call getMemberCount.
+	* Call isActiveMember.
 	**/
-	this.getMemberCount = function(){
-		return contract.getMemberCount(); 
+	this.isActiveMember = function(_memberAdress){
+		return contract.isActiveMember(_memberAdress); 
 	}
 	/**
 	* Call removeManager.
@@ -72,22 +72,16 @@ this.contract = contract;
 		return contract.removeManager(_managerAddress); 
 	}
 	/**
-	* Call isActiveMember.
+	* Call changeMemberAddress.
 	**/
-	this.isActiveMember = function(_memberAdress){
-		return contract.isActiveMember(_memberAdress); 
+	this.changeMemberAddress = function(id,_newMemberAddress){
+		return contract.changeMemberAddress(id,_newMemberAddress); 
 	}
 	/**
 	* Call isManager.
 	**/
 	this.isManager = function(_managerAddress){
 		return contract.isManager(_managerAddress); 
-	}
-	/**
-	* Call changeMemberAddress.
-	**/
-	this.changeMemberAddress = function(id,_newMemberAddress){
-		return contract.changeMemberAddress(id,_newMemberAddress); 
 	}
 	/**
 	* Call getMemberData.
@@ -100,6 +94,24 @@ this.contract = contract;
 	**/
 	this.publishMemberEvent = function(mAddress,eventType){
 		return contract.publishMemberEvent(mAddress,eventType); 
+	}
+	/**
+	* Call isMember.
+	**/
+	this.isMember = function(_memberAdress){
+		return contract.isMember(_memberAdress); 
+	}
+,	/**
+	* Call getMemberAddress.
+	**/
+	this.getMemberAddress = function(id){
+		return contract.getMemberAddress(id); 
+	}
+,	/**
+	* Call getMemberCount.
+	**/
+	this.getMemberCount = function(){
+		return contract.getMemberCount(); 
 	}
 }// end of function MemberRegistryModel
 
@@ -124,11 +136,10 @@ function TestMemberRegistry(contract) {
 		this.testMemberRegistry_addMember_string_address();
 		this.testManageable_addManager_address();
 		this.testMemberRegistry_unregisterMember_uint();
-		this.testMemberRegistry_getMemberCount();
-		this.testManageable_removeManager_address();
 		this.testMemberRegistry_isActiveMember_address();
-		this.testManageable_isManager_address();
+		this.testManageable_removeManager_address();
 		this.testMemberRegistry_changeMemberAddress_uint_address();
+		this.testManageable_isManager_address();
 		this.testMemberRegistry_getMemberData_address();
 		this.testMemberRegistry_publishMemberEvent_address_uint();
 		this.customTests();
@@ -208,26 +219,6 @@ function TestMemberRegistry(contract) {
 		//End of user code
 	}
 
-	//Test for MemberRegistry_getMemberCount
-	this.testMemberRegistry_getMemberCount=function() {
-		//	var res = this.test_instance.getMemberCount();
-		//Start of user code test_MemberRegistry_getMemberCount
-		//TODO: implement
-		var count = this.test_instance.getMemberCount();
-		this.printTest("testgetMemberCount", "executed: testMemberRegistry_getMemberCount: "+count, count==1);		
-		//End of user code
-	}
-
-	//Test for Manageable_removeManager_address
-	this.testManageable_removeManager_address=function() {
-		//	var res = this.test_instance.removeManager( p__managerAddress);
-		//Start of user code test_MemberRegistry_removeManager_address
-		//TODO : implement this
-		//var test = false;		
-		//this.testAE("testremoveManager", "executed: testMemberRegistry_removeManager_address",true, test);		
-		//End of user code
-	}
-
 	//Test for MemberRegistry_isActiveMember_address
 	this.testMemberRegistry_isActiveMember_address=function() {
 		//	var res = this.test_instance.isActiveMember( p__memberAdress);
@@ -245,13 +236,13 @@ function TestMemberRegistry(contract) {
 		//End of user code
 	}
 
-	//Test for Manageable_isManager_address
-	this.testManageable_isManager_address=function() {
-		//	var res = this.test_instance.isManager( p__managerAddress);
-		//Start of user code test_MemberRegistry_isManager_address
+	//Test for Manageable_removeManager_address
+	this.testManageable_removeManager_address=function() {
+		//	var res = this.test_instance.removeManager( p__managerAddress);
+		//Start of user code test_MemberRegistry_removeManager_address
 		//TODO : implement this
 		//var test = false;		
-		//this.testAE("testisManager", "executed: testMemberRegistry_isManager_address",true, test);		
+		//this.testAE("testremoveManager", "executed: testMemberRegistry_removeManager_address",true, test);		
 		//End of user code
 	}
 
@@ -265,6 +256,16 @@ function TestMemberRegistry(contract) {
 		var res = this.test_instance.changeMemberAddress( p_id, p__newMemberAddress);
 		var state = res!="";		
 		this.printTest("testchangeMemberAddress", "executed: testMemberRegistry_changeMemberAddress_uint_address: "+res, state);		
+		//End of user code
+	}
+
+	//Test for Manageable_isManager_address
+	this.testManageable_isManager_address=function() {
+		//	var res = this.test_instance.isManager( p__managerAddress);
+		//Start of user code test_MemberRegistry_isManager_address
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testisManager", "executed: testMemberRegistry_isManager_address",true, test);		
 		//End of user code
 	}
 

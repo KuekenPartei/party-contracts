@@ -1,24 +1,38 @@
 package de.kueken.ethereum.party.party;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
+
+import de.kueken.ethereum.party.basics.*;
+import de.kueken.ethereum.party.members.*;
+import de.kueken.ethereum.party.publishing.*;
+import de.kueken.ethereum.party.voting.*;
+
+import de.kueken.ethereum.party.party.KUEKeNParty.*;
+
 
 import java.io.File;
-import java.util.concurrent.CompletableFuture;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.stream.*;
+import java.math.*;
 
 import org.adridadou.ethereum.EthereumFacade;
-import org.adridadou.ethereum.provider.EthereumFacadeProvider;
+import org.adridadou.ethereum.keystore.*;
 import org.adridadou.ethereum.provider.MainEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.MordenEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.RpcEthereumFacadeProvider;
+import org.adridadou.ethereum.provider.RopstenEthereumFacadeProvider;
+import org.adridadou.ethereum.provider.GenericRpcEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.StandaloneEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.TestnetEthereumFacadeProvider;
 import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
 import org.adridadou.ethereum.values.SoliditySource;
+import org.adridadou.ethereum.values.config.ChainId;
 import org.ethereum.crypto.ECKey;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import de.kueken.ethereum.party.EthereumInstance;
 
 /**
  * Test for the KUEKeNParty contract.
@@ -31,6 +45,7 @@ public class KUEKeNPartyTest extends PartyTest{
 	private KUEKeNParty fixture;
 	private EthAddress fixtureAddress;
 	private SoliditySource contractSource;
+	private String userAddress;
 	// Start of user code KUEKeNPartyTest.attributes
 	//TODO: implement
 	// End of user code
@@ -41,26 +56,8 @@ public class KUEKeNPartyTest extends PartyTest{
 	 */
 	@BeforeClass
 	public static void setup() {
-		ECKey key = new ECKey();
-		sender = new EthAccount(key);
-		String property = System.getProperty("EthereumFacadeProvider");
-		EthereumFacadeProvider efp = new StandaloneEthereumFacadeProvider();
-		if(property!=null){
-			if (property.equalsIgnoreCase("main")) {
-				efp = new MainEthereumFacadeProvider();
-			}else if (property.equalsIgnoreCase("test")) {
-				efp = new TestnetEthereumFacadeProvider();
-			}else if (property.equalsIgnoreCase("morden")) {
-				efp = new MordenEthereumFacadeProvider();
-			}else if (property.equalsIgnoreCase("rcp")) {
-				RpcEthereumFacadeProvider rcp = new RpcEthereumFacadeProvider();
-				String url = System.getProperty("rcp-url");
-				ethereum = rcp.create(url);
-				return;//as this currently breaks the hierarchy
-			}
-		}
-		
-		ethereum = efp.create();//new EthereumFacade(bcProxy);
+		ethereum = EthereumInstance.getInstance().getEthereum();
+
 	}
 
 	/**
@@ -70,9 +67,27 @@ public class KUEKeNPartyTest extends PartyTest{
 	@Before
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
+		String property = System.getProperty("EthereumFacadeProvider");
+		if(property!=null)
+		if (property.equalsIgnoreCase("rpc") || property.equalsIgnoreCase("ropsten")
+				|| property.equalsIgnoreCase("InfuraRopsten")) {
+			SecureKey key2 = new FileSecureKey(new File(
+					"/home/urs/.ethereum/testnet/keystore/UTC--2015-12-15T13-55-38.006995319Z--ba7b29b63c00dff8614f8d8a6bf34e94e853b2d3"));
+			EthAccount decode = key2.decode("n");
+			sender = decode;
+			String senderAddressS = sender.getAddress().withLeading0x();
+			System.out.println(senderAddressS + "->" + ethereum.getBalance(decode));
+		}else if (property.equalsIgnoreCase("private")){
+			EthAccount user = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L)));
+			userAddress = user.getAddress().withLeading0x();
+			sender = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100000L)));
+		}
+		File contractSrc = new File(this.getClass().getResource("/contracts.json").toURI());
+		contractSource = SoliditySource.fromRawJson(contractSrc);
 
-        File contractSrc = new File(this.getClass().getResource("/mix/party.sol").toURI());
-        contractSource = SoliditySource.from(contractSrc);
+//        File contractSrc = new File(this.getClass().getResource("/mix/members.sol").toURI());
+//        contractSource = SoliditySource.from(contractSrc);
+		createFixture();
 		//End of user code
 	}
 
@@ -96,20 +111,26 @@ public class KUEKeNPartyTest extends PartyTest{
 	}
 
 
-
-
 	/**
-	 * Test method for  KUEKeNParty().
-	 * see {@link KUEKeNParty#KUEKeNParty()}
+	 * Test the constructor for the KUEKeNParty contract.
 	 * @throws Exception
 	 */
 	@Test
-	public void testKUEKeNParty() throws Exception {
-		//Start of user code testKUEKeNParty
-		//TODO: implement this
-		fail("not implemented");
+	public void testConstructor_string() throws Exception {
+		//Start of user code testConstructor_string
+		//TODO: Set the constructor args
+		String _name = "_name";
+
+        CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "KUEKeNParty", sender
+				, _name);
+        fixture = ethereum
+                .createContractProxy(contractSource, "KUEKeNParty", address.get(), sender, KUEKeNParty.class);
+
+		//TODO: test the constructor
 		//End of user code
 	}
+
+
 	/**
 	 * Test method for  boostrapParty(String fc,String br).
 	 * see {@link KUEKeNParty#boostrapParty( String, String)}

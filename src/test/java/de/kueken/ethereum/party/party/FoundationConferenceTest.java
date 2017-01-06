@@ -1,21 +1,38 @@
 package de.kueken.ethereum.party.party;
 
+import static org.junit.Assert.*;
+
+import de.kueken.ethereum.party.basics.*;
+import de.kueken.ethereum.party.members.*;
+import de.kueken.ethereum.party.publishing.*;
+import de.kueken.ethereum.party.voting.*;
+
+import de.kueken.ethereum.party.party.FoundationConference.*;
+
+
 import java.io.File;
-import java.util.concurrent.CompletableFuture;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.stream.*;
+import java.math.*;
 
 import org.adridadou.ethereum.EthereumFacade;
-import org.adridadou.ethereum.provider.EthereumFacadeProvider;
+import org.adridadou.ethereum.keystore.*;
 import org.adridadou.ethereum.provider.MainEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.MordenEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.RpcEthereumFacadeProvider;
+import org.adridadou.ethereum.provider.RopstenEthereumFacadeProvider;
+import org.adridadou.ethereum.provider.GenericRpcEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.StandaloneEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.TestnetEthereumFacadeProvider;
 import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
 import org.adridadou.ethereum.values.SoliditySource;
+import org.adridadou.ethereum.values.config.ChainId;
 import org.ethereum.crypto.ECKey;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Test;
+
+import de.kueken.ethereum.party.EthereumInstance;
 
 /**
  * Test for the FoundationConference contract.
@@ -38,26 +55,8 @@ public class FoundationConferenceTest extends ConferenceTest{
 	 */
 	@BeforeClass
 	public static void setup() {
-		ECKey key = new ECKey();
-		sender = new EthAccount(key);
-		String property = System.getProperty("EthereumFacadeProvider");
-		EthereumFacadeProvider efp = new StandaloneEthereumFacadeProvider();
-		if(property!=null){
-			if (property.equalsIgnoreCase("main")) {
-				efp = new MainEthereumFacadeProvider();
-			}else if (property.equalsIgnoreCase("test")) {
-				efp = new TestnetEthereumFacadeProvider();
-			}else if (property.equalsIgnoreCase("morden")) {
-				efp = new MordenEthereumFacadeProvider();
-			}else if (property.equalsIgnoreCase("rcp")) {
-				RpcEthereumFacadeProvider rcp = new RpcEthereumFacadeProvider();
-				String url = System.getProperty("rcp-url");
-				ethereum = rcp.create(url);
-				return;//as this currently breaks the hierarchy
-			}
-		}
-		
-		ethereum = efp.create();//new EthereumFacade(bcProxy);
+		ethereum = EthereumInstance.getInstance().getEthereum();
+
 	}
 
 	/**
@@ -67,9 +66,25 @@ public class FoundationConferenceTest extends ConferenceTest{
 	@Before
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
+		String property = System.getProperty("EthereumFacadeProvider");
+		if(property==null) property="";
+		if (property.equalsIgnoreCase("rpc")|| property.equalsIgnoreCase("ropsten") || property.equalsIgnoreCase("InfuraRopsten")) {
+				SecureKey key2 = new FileSecureKey(new File("/home/urs/.ethereum/testnet/keystore/UTC--2015-12-15T13-55-38.006995319Z--ba7b29b63c00dff8614f8d8a6bf34e94e853b2d3"));
+				EthAccount decode = key2.decode("n");
+				sender = decode;
+				String senderAddressS = sender.getAddress().withLeading0x();
+				System.out.println(senderAddressS+"->"+ethereum.getBalance(decode));
+				
 
-        File contractSrc = new File(this.getClass().getResource("/mix/party.sol").toURI());
-        contractSource = SoliditySource.from(contractSrc);
+			}else if (property.equalsIgnoreCase("private")){
+				sender = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100000L)));
+			}
+//        File contractSrc = new File(this.getClass().getResource("/mix/party.sol").toURI());
+        File contractSrc = new File(this.getClass().getResource("/mix/combine.json").toURI());
+        contractSource = SoliditySource.fromRawJson(contractSrc);
+
+//        File contractSrc = new File(this.getClass().getResource("/mix/party.sol").toURI());
+//        contractSource = SoliditySource.from(contractSrc);
 		//End of user code
 	}
 

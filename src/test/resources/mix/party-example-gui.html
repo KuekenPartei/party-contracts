@@ -1,0 +1,911 @@
+<!doctype>
+<html>
+<head>
+
+<!-- start of style -->
+<style>
+.contract {
+	border-style: solid;
+	border-width: 1px;
+	margin-bottom: 4px;
+	} 
+.contract_attributes{
+	border-style: solid;
+	border-width: 1px;
+	} 
+.Struct_Mapping{}
+.Value_Mapping{}
+.contract_attribute{}
+.contract_attribute_value{}
+.function_execution{}
+.function_parameter{
+	float: left;
+    width: 220px;
+	padding-top: 0.3em;
+}
+.function_input{
+	display : block;
+	margin-bottom: 0.8em;
+}
+.function_btn{}
+.function_result{}
+.eventRow{
+	display: table-row;
+	width: auto;
+}
+.eventValue{	
+	float: left; /*fix for  buggy browsers*/
+	display: table-column;
+}
+
+</style>
+</head>
+<body bgcolor='#E6E6FA'>
+	<h1>Sample Interface for party</h1>
+<!-- gui for Organ_contract -->
+<div class="contract" id="Organ_contract">
+Organ:
+  <input type="text" id="Organ_address"> <button id="OrganController.setAddress" onclick="OrganController.setAddress()">change Organ Address</button>
+  <div class="contract_attributes" id="Organ_contract_attributes"> attributes:
+    <div class="contract_attribute" id="Organ_contract_attribute_memberRegistry"> memberRegistry:
+      <span class="contract_attribute_value" id="Organ_memberRegistry_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Organ_contract_attribute_organName"> organName:
+      <span class="contract_attribute_value" id="Organ_organName_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Organ_contract_attribute_lastFunctionId"> lastFunctionId:
+      <span class="contract_attribute_value" id="Organ_lastFunctionId_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Organ_contract_attribute_mangerCount"> mangerCount:
+      <span class="contract_attribute_value" id="Organ_mangerCount_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Organ_contract_attribute_blogRegistry"> blogRegistry:
+      <span class="contract_attribute_value" id="Organ_blogRegistry_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Organ_contract_attribute_isActive"> isActive:
+      <span class="contract_attribute_value" id="Organ_isActive_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Organ_contract_attribute_ballotCount"> ballotCount:
+      <span class="contract_attribute_value" id="Organ_ballotCount_value"> </span>
+    </div>
+
+<div class="Value_Mapping" id="Organ_contract_attribute_managers">mapping  managers:
+		<input class="function_input" type="text" id="Organ_contract_attribute_managers_input">(address)
+    	<div class="Mapping_value" id="Organ_contract_attribute_address"> bool:
+      		<span class="contract_attribute_value" id="Organ_managers_value"> </span>
+    	</div>
+  </div>
+    <button class="function_btn" id="Organ_updateAttributes" onclick="OrganController._updateAttributes()">update Organ attributes</button>
+  </div>
+  <fieldset class="function_execution" id="Organ_contract_function_Organ_getOrganFunction_uint">
+<legend>getOrganFunction</legend>
+	  <label class="function_parameter" for="Organ_getOrganFunction_uint__id">_id</label>
+		<input class="function_input" type="number" 
+          id="Organ_getOrganFunction_uint__id"
+		  placeholder="_id"/>
+	<button class="function_btn" id="OrganController.Organ_getOrganFunction_uint" onclick="OrganController.Organ_getOrganFunction_uint()">getOrganFunction</button>
+	<div class="function_result" id="Organ_getOrganFunction_uint_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Organ_contract_function_Manageable_addManager_address">
+<legend>addManager</legend>
+	  <label class="function_parameter" for="Manageable_addManager_address__newManagerAddress">_newManagerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_addManager_address__newManagerAddress"
+		  placeholder="_newManagerAddress"/>
+	<button class="function_btn" id="OrganController.Manageable_addManager_address" onclick="OrganController.Manageable_addManager_address()">addManager</button>
+	<div class="function_result" id="Manageable_addManager_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Organ_contract_function_Organ_changeMember_uint_address">
+<legend>changeMember</legend>
+	  <label class="function_parameter" for="Organ_changeMember_uint_address__id">_id</label>
+		<input class="function_input" type="number" 
+          id="Organ_changeMember_uint_address__id"
+		  placeholder="_id"/>
+	  <label class="function_parameter" for="Organ_changeMember_uint_address__address">_address</label>
+		<input class="function_input" type="text" 
+          id="Organ_changeMember_uint_address__address"
+		  placeholder="_address"/>
+	<button class="function_btn" id="OrganController.Organ_changeMember_uint_address" onclick="OrganController.Organ_changeMember_uint_address()">changeMember</button>
+	<div class="function_result" id="Organ_changeMember_uint_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Organ_contract_function_Manageable_removeManager_address">
+<legend>removeManager</legend>
+	  <label class="function_parameter" for="Manageable_removeManager_address__managerAddress">_managerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_removeManager_address__managerAddress"
+		  placeholder="_managerAddress"/>
+	<button class="function_btn" id="OrganController.Manageable_removeManager_address" onclick="OrganController.Manageable_removeManager_address()">removeManager</button>
+	<div class="function_result" id="Manageable_removeManager_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Organ_contract_function_Organ_createFunction_string_string">
+<legend>createFunction</legend>
+	  <label class="function_parameter" for="Organ_createFunction_string_string__functionName">_functionName</label>
+		<input class="function_input" type="text" 
+          id="Organ_createFunction_string_string__functionName"
+		  placeholder="_functionName"/>
+	  <label class="function_parameter" for="Organ_createFunction_string_string__constittiutionHash">_constittiutionHash</label>
+		<input class="function_input" type="text" 
+          id="Organ_createFunction_string_string__constittiutionHash"
+		  placeholder="_constittiutionHash"/>
+	<button class="function_btn" id="OrganController.Organ_createFunction_string_string" onclick="OrganController.Organ_createFunction_string_string()">createFunction</button>
+	<div class="function_result" id="Organ_createFunction_string_string_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Organ_contract_function_Manageable_isManager_address">
+<legend>isManager</legend>
+	  <label class="function_parameter" for="Manageable_isManager_address__managerAddress">_managerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_isManager_address__managerAddress"
+		  placeholder="_managerAddress"/>
+	<button class="function_btn" id="OrganController.Manageable_isManager_address" onclick="OrganController.Manageable_isManager_address()">isManager</button>
+	<div class="function_result" id="Manageable_isManager_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Organ_contract_function_Organ_initalizeOrgan">
+<legend>initalizeOrgan</legend>
+	<button class="function_btn" id="OrganController.Organ_initalizeOrgan" onclick="OrganController.Organ_initalizeOrgan()">initalizeOrgan</button>
+	<div class="function_result" id="Organ_initalizeOrgan_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Organ_contract_function_Organ_publishFunctionMessage_uint_string_string_string">
+<legend>publishFunctionMessage</legend>
+	  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_id">id</label>
+		<input class="function_input" type="number" 
+          id="Organ_publishFunctionMessage_uint_string_string_string_id"
+		  placeholder="id"/>
+	  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_message">message</label>
+		<input class="function_input" type="text" 
+          id="Organ_publishFunctionMessage_uint_string_string_string_message"
+		  placeholder="message"/>
+	  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_hash">hash</label>
+		<input class="function_input" type="text" 
+          id="Organ_publishFunctionMessage_uint_string_string_string_hash"
+		  placeholder="hash"/>
+	  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_er">er</label>
+		<input class="function_input" type="text" 
+          id="Organ_publishFunctionMessage_uint_string_string_string_er"
+		  placeholder="er"/>
+	<button class="function_btn" id="OrganController.Organ_publishFunctionMessage_uint_string_string_string" onclick="OrganController.Organ_publishFunctionMessage_uint_string_string_string()">publishFunctionMessage</button>
+	<div class="function_result" id="Organ_publishFunctionMessage_uint_string_string_string_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Organ_contract_function_Organ_createBallot_string_bytes32">
+<legend>createBallot</legend>
+	  <label class="function_parameter" for="Organ_createBallot_string_bytes32_name">name</label>
+		<input class="function_input" type="text" 
+          id="Organ_createBallot_string_bytes32_name"
+		  placeholder="name"/>
+	  <label class="function_parameter" for="Organ_createBallot_string_bytes32_proposalNames">proposalNames</label>
+		<input class="function_input" type="text" 
+          id="Organ_createBallot_string_bytes32_proposalNames"
+		  placeholder="proposalNames"/>
+	<button class="function_btn" id="OrganController.Organ_createBallot_string_bytes32" onclick="OrganController.Organ_createBallot_string_bytes32()">createBallot</button>
+	<div class="function_result" id="Organ_createBallot_string_bytes32_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Organ_contract_function_Organ_getLastBallot">
+<legend>getLastBallot</legend>
+	<button class="function_btn" id="OrganController.Organ_getLastBallot" onclick="OrganController.Organ_getLastBallot()">getLastBallot</button>
+	<div class="function_result" id="Organ_getLastBallot_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Organ_contract_function_Organ_getOrganBlog">
+<legend>getOrganBlog</legend>
+	<button class="function_btn" id="OrganController.Organ_getOrganBlog" onclick="OrganController.Organ_getOrganBlog()">getOrganBlog</button>
+	<div class="function_result" id="Organ_getOrganBlog_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Organ_contract_function_Organ_addOrganFunction_address_string">
+<legend>addOrganFunction</legend>
+	  <label class="function_parameter" for="Organ_addOrganFunction_address_string__of">_of</label>
+		<input class="function_input" type="text" 
+          id="Organ_addOrganFunction_address_string__of"
+		  placeholder="_of"/>
+	  <label class="function_parameter" for="Organ_addOrganFunction_address_string__name">_name</label>
+		<input class="function_input" type="text" 
+          id="Organ_addOrganFunction_address_string__name"
+		  placeholder="_name"/>
+	<button class="function_btn" id="OrganController.Organ_addOrganFunction_address_string" onclick="OrganController.Organ_addOrganFunction_address_string()">addOrganFunction</button>
+	<div class="function_result" id="Organ_addOrganFunction_address_string_res"></div>
+  </fieldset>
+
+  <fieldset class="function_execution" id="Organ_contract_function_MessagePublisher_publishMessage_string_string_string">
+<legend>publishMessage</legend>
+	  <label class="function_parameter" for="MessagePublisher_publishMessage_string_string_string_message">message</label>
+		<input class="function_input" type="text" 
+          id="MessagePublisher_publishMessage_string_string_string_message"
+		  placeholder="message"/>
+	  <label class="function_parameter" for="MessagePublisher_publishMessage_string_string_string_hash">hash</label>
+		<input class="function_input" type="text" 
+          id="MessagePublisher_publishMessage_string_string_string_hash"
+		  placeholder="hash"/>
+	  <label class="function_parameter" for="MessagePublisher_publishMessage_string_string_string_er">er</label>
+		<input class="function_input" type="text" 
+          id="MessagePublisher_publishMessage_string_string_string_er"
+		  placeholder="er"/>
+	<button class="function_btn" id="OrganController.MessagePublisher_publishMessage_string_string_string" onclick="OrganController.MessagePublisher_publishMessage_string_string_string()">publishMessage</button>
+	<div class="function_result" id="MessagePublisher_publishMessage_string_string_string_res"></div>
+  </fieldset>
+</div>
+<!-- gui for Party_contract -->
+<div class="contract" id="Party_contract">
+Party:
+  <input type="text" id="Party_address"> <button id="PartyController.setAddress" onclick="PartyController.setAddress()">change Party Address</button>
+  <div class="contract_attributes" id="Party_contract_attributes"> attributes:
+    <div class="contract_attribute" id="Party_contract_attribute_name"> name:
+      <span class="contract_attribute_value" id="Party_name_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Party_contract_attribute_mangerCount"> mangerCount:
+      <span class="contract_attribute_value" id="Party_mangerCount_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Party_contract_attribute_memberRegistry"> memberRegistry:
+      <span class="contract_attribute_value" id="Party_memberRegistry_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Party_contract_attribute_constitutionHash"> constitutionHash:
+      <span class="contract_attribute_value" id="Party_constitutionHash_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Party_contract_attribute_organCount"> organCount:
+      <span class="contract_attribute_value" id="Party_organCount_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Party_contract_attribute_blogregistry"> blogregistry:
+      <span class="contract_attribute_value" id="Party_blogregistry_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Party_contract_attribute_parent"> parent:
+      <span class="contract_attribute_value" id="Party_parent_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Party_contract_attribute_subDivisionCount"> subDivisionCount:
+      <span class="contract_attribute_value" id="Party_subDivisionCount_value"> </span>
+    </div>
+
+<div class="Value_Mapping" id="Party_contract_attribute_managers">mapping  managers:
+		<input class="function_input" type="text" id="Party_contract_attribute_managers_input">(address)
+    	<div class="Mapping_value" id="Party_contract_attribute_address"> bool:
+      		<span class="contract_attribute_value" id="Party_managers_value"> </span>
+    	</div>
+  </div>
+<div class="Value_Mapping" id="Party_contract_attribute_organs">mapping  organs:
+		<input class="function_input" type="number" id="Party_contract_attribute_organs_input">(uint)
+    	<div class="Mapping_value" id="Party_contract_attribute_uint"> Organ:
+      		<span class="contract_attribute_value" id="Party_organs_value"> </span>
+    	</div>
+  </div>
+<div class="Value_Mapping" id="Party_contract_attribute_subDivisions">mapping  subDivisions:
+		<input class="function_input" type="number" id="Party_contract_attribute_subDivisions_input">(uint)
+    	<div class="Mapping_value" id="Party_contract_attribute_uint"> Party:
+      		<span class="contract_attribute_value" id="Party_subDivisions_value"> </span>
+    	</div>
+  </div>
+    <button class="function_btn" id="Party_updateAttributes" onclick="PartyController._updateAttributes()">update Party attributes</button>
+  </div>
+  <fieldset class="function_execution" id="Party_contract_function_Manageable_addManager_address">
+<legend>addManager</legend>
+	  <label class="function_parameter" for="Manageable_addManager_address__newManagerAddress">_newManagerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_addManager_address__newManagerAddress"
+		  placeholder="_newManagerAddress"/>
+	<button class="function_btn" id="PartyController.Manageable_addManager_address" onclick="PartyController.Manageable_addManager_address()">addManager</button>
+	<div class="function_result" id="Manageable_addManager_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Party_contract_function_Manageable_removeManager_address">
+<legend>removeManager</legend>
+	  <label class="function_parameter" for="Manageable_removeManager_address__managerAddress">_managerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_removeManager_address__managerAddress"
+		  placeholder="_managerAddress"/>
+	<button class="function_btn" id="PartyController.Manageable_removeManager_address" onclick="PartyController.Manageable_removeManager_address()">removeManager</button>
+	<div class="function_result" id="Manageable_removeManager_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Party_contract_function_Manageable_isManager_address">
+<legend>isManager</legend>
+	  <label class="function_parameter" for="Manageable_isManager_address__managerAddress">_managerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_isManager_address__managerAddress"
+		  placeholder="_managerAddress"/>
+	<button class="function_btn" id="PartyController.Manageable_isManager_address" onclick="PartyController.Manageable_isManager_address()">isManager</button>
+	<div class="function_result" id="Manageable_isManager_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Party_contract_function_Party_createOrgan_string">
+<legend>createOrgan</legend>
+	  <label class="function_parameter" for="Party_createOrgan_string_organName">organName</label>
+		<input class="function_input" type="text" 
+          id="Party_createOrgan_string_organName"
+		  placeholder="organName"/>
+	<button class="function_btn" id="PartyController.Party_createOrgan_string" onclick="PartyController.Party_createOrgan_string()">createOrgan</button>
+	<div class="function_result" id="Party_createOrgan_string_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Party_contract_function_Party_addOrgan_address">
+<legend>addOrgan</legend>
+	  <label class="function_parameter" for="Party_addOrgan_address__organ">_organ</label>
+		<input class="function_input" type="text" 
+          id="Party_addOrgan_address__organ"
+		  placeholder="_organ"/>
+	<button class="function_btn" id="PartyController.Party_addOrgan_address" onclick="PartyController.Party_addOrgan_address()">addOrgan</button>
+	<div class="function_result" id="Party_addOrgan_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Party_contract_function_Party_addSubDivision_address">
+<legend>addSubDivision</legend>
+	  <label class="function_parameter" for="Party_addSubDivision_address__subDivision">_subDivision</label>
+		<input class="function_input" type="text" 
+          id="Party_addSubDivision_address__subDivision"
+		  placeholder="_subDivision"/>
+	<button class="function_btn" id="PartyController.Party_addSubDivision_address" onclick="PartyController.Party_addSubDivision_address()">addSubDivision</button>
+	<div class="function_result" id="Party_addSubDivision_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Party_contract_function_Party_removeSubDivision_uint">
+<legend>removeSubDivision</legend>
+	  <label class="function_parameter" for="Party_removeSubDivision_uint__divisionId">_divisionId</label>
+		<input class="function_input" type="number" 
+          id="Party_removeSubDivision_uint__divisionId"
+		  placeholder="_divisionId"/>
+	<button class="function_btn" id="PartyController.Party_removeSubDivision_uint" onclick="PartyController.Party_removeSubDivision_uint()">removeSubDivision</button>
+	<div class="function_result" id="Party_removeSubDivision_uint_res"></div>
+  </fieldset>
+
+</div>
+<!-- gui for KUEKeNParty_contract -->
+<div class="contract" id="KUEKeNParty_contract">
+KUEKeNParty:
+  <input type="text" id="KUEKeNParty_address"> <button id="KUEKeNPartyController.setAddress" onclick="KUEKeNPartyController.setAddress()">change KUEKeNParty Address</button>
+  <div class="contract_attributes" id="KUEKeNParty_contract_attributes"> attributes:
+    <div class="contract_attribute" id="KUEKeNParty_contract_attribute_name"> name:
+      <span class="contract_attribute_value" id="KUEKeNParty_name_value"> </span>
+    </div>
+    <div class="contract_attribute" id="KUEKeNParty_contract_attribute_mangerCount"> mangerCount:
+      <span class="contract_attribute_value" id="KUEKeNParty_mangerCount_value"> </span>
+    </div>
+    <div class="contract_attribute" id="KUEKeNParty_contract_attribute_memberRegistry"> memberRegistry:
+      <span class="contract_attribute_value" id="KUEKeNParty_memberRegistry_value"> </span>
+    </div>
+    <div class="contract_attribute" id="KUEKeNParty_contract_attribute_constitutionHash"> constitutionHash:
+      <span class="contract_attribute_value" id="KUEKeNParty_constitutionHash_value"> </span>
+    </div>
+    <div class="contract_attribute" id="KUEKeNParty_contract_attribute_organCount"> organCount:
+      <span class="contract_attribute_value" id="KUEKeNParty_organCount_value"> </span>
+    </div>
+    <div class="contract_attribute" id="KUEKeNParty_contract_attribute_blogregistry"> blogregistry:
+      <span class="contract_attribute_value" id="KUEKeNParty_blogregistry_value"> </span>
+    </div>
+    <div class="contract_attribute" id="KUEKeNParty_contract_attribute_parent"> parent:
+      <span class="contract_attribute_value" id="KUEKeNParty_parent_value"> </span>
+    </div>
+    <div class="contract_attribute" id="KUEKeNParty_contract_attribute_subDivisionCount"> subDivisionCount:
+      <span class="contract_attribute_value" id="KUEKeNParty_subDivisionCount_value"> </span>
+    </div>
+
+<div class="Value_Mapping" id="KUEKeNParty_contract_attribute_managers">mapping  managers:
+		<input class="function_input" type="text" id="KUEKeNParty_contract_attribute_managers_input">(address)
+    	<div class="Mapping_value" id="KUEKeNParty_contract_attribute_address"> bool:
+      		<span class="contract_attribute_value" id="KUEKeNParty_managers_value"> </span>
+    	</div>
+  </div>
+<div class="Value_Mapping" id="KUEKeNParty_contract_attribute_organs">mapping  organs:
+		<input class="function_input" type="number" id="KUEKeNParty_contract_attribute_organs_input">(uint)
+    	<div class="Mapping_value" id="KUEKeNParty_contract_attribute_uint"> Organ:
+      		<span class="contract_attribute_value" id="KUEKeNParty_organs_value"> </span>
+    	</div>
+  </div>
+<div class="Value_Mapping" id="KUEKeNParty_contract_attribute_subDivisions">mapping  subDivisions:
+		<input class="function_input" type="number" id="KUEKeNParty_contract_attribute_subDivisions_input">(uint)
+    	<div class="Mapping_value" id="KUEKeNParty_contract_attribute_uint"> Party:
+      		<span class="contract_attribute_value" id="KUEKeNParty_subDivisions_value"> </span>
+    	</div>
+  </div>
+    <button class="function_btn" id="KUEKeNParty_updateAttributes" onclick="KUEKeNPartyController._updateAttributes()">update KUEKeNParty attributes</button>
+  </div>
+  <fieldset class="function_execution" id="KUEKeNParty_contract_function_Manageable_addManager_address">
+<legend>addManager</legend>
+	  <label class="function_parameter" for="Manageable_addManager_address__newManagerAddress">_newManagerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_addManager_address__newManagerAddress"
+		  placeholder="_newManagerAddress"/>
+	<button class="function_btn" id="KUEKeNPartyController.Manageable_addManager_address" onclick="KUEKeNPartyController.Manageable_addManager_address()">addManager</button>
+	<div class="function_result" id="Manageable_addManager_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="KUEKeNParty_contract_function_KUEKeNParty_boostrapParty_address_address">
+<legend>boostrapParty</legend>
+	  <label class="function_parameter" for="KUEKeNParty_boostrapParty_address_address_fc">fc</label>
+		<input class="function_input" type="text" 
+          id="KUEKeNParty_boostrapParty_address_address_fc"
+		  placeholder="fc"/>
+	  <label class="function_parameter" for="KUEKeNParty_boostrapParty_address_address_br">br</label>
+		<input class="function_input" type="text" 
+          id="KUEKeNParty_boostrapParty_address_address_br"
+		  placeholder="br"/>
+	<button class="function_btn" id="KUEKeNPartyController.KUEKeNParty_boostrapParty_address_address" onclick="KUEKeNPartyController.KUEKeNParty_boostrapParty_address_address()">boostrapParty</button>
+	<div class="function_result" id="KUEKeNParty_boostrapParty_address_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="KUEKeNParty_contract_function_Manageable_removeManager_address">
+<legend>removeManager</legend>
+	  <label class="function_parameter" for="Manageable_removeManager_address__managerAddress">_managerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_removeManager_address__managerAddress"
+		  placeholder="_managerAddress"/>
+	<button class="function_btn" id="KUEKeNPartyController.Manageable_removeManager_address" onclick="KUEKeNPartyController.Manageable_removeManager_address()">removeManager</button>
+	<div class="function_result" id="Manageable_removeManager_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="KUEKeNParty_contract_function_Manageable_isManager_address">
+<legend>isManager</legend>
+	  <label class="function_parameter" for="Manageable_isManager_address__managerAddress">_managerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_isManager_address__managerAddress"
+		  placeholder="_managerAddress"/>
+	<button class="function_btn" id="KUEKeNPartyController.Manageable_isManager_address" onclick="KUEKeNPartyController.Manageable_isManager_address()">isManager</button>
+	<div class="function_result" id="Manageable_isManager_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="KUEKeNParty_contract_function_Party_createOrgan_string">
+<legend>createOrgan</legend>
+	  <label class="function_parameter" for="Party_createOrgan_string_organName">organName</label>
+		<input class="function_input" type="text" 
+          id="Party_createOrgan_string_organName"
+		  placeholder="organName"/>
+	<button class="function_btn" id="KUEKeNPartyController.Party_createOrgan_string" onclick="KUEKeNPartyController.Party_createOrgan_string()">createOrgan</button>
+	<div class="function_result" id="Party_createOrgan_string_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="KUEKeNParty_contract_function_Party_addOrgan_address">
+<legend>addOrgan</legend>
+	  <label class="function_parameter" for="Party_addOrgan_address__organ">_organ</label>
+		<input class="function_input" type="text" 
+          id="Party_addOrgan_address__organ"
+		  placeholder="_organ"/>
+	<button class="function_btn" id="KUEKeNPartyController.Party_addOrgan_address" onclick="KUEKeNPartyController.Party_addOrgan_address()">addOrgan</button>
+	<div class="function_result" id="Party_addOrgan_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="KUEKeNParty_contract_function_Party_addSubDivision_address">
+<legend>addSubDivision</legend>
+	  <label class="function_parameter" for="Party_addSubDivision_address__subDivision">_subDivision</label>
+		<input class="function_input" type="text" 
+          id="Party_addSubDivision_address__subDivision"
+		  placeholder="_subDivision"/>
+	<button class="function_btn" id="KUEKeNPartyController.Party_addSubDivision_address" onclick="KUEKeNPartyController.Party_addSubDivision_address()">addSubDivision</button>
+	<div class="function_result" id="Party_addSubDivision_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="KUEKeNParty_contract_function_Party_removeSubDivision_uint">
+<legend>removeSubDivision</legend>
+	  <label class="function_parameter" for="Party_removeSubDivision_uint__divisionId">_divisionId</label>
+		<input class="function_input" type="number" 
+          id="Party_removeSubDivision_uint__divisionId"
+		  placeholder="_divisionId"/>
+	<button class="function_btn" id="KUEKeNPartyController.Party_removeSubDivision_uint" onclick="KUEKeNPartyController.Party_removeSubDivision_uint()">removeSubDivision</button>
+	<div class="function_result" id="Party_removeSubDivision_uint_res"></div>
+  </fieldset>
+
+</div>
+<!-- gui for Conference_contract -->
+<div class="contract" id="Conference_contract">
+Conference:
+  <input type="text" id="Conference_address"> <button id="ConferenceController.setAddress" onclick="ConferenceController.setAddress()">change Conference Address</button>
+  <div class="contract_attributes" id="Conference_contract_attributes"> attributes:
+    <div class="contract_attribute" id="Conference_contract_attribute_memberRegistry"> memberRegistry:
+      <span class="contract_attribute_value" id="Conference_memberRegistry_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Conference_contract_attribute_organName"> organName:
+      <span class="contract_attribute_value" id="Conference_organName_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Conference_contract_attribute_accreditatedMembers"> accreditatedMembers:
+      <span class="contract_attribute_value" id="Conference_accreditatedMembers_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Conference_contract_attribute_lastFunctionId"> lastFunctionId:
+      <span class="contract_attribute_value" id="Conference_lastFunctionId_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Conference_contract_attribute_mangerCount"> mangerCount:
+      <span class="contract_attribute_value" id="Conference_mangerCount_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Conference_contract_attribute_blogRegistry"> blogRegistry:
+      <span class="contract_attribute_value" id="Conference_blogRegistry_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Conference_contract_attribute_date"> date:
+      <span class="contract_attribute_value" id="Conference_date_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Conference_contract_attribute_isActive"> isActive:
+      <span class="contract_attribute_value" id="Conference_isActive_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Conference_contract_attribute_ballotCount"> ballotCount:
+      <span class="contract_attribute_value" id="Conference_ballotCount_value"> </span>
+    </div>
+
+<div class="Value_Mapping" id="Conference_contract_attribute_managers">mapping  managers:
+		<input class="function_input" type="text" id="Conference_contract_attribute_managers_input">(address)
+    	<div class="Mapping_value" id="Conference_contract_attribute_address"> bool:
+      		<span class="contract_attribute_value" id="Conference_managers_value"> </span>
+    	</div>
+  </div>
+    <button class="function_btn" id="Conference_updateAttributes" onclick="ConferenceController._updateAttributes()">update Conference attributes</button>
+  </div>
+  <fieldset class="function_execution" id="Conference_contract_function_Conference_accreditationMember_address">
+<legend>accreditationMember</legend>
+	  <label class="function_parameter" for="Conference_accreditationMember_address__address">_address</label>
+		<input class="function_input" type="text" 
+          id="Conference_accreditationMember_address__address"
+		  placeholder="_address"/>
+	<button class="function_btn" id="ConferenceController.Conference_accreditationMember_address" onclick="ConferenceController.Conference_accreditationMember_address()">accreditationMember</button>
+	<div class="function_result" id="Conference_accreditationMember_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Conference_contract_function_Organ_getOrganFunction_uint">
+<legend>getOrganFunction</legend>
+	  <label class="function_parameter" for="Organ_getOrganFunction_uint__id">_id</label>
+		<input class="function_input" type="number" 
+          id="Organ_getOrganFunction_uint__id"
+		  placeholder="_id"/>
+	<button class="function_btn" id="ConferenceController.Organ_getOrganFunction_uint" onclick="ConferenceController.Organ_getOrganFunction_uint()">getOrganFunction</button>
+	<div class="function_result" id="Organ_getOrganFunction_uint_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Conference_contract_function_Manageable_addManager_address">
+<legend>addManager</legend>
+	  <label class="function_parameter" for="Manageable_addManager_address__newManagerAddress">_newManagerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_addManager_address__newManagerAddress"
+		  placeholder="_newManagerAddress"/>
+	<button class="function_btn" id="ConferenceController.Manageable_addManager_address" onclick="ConferenceController.Manageable_addManager_address()">addManager</button>
+	<div class="function_result" id="Manageable_addManager_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Conference_contract_function_Organ_changeMember_uint_address">
+<legend>changeMember</legend>
+	  <label class="function_parameter" for="Organ_changeMember_uint_address__id">_id</label>
+		<input class="function_input" type="number" 
+          id="Organ_changeMember_uint_address__id"
+		  placeholder="_id"/>
+	  <label class="function_parameter" for="Organ_changeMember_uint_address__address">_address</label>
+		<input class="function_input" type="text" 
+          id="Organ_changeMember_uint_address__address"
+		  placeholder="_address"/>
+	<button class="function_btn" id="ConferenceController.Organ_changeMember_uint_address" onclick="ConferenceController.Organ_changeMember_uint_address()">changeMember</button>
+	<div class="function_result" id="Organ_changeMember_uint_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Conference_contract_function_Manageable_removeManager_address">
+<legend>removeManager</legend>
+	  <label class="function_parameter" for="Manageable_removeManager_address__managerAddress">_managerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_removeManager_address__managerAddress"
+		  placeholder="_managerAddress"/>
+	<button class="function_btn" id="ConferenceController.Manageable_removeManager_address" onclick="ConferenceController.Manageable_removeManager_address()">removeManager</button>
+	<div class="function_result" id="Manageable_removeManager_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Conference_contract_function_Organ_createFunction_string_string">
+<legend>createFunction</legend>
+	  <label class="function_parameter" for="Organ_createFunction_string_string__functionName">_functionName</label>
+		<input class="function_input" type="text" 
+          id="Organ_createFunction_string_string__functionName"
+		  placeholder="_functionName"/>
+	  <label class="function_parameter" for="Organ_createFunction_string_string__constittiutionHash">_constittiutionHash</label>
+		<input class="function_input" type="text" 
+          id="Organ_createFunction_string_string__constittiutionHash"
+		  placeholder="_constittiutionHash"/>
+	<button class="function_btn" id="ConferenceController.Organ_createFunction_string_string" onclick="ConferenceController.Organ_createFunction_string_string()">createFunction</button>
+	<div class="function_result" id="Organ_createFunction_string_string_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Conference_contract_function_Manageable_isManager_address">
+<legend>isManager</legend>
+	  <label class="function_parameter" for="Manageable_isManager_address__managerAddress">_managerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_isManager_address__managerAddress"
+		  placeholder="_managerAddress"/>
+	<button class="function_btn" id="ConferenceController.Manageable_isManager_address" onclick="ConferenceController.Manageable_isManager_address()">isManager</button>
+	<div class="function_result" id="Manageable_isManager_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Conference_contract_function_Organ_initalizeOrgan">
+<legend>initalizeOrgan</legend>
+	<button class="function_btn" id="ConferenceController.Organ_initalizeOrgan" onclick="ConferenceController.Organ_initalizeOrgan()">initalizeOrgan</button>
+	<div class="function_result" id="Organ_initalizeOrgan_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Conference_contract_function_Organ_publishFunctionMessage_uint_string_string_string">
+<legend>publishFunctionMessage</legend>
+	  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_id">id</label>
+		<input class="function_input" type="number" 
+          id="Organ_publishFunctionMessage_uint_string_string_string_id"
+		  placeholder="id"/>
+	  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_message">message</label>
+		<input class="function_input" type="text" 
+          id="Organ_publishFunctionMessage_uint_string_string_string_message"
+		  placeholder="message"/>
+	  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_hash">hash</label>
+		<input class="function_input" type="text" 
+          id="Organ_publishFunctionMessage_uint_string_string_string_hash"
+		  placeholder="hash"/>
+	  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_er">er</label>
+		<input class="function_input" type="text" 
+          id="Organ_publishFunctionMessage_uint_string_string_string_er"
+		  placeholder="er"/>
+	<button class="function_btn" id="ConferenceController.Organ_publishFunctionMessage_uint_string_string_string" onclick="ConferenceController.Organ_publishFunctionMessage_uint_string_string_string()">publishFunctionMessage</button>
+	<div class="function_result" id="Organ_publishFunctionMessage_uint_string_string_string_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Conference_contract_function_Organ_createBallot_string_bytes32">
+<legend>createBallot</legend>
+	  <label class="function_parameter" for="Organ_createBallot_string_bytes32_name">name</label>
+		<input class="function_input" type="text" 
+          id="Organ_createBallot_string_bytes32_name"
+		  placeholder="name"/>
+	  <label class="function_parameter" for="Organ_createBallot_string_bytes32_proposalNames">proposalNames</label>
+		<input class="function_input" type="text" 
+          id="Organ_createBallot_string_bytes32_proposalNames"
+		  placeholder="proposalNames"/>
+	<button class="function_btn" id="ConferenceController.Organ_createBallot_string_bytes32" onclick="ConferenceController.Organ_createBallot_string_bytes32()">createBallot</button>
+	<div class="function_result" id="Organ_createBallot_string_bytes32_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Conference_contract_function_Organ_getLastBallot">
+<legend>getLastBallot</legend>
+	<button class="function_btn" id="ConferenceController.Organ_getLastBallot" onclick="ConferenceController.Organ_getLastBallot()">getLastBallot</button>
+	<div class="function_result" id="Organ_getLastBallot_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Conference_contract_function_Organ_getOrganBlog">
+<legend>getOrganBlog</legend>
+	<button class="function_btn" id="ConferenceController.Organ_getOrganBlog" onclick="ConferenceController.Organ_getOrganBlog()">getOrganBlog</button>
+	<div class="function_result" id="Organ_getOrganBlog_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Conference_contract_function_Organ_addOrganFunction_address_string">
+<legend>addOrganFunction</legend>
+	  <label class="function_parameter" for="Organ_addOrganFunction_address_string__of">_of</label>
+		<input class="function_input" type="text" 
+          id="Organ_addOrganFunction_address_string__of"
+		  placeholder="_of"/>
+	  <label class="function_parameter" for="Organ_addOrganFunction_address_string__name">_name</label>
+		<input class="function_input" type="text" 
+          id="Organ_addOrganFunction_address_string__name"
+		  placeholder="_name"/>
+	<button class="function_btn" id="ConferenceController.Organ_addOrganFunction_address_string" onclick="ConferenceController.Organ_addOrganFunction_address_string()">addOrganFunction</button>
+	<div class="function_result" id="Organ_addOrganFunction_address_string_res"></div>
+  </fieldset>
+
+</div>
+<!-- gui for FoundationConference_contract -->
+<div class="contract" id="FoundationConference_contract">
+FoundationConference:
+  <input type="text" id="FoundationConference_address"> <button id="FoundationConferenceController.setAddress" onclick="FoundationConferenceController.setAddress()">change FoundationConference Address</button>
+  <div class="contract_attributes" id="FoundationConference_contract_attributes"> attributes:
+    <div class="contract_attribute" id="FoundationConference_contract_attribute_memberRegistry"> memberRegistry:
+      <span class="contract_attribute_value" id="FoundationConference_memberRegistry_value"> </span>
+    </div>
+    <div class="contract_attribute" id="FoundationConference_contract_attribute_organName"> organName:
+      <span class="contract_attribute_value" id="FoundationConference_organName_value"> </span>
+    </div>
+    <div class="contract_attribute" id="FoundationConference_contract_attribute_accreditatedMembers"> accreditatedMembers:
+      <span class="contract_attribute_value" id="FoundationConference_accreditatedMembers_value"> </span>
+    </div>
+    <div class="contract_attribute" id="FoundationConference_contract_attribute_lastFunctionId"> lastFunctionId:
+      <span class="contract_attribute_value" id="FoundationConference_lastFunctionId_value"> </span>
+    </div>
+    <div class="contract_attribute" id="FoundationConference_contract_attribute_mangerCount"> mangerCount:
+      <span class="contract_attribute_value" id="FoundationConference_mangerCount_value"> </span>
+    </div>
+    <div class="contract_attribute" id="FoundationConference_contract_attribute_blogRegistry"> blogRegistry:
+      <span class="contract_attribute_value" id="FoundationConference_blogRegistry_value"> </span>
+    </div>
+    <div class="contract_attribute" id="FoundationConference_contract_attribute_date"> date:
+      <span class="contract_attribute_value" id="FoundationConference_date_value"> </span>
+    </div>
+    <div class="contract_attribute" id="FoundationConference_contract_attribute_isActive"> isActive:
+      <span class="contract_attribute_value" id="FoundationConference_isActive_value"> </span>
+    </div>
+    <div class="contract_attribute" id="FoundationConference_contract_attribute_ballotCount"> ballotCount:
+      <span class="contract_attribute_value" id="FoundationConference_ballotCount_value"> </span>
+    </div>
+
+<div class="Value_Mapping" id="FoundationConference_contract_attribute_managers">mapping  managers:
+		<input class="function_input" type="text" id="FoundationConference_contract_attribute_managers_input">(address)
+    	<div class="Mapping_value" id="FoundationConference_contract_attribute_address"> bool:
+      		<span class="contract_attribute_value" id="FoundationConference_managers_value"> </span>
+    	</div>
+  </div>
+    <button class="function_btn" id="FoundationConference_updateAttributes" onclick="FoundationConferenceController._updateAttributes()">update FoundationConference attributes</button>
+  </div>
+  <fieldset class="function_execution" id="FoundationConference_contract_function_Conference_accreditationMember_address">
+<legend>accreditationMember</legend>
+	  <label class="function_parameter" for="Conference_accreditationMember_address__address">_address</label>
+		<input class="function_input" type="text" 
+          id="Conference_accreditationMember_address__address"
+		  placeholder="_address"/>
+	<button class="function_btn" id="FoundationConferenceController.Conference_accreditationMember_address" onclick="FoundationConferenceController.Conference_accreditationMember_address()">accreditationMember</button>
+	<div class="function_result" id="Conference_accreditationMember_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="FoundationConference_contract_function_Organ_getOrganFunction_uint">
+<legend>getOrganFunction</legend>
+	  <label class="function_parameter" for="Organ_getOrganFunction_uint__id">_id</label>
+		<input class="function_input" type="number" 
+          id="Organ_getOrganFunction_uint__id"
+		  placeholder="_id"/>
+	<button class="function_btn" id="FoundationConferenceController.Organ_getOrganFunction_uint" onclick="FoundationConferenceController.Organ_getOrganFunction_uint()">getOrganFunction</button>
+	<div class="function_result" id="Organ_getOrganFunction_uint_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="FoundationConference_contract_function_Manageable_addManager_address">
+<legend>addManager</legend>
+	  <label class="function_parameter" for="Manageable_addManager_address__newManagerAddress">_newManagerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_addManager_address__newManagerAddress"
+		  placeholder="_newManagerAddress"/>
+	<button class="function_btn" id="FoundationConferenceController.Manageable_addManager_address" onclick="FoundationConferenceController.Manageable_addManager_address()">addManager</button>
+	<div class="function_result" id="Manageable_addManager_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="FoundationConference_contract_function_Organ_changeMember_uint_address">
+<legend>changeMember</legend>
+	  <label class="function_parameter" for="Organ_changeMember_uint_address__id">_id</label>
+		<input class="function_input" type="number" 
+          id="Organ_changeMember_uint_address__id"
+		  placeholder="_id"/>
+	  <label class="function_parameter" for="Organ_changeMember_uint_address__address">_address</label>
+		<input class="function_input" type="text" 
+          id="Organ_changeMember_uint_address__address"
+		  placeholder="_address"/>
+	<button class="function_btn" id="FoundationConferenceController.Organ_changeMember_uint_address" onclick="FoundationConferenceController.Organ_changeMember_uint_address()">changeMember</button>
+	<div class="function_result" id="Organ_changeMember_uint_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="FoundationConference_contract_function_Manageable_removeManager_address">
+<legend>removeManager</legend>
+	  <label class="function_parameter" for="Manageable_removeManager_address__managerAddress">_managerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_removeManager_address__managerAddress"
+		  placeholder="_managerAddress"/>
+	<button class="function_btn" id="FoundationConferenceController.Manageable_removeManager_address" onclick="FoundationConferenceController.Manageable_removeManager_address()">removeManager</button>
+	<div class="function_result" id="Manageable_removeManager_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="FoundationConference_contract_function_Organ_createFunction_string_string">
+<legend>createFunction</legend>
+	  <label class="function_parameter" for="Organ_createFunction_string_string__functionName">_functionName</label>
+		<input class="function_input" type="text" 
+          id="Organ_createFunction_string_string__functionName"
+		  placeholder="_functionName"/>
+	  <label class="function_parameter" for="Organ_createFunction_string_string__constittiutionHash">_constittiutionHash</label>
+		<input class="function_input" type="text" 
+          id="Organ_createFunction_string_string__constittiutionHash"
+		  placeholder="_constittiutionHash"/>
+	<button class="function_btn" id="FoundationConferenceController.Organ_createFunction_string_string" onclick="FoundationConferenceController.Organ_createFunction_string_string()">createFunction</button>
+	<div class="function_result" id="Organ_createFunction_string_string_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="FoundationConference_contract_function_Manageable_isManager_address">
+<legend>isManager</legend>
+	  <label class="function_parameter" for="Manageable_isManager_address__managerAddress">_managerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_isManager_address__managerAddress"
+		  placeholder="_managerAddress"/>
+	<button class="function_btn" id="FoundationConferenceController.Manageable_isManager_address" onclick="FoundationConferenceController.Manageable_isManager_address()">isManager</button>
+	<div class="function_result" id="Manageable_isManager_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="FoundationConference_contract_function_Organ_initalizeOrgan">
+<legend>initalizeOrgan</legend>
+	<button class="function_btn" id="FoundationConferenceController.Organ_initalizeOrgan" onclick="FoundationConferenceController.Organ_initalizeOrgan()">initalizeOrgan</button>
+	<div class="function_result" id="Organ_initalizeOrgan_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="FoundationConference_contract_function_Organ_publishFunctionMessage_uint_string_string_string">
+<legend>publishFunctionMessage</legend>
+	  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_id">id</label>
+		<input class="function_input" type="number" 
+          id="Organ_publishFunctionMessage_uint_string_string_string_id"
+		  placeholder="id"/>
+	  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_message">message</label>
+		<input class="function_input" type="text" 
+          id="Organ_publishFunctionMessage_uint_string_string_string_message"
+		  placeholder="message"/>
+	  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_hash">hash</label>
+		<input class="function_input" type="text" 
+          id="Organ_publishFunctionMessage_uint_string_string_string_hash"
+		  placeholder="hash"/>
+	  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_er">er</label>
+		<input class="function_input" type="text" 
+          id="Organ_publishFunctionMessage_uint_string_string_string_er"
+		  placeholder="er"/>
+	<button class="function_btn" id="FoundationConferenceController.Organ_publishFunctionMessage_uint_string_string_string" onclick="FoundationConferenceController.Organ_publishFunctionMessage_uint_string_string_string()">publishFunctionMessage</button>
+	<div class="function_result" id="Organ_publishFunctionMessage_uint_string_string_string_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="FoundationConference_contract_function_Organ_createBallot_string_bytes32">
+<legend>createBallot</legend>
+	  <label class="function_parameter" for="Organ_createBallot_string_bytes32_name">name</label>
+		<input class="function_input" type="text" 
+          id="Organ_createBallot_string_bytes32_name"
+		  placeholder="name"/>
+	  <label class="function_parameter" for="Organ_createBallot_string_bytes32_proposalNames">proposalNames</label>
+		<input class="function_input" type="text" 
+          id="Organ_createBallot_string_bytes32_proposalNames"
+		  placeholder="proposalNames"/>
+	<button class="function_btn" id="FoundationConferenceController.Organ_createBallot_string_bytes32" onclick="FoundationConferenceController.Organ_createBallot_string_bytes32()">createBallot</button>
+	<div class="function_result" id="Organ_createBallot_string_bytes32_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="FoundationConference_contract_function_Organ_getLastBallot">
+<legend>getLastBallot</legend>
+	<button class="function_btn" id="FoundationConferenceController.Organ_getLastBallot" onclick="FoundationConferenceController.Organ_getLastBallot()">getLastBallot</button>
+	<div class="function_result" id="Organ_getLastBallot_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="FoundationConference_contract_function_Organ_getOrganBlog">
+<legend>getOrganBlog</legend>
+	<button class="function_btn" id="FoundationConferenceController.Organ_getOrganBlog" onclick="FoundationConferenceController.Organ_getOrganBlog()">getOrganBlog</button>
+	<div class="function_result" id="Organ_getOrganBlog_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="FoundationConference_contract_function_Organ_addOrganFunction_address_string">
+<legend>addOrganFunction</legend>
+	  <label class="function_parameter" for="Organ_addOrganFunction_address_string__of">_of</label>
+		<input class="function_input" type="text" 
+          id="Organ_addOrganFunction_address_string__of"
+		  placeholder="_of"/>
+	  <label class="function_parameter" for="Organ_addOrganFunction_address_string__name">_name</label>
+		<input class="function_input" type="text" 
+          id="Organ_addOrganFunction_address_string__name"
+		  placeholder="_name"/>
+	<button class="function_btn" id="FoundationConferenceController.Organ_addOrganFunction_address_string" onclick="FoundationConferenceController.Organ_addOrganFunction_address_string()">addOrganFunction</button>
+	<div class="function_result" id="Organ_addOrganFunction_address_string_res"></div>
+  </fieldset>
+
+</div>
+<!-- gui for OrganFunction_contract -->
+<div class="contract" id="OrganFunction_contract">
+OrganFunction:
+  <input type="text" id="OrganFunction_address"> <button id="OrganFunctionController.setAddress" onclick="OrganFunctionController.setAddress()">change OrganFunction Address</button>
+  <div class="contract_attributes" id="OrganFunction_contract_attributes"> attributes:
+    <div class="contract_attribute" id="OrganFunction_contract_attribute_currentMember"> currentMember:
+      <span class="contract_attribute_value" id="OrganFunction_currentMember_value"> </span>
+    </div>
+    <div class="contract_attribute" id="OrganFunction_contract_attribute_functionName"> functionName:
+      <span class="contract_attribute_value" id="OrganFunction_functionName_value"> </span>
+    </div>
+    <div class="contract_attribute" id="OrganFunction_contract_attribute_mangerCount"> mangerCount:
+      <span class="contract_attribute_value" id="OrganFunction_mangerCount_value"> </span>
+    </div>
+    <div class="contract_attribute" id="OrganFunction_contract_attribute_id"> id:
+      <span class="contract_attribute_value" id="OrganFunction_id_value"> </span>
+    </div>
+    <div class="contract_attribute" id="OrganFunction_contract_attribute_constitutionHash"> constitutionHash:
+      <span class="contract_attribute_value" id="OrganFunction_constitutionHash_value"> </span>
+    </div>
+    <div class="contract_attribute" id="OrganFunction_contract_attribute_lastMemberChanged"> lastMemberChanged:
+      <span class="contract_attribute_value" id="OrganFunction_lastMemberChanged_value"> </span>
+    </div>
+    <div class="contract_attribute" id="OrganFunction_contract_attribute_lastConstitutionHashChanged"> lastConstitutionHashChanged:
+      <span class="contract_attribute_value" id="OrganFunction_lastConstitutionHashChanged_value"> </span>
+    </div>
+    <div class="contract_attribute" id="OrganFunction_contract_attribute_publisher"> publisher:
+      <span class="contract_attribute_value" id="OrganFunction_publisher_value"> </span>
+    </div>
+
+<div class="Value_Mapping" id="OrganFunction_contract_attribute_managers">mapping  managers:
+		<input class="function_input" type="text" id="OrganFunction_contract_attribute_managers_input">(address)
+    	<div class="Mapping_value" id="OrganFunction_contract_attribute_address"> bool:
+      		<span class="contract_attribute_value" id="OrganFunction_managers_value"> </span>
+    	</div>
+  </div>
+    <button class="function_btn" id="OrganFunction_updateAttributes" onclick="OrganFunctionController._updateAttributes()">update OrganFunction attributes</button>
+  </div>
+  <fieldset class="function_execution" id="OrganFunction_contract_function_Manageable_addManager_address">
+<legend>addManager</legend>
+	  <label class="function_parameter" for="Manageable_addManager_address__newManagerAddress">_newManagerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_addManager_address__newManagerAddress"
+		  placeholder="_newManagerAddress"/>
+	<button class="function_btn" id="OrganFunctionController.Manageable_addManager_address" onclick="OrganFunctionController.Manageable_addManager_address()">addManager</button>
+	<div class="function_result" id="Manageable_addManager_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="OrganFunction_contract_function_OrganFunction_getFunctioName">
+<legend>getFunctioName</legend>
+	<button class="function_btn" id="OrganFunctionController.OrganFunction_getFunctioName" onclick="OrganFunctionController.OrganFunction_getFunctioName()">getFunctioName</button>
+	<div class="function_result" id="OrganFunction_getFunctioName_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="OrganFunction_contract_function_Manageable_removeManager_address">
+<legend>removeManager</legend>
+	  <label class="function_parameter" for="Manageable_removeManager_address__managerAddress">_managerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_removeManager_address__managerAddress"
+		  placeholder="_managerAddress"/>
+	<button class="function_btn" id="OrganFunctionController.Manageable_removeManager_address" onclick="OrganFunctionController.Manageable_removeManager_address()">removeManager</button>
+	<div class="function_result" id="Manageable_removeManager_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="OrganFunction_contract_function_Manageable_isManager_address">
+<legend>isManager</legend>
+	  <label class="function_parameter" for="Manageable_isManager_address__managerAddress">_managerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_isManager_address__managerAddress"
+		  placeholder="_managerAddress"/>
+	<button class="function_btn" id="OrganFunctionController.Manageable_isManager_address" onclick="OrganFunctionController.Manageable_isManager_address()">isManager</button>
+	<div class="function_result" id="Manageable_isManager_address_res"></div>
+  </fieldset>
+
+  <fieldset class="function_execution" id="OrganFunction_contract_function_MessagePublisher_publishMessage_string_string_string">
+<legend>publishMessage</legend>
+	  <label class="function_parameter" for="MessagePublisher_publishMessage_string_string_string_message">message</label>
+		<input class="function_input" type="text" 
+          id="MessagePublisher_publishMessage_string_string_string_message"
+		  placeholder="message"/>
+	  <label class="function_parameter" for="MessagePublisher_publishMessage_string_string_string_hash">hash</label>
+		<input class="function_input" type="text" 
+          id="MessagePublisher_publishMessage_string_string_string_hash"
+		  placeholder="hash"/>
+	  <label class="function_parameter" for="MessagePublisher_publishMessage_string_string_string_er">er</label>
+		<input class="function_input" type="text" 
+          id="MessagePublisher_publishMessage_string_string_string_er"
+		  placeholder="er"/>
+	<button class="function_btn" id="OrganFunctionController.MessagePublisher_publishMessage_string_string_string" onclick="OrganFunctionController.MessagePublisher_publishMessage_string_string_string()">publishMessage</button>
+	<div class="function_result" id="MessagePublisher_publishMessage_string_string_string_res"></div>
+  </fieldset>
+</div>
+
+<div id="eventLog" ></div>
+</body>
+</html>
+

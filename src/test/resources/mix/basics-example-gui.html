@@ -1,0 +1,205 @@
+<!doctype>
+<html>
+<head>
+
+<!-- start of style -->
+<style>
+.contract {
+	border-style: solid;
+	border-width: 1px;
+	margin-bottom: 4px;
+	} 
+.contract_attributes{
+	border-style: solid;
+	border-width: 1px;
+	} 
+.Struct_Mapping{}
+.Value_Mapping{}
+.contract_attribute{}
+.contract_attribute_value{}
+.function_execution{}
+.function_parameter{
+	float: left;
+    width: 220px;
+	padding-top: 0.3em;
+}
+.function_input{
+	display : block;
+	margin-bottom: 0.8em;
+}
+.function_btn{}
+.function_result{}
+.eventRow{
+	display: table-row;
+	width: auto;
+}
+.eventValue{	
+	float: left; /*fix for  buggy browsers*/
+	display: table-column;
+}
+
+</style>
+</head>
+<body bgcolor='#E6E6FA'>
+	<h1>Sample Interface for basics</h1>
+<!-- gui for Owned_contract -->
+<div class="contract" id="Owned_contract">
+Owned:
+  <input type="text" id="Owned_address"> <button id="OwnedController.setAddress" onclick="OwnedController.setAddress()">change Owned Address</button>
+  <div class="contract_attributes" id="Owned_contract_attributes"> attributes:
+    <div class="contract_attribute" id="Owned_contract_attribute_owner"> owner:
+      <span class="contract_attribute_value" id="Owned_owner_value"> </span>
+    </div>
+
+    <button class="function_btn" id="Owned_updateAttributes" onclick="OwnedController._updateAttributes()">update Owned attributes</button>
+  </div>
+  <fieldset class="function_execution" id="Owned_contract_function_Owned_getOwner">
+<legend>getOwner</legend>
+	<button class="function_btn" id="OwnedController.Owned_getOwner" onclick="OwnedController.Owned_getOwner()">getOwner</button>
+	<div class="function_result" id="Owned_getOwner_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Owned_contract_function_Owned_changeOwner_address">
+<legend>changeOwner</legend>
+	  <label class="function_parameter" for="Owned_changeOwner_address_newOwner">newOwner</label>
+		<input class="function_input" type="text" 
+          id="Owned_changeOwner_address_newOwner"
+		  placeholder="newOwner"/>
+	<button class="function_btn" id="OwnedController.Owned_changeOwner_address" onclick="OwnedController.Owned_changeOwner_address()">changeOwner</button>
+	<div class="function_result" id="Owned_changeOwner_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Owned_contract_function_Owned_kill">
+<legend>kill</legend>
+	<button class="function_btn" id="OwnedController.Owned_kill" onclick="OwnedController.Owned_kill()">kill</button>
+	<div class="function_result" id="Owned_kill_res"></div>
+  </fieldset>
+
+</div>
+<!-- gui for Manageable_contract -->
+<div class="contract" id="Manageable_contract">
+Manageable:
+  <input type="text" id="Manageable_address"> <button id="ManageableController.setAddress" onclick="ManageableController.setAddress()">change Manageable Address</button>
+  <div class="contract_attributes" id="Manageable_contract_attributes"> attributes:
+    <div class="contract_attribute" id="Manageable_contract_attribute_mangerCount"> mangerCount:
+      <span class="contract_attribute_value" id="Manageable_mangerCount_value"> </span>
+    </div>
+
+<div class="Value_Mapping" id="Manageable_contract_attribute_managers">mapping  managers:
+		<input class="function_input" type="text" id="Manageable_contract_attribute_managers_input">(address)
+    	<div class="Mapping_value" id="Manageable_contract_attribute_address"> bool:
+      		<span class="contract_attribute_value" id="Manageable_managers_value"> </span>
+    	</div>
+  </div>
+    <button class="function_btn" id="Manageable_updateAttributes" onclick="ManageableController._updateAttributes()">update Manageable attributes</button>
+  </div>
+  <fieldset class="function_execution" id="Manageable_contract_function_Manageable_addManager_address">
+<legend>addManager</legend>
+	  <label class="function_parameter" for="Manageable_addManager_address__newManagerAddress">_newManagerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_addManager_address__newManagerAddress"
+		  placeholder="_newManagerAddress"/>
+	<button class="function_btn" id="ManageableController.Manageable_addManager_address" onclick="ManageableController.Manageable_addManager_address()">addManager</button>
+	<div class="function_result" id="Manageable_addManager_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Manageable_contract_function_Manageable_removeManager_address">
+<legend>removeManager</legend>
+	  <label class="function_parameter" for="Manageable_removeManager_address__managerAddress">_managerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_removeManager_address__managerAddress"
+		  placeholder="_managerAddress"/>
+	<button class="function_btn" id="ManageableController.Manageable_removeManager_address" onclick="ManageableController.Manageable_removeManager_address()">removeManager</button>
+	<div class="function_result" id="Manageable_removeManager_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Manageable_contract_function_Manageable_isManager_address">
+<legend>isManager</legend>
+	  <label class="function_parameter" for="Manageable_isManager_address__managerAddress">_managerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_isManager_address__managerAddress"
+		  placeholder="_managerAddress"/>
+	<button class="function_btn" id="ManageableController.Manageable_isManager_address" onclick="ManageableController.Manageable_isManager_address()">isManager</button>
+	<div class="function_result" id="Manageable_isManager_address_res"></div>
+  </fieldset>
+
+</div>
+<!-- gui for Multiowned_contract -->
+<div class="contract" id="Multiowned_contract">
+Multiowned:
+  <input type="text" id="Multiowned_address"> <button id="MultiownedController.setAddress" onclick="MultiownedController.setAddress()">change Multiowned Address</button>
+  <div class="contract_attributes" id="Multiowned_contract_attributes"> attributes:
+    <div class="contract_attribute" id="Multiowned_contract_attribute_m_required"> m_required:
+      <span class="contract_attribute_value" id="Multiowned_m_required_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Multiowned_contract_attribute_m_numOwners"> m_numOwners:
+      <span class="contract_attribute_value" id="Multiowned_m_numOwners_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Multiowned_contract_attribute_m_owners"> m_owners:
+      <span class="contract_attribute_value" id="Multiowned_m_owners_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Multiowned_contract_attribute_c_maxOwners"> c_maxOwners:
+      <span class="contract_attribute_value" id="Multiowned_c_maxOwners_value"> </span>
+    </div>
+    <div class="contract_attribute" id="Multiowned_contract_attribute_m_pendingIndex"> m_pendingIndex:
+      <span class="contract_attribute_value" id="Multiowned_m_pendingIndex_value"> </span>
+    </div>
+
+<div class="Value_Mapping" id="Multiowned_contract_attribute_m_ownerIndex">mapping  m_ownerIndex:
+		<input class="function_input" type="number" id="Multiowned_contract_attribute_m_ownerIndex_input">(uint)
+    	<div class="Mapping_value" id="Multiowned_contract_attribute_uint"> uint:
+      		<span class="contract_attribute_value" id="Multiowned_m_ownerIndex_value"> </span>
+    	</div>
+  </div>
+<div class="Struct_Mapping" id="Struc_Multiowned_contract_attribute_m_pending">struc mapping  m_pending:
+		<input class="function_input" type="text" id="Multiowned_contract_attribute_m_pending_input">(bytes32)
+    	<div class="Struct_attribute" id="Multiowned_contract_attribute_m_pending_yetNeeded"> yetNeeded:
+      		<span class="Struct_attribute_value" id="Multiowned_m_pending_yetNeeded_value"> </span>
+    	</div>
+    	<div class="Struct_attribute" id="Multiowned_contract_attribute_m_pending_ownersDone"> ownersDone:
+      		<span class="Struct_attribute_value" id="Multiowned_m_pending_ownersDone_value"> </span>
+    	</div>
+    	<div class="Struct_attribute" id="Multiowned_contract_attribute_m_pending_index"> index:
+      		<span class="Struct_attribute_value" id="Multiowned_m_pending_index_value"> </span>
+    	</div>
+  </div>
+    <button class="function_btn" id="Multiowned_updateAttributes" onclick="MultiownedController._updateAttributes()">update Multiowned attributes</button>
+  </div>
+  <fieldset class="function_execution" id="Multiowned_contract_function_Multiowned_Multiowned_address_uint">
+<legend>Multiowned</legend>
+	  <label class="function_parameter" for="Multiowned_Multiowned_address_uint__owners">_owners</label>
+		<input class="function_input" type="text" 
+          id="Multiowned_Multiowned_address_uint__owners"
+		  placeholder="_owners"/>
+	  <label class="function_parameter" for="Multiowned_Multiowned_address_uint__required">_required</label>
+		<input class="function_input" type="number" 
+          id="Multiowned_Multiowned_address_uint__required"
+		  placeholder="_required"/>
+	<button class="function_btn" id="MultiownedController.Multiowned_Multiowned_address_uint" onclick="MultiownedController.Multiowned_Multiowned_address_uint()">Multiowned</button>
+	<div class="function_result" id="Multiowned_Multiowned_address_uint_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Multiowned_contract_function_Multiowned_isOwner_address">
+<legend>isOwner</legend>
+	  <label class="function_parameter" for="Multiowned_isOwner_address__addr">_addr</label>
+		<input class="function_input" type="text" 
+          id="Multiowned_isOwner_address__addr"
+		  placeholder="_addr"/>
+	<button class="function_btn" id="MultiownedController.Multiowned_isOwner_address" onclick="MultiownedController.Multiowned_isOwner_address()">isOwner</button>
+	<div class="function_result" id="Multiowned_isOwner_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="Multiowned_contract_function_Multiowned_hasConfirmed_bytes32_address">
+<legend>hasConfirmed</legend>
+	  <label class="function_parameter" for="Multiowned_hasConfirmed_bytes32_address__operation">_operation</label>
+		<input class="function_input" type="text" 
+          id="Multiowned_hasConfirmed_bytes32_address__operation"
+		  placeholder="_operation"/>
+	  <label class="function_parameter" for="Multiowned_hasConfirmed_bytes32_address__owner">_owner</label>
+		<input class="function_input" type="text" 
+          id="Multiowned_hasConfirmed_bytes32_address__owner"
+		  placeholder="_owner"/>
+	<button class="function_btn" id="MultiownedController.Multiowned_hasConfirmed_bytes32_address" onclick="MultiownedController.Multiowned_hasConfirmed_bytes32_address()">hasConfirmed</button>
+	<div class="function_result" id="Multiowned_hasConfirmed_bytes32_address_res"></div>
+  </fieldset>
+
+</div>
+
+<div id="eventLog" ></div>
+</body>
+</html>
+

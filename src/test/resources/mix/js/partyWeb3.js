@@ -144,13 +144,21 @@ var OrganContract = web3.eth.contract([
 ]);   
 // contractVariable for Party
 var PartyContract = web3.eth.contract([
+{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"memberRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"constitutionHash","outputs":[{"name":"","type":"string"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"organCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"blogregistry","outputs":[{"name":"","type":"address"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"parent","outputs":[{"name":"","type":"address"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"subDivisionCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
 {"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "organs","outputs": [
+{ "name": "", "type": "address"}
+],"type": "function"	},
+{"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "subDivisions","outputs": [
 { "name": "", "type": "address"}
 ],"type": "function"	},
 { "constant": false,
@@ -163,19 +171,29 @@ var PartyContract = web3.eth.contract([
     "name": "removeManager",
     "outputs": [],
     "type": "function" }
-,{ "constant": false,
-    "inputs": [{"name": "organName","type": "string"}],    
-    "name": "createOrgan",
-    "outputs": [],
-    "type": "function" }
 ,{ "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
     "type": "function" }
 ,{ "constant": false,
+    "inputs": [{"name": "organName","type": "string"}],    
+    "name": "createOrgan",
+    "outputs": [],
+    "type": "function" }
+,{ "constant": false,
     "inputs": [{"name": "_organ","type": "address"}],    
     "name": "addOrgan",
+    "outputs": [],
+    "type": "function" }
+,{ "constant": false,
+    "inputs": [{"name": "_subDivision","type": "address"}],    
+    "name": "addSubDivision",
+    "outputs": [],
+    "type": "function" }
+,{ "constant": false,
+    "inputs": [{"name": "_divisionId","type": "uint256"}],    
+    "name": "removeSubDivision",
     "outputs": [],
     "type": "function" }
 ,
@@ -196,6 +214,21 @@ var PartyContract = web3.eth.contract([
          "type": "uint256"}
 	],    
     "name": "OrganChanged",
+    "type": "event"  }
+,  { "anonymous": false,
+    "inputs": 
+	[
+		{"indexed": false,
+		 "name": "divisionAddress",
+         "type": "address"}
+,		{"indexed": false,
+		 "name": "changer",
+         "type": "address"}
+,		{"indexed": false,
+		 "name": "state",
+         "type": "uint256"}
+	],    
+    "name": "DivisionChanged",
     "type": "event"  }
   ,{
     "constant": true,
@@ -223,21 +256,24 @@ var PartyContract = web3.eth.contract([
 ]);   
 // contractVariable for KUEKeNParty
 var KUEKeNPartyContract = web3.eth.contract([
+{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"memberRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"constitutionHash","outputs":[{"name":"","type":"string"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"organCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"blogregistry","outputs":[{"name":"","type":"address"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"parent","outputs":[{"name":"","type":"address"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"subDivisionCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
 {"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "organs","outputs": [
 { "name": "", "type": "address"}
 ],"type": "function"	},
+{"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "subDivisions","outputs": [
+{ "name": "", "type": "address"}
+],"type": "function"	},
 { "constant": false,
-    "inputs": [],    
-    "name": "KUEKeNParty",
-    "outputs": [],
-    "type": "function" }
-,{ "constant": false,
     "inputs": [{"name": "_newManagerAddress","type": "address"}],    
     "name": "addManager",
     "outputs": [],
@@ -252,19 +288,29 @@ var KUEKeNPartyContract = web3.eth.contract([
     "name": "removeManager",
     "outputs": [],
     "type": "function" }
-,{ "constant": false,
-    "inputs": [{"name": "organName","type": "string"}],    
-    "name": "createOrgan",
-    "outputs": [],
-    "type": "function" }
 ,{ "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
     "type": "function" }
 ,{ "constant": false,
+    "inputs": [{"name": "organName","type": "string"}],    
+    "name": "createOrgan",
+    "outputs": [],
+    "type": "function" }
+,{ "constant": false,
     "inputs": [{"name": "_organ","type": "address"}],    
     "name": "addOrgan",
+    "outputs": [],
+    "type": "function" }
+,{ "constant": false,
+    "inputs": [{"name": "_subDivision","type": "address"}],    
+    "name": "addSubDivision",
+    "outputs": [],
+    "type": "function" }
+,{ "constant": false,
+    "inputs": [{"name": "_divisionId","type": "uint256"}],    
+    "name": "removeSubDivision",
     "outputs": [],
     "type": "function" }
 

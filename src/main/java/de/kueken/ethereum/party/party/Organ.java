@@ -1,5 +1,7 @@
 package de.kueken.ethereum.party.party;
 
+import java.util.concurrent.CompletableFuture;
+import org.adridadou.ethereum.values.EthAddress;
 import de.kueken.ethereum.party.basics.*;
 import de.kueken.ethereum.party.members.*;
 import de.kueken.ethereum.party.publishing.*;
@@ -75,6 +77,6 @@ public interface Organ extends Manageable,MemberAware{
 	
 	String getOrganFunction(Integer _id);
 	//Start of user code additional_methods
-
+	void setBlogRegistry (String aBlogRegistry);
 	//End of user code
 }

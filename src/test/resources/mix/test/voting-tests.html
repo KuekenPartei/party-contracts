@@ -18,7 +18,16 @@
 .contract_attribute{}
 .contract_attribute_value{}
 .function_execution{}
-.function_parameter{}
+.function_parameter{
+	float: left;
+    width: 220px;
+	padding-top: 0.3em;
+}
+.function_input{
+	display : block;
+	margin-bottom: 0.8em;
+}
+.function_btn{}
 .function_result{}
 .eventRow{
 	display: table-row;
@@ -80,6 +89,39 @@ if(contracts['Ballot'] !=undefined){
 	var instance = new TestBallot(contract);
 	instance.prefix = 'all';
 
+
+
+//console.log(instance+'-->');
+	instance.allTests();
+}// execute all BasicBallot tests if set 
+if(contracts['BasicBallot'] !=undefined){
+	var contract = contracts['BasicBallot'].contract;
+	var instance = new TestBasicBallot(contract);
+	instance.prefix = 'all';
+
+
+
+//console.log(instance+'-->');
+	instance.allTests();
+}// execute all PublicBallot tests if set 
+if(contracts['PublicBallot'] !=undefined){
+	var contract = contracts['PublicBallot'].contract;
+	var instance = new TestPublicBallot(contract);
+	instance.prefix = 'all';
+
+var event_VotedCasted = contract.VotedCasted({},{fromBlock: 0});
+event_VotedCasted.watch(function(error,result){
+	if(!error){
+		var e = document.getElementById('eventLog');
+		var elemDiv = document.createElement('div');
+		elemDiv.id= result.blockNumber +'event';
+		e.appendChild(elemDiv);
+		//console.log(result.address+ 'eventLog'+result.blockHash+' '+result.blockNumber+' '+result.args.name+' '+result.args.succesful+' ');
+		elemDiv.innerHTML = '<div class="eventRow">'
++ '</div>';
+		}else
+		console.log(error);
+	});
 
 
 //console.log(instance+'-->');

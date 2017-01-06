@@ -1,36 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="de.urszeidler.eclipse.solidity.laucher.core.launch.uml2solidity">
-<booleanAttribute key="COMPILER_ABI" value="true"/>
+<booleanAttribute key="COMBINED_JSON" value="false"/>
+<stringAttribute key="COMBINED_JSON_OPTIONS" value="abi,bin"/>
+<booleanAttribute key="COMPILER_ABI" value="false"/>
 <booleanAttribute key="COMPILER_ASM" value="false"/>
 <booleanAttribute key="COMPILER_ASM_JSON" value="false"/>
 <booleanAttribute key="COMPILER_AST" value="false"/>
 <booleanAttribute key="COMPILER_AST_JSON" value="false"/>
-<booleanAttribute key="COMPILER_BIN" value="true"/>
-<booleanAttribute key="COMPILER_BIN_RUNTIME" value="true"/>
+<booleanAttribute key="COMPILER_BIN" value="false"/>
+<booleanAttribute key="COMPILER_BIN_RUNTIME" value="false"/>
 <booleanAttribute key="COMPILER_DEVDOC" value="false"/>
 <booleanAttribute key="COMPILER_FORMAL" value="false"/>
 <booleanAttribute key="COMPILER_HASHES" value="false"/>
 <booleanAttribute key="COMPILER_INTERFACT" value="false"/>
 <booleanAttribute key="COMPILER_OPCODE" value="false"/>
 <booleanAttribute key="COMPILER_OPTIMIZE" value="false"/>
-<stringAttribute key="COMPILER_PROGRAMM" value="/home/urs/etc/custombuilding/solidity/build/solc/solc"/>
-<stringAttribute key="COMPILER_TARGET" value="/party-contracts/bin"/>
+<stringAttribute key="COMPILER_PROGRAMM" value="/usr/bin/solc"/>
+<stringAttribute key="COMPILER_TARGET" value="/party-contracts/src/main/resources"/>
 <booleanAttribute key="COMPILER_USERDOC" value="false"/>
-<booleanAttribute key="COMPILE_CONTRACTS" value="true"/>
+<booleanAttribute key="COMPILE_CONTRACTS" value="false"/>
 <stringAttribute key="CONTRACT_FILE_HEADER" value="/*&#10;*&#10;*(c) 2016 KUEKeN&#10;* Urs Zeidler&#10;*&#10;*/"/>
 <booleanAttribute key="GENERATE_ABI" value="false"/>
 <stringAttribute key="GENERATE_ABI_TARGET" value="/party-contracts/mix/abi"/>
 <booleanAttribute key="GENERATE_CONTRACT_FILES" value="true"/>
-<booleanAttribute key="GENERATE_HTML" value="true"/>
-<booleanAttribute key="GENERATE_JAVA_INTERFACE" value="true"/>
-<booleanAttribute key="GENERATE_JAVA_TESTS" value="true"/>
-<booleanAttribute key="GENERATE_JS_CONTROLLER" value="true"/>
+<booleanAttribute key="GENERATE_HTML" value="false"/>
+<booleanAttribute key="GENERATE_JAVA_INTERFACE" value="false"/>
+<booleanAttribute key="GENERATE_JAVA_NONBLOCKING" value="false"/>
+<booleanAttribute key="GENERATE_JAVA_TESTS" value="false"/>
+<booleanAttribute key="GENERATE_JS_CONTROLLER" value="false"/>
 <stringAttribute key="GENERATE_JS_CONTROLLER_TARGET" value="/party-contracts/src/test/resources/mix/js"/>
-<booleanAttribute key="GENERATE_JS_TEST_CONTROLLER" value="true"/>
+<booleanAttribute key="GENERATE_JS_TEST_CONTROLLER" value="false"/>
 <stringAttribute key="GENERATE_JS_TEST_TARGET" value="/party-contracts/src/test/resources/mix/test"/>
-<booleanAttribute key="GENERATE_MARKDOWN" value="true"/>
+<booleanAttribute key="GENERATE_MARKDOWN" value="false"/>
 <booleanAttribute key="GENERATE_MIX" value="false"/>
-<booleanAttribute key="GENERATE_WEB3" value="true"/>
+<booleanAttribute key="GENERATE_WEB3" value="false"/>
 <stringAttribute key="GENERATION_JAVA_2_SOLIDITY_TYPE_address" value="String"/>
 <stringAttribute key="GENERATION_JAVA_2_SOLIDITY_TYPE_bool" value="Boolean"/>
 <stringAttribute key="GENERATION_JAVA_2_SOLIDITY_TYPE_byte" value="Byte"/>
@@ -45,7 +48,7 @@
 <stringAttribute key="GENERATION_TARGET" value="/party-contracts/src/test/resources/mix"/>
 <stringAttribute key="GENERATION_TARGET_DOC" value="/party-contracts/doc"/>
 <stringAttribute key="JS_FILE_HEADER" value="// file header"/>
-<booleanAttribute key="enable_version" value="false"/>
+<booleanAttribute key="enable_version" value="true"/>
 <stringAttribute key="modelUri" value="/party-contracts/model/party-dao.uml"/>
 <stringAttribute key="version_pragma" value="pragma solidity ^0.4.0;"/>
 </launchConfiguration>

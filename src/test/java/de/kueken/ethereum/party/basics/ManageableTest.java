@@ -1,26 +1,34 @@
 package de.kueken.ethereum.party.basics;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+
+
+import de.kueken.ethereum.party.basics.Manageable.*;
+
 
 import java.io.File;
-import java.util.concurrent.CompletableFuture;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.stream.*;
+import java.math.*;
 
 import org.adridadou.ethereum.EthereumFacade;
-import org.adridadou.ethereum.provider.EthereumFacadeProvider;
+import org.adridadou.ethereum.keystore.*;
 import org.adridadou.ethereum.provider.MainEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.MordenEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.RpcEthereumFacadeProvider;
+import org.adridadou.ethereum.provider.RopstenEthereumFacadeProvider;
+import org.adridadou.ethereum.provider.GenericRpcEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.StandaloneEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.TestnetEthereumFacadeProvider;
 import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
 import org.adridadou.ethereum.values.SoliditySource;
+import org.adridadou.ethereum.values.config.ChainId;
 import org.ethereum.crypto.ECKey;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import de.kueken.ethereum.party.EthereumInstance;
 
 /**
  * Test for the Manageable contract.
@@ -34,7 +42,7 @@ public class ManageableTest{
 	private EthAddress fixtureAddress;
 	private SoliditySource contractSource;
 	// Start of user code ManageableTest.attributes
-	//TODO: implement
+	private String senderAddressS = "5db10750e8caff27f906b41c71b3471057dd2004";
 	// End of user code
 
 	/**
@@ -43,26 +51,8 @@ public class ManageableTest{
 	 */
 	@BeforeClass
 	public static void setup() {
-		ECKey key = new ECKey();
-		sender = new EthAccount(key);
-		String property = System.getProperty("EthereumFacadeProvider");
-		EthereumFacadeProvider efp = new StandaloneEthereumFacadeProvider();
-		if(property!=null){
-			if (property.equalsIgnoreCase("main")) {
-				efp = new MainEthereumFacadeProvider();
-			}else if (property.equalsIgnoreCase("test")) {
-				efp = new TestnetEthereumFacadeProvider();
-			}else if (property.equalsIgnoreCase("morden")) {
-				efp = new MordenEthereumFacadeProvider();
-			}else if (property.equalsIgnoreCase("rcp")) {
-				RpcEthereumFacadeProvider rcp = new RpcEthereumFacadeProvider();
-				String url = System.getProperty("rcp-url");
-				ethereum = rcp.create(url);
-				return;//as this currently breaks the hierarchy
-			}
-		}
-		
-		ethereum = efp.create();//new EthereumFacade(bcProxy);
+		ethereum = EthereumInstance.getInstance().getEthereum();
+
 	}
 
 	/**
@@ -75,6 +65,8 @@ public class ManageableTest{
 
         File contractSrc = new File(this.getClass().getResource("/mix/basics.sol").toURI());
         contractSource = SoliditySource.from(contractSrc);
+//        File contractSrc = new File(this.getClass().getResource("/contracts.json").toURI());
+//        contractSource = SoliditySource.fromRawJson(contractSrc);
         createFixture();
 		//End of user code
 	}
@@ -98,6 +90,7 @@ public class ManageableTest{
 
 	protected void setFixture(Manageable f) {
 		this.fixture = f;
+		
 	}
 
 
@@ -116,7 +109,7 @@ public class ManageableTest{
                 .createContractProxy(contractSource, "Manageable", address.get(), sender, Manageable.class);
 
 		assertEquals(1, fixture.mangerCount().intValue());
-		//assertTrue(fixture.isManager( EthAddress.of(sender.getAddress()).toString()));
+		assertTrue(fixture.isManager(senderAddressS));
 		//End of user code
 	}
 
@@ -129,9 +122,10 @@ public class ManageableTest{
 	@Test
 	public void testAddManager_address() throws Exception {
 		//Start of user code testAddManager_address
+		createFixture();
 		assertEquals(1,fixture.mangerCount().intValue());
 		
-		EthAddress ethAddress = EthAddress.of("000000000000000001");
+		EthAddress ethAddress = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L))).getAddress();
 		fixture.addManager(ethAddress.toString());
 		assertEquals(2,fixture.mangerCount().intValue());
 		
@@ -146,7 +140,8 @@ public class ManageableTest{
 	@Test
 	public void testRemoveManager_address() throws Exception {
 		//Start of user code testRemoveManager_address
-		EthAddress ethAddress = EthAddress.of("000000000000000001");
+//		createFixture();
+		EthAddress ethAddress = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L))).getAddress();
 		fixture.addManager(ethAddress.toString());
 		
 		assertTrue(fixture.isManager(ethAddress.toString()));
@@ -165,7 +160,8 @@ public class ManageableTest{
 	@Test
 	public void testIsManager_address() throws Exception {
 		//Start of user code testIsManager_address
-		EthAddress ethAddress = EthAddress.of("000000000000000001");
+//		createFixture();
+		EthAddress ethAddress = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L))).getAddress();
 		fixture.addManager(ethAddress.toString());
 		
 		assertTrue(fixture.isManager(ethAddress.toString()));

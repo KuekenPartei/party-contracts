@@ -214,27 +214,30 @@ function OwnedGuiFactory() {
 +		'		  <input type="text" id="'+this.prefix+'Owned_address"> <button id="'+this.prefix+'OwnedController.setAddress" onclick="'+this.prefix+'OwnedController.setAddress()">change Owned Address</button>'
 +		'		  <div class="contract_attributes" id="'+this.prefix+'Owned_contract_attributes"> attributes:'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Owned_contract_attribute_owner"> owner:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Owned_owner_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Owned_owner_value"> </span>'
 +		'		    </div>'
 +		'		'
-+		'		    <button id="'+this.prefix+'Owned_updateAttributes" onclick="'+this.prefix+'OwnedController._updateAttributes()">update Owned attributes</button>'
++		'		    <button class="function_btn" id="'+this.prefix+'Owned_updateAttributes" onclick="'+this.prefix+'OwnedController._updateAttributes()">update Owned attributes</button>'
 +		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Owned_contract_function_Owned_getOwner">'
-+		'		Owned_getOwner:'
-+		'			<button id="'+this.prefix+'OwnedController.Owned_getOwner" onclick="'+this.prefix+'OwnedController.Owned_getOwner()">execute Owned_getOwner</button>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Owned_contract_function_Owned_getOwner">'
++		'		<legend>getOwner</legend>'
++		'			<button class="function_btn" id="'+this.prefix+'OwnedController.Owned_getOwner" onclick="'+this.prefix+'OwnedController.Owned_getOwner()">getOwner</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Owned_getOwner_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Owned_contract_function_Owned_changeOwner_address">'
-+		'		Owned_changeOwner:'
-+		'			  <div class="function_parameter">newOwner<input type="text" id="'+this.prefix+'Owned_changeOwner_address_newOwner"></div>'
-+		'			<button id="'+this.prefix+'OwnedController.Owned_changeOwner_address" onclick="'+this.prefix+'OwnedController.Owned_changeOwner_address()">execute Owned_changeOwner</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Owned_contract_function_Owned_changeOwner_address">'
++		'		<legend>changeOwner</legend>'
++		'			  <label class="function_parameter" for="Owned_changeOwner_address_newOwner">newOwner</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Owned_changeOwner_address_newOwner"'
++		'				  placeholder="newOwner"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OwnedController.Owned_changeOwner_address" onclick="'+this.prefix+'OwnedController.Owned_changeOwner_address()">changeOwner</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Owned_changeOwner_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Owned_contract_function_Owned_kill">'
-+		'		Owned_kill:'
-+		'			<button id="'+this.prefix+'OwnedController.Owned_kill" onclick="'+this.prefix+'OwnedController.Owned_kill()">execute Owned_kill</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Owned_contract_function_Owned_kill">'
++		'		<legend>kill</legend>'
++		'			<button class="function_btn" id="'+this.prefix+'OwnedController.Owned_kill" onclick="'+this.prefix+'OwnedController.Owned_kill()">kill</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Owned_kill_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 +		'		'
 +		'		</div>'
 ;
@@ -245,21 +248,32 @@ function OwnedGuiFactory() {
 	*/
 	this.createAttributesGui=function() {
 		return 		'    <div class="contract_attribute" id="'+this.prefix+'Owned_contract_attribute_owner"> owner:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Owned_owner_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Owned_owner_value"> </span>'
 +		'		    </div>'
 +		'		'
 ;
 	}
 
 	/**
+	* Create the gui.
+	*/
+	this.createPlainGui=function(){
+		return this.createAttributesGui()
+				+ this.createOwned_getOwnerGui
+				+ this.createOwned_changeOwner_addressGui
+				+ this.createOwned_killGui
+				;
+	}
+
+	/**
 	* Create the gui for the function getOwner.
 	*/
 	this.createOwned_getOwnerGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Owned_contract_function_Owned_getOwner">'
-+		'		Owned_getOwner:'
-+		'			<button id="'+this.prefix+'OwnedController.Owned_getOwner" onclick="'+this.prefix+'OwnedController.Owned_getOwner()">execute Owned_getOwner</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Owned_contract_function_Owned_getOwner">'
++		'		<legend>getOwner</legend>'
++		'			<button class="function_btn" id="'+this.prefix+'OwnedController.Owned_getOwner" onclick="'+this.prefix+'OwnedController.Owned_getOwner()">getOwner</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Owned_getOwner_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -267,12 +281,15 @@ function OwnedGuiFactory() {
 	* Create the gui for the function changeOwner.
 	*/
 	this.createOwned_changeOwner_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Owned_contract_function_Owned_changeOwner_address">'
-+		'		Owned_changeOwner:'
-+		'			  <div class="function_parameter">newOwner<input type="text" id="'+this.prefix+'Owned_changeOwner_address_newOwner"></div>'
-+		'			<button id="'+this.prefix+'OwnedController.Owned_changeOwner_address" onclick="'+this.prefix+'OwnedController.Owned_changeOwner_address()">execute Owned_changeOwner</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Owned_contract_function_Owned_changeOwner_address">'
++		'		<legend>changeOwner</legend>'
++		'			  <label class="function_parameter" for="Owned_changeOwner_address_newOwner">newOwner</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Owned_changeOwner_address_newOwner"'
++		'				  placeholder="newOwner"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OwnedController.Owned_changeOwner_address" onclick="'+this.prefix+'OwnedController.Owned_changeOwner_address()">changeOwner</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Owned_changeOwner_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -280,11 +297,11 @@ function OwnedGuiFactory() {
 	* Create the gui for the function kill.
 	*/
 	this.createOwned_killGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Owned_contract_function_Owned_kill">'
-+		'		Owned_kill:'
-+		'			<button id="'+this.prefix+'OwnedController.Owned_kill" onclick="'+this.prefix+'OwnedController.Owned_kill()">execute Owned_kill</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Owned_contract_function_Owned_kill">'
++		'		<legend>kill</legend>'
++		'			<button class="function_btn" id="'+this.prefix+'OwnedController.Owned_kill" onclick="'+this.prefix+'OwnedController.Owned_kill()">kill</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Owned_kill_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -687,35 +704,44 @@ function ManageableGuiFactory() {
 +		'		  <input type="text" id="'+this.prefix+'Manageable_address"> <button id="'+this.prefix+'ManageableController.setAddress" onclick="'+this.prefix+'ManageableController.setAddress()">change Manageable Address</button>'
 +		'		  <div class="contract_attributes" id="'+this.prefix+'Manageable_contract_attributes"> attributes:'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Manageable_contract_attribute_mangerCount"> mangerCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Manageable_mangerCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Manageable_mangerCount_value"> </span>'
 +		'		    </div>'
 +		'		'
 +		'		<div class="Value_Mapping" id="'+this.prefix+'Manageable_contract_attribute_managers">mapping  managers:'
-+		'				<input type="text" id="'+this.prefix+'Manageable_contract_attribute_managers_input">(address)'
++		'				<input class="function_input" type="text" id="'+this.prefix+'Manageable_contract_attribute_managers_input">(address)'
 +		'		    	<div class="Mapping_value" id="'+this.prefix+'Manageable_contract_attribute_address"> bool:'
-+		'		      		<div class="contract_attribute_value" id="'+this.prefix+'Manageable_managers_value"> </div>'
++		'		      		<span class="contract_attribute_value" id="'+this.prefix+'Manageable_managers_value"> </span>'
 +		'		    	</div>'
 +		'		  </div>'
-+		'		    <button id="'+this.prefix+'Manageable_updateAttributes" onclick="'+this.prefix+'ManageableController._updateAttributes()">update Manageable attributes</button>'
++		'		    <button class="function_btn" id="'+this.prefix+'Manageable_updateAttributes" onclick="'+this.prefix+'ManageableController._updateAttributes()">update Manageable attributes</button>'
 +		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Manageable_contract_function_Manageable_addManager_address">'
-+		'		Manageable_addManager:'
-+		'			  <div class="function_parameter">_newManagerAddress<input type="text" id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"></div>'
-+		'			<button id="'+this.prefix+'ManageableController.Manageable_addManager_address" onclick="'+this.prefix+'ManageableController.Manageable_addManager_address()">execute Manageable_addManager</button>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Manageable_contract_function_Manageable_addManager_address">'
++		'		<legend>addManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_addManager_address__newManagerAddress">_newManagerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"'
++		'				  placeholder="_newManagerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'ManageableController.Manageable_addManager_address" onclick="'+this.prefix+'ManageableController.Manageable_addManager_address()">addManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_addManager_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Manageable_contract_function_Manageable_removeManager_address">'
-+		'		Manageable_removeManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_removeManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'ManageableController.Manageable_removeManager_address" onclick="'+this.prefix+'ManageableController.Manageable_removeManager_address()">execute Manageable_removeManager</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Manageable_contract_function_Manageable_removeManager_address">'
++		'		<legend>removeManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_removeManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_removeManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'ManageableController.Manageable_removeManager_address" onclick="'+this.prefix+'ManageableController.Manageable_removeManager_address()">removeManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_removeManager_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Manageable_contract_function_Manageable_isManager_address">'
-+		'		Manageable_isManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_isManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'ManageableController.Manageable_isManager_address" onclick="'+this.prefix+'ManageableController.Manageable_isManager_address()">execute Manageable_isManager</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Manageable_contract_function_Manageable_isManager_address">'
++		'		<legend>isManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_isManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_isManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'ManageableController.Manageable_isManager_address" onclick="'+this.prefix+'ManageableController.Manageable_isManager_address()">isManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_isManager_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 +		'		'
 +		'		</div>'
 ;
@@ -726,22 +752,36 @@ function ManageableGuiFactory() {
 	*/
 	this.createAttributesGui=function() {
 		return 		'    <div class="contract_attribute" id="'+this.prefix+'Manageable_contract_attribute_mangerCount"> mangerCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Manageable_mangerCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Manageable_mangerCount_value"> </span>'
 +		'		    </div>'
 +		'		'
 ;
 	}
 
 	/**
+	* Create the gui.
+	*/
+	this.createPlainGui=function(){
+		return this.createAttributesGui()
+				+ this.createManageable_addManager_addressGui
+				+ this.createManageable_removeManager_addressGui
+				+ this.createManageable_isManager_addressGui
+				;
+	}
+
+	/**
 	* Create the gui for the function addManager.
 	*/
 	this.createManageable_addManager_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Manageable_contract_function_Manageable_addManager_address">'
-+		'		Manageable_addManager:'
-+		'			  <div class="function_parameter">_newManagerAddress<input type="text" id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"></div>'
-+		'			<button id="'+this.prefix+'ManageableController.Manageable_addManager_address" onclick="'+this.prefix+'ManageableController.Manageable_addManager_address()">execute Manageable_addManager</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Manageable_contract_function_Manageable_addManager_address">'
++		'		<legend>addManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_addManager_address__newManagerAddress">_newManagerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"'
++		'				  placeholder="_newManagerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'ManageableController.Manageable_addManager_address" onclick="'+this.prefix+'ManageableController.Manageable_addManager_address()">addManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_addManager_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -749,12 +789,15 @@ function ManageableGuiFactory() {
 	* Create the gui for the function removeManager.
 	*/
 	this.createManageable_removeManager_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Manageable_contract_function_Manageable_removeManager_address">'
-+		'		Manageable_removeManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_removeManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'ManageableController.Manageable_removeManager_address" onclick="'+this.prefix+'ManageableController.Manageable_removeManager_address()">execute Manageable_removeManager</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Manageable_contract_function_Manageable_removeManager_address">'
++		'		<legend>removeManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_removeManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_removeManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'ManageableController.Manageable_removeManager_address" onclick="'+this.prefix+'ManageableController.Manageable_removeManager_address()">removeManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_removeManager_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -762,12 +805,15 @@ function ManageableGuiFactory() {
 	* Create the gui for the function isManager.
 	*/
 	this.createManageable_isManager_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Manageable_contract_function_Manageable_isManager_address">'
-+		'		Manageable_isManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_isManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'ManageableController.Manageable_isManager_address" onclick="'+this.prefix+'ManageableController.Manageable_isManager_address()">execute Manageable_isManager</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Manageable_contract_function_Manageable_isManager_address">'
++		'		<legend>isManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_isManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_isManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'ManageableController.Manageable_isManager_address" onclick="'+this.prefix+'ManageableController.Manageable_isManager_address()">isManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_isManager_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -1272,61 +1318,76 @@ function MultiownedGuiFactory() {
 +		'		  <input type="text" id="'+this.prefix+'Multiowned_address"> <button id="'+this.prefix+'MultiownedController.setAddress" onclick="'+this.prefix+'MultiownedController.setAddress()">change Multiowned Address</button>'
 +		'		  <div class="contract_attributes" id="'+this.prefix+'Multiowned_contract_attributes"> attributes:'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Multiowned_contract_attribute_m_required"> m_required:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Multiowned_m_required_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Multiowned_m_required_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Multiowned_contract_attribute_m_numOwners"> m_numOwners:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Multiowned_m_numOwners_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Multiowned_m_numOwners_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Multiowned_contract_attribute_m_owners"> m_owners:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Multiowned_m_owners_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Multiowned_m_owners_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Multiowned_contract_attribute_c_maxOwners"> c_maxOwners:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Multiowned_c_maxOwners_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Multiowned_c_maxOwners_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Multiowned_contract_attribute_m_pendingIndex"> m_pendingIndex:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Multiowned_m_pendingIndex_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Multiowned_m_pendingIndex_value"> </span>'
 +		'		    </div>'
 +		'		'
 +		'		<div class="Value_Mapping" id="'+this.prefix+'Multiowned_contract_attribute_m_ownerIndex">mapping  m_ownerIndex:'
-+		'				<input type="number" id="'+this.prefix+'Multiowned_contract_attribute_m_ownerIndex_input">(uint)'
++		'				<input class="function_input" type="number" id="'+this.prefix+'Multiowned_contract_attribute_m_ownerIndex_input">(uint)'
 +		'		    	<div class="Mapping_value" id="'+this.prefix+'Multiowned_contract_attribute_uint"> uint:'
-+		'		      		<div class="contract_attribute_value" id="'+this.prefix+'Multiowned_m_ownerIndex_value"> </div>'
++		'		      		<span class="contract_attribute_value" id="'+this.prefix+'Multiowned_m_ownerIndex_value"> </span>'
 +		'		    	</div>'
 +		'		  </div>'
 +		'		<div class="Struct_Mapping" id="'+this.prefix+'Struc_Multiowned_contract_attribute_m_pending">struc mapping  m_pending:'
-+		'				<input type="text" id="'+this.prefix+'Multiowned_contract_attribute_m_pending_input">(bytes32)'
++		'				<input class="function_input" type="text" id="'+this.prefix+'Multiowned_contract_attribute_m_pending_input">(bytes32)'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'Multiowned_contract_attribute_m_pending_yetNeeded"> yetNeeded:'
-+		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'Multiowned_m_pending_yetNeeded_value"> </div>'
++		'		      		<span class="Struct_attribute_value" id="'+this.prefix+'Multiowned_m_pending_yetNeeded_value"> </span>'
 +		'		    	</div>'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'Multiowned_contract_attribute_m_pending_ownersDone"> ownersDone:'
-+		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'Multiowned_m_pending_ownersDone_value"> </div>'
++		'		      		<span class="Struct_attribute_value" id="'+this.prefix+'Multiowned_m_pending_ownersDone_value"> </span>'
 +		'		    	</div>'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'Multiowned_contract_attribute_m_pending_index"> index:'
-+		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'Multiowned_m_pending_index_value"> </div>'
++		'		      		<span class="Struct_attribute_value" id="'+this.prefix+'Multiowned_m_pending_index_value"> </span>'
 +		'		    	</div>'
 +		'		  </div>'
-+		'		    <button id="'+this.prefix+'Multiowned_updateAttributes" onclick="'+this.prefix+'MultiownedController._updateAttributes()">update Multiowned attributes</button>'
++		'		    <button class="function_btn" id="'+this.prefix+'Multiowned_updateAttributes" onclick="'+this.prefix+'MultiownedController._updateAttributes()">update Multiowned attributes</button>'
 +		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Multiowned_contract_function_Multiowned_Multiowned_address_uint">'
-+		'		Multiowned_Multiowned:'
-+		'			  <div class="function_parameter">_owners<input type="text" id="'+this.prefix+'Multiowned_Multiowned_address_uint__owners"></div>'
-+		'			  <div class="function_parameter">_required<input type="number" id="'+this.prefix+'Multiowned_Multiowned_address_uint__required"></div>'
-+		'			<button id="'+this.prefix+'MultiownedController.Multiowned_Multiowned_address_uint" onclick="'+this.prefix+'MultiownedController.Multiowned_Multiowned_address_uint()">execute Multiowned_Multiowned</button>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Multiowned_contract_function_Multiowned_Multiowned_address_uint">'
++		'		<legend>Multiowned</legend>'
++		'			  <label class="function_parameter" for="Multiowned_Multiowned_address_uint__owners">_owners</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Multiowned_Multiowned_address_uint__owners"'
++		'				  placeholder="_owners"/>'
++		'			  <label class="function_parameter" for="Multiowned_Multiowned_address_uint__required">_required</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'Multiowned_Multiowned_address_uint__required"'
++		'				  placeholder="_required"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MultiownedController.Multiowned_Multiowned_address_uint" onclick="'+this.prefix+'MultiownedController.Multiowned_Multiowned_address_uint()">Multiowned</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Multiowned_Multiowned_address_uint_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Multiowned_contract_function_Multiowned_isOwner_address">'
-+		'		Multiowned_isOwner:'
-+		'			  <div class="function_parameter">_addr<input type="text" id="'+this.prefix+'Multiowned_isOwner_address__addr"></div>'
-+		'			<button id="'+this.prefix+'MultiownedController.Multiowned_isOwner_address" onclick="'+this.prefix+'MultiownedController.Multiowned_isOwner_address()">execute Multiowned_isOwner</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Multiowned_contract_function_Multiowned_isOwner_address">'
++		'		<legend>isOwner</legend>'
++		'			  <label class="function_parameter" for="Multiowned_isOwner_address__addr">_addr</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Multiowned_isOwner_address__addr"'
++		'				  placeholder="_addr"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MultiownedController.Multiowned_isOwner_address" onclick="'+this.prefix+'MultiownedController.Multiowned_isOwner_address()">isOwner</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Multiowned_isOwner_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Multiowned_contract_function_Multiowned_hasConfirmed_bytes32_address">'
-+		'		Multiowned_hasConfirmed:'
-+		'			  <div class="function_parameter">_operation<input type="text" id="'+this.prefix+'Multiowned_hasConfirmed_bytes32_address__operation"></div>'
-+		'			  <div class="function_parameter">_owner<input type="text" id="'+this.prefix+'Multiowned_hasConfirmed_bytes32_address__owner"></div>'
-+		'			<button id="'+this.prefix+'MultiownedController.Multiowned_hasConfirmed_bytes32_address" onclick="'+this.prefix+'MultiownedController.Multiowned_hasConfirmed_bytes32_address()">execute Multiowned_hasConfirmed</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Multiowned_contract_function_Multiowned_hasConfirmed_bytes32_address">'
++		'		<legend>hasConfirmed</legend>'
++		'			  <label class="function_parameter" for="Multiowned_hasConfirmed_bytes32_address__operation">_operation</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Multiowned_hasConfirmed_bytes32_address__operation"'
++		'				  placeholder="_operation"/>'
++		'			  <label class="function_parameter" for="Multiowned_hasConfirmed_bytes32_address__owner">_owner</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Multiowned_hasConfirmed_bytes32_address__owner"'
++		'				  placeholder="_owner"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MultiownedController.Multiowned_hasConfirmed_bytes32_address" onclick="'+this.prefix+'MultiownedController.Multiowned_hasConfirmed_bytes32_address()">hasConfirmed</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Multiowned_hasConfirmed_bytes32_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 +		'		'
 +		'		</div>'
 ;
@@ -1337,35 +1398,52 @@ function MultiownedGuiFactory() {
 	*/
 	this.createAttributesGui=function() {
 		return 		'    <div class="contract_attribute" id="'+this.prefix+'Multiowned_contract_attribute_m_required"> m_required:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Multiowned_m_required_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Multiowned_m_required_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Multiowned_contract_attribute_m_numOwners"> m_numOwners:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Multiowned_m_numOwners_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Multiowned_m_numOwners_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Multiowned_contract_attribute_m_owners"> m_owners:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Multiowned_m_owners_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Multiowned_m_owners_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Multiowned_contract_attribute_c_maxOwners"> c_maxOwners:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Multiowned_c_maxOwners_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Multiowned_c_maxOwners_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Multiowned_contract_attribute_m_pendingIndex"> m_pendingIndex:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Multiowned_m_pendingIndex_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Multiowned_m_pendingIndex_value"> </span>'
 +		'		    </div>'
 +		'		'
 ;
 	}
 
 	/**
+	* Create the gui.
+	*/
+	this.createPlainGui=function(){
+		return this.createAttributesGui()
+				+ this.createMultiowned_Multiowned_address_uintGui
+				+ this.createMultiowned_isOwner_addressGui
+				+ this.createMultiowned_hasConfirmed_bytes32_addressGui
+				;
+	}
+
+	/**
 	* Create the gui for the function Multiowned.
 	*/
 	this.createMultiowned_Multiowned_address_uintGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Multiowned_contract_function_Multiowned_Multiowned_address_uint">'
-+		'		Multiowned_Multiowned:'
-+		'			  <div class="function_parameter">_owners<input type="text" id="'+this.prefix+'Multiowned_Multiowned_address_uint__owners"></div>'
-+		'			  <div class="function_parameter">_required<input type="number" id="'+this.prefix+'Multiowned_Multiowned_address_uint__required"></div>'
-+		'			<button id="'+this.prefix+'MultiownedController.Multiowned_Multiowned_address_uint" onclick="'+this.prefix+'MultiownedController.Multiowned_Multiowned_address_uint()">execute Multiowned_Multiowned</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Multiowned_contract_function_Multiowned_Multiowned_address_uint">'
++		'		<legend>Multiowned</legend>'
++		'			  <label class="function_parameter" for="Multiowned_Multiowned_address_uint__owners">_owners</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Multiowned_Multiowned_address_uint__owners"'
++		'				  placeholder="_owners"/>'
++		'			  <label class="function_parameter" for="Multiowned_Multiowned_address_uint__required">_required</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'Multiowned_Multiowned_address_uint__required"'
++		'				  placeholder="_required"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MultiownedController.Multiowned_Multiowned_address_uint" onclick="'+this.prefix+'MultiownedController.Multiowned_Multiowned_address_uint()">Multiowned</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Multiowned_Multiowned_address_uint_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -1373,12 +1451,15 @@ function MultiownedGuiFactory() {
 	* Create the gui for the function isOwner.
 	*/
 	this.createMultiowned_isOwner_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Multiowned_contract_function_Multiowned_isOwner_address">'
-+		'		Multiowned_isOwner:'
-+		'			  <div class="function_parameter">_addr<input type="text" id="'+this.prefix+'Multiowned_isOwner_address__addr"></div>'
-+		'			<button id="'+this.prefix+'MultiownedController.Multiowned_isOwner_address" onclick="'+this.prefix+'MultiownedController.Multiowned_isOwner_address()">execute Multiowned_isOwner</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Multiowned_contract_function_Multiowned_isOwner_address">'
++		'		<legend>isOwner</legend>'
++		'			  <label class="function_parameter" for="Multiowned_isOwner_address__addr">_addr</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Multiowned_isOwner_address__addr"'
++		'				  placeholder="_addr"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MultiownedController.Multiowned_isOwner_address" onclick="'+this.prefix+'MultiownedController.Multiowned_isOwner_address()">isOwner</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Multiowned_isOwner_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -1386,13 +1467,19 @@ function MultiownedGuiFactory() {
 	* Create the gui for the function hasConfirmed.
 	*/
 	this.createMultiowned_hasConfirmed_bytes32_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Multiowned_contract_function_Multiowned_hasConfirmed_bytes32_address">'
-+		'		Multiowned_hasConfirmed:'
-+		'			  <div class="function_parameter">_operation<input type="text" id="'+this.prefix+'Multiowned_hasConfirmed_bytes32_address__operation"></div>'
-+		'			  <div class="function_parameter">_owner<input type="text" id="'+this.prefix+'Multiowned_hasConfirmed_bytes32_address__owner"></div>'
-+		'			<button id="'+this.prefix+'MultiownedController.Multiowned_hasConfirmed_bytes32_address" onclick="'+this.prefix+'MultiownedController.Multiowned_hasConfirmed_bytes32_address()">execute Multiowned_hasConfirmed</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Multiowned_contract_function_Multiowned_hasConfirmed_bytes32_address">'
++		'		<legend>hasConfirmed</legend>'
++		'			  <label class="function_parameter" for="Multiowned_hasConfirmed_bytes32_address__operation">_operation</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Multiowned_hasConfirmed_bytes32_address__operation"'
++		'				  placeholder="_operation"/>'
++		'			  <label class="function_parameter" for="Multiowned_hasConfirmed_bytes32_address__owner">_owner</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Multiowned_hasConfirmed_bytes32_address__owner"'
++		'				  placeholder="_owner"/>'
++		'			<button class="function_btn" id="'+this.prefix+'MultiownedController.Multiowned_hasConfirmed_bytes32_address" onclick="'+this.prefix+'MultiownedController.Multiowned_hasConfirmed_bytes32_address()">hasConfirmed</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Multiowned_hasConfirmed_bytes32_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -1401,15 +1488,15 @@ function MultiownedGuiFactory() {
 	*/
 	this.createm_pendingStructGui=function() {
 		return 		'<div class="Struct_Mapping" id="'+this.prefix+'Struc_Multiowned_contract_attribute_m_pending">struc mapping  m_pending:'
-+		'				<input type="text" id="'+this.prefix+'Multiowned_contract_attribute_m_pending_input">(bytes32)'
++		'				<input class="function_input" type="text" id="'+this.prefix+'Multiowned_contract_attribute_m_pending_input">(bytes32)'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'Multiowned_contract_attribute_m_pending_yetNeeded"> yetNeeded:'
-+		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'Multiowned_m_pending_yetNeeded_value"> </div>'
++		'		      		<span class="Struct_attribute_value" id="'+this.prefix+'Multiowned_m_pending_yetNeeded_value"> </span>'
 +		'		    	</div>'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'Multiowned_contract_attribute_m_pending_ownersDone"> ownersDone:'
-+		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'Multiowned_m_pending_ownersDone_value"> </div>'
++		'		      		<span class="Struct_attribute_value" id="'+this.prefix+'Multiowned_m_pending_ownersDone_value"> </span>'
 +		'		    	</div>'
 +		'		    	<div class="Struct_attribute" id="'+this.prefix+'Multiowned_contract_attribute_m_pending_index"> index:'
-+		'		      		<div class="Struct_attribute_value" id="'+this.prefix+'Multiowned_m_pending_index_value"> </div>'
++		'		      		<span class="Struct_attribute_value" id="'+this.prefix+'Multiowned_m_pending_index_value"> </span>'
 +		'		    	</div>'
 +		'		  </div>'
 ;
@@ -1515,13 +1602,13 @@ function MultiownedGuiFactory() {
 	this.createStruc_Multiowned_contract_attribute_m_pendingGui=function(struct) {
 		return '<div class="Struct_Mapping" id='+this.prefix+'"Struc_Multiowned_contract_attribute_m_pending">'
     		+'<div class="Struct_attribute" id='+this.prefix+'"Multiowned_contract_attribute_m_pending_yetNeeded"> yetNeeded:'
-      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"Multiowned_m_pending_yetNeeded_value">'+struct.yetNeeded()+'</div>'
+      		+'	<span class="Struct_attribute_value" id='+this.prefix+'"Multiowned_m_pending_yetNeeded_value">'+struct.yetNeeded()+'</span>'
     		+'</div>'
     		+'<div class="Struct_attribute" id='+this.prefix+'"Multiowned_contract_attribute_m_pending_ownersDone"> ownersDone:'
-      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"Multiowned_m_pending_ownersDone_value">'+struct.ownersDone()+'</div>'
+      		+'	<span class="Struct_attribute_value" id='+this.prefix+'"Multiowned_m_pending_ownersDone_value">'+struct.ownersDone()+'</span>'
     		+'</div>'
     		+'<div class="Struct_attribute" id='+this.prefix+'"Multiowned_contract_attribute_m_pending_index"> index:'
-      		+'	<div class="Struct_attribute_value" id='+this.prefix+'"Multiowned_m_pending_index_value">'+struct.index()+'</div>'
+      		+'	<span class="Struct_attribute_value" id='+this.prefix+'"Multiowned_m_pending_index_value">'+struct.index()+'</span>'
     		+'</div>'
   		+'</div>';
 	}

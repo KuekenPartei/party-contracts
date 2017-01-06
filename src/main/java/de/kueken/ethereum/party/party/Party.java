@@ -1,5 +1,7 @@
 package de.kueken.ethereum.party.party;
 
+import java.util.concurrent.CompletableFuture;
+import org.adridadou.ethereum.values.EthAddress;
 import de.kueken.ethereum.party.basics.*;
 import de.kueken.ethereum.party.members.*;
 import de.kueken.ethereum.party.publishing.*;
@@ -10,13 +12,25 @@ import de.kueken.ethereum.party.voting.*;
 **/
 public interface Party extends Manageable{
 	
+	String name();
+	
+	String memberRegistry();
+	
 	String constitutionHash();
 	
 	Integer organCount();
 	
+	String blogregistry();
+	
+	String parent();
+	
+	Integer subDivisionCount();
+	
 	Boolean managers(String key);
 	
 	String[] organs(Integer key);	
+	
+	String[] subDivisions(Integer key);	
 
 	
 	void createOrgan(String organName);
@@ -26,7 +40,19 @@ public interface Party extends Manageable{
 	* @param _organ -
 	**/
 	void addOrgan(String _organ);
+	/**
+	* Add a subdivision of this party, the contrains are:
+	* the party must be a mananger of the subdivision
+	* the blogregistry must be the same
+	* the member regstry must be the same
+	* 
+	* @param _subDivision -
+	**/
+	void addSubDivision(String _subDivision);
+	
+	void removeSubDivision(Integer _divisionId);
 	//Start of user code additional_methods
-
+	void setBlogregistry (String aBlogregistr); 
+	void setMemberRegistry (String aMemberRegistry);
 	//End of user code
 }

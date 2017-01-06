@@ -148,9 +148,11 @@ _function|OrganFunction||
 ## contract: Party
 
     overview:
-	constructor Party()
+	constructor Party(string _name)
 	function createOrgan(string organName) public  
 	function addOrgan(address _organ) public  onlyManager() 
+	function addSubDivision(address _subDivision) public  
+	function removeSubDivision(uint _divisionId) public  
 
 inherites: [Manageable](basics#contract-manageable)
 
@@ -164,15 +166,23 @@ A basic party contract.
 
 name|type|visiblity|delegate|doc
 ----|----|----|----|----
-memberRegistry|MemberRegistry|protected||
+name|string|public||
+memberRegistry|MemberRegistry|public||
 constitutionHash|string|public||
 organCount|uint|public||
-blogregistry|BlogRegistry|protected||
+blogregistry|BlogRegistry|public||
+parent|Party|public||
+subDivisionCount|uint|public||
 -
 
-#### Party.Party() public  
+#### Party.Party(string _name) public  
+
+Construct a new party or division.
 
 
+name|type|doc
+----|----|----
+_name|string|The name of the party or division.
 
 #### Party.createOrgan(string organName) public  
 
@@ -190,6 +200,25 @@ name|type|direction|doc
 ----|----|----|----
 _organ|address|in|
 
+#### Party.addSubDivision(address _subDivision) public  
+
+Add a subdivision of this party, the contrains are:
+the party must be a mananger of the subdivision
+the blogregistry must be the same
+the member regstry must be the same
+
+
+name|type|direction|doc
+----|----|----|----
+_subDivision|address|in|
+
+#### Party.removeSubDivision(uint _divisionId) public  
+
+
+name|type|direction|doc
+----|----|----|----
+_divisionId|uint|in|
+
 #### event ConstiutionChange
 
 
@@ -202,11 +231,20 @@ name|type|indexed|doc
 _organ|Organ||
 _changeType|uint||
 
+#### event DivisionChanged
+
+
+name|type|indexed|doc
+----|----|----|----
+divisionAddress|address||
+changer|address||
+state|uint||
+
 
 ## contract: KUEKeNParty
 
     overview:
-	function KUEKeNParty() public  
+	constructor KUEKeNParty(string _name)
 	function boostrapParty(address fc,address br) public  onlyManager() 
 
 inherites: [Party](#contract-party)
@@ -219,9 +257,12 @@ The KUEKen party.
 
 -
 
-#### KUEKeNParty.KUEKeNParty() public  
+#### KUEKeNParty.KUEKeNParty(string _name) public  
 
 
+name|type|doc
+----|----|----
+_name|string|The name of the party or division.
 
 #### KUEKeNParty.boostrapParty(address fc,address br) public  onlyManager() 
 

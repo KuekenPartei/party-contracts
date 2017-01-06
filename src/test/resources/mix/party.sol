@@ -4,7 +4,7 @@
 * Urs Zeidler
 *
 */
-
+pragma solidity ^0.4.0;
 
 import "./basics.sol";
 import "./members.sol";
@@ -32,7 +32,7 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 	{
 	    
 	
-	    _
+	    _;
 	}
 	
 	
@@ -229,10 +229,10 @@ contract Party is Manageable {
 	* 
 	* _name -The name of the party or division.
 	*/
-	function Party(string _name) public   {
+	function Party(string _name) public Manageable()   {
 		//Start of user code Party.constructor.Party_string
-		name = _name;
-		//End of user code
+		name = _name; 
+//		//End of user code
 	}
 	
 	
@@ -241,10 +241,10 @@ contract Party is Manageable {
 		//Start of user code Party.function.createOrgan_string
 		Organ o = new Organ();
 		o.setOrganName(organName);
-		blogregistry.addManager(o);
+//		blogregistry.addManager(o);
 		o.setBlogRegistry(blogregistry);
 		o.setMemberRegistry(memberRegistry);	
-		o.initalizeOrgan();	
+//		o.initalizeOrgan();	
 		organs[organCount] = o;
 		OrganChanged(o,1);
 		organCount++; 
@@ -260,10 +260,10 @@ contract Party is Manageable {
 	function addOrgan(address _organ) public  onlyManager()  {
 		//Start of user code Party.function.addOrgan_address
 		Organ o = Organ(_organ);
-		blogregistry.addManager(o);
+//		blogregistry.addManager(o);
 		o.setBlogRegistry(blogregistry);
 		o.setMemberRegistry(memberRegistry);	
-		o.initalizeOrgan();	
+//		o.initalizeOrgan();	
 		organs[organCount] = o;
 		OrganChanged(o,1);
 		organCount++; 
@@ -283,10 +283,10 @@ contract Party is Manageable {
 		//Start of user code Party.function.addSubDivision_address
 		Party p = Party(_subDivision);
 		//check the constrains
-		if(!p.isManager(this)) throw;
-		if(p.blogregistry()!=blogregistry) throw;
-		if(p.memberRegistry()!=memberRegistry) throw;
-		if(p.parent()!= this) throw;
+//		if(!p.isManager(this)) throw;
+//		if(p.blogregistry()!=blogregistry) throw;
+//		if(p.memberRegistry()!=memberRegistry) throw;
+//		if(p.parent()!= this) throw;
 		//TODO; a foundation conference should be done
 		
 		subDivisions[subDivisionCount] = p;
@@ -335,10 +335,10 @@ contract KUEKeNParty is Party {
 	// End of user code
 	
 	
-	function KUEKeNParty(string _name) Party(_name) public   {
+	function KUEKeNParty(string _name) public   {
 		//Start of user code KUEKeNParty.constructor.KUEKeNParty_string
-		//TODO: implement
-		//End of user code
+//		//TODO: implement
+//		//End of user code
 	}
 	
 	

@@ -1,0 +1,209 @@
+<!doctype>
+<html>
+<head>
+
+<!-- start of style -->
+<style>
+.contract {
+	border-style: solid;
+	border-width: 1px;
+	margin-bottom: 4px;
+	} 
+.contract_attributes{
+	border-style: solid;
+	border-width: 1px;
+	} 
+.Struct_Mapping{}
+.Value_Mapping{}
+.contract_attribute{}
+.contract_attribute_value{}
+.function_execution{}
+.function_parameter{
+	float: left;
+    width: 220px;
+	padding-top: 0.3em;
+}
+.function_input{
+	display : block;
+	margin-bottom: 0.8em;
+}
+.function_btn{}
+.function_result{}
+.eventRow{
+	display: table-row;
+	width: auto;
+}
+.eventValue{	
+	float: left; /*fix for  buggy browsers*/
+	display: table-column;
+}
+
+</style>
+</head>
+<body bgcolor='#E6E6FA'>
+	<h1>Sample Interface for publishing</h1>
+<!-- gui for ShortBlog_contract -->
+<div class="contract" id="ShortBlog_contract">
+ShortBlog:
+  <input type="text" id="ShortBlog_address"> <button id="ShortBlogController.setAddress" onclick="ShortBlogController.setAddress()">change ShortBlog Address</button>
+  <div class="contract_attributes" id="ShortBlog_contract_attributes"> attributes:
+    <div class="contract_attribute" id="ShortBlog_contract_attribute_messageCount"> messageCount:
+      <span class="contract_attribute_value" id="ShortBlog_messageCount_value"> </span>
+    </div>
+    <div class="contract_attribute" id="ShortBlog_contract_attribute_lastMessageDate"> lastMessageDate:
+      <span class="contract_attribute_value" id="ShortBlog_lastMessageDate_value"> </span>
+    </div>
+    <div class="contract_attribute" id="ShortBlog_contract_attribute_mangerCount"> mangerCount:
+      <span class="contract_attribute_value" id="ShortBlog_mangerCount_value"> </span>
+    </div>
+    <div class="contract_attribute" id="ShortBlog_contract_attribute_name"> name:
+      <span class="contract_attribute_value" id="ShortBlog_name_value"> </span>
+    </div>
+
+<div class="Value_Mapping" id="ShortBlog_contract_attribute_managers">mapping  managers:
+		<input class="function_input" type="text" id="ShortBlog_contract_attribute_managers_input">(address)
+    	<div class="Mapping_value" id="ShortBlog_contract_attribute_address"> bool:
+      		<span class="contract_attribute_value" id="ShortBlog_managers_value"> </span>
+    	</div>
+  </div>
+<div class="Struct_Mapping" id="Struc_ShortBlog_contract_attribute_messages">struc mapping  messages:
+		<input class="function_input" type="number" id="ShortBlog_contract_attribute_messages_input">(uint)
+    	<div class="Struct_attribute" id="ShortBlog_contract_attribute_messages_message"> message:
+      		<span class="Struct_attribute_value" id="ShortBlog_messages_message_value"> </span>
+    	</div>
+    	<div class="Struct_attribute" id="ShortBlog_contract_attribute_messages_date"> date:
+      		<span class="Struct_attribute_value" id="ShortBlog_messages_date_value"> </span>
+    	</div>
+    	<div class="Struct_attribute" id="ShortBlog_contract_attribute_messages_id"> id:
+      		<span class="Struct_attribute_value" id="ShortBlog_messages_id_value"> </span>
+    	</div>
+    	<div class="Struct_attribute" id="ShortBlog_contract_attribute_messages_sender"> sender:
+      		<span class="Struct_attribute_value" id="ShortBlog_messages_sender_value"> </span>
+    	</div>
+    	<div class="Struct_attribute" id="ShortBlog_contract_attribute_messages_blockNumber"> blockNumber:
+      		<span class="Struct_attribute_value" id="ShortBlog_messages_blockNumber_value"> </span>
+    	</div>
+    	<div class="Struct_attribute" id="ShortBlog_contract_attribute_messages_hashValue"> hashValue:
+      		<span class="Struct_attribute_value" id="ShortBlog_messages_hashValue_value"> </span>
+    	</div>
+    	<div class="Struct_attribute" id="ShortBlog_contract_attribute_messages_externalResource"> externalResource:
+      		<span class="Struct_attribute_value" id="ShortBlog_messages_externalResource_value"> </span>
+    	</div>
+  </div>
+    <button class="function_btn" id="ShortBlog_updateAttributes" onclick="ShortBlogController._updateAttributes()">update ShortBlog attributes</button>
+  </div>
+  <fieldset class="function_execution" id="ShortBlog_contract_function_Manageable_addManager_address">
+<legend>addManager</legend>
+	  <label class="function_parameter" for="Manageable_addManager_address__newManagerAddress">_newManagerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_addManager_address__newManagerAddress"
+		  placeholder="_newManagerAddress"/>
+	<button class="function_btn" id="ShortBlogController.Manageable_addManager_address" onclick="ShortBlogController.Manageable_addManager_address()">addManager</button>
+	<div class="function_result" id="Manageable_addManager_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="ShortBlog_contract_function_ShortBlog_sendMessage_string_string_string">
+<legend>sendMessage</legend>
+	  <label class="function_parameter" for="ShortBlog_sendMessage_string_string_string_message">message</label>
+		<input class="function_input" type="text" 
+          id="ShortBlog_sendMessage_string_string_string_message"
+		  placeholder="message"/>
+	  <label class="function_parameter" for="ShortBlog_sendMessage_string_string_string_hash">hash</label>
+		<input class="function_input" type="text" 
+          id="ShortBlog_sendMessage_string_string_string_hash"
+		  placeholder="hash"/>
+	  <label class="function_parameter" for="ShortBlog_sendMessage_string_string_string_er">er</label>
+		<input class="function_input" type="text" 
+          id="ShortBlog_sendMessage_string_string_string_er"
+		  placeholder="er"/>
+	<button class="function_btn" id="ShortBlogController.ShortBlog_sendMessage_string_string_string" onclick="ShortBlogController.ShortBlog_sendMessage_string_string_string()">sendMessage</button>
+	<div class="function_result" id="ShortBlog_sendMessage_string_string_string_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="ShortBlog_contract_function_Manageable_removeManager_address">
+<legend>removeManager</legend>
+	  <label class="function_parameter" for="Manageable_removeManager_address__managerAddress">_managerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_removeManager_address__managerAddress"
+		  placeholder="_managerAddress"/>
+	<button class="function_btn" id="ShortBlogController.Manageable_removeManager_address" onclick="ShortBlogController.Manageable_removeManager_address()">removeManager</button>
+	<div class="function_result" id="Manageable_removeManager_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="ShortBlog_contract_function_Manageable_isManager_address">
+<legend>isManager</legend>
+	  <label class="function_parameter" for="Manageable_isManager_address__managerAddress">_managerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_isManager_address__managerAddress"
+		  placeholder="_managerAddress"/>
+	<button class="function_btn" id="ShortBlogController.Manageable_isManager_address" onclick="ShortBlogController.Manageable_isManager_address()">isManager</button>
+	<div class="function_result" id="Manageable_isManager_address_res"></div>
+  </fieldset>
+
+</div>
+<!-- gui for BlogRegistry_contract -->
+<div class="contract" id="BlogRegistry_contract">
+BlogRegistry:
+  <input type="text" id="BlogRegistry_address"> <button id="BlogRegistryController.setAddress" onclick="BlogRegistryController.setAddress()">change BlogRegistry Address</button>
+  <div class="contract_attributes" id="BlogRegistry_contract_attributes"> attributes:
+    <div class="contract_attribute" id="BlogRegistry_contract_attribute_blogCount"> blogCount:
+      <span class="contract_attribute_value" id="BlogRegistry_blogCount_value"> </span>
+    </div>
+    <div class="contract_attribute" id="BlogRegistry_contract_attribute_mangerCount"> mangerCount:
+      <span class="contract_attribute_value" id="BlogRegistry_mangerCount_value"> </span>
+    </div>
+
+<div class="Value_Mapping" id="BlogRegistry_contract_attribute_blogs">mapping  blogs:
+		<input class="function_input" type="number" id="BlogRegistry_contract_attribute_blogs_input">(uint)
+    	<div class="Mapping_value" id="BlogRegistry_contract_attribute_uint"> ShortBlog:
+      		<span class="contract_attribute_value" id="BlogRegistry_blogs_value"> </span>
+    	</div>
+  </div>
+<div class="Value_Mapping" id="BlogRegistry_contract_attribute_managers">mapping  managers:
+		<input class="function_input" type="text" id="BlogRegistry_contract_attribute_managers_input">(address)
+    	<div class="Mapping_value" id="BlogRegistry_contract_attribute_address"> bool:
+      		<span class="contract_attribute_value" id="BlogRegistry_managers_value"> </span>
+    	</div>
+  </div>
+    <button class="function_btn" id="BlogRegistry_updateAttributes" onclick="BlogRegistryController._updateAttributes()">update BlogRegistry attributes</button>
+  </div>
+  <fieldset class="function_execution" id="BlogRegistry_contract_function_BlogRegistry_registerBlog_string">
+<legend>registerBlog</legend>
+	  <label class="function_parameter" for="BlogRegistry_registerBlog_string__name">_name</label>
+		<input class="function_input" type="text" 
+          id="BlogRegistry_registerBlog_string__name"
+		  placeholder="_name"/>
+	<button class="function_btn" id="BlogRegistryController.BlogRegistry_registerBlog_string" onclick="BlogRegistryController.BlogRegistry_registerBlog_string()">registerBlog</button>
+	<div class="function_result" id="BlogRegistry_registerBlog_string_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="BlogRegistry_contract_function_Manageable_addManager_address">
+<legend>addManager</legend>
+	  <label class="function_parameter" for="Manageable_addManager_address__newManagerAddress">_newManagerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_addManager_address__newManagerAddress"
+		  placeholder="_newManagerAddress"/>
+	<button class="function_btn" id="BlogRegistryController.Manageable_addManager_address" onclick="BlogRegistryController.Manageable_addManager_address()">addManager</button>
+	<div class="function_result" id="Manageable_addManager_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="BlogRegistry_contract_function_Manageable_removeManager_address">
+<legend>removeManager</legend>
+	  <label class="function_parameter" for="Manageable_removeManager_address__managerAddress">_managerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_removeManager_address__managerAddress"
+		  placeholder="_managerAddress"/>
+	<button class="function_btn" id="BlogRegistryController.Manageable_removeManager_address" onclick="BlogRegistryController.Manageable_removeManager_address()">removeManager</button>
+	<div class="function_result" id="Manageable_removeManager_address_res"></div>
+  </fieldset>
+  <fieldset class="function_execution" id="BlogRegistry_contract_function_Manageable_isManager_address">
+<legend>isManager</legend>
+	  <label class="function_parameter" for="Manageable_isManager_address__managerAddress">_managerAddress</label>
+		<input class="function_input" type="text" 
+          id="Manageable_isManager_address__managerAddress"
+		  placeholder="_managerAddress"/>
+	<button class="function_btn" id="BlogRegistryController.Manageable_isManager_address" onclick="BlogRegistryController.Manageable_isManager_address()">isManager</button>
+	<div class="function_result" id="Manageable_isManager_address_res"></div>
+  </fieldset>
+
+</div>
+
+<div id="eventLog" ></div>
+</body>
+</html>
+

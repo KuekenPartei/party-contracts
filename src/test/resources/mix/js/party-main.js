@@ -144,13 +144,21 @@ var OrganContract = web3.eth.contract([
 ]);   
 // contractVariable for Party
 var PartyContract = web3.eth.contract([
+{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"memberRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"constitutionHash","outputs":[{"name":"","type":"string"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"organCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"blogregistry","outputs":[{"name":"","type":"address"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"parent","outputs":[{"name":"","type":"address"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"subDivisionCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
 {"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "organs","outputs": [
+{ "name": "", "type": "address"}
+],"type": "function"	},
+{"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "subDivisions","outputs": [
 { "name": "", "type": "address"}
 ],"type": "function"	},
 { "constant": false,
@@ -163,19 +171,29 @@ var PartyContract = web3.eth.contract([
     "name": "removeManager",
     "outputs": [],
     "type": "function" }
-,{ "constant": false,
-    "inputs": [{"name": "organName","type": "string"}],    
-    "name": "createOrgan",
-    "outputs": [],
-    "type": "function" }
 ,{ "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
     "type": "function" }
 ,{ "constant": false,
+    "inputs": [{"name": "organName","type": "string"}],    
+    "name": "createOrgan",
+    "outputs": [],
+    "type": "function" }
+,{ "constant": false,
     "inputs": [{"name": "_organ","type": "address"}],    
     "name": "addOrgan",
+    "outputs": [],
+    "type": "function" }
+,{ "constant": false,
+    "inputs": [{"name": "_subDivision","type": "address"}],    
+    "name": "addSubDivision",
+    "outputs": [],
+    "type": "function" }
+,{ "constant": false,
+    "inputs": [{"name": "_divisionId","type": "uint256"}],    
+    "name": "removeSubDivision",
     "outputs": [],
     "type": "function" }
 ,
@@ -196,6 +214,21 @@ var PartyContract = web3.eth.contract([
          "type": "uint256"}
 	],    
     "name": "OrganChanged",
+    "type": "event"  }
+,  { "anonymous": false,
+    "inputs": 
+	[
+		{"indexed": false,
+		 "name": "divisionAddress",
+         "type": "address"}
+,		{"indexed": false,
+		 "name": "changer",
+         "type": "address"}
+,		{"indexed": false,
+		 "name": "state",
+         "type": "uint256"}
+	],    
+    "name": "DivisionChanged",
     "type": "event"  }
   ,{
     "constant": true,
@@ -223,21 +256,24 @@ var PartyContract = web3.eth.contract([
 ]);   
 // contractVariable for KUEKeNParty
 var KUEKeNPartyContract = web3.eth.contract([
+{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"mangerCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"memberRegistry","outputs":[{"name":"","type":"address"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"constitutionHash","outputs":[{"name":"","type":"string"}],"type":"function"},
 {"constant":true,"inputs":[],"name":"organCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"blogregistry","outputs":[{"name":"","type":"address"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"parent","outputs":[{"name":"","type":"address"}],"type":"function"},
+{"constant":true,"inputs":[],"name":"subDivisionCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
 {"constant": true,"inputs": [{"name": "","type": "address"}],"name": "managers","outputs": [
 { "name": "", "type": "bool"}
 ],"type": "function"	},
 {"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "organs","outputs": [
 { "name": "", "type": "address"}
 ],"type": "function"	},
+{"constant": true,"inputs": [{"name": "","type": "uint256"}],"name": "subDivisions","outputs": [
+{ "name": "", "type": "address"}
+],"type": "function"	},
 { "constant": false,
-    "inputs": [],    
-    "name": "KUEKeNParty",
-    "outputs": [],
-    "type": "function" }
-,{ "constant": false,
     "inputs": [{"name": "_newManagerAddress","type": "address"}],    
     "name": "addManager",
     "outputs": [],
@@ -252,19 +288,29 @@ var KUEKeNPartyContract = web3.eth.contract([
     "name": "removeManager",
     "outputs": [],
     "type": "function" }
-,{ "constant": false,
-    "inputs": [{"name": "organName","type": "string"}],    
-    "name": "createOrgan",
-    "outputs": [],
-    "type": "function" }
 ,{ "constant": true,
     "inputs": [{"name": "_managerAddress","type": "address"}],    
     "name": "isManager",
     "outputs": [{"name": "","type": "bool"}],
     "type": "function" }
 ,{ "constant": false,
+    "inputs": [{"name": "organName","type": "string"}],    
+    "name": "createOrgan",
+    "outputs": [],
+    "type": "function" }
+,{ "constant": false,
     "inputs": [{"name": "_organ","type": "address"}],    
     "name": "addOrgan",
+    "outputs": [],
+    "type": "function" }
+,{ "constant": false,
+    "inputs": [{"name": "_subDivision","type": "address"}],    
+    "name": "addSubDivision",
+    "outputs": [],
+    "type": "function" }
+,{ "constant": false,
+    "inputs": [{"name": "_divisionId","type": "uint256"}],    
+    "name": "removeSubDivision",
     "outputs": [],
     "type": "function" }
 
@@ -757,120 +803,177 @@ function OrganGuiFactory() {
 +		'		  <input type="text" id="'+this.prefix+'Organ_address"> <button id="'+this.prefix+'OrganController.setAddress" onclick="'+this.prefix+'OrganController.setAddress()">change Organ Address</button>'
 +		'		  <div class="contract_attributes" id="'+this.prefix+'Organ_contract_attributes"> attributes:'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Organ_contract_attribute_memberRegistry"> memberRegistry:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Organ_memberRegistry_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Organ_memberRegistry_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Organ_contract_attribute_organName"> organName:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Organ_organName_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Organ_organName_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Organ_contract_attribute_lastFunctionId"> lastFunctionId:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Organ_lastFunctionId_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Organ_lastFunctionId_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Organ_contract_attribute_mangerCount"> mangerCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Organ_mangerCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Organ_mangerCount_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Organ_contract_attribute_blogRegistry"> blogRegistry:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Organ_blogRegistry_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Organ_blogRegistry_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Organ_contract_attribute_isActive"> isActive:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Organ_isActive_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Organ_isActive_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Organ_contract_attribute_ballotCount"> ballotCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Organ_ballotCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Organ_ballotCount_value"> </span>'
 +		'		    </div>'
 +		'		'
 +		'		<div class="Value_Mapping" id="'+this.prefix+'Organ_contract_attribute_managers">mapping  managers:'
-+		'				<input type="text" id="'+this.prefix+'Organ_contract_attribute_managers_input">(address)'
++		'				<input class="function_input" type="text" id="'+this.prefix+'Organ_contract_attribute_managers_input">(address)'
 +		'		    	<div class="Mapping_value" id="'+this.prefix+'Organ_contract_attribute_address"> bool:'
-+		'		      		<div class="contract_attribute_value" id="'+this.prefix+'Organ_managers_value"> </div>'
++		'		      		<span class="contract_attribute_value" id="'+this.prefix+'Organ_managers_value"> </span>'
 +		'		    	</div>'
 +		'		  </div>'
-+		'		    <button id="'+this.prefix+'Organ_updateAttributes" onclick="'+this.prefix+'OrganController._updateAttributes()">update Organ attributes</button>'
++		'		    <button class="function_btn" id="'+this.prefix+'Organ_updateAttributes" onclick="'+this.prefix+'OrganController._updateAttributes()">update Organ attributes</button>'
 +		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_getOrganFunction_uint">'
-+		'		Organ_getOrganFunction:'
-+		'			  <div class="function_parameter">_id<input type="number" id="'+this.prefix+'Organ_getOrganFunction_uint__id"></div>'
-+		'			<button id="'+this.prefix+'OrganController.Organ_getOrganFunction_uint" onclick="'+this.prefix+'OrganController.Organ_getOrganFunction_uint()">execute Organ_getOrganFunction</button>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_getOrganFunction_uint">'
++		'		<legend>getOrganFunction</legend>'
++		'			  <label class="function_parameter" for="Organ_getOrganFunction_uint__id">_id</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'Organ_getOrganFunction_uint__id"'
++		'				  placeholder="_id"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganController.Organ_getOrganFunction_uint" onclick="'+this.prefix+'OrganController.Organ_getOrganFunction_uint()">getOrganFunction</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_getOrganFunction_uint_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Manageable_addManager_address">'
-+		'		Organ_addManager:'
-+		'			  <div class="function_parameter">_newManagerAddress<input type="text" id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"></div>'
-+		'			<button id="'+this.prefix+'OrganController.Manageable_addManager_address" onclick="'+this.prefix+'OrganController.Manageable_addManager_address()">execute Organ_addManager</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Organ_contract_function_Manageable_addManager_address">'
++		'		<legend>addManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_addManager_address__newManagerAddress">_newManagerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"'
++		'				  placeholder="_newManagerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganController.Manageable_addManager_address" onclick="'+this.prefix+'OrganController.Manageable_addManager_address()">addManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_addManager_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_changeMember_uint_address">'
-+		'		Organ_changeMember:'
-+		'			  <div class="function_parameter">_id<input type="number" id="'+this.prefix+'Organ_changeMember_uint_address__id"></div>'
-+		'			  <div class="function_parameter">_address<input type="text" id="'+this.prefix+'Organ_changeMember_uint_address__address"></div>'
-+		'			<button id="'+this.prefix+'OrganController.Organ_changeMember_uint_address" onclick="'+this.prefix+'OrganController.Organ_changeMember_uint_address()">execute Organ_changeMember</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_changeMember_uint_address">'
++		'		<legend>changeMember</legend>'
++		'			  <label class="function_parameter" for="Organ_changeMember_uint_address__id">_id</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'Organ_changeMember_uint_address__id"'
++		'				  placeholder="_id"/>'
++		'			  <label class="function_parameter" for="Organ_changeMember_uint_address__address">_address</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_changeMember_uint_address__address"'
++		'				  placeholder="_address"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganController.Organ_changeMember_uint_address" onclick="'+this.prefix+'OrganController.Organ_changeMember_uint_address()">changeMember</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_changeMember_uint_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Manageable_removeManager_address">'
-+		'		Organ_removeManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_removeManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'OrganController.Manageable_removeManager_address" onclick="'+this.prefix+'OrganController.Manageable_removeManager_address()">execute Organ_removeManager</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Organ_contract_function_Manageable_removeManager_address">'
++		'		<legend>removeManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_removeManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_removeManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganController.Manageable_removeManager_address" onclick="'+this.prefix+'OrganController.Manageable_removeManager_address()">removeManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_removeManager_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_createFunction_string_string">'
-+		'		Organ_createFunction:'
-+		'			  <div class="function_parameter">_functionName<input type="text" id="'+this.prefix+'Organ_createFunction_string_string__functionName"></div>'
-+		'			  <div class="function_parameter">_constittiutionHash<input type="text" id="'+this.prefix+'Organ_createFunction_string_string__constittiutionHash"></div>'
-+		'			<button id="'+this.prefix+'OrganController.Organ_createFunction_string_string" onclick="'+this.prefix+'OrganController.Organ_createFunction_string_string()">execute Organ_createFunction</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_createFunction_string_string">'
++		'		<legend>createFunction</legend>'
++		'			  <label class="function_parameter" for="Organ_createFunction_string_string__functionName">_functionName</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_createFunction_string_string__functionName"'
++		'				  placeholder="_functionName"/>'
++		'			  <label class="function_parameter" for="Organ_createFunction_string_string__constittiutionHash">_constittiutionHash</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_createFunction_string_string__constittiutionHash"'
++		'				  placeholder="_constittiutionHash"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganController.Organ_createFunction_string_string" onclick="'+this.prefix+'OrganController.Organ_createFunction_string_string()">createFunction</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_createFunction_string_string_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Manageable_isManager_address">'
-+		'		Organ_isManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_isManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'OrganController.Manageable_isManager_address" onclick="'+this.prefix+'OrganController.Manageable_isManager_address()">execute Organ_isManager</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Organ_contract_function_Manageable_isManager_address">'
++		'		<legend>isManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_isManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_isManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganController.Manageable_isManager_address" onclick="'+this.prefix+'OrganController.Manageable_isManager_address()">isManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_isManager_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_initalizeOrgan">'
-+		'		Organ_initalizeOrgan:'
-+		'			<button id="'+this.prefix+'OrganController.Organ_initalizeOrgan" onclick="'+this.prefix+'OrganController.Organ_initalizeOrgan()">execute Organ_initalizeOrgan</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_initalizeOrgan">'
++		'		<legend>initalizeOrgan</legend>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganController.Organ_initalizeOrgan" onclick="'+this.prefix+'OrganController.Organ_initalizeOrgan()">initalizeOrgan</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_initalizeOrgan_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_publishFunctionMessage_uint_string_string_string">'
-+		'		Organ_publishFunctionMessage:'
-+		'			  <div class="function_parameter">id<input type="number" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_id"></div>'
-+		'			  <div class="function_parameter">message<input type="text" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_message"></div>'
-+		'			  <div class="function_parameter">hash<input type="text" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_hash"></div>'
-+		'			  <div class="function_parameter">er<input type="text" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_er"></div>'
-+		'			<button id="'+this.prefix+'OrganController.Organ_publishFunctionMessage_uint_string_string_string" onclick="'+this.prefix+'OrganController.Organ_publishFunctionMessage_uint_string_string_string()">execute Organ_publishFunctionMessage</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_publishFunctionMessage_uint_string_string_string">'
++		'		<legend>publishFunctionMessage</legend>'
++		'			  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_id">id</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_id"'
++		'				  placeholder="id"/>'
++		'			  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_message">message</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_message"'
++		'				  placeholder="message"/>'
++		'			  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_hash">hash</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_hash"'
++		'				  placeholder="hash"/>'
++		'			  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_er">er</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_er"'
++		'				  placeholder="er"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganController.Organ_publishFunctionMessage_uint_string_string_string" onclick="'+this.prefix+'OrganController.Organ_publishFunctionMessage_uint_string_string_string()">publishFunctionMessage</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_createBallot_string_bytes32">'
-+		'		Organ_createBallot:'
-+		'			  <div class="function_parameter">name<input type="text" id="'+this.prefix+'Organ_createBallot_string_bytes32_name"></div>'
-+		'			  <div class="function_parameter">proposalNames<input type="text" id="'+this.prefix+'Organ_createBallot_string_bytes32_proposalNames"></div>'
-+		'			<button id="'+this.prefix+'OrganController.Organ_createBallot_string_bytes32" onclick="'+this.prefix+'OrganController.Organ_createBallot_string_bytes32()">execute Organ_createBallot</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_createBallot_string_bytes32">'
++		'		<legend>createBallot</legend>'
++		'			  <label class="function_parameter" for="Organ_createBallot_string_bytes32_name">name</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_createBallot_string_bytes32_name"'
++		'				  placeholder="name"/>'
++		'			  <label class="function_parameter" for="Organ_createBallot_string_bytes32_proposalNames">proposalNames</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_createBallot_string_bytes32_proposalNames"'
++		'				  placeholder="proposalNames"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganController.Organ_createBallot_string_bytes32" onclick="'+this.prefix+'OrganController.Organ_createBallot_string_bytes32()">createBallot</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_createBallot_string_bytes32_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_getLastBallot">'
-+		'		Organ_getLastBallot:'
-+		'			<button id="'+this.prefix+'OrganController.Organ_getLastBallot" onclick="'+this.prefix+'OrganController.Organ_getLastBallot()">execute Organ_getLastBallot</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_getLastBallot">'
++		'		<legend>getLastBallot</legend>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganController.Organ_getLastBallot" onclick="'+this.prefix+'OrganController.Organ_getLastBallot()">getLastBallot</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_getLastBallot_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_getOrganBlog">'
-+		'		Organ_getOrganBlog:'
-+		'			<button id="'+this.prefix+'OrganController.Organ_getOrganBlog" onclick="'+this.prefix+'OrganController.Organ_getOrganBlog()">execute Organ_getOrganBlog</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_getOrganBlog">'
++		'		<legend>getOrganBlog</legend>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganController.Organ_getOrganBlog" onclick="'+this.prefix+'OrganController.Organ_getOrganBlog()">getOrganBlog</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_getOrganBlog_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_addOrganFunction_address_string">'
-+		'		Organ_addOrganFunction:'
-+		'			  <div class="function_parameter">_of<input type="text" id="'+this.prefix+'Organ_addOrganFunction_address_string__of"></div>'
-+		'			  <div class="function_parameter">_name<input type="text" id="'+this.prefix+'Organ_addOrganFunction_address_string__name"></div>'
-+		'			<button id="'+this.prefix+'OrganController.Organ_addOrganFunction_address_string" onclick="'+this.prefix+'OrganController.Organ_addOrganFunction_address_string()">execute Organ_addOrganFunction</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_addOrganFunction_address_string">'
++		'		<legend>addOrganFunction</legend>'
++		'			  <label class="function_parameter" for="Organ_addOrganFunction_address_string__of">_of</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_addOrganFunction_address_string__of"'
++		'				  placeholder="_of"/>'
++		'			  <label class="function_parameter" for="Organ_addOrganFunction_address_string__name">_name</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_addOrganFunction_address_string__name"'
++		'				  placeholder="_name"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganController.Organ_addOrganFunction_address_string" onclick="'+this.prefix+'OrganController.Organ_addOrganFunction_address_string()">addOrganFunction</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_addOrganFunction_address_string_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 +		'		'
-+		'		  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_MessagePublisher_publishMessage_string_string_string">'
-+		'		Organ_publishMessage:'
-+		'			  <div class="function_parameter">message<input type="text" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_message"></div>'
-+		'			  <div class="function_parameter">hash<input type="text" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_hash"></div>'
-+		'			  <div class="function_parameter">er<input type="text" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_er"></div>'
-+		'			<button id="'+this.prefix+'OrganController.MessagePublisher_publishMessage_string_string_string" onclick="'+this.prefix+'OrganController.MessagePublisher_publishMessage_string_string_string()">execute Organ_publishMessage</button>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Organ_contract_function_MessagePublisher_publishMessage_string_string_string">'
++		'		<legend>publishMessage</legend>'
++		'			  <label class="function_parameter" for="MessagePublisher_publishMessage_string_string_string_message">message</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_message"'
++		'				  placeholder="message"/>'
++		'			  <label class="function_parameter" for="MessagePublisher_publishMessage_string_string_string_hash">hash</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_hash"'
++		'				  placeholder="hash"/>'
++		'			  <label class="function_parameter" for="MessagePublisher_publishMessage_string_string_string_er">er</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_er"'
++		'				  placeholder="er"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganController.MessagePublisher_publishMessage_string_string_string" onclick="'+this.prefix+'OrganController.MessagePublisher_publishMessage_string_string_string()">publishMessage</button>'
 +		'			<div class="function_result" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 +		'		</div>'
 ;
 	}
@@ -880,52 +983,64 @@ function OrganGuiFactory() {
 	*/
 	this.createAttributesGui=function() {
 		return 		'    <div class="contract_attribute" id="'+this.prefix+'Organ_contract_attribute_memberRegistry"> memberRegistry:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Organ_memberRegistry_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Organ_memberRegistry_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Organ_contract_attribute_organName"> organName:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Organ_organName_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Organ_organName_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Organ_contract_attribute_lastFunctionId"> lastFunctionId:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Organ_lastFunctionId_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Organ_lastFunctionId_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Organ_contract_attribute_mangerCount"> mangerCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Organ_mangerCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Organ_mangerCount_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Organ_contract_attribute_blogRegistry"> blogRegistry:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Organ_blogRegistry_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Organ_blogRegistry_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Organ_contract_attribute_isActive"> isActive:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Organ_isActive_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Organ_isActive_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Organ_contract_attribute_ballotCount"> ballotCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Organ_ballotCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Organ_ballotCount_value"> </span>'
 +		'		    </div>'
 +		'		'
 ;
 	}
 
+	/**
+	* Create the gui.
+	*/
 	this.createPlainGui=function(){
 		return this.createAttributesGui()
-				+ this.createManageable_addManager_addressGui()
-				+ this.createManageable_isManager_addressGui()
-				+ this.createManageable_removeManager_addressGui()
-				+ this.createOrgan_createFunction_string_stringGui()
-				+ this.createOrgan_addOrganFunction_address_stringGui()
-				+ this.createOrgan_changeMember_uint_addressGui()
+				+ this.createOrgan_getOrganFunction_uintGui
+				+ this.createManageable_addManager_addressGui
+				+ this.createOrgan_changeMember_uint_addressGui
+				+ this.createManageable_removeManager_addressGui
+				+ this.createOrgan_createFunction_string_stringGui
+				+ this.createManageable_isManager_addressGui
+				+ this.createOrgan_initalizeOrganGui
+				+ this.createOrgan_publishFunctionMessage_uint_string_string_stringGui
+				+ this.createOrgan_createBallot_string_bytes32Gui
+				+ this.createOrgan_getLastBallotGui
+				+ this.createOrgan_getOrganBlogGui
+				+ this.createOrgan_addOrganFunction_address_stringGui
+				+ this.createOrgan_publishMessage_string_string_stringGui
 				;
 	}
 
-	
 	/**
 	* Create the gui for the function getOrganFunction.
 	*/
 	this.createOrgan_getOrganFunction_uintGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_getOrganFunction_uint">'
-+		'		Organ_getOrganFunction:'
-+		'			  <div class="function_parameter">_id<input type="number" id="'+this.prefix+'Organ_getOrganFunction_uint__id"></div>'
-+		'			<button id="'+this.prefix+'OrganController.Organ_getOrganFunction_uint" onclick="'+this.prefix+'OrganController.Organ_getOrganFunction_uint()">execute Organ_getOrganFunction</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_getOrganFunction_uint">'
++		'		<legend>getOrganFunction</legend>'
++		'			  <label class="function_parameter" for="Organ_getOrganFunction_uint__id">_id</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'Organ_getOrganFunction_uint__id"'
++		'				  placeholder="_id"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganController.Organ_getOrganFunction_uint" onclick="'+this.prefix+'OrganController.Organ_getOrganFunction_uint()">getOrganFunction</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_getOrganFunction_uint_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -933,12 +1048,15 @@ function OrganGuiFactory() {
 	* Create the gui for the function addManager.
 	*/
 	this.createManageable_addManager_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Manageable_addManager_address">'
-+		'		Organ_addManager:'
-+		'			  <div class="function_parameter">_newManagerAddress<input type="text" id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"></div>'
-+		'			<button id="'+this.prefix+'OrganController.Manageable_addManager_address" onclick="'+this.prefix+'OrganController.Manageable_addManager_address()">execute Organ_addManager</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Organ_contract_function_Manageable_addManager_address">'
++		'		<legend>addManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_addManager_address__newManagerAddress">_newManagerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"'
++		'				  placeholder="_newManagerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganController.Manageable_addManager_address" onclick="'+this.prefix+'OrganController.Manageable_addManager_address()">addManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_addManager_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -946,13 +1064,19 @@ function OrganGuiFactory() {
 	* Create the gui for the function changeMember.
 	*/
 	this.createOrgan_changeMember_uint_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_changeMember_uint_address">'
-+		'		Organ_changeMember:'
-+		'			  <div class="function_parameter">_id<input type="number" id="'+this.prefix+'Organ_changeMember_uint_address__id"></div>'
-+		'			  <div class="function_parameter">_address<input type="text" id="'+this.prefix+'Organ_changeMember_uint_address__address"></div>'
-+		'			<button id="'+this.prefix+'OrganController.Organ_changeMember_uint_address" onclick="'+this.prefix+'OrganController.Organ_changeMember_uint_address()">execute Organ_changeMember</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_changeMember_uint_address">'
++		'		<legend>changeMember</legend>'
++		'			  <label class="function_parameter" for="Organ_changeMember_uint_address__id">_id</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'Organ_changeMember_uint_address__id"'
++		'				  placeholder="_id"/>'
++		'			  <label class="function_parameter" for="Organ_changeMember_uint_address__address">_address</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_changeMember_uint_address__address"'
++		'				  placeholder="_address"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganController.Organ_changeMember_uint_address" onclick="'+this.prefix+'OrganController.Organ_changeMember_uint_address()">changeMember</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_changeMember_uint_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -960,12 +1084,15 @@ function OrganGuiFactory() {
 	* Create the gui for the function removeManager.
 	*/
 	this.createManageable_removeManager_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Manageable_removeManager_address">'
-+		'		Organ_removeManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_removeManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'OrganController.Manageable_removeManager_address" onclick="'+this.prefix+'OrganController.Manageable_removeManager_address()">execute Organ_removeManager</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Organ_contract_function_Manageable_removeManager_address">'
++		'		<legend>removeManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_removeManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_removeManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganController.Manageable_removeManager_address" onclick="'+this.prefix+'OrganController.Manageable_removeManager_address()">removeManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_removeManager_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -973,13 +1100,19 @@ function OrganGuiFactory() {
 	* Create the gui for the function createFunction.
 	*/
 	this.createOrgan_createFunction_string_stringGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_createFunction_string_string">'
-+		'		Organ_createFunction:'
-+		'			  <div class="function_parameter">_functionName<input type="text" id="'+this.prefix+'Organ_createFunction_string_string__functionName"></div>'
-+		'			  <div class="function_parameter">_constittiutionHash<input type="text" id="'+this.prefix+'Organ_createFunction_string_string__constittiutionHash"></div>'
-+		'			<button id="'+this.prefix+'OrganController.Organ_createFunction_string_string" onclick="'+this.prefix+'OrganController.Organ_createFunction_string_string()">execute Organ_createFunction</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_createFunction_string_string">'
++		'		<legend>createFunction</legend>'
++		'			  <label class="function_parameter" for="Organ_createFunction_string_string__functionName">_functionName</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_createFunction_string_string__functionName"'
++		'				  placeholder="_functionName"/>'
++		'			  <label class="function_parameter" for="Organ_createFunction_string_string__constittiutionHash">_constittiutionHash</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_createFunction_string_string__constittiutionHash"'
++		'				  placeholder="_constittiutionHash"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganController.Organ_createFunction_string_string" onclick="'+this.prefix+'OrganController.Organ_createFunction_string_string()">createFunction</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_createFunction_string_string_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -987,12 +1120,15 @@ function OrganGuiFactory() {
 	* Create the gui for the function isManager.
 	*/
 	this.createManageable_isManager_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Manageable_isManager_address">'
-+		'		Organ_isManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_isManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'OrganController.Manageable_isManager_address" onclick="'+this.prefix+'OrganController.Manageable_isManager_address()">execute Organ_isManager</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Organ_contract_function_Manageable_isManager_address">'
++		'		<legend>isManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_isManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_isManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganController.Manageable_isManager_address" onclick="'+this.prefix+'OrganController.Manageable_isManager_address()">isManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_isManager_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -1000,11 +1136,11 @@ function OrganGuiFactory() {
 	* Create the gui for the function initalizeOrgan.
 	*/
 	this.createOrgan_initalizeOrganGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_initalizeOrgan">'
-+		'		Organ_initalizeOrgan:'
-+		'			<button id="'+this.prefix+'OrganController.Organ_initalizeOrgan" onclick="'+this.prefix+'OrganController.Organ_initalizeOrgan()">execute Organ_initalizeOrgan</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_initalizeOrgan">'
++		'		<legend>initalizeOrgan</legend>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganController.Organ_initalizeOrgan" onclick="'+this.prefix+'OrganController.Organ_initalizeOrgan()">initalizeOrgan</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_initalizeOrgan_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -1012,15 +1148,27 @@ function OrganGuiFactory() {
 	* Create the gui for the function publishFunctionMessage.
 	*/
 	this.createOrgan_publishFunctionMessage_uint_string_string_stringGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_publishFunctionMessage_uint_string_string_string">'
-+		'		Organ_publishFunctionMessage:'
-+		'			  <div class="function_parameter">id<input type="number" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_id"></div>'
-+		'			  <div class="function_parameter">message<input type="text" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_message"></div>'
-+		'			  <div class="function_parameter">hash<input type="text" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_hash"></div>'
-+		'			  <div class="function_parameter">er<input type="text" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_er"></div>'
-+		'			<button id="'+this.prefix+'OrganController.Organ_publishFunctionMessage_uint_string_string_string" onclick="'+this.prefix+'OrganController.Organ_publishFunctionMessage_uint_string_string_string()">execute Organ_publishFunctionMessage</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_publishFunctionMessage_uint_string_string_string">'
++		'		<legend>publishFunctionMessage</legend>'
++		'			  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_id">id</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_id"'
++		'				  placeholder="id"/>'
++		'			  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_message">message</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_message"'
++		'				  placeholder="message"/>'
++		'			  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_hash">hash</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_hash"'
++		'				  placeholder="hash"/>'
++		'			  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_er">er</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_er"'
++		'				  placeholder="er"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganController.Organ_publishFunctionMessage_uint_string_string_string" onclick="'+this.prefix+'OrganController.Organ_publishFunctionMessage_uint_string_string_string()">publishFunctionMessage</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -1028,13 +1176,19 @@ function OrganGuiFactory() {
 	* Create the gui for the function createBallot.
 	*/
 	this.createOrgan_createBallot_string_bytes32Gui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_createBallot_string_bytes32">'
-+		'		Organ_createBallot:'
-+		'			  <div class="function_parameter">name<input type="text" id="'+this.prefix+'Organ_createBallot_string_bytes32_name"></div>'
-+		'			  <div class="function_parameter">proposalNames<input type="text" id="'+this.prefix+'Organ_createBallot_string_bytes32_proposalNames"></div>'
-+		'			<button id="'+this.prefix+'OrganController.Organ_createBallot_string_bytes32" onclick="'+this.prefix+'OrganController.Organ_createBallot_string_bytes32()">execute Organ_createBallot</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_createBallot_string_bytes32">'
++		'		<legend>createBallot</legend>'
++		'			  <label class="function_parameter" for="Organ_createBallot_string_bytes32_name">name</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_createBallot_string_bytes32_name"'
++		'				  placeholder="name"/>'
++		'			  <label class="function_parameter" for="Organ_createBallot_string_bytes32_proposalNames">proposalNames</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_createBallot_string_bytes32_proposalNames"'
++		'				  placeholder="proposalNames"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganController.Organ_createBallot_string_bytes32" onclick="'+this.prefix+'OrganController.Organ_createBallot_string_bytes32()">createBallot</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_createBallot_string_bytes32_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -1042,11 +1196,11 @@ function OrganGuiFactory() {
 	* Create the gui for the function getLastBallot.
 	*/
 	this.createOrgan_getLastBallotGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_getLastBallot">'
-+		'		Organ_getLastBallot:'
-+		'			<button id="'+this.prefix+'OrganController.Organ_getLastBallot" onclick="'+this.prefix+'OrganController.Organ_getLastBallot()">execute Organ_getLastBallot</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_getLastBallot">'
++		'		<legend>getLastBallot</legend>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganController.Organ_getLastBallot" onclick="'+this.prefix+'OrganController.Organ_getLastBallot()">getLastBallot</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_getLastBallot_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -1054,11 +1208,11 @@ function OrganGuiFactory() {
 	* Create the gui for the function getOrganBlog.
 	*/
 	this.createOrgan_getOrganBlogGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_getOrganBlog">'
-+		'		Organ_getOrganBlog:'
-+		'			<button id="'+this.prefix+'OrganController.Organ_getOrganBlog" onclick="'+this.prefix+'OrganController.Organ_getOrganBlog()">execute Organ_getOrganBlog</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_getOrganBlog">'
++		'		<legend>getOrganBlog</legend>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganController.Organ_getOrganBlog" onclick="'+this.prefix+'OrganController.Organ_getOrganBlog()">getOrganBlog</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_getOrganBlog_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -1066,13 +1220,19 @@ function OrganGuiFactory() {
 	* Create the gui for the function addOrganFunction.
 	*/
 	this.createOrgan_addOrganFunction_address_stringGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_addOrganFunction_address_string">'
-+		'		Organ_addOrganFunction:'
-+		'			  <div class="function_parameter">_of<input type="text" id="'+this.prefix+'Organ_addOrganFunction_address_string__of"></div>'
-+		'			  <div class="function_parameter">_name<input type="text" id="'+this.prefix+'Organ_addOrganFunction_address_string__name"></div>'
-+		'			<button id="'+this.prefix+'OrganController.Organ_addOrganFunction_address_string" onclick="'+this.prefix+'OrganController.Organ_addOrganFunction_address_string()">execute Organ_addOrganFunction</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Organ_contract_function_Organ_addOrganFunction_address_string">'
++		'		<legend>addOrganFunction</legend>'
++		'			  <label class="function_parameter" for="Organ_addOrganFunction_address_string__of">_of</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_addOrganFunction_address_string__of"'
++		'				  placeholder="_of"/>'
++		'			  <label class="function_parameter" for="Organ_addOrganFunction_address_string__name">_name</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_addOrganFunction_address_string__name"'
++		'				  placeholder="_name"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganController.Organ_addOrganFunction_address_string" onclick="'+this.prefix+'OrganController.Organ_addOrganFunction_address_string()">addOrganFunction</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_addOrganFunction_address_string_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -1080,14 +1240,23 @@ function OrganGuiFactory() {
 	* Create the gui for the function publishMessage.
 	*/
 	this.createOrgan_publishMessage_string_string_stringGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Organ_contract_function_MessagePublisher_publishMessage_string_string_string">'
-+		'		Organ_publishMessage:'
-+		'			  <div class="function_parameter">message<input type="text" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_message"></div>'
-+		'			  <div class="function_parameter">hash<input type="text" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_hash"></div>'
-+		'			  <div class="function_parameter">er<input type="text" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_er"></div>'
-+		'			<button id="'+this.prefix+'OrganController.MessagePublisher_publishMessage_string_string_string" onclick="'+this.prefix+'OrganController.MessagePublisher_publishMessage_string_string_string()">execute Organ_publishMessage</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Organ_contract_function_MessagePublisher_publishMessage_string_string_string">'
++		'		<legend>publishMessage</legend>'
++		'			  <label class="function_parameter" for="MessagePublisher_publishMessage_string_string_string_message">message</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_message"'
++		'				  placeholder="message"/>'
++		'			  <label class="function_parameter" for="MessagePublisher_publishMessage_string_string_string_hash">hash</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_hash"'
++		'				  placeholder="hash"/>'
++		'			  <label class="function_parameter" for="MessagePublisher_publishMessage_string_string_string_er">er</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_er"'
++		'				  placeholder="er"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganController.MessagePublisher_publishMessage_string_string_string" onclick="'+this.prefix+'OrganController.MessagePublisher_publishMessage_string_string_string()">publishMessage</button>'
 +		'			<div class="function_result" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -1793,10 +1962,22 @@ function OrganDeployment(guiId){
 function PartyModel(contract) {
 this.contract = contract;
 	/**
+	* Getter for name.
+	**/
+	this.getName = function(){
+		return contract.name(); 
+	}
+	/**
 	* Getter for mangerCount.
 	**/
 	this.getMangerCount = function(){
 		return contract.mangerCount(); 
+	}
+	/**
+	* Getter for memberRegistry.
+	**/
+	this.getMemberRegistry = function(){
+		return contract.memberRegistry(); 
 	}
 	/**
 	* Getter for constitutionHash.
@@ -1811,6 +1992,24 @@ this.contract = contract;
 		return contract.organCount(); 
 	}
 	/**
+	* Getter for blogregistry.
+	**/
+	this.getBlogregistry = function(){
+		return contract.blogregistry(); 
+	}
+	/**
+	* Getter for parent.
+	**/
+	this.getParent = function(){
+		return contract.parent(); 
+	}
+	/**
+	* Getter for subDivisionCount.
+	**/
+	this.getSubDivisionCount = function(){
+		return contract.subDivisionCount(); 
+	}
+	/**
 	* Get the mapped value for a key.
 	*/
 	this.getManagers=function(key) {
@@ -1821,6 +2020,12 @@ this.contract = contract;
 	*/
 	this.getOrgans=function(key) {
 		return contract.organs(key);
+	}
+	/**
+	* Get the mapped value for a key.
+	*/
+	this.getSubDivisions=function(key) {
+		return contract.subDivisions(key);
 	}
 	/**
 	* Call addManager.
@@ -1835,22 +2040,34 @@ this.contract = contract;
 		return contract.removeManager(_managerAddress); 
 	}
 	/**
-	* Call createOrgan.
-	**/
-	this.createOrgan = function(organName){
-		return contract.createOrgan(organName); 
-	}
-	/**
 	* Call isManager.
 	**/
 	this.isManager = function(_managerAddress){
 		return contract.isManager(_managerAddress); 
 	}
 	/**
+	* Call createOrgan.
+	**/
+	this.createOrgan = function(organName){
+		return contract.createOrgan(organName); 
+	}
+	/**
 	* Call addOrgan.
 	**/
 	this.addOrgan = function(_organ){
 		return contract.addOrgan(_organ); 
+	}
+	/**
+	* Call addSubDivision.
+	**/
+	this.addSubDivision = function(_subDivision){
+		return contract.addSubDivision(_subDivision); 
+	}
+	/**
+	* Call removeSubDivision.
+	**/
+	this.removeSubDivision = function(_divisionId){
+		return contract.removeSubDivision(_divisionId); 
 	}
 }// end of function PartyModel
 
@@ -1881,104 +2098,179 @@ function PartyGuiFactory() {
 +		'		Party:'
 +		'		  <input type="text" id="'+this.prefix+'Party_address"> <button id="'+this.prefix+'PartyController.setAddress" onclick="'+this.prefix+'PartyController.setAddress()">change Party Address</button>'
 +		'		  <div class="contract_attributes" id="'+this.prefix+'Party_contract_attributes"> attributes:'
++		'		    <div class="contract_attribute" id="'+this.prefix+'Party_contract_attribute_name"> name:'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Party_name_value"> </span>'
++		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Party_contract_attribute_mangerCount"> mangerCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Party_mangerCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Party_mangerCount_value"> </span>'
++		'		    </div>'
++		'		    <div class="contract_attribute" id="'+this.prefix+'Party_contract_attribute_memberRegistry"> memberRegistry:'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Party_memberRegistry_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Party_contract_attribute_constitutionHash"> constitutionHash:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Party_constitutionHash_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Party_constitutionHash_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Party_contract_attribute_organCount"> organCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Party_organCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Party_organCount_value"> </span>'
++		'		    </div>'
++		'		    <div class="contract_attribute" id="'+this.prefix+'Party_contract_attribute_blogregistry"> blogregistry:'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Party_blogregistry_value"> </span>'
++		'		    </div>'
++		'		    <div class="contract_attribute" id="'+this.prefix+'Party_contract_attribute_parent"> parent:'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Party_parent_value"> </span>'
++		'		    </div>'
++		'		    <div class="contract_attribute" id="'+this.prefix+'Party_contract_attribute_subDivisionCount"> subDivisionCount:'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Party_subDivisionCount_value"> </span>'
 +		'		    </div>'
 +		'		'
 +		'		<div class="Value_Mapping" id="'+this.prefix+'Party_contract_attribute_managers">mapping  managers:'
-+		'				<input type="text" id="'+this.prefix+'Party_contract_attribute_managers_input">(address)'
++		'				<input class="function_input" type="text" id="'+this.prefix+'Party_contract_attribute_managers_input">(address)'
 +		'		    	<div class="Mapping_value" id="'+this.prefix+'Party_contract_attribute_address"> bool:'
-+		'		      		<div class="contract_attribute_value" id="'+this.prefix+'Party_managers_value"> </div>'
++		'		      		<span class="contract_attribute_value" id="'+this.prefix+'Party_managers_value"> </span>'
 +		'		    	</div>'
 +		'		  </div>'
 +		'		<div class="Value_Mapping" id="'+this.prefix+'Party_contract_attribute_organs">mapping  organs:'
-+		'				<input type="number" id="'+this.prefix+'Party_contract_attribute_organs_input">(uint)'
++		'				<input class="function_input" type="number" id="'+this.prefix+'Party_contract_attribute_organs_input">(uint)'
 +		'		    	<div class="Mapping_value" id="'+this.prefix+'Party_contract_attribute_uint"> Organ:'
-+		'		      		<div class="contract_attribute_value" id="'+this.prefix+'Party_organs_value"> </div>'
++		'		      		<span class="contract_attribute_value" id="'+this.prefix+'Party_organs_value"> </span>'
 +		'		    	</div>'
 +		'		  </div>'
-+		'		    <button id="'+this.prefix+'Party_updateAttributes" onclick="'+this.prefix+'PartyController._updateAttributes()">update Party attributes</button>'
++		'		<div class="Value_Mapping" id="'+this.prefix+'Party_contract_attribute_subDivisions">mapping  subDivisions:'
++		'				<input class="function_input" type="number" id="'+this.prefix+'Party_contract_attribute_subDivisions_input">(uint)'
++		'		    	<div class="Mapping_value" id="'+this.prefix+'Party_contract_attribute_uint"> Party:'
++		'		      		<span class="contract_attribute_value" id="'+this.prefix+'Party_subDivisions_value"> </span>'
++		'		    	</div>'
 +		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Party_contract_function_Manageable_addManager_address">'
-+		'		Party_addManager:'
-+		'			  <div class="function_parameter">_newManagerAddress<input type="text" id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"></div>'
-+		'			<button id="'+this.prefix+'PartyController.Manageable_addManager_address" onclick="'+this.prefix+'PartyController.Manageable_addManager_address()">execute Party_addManager</button>'
++		'		    <button class="function_btn" id="'+this.prefix+'Party_updateAttributes" onclick="'+this.prefix+'PartyController._updateAttributes()">update Party attributes</button>'
++		'		  </div>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Party_contract_function_Manageable_addManager_address">'
++		'		<legend>addManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_addManager_address__newManagerAddress">_newManagerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"'
++		'				  placeholder="_newManagerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'PartyController.Manageable_addManager_address" onclick="'+this.prefix+'PartyController.Manageable_addManager_address()">addManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_addManager_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Party_contract_function_Manageable_removeManager_address">'
-+		'		Party_removeManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_removeManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'PartyController.Manageable_removeManager_address" onclick="'+this.prefix+'PartyController.Manageable_removeManager_address()">execute Party_removeManager</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Party_contract_function_Manageable_removeManager_address">'
++		'		<legend>removeManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_removeManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_removeManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'PartyController.Manageable_removeManager_address" onclick="'+this.prefix+'PartyController.Manageable_removeManager_address()">removeManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_removeManager_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Party_contract_function_Party_createOrgan_string">'
-+		'		Party_createOrgan:'
-+		'			  <div class="function_parameter">organName<input type="text" id="'+this.prefix+'Party_createOrgan_string_organName"></div>'
-+		'			<button id="'+this.prefix+'PartyController.Party_createOrgan_string" onclick="'+this.prefix+'PartyController.Party_createOrgan_string()">execute Party_createOrgan</button>'
-+		'			<div class="function_result" id="'+this.prefix+'Party_createOrgan_string_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Party_contract_function_Manageable_isManager_address">'
-+		'		Party_isManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_isManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'PartyController.Manageable_isManager_address" onclick="'+this.prefix+'PartyController.Manageable_isManager_address()">execute Party_isManager</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Party_contract_function_Manageable_isManager_address">'
++		'		<legend>isManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_isManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_isManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'PartyController.Manageable_isManager_address" onclick="'+this.prefix+'PartyController.Manageable_isManager_address()">isManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_isManager_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Party_contract_function_Party_addOrgan_address">'
-+		'		Party_addOrgan:'
-+		'			  <div class="function_parameter">_organ<input type="text" id="'+this.prefix+'Party_addOrgan_address__organ"></div>'
-+		'			<button id="'+this.prefix+'PartyController.Party_addOrgan_address" onclick="'+this.prefix+'PartyController.Party_addOrgan_address()">execute Party_addOrgan</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Party_contract_function_Party_createOrgan_string">'
++		'		<legend>createOrgan</legend>'
++		'			  <label class="function_parameter" for="Party_createOrgan_string_organName">organName</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Party_createOrgan_string_organName"'
++		'				  placeholder="organName"/>'
++		'			<button class="function_btn" id="'+this.prefix+'PartyController.Party_createOrgan_string" onclick="'+this.prefix+'PartyController.Party_createOrgan_string()">createOrgan</button>'
++		'			<div class="function_result" id="'+this.prefix+'Party_createOrgan_string_res"></div>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Party_contract_function_Party_addOrgan_address">'
++		'		<legend>addOrgan</legend>'
++		'			  <label class="function_parameter" for="Party_addOrgan_address__organ">_organ</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Party_addOrgan_address__organ"'
++		'				  placeholder="_organ"/>'
++		'			<button class="function_btn" id="'+this.prefix+'PartyController.Party_addOrgan_address" onclick="'+this.prefix+'PartyController.Party_addOrgan_address()">addOrgan</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Party_addOrgan_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Party_contract_function_Party_addSubDivision_address">'
++		'		<legend>addSubDivision</legend>'
++		'			  <label class="function_parameter" for="Party_addSubDivision_address__subDivision">_subDivision</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Party_addSubDivision_address__subDivision"'
++		'				  placeholder="_subDivision"/>'
++		'			<button class="function_btn" id="'+this.prefix+'PartyController.Party_addSubDivision_address" onclick="'+this.prefix+'PartyController.Party_addSubDivision_address()">addSubDivision</button>'
++		'			<div class="function_result" id="'+this.prefix+'Party_addSubDivision_address_res"></div>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Party_contract_function_Party_removeSubDivision_uint">'
++		'		<legend>removeSubDivision</legend>'
++		'			  <label class="function_parameter" for="Party_removeSubDivision_uint__divisionId">_divisionId</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'Party_removeSubDivision_uint__divisionId"'
++		'				  placeholder="_divisionId"/>'
++		'			<button class="function_btn" id="'+this.prefix+'PartyController.Party_removeSubDivision_uint" onclick="'+this.prefix+'PartyController.Party_removeSubDivision_uint()">removeSubDivision</button>'
++		'			<div class="function_result" id="'+this.prefix+'Party_removeSubDivision_uint_res"></div>'
++		'		  </fieldset>'
 +		'		'
 +		'		</div>'
 ;
 	}
 
-	this.createPlainGui=function(){
-		return this.createAttributesGui()
-				+ this.createManageable_addManager_addressGui()
-				+ this.createManageable_isManager_addressGui()
-				+ this.createManageable_removeManager_addressGui()
-				+ this.createParty_addOrgan_addressGui()
-				+ this.createParty_createOrgan_stringGui()
-				
-				;
-	}
-
-	
 	/**
 	* Create the gui for the attributes.
 	*/
 	this.createAttributesGui=function() {
-		return 		'    <div class="contract_attribute" id="'+this.prefix+'Party_contract_attribute_mangerCount"> mangerCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Party_mangerCount_value"> </div>'
+		return 		'    <div class="contract_attribute" id="'+this.prefix+'Party_contract_attribute_name"> name:'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Party_name_value"> </span>'
++		'		    </div>'
++		'		    <div class="contract_attribute" id="'+this.prefix+'Party_contract_attribute_mangerCount"> mangerCount:'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Party_mangerCount_value"> </span>'
++		'		    </div>'
++		'		    <div class="contract_attribute" id="'+this.prefix+'Party_contract_attribute_memberRegistry"> memberRegistry:'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Party_memberRegistry_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Party_contract_attribute_constitutionHash"> constitutionHash:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Party_constitutionHash_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Party_constitutionHash_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Party_contract_attribute_organCount"> organCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Party_organCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Party_organCount_value"> </span>'
++		'		    </div>'
++		'		    <div class="contract_attribute" id="'+this.prefix+'Party_contract_attribute_blogregistry"> blogregistry:'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Party_blogregistry_value"> </span>'
++		'		    </div>'
++		'		    <div class="contract_attribute" id="'+this.prefix+'Party_contract_attribute_parent"> parent:'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Party_parent_value"> </span>'
++		'		    </div>'
++		'		    <div class="contract_attribute" id="'+this.prefix+'Party_contract_attribute_subDivisionCount"> subDivisionCount:'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Party_subDivisionCount_value"> </span>'
 +		'		    </div>'
 +		'		'
 ;
+	}
+
+	/**
+	* Create the gui.
+	*/
+	this.createPlainGui=function(){
+		return this.createAttributesGui()
+				+ this.createManageable_addManager_addressGui
+				+ this.createManageable_removeManager_addressGui
+				+ this.createManageable_isManager_addressGui
+				+ this.createParty_createOrgan_stringGui
+				+ this.createParty_addOrgan_addressGui
+				+ this.createParty_addSubDivision_addressGui
+				+ this.createParty_removeSubDivision_uintGui
+				;
 	}
 
 	/**
 	* Create the gui for the function addManager.
 	*/
 	this.createManageable_addManager_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Party_contract_function_Manageable_addManager_address">'
-+		'		Party_addManager:'
-+		'			  <div class="function_parameter">_newManagerAddress<input type="text" id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"></div>'
-+		'			<button id="'+this.prefix+'PartyController.Manageable_addManager_address" onclick="'+this.prefix+'PartyController.Manageable_addManager_address()">execute Party_addManager</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Party_contract_function_Manageable_addManager_address">'
++		'		<legend>addManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_addManager_address__newManagerAddress">_newManagerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"'
++		'				  placeholder="_newManagerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'PartyController.Manageable_addManager_address" onclick="'+this.prefix+'PartyController.Manageable_addManager_address()">addManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_addManager_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -1986,25 +2278,15 @@ function PartyGuiFactory() {
 	* Create the gui for the function removeManager.
 	*/
 	this.createManageable_removeManager_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Party_contract_function_Manageable_removeManager_address">'
-+		'		Party_removeManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_removeManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'PartyController.Manageable_removeManager_address" onclick="'+this.prefix+'PartyController.Manageable_removeManager_address()">execute Party_removeManager</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Party_contract_function_Manageable_removeManager_address">'
++		'		<legend>removeManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_removeManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_removeManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'PartyController.Manageable_removeManager_address" onclick="'+this.prefix+'PartyController.Manageable_removeManager_address()">removeManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_removeManager_address_res"></div>'
-+		'		  </div>'
-;
-	}
-
-	/**
-	* Create the gui for the function createOrgan.
-	*/
-	this.createParty_createOrgan_stringGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Party_contract_function_Party_createOrgan_string">'
-+		'		Party_createOrgan:'
-+		'			  <div class="function_parameter">organName<input type="text" id="'+this.prefix+'Party_createOrgan_string_organName"></div>'
-+		'			<button id="'+this.prefix+'PartyController.Party_createOrgan_string" onclick="'+this.prefix+'PartyController.Party_createOrgan_string()">execute Party_createOrgan</button>'
-+		'			<div class="function_result" id="'+this.prefix+'Party_createOrgan_string_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -2012,12 +2294,31 @@ function PartyGuiFactory() {
 	* Create the gui for the function isManager.
 	*/
 	this.createManageable_isManager_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Party_contract_function_Manageable_isManager_address">'
-+		'		Party_isManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_isManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'PartyController.Manageable_isManager_address" onclick="'+this.prefix+'PartyController.Manageable_isManager_address()">execute Party_isManager</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Party_contract_function_Manageable_isManager_address">'
++		'		<legend>isManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_isManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_isManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'PartyController.Manageable_isManager_address" onclick="'+this.prefix+'PartyController.Manageable_isManager_address()">isManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_isManager_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
+;
+	}
+
+	/**
+	* Create the gui for the function createOrgan.
+	*/
+	this.createParty_createOrgan_stringGui=function() {
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Party_contract_function_Party_createOrgan_string">'
++		'		<legend>createOrgan</legend>'
++		'			  <label class="function_parameter" for="Party_createOrgan_string_organName">organName</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Party_createOrgan_string_organName"'
++		'				  placeholder="organName"/>'
++		'			<button class="function_btn" id="'+this.prefix+'PartyController.Party_createOrgan_string" onclick="'+this.prefix+'PartyController.Party_createOrgan_string()">createOrgan</button>'
++		'			<div class="function_result" id="'+this.prefix+'Party_createOrgan_string_res"></div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -2025,12 +2326,47 @@ function PartyGuiFactory() {
 	* Create the gui for the function addOrgan.
 	*/
 	this.createParty_addOrgan_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Party_contract_function_Party_addOrgan_address">'
-+		'		Party_addOrgan:'
-+		'			  <div class="function_parameter">_organ<input type="text" id="'+this.prefix+'Party_addOrgan_address__organ"></div>'
-+		'			<button id="'+this.prefix+'PartyController.Party_addOrgan_address" onclick="'+this.prefix+'PartyController.Party_addOrgan_address()">execute Party_addOrgan</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Party_contract_function_Party_addOrgan_address">'
++		'		<legend>addOrgan</legend>'
++		'			  <label class="function_parameter" for="Party_addOrgan_address__organ">_organ</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Party_addOrgan_address__organ"'
++		'				  placeholder="_organ"/>'
++		'			<button class="function_btn" id="'+this.prefix+'PartyController.Party_addOrgan_address" onclick="'+this.prefix+'PartyController.Party_addOrgan_address()">addOrgan</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Party_addOrgan_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
+;
+	}
+
+	/**
+	* Create the gui for the function addSubDivision.
+	*/
+	this.createParty_addSubDivision_addressGui=function() {
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Party_contract_function_Party_addSubDivision_address">'
++		'		<legend>addSubDivision</legend>'
++		'			  <label class="function_parameter" for="Party_addSubDivision_address__subDivision">_subDivision</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Party_addSubDivision_address__subDivision"'
++		'				  placeholder="_subDivision"/>'
++		'			<button class="function_btn" id="'+this.prefix+'PartyController.Party_addSubDivision_address" onclick="'+this.prefix+'PartyController.Party_addSubDivision_address()">addSubDivision</button>'
++		'			<div class="function_result" id="'+this.prefix+'Party_addSubDivision_address_res"></div>'
++		'		  </fieldset>'
+;
+	}
+
+	/**
+	* Create the gui for the function removeSubDivision.
+	*/
+	this.createParty_removeSubDivision_uintGui=function() {
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Party_contract_function_Party_removeSubDivision_uint">'
++		'		<legend>removeSubDivision</legend>'
++		'			  <label class="function_parameter" for="Party_removeSubDivision_uint__divisionId">_divisionId</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'Party_removeSubDivision_uint__divisionId"'
++		'				  placeholder="_divisionId"/>'
++		'			<button class="function_btn" id="'+this.prefix+'PartyController.Party_removeSubDivision_uint" onclick="'+this.prefix+'PartyController.Party_removeSubDivision_uint()">removeSubDivision</button>'
++		'			<div class="function_result" id="'+this.prefix+'Party_removeSubDivision_uint_res"></div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -2074,6 +2410,21 @@ function PartyGuiFactory() {
         +' </div>';
 	}
 
+	/**
+	* Create a gui for the DivisionChanged event.
+    * @prefix - a prefix
+	* @blockHash - the bolckhash 
+	* @blockNumber - the number of the block
+	*/
+	this.createDivisionChangedLogDataGui = function(prefix, blockHash, blockNumber
+	,divisionAddress	,changer	,state	) {
+		return '<div class="eventRow">'
+        +'<div class="eventValue">'+divisionAddress+'</div>'
+        +'<div class="eventValue">'+changer+'</div>'
+        +'<div class="eventValue">'+state+'</div>'
+        +' </div>';
+	}
+
 }//end guifactory
 
 /**
@@ -2085,9 +2436,11 @@ function PartyGuiFactory() {
 * self.prefix+'Party_updateAttributes'     - 
 * self.prefix+'Manageable_addManager_address -
 * self.prefix+'Manageable_removeManager_address -
-* self.prefix+'Party_createOrgan_string -
 * self.prefix+'Manageable_isManager_address -
+* self.prefix+'Party_createOrgan_string -
 * self.prefix+'Party_addOrgan_address -
+* self.prefix+'Party_addSubDivision_address -
+* self.prefix+'Party_removeSubDivision_uint -
 */
 function PartyController() {
 
@@ -2119,18 +2472,26 @@ function PartyController() {
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_removeManager_address;
 		else console.log('Manageable_removeManager_address widget not bound');
-		var btn = document.getElementById(self.prefix+'PartyController.Party_createOrgan_string');
-		if(btn!=undefined)
-			btn.onclick = this.Party_createOrgan_string;
-		else console.log('Party_createOrgan_string widget not bound');
 		var btn = document.getElementById(self.prefix+'PartyController.Manageable_isManager_address');
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_isManager_address;
 		else console.log('Manageable_isManager_address widget not bound');
+		var btn = document.getElementById(self.prefix+'PartyController.Party_createOrgan_string');
+		if(btn!=undefined)
+			btn.onclick = this.Party_createOrgan_string;
+		else console.log('Party_createOrgan_string widget not bound');
 		var btn = document.getElementById(self.prefix+'PartyController.Party_addOrgan_address');
 		if(btn!=undefined)
 			btn.onclick = this.Party_addOrgan_address;
 		else console.log('Party_addOrgan_address widget not bound');
+		var btn = document.getElementById(self.prefix+'PartyController.Party_addSubDivision_address');
+		if(btn!=undefined)
+			btn.onclick = this.Party_addSubDivision_address;
+		else console.log('Party_addSubDivision_address widget not bound');
+		var btn = document.getElementById(self.prefix+'PartyController.Party_removeSubDivision_uint');
+		if(btn!=undefined)
+			btn.onclick = this.Party_removeSubDivision_uint;
+		else console.log('Party_removeSubDivision_uint widget not bound');
 
 	}
 
@@ -2149,18 +2510,33 @@ function PartyController() {
 	/**
 	* Update attributes.
 	*
+	* prefix+'Party_name_value' - 
 	* prefix+'Party_mangerCount_value' - 
+	* prefix+'Party_memberRegistry_value' - 
 	* prefix+'Party_constitutionHash_value' - 
 	* prefix+'Party_organCount_value' - 
+	* prefix+'Party_blogregistry_value' - 
+	* prefix+'Party_parent_value' - 
+	* prefix+'Party_subDivisionCount_value' - 
 	**/
 	this._updateAttributes=function () {
 		if(this.instance===null) return;
 		// update attributes
+		var name_res = self.instance.name();
+		var e = document.getElementById(self.prefix+'Party_name_value');
+		if(name_res!=null && e!=null)
+			e.innerText = name_res;
+		else console.log(self.prefix+'Party_name_value not found');
 		var mangerCount_res = self.instance.mangerCount();
 		var e = document.getElementById(self.prefix+'Party_mangerCount_value');
 		if(mangerCount_res!=null && e!=null)
 			e.innerText = mangerCount_res;
 		else console.log(self.prefix+'Party_mangerCount_value not found');
+		var memberRegistry_res = self.instance.memberRegistry();
+		var e = document.getElementById(self.prefix+'Party_memberRegistry_value');
+		if(memberRegistry_res!=null && e!=null)
+			e.innerText = memberRegistry_res;
+		else console.log(self.prefix+'Party_memberRegistry_value not found');
 		var constitutionHash_res = self.instance.constitutionHash();
 		var e = document.getElementById(self.prefix+'Party_constitutionHash_value');
 		if(constitutionHash_res!=null && e!=null)
@@ -2171,6 +2547,21 @@ function PartyController() {
 		if(organCount_res!=null && e!=null)
 			e.innerText = organCount_res;
 		else console.log(self.prefix+'Party_organCount_value not found');
+		var blogregistry_res = self.instance.blogregistry();
+		var e = document.getElementById(self.prefix+'Party_blogregistry_value');
+		if(blogregistry_res!=null && e!=null)
+			e.innerText = blogregistry_res;
+		else console.log(self.prefix+'Party_blogregistry_value not found');
+		var parent_res = self.instance.parent();
+		var e = document.getElementById(self.prefix+'Party_parent_value');
+		if(parent_res!=null && e!=null)
+			e.innerText = parent_res;
+		else console.log(self.prefix+'Party_parent_value not found');
+		var subDivisionCount_res = self.instance.subDivisionCount();
+		var e = document.getElementById(self.prefix+'Party_subDivisionCount_value');
+		if(subDivisionCount_res!=null && e!=null)
+			e.innerText = subDivisionCount_res;
+		else console.log(self.prefix+'Party_subDivisionCount_value not found');
 		var e = document.getElementById(self.prefix+'Party_contract_attribute_managers_input');
 		if(e!=null){
 			var _key = e.value;
@@ -2190,6 +2581,16 @@ function PartyController() {
 				var e1 = document.getElementById(self.prefix+'Party_organs_value');
 				if(e1!=null)	
 					e1.innerText = organs_res;
+			}}}
+		var e = document.getElementById(self.prefix+'Party_contract_attribute_subDivisions_input');
+		if(e!=null){
+			var _key = document.getElementById(self.prefix+'Party_contract_attribute_subDivisions_input').value;
+			if(_key!=''){
+			var subDivisions_res = self.instance.subDivisions(_key);
+			if(subDivisions_res!=null){
+				var e1 = document.getElementById(self.prefix+'Party_subDivisions_value');
+				if(e1!=null)	
+					e1.innerText = subDivisions_res;
 			}}}
 	}
 
@@ -2233,19 +2634,6 @@ function PartyController() {
 	}
 	
 	/**
-	* Calls the contract function Party_createOrgan.
-	*
-	* this.prefix+'Party_createOrgan_string_organName' -
-	**/
-	this.Party_createOrgan_string=function() {
-		var e = document.getElementById(self.prefix+'Party_createOrgan_string_organName');
-		if(e!=null)
-			var param_organName = e.value;
-		else console.log(self.prefix+'Party_createOrgan_string_organName not found');
-		var res = self.instance.createOrgan(param_organName);
-	}
-	
-	/**
 	* Calls the contract function Party_isManager.
 	*
 	* this.prefix+'Manageable_isManager_address__managerAddress' -
@@ -2262,6 +2650,19 @@ function PartyController() {
 	}
 	
 	/**
+	* Calls the contract function Party_createOrgan.
+	*
+	* this.prefix+'Party_createOrgan_string_organName' -
+	**/
+	this.Party_createOrgan_string=function() {
+		var e = document.getElementById(self.prefix+'Party_createOrgan_string_organName');
+		if(e!=null)
+			var param_organName = e.value;
+		else console.log(self.prefix+'Party_createOrgan_string_organName not found');
+		var res = self.instance.createOrgan(param_organName);
+	}
+	
+	/**
 	* Calls the contract function Party_addOrgan.
 	*
 	* this.prefix+'Party_addOrgan_address__organ' -
@@ -2272,6 +2673,32 @@ function PartyController() {
 			var param__organ = e.value;
 		else console.log(self.prefix+'Party_addOrgan_address__organ not found');
 		var res = self.instance.addOrgan(param__organ);
+	}
+	
+	/**
+	* Calls the contract function Party_addSubDivision.
+	*
+	* this.prefix+'Party_addSubDivision_address__subDivision' -
+	**/
+	this.Party_addSubDivision_address=function() {
+		var e = document.getElementById(self.prefix+'Party_addSubDivision_address__subDivision');
+		if(e!=null)
+			var param__subDivision = e.value;
+		else console.log(self.prefix+'Party_addSubDivision_address__subDivision not found');
+		var res = self.instance.addSubDivision(param__subDivision);
+	}
+	
+	/**
+	* Calls the contract function Party_removeSubDivision.
+	*
+	* this.prefix+'Party_removeSubDivision_uint__divisionId' -
+	**/
+	this.Party_removeSubDivision_uint=function() {
+		var e = document.getElementById(self.prefix+'Party_removeSubDivision_uint__divisionId');
+		if(e!=null)
+			var param__divisionId = e.value;
+		else console.log(self.prefix+'Party_removeSubDivision_uint__divisionId not found');
+		var res = self.instance.removeSubDivision(param__divisionId);
 	}
 	
 //delegated calls
@@ -2296,6 +2723,7 @@ function PartyManager(prefix,contract,containerId) {
 	this.guiFunction = null;
 	this.eventConstiutionChange = null;
 	this.eventOrganChanged = null;
+	this.eventDivisionChanged = null;
 	
 	/**
 	* adds the gui element to the given 'e' element
@@ -2395,6 +2823,17 @@ function PartyManager(prefix,contract,containerId) {
 		}else
 			console.log(error);	
 	});
+	var event_DivisionChanged = this.getContract().DivisionChanged({},{fromBlock: 0});
+	var elp = this.eventlogPrefix;
+	var callback = this.eventDivisionChanged;
+	event_DivisionChanged.watch(function(error,result){
+	if(!error){
+		if(callback!=null)
+			callback(result);
+
+		}else
+			console.log(error);	
+	});
 	}
 
 }// end of manager
@@ -2408,6 +2847,7 @@ function PartyGuiMananger(guiId){
 	this.guiFunction = null;
 	this.eventConstiutionChange = null;
 	this.eventOrganChanged = null;
+	this.eventDivisionChanged = null;
 	this.managerMap = {};
 	
 	/**
@@ -2419,6 +2859,7 @@ function PartyGuiMananger(guiId){
 		m.eventlogPrefix = this.prefix;
 		m.eventConstiutionChange = this.eventConstiutionChange;
 		m.eventOrganChanged = this.eventOrganChanged;
+		m.eventDivisionChanged = this.eventDivisionChanged;
 		m.watchEvents();
 		if(this.guiFunction!=null)
 			m.guiFunction = this.guiFunction;
@@ -2500,8 +2941,8 @@ function PartyDeployment(guiId){
 	/**
 	* Construct Party.
 	**/
-	this.deployParty_Party = function(account, code, providedGas){
-//		var c = Party.new({
+	this.deployParty_Party_string = function(account, code, providedGas, _name){
+//		var c = Party.new( _name,{
 //			from: account,
 //			data: code,
 //			gas:  providedGas
@@ -2529,10 +2970,22 @@ function PartyDeployment(guiId){
 function KUEKeNPartyModel(contract) {
 this.contract = contract;
 	/**
+	* Getter for name.
+	**/
+	this.getName = function(){
+		return contract.name(); 
+	}
+	/**
 	* Getter for mangerCount.
 	**/
 	this.getMangerCount = function(){
 		return contract.mangerCount(); 
+	}
+	/**
+	* Getter for memberRegistry.
+	**/
+	this.getMemberRegistry = function(){
+		return contract.memberRegistry(); 
 	}
 	/**
 	* Getter for constitutionHash.
@@ -2547,6 +3000,24 @@ this.contract = contract;
 		return contract.organCount(); 
 	}
 	/**
+	* Getter for blogregistry.
+	**/
+	this.getBlogregistry = function(){
+		return contract.blogregistry(); 
+	}
+	/**
+	* Getter for parent.
+	**/
+	this.getParent = function(){
+		return contract.parent(); 
+	}
+	/**
+	* Getter for subDivisionCount.
+	**/
+	this.getSubDivisionCount = function(){
+		return contract.subDivisionCount(); 
+	}
+	/**
 	* Get the mapped value for a key.
 	*/
 	this.getManagers=function(key) {
@@ -2559,10 +3030,10 @@ this.contract = contract;
 		return contract.organs(key);
 	}
 	/**
-	* Call KUEKeNParty.
-	**/
-	this.KUEKeNParty = function(){
-		return contract.KUEKeNParty(); 
+	* Get the mapped value for a key.
+	*/
+	this.getSubDivisions=function(key) {
+		return contract.subDivisions(key);
 	}
 	/**
 	* Call addManager.
@@ -2583,22 +3054,34 @@ this.contract = contract;
 		return contract.removeManager(_managerAddress); 
 	}
 	/**
-	* Call createOrgan.
-	**/
-	this.createOrgan = function(organName){
-		return contract.createOrgan(organName); 
-	}
-	/**
 	* Call isManager.
 	**/
 	this.isManager = function(_managerAddress){
 		return contract.isManager(_managerAddress); 
 	}
 	/**
+	* Call createOrgan.
+	**/
+	this.createOrgan = function(organName){
+		return contract.createOrgan(organName); 
+	}
+	/**
 	* Call addOrgan.
 	**/
 	this.addOrgan = function(_organ){
 		return contract.addOrgan(_organ); 
+	}
+	/**
+	* Call addSubDivision.
+	**/
+	this.addSubDivision = function(_subDivision){
+		return contract.addSubDivision(_subDivision); 
+	}
+	/**
+	* Call removeSubDivision.
+	**/
+	this.removeSubDivision = function(_divisionId){
+		return contract.removeSubDivision(_divisionId); 
 	}
 }// end of function KUEKeNPartyModel
 
@@ -2629,72 +3112,127 @@ function KUEKeNPartyGuiFactory() {
 +		'		KUEKeNParty:'
 +		'		  <input type="text" id="'+this.prefix+'KUEKeNParty_address"> <button id="'+this.prefix+'KUEKeNPartyController.setAddress" onclick="'+this.prefix+'KUEKeNPartyController.setAddress()">change KUEKeNParty Address</button>'
 +		'		  <div class="contract_attributes" id="'+this.prefix+'KUEKeNParty_contract_attributes"> attributes:'
++		'		    <div class="contract_attribute" id="'+this.prefix+'KUEKeNParty_contract_attribute_name"> name:'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_name_value"> </span>'
++		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'KUEKeNParty_contract_attribute_mangerCount"> mangerCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_mangerCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_mangerCount_value"> </span>'
++		'		    </div>'
++		'		    <div class="contract_attribute" id="'+this.prefix+'KUEKeNParty_contract_attribute_memberRegistry"> memberRegistry:'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_memberRegistry_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'KUEKeNParty_contract_attribute_constitutionHash"> constitutionHash:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_constitutionHash_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_constitutionHash_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'KUEKeNParty_contract_attribute_organCount"> organCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_organCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_organCount_value"> </span>'
++		'		    </div>'
++		'		    <div class="contract_attribute" id="'+this.prefix+'KUEKeNParty_contract_attribute_blogregistry"> blogregistry:'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_blogregistry_value"> </span>'
++		'		    </div>'
++		'		    <div class="contract_attribute" id="'+this.prefix+'KUEKeNParty_contract_attribute_parent"> parent:'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_parent_value"> </span>'
++		'		    </div>'
++		'		    <div class="contract_attribute" id="'+this.prefix+'KUEKeNParty_contract_attribute_subDivisionCount"> subDivisionCount:'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_subDivisionCount_value"> </span>'
 +		'		    </div>'
 +		'		'
 +		'		<div class="Value_Mapping" id="'+this.prefix+'KUEKeNParty_contract_attribute_managers">mapping  managers:'
-+		'				<input type="text" id="'+this.prefix+'KUEKeNParty_contract_attribute_managers_input">(address)'
++		'				<input class="function_input" type="text" id="'+this.prefix+'KUEKeNParty_contract_attribute_managers_input">(address)'
 +		'		    	<div class="Mapping_value" id="'+this.prefix+'KUEKeNParty_contract_attribute_address"> bool:'
-+		'		      		<div class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_managers_value"> </div>'
++		'		      		<span class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_managers_value"> </span>'
 +		'		    	</div>'
 +		'		  </div>'
 +		'		<div class="Value_Mapping" id="'+this.prefix+'KUEKeNParty_contract_attribute_organs">mapping  organs:'
-+		'				<input type="number" id="'+this.prefix+'KUEKeNParty_contract_attribute_organs_input">(uint)'
++		'				<input class="function_input" type="number" id="'+this.prefix+'KUEKeNParty_contract_attribute_organs_input">(uint)'
 +		'		    	<div class="Mapping_value" id="'+this.prefix+'KUEKeNParty_contract_attribute_uint"> Organ:'
-+		'		      		<div class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_organs_value"> </div>'
++		'		      		<span class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_organs_value"> </span>'
 +		'		    	</div>'
 +		'		  </div>'
-+		'		    <button id="'+this.prefix+'KUEKeNParty_updateAttributes" onclick="'+this.prefix+'KUEKeNPartyController._updateAttributes()">update KUEKeNParty attributes</button>'
++		'		<div class="Value_Mapping" id="'+this.prefix+'KUEKeNParty_contract_attribute_subDivisions">mapping  subDivisions:'
++		'				<input class="function_input" type="number" id="'+this.prefix+'KUEKeNParty_contract_attribute_subDivisions_input">(uint)'
++		'		    	<div class="Mapping_value" id="'+this.prefix+'KUEKeNParty_contract_attribute_uint"> Party:'
++		'		      		<span class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_subDivisions_value"> </span>'
++		'		    	</div>'
 +		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_KUEKeNParty_KUEKeNParty">'
-+		'		KUEKeNParty_KUEKeNParty:'
-+		'			<button id="'+this.prefix+'KUEKeNPartyController.KUEKeNParty_KUEKeNParty" onclick="'+this.prefix+'KUEKeNPartyController.KUEKeNParty_KUEKeNParty()">execute KUEKeNParty_KUEKeNParty</button>'
-+		'			<div class="function_result" id="'+this.prefix+'KUEKeNParty_KUEKeNParty_res"></div>'
++		'		    <button class="function_btn" id="'+this.prefix+'KUEKeNParty_updateAttributes" onclick="'+this.prefix+'KUEKeNPartyController._updateAttributes()">update KUEKeNParty attributes</button>'
 +		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Manageable_addManager_address">'
-+		'		KUEKeNParty_addManager:'
-+		'			  <div class="function_parameter">_newManagerAddress<input type="text" id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"></div>'
-+		'			<button id="'+this.prefix+'KUEKeNPartyController.Manageable_addManager_address" onclick="'+this.prefix+'KUEKeNPartyController.Manageable_addManager_address()">execute KUEKeNParty_addManager</button>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Manageable_addManager_address">'
++		'		<legend>addManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_addManager_address__newManagerAddress">_newManagerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"'
++		'				  placeholder="_newManagerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'KUEKeNPartyController.Manageable_addManager_address" onclick="'+this.prefix+'KUEKeNPartyController.Manageable_addManager_address()">addManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_addManager_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_KUEKeNParty_boostrapParty_address_address">'
-+		'		KUEKeNParty_boostrapParty:'
-+		'			  <div class="function_parameter">fc<input type="text" id="'+this.prefix+'KUEKeNParty_boostrapParty_address_address_fc"></div>'
-+		'			  <div class="function_parameter">br<input type="text" id="'+this.prefix+'KUEKeNParty_boostrapParty_address_address_br"></div>'
-+		'			<button id="'+this.prefix+'KUEKeNPartyController.KUEKeNParty_boostrapParty_address_address" onclick="'+this.prefix+'KUEKeNPartyController.KUEKeNParty_boostrapParty_address_address()">execute KUEKeNParty_boostrapParty</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_KUEKeNParty_boostrapParty_address_address">'
++		'		<legend>boostrapParty</legend>'
++		'			  <label class="function_parameter" for="KUEKeNParty_boostrapParty_address_address_fc">fc</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'KUEKeNParty_boostrapParty_address_address_fc"'
++		'				  placeholder="fc"/>'
++		'			  <label class="function_parameter" for="KUEKeNParty_boostrapParty_address_address_br">br</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'KUEKeNParty_boostrapParty_address_address_br"'
++		'				  placeholder="br"/>'
++		'			<button class="function_btn" id="'+this.prefix+'KUEKeNPartyController.KUEKeNParty_boostrapParty_address_address" onclick="'+this.prefix+'KUEKeNPartyController.KUEKeNParty_boostrapParty_address_address()">boostrapParty</button>'
 +		'			<div class="function_result" id="'+this.prefix+'KUEKeNParty_boostrapParty_address_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Manageable_removeManager_address">'
-+		'		KUEKeNParty_removeManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_removeManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'KUEKeNPartyController.Manageable_removeManager_address" onclick="'+this.prefix+'KUEKeNPartyController.Manageable_removeManager_address()">execute KUEKeNParty_removeManager</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Manageable_removeManager_address">'
++		'		<legend>removeManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_removeManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_removeManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'KUEKeNPartyController.Manageable_removeManager_address" onclick="'+this.prefix+'KUEKeNPartyController.Manageable_removeManager_address()">removeManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_removeManager_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Party_createOrgan_string">'
-+		'		KUEKeNParty_createOrgan:'
-+		'			  <div class="function_parameter">organName<input type="text" id="'+this.prefix+'Party_createOrgan_string_organName"></div>'
-+		'			<button id="'+this.prefix+'KUEKeNPartyController.Party_createOrgan_string" onclick="'+this.prefix+'KUEKeNPartyController.Party_createOrgan_string()">execute KUEKeNParty_createOrgan</button>'
-+		'			<div class="function_result" id="'+this.prefix+'Party_createOrgan_string_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Manageable_isManager_address">'
-+		'		KUEKeNParty_isManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_isManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'KUEKeNPartyController.Manageable_isManager_address" onclick="'+this.prefix+'KUEKeNPartyController.Manageable_isManager_address()">execute KUEKeNParty_isManager</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Manageable_isManager_address">'
++		'		<legend>isManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_isManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_isManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'KUEKeNPartyController.Manageable_isManager_address" onclick="'+this.prefix+'KUEKeNPartyController.Manageable_isManager_address()">isManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_isManager_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Party_addOrgan_address">'
-+		'		KUEKeNParty_addOrgan:'
-+		'			  <div class="function_parameter">_organ<input type="text" id="'+this.prefix+'Party_addOrgan_address__organ"></div>'
-+		'			<button id="'+this.prefix+'KUEKeNPartyController.Party_addOrgan_address" onclick="'+this.prefix+'KUEKeNPartyController.Party_addOrgan_address()">execute KUEKeNParty_addOrgan</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Party_createOrgan_string">'
++		'		<legend>createOrgan</legend>'
++		'			  <label class="function_parameter" for="Party_createOrgan_string_organName">organName</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Party_createOrgan_string_organName"'
++		'				  placeholder="organName"/>'
++		'			<button class="function_btn" id="'+this.prefix+'KUEKeNPartyController.Party_createOrgan_string" onclick="'+this.prefix+'KUEKeNPartyController.Party_createOrgan_string()">createOrgan</button>'
++		'			<div class="function_result" id="'+this.prefix+'Party_createOrgan_string_res"></div>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Party_addOrgan_address">'
++		'		<legend>addOrgan</legend>'
++		'			  <label class="function_parameter" for="Party_addOrgan_address__organ">_organ</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Party_addOrgan_address__organ"'
++		'				  placeholder="_organ"/>'
++		'			<button class="function_btn" id="'+this.prefix+'KUEKeNPartyController.Party_addOrgan_address" onclick="'+this.prefix+'KUEKeNPartyController.Party_addOrgan_address()">addOrgan</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Party_addOrgan_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Party_addSubDivision_address">'
++		'		<legend>addSubDivision</legend>'
++		'			  <label class="function_parameter" for="Party_addSubDivision_address__subDivision">_subDivision</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Party_addSubDivision_address__subDivision"'
++		'				  placeholder="_subDivision"/>'
++		'			<button class="function_btn" id="'+this.prefix+'KUEKeNPartyController.Party_addSubDivision_address" onclick="'+this.prefix+'KUEKeNPartyController.Party_addSubDivision_address()">addSubDivision</button>'
++		'			<div class="function_result" id="'+this.prefix+'Party_addSubDivision_address_res"></div>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Party_removeSubDivision_uint">'
++		'		<legend>removeSubDivision</legend>'
++		'			  <label class="function_parameter" for="Party_removeSubDivision_uint__divisionId">_divisionId</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'Party_removeSubDivision_uint__divisionId"'
++		'				  placeholder="_divisionId"/>'
++		'			<button class="function_btn" id="'+this.prefix+'KUEKeNPartyController.Party_removeSubDivision_uint" onclick="'+this.prefix+'KUEKeNPartyController.Party_removeSubDivision_uint()">removeSubDivision</button>'
++		'			<div class="function_result" id="'+this.prefix+'Party_removeSubDivision_uint_res"></div>'
++		'		  </fieldset>'
 +		'		'
 +		'		</div>'
 ;
@@ -2704,41 +3242,63 @@ function KUEKeNPartyGuiFactory() {
 	* Create the gui for the attributes.
 	*/
 	this.createAttributesGui=function() {
-		return 		'    <div class="contract_attribute" id="'+this.prefix+'KUEKeNParty_contract_attribute_mangerCount"> mangerCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_mangerCount_value"> </div>'
+		return 		'    <div class="contract_attribute" id="'+this.prefix+'KUEKeNParty_contract_attribute_name"> name:'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_name_value"> </span>'
++		'		    </div>'
++		'		    <div class="contract_attribute" id="'+this.prefix+'KUEKeNParty_contract_attribute_mangerCount"> mangerCount:'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_mangerCount_value"> </span>'
++		'		    </div>'
++		'		    <div class="contract_attribute" id="'+this.prefix+'KUEKeNParty_contract_attribute_memberRegistry"> memberRegistry:'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_memberRegistry_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'KUEKeNParty_contract_attribute_constitutionHash"> constitutionHash:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_constitutionHash_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_constitutionHash_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'KUEKeNParty_contract_attribute_organCount"> organCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_organCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_organCount_value"> </span>'
++		'		    </div>'
++		'		    <div class="contract_attribute" id="'+this.prefix+'KUEKeNParty_contract_attribute_blogregistry"> blogregistry:'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_blogregistry_value"> </span>'
++		'		    </div>'
++		'		    <div class="contract_attribute" id="'+this.prefix+'KUEKeNParty_contract_attribute_parent"> parent:'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_parent_value"> </span>'
++		'		    </div>'
++		'		    <div class="contract_attribute" id="'+this.prefix+'KUEKeNParty_contract_attribute_subDivisionCount"> subDivisionCount:'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'KUEKeNParty_subDivisionCount_value"> </span>'
 +		'		    </div>'
 +		'		'
 ;
 	}
 
 	/**
-	* Create the gui for the function KUEKeNParty.
+	* Create the gui.
 	*/
-	this.createKUEKeNParty_KUEKeNPartyGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_KUEKeNParty_KUEKeNParty">'
-+		'		KUEKeNParty_KUEKeNParty:'
-+		'			<button id="'+this.prefix+'KUEKeNPartyController.KUEKeNParty_KUEKeNParty" onclick="'+this.prefix+'KUEKeNPartyController.KUEKeNParty_KUEKeNParty()">execute KUEKeNParty_KUEKeNParty</button>'
-+		'			<div class="function_result" id="'+this.prefix+'KUEKeNParty_KUEKeNParty_res"></div>'
-+		'		  </div>'
-;
+	this.createPlainGui=function(){
+		return this.createAttributesGui()
+				+ this.createManageable_addManager_addressGui
+				+ this.createKUEKeNParty_boostrapParty_address_addressGui
+				+ this.createManageable_removeManager_addressGui
+				+ this.createManageable_isManager_addressGui
+				+ this.createParty_createOrgan_stringGui
+				+ this.createParty_addOrgan_addressGui
+				+ this.createParty_addSubDivision_addressGui
+				+ this.createParty_removeSubDivision_uintGui
+				;
 	}
 
 	/**
 	* Create the gui for the function addManager.
 	*/
 	this.createManageable_addManager_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Manageable_addManager_address">'
-+		'		KUEKeNParty_addManager:'
-+		'			  <div class="function_parameter">_newManagerAddress<input type="text" id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"></div>'
-+		'			<button id="'+this.prefix+'KUEKeNPartyController.Manageable_addManager_address" onclick="'+this.prefix+'KUEKeNPartyController.Manageable_addManager_address()">execute KUEKeNParty_addManager</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Manageable_addManager_address">'
++		'		<legend>addManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_addManager_address__newManagerAddress">_newManagerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"'
++		'				  placeholder="_newManagerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'KUEKeNPartyController.Manageable_addManager_address" onclick="'+this.prefix+'KUEKeNPartyController.Manageable_addManager_address()">addManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_addManager_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -2746,13 +3306,19 @@ function KUEKeNPartyGuiFactory() {
 	* Create the gui for the function boostrapParty.
 	*/
 	this.createKUEKeNParty_boostrapParty_address_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_KUEKeNParty_boostrapParty_address_address">'
-+		'		KUEKeNParty_boostrapParty:'
-+		'			  <div class="function_parameter">fc<input type="text" id="'+this.prefix+'KUEKeNParty_boostrapParty_address_address_fc"></div>'
-+		'			  <div class="function_parameter">br<input type="text" id="'+this.prefix+'KUEKeNParty_boostrapParty_address_address_br"></div>'
-+		'			<button id="'+this.prefix+'KUEKeNPartyController.KUEKeNParty_boostrapParty_address_address" onclick="'+this.prefix+'KUEKeNPartyController.KUEKeNParty_boostrapParty_address_address()">execute KUEKeNParty_boostrapParty</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_KUEKeNParty_boostrapParty_address_address">'
++		'		<legend>boostrapParty</legend>'
++		'			  <label class="function_parameter" for="KUEKeNParty_boostrapParty_address_address_fc">fc</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'KUEKeNParty_boostrapParty_address_address_fc"'
++		'				  placeholder="fc"/>'
++		'			  <label class="function_parameter" for="KUEKeNParty_boostrapParty_address_address_br">br</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'KUEKeNParty_boostrapParty_address_address_br"'
++		'				  placeholder="br"/>'
++		'			<button class="function_btn" id="'+this.prefix+'KUEKeNPartyController.KUEKeNParty_boostrapParty_address_address" onclick="'+this.prefix+'KUEKeNPartyController.KUEKeNParty_boostrapParty_address_address()">boostrapParty</button>'
 +		'			<div class="function_result" id="'+this.prefix+'KUEKeNParty_boostrapParty_address_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -2760,25 +3326,15 @@ function KUEKeNPartyGuiFactory() {
 	* Create the gui for the function removeManager.
 	*/
 	this.createManageable_removeManager_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Manageable_removeManager_address">'
-+		'		KUEKeNParty_removeManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_removeManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'KUEKeNPartyController.Manageable_removeManager_address" onclick="'+this.prefix+'KUEKeNPartyController.Manageable_removeManager_address()">execute KUEKeNParty_removeManager</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Manageable_removeManager_address">'
++		'		<legend>removeManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_removeManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_removeManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'KUEKeNPartyController.Manageable_removeManager_address" onclick="'+this.prefix+'KUEKeNPartyController.Manageable_removeManager_address()">removeManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_removeManager_address_res"></div>'
-+		'		  </div>'
-;
-	}
-
-	/**
-	* Create the gui for the function createOrgan.
-	*/
-	this.createParty_createOrgan_stringGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Party_createOrgan_string">'
-+		'		KUEKeNParty_createOrgan:'
-+		'			  <div class="function_parameter">organName<input type="text" id="'+this.prefix+'Party_createOrgan_string_organName"></div>'
-+		'			<button id="'+this.prefix+'KUEKeNPartyController.Party_createOrgan_string" onclick="'+this.prefix+'KUEKeNPartyController.Party_createOrgan_string()">execute KUEKeNParty_createOrgan</button>'
-+		'			<div class="function_result" id="'+this.prefix+'Party_createOrgan_string_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -2786,12 +3342,31 @@ function KUEKeNPartyGuiFactory() {
 	* Create the gui for the function isManager.
 	*/
 	this.createManageable_isManager_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Manageable_isManager_address">'
-+		'		KUEKeNParty_isManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_isManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'KUEKeNPartyController.Manageable_isManager_address" onclick="'+this.prefix+'KUEKeNPartyController.Manageable_isManager_address()">execute KUEKeNParty_isManager</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Manageable_isManager_address">'
++		'		<legend>isManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_isManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_isManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'KUEKeNPartyController.Manageable_isManager_address" onclick="'+this.prefix+'KUEKeNPartyController.Manageable_isManager_address()">isManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_isManager_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
+;
+	}
+
+	/**
+	* Create the gui for the function createOrgan.
+	*/
+	this.createParty_createOrgan_stringGui=function() {
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Party_createOrgan_string">'
++		'		<legend>createOrgan</legend>'
++		'			  <label class="function_parameter" for="Party_createOrgan_string_organName">organName</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Party_createOrgan_string_organName"'
++		'				  placeholder="organName"/>'
++		'			<button class="function_btn" id="'+this.prefix+'KUEKeNPartyController.Party_createOrgan_string" onclick="'+this.prefix+'KUEKeNPartyController.Party_createOrgan_string()">createOrgan</button>'
++		'			<div class="function_result" id="'+this.prefix+'Party_createOrgan_string_res"></div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -2799,12 +3374,47 @@ function KUEKeNPartyGuiFactory() {
 	* Create the gui for the function addOrgan.
 	*/
 	this.createParty_addOrgan_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Party_addOrgan_address">'
-+		'		KUEKeNParty_addOrgan:'
-+		'			  <div class="function_parameter">_organ<input type="text" id="'+this.prefix+'Party_addOrgan_address__organ"></div>'
-+		'			<button id="'+this.prefix+'KUEKeNPartyController.Party_addOrgan_address" onclick="'+this.prefix+'KUEKeNPartyController.Party_addOrgan_address()">execute KUEKeNParty_addOrgan</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Party_addOrgan_address">'
++		'		<legend>addOrgan</legend>'
++		'			  <label class="function_parameter" for="Party_addOrgan_address__organ">_organ</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Party_addOrgan_address__organ"'
++		'				  placeholder="_organ"/>'
++		'			<button class="function_btn" id="'+this.prefix+'KUEKeNPartyController.Party_addOrgan_address" onclick="'+this.prefix+'KUEKeNPartyController.Party_addOrgan_address()">addOrgan</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Party_addOrgan_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
+;
+	}
+
+	/**
+	* Create the gui for the function addSubDivision.
+	*/
+	this.createParty_addSubDivision_addressGui=function() {
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Party_addSubDivision_address">'
++		'		<legend>addSubDivision</legend>'
++		'			  <label class="function_parameter" for="Party_addSubDivision_address__subDivision">_subDivision</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Party_addSubDivision_address__subDivision"'
++		'				  placeholder="_subDivision"/>'
++		'			<button class="function_btn" id="'+this.prefix+'KUEKeNPartyController.Party_addSubDivision_address" onclick="'+this.prefix+'KUEKeNPartyController.Party_addSubDivision_address()">addSubDivision</button>'
++		'			<div class="function_result" id="'+this.prefix+'Party_addSubDivision_address_res"></div>'
++		'		  </fieldset>'
+;
+	}
+
+	/**
+	* Create the gui for the function removeSubDivision.
+	*/
+	this.createParty_removeSubDivision_uintGui=function() {
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'KUEKeNParty_contract_function_Party_removeSubDivision_uint">'
++		'		<legend>removeSubDivision</legend>'
++		'			  <label class="function_parameter" for="Party_removeSubDivision_uint__divisionId">_divisionId</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'Party_removeSubDivision_uint__divisionId"'
++		'				  placeholder="_divisionId"/>'
++		'			<button class="function_btn" id="'+this.prefix+'KUEKeNPartyController.Party_removeSubDivision_uint" onclick="'+this.prefix+'KUEKeNPartyController.Party_removeSubDivision_uint()">removeSubDivision</button>'
++		'			<div class="function_result" id="'+this.prefix+'Party_removeSubDivision_uint_res"></div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -2831,13 +3441,14 @@ function KUEKeNPartyGuiFactory() {
 *
 * self.prefix+'KUEKeNPartyController.setAddress' - 
 * self.prefix+'KUEKeNParty_updateAttributes'     - 
-* self.prefix+'KUEKeNParty_KUEKeNParty -
 * self.prefix+'Manageable_addManager_address -
 * self.prefix+'KUEKeNParty_boostrapParty_address_address -
 * self.prefix+'Manageable_removeManager_address -
-* self.prefix+'Party_createOrgan_string -
 * self.prefix+'Manageable_isManager_address -
+* self.prefix+'Party_createOrgan_string -
 * self.prefix+'Party_addOrgan_address -
+* self.prefix+'Party_addSubDivision_address -
+* self.prefix+'Party_removeSubDivision_uint -
 */
 function KUEKeNPartyController() {
 
@@ -2861,10 +3472,6 @@ function KUEKeNPartyController() {
 		if(btn!=undefined)
 			btn.onclick = this._updateAttributes;
 		else console.log('_updateAttributes widget not bound');
-		var btn = document.getElementById(self.prefix+'KUEKeNPartyController.KUEKeNParty_KUEKeNParty');
-		if(btn!=undefined)
-			btn.onclick = this.KUEKeNParty_KUEKeNParty;
-		else console.log('KUEKeNParty_KUEKeNParty widget not bound');
 		var btn = document.getElementById(self.prefix+'KUEKeNPartyController.Manageable_addManager_address');
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_addManager_address;
@@ -2877,18 +3484,26 @@ function KUEKeNPartyController() {
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_removeManager_address;
 		else console.log('Manageable_removeManager_address widget not bound');
-		var btn = document.getElementById(self.prefix+'KUEKeNPartyController.Party_createOrgan_string');
-		if(btn!=undefined)
-			btn.onclick = this.Party_createOrgan_string;
-		else console.log('Party_createOrgan_string widget not bound');
 		var btn = document.getElementById(self.prefix+'KUEKeNPartyController.Manageable_isManager_address');
 		if(btn!=undefined)
 			btn.onclick = this.Manageable_isManager_address;
 		else console.log('Manageable_isManager_address widget not bound');
+		var btn = document.getElementById(self.prefix+'KUEKeNPartyController.Party_createOrgan_string');
+		if(btn!=undefined)
+			btn.onclick = this.Party_createOrgan_string;
+		else console.log('Party_createOrgan_string widget not bound');
 		var btn = document.getElementById(self.prefix+'KUEKeNPartyController.Party_addOrgan_address');
 		if(btn!=undefined)
 			btn.onclick = this.Party_addOrgan_address;
 		else console.log('Party_addOrgan_address widget not bound');
+		var btn = document.getElementById(self.prefix+'KUEKeNPartyController.Party_addSubDivision_address');
+		if(btn!=undefined)
+			btn.onclick = this.Party_addSubDivision_address;
+		else console.log('Party_addSubDivision_address widget not bound');
+		var btn = document.getElementById(self.prefix+'KUEKeNPartyController.Party_removeSubDivision_uint');
+		if(btn!=undefined)
+			btn.onclick = this.Party_removeSubDivision_uint;
+		else console.log('Party_removeSubDivision_uint widget not bound');
 
 	}
 
@@ -2907,18 +3522,33 @@ function KUEKeNPartyController() {
 	/**
 	* Update attributes.
 	*
+	* prefix+'KUEKeNParty_name_value' - 
 	* prefix+'KUEKeNParty_mangerCount_value' - 
+	* prefix+'KUEKeNParty_memberRegistry_value' - 
 	* prefix+'KUEKeNParty_constitutionHash_value' - 
 	* prefix+'KUEKeNParty_organCount_value' - 
+	* prefix+'KUEKeNParty_blogregistry_value' - 
+	* prefix+'KUEKeNParty_parent_value' - 
+	* prefix+'KUEKeNParty_subDivisionCount_value' - 
 	**/
 	this._updateAttributes=function () {
 		if(this.instance===null) return;
 		// update attributes
+		var name_res = self.instance.name();
+		var e = document.getElementById(self.prefix+'KUEKeNParty_name_value');
+		if(name_res!=null && e!=null)
+			e.innerText = name_res;
+		else console.log(self.prefix+'KUEKeNParty_name_value not found');
 		var mangerCount_res = self.instance.mangerCount();
 		var e = document.getElementById(self.prefix+'KUEKeNParty_mangerCount_value');
 		if(mangerCount_res!=null && e!=null)
 			e.innerText = mangerCount_res;
 		else console.log(self.prefix+'KUEKeNParty_mangerCount_value not found');
+		var memberRegistry_res = self.instance.memberRegistry();
+		var e = document.getElementById(self.prefix+'KUEKeNParty_memberRegistry_value');
+		if(memberRegistry_res!=null && e!=null)
+			e.innerText = memberRegistry_res;
+		else console.log(self.prefix+'KUEKeNParty_memberRegistry_value not found');
 		var constitutionHash_res = self.instance.constitutionHash();
 		var e = document.getElementById(self.prefix+'KUEKeNParty_constitutionHash_value');
 		if(constitutionHash_res!=null && e!=null)
@@ -2929,6 +3559,21 @@ function KUEKeNPartyController() {
 		if(organCount_res!=null && e!=null)
 			e.innerText = organCount_res;
 		else console.log(self.prefix+'KUEKeNParty_organCount_value not found');
+		var blogregistry_res = self.instance.blogregistry();
+		var e = document.getElementById(self.prefix+'KUEKeNParty_blogregistry_value');
+		if(blogregistry_res!=null && e!=null)
+			e.innerText = blogregistry_res;
+		else console.log(self.prefix+'KUEKeNParty_blogregistry_value not found');
+		var parent_res = self.instance.parent();
+		var e = document.getElementById(self.prefix+'KUEKeNParty_parent_value');
+		if(parent_res!=null && e!=null)
+			e.innerText = parent_res;
+		else console.log(self.prefix+'KUEKeNParty_parent_value not found');
+		var subDivisionCount_res = self.instance.subDivisionCount();
+		var e = document.getElementById(self.prefix+'KUEKeNParty_subDivisionCount_value');
+		if(subDivisionCount_res!=null && e!=null)
+			e.innerText = subDivisionCount_res;
+		else console.log(self.prefix+'KUEKeNParty_subDivisionCount_value not found');
 		var e = document.getElementById(self.prefix+'KUEKeNParty_contract_attribute_managers_input');
 		if(e!=null){
 			var _key = e.value;
@@ -2949,17 +3594,19 @@ function KUEKeNPartyController() {
 				if(e1!=null)	
 					e1.innerText = organs_res;
 			}}}
+		var e = document.getElementById(self.prefix+'KUEKeNParty_contract_attribute_subDivisions_input');
+		if(e!=null){
+			var _key = document.getElementById(self.prefix+'KUEKeNParty_contract_attribute_subDivisions_input').value;
+			if(_key!=''){
+			var subDivisions_res = self.instance.subDivisions(_key);
+			if(subDivisions_res!=null){
+				var e1 = document.getElementById(self.prefix+'KUEKeNParty_subDivisions_value');
+				if(e1!=null)	
+					e1.innerText = subDivisions_res;
+			}}}
 	}
 
 	//call functions
-	
-	/**
-	* Calls the contract function KUEKeNParty_KUEKeNParty.
-	*
-	**/
-	this.KUEKeNParty_KUEKeNParty=function() {
-		var res = self.instance.KUEKeNParty();
-	}
 	
 	/**
 	* Calls the contract function KUEKeNParty_canAccess.
@@ -3017,19 +3664,6 @@ function KUEKeNPartyController() {
 	}
 	
 	/**
-	* Calls the contract function KUEKeNParty_createOrgan.
-	*
-	* this.prefix+'Party_createOrgan_string_organName' -
-	**/
-	this.Party_createOrgan_string=function() {
-		var e = document.getElementById(self.prefix+'Party_createOrgan_string_organName');
-		if(e!=null)
-			var param_organName = e.value;
-		else console.log(self.prefix+'Party_createOrgan_string_organName not found');
-		var res = self.instance.createOrgan(param_organName);
-	}
-	
-	/**
 	* Calls the contract function KUEKeNParty_isManager.
 	*
 	* this.prefix+'Manageable_isManager_address__managerAddress' -
@@ -3046,6 +3680,19 @@ function KUEKeNPartyController() {
 	}
 	
 	/**
+	* Calls the contract function KUEKeNParty_createOrgan.
+	*
+	* this.prefix+'Party_createOrgan_string_organName' -
+	**/
+	this.Party_createOrgan_string=function() {
+		var e = document.getElementById(self.prefix+'Party_createOrgan_string_organName');
+		if(e!=null)
+			var param_organName = e.value;
+		else console.log(self.prefix+'Party_createOrgan_string_organName not found');
+		var res = self.instance.createOrgan(param_organName);
+	}
+	
+	/**
 	* Calls the contract function KUEKeNParty_addOrgan.
 	*
 	* this.prefix+'Party_addOrgan_address__organ' -
@@ -3056,6 +3703,32 @@ function KUEKeNPartyController() {
 			var param__organ = e.value;
 		else console.log(self.prefix+'Party_addOrgan_address__organ not found');
 		var res = self.instance.addOrgan(param__organ);
+	}
+	
+	/**
+	* Calls the contract function KUEKeNParty_addSubDivision.
+	*
+	* this.prefix+'Party_addSubDivision_address__subDivision' -
+	**/
+	this.Party_addSubDivision_address=function() {
+		var e = document.getElementById(self.prefix+'Party_addSubDivision_address__subDivision');
+		if(e!=null)
+			var param__subDivision = e.value;
+		else console.log(self.prefix+'Party_addSubDivision_address__subDivision not found');
+		var res = self.instance.addSubDivision(param__subDivision);
+	}
+	
+	/**
+	* Calls the contract function KUEKeNParty_removeSubDivision.
+	*
+	* this.prefix+'Party_removeSubDivision_uint__divisionId' -
+	**/
+	this.Party_removeSubDivision_uint=function() {
+		var e = document.getElementById(self.prefix+'Party_removeSubDivision_uint__divisionId');
+		if(e!=null)
+			var param__divisionId = e.value;
+		else console.log(self.prefix+'Party_removeSubDivision_uint__divisionId not found');
+		var res = self.instance.removeSubDivision(param__divisionId);
 	}
 	
 //delegated calls
@@ -3255,6 +3928,18 @@ function KUEKeNPartyDeployment(guiId){
 			.at('0xeaefeb5cadc46f34d736529991059575bd989c77');
 	// End of user code
 
+
+	/**
+	* Construct KUEKeNParty.
+	**/
+	this.deployKUEKeNParty_KUEKeNParty_string = function(account, code, providedGas, _name){
+//		var c = KUEKeNParty.new( _name,{
+//			from: account,
+//			data: code,
+//			gas:  providedGas
+//		});
+		return c;
+	}
 	
 	/**
 	* The default deployer function.
@@ -3455,123 +4140,174 @@ function ConferenceGuiFactory() {
 +		'		  <input type="text" id="'+this.prefix+'Conference_address"> <button id="'+this.prefix+'ConferenceController.setAddress" onclick="'+this.prefix+'ConferenceController.setAddress()">change Conference Address</button>'
 +		'		  <div class="contract_attributes" id="'+this.prefix+'Conference_contract_attributes"> attributes:'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Conference_contract_attribute_memberRegistry"> memberRegistry:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Conference_memberRegistry_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Conference_memberRegistry_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Conference_contract_attribute_organName"> organName:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Conference_organName_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Conference_organName_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Conference_contract_attribute_accreditatedMembers"> accreditatedMembers:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Conference_accreditatedMembers_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Conference_accreditatedMembers_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Conference_contract_attribute_lastFunctionId"> lastFunctionId:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Conference_lastFunctionId_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Conference_lastFunctionId_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Conference_contract_attribute_mangerCount"> mangerCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Conference_mangerCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Conference_mangerCount_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Conference_contract_attribute_blogRegistry"> blogRegistry:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Conference_blogRegistry_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Conference_blogRegistry_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Conference_contract_attribute_date"> date:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Conference_date_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Conference_date_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Conference_contract_attribute_isActive"> isActive:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Conference_isActive_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Conference_isActive_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Conference_contract_attribute_ballotCount"> ballotCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Conference_ballotCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Conference_ballotCount_value"> </span>'
 +		'		    </div>'
 +		'		'
 +		'		<div class="Value_Mapping" id="'+this.prefix+'Conference_contract_attribute_managers">mapping  managers:'
-+		'				<input type="text" id="'+this.prefix+'Conference_contract_attribute_managers_input">(address)'
++		'				<input class="function_input" type="text" id="'+this.prefix+'Conference_contract_attribute_managers_input">(address)'
 +		'		    	<div class="Mapping_value" id="'+this.prefix+'Conference_contract_attribute_address"> bool:'
-+		'		      		<div class="contract_attribute_value" id="'+this.prefix+'Conference_managers_value"> </div>'
++		'		      		<span class="contract_attribute_value" id="'+this.prefix+'Conference_managers_value"> </span>'
 +		'		    	</div>'
 +		'		  </div>'
-+		'		    <button id="'+this.prefix+'Conference_updateAttributes" onclick="'+this.prefix+'ConferenceController._updateAttributes()">update Conference attributes</button>'
++		'		    <button class="function_btn" id="'+this.prefix+'Conference_updateAttributes" onclick="'+this.prefix+'ConferenceController._updateAttributes()">update Conference attributes</button>'
 +		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Conference_accreditationMember_address">'
-+		'		Conference_accreditationMember:'
-+		'			  <div class="function_parameter">_address<input type="text" id="'+this.prefix+'Conference_accreditationMember_address__address"></div>'
-+		'			<button id="'+this.prefix+'ConferenceController.Conference_accreditationMember_address" onclick="'+this.prefix+'ConferenceController.Conference_accreditationMember_address()">execute Conference_accreditationMember</button>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Conference_contract_function_Conference_accreditationMember_address">'
++		'		<legend>accreditationMember</legend>'
++		'			  <label class="function_parameter" for="Conference_accreditationMember_address__address">_address</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Conference_accreditationMember_address__address"'
++		'				  placeholder="_address"/>'
++		'			<button class="function_btn" id="'+this.prefix+'ConferenceController.Conference_accreditationMember_address" onclick="'+this.prefix+'ConferenceController.Conference_accreditationMember_address()">accreditationMember</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Conference_accreditationMember_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_getOrganFunction_uint">'
-+		'		Conference_getOrganFunction:'
-+		'			  <div class="function_parameter">_id<input type="number" id="'+this.prefix+'Organ_getOrganFunction_uint__id"></div>'
-+		'			<button id="'+this.prefix+'ConferenceController.Organ_getOrganFunction_uint" onclick="'+this.prefix+'ConferenceController.Organ_getOrganFunction_uint()">execute Conference_getOrganFunction</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_getOrganFunction_uint">'
++		'		<legend>getOrganFunction</legend>'
++		'			  <label class="function_parameter" for="Organ_getOrganFunction_uint__id">_id</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'Organ_getOrganFunction_uint__id"'
++		'				  placeholder="_id"/>'
++		'			<button class="function_btn" id="'+this.prefix+'ConferenceController.Organ_getOrganFunction_uint" onclick="'+this.prefix+'ConferenceController.Organ_getOrganFunction_uint()">getOrganFunction</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_getOrganFunction_uint_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Manageable_addManager_address">'
-+		'		Conference_addManager:'
-+		'			  <div class="function_parameter">_newManagerAddress<input type="text" id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"></div>'
-+		'			<button id="'+this.prefix+'ConferenceController.Manageable_addManager_address" onclick="'+this.prefix+'ConferenceController.Manageable_addManager_address()">execute Conference_addManager</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Conference_contract_function_Manageable_addManager_address">'
++		'		<legend>addManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_addManager_address__newManagerAddress">_newManagerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"'
++		'				  placeholder="_newManagerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'ConferenceController.Manageable_addManager_address" onclick="'+this.prefix+'ConferenceController.Manageable_addManager_address()">addManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_addManager_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_changeMember_uint_address">'
-+		'		Conference_changeMember:'
-+		'			  <div class="function_parameter">_id<input type="number" id="'+this.prefix+'Organ_changeMember_uint_address__id"></div>'
-+		'			  <div class="function_parameter">_address<input type="text" id="'+this.prefix+'Organ_changeMember_uint_address__address"></div>'
-+		'			<button id="'+this.prefix+'ConferenceController.Organ_changeMember_uint_address" onclick="'+this.prefix+'ConferenceController.Organ_changeMember_uint_address()">execute Conference_changeMember</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_changeMember_uint_address">'
++		'		<legend>changeMember</legend>'
++		'			  <label class="function_parameter" for="Organ_changeMember_uint_address__id">_id</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'Organ_changeMember_uint_address__id"'
++		'				  placeholder="_id"/>'
++		'			  <label class="function_parameter" for="Organ_changeMember_uint_address__address">_address</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_changeMember_uint_address__address"'
++		'				  placeholder="_address"/>'
++		'			<button class="function_btn" id="'+this.prefix+'ConferenceController.Organ_changeMember_uint_address" onclick="'+this.prefix+'ConferenceController.Organ_changeMember_uint_address()">changeMember</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_changeMember_uint_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Manageable_removeManager_address">'
-+		'		Conference_removeManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_removeManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'ConferenceController.Manageable_removeManager_address" onclick="'+this.prefix+'ConferenceController.Manageable_removeManager_address()">execute Conference_removeManager</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Conference_contract_function_Manageable_removeManager_address">'
++		'		<legend>removeManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_removeManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_removeManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'ConferenceController.Manageable_removeManager_address" onclick="'+this.prefix+'ConferenceController.Manageable_removeManager_address()">removeManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_removeManager_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_createFunction_string_string">'
-+		'		Conference_createFunction:'
-+		'			  <div class="function_parameter">_functionName<input type="text" id="'+this.prefix+'Organ_createFunction_string_string__functionName"></div>'
-+		'			  <div class="function_parameter">_constittiutionHash<input type="text" id="'+this.prefix+'Organ_createFunction_string_string__constittiutionHash"></div>'
-+		'			<button id="'+this.prefix+'ConferenceController.Organ_createFunction_string_string" onclick="'+this.prefix+'ConferenceController.Organ_createFunction_string_string()">execute Conference_createFunction</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_createFunction_string_string">'
++		'		<legend>createFunction</legend>'
++		'			  <label class="function_parameter" for="Organ_createFunction_string_string__functionName">_functionName</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_createFunction_string_string__functionName"'
++		'				  placeholder="_functionName"/>'
++		'			  <label class="function_parameter" for="Organ_createFunction_string_string__constittiutionHash">_constittiutionHash</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_createFunction_string_string__constittiutionHash"'
++		'				  placeholder="_constittiutionHash"/>'
++		'			<button class="function_btn" id="'+this.prefix+'ConferenceController.Organ_createFunction_string_string" onclick="'+this.prefix+'ConferenceController.Organ_createFunction_string_string()">createFunction</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_createFunction_string_string_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Manageable_isManager_address">'
-+		'		Conference_isManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_isManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'ConferenceController.Manageable_isManager_address" onclick="'+this.prefix+'ConferenceController.Manageable_isManager_address()">execute Conference_isManager</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Conference_contract_function_Manageable_isManager_address">'
++		'		<legend>isManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_isManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_isManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'ConferenceController.Manageable_isManager_address" onclick="'+this.prefix+'ConferenceController.Manageable_isManager_address()">isManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_isManager_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_initalizeOrgan">'
-+		'		Conference_initalizeOrgan:'
-+		'			<button id="'+this.prefix+'ConferenceController.Organ_initalizeOrgan" onclick="'+this.prefix+'ConferenceController.Organ_initalizeOrgan()">execute Conference_initalizeOrgan</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_initalizeOrgan">'
++		'		<legend>initalizeOrgan</legend>'
++		'			<button class="function_btn" id="'+this.prefix+'ConferenceController.Organ_initalizeOrgan" onclick="'+this.prefix+'ConferenceController.Organ_initalizeOrgan()">initalizeOrgan</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_initalizeOrgan_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_publishFunctionMessage_uint_string_string_string">'
-+		'		Conference_publishFunctionMessage:'
-+		'			  <div class="function_parameter">id<input type="number" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_id"></div>'
-+		'			  <div class="function_parameter">message<input type="text" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_message"></div>'
-+		'			  <div class="function_parameter">hash<input type="text" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_hash"></div>'
-+		'			  <div class="function_parameter">er<input type="text" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_er"></div>'
-+		'			<button id="'+this.prefix+'ConferenceController.Organ_publishFunctionMessage_uint_string_string_string" onclick="'+this.prefix+'ConferenceController.Organ_publishFunctionMessage_uint_string_string_string()">execute Conference_publishFunctionMessage</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_publishFunctionMessage_uint_string_string_string">'
++		'		<legend>publishFunctionMessage</legend>'
++		'			  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_id">id</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_id"'
++		'				  placeholder="id"/>'
++		'			  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_message">message</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_message"'
++		'				  placeholder="message"/>'
++		'			  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_hash">hash</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_hash"'
++		'				  placeholder="hash"/>'
++		'			  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_er">er</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_er"'
++		'				  placeholder="er"/>'
++		'			<button class="function_btn" id="'+this.prefix+'ConferenceController.Organ_publishFunctionMessage_uint_string_string_string" onclick="'+this.prefix+'ConferenceController.Organ_publishFunctionMessage_uint_string_string_string()">publishFunctionMessage</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_createBallot_string_bytes32">'
-+		'		Conference_createBallot:'
-+		'			  <div class="function_parameter">name<input type="text" id="'+this.prefix+'Organ_createBallot_string_bytes32_name"></div>'
-+		'			  <div class="function_parameter">proposalNames<input type="text" id="'+this.prefix+'Organ_createBallot_string_bytes32_proposalNames"></div>'
-+		'			<button id="'+this.prefix+'ConferenceController.Organ_createBallot_string_bytes32" onclick="'+this.prefix+'ConferenceController.Organ_createBallot_string_bytes32()">execute Conference_createBallot</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_createBallot_string_bytes32">'
++		'		<legend>createBallot</legend>'
++		'			  <label class="function_parameter" for="Organ_createBallot_string_bytes32_name">name</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_createBallot_string_bytes32_name"'
++		'				  placeholder="name"/>'
++		'			  <label class="function_parameter" for="Organ_createBallot_string_bytes32_proposalNames">proposalNames</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_createBallot_string_bytes32_proposalNames"'
++		'				  placeholder="proposalNames"/>'
++		'			<button class="function_btn" id="'+this.prefix+'ConferenceController.Organ_createBallot_string_bytes32" onclick="'+this.prefix+'ConferenceController.Organ_createBallot_string_bytes32()">createBallot</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_createBallot_string_bytes32_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_getLastBallot">'
-+		'		Conference_getLastBallot:'
-+		'			<button id="'+this.prefix+'ConferenceController.Organ_getLastBallot" onclick="'+this.prefix+'ConferenceController.Organ_getLastBallot()">execute Conference_getLastBallot</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_getLastBallot">'
++		'		<legend>getLastBallot</legend>'
++		'			<button class="function_btn" id="'+this.prefix+'ConferenceController.Organ_getLastBallot" onclick="'+this.prefix+'ConferenceController.Organ_getLastBallot()">getLastBallot</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_getLastBallot_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_getOrganBlog">'
-+		'		Conference_getOrganBlog:'
-+		'			<button id="'+this.prefix+'ConferenceController.Organ_getOrganBlog" onclick="'+this.prefix+'ConferenceController.Organ_getOrganBlog()">execute Conference_getOrganBlog</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_getOrganBlog">'
++		'		<legend>getOrganBlog</legend>'
++		'			<button class="function_btn" id="'+this.prefix+'ConferenceController.Organ_getOrganBlog" onclick="'+this.prefix+'ConferenceController.Organ_getOrganBlog()">getOrganBlog</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_getOrganBlog_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_addOrganFunction_address_string">'
-+		'		Conference_addOrganFunction:'
-+		'			  <div class="function_parameter">_of<input type="text" id="'+this.prefix+'Organ_addOrganFunction_address_string__of"></div>'
-+		'			  <div class="function_parameter">_name<input type="text" id="'+this.prefix+'Organ_addOrganFunction_address_string__name"></div>'
-+		'			<button id="'+this.prefix+'ConferenceController.Organ_addOrganFunction_address_string" onclick="'+this.prefix+'ConferenceController.Organ_addOrganFunction_address_string()">execute Conference_addOrganFunction</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_addOrganFunction_address_string">'
++		'		<legend>addOrganFunction</legend>'
++		'			  <label class="function_parameter" for="Organ_addOrganFunction_address_string__of">_of</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_addOrganFunction_address_string__of"'
++		'				  placeholder="_of"/>'
++		'			  <label class="function_parameter" for="Organ_addOrganFunction_address_string__name">_name</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_addOrganFunction_address_string__name"'
++		'				  placeholder="_name"/>'
++		'			<button class="function_btn" id="'+this.prefix+'ConferenceController.Organ_addOrganFunction_address_string" onclick="'+this.prefix+'ConferenceController.Organ_addOrganFunction_address_string()">addOrganFunction</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_addOrganFunction_address_string_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 +		'		'
 +		'		</div>'
 ;
@@ -3582,46 +4318,70 @@ function ConferenceGuiFactory() {
 	*/
 	this.createAttributesGui=function() {
 		return 		'    <div class="contract_attribute" id="'+this.prefix+'Conference_contract_attribute_memberRegistry"> memberRegistry:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Conference_memberRegistry_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Conference_memberRegistry_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Conference_contract_attribute_organName"> organName:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Conference_organName_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Conference_organName_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Conference_contract_attribute_accreditatedMembers"> accreditatedMembers:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Conference_accreditatedMembers_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Conference_accreditatedMembers_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Conference_contract_attribute_lastFunctionId"> lastFunctionId:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Conference_lastFunctionId_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Conference_lastFunctionId_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Conference_contract_attribute_mangerCount"> mangerCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Conference_mangerCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Conference_mangerCount_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Conference_contract_attribute_blogRegistry"> blogRegistry:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Conference_blogRegistry_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Conference_blogRegistry_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Conference_contract_attribute_date"> date:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Conference_date_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Conference_date_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Conference_contract_attribute_isActive"> isActive:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Conference_isActive_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Conference_isActive_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'Conference_contract_attribute_ballotCount"> ballotCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'Conference_ballotCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'Conference_ballotCount_value"> </span>'
 +		'		    </div>'
 +		'		'
 ;
 	}
 
 	/**
+	* Create the gui.
+	*/
+	this.createPlainGui=function(){
+		return this.createAttributesGui()
+				+ this.createConference_accreditationMember_addressGui
+				+ this.createOrgan_getOrganFunction_uintGui
+				+ this.createManageable_addManager_addressGui
+				+ this.createOrgan_changeMember_uint_addressGui
+				+ this.createManageable_removeManager_addressGui
+				+ this.createOrgan_createFunction_string_stringGui
+				+ this.createManageable_isManager_addressGui
+				+ this.createOrgan_initalizeOrganGui
+				+ this.createOrgan_publishFunctionMessage_uint_string_string_stringGui
+				+ this.createOrgan_createBallot_string_bytes32Gui
+				+ this.createOrgan_getLastBallotGui
+				+ this.createOrgan_getOrganBlogGui
+				+ this.createOrgan_addOrganFunction_address_stringGui
+				;
+	}
+
+	/**
 	* Create the gui for the function accreditationMember.
 	*/
 	this.createConference_accreditationMember_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Conference_accreditationMember_address">'
-+		'		Conference_accreditationMember:'
-+		'			  <div class="function_parameter">_address<input type="text" id="'+this.prefix+'Conference_accreditationMember_address__address"></div>'
-+		'			<button id="'+this.prefix+'ConferenceController.Conference_accreditationMember_address" onclick="'+this.prefix+'ConferenceController.Conference_accreditationMember_address()">execute Conference_accreditationMember</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Conference_contract_function_Conference_accreditationMember_address">'
++		'		<legend>accreditationMember</legend>'
++		'			  <label class="function_parameter" for="Conference_accreditationMember_address__address">_address</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Conference_accreditationMember_address__address"'
++		'				  placeholder="_address"/>'
++		'			<button class="function_btn" id="'+this.prefix+'ConferenceController.Conference_accreditationMember_address" onclick="'+this.prefix+'ConferenceController.Conference_accreditationMember_address()">accreditationMember</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Conference_accreditationMember_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -3629,12 +4389,15 @@ function ConferenceGuiFactory() {
 	* Create the gui for the function getOrganFunction.
 	*/
 	this.createOrgan_getOrganFunction_uintGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_getOrganFunction_uint">'
-+		'		Conference_getOrganFunction:'
-+		'			  <div class="function_parameter">_id<input type="number" id="'+this.prefix+'Organ_getOrganFunction_uint__id"></div>'
-+		'			<button id="'+this.prefix+'ConferenceController.Organ_getOrganFunction_uint" onclick="'+this.prefix+'ConferenceController.Organ_getOrganFunction_uint()">execute Conference_getOrganFunction</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_getOrganFunction_uint">'
++		'		<legend>getOrganFunction</legend>'
++		'			  <label class="function_parameter" for="Organ_getOrganFunction_uint__id">_id</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'Organ_getOrganFunction_uint__id"'
++		'				  placeholder="_id"/>'
++		'			<button class="function_btn" id="'+this.prefix+'ConferenceController.Organ_getOrganFunction_uint" onclick="'+this.prefix+'ConferenceController.Organ_getOrganFunction_uint()">getOrganFunction</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_getOrganFunction_uint_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -3642,12 +4405,15 @@ function ConferenceGuiFactory() {
 	* Create the gui for the function addManager.
 	*/
 	this.createManageable_addManager_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Manageable_addManager_address">'
-+		'		Conference_addManager:'
-+		'			  <div class="function_parameter">_newManagerAddress<input type="text" id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"></div>'
-+		'			<button id="'+this.prefix+'ConferenceController.Manageable_addManager_address" onclick="'+this.prefix+'ConferenceController.Manageable_addManager_address()">execute Conference_addManager</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Conference_contract_function_Manageable_addManager_address">'
++		'		<legend>addManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_addManager_address__newManagerAddress">_newManagerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"'
++		'				  placeholder="_newManagerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'ConferenceController.Manageable_addManager_address" onclick="'+this.prefix+'ConferenceController.Manageable_addManager_address()">addManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_addManager_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -3655,13 +4421,19 @@ function ConferenceGuiFactory() {
 	* Create the gui for the function changeMember.
 	*/
 	this.createOrgan_changeMember_uint_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_changeMember_uint_address">'
-+		'		Conference_changeMember:'
-+		'			  <div class="function_parameter">_id<input type="number" id="'+this.prefix+'Organ_changeMember_uint_address__id"></div>'
-+		'			  <div class="function_parameter">_address<input type="text" id="'+this.prefix+'Organ_changeMember_uint_address__address"></div>'
-+		'			<button id="'+this.prefix+'ConferenceController.Organ_changeMember_uint_address" onclick="'+this.prefix+'ConferenceController.Organ_changeMember_uint_address()">execute Conference_changeMember</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_changeMember_uint_address">'
++		'		<legend>changeMember</legend>'
++		'			  <label class="function_parameter" for="Organ_changeMember_uint_address__id">_id</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'Organ_changeMember_uint_address__id"'
++		'				  placeholder="_id"/>'
++		'			  <label class="function_parameter" for="Organ_changeMember_uint_address__address">_address</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_changeMember_uint_address__address"'
++		'				  placeholder="_address"/>'
++		'			<button class="function_btn" id="'+this.prefix+'ConferenceController.Organ_changeMember_uint_address" onclick="'+this.prefix+'ConferenceController.Organ_changeMember_uint_address()">changeMember</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_changeMember_uint_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -3669,12 +4441,15 @@ function ConferenceGuiFactory() {
 	* Create the gui for the function removeManager.
 	*/
 	this.createManageable_removeManager_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Manageable_removeManager_address">'
-+		'		Conference_removeManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_removeManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'ConferenceController.Manageable_removeManager_address" onclick="'+this.prefix+'ConferenceController.Manageable_removeManager_address()">execute Conference_removeManager</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Conference_contract_function_Manageable_removeManager_address">'
++		'		<legend>removeManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_removeManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_removeManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'ConferenceController.Manageable_removeManager_address" onclick="'+this.prefix+'ConferenceController.Manageable_removeManager_address()">removeManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_removeManager_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -3682,13 +4457,19 @@ function ConferenceGuiFactory() {
 	* Create the gui for the function createFunction.
 	*/
 	this.createOrgan_createFunction_string_stringGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_createFunction_string_string">'
-+		'		Conference_createFunction:'
-+		'			  <div class="function_parameter">_functionName<input type="text" id="'+this.prefix+'Organ_createFunction_string_string__functionName"></div>'
-+		'			  <div class="function_parameter">_constittiutionHash<input type="text" id="'+this.prefix+'Organ_createFunction_string_string__constittiutionHash"></div>'
-+		'			<button id="'+this.prefix+'ConferenceController.Organ_createFunction_string_string" onclick="'+this.prefix+'ConferenceController.Organ_createFunction_string_string()">execute Conference_createFunction</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_createFunction_string_string">'
++		'		<legend>createFunction</legend>'
++		'			  <label class="function_parameter" for="Organ_createFunction_string_string__functionName">_functionName</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_createFunction_string_string__functionName"'
++		'				  placeholder="_functionName"/>'
++		'			  <label class="function_parameter" for="Organ_createFunction_string_string__constittiutionHash">_constittiutionHash</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_createFunction_string_string__constittiutionHash"'
++		'				  placeholder="_constittiutionHash"/>'
++		'			<button class="function_btn" id="'+this.prefix+'ConferenceController.Organ_createFunction_string_string" onclick="'+this.prefix+'ConferenceController.Organ_createFunction_string_string()">createFunction</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_createFunction_string_string_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -3696,12 +4477,15 @@ function ConferenceGuiFactory() {
 	* Create the gui for the function isManager.
 	*/
 	this.createManageable_isManager_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Manageable_isManager_address">'
-+		'		Conference_isManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_isManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'ConferenceController.Manageable_isManager_address" onclick="'+this.prefix+'ConferenceController.Manageable_isManager_address()">execute Conference_isManager</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Conference_contract_function_Manageable_isManager_address">'
++		'		<legend>isManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_isManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_isManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'ConferenceController.Manageable_isManager_address" onclick="'+this.prefix+'ConferenceController.Manageable_isManager_address()">isManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_isManager_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -3709,11 +4493,11 @@ function ConferenceGuiFactory() {
 	* Create the gui for the function initalizeOrgan.
 	*/
 	this.createOrgan_initalizeOrganGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_initalizeOrgan">'
-+		'		Conference_initalizeOrgan:'
-+		'			<button id="'+this.prefix+'ConferenceController.Organ_initalizeOrgan" onclick="'+this.prefix+'ConferenceController.Organ_initalizeOrgan()">execute Conference_initalizeOrgan</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_initalizeOrgan">'
++		'		<legend>initalizeOrgan</legend>'
++		'			<button class="function_btn" id="'+this.prefix+'ConferenceController.Organ_initalizeOrgan" onclick="'+this.prefix+'ConferenceController.Organ_initalizeOrgan()">initalizeOrgan</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_initalizeOrgan_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -3721,15 +4505,27 @@ function ConferenceGuiFactory() {
 	* Create the gui for the function publishFunctionMessage.
 	*/
 	this.createOrgan_publishFunctionMessage_uint_string_string_stringGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_publishFunctionMessage_uint_string_string_string">'
-+		'		Conference_publishFunctionMessage:'
-+		'			  <div class="function_parameter">id<input type="number" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_id"></div>'
-+		'			  <div class="function_parameter">message<input type="text" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_message"></div>'
-+		'			  <div class="function_parameter">hash<input type="text" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_hash"></div>'
-+		'			  <div class="function_parameter">er<input type="text" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_er"></div>'
-+		'			<button id="'+this.prefix+'ConferenceController.Organ_publishFunctionMessage_uint_string_string_string" onclick="'+this.prefix+'ConferenceController.Organ_publishFunctionMessage_uint_string_string_string()">execute Conference_publishFunctionMessage</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_publishFunctionMessage_uint_string_string_string">'
++		'		<legend>publishFunctionMessage</legend>'
++		'			  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_id">id</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_id"'
++		'				  placeholder="id"/>'
++		'			  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_message">message</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_message"'
++		'				  placeholder="message"/>'
++		'			  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_hash">hash</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_hash"'
++		'				  placeholder="hash"/>'
++		'			  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_er">er</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_er"'
++		'				  placeholder="er"/>'
++		'			<button class="function_btn" id="'+this.prefix+'ConferenceController.Organ_publishFunctionMessage_uint_string_string_string" onclick="'+this.prefix+'ConferenceController.Organ_publishFunctionMessage_uint_string_string_string()">publishFunctionMessage</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -3737,13 +4533,19 @@ function ConferenceGuiFactory() {
 	* Create the gui for the function createBallot.
 	*/
 	this.createOrgan_createBallot_string_bytes32Gui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_createBallot_string_bytes32">'
-+		'		Conference_createBallot:'
-+		'			  <div class="function_parameter">name<input type="text" id="'+this.prefix+'Organ_createBallot_string_bytes32_name"></div>'
-+		'			  <div class="function_parameter">proposalNames<input type="text" id="'+this.prefix+'Organ_createBallot_string_bytes32_proposalNames"></div>'
-+		'			<button id="'+this.prefix+'ConferenceController.Organ_createBallot_string_bytes32" onclick="'+this.prefix+'ConferenceController.Organ_createBallot_string_bytes32()">execute Conference_createBallot</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_createBallot_string_bytes32">'
++		'		<legend>createBallot</legend>'
++		'			  <label class="function_parameter" for="Organ_createBallot_string_bytes32_name">name</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_createBallot_string_bytes32_name"'
++		'				  placeholder="name"/>'
++		'			  <label class="function_parameter" for="Organ_createBallot_string_bytes32_proposalNames">proposalNames</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_createBallot_string_bytes32_proposalNames"'
++		'				  placeholder="proposalNames"/>'
++		'			<button class="function_btn" id="'+this.prefix+'ConferenceController.Organ_createBallot_string_bytes32" onclick="'+this.prefix+'ConferenceController.Organ_createBallot_string_bytes32()">createBallot</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_createBallot_string_bytes32_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -3751,11 +4553,11 @@ function ConferenceGuiFactory() {
 	* Create the gui for the function getLastBallot.
 	*/
 	this.createOrgan_getLastBallotGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_getLastBallot">'
-+		'		Conference_getLastBallot:'
-+		'			<button id="'+this.prefix+'ConferenceController.Organ_getLastBallot" onclick="'+this.prefix+'ConferenceController.Organ_getLastBallot()">execute Conference_getLastBallot</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_getLastBallot">'
++		'		<legend>getLastBallot</legend>'
++		'			<button class="function_btn" id="'+this.prefix+'ConferenceController.Organ_getLastBallot" onclick="'+this.prefix+'ConferenceController.Organ_getLastBallot()">getLastBallot</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_getLastBallot_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -3763,11 +4565,11 @@ function ConferenceGuiFactory() {
 	* Create the gui for the function getOrganBlog.
 	*/
 	this.createOrgan_getOrganBlogGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_getOrganBlog">'
-+		'		Conference_getOrganBlog:'
-+		'			<button id="'+this.prefix+'ConferenceController.Organ_getOrganBlog" onclick="'+this.prefix+'ConferenceController.Organ_getOrganBlog()">execute Conference_getOrganBlog</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_getOrganBlog">'
++		'		<legend>getOrganBlog</legend>'
++		'			<button class="function_btn" id="'+this.prefix+'ConferenceController.Organ_getOrganBlog" onclick="'+this.prefix+'ConferenceController.Organ_getOrganBlog()">getOrganBlog</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_getOrganBlog_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -3775,13 +4577,19 @@ function ConferenceGuiFactory() {
 	* Create the gui for the function addOrganFunction.
 	*/
 	this.createOrgan_addOrganFunction_address_stringGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_addOrganFunction_address_string">'
-+		'		Conference_addOrganFunction:'
-+		'			  <div class="function_parameter">_of<input type="text" id="'+this.prefix+'Organ_addOrganFunction_address_string__of"></div>'
-+		'			  <div class="function_parameter">_name<input type="text" id="'+this.prefix+'Organ_addOrganFunction_address_string__name"></div>'
-+		'			<button id="'+this.prefix+'ConferenceController.Organ_addOrganFunction_address_string" onclick="'+this.prefix+'ConferenceController.Organ_addOrganFunction_address_string()">execute Conference_addOrganFunction</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'Conference_contract_function_Organ_addOrganFunction_address_string">'
++		'		<legend>addOrganFunction</legend>'
++		'			  <label class="function_parameter" for="Organ_addOrganFunction_address_string__of">_of</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_addOrganFunction_address_string__of"'
++		'				  placeholder="_of"/>'
++		'			  <label class="function_parameter" for="Organ_addOrganFunction_address_string__name">_name</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_addOrganFunction_address_string__name"'
++		'				  placeholder="_name"/>'
++		'			<button class="function_btn" id="'+this.prefix+'ConferenceController.Organ_addOrganFunction_address_string" onclick="'+this.prefix+'ConferenceController.Organ_addOrganFunction_address_string()">addOrganFunction</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_addOrganFunction_address_string_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -4628,123 +5436,174 @@ function FoundationConferenceGuiFactory() {
 +		'		  <input type="text" id="'+this.prefix+'FoundationConference_address"> <button id="'+this.prefix+'FoundationConferenceController.setAddress" onclick="'+this.prefix+'FoundationConferenceController.setAddress()">change FoundationConference Address</button>'
 +		'		  <div class="contract_attributes" id="'+this.prefix+'FoundationConference_contract_attributes"> attributes:'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'FoundationConference_contract_attribute_memberRegistry"> memberRegistry:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'FoundationConference_memberRegistry_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'FoundationConference_memberRegistry_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'FoundationConference_contract_attribute_organName"> organName:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'FoundationConference_organName_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'FoundationConference_organName_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'FoundationConference_contract_attribute_accreditatedMembers"> accreditatedMembers:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'FoundationConference_accreditatedMembers_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'FoundationConference_accreditatedMembers_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'FoundationConference_contract_attribute_lastFunctionId"> lastFunctionId:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'FoundationConference_lastFunctionId_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'FoundationConference_lastFunctionId_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'FoundationConference_contract_attribute_mangerCount"> mangerCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'FoundationConference_mangerCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'FoundationConference_mangerCount_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'FoundationConference_contract_attribute_blogRegistry"> blogRegistry:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'FoundationConference_blogRegistry_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'FoundationConference_blogRegistry_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'FoundationConference_contract_attribute_date"> date:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'FoundationConference_date_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'FoundationConference_date_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'FoundationConference_contract_attribute_isActive"> isActive:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'FoundationConference_isActive_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'FoundationConference_isActive_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'FoundationConference_contract_attribute_ballotCount"> ballotCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'FoundationConference_ballotCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'FoundationConference_ballotCount_value"> </span>'
 +		'		    </div>'
 +		'		'
 +		'		<div class="Value_Mapping" id="'+this.prefix+'FoundationConference_contract_attribute_managers">mapping  managers:'
-+		'				<input type="text" id="'+this.prefix+'FoundationConference_contract_attribute_managers_input">(address)'
++		'				<input class="function_input" type="text" id="'+this.prefix+'FoundationConference_contract_attribute_managers_input">(address)'
 +		'		    	<div class="Mapping_value" id="'+this.prefix+'FoundationConference_contract_attribute_address"> bool:'
-+		'		      		<div class="contract_attribute_value" id="'+this.prefix+'FoundationConference_managers_value"> </div>'
++		'		      		<span class="contract_attribute_value" id="'+this.prefix+'FoundationConference_managers_value"> </span>'
 +		'		    	</div>'
 +		'		  </div>'
-+		'		    <button id="'+this.prefix+'FoundationConference_updateAttributes" onclick="'+this.prefix+'FoundationConferenceController._updateAttributes()">update FoundationConference attributes</button>'
++		'		    <button class="function_btn" id="'+this.prefix+'FoundationConference_updateAttributes" onclick="'+this.prefix+'FoundationConferenceController._updateAttributes()">update FoundationConference attributes</button>'
 +		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Conference_accreditationMember_address">'
-+		'		FoundationConference_accreditationMember:'
-+		'			  <div class="function_parameter">_address<input type="text" id="'+this.prefix+'Conference_accreditationMember_address__address"></div>'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Conference_accreditationMember_address" onclick="'+this.prefix+'FoundationConferenceController.Conference_accreditationMember_address()">execute FoundationConference_accreditationMember</button>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Conference_accreditationMember_address">'
++		'		<legend>accreditationMember</legend>'
++		'			  <label class="function_parameter" for="Conference_accreditationMember_address__address">_address</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Conference_accreditationMember_address__address"'
++		'				  placeholder="_address"/>'
++		'			<button class="function_btn" id="'+this.prefix+'FoundationConferenceController.Conference_accreditationMember_address" onclick="'+this.prefix+'FoundationConferenceController.Conference_accreditationMember_address()">accreditationMember</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Conference_accreditationMember_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_getOrganFunction_uint">'
-+		'		FoundationConference_getOrganFunction:'
-+		'			  <div class="function_parameter">_id<input type="number" id="'+this.prefix+'Organ_getOrganFunction_uint__id"></div>'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Organ_getOrganFunction_uint" onclick="'+this.prefix+'FoundationConferenceController.Organ_getOrganFunction_uint()">execute FoundationConference_getOrganFunction</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_getOrganFunction_uint">'
++		'		<legend>getOrganFunction</legend>'
++		'			  <label class="function_parameter" for="Organ_getOrganFunction_uint__id">_id</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'Organ_getOrganFunction_uint__id"'
++		'				  placeholder="_id"/>'
++		'			<button class="function_btn" id="'+this.prefix+'FoundationConferenceController.Organ_getOrganFunction_uint" onclick="'+this.prefix+'FoundationConferenceController.Organ_getOrganFunction_uint()">getOrganFunction</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_getOrganFunction_uint_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Manageable_addManager_address">'
-+		'		FoundationConference_addManager:'
-+		'			  <div class="function_parameter">_newManagerAddress<input type="text" id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"></div>'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Manageable_addManager_address" onclick="'+this.prefix+'FoundationConferenceController.Manageable_addManager_address()">execute FoundationConference_addManager</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Manageable_addManager_address">'
++		'		<legend>addManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_addManager_address__newManagerAddress">_newManagerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"'
++		'				  placeholder="_newManagerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'FoundationConferenceController.Manageable_addManager_address" onclick="'+this.prefix+'FoundationConferenceController.Manageable_addManager_address()">addManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_addManager_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_changeMember_uint_address">'
-+		'		FoundationConference_changeMember:'
-+		'			  <div class="function_parameter">_id<input type="number" id="'+this.prefix+'Organ_changeMember_uint_address__id"></div>'
-+		'			  <div class="function_parameter">_address<input type="text" id="'+this.prefix+'Organ_changeMember_uint_address__address"></div>'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Organ_changeMember_uint_address" onclick="'+this.prefix+'FoundationConferenceController.Organ_changeMember_uint_address()">execute FoundationConference_changeMember</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_changeMember_uint_address">'
++		'		<legend>changeMember</legend>'
++		'			  <label class="function_parameter" for="Organ_changeMember_uint_address__id">_id</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'Organ_changeMember_uint_address__id"'
++		'				  placeholder="_id"/>'
++		'			  <label class="function_parameter" for="Organ_changeMember_uint_address__address">_address</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_changeMember_uint_address__address"'
++		'				  placeholder="_address"/>'
++		'			<button class="function_btn" id="'+this.prefix+'FoundationConferenceController.Organ_changeMember_uint_address" onclick="'+this.prefix+'FoundationConferenceController.Organ_changeMember_uint_address()">changeMember</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_changeMember_uint_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Manageable_removeManager_address">'
-+		'		FoundationConference_removeManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_removeManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Manageable_removeManager_address" onclick="'+this.prefix+'FoundationConferenceController.Manageable_removeManager_address()">execute FoundationConference_removeManager</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Manageable_removeManager_address">'
++		'		<legend>removeManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_removeManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_removeManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'FoundationConferenceController.Manageable_removeManager_address" onclick="'+this.prefix+'FoundationConferenceController.Manageable_removeManager_address()">removeManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_removeManager_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_createFunction_string_string">'
-+		'		FoundationConference_createFunction:'
-+		'			  <div class="function_parameter">_functionName<input type="text" id="'+this.prefix+'Organ_createFunction_string_string__functionName"></div>'
-+		'			  <div class="function_parameter">_constittiutionHash<input type="text" id="'+this.prefix+'Organ_createFunction_string_string__constittiutionHash"></div>'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Organ_createFunction_string_string" onclick="'+this.prefix+'FoundationConferenceController.Organ_createFunction_string_string()">execute FoundationConference_createFunction</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_createFunction_string_string">'
++		'		<legend>createFunction</legend>'
++		'			  <label class="function_parameter" for="Organ_createFunction_string_string__functionName">_functionName</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_createFunction_string_string__functionName"'
++		'				  placeholder="_functionName"/>'
++		'			  <label class="function_parameter" for="Organ_createFunction_string_string__constittiutionHash">_constittiutionHash</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_createFunction_string_string__constittiutionHash"'
++		'				  placeholder="_constittiutionHash"/>'
++		'			<button class="function_btn" id="'+this.prefix+'FoundationConferenceController.Organ_createFunction_string_string" onclick="'+this.prefix+'FoundationConferenceController.Organ_createFunction_string_string()">createFunction</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_createFunction_string_string_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Manageable_isManager_address">'
-+		'		FoundationConference_isManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_isManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Manageable_isManager_address" onclick="'+this.prefix+'FoundationConferenceController.Manageable_isManager_address()">execute FoundationConference_isManager</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Manageable_isManager_address">'
++		'		<legend>isManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_isManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_isManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'FoundationConferenceController.Manageable_isManager_address" onclick="'+this.prefix+'FoundationConferenceController.Manageable_isManager_address()">isManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_isManager_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_initalizeOrgan">'
-+		'		FoundationConference_initalizeOrgan:'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Organ_initalizeOrgan" onclick="'+this.prefix+'FoundationConferenceController.Organ_initalizeOrgan()">execute FoundationConference_initalizeOrgan</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_initalizeOrgan">'
++		'		<legend>initalizeOrgan</legend>'
++		'			<button class="function_btn" id="'+this.prefix+'FoundationConferenceController.Organ_initalizeOrgan" onclick="'+this.prefix+'FoundationConferenceController.Organ_initalizeOrgan()">initalizeOrgan</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_initalizeOrgan_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_publishFunctionMessage_uint_string_string_string">'
-+		'		FoundationConference_publishFunctionMessage:'
-+		'			  <div class="function_parameter">id<input type="number" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_id"></div>'
-+		'			  <div class="function_parameter">message<input type="text" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_message"></div>'
-+		'			  <div class="function_parameter">hash<input type="text" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_hash"></div>'
-+		'			  <div class="function_parameter">er<input type="text" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_er"></div>'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Organ_publishFunctionMessage_uint_string_string_string" onclick="'+this.prefix+'FoundationConferenceController.Organ_publishFunctionMessage_uint_string_string_string()">execute FoundationConference_publishFunctionMessage</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_publishFunctionMessage_uint_string_string_string">'
++		'		<legend>publishFunctionMessage</legend>'
++		'			  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_id">id</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_id"'
++		'				  placeholder="id"/>'
++		'			  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_message">message</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_message"'
++		'				  placeholder="message"/>'
++		'			  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_hash">hash</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_hash"'
++		'				  placeholder="hash"/>'
++		'			  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_er">er</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_er"'
++		'				  placeholder="er"/>'
++		'			<button class="function_btn" id="'+this.prefix+'FoundationConferenceController.Organ_publishFunctionMessage_uint_string_string_string" onclick="'+this.prefix+'FoundationConferenceController.Organ_publishFunctionMessage_uint_string_string_string()">publishFunctionMessage</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_createBallot_string_bytes32">'
-+		'		FoundationConference_createBallot:'
-+		'			  <div class="function_parameter">name<input type="text" id="'+this.prefix+'Organ_createBallot_string_bytes32_name"></div>'
-+		'			  <div class="function_parameter">proposalNames<input type="text" id="'+this.prefix+'Organ_createBallot_string_bytes32_proposalNames"></div>'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Organ_createBallot_string_bytes32" onclick="'+this.prefix+'FoundationConferenceController.Organ_createBallot_string_bytes32()">execute FoundationConference_createBallot</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_createBallot_string_bytes32">'
++		'		<legend>createBallot</legend>'
++		'			  <label class="function_parameter" for="Organ_createBallot_string_bytes32_name">name</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_createBallot_string_bytes32_name"'
++		'				  placeholder="name"/>'
++		'			  <label class="function_parameter" for="Organ_createBallot_string_bytes32_proposalNames">proposalNames</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_createBallot_string_bytes32_proposalNames"'
++		'				  placeholder="proposalNames"/>'
++		'			<button class="function_btn" id="'+this.prefix+'FoundationConferenceController.Organ_createBallot_string_bytes32" onclick="'+this.prefix+'FoundationConferenceController.Organ_createBallot_string_bytes32()">createBallot</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_createBallot_string_bytes32_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_getLastBallot">'
-+		'		FoundationConference_getLastBallot:'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Organ_getLastBallot" onclick="'+this.prefix+'FoundationConferenceController.Organ_getLastBallot()">execute FoundationConference_getLastBallot</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_getLastBallot">'
++		'		<legend>getLastBallot</legend>'
++		'			<button class="function_btn" id="'+this.prefix+'FoundationConferenceController.Organ_getLastBallot" onclick="'+this.prefix+'FoundationConferenceController.Organ_getLastBallot()">getLastBallot</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_getLastBallot_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_getOrganBlog">'
-+		'		FoundationConference_getOrganBlog:'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Organ_getOrganBlog" onclick="'+this.prefix+'FoundationConferenceController.Organ_getOrganBlog()">execute FoundationConference_getOrganBlog</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_getOrganBlog">'
++		'		<legend>getOrganBlog</legend>'
++		'			<button class="function_btn" id="'+this.prefix+'FoundationConferenceController.Organ_getOrganBlog" onclick="'+this.prefix+'FoundationConferenceController.Organ_getOrganBlog()">getOrganBlog</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_getOrganBlog_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_addOrganFunction_address_string">'
-+		'		FoundationConference_addOrganFunction:'
-+		'			  <div class="function_parameter">_of<input type="text" id="'+this.prefix+'Organ_addOrganFunction_address_string__of"></div>'
-+		'			  <div class="function_parameter">_name<input type="text" id="'+this.prefix+'Organ_addOrganFunction_address_string__name"></div>'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Organ_addOrganFunction_address_string" onclick="'+this.prefix+'FoundationConferenceController.Organ_addOrganFunction_address_string()">execute FoundationConference_addOrganFunction</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_addOrganFunction_address_string">'
++		'		<legend>addOrganFunction</legend>'
++		'			  <label class="function_parameter" for="Organ_addOrganFunction_address_string__of">_of</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_addOrganFunction_address_string__of"'
++		'				  placeholder="_of"/>'
++		'			  <label class="function_parameter" for="Organ_addOrganFunction_address_string__name">_name</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_addOrganFunction_address_string__name"'
++		'				  placeholder="_name"/>'
++		'			<button class="function_btn" id="'+this.prefix+'FoundationConferenceController.Organ_addOrganFunction_address_string" onclick="'+this.prefix+'FoundationConferenceController.Organ_addOrganFunction_address_string()">addOrganFunction</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_addOrganFunction_address_string_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 +		'		'
 +		'		</div>'
 ;
@@ -4755,46 +5614,70 @@ function FoundationConferenceGuiFactory() {
 	*/
 	this.createAttributesGui=function() {
 		return 		'    <div class="contract_attribute" id="'+this.prefix+'FoundationConference_contract_attribute_memberRegistry"> memberRegistry:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'FoundationConference_memberRegistry_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'FoundationConference_memberRegistry_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'FoundationConference_contract_attribute_organName"> organName:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'FoundationConference_organName_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'FoundationConference_organName_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'FoundationConference_contract_attribute_accreditatedMembers"> accreditatedMembers:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'FoundationConference_accreditatedMembers_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'FoundationConference_accreditatedMembers_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'FoundationConference_contract_attribute_lastFunctionId"> lastFunctionId:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'FoundationConference_lastFunctionId_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'FoundationConference_lastFunctionId_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'FoundationConference_contract_attribute_mangerCount"> mangerCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'FoundationConference_mangerCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'FoundationConference_mangerCount_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'FoundationConference_contract_attribute_blogRegistry"> blogRegistry:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'FoundationConference_blogRegistry_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'FoundationConference_blogRegistry_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'FoundationConference_contract_attribute_date"> date:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'FoundationConference_date_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'FoundationConference_date_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'FoundationConference_contract_attribute_isActive"> isActive:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'FoundationConference_isActive_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'FoundationConference_isActive_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'FoundationConference_contract_attribute_ballotCount"> ballotCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'FoundationConference_ballotCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'FoundationConference_ballotCount_value"> </span>'
 +		'		    </div>'
 +		'		'
 ;
 	}
 
 	/**
+	* Create the gui.
+	*/
+	this.createPlainGui=function(){
+		return this.createAttributesGui()
+				+ this.createConference_accreditationMember_addressGui
+				+ this.createOrgan_getOrganFunction_uintGui
+				+ this.createManageable_addManager_addressGui
+				+ this.createOrgan_changeMember_uint_addressGui
+				+ this.createManageable_removeManager_addressGui
+				+ this.createOrgan_createFunction_string_stringGui
+				+ this.createManageable_isManager_addressGui
+				+ this.createOrgan_initalizeOrganGui
+				+ this.createOrgan_publishFunctionMessage_uint_string_string_stringGui
+				+ this.createOrgan_createBallot_string_bytes32Gui
+				+ this.createOrgan_getLastBallotGui
+				+ this.createOrgan_getOrganBlogGui
+				+ this.createOrgan_addOrganFunction_address_stringGui
+				;
+	}
+
+	/**
 	* Create the gui for the function accreditationMember.
 	*/
 	this.createConference_accreditationMember_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Conference_accreditationMember_address">'
-+		'		FoundationConference_accreditationMember:'
-+		'			  <div class="function_parameter">_address<input type="text" id="'+this.prefix+'Conference_accreditationMember_address__address"></div>'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Conference_accreditationMember_address" onclick="'+this.prefix+'FoundationConferenceController.Conference_accreditationMember_address()">execute FoundationConference_accreditationMember</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Conference_accreditationMember_address">'
++		'		<legend>accreditationMember</legend>'
++		'			  <label class="function_parameter" for="Conference_accreditationMember_address__address">_address</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Conference_accreditationMember_address__address"'
++		'				  placeholder="_address"/>'
++		'			<button class="function_btn" id="'+this.prefix+'FoundationConferenceController.Conference_accreditationMember_address" onclick="'+this.prefix+'FoundationConferenceController.Conference_accreditationMember_address()">accreditationMember</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Conference_accreditationMember_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -4802,12 +5685,15 @@ function FoundationConferenceGuiFactory() {
 	* Create the gui for the function getOrganFunction.
 	*/
 	this.createOrgan_getOrganFunction_uintGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_getOrganFunction_uint">'
-+		'		FoundationConference_getOrganFunction:'
-+		'			  <div class="function_parameter">_id<input type="number" id="'+this.prefix+'Organ_getOrganFunction_uint__id"></div>'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Organ_getOrganFunction_uint" onclick="'+this.prefix+'FoundationConferenceController.Organ_getOrganFunction_uint()">execute FoundationConference_getOrganFunction</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_getOrganFunction_uint">'
++		'		<legend>getOrganFunction</legend>'
++		'			  <label class="function_parameter" for="Organ_getOrganFunction_uint__id">_id</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'Organ_getOrganFunction_uint__id"'
++		'				  placeholder="_id"/>'
++		'			<button class="function_btn" id="'+this.prefix+'FoundationConferenceController.Organ_getOrganFunction_uint" onclick="'+this.prefix+'FoundationConferenceController.Organ_getOrganFunction_uint()">getOrganFunction</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_getOrganFunction_uint_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -4815,12 +5701,15 @@ function FoundationConferenceGuiFactory() {
 	* Create the gui for the function addManager.
 	*/
 	this.createManageable_addManager_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Manageable_addManager_address">'
-+		'		FoundationConference_addManager:'
-+		'			  <div class="function_parameter">_newManagerAddress<input type="text" id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"></div>'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Manageable_addManager_address" onclick="'+this.prefix+'FoundationConferenceController.Manageable_addManager_address()">execute FoundationConference_addManager</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Manageable_addManager_address">'
++		'		<legend>addManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_addManager_address__newManagerAddress">_newManagerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"'
++		'				  placeholder="_newManagerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'FoundationConferenceController.Manageable_addManager_address" onclick="'+this.prefix+'FoundationConferenceController.Manageable_addManager_address()">addManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_addManager_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -4828,13 +5717,19 @@ function FoundationConferenceGuiFactory() {
 	* Create the gui for the function changeMember.
 	*/
 	this.createOrgan_changeMember_uint_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_changeMember_uint_address">'
-+		'		FoundationConference_changeMember:'
-+		'			  <div class="function_parameter">_id<input type="number" id="'+this.prefix+'Organ_changeMember_uint_address__id"></div>'
-+		'			  <div class="function_parameter">_address<input type="text" id="'+this.prefix+'Organ_changeMember_uint_address__address"></div>'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Organ_changeMember_uint_address" onclick="'+this.prefix+'FoundationConferenceController.Organ_changeMember_uint_address()">execute FoundationConference_changeMember</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_changeMember_uint_address">'
++		'		<legend>changeMember</legend>'
++		'			  <label class="function_parameter" for="Organ_changeMember_uint_address__id">_id</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'Organ_changeMember_uint_address__id"'
++		'				  placeholder="_id"/>'
++		'			  <label class="function_parameter" for="Organ_changeMember_uint_address__address">_address</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_changeMember_uint_address__address"'
++		'				  placeholder="_address"/>'
++		'			<button class="function_btn" id="'+this.prefix+'FoundationConferenceController.Organ_changeMember_uint_address" onclick="'+this.prefix+'FoundationConferenceController.Organ_changeMember_uint_address()">changeMember</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_changeMember_uint_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -4842,12 +5737,15 @@ function FoundationConferenceGuiFactory() {
 	* Create the gui for the function removeManager.
 	*/
 	this.createManageable_removeManager_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Manageable_removeManager_address">'
-+		'		FoundationConference_removeManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_removeManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Manageable_removeManager_address" onclick="'+this.prefix+'FoundationConferenceController.Manageable_removeManager_address()">execute FoundationConference_removeManager</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Manageable_removeManager_address">'
++		'		<legend>removeManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_removeManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_removeManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'FoundationConferenceController.Manageable_removeManager_address" onclick="'+this.prefix+'FoundationConferenceController.Manageable_removeManager_address()">removeManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_removeManager_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -4855,13 +5753,19 @@ function FoundationConferenceGuiFactory() {
 	* Create the gui for the function createFunction.
 	*/
 	this.createOrgan_createFunction_string_stringGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_createFunction_string_string">'
-+		'		FoundationConference_createFunction:'
-+		'			  <div class="function_parameter">_functionName<input type="text" id="'+this.prefix+'Organ_createFunction_string_string__functionName"></div>'
-+		'			  <div class="function_parameter">_constittiutionHash<input type="text" id="'+this.prefix+'Organ_createFunction_string_string__constittiutionHash"></div>'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Organ_createFunction_string_string" onclick="'+this.prefix+'FoundationConferenceController.Organ_createFunction_string_string()">execute FoundationConference_createFunction</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_createFunction_string_string">'
++		'		<legend>createFunction</legend>'
++		'			  <label class="function_parameter" for="Organ_createFunction_string_string__functionName">_functionName</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_createFunction_string_string__functionName"'
++		'				  placeholder="_functionName"/>'
++		'			  <label class="function_parameter" for="Organ_createFunction_string_string__constittiutionHash">_constittiutionHash</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_createFunction_string_string__constittiutionHash"'
++		'				  placeholder="_constittiutionHash"/>'
++		'			<button class="function_btn" id="'+this.prefix+'FoundationConferenceController.Organ_createFunction_string_string" onclick="'+this.prefix+'FoundationConferenceController.Organ_createFunction_string_string()">createFunction</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_createFunction_string_string_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -4869,12 +5773,15 @@ function FoundationConferenceGuiFactory() {
 	* Create the gui for the function isManager.
 	*/
 	this.createManageable_isManager_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Manageable_isManager_address">'
-+		'		FoundationConference_isManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_isManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Manageable_isManager_address" onclick="'+this.prefix+'FoundationConferenceController.Manageable_isManager_address()">execute FoundationConference_isManager</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Manageable_isManager_address">'
++		'		<legend>isManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_isManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_isManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'FoundationConferenceController.Manageable_isManager_address" onclick="'+this.prefix+'FoundationConferenceController.Manageable_isManager_address()">isManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_isManager_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -4882,11 +5789,11 @@ function FoundationConferenceGuiFactory() {
 	* Create the gui for the function initalizeOrgan.
 	*/
 	this.createOrgan_initalizeOrganGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_initalizeOrgan">'
-+		'		FoundationConference_initalizeOrgan:'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Organ_initalizeOrgan" onclick="'+this.prefix+'FoundationConferenceController.Organ_initalizeOrgan()">execute FoundationConference_initalizeOrgan</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_initalizeOrgan">'
++		'		<legend>initalizeOrgan</legend>'
++		'			<button class="function_btn" id="'+this.prefix+'FoundationConferenceController.Organ_initalizeOrgan" onclick="'+this.prefix+'FoundationConferenceController.Organ_initalizeOrgan()">initalizeOrgan</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_initalizeOrgan_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -4894,15 +5801,27 @@ function FoundationConferenceGuiFactory() {
 	* Create the gui for the function publishFunctionMessage.
 	*/
 	this.createOrgan_publishFunctionMessage_uint_string_string_stringGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_publishFunctionMessage_uint_string_string_string">'
-+		'		FoundationConference_publishFunctionMessage:'
-+		'			  <div class="function_parameter">id<input type="number" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_id"></div>'
-+		'			  <div class="function_parameter">message<input type="text" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_message"></div>'
-+		'			  <div class="function_parameter">hash<input type="text" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_hash"></div>'
-+		'			  <div class="function_parameter">er<input type="text" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_er"></div>'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Organ_publishFunctionMessage_uint_string_string_string" onclick="'+this.prefix+'FoundationConferenceController.Organ_publishFunctionMessage_uint_string_string_string()">execute FoundationConference_publishFunctionMessage</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_publishFunctionMessage_uint_string_string_string">'
++		'		<legend>publishFunctionMessage</legend>'
++		'			  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_id">id</label>'
++		'				<input class="function_input" type="number" '
++		'		          id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_id"'
++		'				  placeholder="id"/>'
++		'			  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_message">message</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_message"'
++		'				  placeholder="message"/>'
++		'			  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_hash">hash</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_hash"'
++		'				  placeholder="hash"/>'
++		'			  <label class="function_parameter" for="Organ_publishFunctionMessage_uint_string_string_string_er">er</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_er"'
++		'				  placeholder="er"/>'
++		'			<button class="function_btn" id="'+this.prefix+'FoundationConferenceController.Organ_publishFunctionMessage_uint_string_string_string" onclick="'+this.prefix+'FoundationConferenceController.Organ_publishFunctionMessage_uint_string_string_string()">publishFunctionMessage</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_publishFunctionMessage_uint_string_string_string_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -4910,13 +5829,19 @@ function FoundationConferenceGuiFactory() {
 	* Create the gui for the function createBallot.
 	*/
 	this.createOrgan_createBallot_string_bytes32Gui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_createBallot_string_bytes32">'
-+		'		FoundationConference_createBallot:'
-+		'			  <div class="function_parameter">name<input type="text" id="'+this.prefix+'Organ_createBallot_string_bytes32_name"></div>'
-+		'			  <div class="function_parameter">proposalNames<input type="text" id="'+this.prefix+'Organ_createBallot_string_bytes32_proposalNames"></div>'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Organ_createBallot_string_bytes32" onclick="'+this.prefix+'FoundationConferenceController.Organ_createBallot_string_bytes32()">execute FoundationConference_createBallot</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_createBallot_string_bytes32">'
++		'		<legend>createBallot</legend>'
++		'			  <label class="function_parameter" for="Organ_createBallot_string_bytes32_name">name</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_createBallot_string_bytes32_name"'
++		'				  placeholder="name"/>'
++		'			  <label class="function_parameter" for="Organ_createBallot_string_bytes32_proposalNames">proposalNames</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_createBallot_string_bytes32_proposalNames"'
++		'				  placeholder="proposalNames"/>'
++		'			<button class="function_btn" id="'+this.prefix+'FoundationConferenceController.Organ_createBallot_string_bytes32" onclick="'+this.prefix+'FoundationConferenceController.Organ_createBallot_string_bytes32()">createBallot</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_createBallot_string_bytes32_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -4924,11 +5849,11 @@ function FoundationConferenceGuiFactory() {
 	* Create the gui for the function getLastBallot.
 	*/
 	this.createOrgan_getLastBallotGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_getLastBallot">'
-+		'		FoundationConference_getLastBallot:'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Organ_getLastBallot" onclick="'+this.prefix+'FoundationConferenceController.Organ_getLastBallot()">execute FoundationConference_getLastBallot</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_getLastBallot">'
++		'		<legend>getLastBallot</legend>'
++		'			<button class="function_btn" id="'+this.prefix+'FoundationConferenceController.Organ_getLastBallot" onclick="'+this.prefix+'FoundationConferenceController.Organ_getLastBallot()">getLastBallot</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_getLastBallot_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -4936,11 +5861,11 @@ function FoundationConferenceGuiFactory() {
 	* Create the gui for the function getOrganBlog.
 	*/
 	this.createOrgan_getOrganBlogGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_getOrganBlog">'
-+		'		FoundationConference_getOrganBlog:'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Organ_getOrganBlog" onclick="'+this.prefix+'FoundationConferenceController.Organ_getOrganBlog()">execute FoundationConference_getOrganBlog</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_getOrganBlog">'
++		'		<legend>getOrganBlog</legend>'
++		'			<button class="function_btn" id="'+this.prefix+'FoundationConferenceController.Organ_getOrganBlog" onclick="'+this.prefix+'FoundationConferenceController.Organ_getOrganBlog()">getOrganBlog</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_getOrganBlog_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -4948,13 +5873,19 @@ function FoundationConferenceGuiFactory() {
 	* Create the gui for the function addOrganFunction.
 	*/
 	this.createOrgan_addOrganFunction_address_stringGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_addOrganFunction_address_string">'
-+		'		FoundationConference_addOrganFunction:'
-+		'			  <div class="function_parameter">_of<input type="text" id="'+this.prefix+'Organ_addOrganFunction_address_string__of"></div>'
-+		'			  <div class="function_parameter">_name<input type="text" id="'+this.prefix+'Organ_addOrganFunction_address_string__name"></div>'
-+		'			<button id="'+this.prefix+'FoundationConferenceController.Organ_addOrganFunction_address_string" onclick="'+this.prefix+'FoundationConferenceController.Organ_addOrganFunction_address_string()">execute FoundationConference_addOrganFunction</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'FoundationConference_contract_function_Organ_addOrganFunction_address_string">'
++		'		<legend>addOrganFunction</legend>'
++		'			  <label class="function_parameter" for="Organ_addOrganFunction_address_string__of">_of</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_addOrganFunction_address_string__of"'
++		'				  placeholder="_of"/>'
++		'			  <label class="function_parameter" for="Organ_addOrganFunction_address_string__name">_name</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Organ_addOrganFunction_address_string__name"'
++		'				  placeholder="_name"/>'
++		'			<button class="function_btn" id="'+this.prefix+'FoundationConferenceController.Organ_addOrganFunction_address_string" onclick="'+this.prefix+'FoundationConferenceController.Organ_addOrganFunction_address_string()">addOrganFunction</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Organ_addOrganFunction_address_string_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -5718,70 +6649,88 @@ function OrganFunctionGuiFactory() {
 +		'		  <input type="text" id="'+this.prefix+'OrganFunction_address"> <button id="'+this.prefix+'OrganFunctionController.setAddress" onclick="'+this.prefix+'OrganFunctionController.setAddress()">change OrganFunction Address</button>'
 +		'		  <div class="contract_attributes" id="'+this.prefix+'OrganFunction_contract_attributes"> attributes:'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'OrganFunction_contract_attribute_currentMember"> currentMember:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'OrganFunction_currentMember_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'OrganFunction_currentMember_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'OrganFunction_contract_attribute_functionName"> functionName:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'OrganFunction_functionName_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'OrganFunction_functionName_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'OrganFunction_contract_attribute_mangerCount"> mangerCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'OrganFunction_mangerCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'OrganFunction_mangerCount_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'OrganFunction_contract_attribute_id"> id:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'OrganFunction_id_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'OrganFunction_id_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'OrganFunction_contract_attribute_constitutionHash"> constitutionHash:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'OrganFunction_constitutionHash_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'OrganFunction_constitutionHash_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'OrganFunction_contract_attribute_lastMemberChanged"> lastMemberChanged:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'OrganFunction_lastMemberChanged_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'OrganFunction_lastMemberChanged_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'OrganFunction_contract_attribute_lastConstitutionHashChanged"> lastConstitutionHashChanged:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'OrganFunction_lastConstitutionHashChanged_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'OrganFunction_lastConstitutionHashChanged_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'OrganFunction_contract_attribute_publisher"> publisher:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'OrganFunction_publisher_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'OrganFunction_publisher_value"> </span>'
 +		'		    </div>'
 +		'		'
 +		'		<div class="Value_Mapping" id="'+this.prefix+'OrganFunction_contract_attribute_managers">mapping  managers:'
-+		'				<input type="text" id="'+this.prefix+'OrganFunction_contract_attribute_managers_input">(address)'
++		'				<input class="function_input" type="text" id="'+this.prefix+'OrganFunction_contract_attribute_managers_input">(address)'
 +		'		    	<div class="Mapping_value" id="'+this.prefix+'OrganFunction_contract_attribute_address"> bool:'
-+		'		      		<div class="contract_attribute_value" id="'+this.prefix+'OrganFunction_managers_value"> </div>'
++		'		      		<span class="contract_attribute_value" id="'+this.prefix+'OrganFunction_managers_value"> </span>'
 +		'		    	</div>'
 +		'		  </div>'
-+		'		    <button id="'+this.prefix+'OrganFunction_updateAttributes" onclick="'+this.prefix+'OrganFunctionController._updateAttributes()">update OrganFunction attributes</button>'
++		'		    <button class="function_btn" id="'+this.prefix+'OrganFunction_updateAttributes" onclick="'+this.prefix+'OrganFunctionController._updateAttributes()">update OrganFunction attributes</button>'
 +		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'OrganFunction_contract_function_Manageable_addManager_address">'
-+		'		OrganFunction_addManager:'
-+		'			  <div class="function_parameter">_newManagerAddress<input type="text" id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"></div>'
-+		'			<button id="'+this.prefix+'OrganFunctionController.Manageable_addManager_address" onclick="'+this.prefix+'OrganFunctionController.Manageable_addManager_address()">execute OrganFunction_addManager</button>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'OrganFunction_contract_function_Manageable_addManager_address">'
++		'		<legend>addManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_addManager_address__newManagerAddress">_newManagerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"'
++		'				  placeholder="_newManagerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganFunctionController.Manageable_addManager_address" onclick="'+this.prefix+'OrganFunctionController.Manageable_addManager_address()">addManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_addManager_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'OrganFunction_contract_function_OrganFunction_getFunctioName">'
-+		'		OrganFunction_getFunctioName:'
-+		'			<button id="'+this.prefix+'OrganFunctionController.OrganFunction_getFunctioName" onclick="'+this.prefix+'OrganFunctionController.OrganFunction_getFunctioName()">execute OrganFunction_getFunctioName</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'OrganFunction_contract_function_OrganFunction_getFunctioName">'
++		'		<legend>getFunctioName</legend>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganFunctionController.OrganFunction_getFunctioName" onclick="'+this.prefix+'OrganFunctionController.OrganFunction_getFunctioName()">getFunctioName</button>'
 +		'			<div class="function_result" id="'+this.prefix+'OrganFunction_getFunctioName_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'OrganFunction_contract_function_Manageable_removeManager_address">'
-+		'		OrganFunction_removeManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_removeManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'OrganFunctionController.Manageable_removeManager_address" onclick="'+this.prefix+'OrganFunctionController.Manageable_removeManager_address()">execute OrganFunction_removeManager</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'OrganFunction_contract_function_Manageable_removeManager_address">'
++		'		<legend>removeManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_removeManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_removeManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganFunctionController.Manageable_removeManager_address" onclick="'+this.prefix+'OrganFunctionController.Manageable_removeManager_address()">removeManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_removeManager_address_res"></div>'
-+		'		  </div>'
-+		'		  <div class="function_execution" id="'+this.prefix+'OrganFunction_contract_function_Manageable_isManager_address">'
-+		'		OrganFunction_isManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_isManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'OrganFunctionController.Manageable_isManager_address" onclick="'+this.prefix+'OrganFunctionController.Manageable_isManager_address()">execute OrganFunction_isManager</button>'
++		'		  </fieldset>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'OrganFunction_contract_function_Manageable_isManager_address">'
++		'		<legend>isManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_isManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_isManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganFunctionController.Manageable_isManager_address" onclick="'+this.prefix+'OrganFunctionController.Manageable_isManager_address()">isManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_isManager_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 +		'		'
-+		'		  <div class="function_execution" id="'+this.prefix+'OrganFunction_contract_function_MessagePublisher_publishMessage_string_string_string">'
-+		'		OrganFunction_publishMessage:'
-+		'			  <div class="function_parameter">message<input type="text" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_message"></div>'
-+		'			  <div class="function_parameter">hash<input type="text" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_hash"></div>'
-+		'			  <div class="function_parameter">er<input type="text" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_er"></div>'
-+		'			<button id="'+this.prefix+'OrganFunctionController.MessagePublisher_publishMessage_string_string_string" onclick="'+this.prefix+'OrganFunctionController.MessagePublisher_publishMessage_string_string_string()">execute OrganFunction_publishMessage</button>'
++		'		  <fieldset class="function_execution" id="'+this.prefix+'OrganFunction_contract_function_MessagePublisher_publishMessage_string_string_string">'
++		'		<legend>publishMessage</legend>'
++		'			  <label class="function_parameter" for="MessagePublisher_publishMessage_string_string_string_message">message</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_message"'
++		'				  placeholder="message"/>'
++		'			  <label class="function_parameter" for="MessagePublisher_publishMessage_string_string_string_hash">hash</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_hash"'
++		'				  placeholder="hash"/>'
++		'			  <label class="function_parameter" for="MessagePublisher_publishMessage_string_string_string_er">er</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_er"'
++		'				  placeholder="er"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganFunctionController.MessagePublisher_publishMessage_string_string_string" onclick="'+this.prefix+'OrganFunctionController.MessagePublisher_publishMessage_string_string_string()">publishMessage</button>'
 +		'			<div class="function_result" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 +		'		</div>'
 ;
 	}
@@ -5791,51 +6740,59 @@ function OrganFunctionGuiFactory() {
 	*/
 	this.createAttributesGui=function() {
 		return 		'    <div class="contract_attribute" id="'+this.prefix+'OrganFunction_contract_attribute_currentMember"> currentMember:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'OrganFunction_currentMember_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'OrganFunction_currentMember_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'OrganFunction_contract_attribute_functionName"> functionName:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'OrganFunction_functionName_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'OrganFunction_functionName_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'OrganFunction_contract_attribute_mangerCount"> mangerCount:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'OrganFunction_mangerCount_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'OrganFunction_mangerCount_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'OrganFunction_contract_attribute_id"> id:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'OrganFunction_id_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'OrganFunction_id_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'OrganFunction_contract_attribute_constitutionHash"> constitutionHash:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'OrganFunction_constitutionHash_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'OrganFunction_constitutionHash_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'OrganFunction_contract_attribute_lastMemberChanged"> lastMemberChanged:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'OrganFunction_lastMemberChanged_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'OrganFunction_lastMemberChanged_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'OrganFunction_contract_attribute_lastConstitutionHashChanged"> lastConstitutionHashChanged:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'OrganFunction_lastConstitutionHashChanged_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'OrganFunction_lastConstitutionHashChanged_value"> </span>'
 +		'		    </div>'
 +		'		    <div class="contract_attribute" id="'+this.prefix+'OrganFunction_contract_attribute_publisher"> publisher:'
-+		'		      <div class="contract_attribute_value" id="'+this.prefix+'OrganFunction_publisher_value"> </div>'
++		'		      <span class="contract_attribute_value" id="'+this.prefix+'OrganFunction_publisher_value"> </span>'
 +		'		    </div>'
 +		'		'
 ;
 	}
 
+	/**
+	* Create the gui.
+	*/
 	this.createPlainGui=function(){
 		return this.createAttributesGui()
-				+ this.createManageable_addManager_addressGui()
-				+ this.createManageable_isManager_addressGui()
-				+ this.createManageable_removeManager_addressGui()
+				+ this.createManageable_addManager_addressGui
+				+ this.createOrganFunction_getFunctioNameGui
+				+ this.createManageable_removeManager_addressGui
+				+ this.createManageable_isManager_addressGui
+				+ this.createOrganFunction_publishMessage_string_string_stringGui
 				;
 	}
-	
+
 	/**
 	* Create the gui for the function addManager.
 	*/
 	this.createManageable_addManager_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'OrganFunction_contract_function_Manageable_addManager_address">'
-+		'		OrganFunction_addManager:'
-+		'			  <div class="function_parameter">_newManagerAddress<input type="text" id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"></div>'
-+		'			<button id="'+this.prefix+'OrganFunctionController.Manageable_addManager_address" onclick="'+this.prefix+'OrganFunctionController.Manageable_addManager_address()">execute OrganFunction_addManager</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'OrganFunction_contract_function_Manageable_addManager_address">'
++		'		<legend>addManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_addManager_address__newManagerAddress">_newManagerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_addManager_address__newManagerAddress"'
++		'				  placeholder="_newManagerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganFunctionController.Manageable_addManager_address" onclick="'+this.prefix+'OrganFunctionController.Manageable_addManager_address()">addManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_addManager_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -5843,11 +6800,11 @@ function OrganFunctionGuiFactory() {
 	* Create the gui for the function getFunctioName.
 	*/
 	this.createOrganFunction_getFunctioNameGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'OrganFunction_contract_function_OrganFunction_getFunctioName">'
-+		'		OrganFunction_getFunctioName:'
-+		'			<button id="'+this.prefix+'OrganFunctionController.OrganFunction_getFunctioName" onclick="'+this.prefix+'OrganFunctionController.OrganFunction_getFunctioName()">execute OrganFunction_getFunctioName</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'OrganFunction_contract_function_OrganFunction_getFunctioName">'
++		'		<legend>getFunctioName</legend>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganFunctionController.OrganFunction_getFunctioName" onclick="'+this.prefix+'OrganFunctionController.OrganFunction_getFunctioName()">getFunctioName</button>'
 +		'			<div class="function_result" id="'+this.prefix+'OrganFunction_getFunctioName_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -5855,12 +6812,15 @@ function OrganFunctionGuiFactory() {
 	* Create the gui for the function removeManager.
 	*/
 	this.createManageable_removeManager_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'OrganFunction_contract_function_Manageable_removeManager_address">'
-+		'		OrganFunction_removeManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_removeManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'OrganFunctionController.Manageable_removeManager_address" onclick="'+this.prefix+'OrganFunctionController.Manageable_removeManager_address()">execute OrganFunction_removeManager</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'OrganFunction_contract_function_Manageable_removeManager_address">'
++		'		<legend>removeManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_removeManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_removeManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganFunctionController.Manageable_removeManager_address" onclick="'+this.prefix+'OrganFunctionController.Manageable_removeManager_address()">removeManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_removeManager_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -5868,12 +6828,15 @@ function OrganFunctionGuiFactory() {
 	* Create the gui for the function isManager.
 	*/
 	this.createManageable_isManager_addressGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'OrganFunction_contract_function_Manageable_isManager_address">'
-+		'		OrganFunction_isManager:'
-+		'			  <div class="function_parameter">_managerAddress<input type="text" id="'+this.prefix+'Manageable_isManager_address__managerAddress"></div>'
-+		'			<button id="'+this.prefix+'OrganFunctionController.Manageable_isManager_address" onclick="'+this.prefix+'OrganFunctionController.Manageable_isManager_address()">execute OrganFunction_isManager</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'OrganFunction_contract_function_Manageable_isManager_address">'
++		'		<legend>isManager</legend>'
++		'			  <label class="function_parameter" for="Manageable_isManager_address__managerAddress">_managerAddress</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'Manageable_isManager_address__managerAddress"'
++		'				  placeholder="_managerAddress"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganFunctionController.Manageable_isManager_address" onclick="'+this.prefix+'OrganFunctionController.Manageable_isManager_address()">isManager</button>'
 +		'			<div class="function_result" id="'+this.prefix+'Manageable_isManager_address_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 
@@ -5881,14 +6844,23 @@ function OrganFunctionGuiFactory() {
 	* Create the gui for the function publishMessage.
 	*/
 	this.createOrganFunction_publishMessage_string_string_stringGui=function() {
-		return 		'  <div class="function_execution" id="'+this.prefix+'OrganFunction_contract_function_MessagePublisher_publishMessage_string_string_string">'
-+		'		OrganFunction_publishMessage:'
-+		'			  <div class="function_parameter">message<input type="text" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_message"></div>'
-+		'			  <div class="function_parameter">hash<input type="text" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_hash"></div>'
-+		'			  <div class="function_parameter">er<input type="text" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_er"></div>'
-+		'			<button id="'+this.prefix+'OrganFunctionController.MessagePublisher_publishMessage_string_string_string" onclick="'+this.prefix+'OrganFunctionController.MessagePublisher_publishMessage_string_string_string()">execute OrganFunction_publishMessage</button>'
+		return 		'  <fieldset class="function_execution" id="'+this.prefix+'OrganFunction_contract_function_MessagePublisher_publishMessage_string_string_string">'
++		'		<legend>publishMessage</legend>'
++		'			  <label class="function_parameter" for="MessagePublisher_publishMessage_string_string_string_message">message</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_message"'
++		'				  placeholder="message"/>'
++		'			  <label class="function_parameter" for="MessagePublisher_publishMessage_string_string_string_hash">hash</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_hash"'
++		'				  placeholder="hash"/>'
++		'			  <label class="function_parameter" for="MessagePublisher_publishMessage_string_string_string_er">er</label>'
++		'				<input class="function_input" type="text" '
++		'		          id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_er"'
++		'				  placeholder="er"/>'
++		'			<button class="function_btn" id="'+this.prefix+'OrganFunctionController.MessagePublisher_publishMessage_string_string_string" onclick="'+this.prefix+'OrganFunctionController.MessagePublisher_publishMessage_string_string_string()">publishMessage</button>'
 +		'			<div class="function_result" id="'+this.prefix+'MessagePublisher_publishMessage_string_string_string_res"></div>'
-+		'		  </div>'
++		'		  </fieldset>'
 ;
 	}
 

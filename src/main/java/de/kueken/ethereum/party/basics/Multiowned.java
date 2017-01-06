@@ -1,5 +1,7 @@
 package de.kueken.ethereum.party.basics;
 
+import java.util.concurrent.CompletableFuture;
+import org.adridadou.ethereum.values.EthAddress;
 
 
 public interface Multiowned{

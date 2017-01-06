@@ -1,5 +1,7 @@
 package de.kueken.ethereum.party.party;
 
+import java.util.concurrent.CompletableFuture;
+import org.adridadou.ethereum.values.EthAddress;
 import de.kueken.ethereum.party.basics.*;
 import de.kueken.ethereum.party.members.*;
 import de.kueken.ethereum.party.publishing.*;

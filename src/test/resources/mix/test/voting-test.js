@@ -193,3 +193,347 @@ function TestBallot(contract) {
 		//End of user code
 	}
 }
+/**
+* A simple bean class around the contract.
+* The BasicBallotModel.
+**/
+function BasicBallotModel(contract) {
+this.contract = contract;
+	/**
+	* Getter for accessregistry.
+	**/
+	this.getAccessregistry = function(){
+		return contract.accessregistry(); 
+	}
+	/**
+	* Getter for ballotStart.
+	**/
+	this.getBallotStart = function(){
+		return contract.ballotStart(); 
+	}
+	/**
+	* Getter for ballotEnd.
+	**/
+	this.getBallotEnd = function(){
+		return contract.ballotEnd(); 
+	}
+	/**
+	* Getter for ballotState.
+	**/
+	this.getBallotState = function(){
+		return contract.ballotState(); 
+	}
+	/**
+	* Getter for proposalCount.
+	**/
+	this.getProposalCount = function(){
+		return contract.proposalCount(); 
+	}
+	/**
+	* Getter for ballotName.
+	**/
+	this.getBallotName = function(){
+		return contract.ballotName(); 
+	}
+	/**
+	* Getter for ballotHash.
+	**/
+	this.getBallotHash = function(){
+		return contract.ballotHash(); 
+	}
+	/**
+	* Get the mapped value for a key.
+	*/
+	this.getProposals=function(key) {
+		return contract.proposals(key);
+	}
+	/**
+	* Call addProposal.
+	**/
+	this.addProposal = function(_name,_hash,_url,_member){
+		return contract.addProposal(_name,_hash,_url,_member); 
+	}
+	/**
+	* Call castVote.
+	**/
+	this.castVote = function(_voteFor){
+		return contract.castVote(_voteFor); 
+	}
+	/**
+	* Call startBallot.
+	**/
+	this.startBallot = function(){
+		return contract.startBallot(); 
+	}
+}// end of function BasicBallotModel
+
+//test class for BasicBallot
+function TestBasicBallot(contract) {
+	
+	this.test_instance = contract;
+	this.model = new BasicBallotModel(contract);
+	this.prefix='';
+	this.messageBlockId = "testResult";
+	var self = this;
+
+	this.testSetup=function(){
+		//Start of user code testSetup_BasicBallot
+		//TODO: implement
+		//End of user code
+	}
+
+	this.allTests=function(){
+		this.testSetup();
+		this.testAttributes();
+		this.testBasicBallot_addProposal_string_string_string_address();
+		this.testBasicBallot_castVote_uint();
+		this.testBasicBallot_startBallot();
+		this.customTests();
+	
+		//Start of user code allTests_BasicBallot
+		//TODO: implement
+		//End of user code
+
+	}
+	
+	//print the test result
+	this.printTest=function(testName,testMessage,state){
+		var e = document.getElementById(this.prefix+'-'+this.messageBlockId);
+		var elemDiv = document.createElement('div');
+		elemDiv.id= this.prefix+'-'+testName;
+		elemDiv.className='testRow';
+		elemDiv.text=testMessage;
+		var stateDiv = document.createElement('div');
+		if(state){
+			elemDiv.innerHTML = '<div class="pass_state">P</div><div class="testCell">'+testMessage+'</div>';
+		}else{
+			elemDiv.innerHTML = '<div class="failed_state">F</div><div class="testCell">'+testMessage+'</div>';
+		}
+		e.appendChild(elemDiv);
+	}
+
+	//assertEquals
+	this.testAE=function(testName,testMessage,expected,value) {
+		if(expected==value)
+			this.printTest(testName, testMessage, true);
+		else
+			this.printTest(testName, testMessage+': expected '+expected+' got '+value, false);
+	}
+
+	//test the attributes after setup	
+	this.testAttributes=function() {
+	//Start of user code attributeTests_BasicBallot
+	//TODO: implement
+	//End of user code
+	}
+
+	//Test for BasicBallot_addProposal_string_string_string_address
+	this.testBasicBallot_addProposal_string_string_string_address=function() {
+		//	var res = this.test_instance.addProposal( p__name, p__hash, p__url, p__member);
+		//Start of user code test_BasicBallot_addProposal_string_string_string_address
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testaddProposal", "executed: testBasicBallot_addProposal_string_string_string_address",true, test);		
+		//End of user code
+	}
+
+	//Test for BasicBallot_castVote_uint
+	this.testBasicBallot_castVote_uint=function() {
+		//	var res = this.test_instance.castVote( p__voteFor);
+		//Start of user code test_BasicBallot_castVote_uint
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testcastVote", "executed: testBasicBallot_castVote_uint",true, test);		
+		//End of user code
+	}
+
+	//Test for BasicBallot_startBallot
+	this.testBasicBallot_startBallot=function() {
+		//	var res = this.test_instance.startBallot();
+		//Start of user code test_BasicBallot_startBallot
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("teststartBallot", "executed: testBasicBallot_startBallot",true, test);		
+		//End of user code
+	}
+	this.customTests=function() {
+		//Start of user code test_BasicBallot_custom tests
+		//
+		//End of user code
+	}
+}
+/**
+* A simple bean class around the contract.
+* The PublicBallotModel.
+**/
+function PublicBallotModel(contract) {
+this.contract = contract;
+	/**
+	* Getter for accessregistry.
+	**/
+	this.getAccessregistry = function(){
+		return contract.accessregistry(); 
+	}
+	/**
+	* Getter for ballotStart.
+	**/
+	this.getBallotStart = function(){
+		return contract.ballotStart(); 
+	}
+	/**
+	* Getter for ballotEnd.
+	**/
+	this.getBallotEnd = function(){
+		return contract.ballotEnd(); 
+	}
+	/**
+	* Getter for ballotState.
+	**/
+	this.getBallotState = function(){
+		return contract.ballotState(); 
+	}
+	/**
+	* Getter for proposalCount.
+	**/
+	this.getProposalCount = function(){
+		return contract.proposalCount(); 
+	}
+	/**
+	* Getter for ballotName.
+	**/
+	this.getBallotName = function(){
+		return contract.ballotName(); 
+	}
+	/**
+	* Getter for ballotHash.
+	**/
+	this.getBallotHash = function(){
+		return contract.ballotHash(); 
+	}
+	/**
+	* Get the mapped value for a key.
+	*/
+	this.getProposals=function(key) {
+		return contract.proposals(key);
+	}
+	/**
+	* Call addProposal.
+	**/
+	this.addProposal = function(_name,_hash,_url,_member){
+		return contract.addProposal(_name,_hash,_url,_member); 
+	}
+	/**
+	* Call castVote.
+	**/
+	this.castVote = function(_voteFor){
+		return contract.castVote(_voteFor); 
+	}
+	/**
+	* Call startBallot.
+	**/
+	this.startBallot = function(){
+		return contract.startBallot(); 
+	}
+	/**
+	* Call castVote.
+	**/
+	this.castVote = function(_voteFor){
+		return contract.castVote(_voteFor); 
+	}
+}// end of function PublicBallotModel
+
+//test class for PublicBallot
+function TestPublicBallot(contract) {
+	
+	this.test_instance = contract;
+	this.model = new PublicBallotModel(contract);
+	this.prefix='';
+	this.messageBlockId = "testResult";
+	var self = this;
+
+	this.testSetup=function(){
+		//Start of user code testSetup_PublicBallot
+		//TODO: implement
+		//End of user code
+	}
+
+	this.allTests=function(){
+		this.testSetup();
+		this.testAttributes();
+		this.testBasicBallot_addProposal_string_string_string_address();
+		this.testBasicBallot_castVote_uint();
+		this.testBasicBallot_startBallot();
+		this.customTests();
+	
+		//Start of user code allTests_PublicBallot
+		//TODO: implement
+		//End of user code
+
+	}
+	
+	//print the test result
+	this.printTest=function(testName,testMessage,state){
+		var e = document.getElementById(this.prefix+'-'+this.messageBlockId);
+		var elemDiv = document.createElement('div');
+		elemDiv.id= this.prefix+'-'+testName;
+		elemDiv.className='testRow';
+		elemDiv.text=testMessage;
+		var stateDiv = document.createElement('div');
+		if(state){
+			elemDiv.innerHTML = '<div class="pass_state">P</div><div class="testCell">'+testMessage+'</div>';
+		}else{
+			elemDiv.innerHTML = '<div class="failed_state">F</div><div class="testCell">'+testMessage+'</div>';
+		}
+		e.appendChild(elemDiv);
+	}
+
+	//assertEquals
+	this.testAE=function(testName,testMessage,expected,value) {
+		if(expected==value)
+			this.printTest(testName, testMessage, true);
+		else
+			this.printTest(testName, testMessage+': expected '+expected+' got '+value, false);
+	}
+
+	//test the attributes after setup	
+	this.testAttributes=function() {
+	//Start of user code attributeTests_PublicBallot
+	//TODO: implement
+	//End of user code
+	}
+
+	//Test for BasicBallot_addProposal_string_string_string_address
+	this.testBasicBallot_addProposal_string_string_string_address=function() {
+		//	var res = this.test_instance.addProposal( p__name, p__hash, p__url, p__member);
+		//Start of user code test_PublicBallot_addProposal_string_string_string_address
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testaddProposal", "executed: testPublicBallot_addProposal_string_string_string_address",true, test);		
+		//End of user code
+	}
+
+	//Test for BasicBallot_castVote_uint
+	this.testBasicBallot_castVote_uint=function() {
+		//	var res = this.test_instance.castVote( p__voteFor);
+		//Start of user code test_PublicBallot_castVote_uint
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("testcastVote", "executed: testPublicBallot_castVote_uint",true, test);		
+		//End of user code
+	}
+
+	//Test for BasicBallot_startBallot
+	this.testBasicBallot_startBallot=function() {
+		//	var res = this.test_instance.startBallot();
+		//Start of user code test_PublicBallot_startBallot
+		//TODO : implement this
+		//var test = false;		
+		//this.testAE("teststartBallot", "executed: testPublicBallot_startBallot",true, test);		
+		//End of user code
+	}
+	this.customTests=function() {
+		//Start of user code test_PublicBallot_custom tests
+		//
+		//End of user code
+	}
+}

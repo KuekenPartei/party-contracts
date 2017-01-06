@@ -4,7 +4,7 @@
 * Urs Zeidler
 *
 */
-
+pragma solidity ^0.4.0;
 
 import "./members.sol";
 
@@ -115,7 +115,7 @@ contract BasicBallot {
 	{
 	    if (ballotState!=_ballotState) throw;
 	
-	    _
+	    _;
 	}
 	
 	
