@@ -14,28 +14,61 @@ import org.adridadou.ethereum.values.SoliditySource;
 import de.kueken.ethereum.party.basics.*;
 
 
+
+
 /**
  * The deployer for the basics package.
  *
  */
 public class BasicsDeployer {
 
+	public class DeployDuo<EA,C>{
+		public EA contractAddress;
+		public C constractInstance;
+		
+		public DeployDuo(EA contractAddress, C constractInstance) {
+			super();
+			this.contractAddress = contractAddress;
+			this.constractInstance = constractInstance;
+		}
+	}
+
 	private EthereumFacade ethereum;
 	private SoliditySource contractSource;
 	private static String filename = "/mix/basics.sol";
 
 	public BasicsDeployer(EthereumFacade ethereum) {
-		this(ethereum,filename);
+		this(ethereum,filename, true);
 	}
 
-	public BasicsDeployer(EthereumFacade ethereum, String contractSourceFile) {
+	public BasicsDeployer(EthereumFacade ethereum, String contractSourceFile, boolean plain) {
 		this.ethereum = ethereum;
 		try {
-			contractSource = SoliditySource.from(new File(this.getClass().getResource(contractSourceFile).toURI()));
+			if(plain)
+				contractSource = SoliditySource.from(new File(this.getClass().getResource(contractSourceFile).toURI()));
+			else
+				contractSource = SoliditySource.fromRawJson(new File(this.getClass().getResource(contractSourceFile).toURI()));
+				
 		} catch (URISyntaxException e) {
+			throw new IllegalArgumentException(e);
+		} catch (IOException e) {
 			throw new IllegalArgumentException(e);
 		}
 	}
+
+	public BasicsDeployer(EthereumFacade ethereum, File contractSourceFile, boolean plain) {
+		this.ethereum = ethereum;
+		try {
+			if(plain)
+				contractSource = SoliditySource.from(contractSourceFile);
+			else
+				contractSource = SoliditySource.fromRawJson(contractSourceFile);
+				
+		} catch (IOException e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
+
 
 
 	/**
@@ -53,11 +86,11 @@ public class BasicsDeployer {
 	 * Deploys a 'Owned' on the blockchain and wrapps the contcat proxy.
 	 *  
 	 * @param sender the sender address
-	 * @return the contract interface
+	 * @return the contract interface and the deployed address
 	 */
-	public Owned createOwned(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
+	public DeployDuo<CompletableFuture<EthAddress>, Owned> createOwned(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> address = deployOwned(sender);
-		return createOwned(sender, address.get());
+		return new DeployDuo<CompletableFuture<EthAddress>, Owned>(address, createOwned(sender, address.get()));
 	}
 
 	/**
@@ -90,9 +123,9 @@ public class BasicsDeployer {
 	 * @param sender the sender address
 	 * @return the contract interface
 	 */
-	public Manageable createManageable(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
+	public DeployDuo<CompletableFuture<EthAddress>, Manageable> createManageable(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> address = deployManageable(sender);
-		return createManageable(sender, address.get());
+		return new DeployDuo<CompletableFuture<EthAddress>, Manageable>(address, createManageable(sender, address.get()));
 	}
 
 	/**
@@ -123,11 +156,11 @@ public class BasicsDeployer {
 	 * Deploys a 'Multiowned' on the blockchain and wrapps the contcat proxy.
 	 *  
 	 * @param sender the sender address
-	 * @return the contract interface
+	 * @return the contract interface and the deployed address
 	 */
-	public Multiowned createMultiowned(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
+	public DeployDuo<CompletableFuture<EthAddress>, Multiowned> createMultiowned(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> address = deployMultiowned(sender);
-		return createMultiowned(sender, address.get());
+		return new DeployDuo<CompletableFuture<EthAddress>, Multiowned>(address, createMultiowned(sender, address.get()));
 	}
 
 	/**

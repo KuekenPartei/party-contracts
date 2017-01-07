@@ -36,6 +36,7 @@ public interface Multiowned{
 	java.util.concurrent.CompletableFuture<Boolean> isOwner(String _addr);
 	
 	Boolean hasConfirmed(Byte[] _operation,String _owner);
+
 	//Start of user code additional_methods
 
 	//End of user code

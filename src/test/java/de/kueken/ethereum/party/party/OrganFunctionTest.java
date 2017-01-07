@@ -3,7 +3,6 @@ package de.kueken.ethereum.party.party;
 import static org.junit.Assert.*;
 
 import de.kueken.ethereum.party.basics.*;
-import de.kueken.ethereum.party.deployer.PartyDeployer;
 import de.kueken.ethereum.party.members.*;
 import de.kueken.ethereum.party.publishing.*;
 import de.kueken.ethereum.party.voting.*;
@@ -34,6 +33,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.kueken.ethereum.party.EthereumInstance;
+
+// Start of user code OrganFunctionTest.customImports
+
+// End of user code
+
 
 /**
  * Test for the OrganFunction contract.

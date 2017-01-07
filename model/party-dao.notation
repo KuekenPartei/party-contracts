@@ -2393,10 +2393,14 @@
       <children xmi:type="notation:BasicCompartment" xmi:id="_kqQ5eB82Eea0ndjKa8R1Fg" type="Class_OperationCompartment">
         <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_jJUoECAbEeaptIkV30WcIg" source="PapyrusCSSForceValue">
           <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_jJVPICAbEeaptIkV30WcIg" key="collapsed" value="true"/>
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_ssq_4NTAEeaehMvKntlBaA" key="mutable" value="true"/>
         </eAnnotations>
-        <children xmi:type="notation:Shape" xmi:id="_JMYrMB86Eea0ndjKa8R1Fg" type="Operation_ClassOperationLabel">
-          <element xmi:type="uml:Operation" href="party-dao.uml#_JMKBsB86Eea0ndjKa8R1Fg"/>
-          <layoutConstraint xmi:type="notation:Location" xmi:id="_JMYrMR86Eea0ndjKa8R1Fg"/>
+        <children xmi:type="notation:Shape" xmi:id="_snWbANTAEeaehMvKntlBaA" type="Operation_ClassOperationLabel">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_ssq_4dTAEeaehMvKntlBaA" source="PapyrusCSSForceValue">
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_sssOANTAEeaehMvKntlBaA" key="mutable" value="true"/>
+          </eAnnotations>
+          <element xmi:type="uml:Operation" href="party-dao.uml#_seHmgNTAEeaehMvKntlBaA"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_snWbAdTAEeaehMvKntlBaA"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_Lq_XcB9BEea0ndjKa8R1Fg" type="Operation_ClassOperationLabel">
           <element xmi:type="uml:Operation" href="party-dao.uml#_LqoLEB9BEea0ndjKa8R1Fg"/>

@@ -30,6 +30,11 @@ import org.junit.Test;
 
 import de.kueken.ethereum.party.EthereumInstance;
 
+// Start of user code ManageableTest.customImports
+
+// End of user code
+
+
 /**
  * Test for the Manageable contract.
  *
@@ -90,7 +95,6 @@ public class ManageableTest{
 
 	protected void setFixture(Manageable f) {
 		this.fixture = f;
-		
 	}
 
 

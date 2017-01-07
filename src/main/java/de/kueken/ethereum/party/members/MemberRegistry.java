@@ -70,6 +70,7 @@ public interface MemberRegistry extends Manageable{
 	ReturnGetMemberData_string_uint getMemberData(String _address);
 	
 	void publishMemberEvent(String mAddress,Integer eventType);
+
 	//Start of user code additional_methods
 
 	//End of user code

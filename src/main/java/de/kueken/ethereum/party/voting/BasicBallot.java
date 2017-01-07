@@ -31,6 +31,7 @@ public interface BasicBallot{
 	void castVote(Integer _voteFor);
 	
 	void startBallot();
+
 	//Start of user code additional_methods
 
 	//End of user code

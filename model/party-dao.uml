@@ -622,15 +622,21 @@ It is populated by functions party members.</body>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_6Ej-gL79EeaXm-1aKivBzQ" name="subDivisionCount">
           <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
         </ownedAttribute>
-        <ownedOperation xmi:type="uml:Operation" xmi:id="_JMKBsB86Eea0ndjKa8R1Fg" name="Party">
-          <ownedComment xmi:type="uml:Comment" xmi:id="_B2Z_kL_BEeazOb5wmAyG3w">
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_seHmgNTAEeaehMvKntlBaA" name="Party">
+          <ownedComment xmi:type="uml:Comment" xmi:id="_seHmgdTAEeaehMvKntlBaA">
             <body>Construct a new party or division.</body>
           </ownedComment>
-          <ownedParameter xmi:type="uml:Parameter" xmi:id="_cAIdYL8EEeaXm-1aKivBzQ" name="_name">
-            <ownedComment xmi:type="uml:Comment" xmi:id="_ILwYEL_BEeazOb5wmAyG3w">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_seHmgtTAEeaehMvKntlBaA" name="_name">
+            <ownedComment xmi:type="uml:Comment" xmi:id="_seHmg9TAEeaehMvKntlBaA">
               <body>The name of the party or division.</body>
             </ownedComment>
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_y88rINTAEeaehMvKntlBaA" name="_memberRegistry">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_2IYsYNTAEeaehMvKntlBaA" name="_blogRegistry">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
           </ownedParameter>
         </ownedOperation>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_LqoLEB9BEea0ndjKa8R1Fg" name="ConstiutionChange"/>
@@ -1311,7 +1317,6 @@ Collects the proposals and manages the state.</body>
   <Contracts:Function xmi:id="_ZRHuQJXXEeaCN_-XsTGglw" base_Operation="_zzhrYJXWEeaCN_-XsTGglw">
     <modifiers xmi:type="Contracts:Modifier" xmi:id="_mIwIAJXXEeaCN_-XsTGglw" parameter="" modifier="_8DcOwM2GEeWqGaV8xrZGjQ"/>
   </Contracts:Function>
-  <Contracts:Constructor xmi:id="_wPj_8JXXEeaCN_-XsTGglw" base_Operation="_JMKBsB86Eea0ndjKa8R1Fg" superConstructor="Manageable()"/>
   <Contracts:KeyMapping xmi:id="_atwO4JXYEeaCN_-XsTGglw" base_Property="_2lkfwJXXEeaCN_-XsTGglw">
     <key xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
   </Contracts:KeyMapping>
@@ -1358,4 +1363,5 @@ Collects the proposals and manages the state.</body>
   <Contracts:Function xmi:id="_umKzIL7-EeaXm-1aKivBzQ" base_Operation="_qkZm0L7-EeaXm-1aKivBzQ"/>
   <Contracts:Event xmi:id="_tuHUUL7_EeaXm-1aKivBzQ" base_Operation="_k6XmwL7_EeaXm-1aKivBzQ"/>
   <Contracts:Constructor xmi:id="_EMXqEL8AEeaXm-1aKivBzQ" base_Operation="_j6IgMB86Eea0ndjKa8R1Fg"/>
+  <Contracts:Constructor xmi:id="_sexGwNTAEeaehMvKntlBaA" base_Operation="_seHmgNTAEeaehMvKntlBaA" superConstructor="Manageable()"/>
 </xmi:XMI>

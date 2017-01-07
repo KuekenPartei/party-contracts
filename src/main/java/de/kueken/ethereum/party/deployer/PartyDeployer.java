@@ -14,18 +14,31 @@ import org.adridadou.ethereum.values.SoliditySource;
 import de.kueken.ethereum.party.party.*;
 
 
+
+
 /**
  * The deployer for the party package.
  *
  */
 public class PartyDeployer {
 
+	public class DeployDuo<EA,C>{
+		public EA contractAddress;
+		public C constractInstance;
+		
+		public DeployDuo(EA contractAddress, C constractInstance) {
+			super();
+			this.contractAddress = contractAddress;
+			this.constractInstance = constractInstance;
+		}
+	}
+
 	private EthereumFacade ethereum;
 	private SoliditySource contractSource;
 	private static String filename = "/mix/party.sol";
 
 	public PartyDeployer(EthereumFacade ethereum) {
-		this(ethereum,filename,true);
+		this(ethereum,filename, true);
 	}
 
 	public PartyDeployer(EthereumFacade ethereum, String contractSourceFile, boolean plain) {
@@ -43,15 +56,19 @@ public class PartyDeployer {
 		}
 	}
 
-//	public PartyDeployer(EthereumFacade ethereum, String contractSourceFile) {
-//		this.ethereum = ethereum;
-//		try {
-//			contractSource = SoliditySource.from(new File(this.getClass().getResource(contractSourceFile).toURI()));
-//		} catch (URISyntaxException e) {
-//			throw new IllegalArgumentException(e);
-//		}
-//	}
-//
+	public PartyDeployer(EthereumFacade ethereum, File contractSourceFile, boolean plain) {
+		this.ethereum = ethereum;
+		try {
+			if(plain)
+				contractSource = SoliditySource.from(contractSourceFile);
+			else
+				contractSource = SoliditySource.fromRawJson(contractSourceFile);
+				
+		} catch (IOException e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
+
 
 
 	/**
@@ -69,11 +86,11 @@ public class PartyDeployer {
 	 * Deploys a 'Organ' on the blockchain and wrapps the contcat proxy.
 	 *  
 	 * @param sender the sender address
-	 * @return the contract interface
+	 * @return the contract interface and the deployed address
 	 */
-	public Organ createOrgan(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
+	public DeployDuo<CompletableFuture<EthAddress>, Organ> createOrgan(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> address = deployOrgan(sender);
-		return createOrgan(sender, address.get());
+		return new DeployDuo<CompletableFuture<EthAddress>, Organ>(address, createOrgan(sender, address.get()));
 	}
 
 	/**
@@ -94,10 +111,12 @@ public class PartyDeployer {
 	 *  
 	 * @param sender the sender address
 	 * @param _name The name of the party or division.
+	 * @param _memberRegistry 
+	 * @param _blogRegistry 
 	 * @return the address of the deployed contract
 	 */
-	public CompletableFuture<EthAddress> deployParty(EthAccount sender, String _name) {
-		CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "Party", sender, _name);
+	public CompletableFuture<EthAddress> deployParty(EthAccount sender, String _name, String _memberRegistry, String _blogRegistry) {
+		CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "Party", sender, _name, _memberRegistry, _blogRegistry);
 		return address;
 	}
 
@@ -106,11 +125,13 @@ public class PartyDeployer {
 	 *  
 	 * @param sender the sender address
 	 * @param _name The name of the party or division.
+	 * @param _memberRegistry 
+	 * @param _blogRegistry 
 	 * @return the contract interface
 	 */
-	public Party createParty(EthAccount sender, String _name) throws IOException, InterruptedException, ExecutionException {
-		CompletableFuture<EthAddress> address = deployParty(sender, _name);
-		return createParty(sender, address.get());
+	public DeployDuo<CompletableFuture<EthAddress>, Party> createParty(EthAccount sender, String _name, String _memberRegistry, String _blogRegistry) throws IOException, InterruptedException, ExecutionException {
+		CompletableFuture<EthAddress> address = deployParty(sender, _name, _memberRegistry, _blogRegistry);
+		return new DeployDuo<CompletableFuture<EthAddress>, Party>(address, createParty(sender, address.get()));
 	}
 
 	/**
@@ -145,9 +166,9 @@ public class PartyDeployer {
 	 * @param _name The name of the party or division.
 	 * @return the contract interface
 	 */
-	public KUEKeNParty createKUEKeNParty(EthAccount sender, String _name) throws IOException, InterruptedException, ExecutionException {
+	public DeployDuo<CompletableFuture<EthAddress>, KUEKeNParty> createKUEKeNParty(EthAccount sender, String _name) throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> address = deployKUEKeNParty(sender, _name);
-		return createKUEKeNParty(sender, address.get());
+		return new DeployDuo<CompletableFuture<EthAddress>, KUEKeNParty>(address, createKUEKeNParty(sender, address.get()));
 	}
 
 	/**
@@ -178,11 +199,11 @@ public class PartyDeployer {
 	 * Deploys a 'Conference' on the blockchain and wrapps the contcat proxy.
 	 *  
 	 * @param sender the sender address
-	 * @return the contract interface
+	 * @return the contract interface and the deployed address
 	 */
-	public Conference createConference(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
+	public DeployDuo<CompletableFuture<EthAddress>, Conference> createConference(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> address = deployConference(sender);
-		return createConference(sender, address.get());
+		return new DeployDuo<CompletableFuture<EthAddress>, Conference>(address, createConference(sender, address.get()));
 	}
 
 	/**
@@ -213,11 +234,11 @@ public class PartyDeployer {
 	 * Deploys a 'FoundationConference' on the blockchain and wrapps the contcat proxy.
 	 *  
 	 * @param sender the sender address
-	 * @return the contract interface
+	 * @return the contract interface and the deployed address
 	 */
-	public FoundationConference createFoundationConference(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
+	public DeployDuo<CompletableFuture<EthAddress>, FoundationConference> createFoundationConference(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> address = deployFoundationConference(sender);
-		return createFoundationConference(sender, address.get());
+		return new DeployDuo<CompletableFuture<EthAddress>, FoundationConference>(address, createFoundationConference(sender, address.get()));
 	}
 
 	/**
@@ -254,9 +275,9 @@ public class PartyDeployer {
 	 * @param _ch 
 	 * @return the contract interface
 	 */
-	public OrganFunction createOrganFunction(EthAccount sender, String _name, String _ch) throws IOException, InterruptedException, ExecutionException {
+	public DeployDuo<CompletableFuture<EthAddress>, OrganFunction> createOrganFunction(EthAccount sender, String _name, String _ch) throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> address = deployOrganFunction(sender, _name, _ch);
-		return createOrganFunction(sender, address.get());
+		return new DeployDuo<CompletableFuture<EthAddress>, OrganFunction>(address, createOrganFunction(sender, address.get()));
 	}
 
 	/**

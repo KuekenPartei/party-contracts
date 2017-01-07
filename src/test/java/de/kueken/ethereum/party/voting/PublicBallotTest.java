@@ -31,6 +31,11 @@ import org.junit.Test;
 
 import de.kueken.ethereum.party.EthereumInstance;
 
+// Start of user code PublicBallotTest.customImports
+
+// End of user code
+
+
 /**
  * Test for the PublicBallot contract.
  *

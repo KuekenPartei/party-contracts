@@ -11,6 +11,9 @@ public interface MemberAware{
 	
 	String memberRegistry();
 
+
+	void setMemberRegistry (String aMemberRegistry);
+
 	//Start of user code additional_methods
 
 	//End of user code

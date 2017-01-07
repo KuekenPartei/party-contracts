@@ -34,6 +34,11 @@ import org.junit.Test;
 
 import de.kueken.ethereum.party.EthereumInstance;
 
+// Start of user code KUEKeNPartyTest.customImports
+
+// End of user code
+
+
 /**
  * Test for the KUEKeNParty contract.
  *
@@ -45,9 +50,8 @@ public class KUEKeNPartyTest extends PartyTest{
 	private KUEKeNParty fixture;
 	private EthAddress fixtureAddress;
 	private SoliditySource contractSource;
-	private String userAddress;
 	// Start of user code KUEKeNPartyTest.attributes
-	//TODO: implement
+	private String userAddress;
 	// End of user code
 
 	/**

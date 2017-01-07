@@ -3,7 +3,6 @@ package de.kueken.ethereum.party.party;
 import static org.junit.Assert.*;
 
 import de.kueken.ethereum.party.basics.*;
-import de.kueken.ethereum.party.deployer.PublishingDeployer;
 import de.kueken.ethereum.party.members.*;
 import de.kueken.ethereum.party.publishing.*;
 import de.kueken.ethereum.party.voting.*;
@@ -12,7 +11,6 @@ import de.kueken.ethereum.party.party.Organ.*;
 
 
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.stream.*;
@@ -35,6 +33,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.kueken.ethereum.party.EthereumInstance;
+
+// Start of user code OrganTest.customImports
+import de.kueken.ethereum.party.deployer.PublishingDeployer;
+import java.io.IOException;
+// End of user code
+
 
 /**
  * Test for the Organ contract.
@@ -159,7 +163,6 @@ public class OrganTest extends ManageableTest{
 		assertEquals(1, fixture.lastFunctionId().intValue());
 		//End of user code
 	}
-
 	/**
 	 * Test method for  initalizeOrgan().
 	 * see {@link Organ#initalizeOrgan()}
@@ -242,7 +245,8 @@ public class OrganTest extends ManageableTest{
 		//Start of user code testAddOrganFunction_address_string
 		initOrgan();
 		assertEquals(0, fixture.lastFunctionId().intValue());
-		fixture.addOrganFunction("Function1", "name");
+		String organAddress="";
+		fixture.addOrganFunction(organAddress, "name");
 		assertEquals(1, fixture.lastFunctionId().intValue());
 		//End of user code
 	}
@@ -270,7 +274,7 @@ public class OrganTest extends ManageableTest{
 		CompletableFuture<EthAddress> deployBlogRegistry = publishingDeployer.deployBlogRegistry(sender);
 		BlogRegistry blogRegistry = publishingDeployer.createBlogRegistry(sender, deployBlogRegistry.get());
 		String blogRegistryAddress = deployBlogRegistry.get().withLeading0x();
-		fixture.setBlogRegistry(blogRegistryAddress);
+		fixture.setBlogRegistry(deployBlogRegistry.get().withLeading0x());
 	}
 
 	//End of user code

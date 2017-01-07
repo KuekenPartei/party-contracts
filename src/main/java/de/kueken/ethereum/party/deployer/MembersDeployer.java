@@ -14,11 +14,24 @@ import org.adridadou.ethereum.values.SoliditySource;
 import de.kueken.ethereum.party.members.*;
 
 
+
+
 /**
  * The deployer for the members package.
  *
  */
 public class MembersDeployer {
+
+	public class DeployDuo<EA,C>{
+		public EA contractAddress;
+		public C constractInstance;
+		
+		public DeployDuo(EA contractAddress, C constractInstance) {
+			super();
+			this.contractAddress = contractAddress;
+			this.constractInstance = constractInstance;
+		}
+	}
 
 	private EthereumFacade ethereum;
 	private SoliditySource contractSource;
@@ -43,6 +56,20 @@ public class MembersDeployer {
 		}
 	}
 
+	public MembersDeployer(EthereumFacade ethereum, File contractSourceFile, boolean plain) {
+		this.ethereum = ethereum;
+		try {
+			if(plain)
+				contractSource = SoliditySource.from(contractSourceFile);
+			else
+				contractSource = SoliditySource.fromRawJson(contractSourceFile);
+				
+		} catch (IOException e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
+
+
 
 	/**
 	 * Deploys a 'MemberRegistry' on the blockchain.
@@ -59,11 +86,11 @@ public class MembersDeployer {
 	 * Deploys a 'MemberRegistry' on the blockchain and wrapps the contcat proxy.
 	 *  
 	 * @param sender the sender address
-	 * @return the contract interface
+	 * @return the contract interface and the deployed address
 	 */
-	public MemberRegistry createMemberRegistry(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
+	public DeployDuo<CompletableFuture<EthAddress>, MemberRegistry> createMemberRegistry(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> address = deployMemberRegistry(sender);
-		return createMemberRegistry(sender, address.get());
+		return new DeployDuo<CompletableFuture<EthAddress>, MemberRegistry>(address, createMemberRegistry(sender, address.get()));
 	}
 
 	/**
@@ -94,11 +121,11 @@ public class MembersDeployer {
 	 * Deploys a 'MemberAware' on the blockchain and wrapps the contcat proxy.
 	 *  
 	 * @param sender the sender address
-	 * @return the contract interface
+	 * @return the contract interface and the deployed address
 	 */
-	public MemberAware createMemberAware(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
+	public DeployDuo<CompletableFuture<EthAddress>, MemberAware> createMemberAware(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> address = deployMemberAware(sender);
-		return createMemberAware(sender, address.get());
+		return new DeployDuo<CompletableFuture<EthAddress>, MemberAware>(address, createMemberAware(sender, address.get()));
 	}
 
 	/**

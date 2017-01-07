@@ -224,15 +224,30 @@ contract Party is Manageable {
 	
 	event DivisionChanged(address divisionAddress,address changer,uint state);
 	
+//	/*
+//	* Construct a new party or division.
+//	* 
+//	* _name -The name of the party or division.
+//	*/
+//	function Party(string _name) public Manageable()   {
+//		//Start of user code Party.constructor.Party_string
+//		name = _name; 
+////		//End of user code
+//	}
+	
 	/*
 	* Construct a new party or division.
 	* 
 	* _name -The name of the party or division.
+	* _memberRegistry -
+	* _blogRegistry -
 	*/
-	function Party(string _name) public Manageable()   {
-		//Start of user code Party.constructor.Party_string
+	function Party(string _name,address _memberRegistry,address _blogRegistry) public Manageable()   {
+		//Start of user code Party.constructor.Party_string_address_address
 		name = _name; 
-//		//End of user code
+		memberRegistry = MemberRegistry(_memberRegistry); 
+		blogregistry = BlogRegistry(_blogRegistry);
+		//End of user code
 	}
 	
 	

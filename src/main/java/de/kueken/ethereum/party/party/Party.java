@@ -51,8 +51,13 @@ public interface Party extends Manageable{
 	void addSubDivision(String _subDivision);
 	
 	void removeSubDivision(Integer _divisionId);
-	//Start of user code additional_methods
-	void setBlogregistry (String aBlogregistr); 
+
+	String getMemberRegistry();
+
 	void setMemberRegistry (String aMemberRegistry);
+
+	void setBlogregistry (String aBlogregistry);
+
+	//Start of user code additional_methods
 	//End of user code
 }

@@ -34,6 +34,11 @@ import org.junit.Test;
 
 import de.kueken.ethereum.party.EthereumInstance;
 
+// Start of user code FoundationConferenceTest.customImports
+
+// End of user code
+
+
 /**
  * Test for the FoundationConference contract.
  *

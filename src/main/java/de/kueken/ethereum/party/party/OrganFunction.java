@@ -41,6 +41,11 @@ public interface OrganFunction extends Manageable{
 
 	
 	String getFunctioName();
+
+	void setCurrentMember (String aCurrentMember);
+
+	void setPublisher (String aPublisher);
+
 	//Start of user code additional_methods
 
 	//End of user code

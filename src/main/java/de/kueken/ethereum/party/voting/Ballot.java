@@ -23,6 +23,7 @@ public interface Ballot{
 	void voteFor(Integer proposal);
 	
 	java.util.concurrent.CompletableFuture<Integer> winningProposal();
+
 	//Start of user code additional_methods
 
 	//End of user code

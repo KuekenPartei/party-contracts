@@ -6,6 +6,7 @@ import de.kueken.ethereum.party.basics.*;
 
 import de.kueken.ethereum.party.members.MemberRegistry.*;
 
+
 import java.io.File;
 import java.util.*;
 import java.util.concurrent.*;
@@ -30,11 +31,16 @@ import org.junit.Test;
 
 import de.kueken.ethereum.party.EthereumInstance;
 
+// Start of user code MemberRegistryTest.customImports
+
+// End of user code
+
+
 /**
  * Test for the MemberRegistry contract.
  *
  */
-public class MemberRegistryTest extends ManageableTest {
+public class MemberRegistryTest extends ManageableTest{
 	private static EthereumFacade ethereum;
 	private static EthAccount sender;
 
@@ -46,7 +52,7 @@ public class MemberRegistryTest extends ManageableTest {
 	// End of user code
 
 	/**
-	 * Setup up the blockchain. Add the 'EthereumFacadeProvider' property to use
+	 * Setup up the blockchain. Add the 'EthereumFacadeProvider' property to use 
 	 * another block chain implemenation or network.
 	 */
 	@BeforeClass
@@ -57,12 +63,11 @@ public class MemberRegistryTest extends ManageableTest {
 
 	/**
 	 * Read the contract from the file and deploys the contract code.
-	 * 
 	 * @throws Exception
 	 */
 	@Before
 	public void prepareTest() throws Exception {
-		// Start of user code prepareTest
+		//Start of user code prepareTest
 		String property = System.getProperty("EthereumFacadeProvider");
 		if (property != null) {
 			if (property.equalsIgnoreCase("rpc") || property.equalsIgnoreCase("ropsten")
@@ -88,13 +93,13 @@ public class MemberRegistryTest extends ManageableTest {
 		// End of user code
 	}
 
+
 	/**
 	 * Create a new fixture by deploying the contract source.
-	 * 
 	 * @throws Exception
 	 */
 	protected void createFixture() throws Exception {
-		// Start of user code createFixture
+		//Start of user code createFixture
 		CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "MemberRegistry", sender);
 		fixtureAddress = address.get();
 		setFixture(ethereum.createContractProxy(contractSource, "MemberRegistry", address.get(), sender,
@@ -107,41 +112,39 @@ public class MemberRegistryTest extends ManageableTest {
 		super.setFixture(f);
 	}
 
+
+
+
 	/**
-	 * Test method for isMember(String _memberAdress). see
-	 * {@link MemberRegistry#isMember( String)}
-	 * 
+	 * Test method for  isMember(String _memberAdress).
+	 * see {@link MemberRegistry#isMember( String)}
 	 * @throws Exception
 	 */
 	@Test
 	public void testIsMember_address() throws Exception {
-		// Start of user code testIsMember_address
+		//Start of user code testIsMember_address
 		fail("not implemented");// TODO: implement this
 		// End of user code
 	}
-
 	/**
-	 * Test method for getMemberAddress(Integer id). see
-	 * {@link MemberRegistry#getMemberAddress( Integer)}
-	 * 
+	 * Test method for  getMemberAddress(Integer id).
+	 * see {@link MemberRegistry#getMemberAddress( Integer)}
 	 * @throws Exception
 	 */
 	@Test
 	public void testGetMemberAddress_uint() throws Exception {
-		// Start of user code testGetMemberAddress_uint
+		//Start of user code testGetMemberAddress_uint
 		fail("not implemented");// TODO: implement this
 		// End of user code
 	}
-
 	/**
-	 * Test method for getMemberCount(). see
-	 * {@link MemberRegistry#getMemberCount()}
-	 * 
+	 * Test method for  getMemberCount().
+	 * see {@link MemberRegistry#getMemberCount()}
 	 * @throws Exception
 	 */
 	@Test
 	public void testGetMemberCount() throws Exception {
-		// Start of user code testGetMemberCount
+		//Start of user code testGetMemberCount
 		assertEquals(0, fixture.getMemberCount().intValue());
 		fixture.addMember("test1", "0x0001");
 		assertEquals(1, fixture.getMemberCount().intValue());
@@ -149,16 +152,14 @@ public class MemberRegistryTest extends ManageableTest {
 		assertEquals(0, fixture.getMemberCount().intValue());
 		// End of user code
 	}
-
 	/**
-	 * Test method for addMember(String name,String _memberAddress). see
-	 * {@link MemberRegistry#addMember( String, String)}
-	 * 
+	 * Test method for  addMember(String name,String _memberAddress).
+	 * see {@link MemberRegistry#addMember( String, String)}
 	 * @throws Exception
 	 */
 	@Test
 	public void testAddMember_string_address() throws Exception {
-		// Start of user code testAddMember_string_address
+		//Start of user code testAddMember_string_address
 		assertEquals(0, fixture.getMemberCount().intValue());
 		fixture.addMember("test1", "0x0001");
 		assertEquals(1, fixture.getMemberCount().intValue());
@@ -166,16 +167,14 @@ public class MemberRegistryTest extends ManageableTest {
 		assertEquals(2, fixture.getMemberCount().intValue());
 		// End of user code
 	}
-
 	/**
-	 * Test method for unregisterMember(Integer id). see
-	 * {@link MemberRegistry#unregisterMember( Integer)}
-	 * 
+	 * Test method for  unregisterMember(Integer id).
+	 * see {@link MemberRegistry#unregisterMember( Integer)}
 	 * @throws Exception
 	 */
 	@Test
 	public void testUnregisterMember_uint() throws Exception {
-		// Start of user code testUnregisterMember_uint
+		//Start of user code testUnregisterMember_uint
 		assertEquals(0, fixture.getMemberCount().intValue());
 		fixture.addMember("test1", "0x0001");
 		assertEquals(1, fixture.getMemberCount().intValue());
@@ -188,29 +187,25 @@ public class MemberRegistryTest extends ManageableTest {
 		assertEquals(2, fixture.partyMemberCount().intValue());
 		// End of user code
 	}
-
 	/**
-	 * Test method for isActiveMember(String _memberAdress). see
-	 * {@link MemberRegistry#isActiveMember( String)}
-	 * 
+	 * Test method for  isActiveMember(String _memberAdress).
+	 * see {@link MemberRegistry#isActiveMember( String)}
 	 * @throws Exception
 	 */
 	@Test
 	public void testIsActiveMember_address() throws Exception {
-		// Start of user code testIsActiveMember_address
+		//Start of user code testIsActiveMember_address
 		fail("not implemented");// TODO: implement this
 		// End of user code
 	}
-
 	/**
-	 * Test method for changeMemberAddress(Integer id,String _newMemberAddress).
+	 * Test method for  changeMemberAddress(Integer id,String _newMemberAddress).
 	 * see {@link MemberRegistry#changeMemberAddress( Integer, String)}
-	 * 
 	 * @throws Exception
 	 */
 	@Test
 	public void testChangeMemberAddress_uint_address() throws Exception {
-		// Start of user code testChangeMemberAddress_uint_address
+		//Start of user code testChangeMemberAddress_uint_address
 		String _memberAdress = "0x02";
 		assertFalse(fixture.isActiveMember(_memberAdress));
 		fixture.addMember("Test1", _memberAdress);
@@ -225,16 +220,14 @@ public class MemberRegistryTest extends ManageableTest {
 
 		// End of user code
 	}
-
 	/**
-	 * Test method for getMemberData(String _address). see
-	 * {@link MemberRegistry#getMemberData( String)}
-	 * 
+	 * Test method for  getMemberData(String _address).
+	 * see {@link MemberRegistry#getMemberData( String)}
 	 * @throws Exception
 	 */
 	@Test
 	public void testGetMemberData_address() throws Exception {
-		// Start of user code testGetMemberData_address
+		//Start of user code testGetMemberData_address
 		String _memberAdress = "0x02";
 		assertFalse(fixture.isActiveMember(_memberAdress));
 		fixture.addMember("Test1", _memberAdress);
@@ -244,24 +237,21 @@ public class MemberRegistryTest extends ManageableTest {
 		assertEquals("Test1", memberData.getName());
 		// End of user code
 	}
-
 	/**
-	 * Test method for publishMemberEvent(String mAddress,Integer eventType).
+	 * Test method for  publishMemberEvent(String mAddress,Integer eventType).
 	 * see {@link MemberRegistry#publishMemberEvent( String, Integer)}
-	 * 
 	 * @throws Exception
 	 */
 	@Test
 	public void testPublishMemberEvent_address_uint() throws Exception {
-		// Start of user code testPublishMemberEvent_address_uint
+		//Start of user code testPublishMemberEvent_address_uint
 		String _memberAdress = "0x02";
 		assertFalse(fixture.isActiveMember(_memberAdress));
 		fixture.addMember("Test1", _memberAdress);
 		fixture.publishMemberEvent(_memberAdress, 0);
 		// End of user code
 	}
-
-	// Start of user code customTests
+	//Start of user code customTests
 	@Override
 	public void testConstructor() throws Exception {
 		assertEquals(0, fixture.activeMemberCount().intValue());

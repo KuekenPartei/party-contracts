@@ -20,6 +20,7 @@ public interface Conference extends Organ{
 
 	
 	void accreditationMember(String _address);
+
 	//Start of user code additional_methods
 
 	//End of user code

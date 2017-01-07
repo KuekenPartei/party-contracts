@@ -14,11 +14,24 @@ import org.adridadou.ethereum.values.SoliditySource;
 import de.kueken.ethereum.party.publishing.*;
 
 
+
+
 /**
  * The deployer for the publishing package.
  *
  */
 public class PublishingDeployer {
+
+	public class DeployDuo<EA,C>{
+		public EA contractAddress;
+		public C constractInstance;
+		
+		public DeployDuo(EA contractAddress, C constractInstance) {
+			super();
+			this.contractAddress = contractAddress;
+			this.constractInstance = constractInstance;
+		}
+	}
 
 	private EthereumFacade ethereum;
 	private SoliditySource contractSource;
@@ -43,6 +56,20 @@ public class PublishingDeployer {
 		}
 	}
 
+	public PublishingDeployer(EthereumFacade ethereum, File contractSourceFile, boolean plain) {
+		this.ethereum = ethereum;
+		try {
+			if(plain)
+				contractSource = SoliditySource.from(contractSourceFile);
+			else
+				contractSource = SoliditySource.fromRawJson(contractSourceFile);
+				
+		} catch (IOException e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
+
+
 
 	/**
 	 * Deploys a 'ShortBlog' on the blockchain.
@@ -63,9 +90,9 @@ public class PublishingDeployer {
 	 * @param _name 
 	 * @return the contract interface
 	 */
-	public ShortBlog createShortBlog(EthAccount sender, String _name) throws IOException, InterruptedException, ExecutionException {
+	public DeployDuo<CompletableFuture<EthAddress>, ShortBlog> createShortBlog(EthAccount sender, String _name) throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> address = deployShortBlog(sender, _name);
-		return createShortBlog(sender, address.get());
+		return new DeployDuo<CompletableFuture<EthAddress>, ShortBlog>(address, createShortBlog(sender, address.get()));
 	}
 
 	/**
@@ -96,11 +123,11 @@ public class PublishingDeployer {
 	 * Deploys a 'BlogRegistry' on the blockchain and wrapps the contcat proxy.
 	 *  
 	 * @param sender the sender address
-	 * @return the contract interface
+	 * @return the contract interface and the deployed address
 	 */
-	public BlogRegistry createBlogRegistry(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
+	public DeployDuo<CompletableFuture<EthAddress>, BlogRegistry> createBlogRegistry(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> address = deployBlogRegistry(sender);
-		return createBlogRegistry(sender, address.get());
+		return new DeployDuo<CompletableFuture<EthAddress>, BlogRegistry>(address, createBlogRegistry(sender, address.get()));
 	}
 
 	/**

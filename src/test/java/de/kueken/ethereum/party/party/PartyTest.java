@@ -1,31 +1,48 @@
 package de.kueken.ethereum.party.party;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+
+import de.kueken.ethereum.party.basics.*;
+import de.kueken.ethereum.party.members.*;
+import de.kueken.ethereum.party.publishing.*;
+import de.kueken.ethereum.party.voting.*;
+
+import de.kueken.ethereum.party.party.Party.*;
+
 
 import java.io.File;
-import java.io.IOException;
-import java.math.BigInteger;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.stream.*;
+import java.math.*;
 
 import org.adridadou.ethereum.EthereumFacade;
-import org.adridadou.ethereum.keystore.FileSecureKey;
-import org.adridadou.ethereum.keystore.SecureKey;
+import org.adridadou.ethereum.keystore.*;
+import org.adridadou.ethereum.provider.MainEthereumFacadeProvider;
+import org.adridadou.ethereum.provider.RopstenEthereumFacadeProvider;
+import org.adridadou.ethereum.provider.GenericRpcEthereumFacadeProvider;
+import org.adridadou.ethereum.provider.StandaloneEthereumFacadeProvider;
+import org.adridadou.ethereum.provider.TestnetEthereumFacadeProvider;
 import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
 import org.adridadou.ethereum.values.SoliditySource;
+import org.adridadou.ethereum.values.config.ChainId;
 import org.ethereum.crypto.ECKey;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.kueken.ethereum.party.EthereumInstance;
-import de.kueken.ethereum.party.basics.ManageableTest;
+
+// Start of user code PartyTest.customImports
 import de.kueken.ethereum.party.deployer.MembersDeployer;
 import de.kueken.ethereum.party.deployer.PartyDeployer;
+import de.kueken.ethereum.party.deployer.PartyDeployer.DeployDuo;
 import de.kueken.ethereum.party.deployer.PublishingDeployer;
-import de.kueken.ethereum.party.publishing.BlogRegistry;
+import java.io.IOException;
+
+// End of user code
+
 
 /**
  * Test for the Party contract.
@@ -33,7 +50,7 @@ import de.kueken.ethereum.party.publishing.BlogRegistry;
  */
 public class PartyTest extends ManageableTest{
 	private static EthereumFacade ethereum;
-	private static EthAccount sender ;
+	private static EthAccount sender;
 
 	private Party fixture;
 	private EthAddress fixtureAddress;
@@ -54,7 +71,7 @@ public class PartyTest extends ManageableTest{
 	@BeforeClass
 	public static void setup() {
 		ethereum = EthereumInstance.getInstance().getEthereum();
-//		sender = new EthAccount(key)
+
 	}
 
 	/**
@@ -97,13 +114,23 @@ public class PartyTest extends ManageableTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-		//TODO: set the constructor args
-		ethereum = EthereumInstance.getInstance().getEthereum();
+//		ethereum = EthereumInstance.getInstance().getEthereum();
+//        CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "Party", sender
+//				);
+//        fixtureAddress = address.get();
+//        fixture = ethereum.createContractProxy(contractSource, "Party", address.get(), sender, Party.class);
+
+		
+		String _name = "_name";
+		String _memberRegistry = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L))).getAddress().withLeading0x();
+		String _blogRegistry = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100002L))).getAddress().withLeading0x();
+
         CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "Party", sender
-				);
+				, _name, _memberRegistry, _blogRegistry);
+        fixture = ethereum
+                .createContractProxy(contractSource, "Party", address.get(), sender, Party.class);
         fixtureAddress = address.get();
-        fixture = ethereum.createContractProxy(contractSource, "Party", address.get(), sender, Party.class);
-        
+		
 //		PartyDeployer partyDeployer = new PartyDeployer(ethereum,"/mix/combine.json",false);
 //		MembersDeployer membersDeployer = new MembersDeployer(ethereum, "/mix/combine.json",false);
 //		PublishingDeployer publishingDeployer = new PublishingDeployer(ethereum,"/mix/combine.json",false);
@@ -122,38 +149,28 @@ public class PartyTest extends ManageableTest{
 		super.setFixture(f);
 	}
 
-	/**
-	 * Test the constructor for the Manageable contract.
-	 * @throws Exception
-	 */
-	@Test
-	public void testConstructor() throws Exception {
-		//Start of user code testConstructor
-		assertEquals(1, fixture.mangerCount().intValue());
-		assertTrue(fixture.isManager(senderAddressS));
-		//End of user code
-	}
 
 	/**
 	 * Test the constructor for the Party contract.
 	 * @throws Exception
 	 */
 	@Test
-	public void testConstructor_string() throws Exception {
-		//Start of user code testConstructor_string
+	public void testConstructor_string_address_address() throws Exception {
+		//Start of user code testConstructor_string_address_address
 		//TODO: Set the constructor args
 		String _name = "_name";
+		String _memberRegistry = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L))).getAddress().withLeading0x();
+		String _blogRegistry = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100002L))).getAddress().withLeading0x();
 
-        CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "Party", sender,_name);
+        CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "Party", sender
+				, _name, _memberRegistry, _blogRegistry);
         fixture = ethereum
                 .createContractProxy(contractSource, "Party", address.get(), sender, Party.class);
 
-//        fixture.isManager(senderAddressS);
-       
 		assertEquals(1,fixture.mangerCount().intValue());
-		assertTrue(fixture.isManager(senderAddressS));
+		assertTrue(fixture.isManager(EthAddress.of(senderAddressS).withLeading0x()));
 		assertEquals(_name, fixture.name());
-//		assertEquals(_name,fixture.name());
+
 		//End of user code
 	}
 
@@ -193,14 +210,13 @@ public class PartyTest extends ManageableTest{
 		Organ organ = partyDeployer.createOrgan(sender,deployOrgan.get());
 		String organAddress = deployOrgan.get().withLeading0x();
 		
-		fixture.addOrgan(organAddress);
+		fixture.addOrgan(deployOrgan.get().withLeading0x());
 		assertEquals(1, fixture.organCount().intValue());
 	
 		
 		
 		//End of user code
 	}
-
 	/**
 	 * Test method for  addSubDivision(String _subDivision).
 	 * see {@link Party#addSubDivision( String)}
@@ -211,12 +227,13 @@ public class PartyTest extends ManageableTest{
 		//Start of user code testAddSubDivision_address
 		assertEquals(0, fixture.subDivisionCount().intValue());
 		
-		CompletableFuture<EthAddress> deployParty = partyDeployer.deployParty(sender, "subDivision");
-		Party subDivision = partyDeployer.createParty(sender, deployParty.get().withLeading0x());
-		subDivision.addManager(fixtureAddress.withLeading0x());
+		String _name="subdivision";
+		String _memberRegistry = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(100001L))).withLeading0x();
+		String _blogRegistry = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(100002L))).withLeading0x();
+		DeployDuo<CompletableFuture<EthAddress>, Party> subDivision = partyDeployer.createParty(sender, _name,_memberRegistry,_blogRegistry);
+		subDivision.constractInstance.addManager(fixtureAddress.withLeading0x());
 		
-		
-		fixture.addSubDivision(deployParty.get().withLeading0x());
+		fixture.addSubDivision(subDivision.contractAddress.get().withLeading0x());
 		assertEquals(1, fixture.subDivisionCount().intValue());
 
 		//End of user code
@@ -231,12 +248,14 @@ public class PartyTest extends ManageableTest{
 		//Start of user code testRemoveSubDivision_uint
 		assertEquals(0, fixture.subDivisionCount().intValue());
 		
-		CompletableFuture<EthAddress> deployParty = partyDeployer.deployParty(sender, "subDivision");
-		Party subDivision = partyDeployer.createParty(sender, deployParty.get().withLeading0x());
-		subDivision.addManager(fixtureAddress.withLeading0x());
+		String _name="subdivision";
+		String _memberRegistry=EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(100001L))).withLeading0x();
+		String _blogRegistry=EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(100002L))).withLeading0x();
+		DeployDuo<CompletableFuture<EthAddress>, Party> subDivision = partyDeployer.createParty(sender, _name,_memberRegistry,_blogRegistry);
+		subDivision.constractInstance.addManager(fixtureAddress.withLeading0x());
 		
 		
-		fixture.addSubDivision(deployParty.get().withLeading0x());
+		fixture.addSubDivision(subDivision.contractAddress.get().withLeading0x());
 		assertEquals(1, fixture.subDivisionCount().intValue());
 
 		
@@ -257,7 +276,7 @@ public class PartyTest extends ManageableTest{
 		BlogRegistry blogRegistry = publishingDeployer.createBlogRegistry(sender, deployBlogRegistry.get());
 		String blogRegistryAddress = deployBlogRegistry.get().withLeading0x();
 		
-		fixture.setBlogregistry(blogRegistryAddress);
+		fixture.setBlogregistry(deployBlogRegistry.get().withLeading0x());
 	}
 
 	//End of user code

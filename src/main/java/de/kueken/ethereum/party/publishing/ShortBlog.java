@@ -25,6 +25,7 @@ public interface ShortBlog extends Manageable{
 	* @param er -The link to the message.
 	**/
 	void sendMessage(String message,String hash,String er);
+
 	//Start of user code additional_methods
 
 	//End of user code

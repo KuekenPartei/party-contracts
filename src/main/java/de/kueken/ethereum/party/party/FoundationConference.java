@@ -15,6 +15,7 @@ public interface FoundationConference extends Conference{
 	
 	Boolean managers(String key);
 
+
 	//Start of user code additional_methods
 
 	//End of user code

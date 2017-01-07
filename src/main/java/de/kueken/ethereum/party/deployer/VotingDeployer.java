@@ -14,28 +14,61 @@ import org.adridadou.ethereum.values.SoliditySource;
 import de.kueken.ethereum.party.voting.*;
 
 
+
+
 /**
  * The deployer for the voting package.
  *
  */
 public class VotingDeployer {
 
+	public class DeployDuo<EA,C>{
+		public EA contractAddress;
+		public C constractInstance;
+		
+		public DeployDuo(EA contractAddress, C constractInstance) {
+			super();
+			this.contractAddress = contractAddress;
+			this.constractInstance = constractInstance;
+		}
+	}
+
 	private EthereumFacade ethereum;
 	private SoliditySource contractSource;
 	private static String filename = "/mix/voting.sol";
 
 	public VotingDeployer(EthereumFacade ethereum) {
-		this(ethereum,filename);
+		this(ethereum,filename, true);
 	}
 
-	public VotingDeployer(EthereumFacade ethereum, String contractSourceFile) {
+	public VotingDeployer(EthereumFacade ethereum, String contractSourceFile, boolean plain) {
 		this.ethereum = ethereum;
 		try {
-			contractSource = SoliditySource.from(new File(this.getClass().getResource(contractSourceFile).toURI()));
+			if(plain)
+				contractSource = SoliditySource.from(new File(this.getClass().getResource(contractSourceFile).toURI()));
+			else
+				contractSource = SoliditySource.fromRawJson(new File(this.getClass().getResource(contractSourceFile).toURI()));
+				
 		} catch (URISyntaxException e) {
+			throw new IllegalArgumentException(e);
+		} catch (IOException e) {
 			throw new IllegalArgumentException(e);
 		}
 	}
+
+	public VotingDeployer(EthereumFacade ethereum, File contractSourceFile, boolean plain) {
+		this.ethereum = ethereum;
+		try {
+			if(plain)
+				contractSource = SoliditySource.from(contractSourceFile);
+			else
+				contractSource = SoliditySource.fromRawJson(contractSourceFile);
+				
+		} catch (IOException e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
+
 
 
 	/**
@@ -53,11 +86,11 @@ public class VotingDeployer {
 	 * Deploys a 'Ballot' on the blockchain and wrapps the contcat proxy.
 	 *  
 	 * @param sender the sender address
-	 * @return the contract interface
+	 * @return the contract interface and the deployed address
 	 */
-	public Ballot createBallot(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
+	public DeployDuo<CompletableFuture<EthAddress>, Ballot> createBallot(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> address = deployBallot(sender);
-		return createBallot(sender, address.get());
+		return new DeployDuo<CompletableFuture<EthAddress>, Ballot>(address, createBallot(sender, address.get()));
 	}
 
 	/**
@@ -96,9 +129,9 @@ public class VotingDeployer {
 	 * @param _hash 
 	 * @return the contract interface
 	 */
-	public BasicBallot createBasicBallot(EthAccount sender, String _registry, String _name, String _hash) throws IOException, InterruptedException, ExecutionException {
+	public DeployDuo<CompletableFuture<EthAddress>, BasicBallot> createBasicBallot(EthAccount sender, String _registry, String _name, String _hash) throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> address = deployBasicBallot(sender, _registry, _name, _hash);
-		return createBasicBallot(sender, address.get());
+		return new DeployDuo<CompletableFuture<EthAddress>, BasicBallot>(address, createBasicBallot(sender, address.get()));
 	}
 
 	/**
@@ -129,11 +162,11 @@ public class VotingDeployer {
 	 * Deploys a 'PublicBallot' on the blockchain and wrapps the contcat proxy.
 	 *  
 	 * @param sender the sender address
-	 * @return the contract interface
+	 * @return the contract interface and the deployed address
 	 */
-	public PublicBallot createPublicBallot(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
+	public DeployDuo<CompletableFuture<EthAddress>, PublicBallot> createPublicBallot(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> address = deployPublicBallot(sender);
-		return createPublicBallot(sender, address.get());
+		return new DeployDuo<CompletableFuture<EthAddress>, PublicBallot>(address, createPublicBallot(sender, address.get()));
 	}
 
 	/**

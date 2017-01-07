@@ -20,6 +20,7 @@ public interface Manageable{
 	void removeManager(String _managerAddress);
 	
 	Boolean isManager(String _managerAddress);
+
 	//Start of user code additional_methods
 
 	//End of user code

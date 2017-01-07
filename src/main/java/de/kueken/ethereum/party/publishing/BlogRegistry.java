@@ -24,6 +24,7 @@ public interface BlogRegistry extends Manageable{
 	*  -
 	**/
 	java.util.concurrent.CompletableFuture<String> registerBlog(String _name);
+
 	//Start of user code additional_methods
 
 	//End of user code

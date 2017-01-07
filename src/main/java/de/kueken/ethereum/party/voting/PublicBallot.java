@@ -12,6 +12,7 @@ public interface PublicBallot extends BasicBallot{
 	
 	void castVote(Integer _voteFor);
 
+
 	//Start of user code additional_methods
 
 	//End of user code

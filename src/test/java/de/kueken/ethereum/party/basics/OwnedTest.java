@@ -30,6 +30,11 @@ import org.junit.Test;
 
 import de.kueken.ethereum.party.EthereumInstance;
 
+// Start of user code OwnedTest.customImports
+
+// End of user code
+
+
 /**
  * Test for the Owned contract.
  *

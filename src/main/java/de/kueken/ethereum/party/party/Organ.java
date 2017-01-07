@@ -76,7 +76,13 @@ public interface Organ extends Manageable,MemberAware{
 	void addOrganFunction(String _of,String _name);
 	
 	String getOrganFunction(Integer _id);
-	//Start of user code additional_methods
+
+	String getOrganName();
+
+	void setOrganName (String aOrganName);
+
 	void setBlogRegistry (String aBlogRegistry);
+
+	//Start of user code additional_methods
 	//End of user code
 }
