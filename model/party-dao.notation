@@ -2936,7 +2936,7 @@
       <element xmi:type="uml:Association" href="party-dao.uml#_oJRW8B82Eea0ndjKa8R1Fg"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_oJvRAh82Eea0ndjKa8R1Fg" points="[0, 0, -240, 59]$[331, 45, 91, 104]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_oK_1QB82Eea0ndjKa8R1Fg" id="(1.0,0.4620938628158845)"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_oK_1QR82Eea0ndjKa8R1Fg" id="(0.0,0.28851540616246496)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_oK_1QR82Eea0ndjKa8R1Fg" id="(0.0,0.35294117647058826)"/>
     </edges>
     <edges xmi:type="notation:Connector" xmi:id="_DMqZ4R85Eea0ndjKa8R1Fg" type="StereotypeCommentLink" source="_DMbwYB85Eea0ndjKa8R1Fg" target="_DMpy0x85Eea0ndjKa8R1Fg">
       <styles xmi:type="notation:FontStyle" xmi:id="_DMqZ4h85Eea0ndjKa8R1Fg"/>
@@ -3227,9 +3227,9 @@
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_2mUtsZXXEeaCN_-XsTGglw"/>
       <element xmi:type="uml:Association" href="party-dao.uml#_2lV2QJXXEeaCN_-XsTGglw"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_2mUtspXXEeaCN_-XsTGglw" points="[843, 319, -643984, -643984]$[1058, 318, -643984, -643984]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2n73QJXXEeaCN_-XsTGglw" id="(1.0,0.37637362637362637)"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2n73QZXXEeaCN_-XsTGglw" id="(0.0,0.5048543689320388)"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_2mUtspXXEeaCN_-XsTGglw" points="[843, 322, -643984, -643984]$[992, 322, -643984, -643984]$[992, 322, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2n73QJXXEeaCN_-XsTGglw" id="(1.0,0.3753501400560224)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2n73QZXXEeaCN_-XsTGglw" id="(0.0,0.42358078602620086)"/>
     </edges>
     <edges xmi:type="notation:Connector" xmi:id="_OgoqYJXbEeaCN_-XsTGglw" type="Generalization_Edge" source="_chZosJXWEeaCN_-XsTGglw" target="_DMbwYB85Eea0ndjKa8R1Fg">
       <children xmi:type="notation:DecorationNode" xmi:id="_OgoqY5XbEeaCN_-XsTGglw" type="Generalization_StereotypeLabel">
