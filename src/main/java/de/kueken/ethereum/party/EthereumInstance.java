@@ -1,25 +1,26 @@
 package de.kueken.ethereum.party;
 
+//Start of user code customizedImports
+
+import java.math.BigInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.adridadou.ethereum.EthereumFacade;
+import org.adridadou.ethereum.provider.GenericRpcEthereumFacadeProvider;
+import org.adridadou.ethereum.provider.InfuraRopstenEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.MainEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.PrivateEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.PrivateNetworkConfig;
 import org.adridadou.ethereum.provider.RopstenEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.GenericRpcEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.InfuraRopstenEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.StandaloneEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.TestnetEthereumFacadeProvider;
+import org.adridadou.ethereum.values.EthAccount;
+import org.adridadou.ethereum.values.EthAddress;
+import org.adridadou.ethereum.values.EthValue;
 import org.adridadou.ethereum.values.config.ChainId;
 import org.adridadou.ethereum.values.config.InfuraKey;
-
-//Start of user code customizedImports
-import org.adridadou.ethereum.values.EthAccount;
-import org.adridadou.ethereum.values.EthValue;
 import org.ethereum.crypto.ECKey;
-import java.math.BigInteger;
 
 //End of user code
 
@@ -34,6 +35,17 @@ public class EthereumInstance{
 	private static Lock instanceLock = new ReentrantLock();
 	
 	private EthereumFacade ethereum;
+
+	public static class DeployDuo<C>{
+		public EthAddress contractAddress;
+		public C constractInstance;
+		
+		public DeployDuo(EthAddress contractAddress, C constractInstance) {
+			super();
+			this.contractAddress = contractAddress;
+			this.constractInstance = constractInstance;
+		}
+	}
 
 	private EthereumInstance() {
 		try {

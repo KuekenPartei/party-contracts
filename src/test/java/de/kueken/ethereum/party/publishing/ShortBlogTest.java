@@ -6,6 +6,7 @@ import de.kueken.ethereum.party.basics.*;
 
 import de.kueken.ethereum.party.publishing.ShortBlog.*;
 
+
 import java.io.File;
 import java.util.*;
 import java.util.concurrent.*;
@@ -32,14 +33,16 @@ import org.junit.Test;
 import de.kueken.ethereum.party.EthereumInstance;
 
 // Start of user code ShortBlogTest.customImports
+import org.adridadou.exception.EthereumApiException;
 
 // End of user code
+
 
 /**
  * Test for the ShortBlog contract.
  *
  */
-public class ShortBlogTest extends ManageableTest {
+public class ShortBlogTest extends ManageableTest{
 	private static EthereumFacade ethereum;
 	private static EthAccount sender;
 
@@ -51,7 +54,7 @@ public class ShortBlogTest extends ManageableTest {
 	// End of user code
 
 	/**
-	 * Setup up the blockchain. Add the 'EthereumFacadeProvider' property to use
+	 * Setup up the blockchain. Add the 'EthereumFacadeProvider' property to use 
 	 * another block chain implemenation or network.
 	 */
 	@BeforeClass
@@ -62,12 +65,11 @@ public class ShortBlogTest extends ManageableTest {
 
 	/**
 	 * Read the contract from the file and deploys the contract code.
-	 * 
 	 * @throws Exception
 	 */
 	@Before
 	public void prepareTest() throws Exception {
-		// Start of user code prepareTest
+		//Start of user code prepareTest
 
 		File contractSrc = new File(this.getClass().getResource("/mix/combine.json").toURI());
 		contractSource = SoliditySource.fromRawJson(contractSrc);
@@ -75,14 +77,13 @@ public class ShortBlogTest extends ManageableTest {
 		// End of user code
 	}
 
+
 	/**
 	 * Create a new fixture by deploying the contract source.
-	 * 
 	 * @throws Exception
 	 */
 	protected void createFixture() throws Exception {
-		// Start of user code createFixture
-		// TODO: set the constructor args
+		//Start of user code createFixture
 		String _name = "_name";
 
 		CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "ShortBlog", sender, _name);
@@ -96,14 +97,14 @@ public class ShortBlogTest extends ManageableTest {
 		super.setFixture(f);
 	}
 
+
 	/**
 	 * Test the constructor for the ShortBlog contract.
-	 * 
 	 * @throws Exception
 	 */
 	@Test
 	public void testConstructor_string() throws Exception {
-		// Start of user code testConstructor_string
+		//Start of user code testConstructor_string
 		String _name = "_name";
 
 		CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "ShortBlog", sender, _name);
@@ -114,15 +115,15 @@ public class ShortBlogTest extends ManageableTest {
 		// End of user code
 	}
 
+
 	/**
-	 * Test method for sendMessage(String message,String hash,String er). see
-	 * {@link ShortBlog#sendMessage( String, String, String)}
-	 * 
+	 * Test method for  sendMessage(String message,String hash,String er).
+	 * see {@link ShortBlog#sendMessage( String, String, String)}
 	 * @throws Exception
 	 */
 	@Test
 	public void testSendMessage_string_string_string() throws Exception {
-		// Start of user code testSendMessage_string_string_string
+		//Start of user code testSendMessage_string_string_string
 		assertEquals(0, fixture.messageCount().intValue());
 		fixture.sendMessage("test1", "h1", "er1");
 		assertEquals(1, fixture.messageCount().intValue());
@@ -131,8 +132,7 @@ public class ShortBlogTest extends ManageableTest {
 		System.out.println("-->" + lastMessageDate);
 		// End of user code
 	}
-
-	// Start of user code customTests
+	//Start of user code customTests
 	/**
 	 * Test method for sendMessage(String message,String hash,String er). see
 	 * {@link ShortBlog#sendMessage( String, String, String)}

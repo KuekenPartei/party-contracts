@@ -11,6 +11,9 @@ import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
 import org.adridadou.ethereum.values.SoliditySource;
 
+import de.kueken.ethereum.party.EthereumInstance;
+import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
+
 import de.kueken.ethereum.party.basics.*;
 
 
@@ -21,17 +24,6 @@ import de.kueken.ethereum.party.basics.*;
  *
  */
 public class BasicsDeployer {
-
-	public class DeployDuo<EA,C>{
-		public EA contractAddress;
-		public C constractInstance;
-		
-		public DeployDuo(EA contractAddress, C constractInstance) {
-			super();
-			this.contractAddress = contractAddress;
-			this.constractInstance = constractInstance;
-		}
-	}
 
 	private EthereumFacade ethereum;
 	private SoliditySource contractSource;
@@ -88,9 +80,9 @@ public class BasicsDeployer {
 	 * @param sender the sender address
 	 * @return the contract interface and the deployed address
 	 */
-	public DeployDuo<CompletableFuture<EthAddress>, Owned> createOwned(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
+	public DeployDuo<Owned> createOwned(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> address = deployOwned(sender);
-		return new DeployDuo<CompletableFuture<EthAddress>, Owned>(address, createOwned(sender, address.get()));
+		return new EthereumInstance.DeployDuo<Owned>(address.get(), createOwnedProxy(sender, address.get()));
 	}
 
 	/**
@@ -100,7 +92,7 @@ public class BasicsDeployer {
 	 * @param address the address of the contract
 	 * @return the contract interface
 	 */
-	public Owned createOwned(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
+	public Owned createOwnedProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
 		Owned owned = ethereum
         .createContractProxy(contractSource, "Owned", address, sender, Owned.class);
 		return owned;
@@ -123,9 +115,9 @@ public class BasicsDeployer {
 	 * @param sender the sender address
 	 * @return the contract interface
 	 */
-	public DeployDuo<CompletableFuture<EthAddress>, Manageable> createManageable(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
+	public DeployDuo<Manageable> createManageable(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> address = deployManageable(sender);
-		return new DeployDuo<CompletableFuture<EthAddress>, Manageable>(address, createManageable(sender, address.get()));
+		return new EthereumInstance.DeployDuo<Manageable>(address.get(), createManageableProxy(sender, address.get()));
 	}
 
 	/**
@@ -135,7 +127,7 @@ public class BasicsDeployer {
 	 * @param address the address of the contract
 	 * @return the contract interface
 	 */
-	public Manageable createManageable(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
+	public Manageable createManageableProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
 		Manageable manageable = ethereum
         .createContractProxy(contractSource, "Manageable", address, sender, Manageable.class);
 		return manageable;
@@ -158,9 +150,9 @@ public class BasicsDeployer {
 	 * @param sender the sender address
 	 * @return the contract interface and the deployed address
 	 */
-	public DeployDuo<CompletableFuture<EthAddress>, Multiowned> createMultiowned(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
+	public DeployDuo<Multiowned> createMultiowned(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> address = deployMultiowned(sender);
-		return new DeployDuo<CompletableFuture<EthAddress>, Multiowned>(address, createMultiowned(sender, address.get()));
+		return new EthereumInstance.DeployDuo<Multiowned>(address.get(), createMultiownedProxy(sender, address.get()));
 	}
 
 	/**
@@ -170,7 +162,7 @@ public class BasicsDeployer {
 	 * @param address the address of the contract
 	 * @return the contract interface
 	 */
-	public Multiowned createMultiowned(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
+	public Multiowned createMultiownedProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
 		Multiowned multiowned = ethereum
         .createContractProxy(contractSource, "Multiowned", address, sender, Multiowned.class);
 		return multiowned;

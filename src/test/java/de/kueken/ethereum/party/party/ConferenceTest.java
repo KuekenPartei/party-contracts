@@ -72,8 +72,11 @@ public class ConferenceTest extends OrganTest{
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
 
-        File contractSrc = new File(this.getClass().getResource("/mix/party.sol").toURI());
-        contractSource = SoliditySource.from(contractSrc);
+	       File contractSrc = new File(this.getClass().getResource("/mix/combine.json").toURI());
+	        contractSource = SoliditySource.fromRawJson(contractSrc);
+	        createFixture();
+//        File contractSrc = new File(this.getClass().getResource("/mix/party.sol").toURI());
+//        contractSource = SoliditySource.from(contractSrc);
 		//End of user code
 	}
 
@@ -86,8 +89,8 @@ public class ConferenceTest extends OrganTest{
 		//Start of user code createFixture
         CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "Conference", sender);
         fixtureAddress = address.get();
-        fixture = ethereum
-                .createContractProxy(contractSource, "Conference", address.get(), sender, Conference.class);
+        setFixture(ethereum
+                .createContractProxy(contractSource, "Conference", address.get(), sender, Conference.class));
 		//End of user code
 	}
 

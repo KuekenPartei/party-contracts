@@ -11,6 +11,9 @@ import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
 import org.adridadou.ethereum.values.SoliditySource;
 
+import de.kueken.ethereum.party.EthereumInstance;
+import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
+
 import de.kueken.ethereum.party.publishing.*;
 
 
@@ -21,17 +24,6 @@ import de.kueken.ethereum.party.publishing.*;
  *
  */
 public class PublishingDeployer {
-
-	public class DeployDuo<EA,C>{
-		public EA contractAddress;
-		public C constractInstance;
-		
-		public DeployDuo(EA contractAddress, C constractInstance) {
-			super();
-			this.contractAddress = contractAddress;
-			this.constractInstance = constractInstance;
-		}
-	}
 
 	private EthereumFacade ethereum;
 	private SoliditySource contractSource;
@@ -90,9 +82,9 @@ public class PublishingDeployer {
 	 * @param _name 
 	 * @return the contract interface
 	 */
-	public DeployDuo<CompletableFuture<EthAddress>, ShortBlog> createShortBlog(EthAccount sender, String _name) throws IOException, InterruptedException, ExecutionException {
+	public DeployDuo<ShortBlog> createShortBlog(EthAccount sender, String _name) throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> address = deployShortBlog(sender, _name);
-		return new DeployDuo<CompletableFuture<EthAddress>, ShortBlog>(address, createShortBlog(sender, address.get()));
+		return new EthereumInstance.DeployDuo<ShortBlog>(address.get(), createShortBlogProxy(sender, address.get()));
 	}
 
 	/**
@@ -102,7 +94,7 @@ public class PublishingDeployer {
 	 * @param address the address of the contract
 	 * @return the contract interface
 	 */
-	public ShortBlog createShortBlog(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
+	public ShortBlog createShortBlogProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
 		ShortBlog shortblog = ethereum
         .createContractProxy(contractSource, "ShortBlog", address, sender, ShortBlog.class);
 		return shortblog;
@@ -125,9 +117,9 @@ public class PublishingDeployer {
 	 * @param sender the sender address
 	 * @return the contract interface and the deployed address
 	 */
-	public DeployDuo<CompletableFuture<EthAddress>, BlogRegistry> createBlogRegistry(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
+	public DeployDuo<BlogRegistry> createBlogRegistry(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> address = deployBlogRegistry(sender);
-		return new DeployDuo<CompletableFuture<EthAddress>, BlogRegistry>(address, createBlogRegistry(sender, address.get()));
+		return new EthereumInstance.DeployDuo<BlogRegistry>(address.get(), createBlogRegistryProxy(sender, address.get()));
 	}
 
 	/**
@@ -137,7 +129,7 @@ public class PublishingDeployer {
 	 * @param address the address of the contract
 	 * @return the contract interface
 	 */
-	public BlogRegistry createBlogRegistry(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
+	public BlogRegistry createBlogRegistryProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
 		BlogRegistry blogregistry = ethereum
         .createContractProxy(contractSource, "BlogRegistry", address, sender, BlogRegistry.class);
 		return blogregistry;

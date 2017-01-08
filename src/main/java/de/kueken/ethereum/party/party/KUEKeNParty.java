@@ -15,9 +15,9 @@ public interface KUEKeNParty extends Party{
 	
 	Boolean managers(String key);
 	
-	String[] organs(Integer key);	
+	String organs(Integer key);	
 	
-	String[] subDivisions(Integer key);	
+	String subDivisions(Integer key);	
 
 	
 	void boostrapParty(String fc,String br);

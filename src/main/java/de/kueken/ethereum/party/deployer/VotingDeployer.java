@@ -11,6 +11,9 @@ import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
 import org.adridadou.ethereum.values.SoliditySource;
 
+import de.kueken.ethereum.party.EthereumInstance;
+import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
+
 import de.kueken.ethereum.party.voting.*;
 
 
@@ -21,17 +24,6 @@ import de.kueken.ethereum.party.voting.*;
  *
  */
 public class VotingDeployer {
-
-	public class DeployDuo<EA,C>{
-		public EA contractAddress;
-		public C constractInstance;
-		
-		public DeployDuo(EA contractAddress, C constractInstance) {
-			super();
-			this.contractAddress = contractAddress;
-			this.constractInstance = constractInstance;
-		}
-	}
 
 	private EthereumFacade ethereum;
 	private SoliditySource contractSource;
@@ -88,9 +80,9 @@ public class VotingDeployer {
 	 * @param sender the sender address
 	 * @return the contract interface and the deployed address
 	 */
-	public DeployDuo<CompletableFuture<EthAddress>, Ballot> createBallot(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
+	public DeployDuo<Ballot> createBallot(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> address = deployBallot(sender);
-		return new DeployDuo<CompletableFuture<EthAddress>, Ballot>(address, createBallot(sender, address.get()));
+		return new EthereumInstance.DeployDuo<Ballot>(address.get(), createBallotProxy(sender, address.get()));
 	}
 
 	/**
@@ -100,7 +92,7 @@ public class VotingDeployer {
 	 * @param address the address of the contract
 	 * @return the contract interface
 	 */
-	public Ballot createBallot(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
+	public Ballot createBallotProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
 		Ballot ballot = ethereum
         .createContractProxy(contractSource, "Ballot", address, sender, Ballot.class);
 		return ballot;
@@ -129,9 +121,9 @@ public class VotingDeployer {
 	 * @param _hash 
 	 * @return the contract interface
 	 */
-	public DeployDuo<CompletableFuture<EthAddress>, BasicBallot> createBasicBallot(EthAccount sender, String _registry, String _name, String _hash) throws IOException, InterruptedException, ExecutionException {
+	public DeployDuo<BasicBallot> createBasicBallot(EthAccount sender, String _registry, String _name, String _hash) throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> address = deployBasicBallot(sender, _registry, _name, _hash);
-		return new DeployDuo<CompletableFuture<EthAddress>, BasicBallot>(address, createBasicBallot(sender, address.get()));
+		return new EthereumInstance.DeployDuo<BasicBallot>(address.get(), createBasicBallotProxy(sender, address.get()));
 	}
 
 	/**
@@ -141,7 +133,7 @@ public class VotingDeployer {
 	 * @param address the address of the contract
 	 * @return the contract interface
 	 */
-	public BasicBallot createBasicBallot(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
+	public BasicBallot createBasicBallotProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
 		BasicBallot basicballot = ethereum
         .createContractProxy(contractSource, "BasicBallot", address, sender, BasicBallot.class);
 		return basicballot;
@@ -164,9 +156,9 @@ public class VotingDeployer {
 	 * @param sender the sender address
 	 * @return the contract interface and the deployed address
 	 */
-	public DeployDuo<CompletableFuture<EthAddress>, PublicBallot> createPublicBallot(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
+	public DeployDuo<PublicBallot> createPublicBallot(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> address = deployPublicBallot(sender);
-		return new DeployDuo<CompletableFuture<EthAddress>, PublicBallot>(address, createPublicBallot(sender, address.get()));
+		return new EthereumInstance.DeployDuo<PublicBallot>(address.get(), createPublicBallotProxy(sender, address.get()));
 	}
 
 	/**
@@ -176,7 +168,7 @@ public class VotingDeployer {
 	 * @param address the address of the contract
 	 * @return the contract interface
 	 */
-	public PublicBallot createPublicBallot(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
+	public PublicBallot createPublicBallotProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
 		PublicBallot publicballot = ethereum
         .createContractProxy(contractSource, "PublicBallot", address, sender, PublicBallot.class);
 		return publicballot;

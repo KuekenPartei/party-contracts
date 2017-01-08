@@ -10,7 +10,7 @@ import "./basics.sol";
 import "./members.sol";
 import "./publishing.sol";
 import "./voting.sol";
-
+ 
 /*
 * An organ is part of the party, defined in the constitution.
 * It is populated by functions party members.
@@ -222,33 +222,21 @@ contract Party is Manageable {
 	event OrganChanged(Organ _organ,uint _changeType);
 	
 	
-	event DivisionChanged(address divisionAddress,address changer,uint state);
+//	event DivisionChanged(address divisionAddress,address changer,uint state);
 	
 //	/*
 //	* Construct a new party or division.
 //	* 
 //	* _name -The name of the party or division.
 //	*/
-//	function Party(string _name) public Manageable()   {
+//	function Party() public  {
 //		//Start of user code Party.constructor.Party_string
-//		name = _name; 
+//	    managers[msg.sender] = true;
+//		mangerCount++;
 ////		//End of user code
 //	}
+
 	
-	/*
-	* Construct a new party or division.
-	* 
-	* _name -The name of the party or division.
-	* _memberRegistry -
-	* _blogRegistry -
-	*/
-	function Party(string _name,address _memberRegistry,address _blogRegistry) public Manageable()   {
-		//Start of user code Party.constructor.Party_string_address_address
-		name = _name; 
-		memberRegistry = MemberRegistry(_memberRegistry); 
-		blogregistry = BlogRegistry(_blogRegistry);
-		//End of user code
-	}
 	
 	
 	
@@ -275,10 +263,10 @@ contract Party is Manageable {
 	function addOrgan(address _organ) public  onlyManager()  {
 		//Start of user code Party.function.addOrgan_address
 		Organ o = Organ(_organ);
-//		blogregistry.addManager(o);
+		blogregistry.addManager(o);
 		o.setBlogRegistry(blogregistry);
 		o.setMemberRegistry(memberRegistry);	
-//		o.initalizeOrgan();	
+		o.initalizeOrgan();	
 		organs[organCount] = o;
 		OrganChanged(o,1);
 		organCount++; 
@@ -305,7 +293,7 @@ contract Party is Manageable {
 		//TODO; a foundation conference should be done
 		
 		subDivisions[subDivisionCount] = p;
-		DivisionChanged(p,msg.sender,1);
+//		DivisionChanged(p,msg.sender,1);
 		subDivisionCount++;
 		
 		
@@ -317,7 +305,7 @@ contract Party is Manageable {
 	function removeSubDivision(uint _divisionId) public   {
 		//Start of user code Party.function.removeSubDivision_uint
 		Party p = subDivisions[_divisionId];
-		DivisionChanged(p,msg.sender,0);
+//		DivisionChanged(p,msg.sender,0);
 		//End of user code
 	}
 	
@@ -336,6 +324,13 @@ contract Party is Manageable {
 	}
 	
 	// Start of user code Party.operations
+	
+	/**
+	*  setName
+	*/
+	function setName(string aName) public {
+		name = aName; 
+	}
 	// End of user code
 }
 

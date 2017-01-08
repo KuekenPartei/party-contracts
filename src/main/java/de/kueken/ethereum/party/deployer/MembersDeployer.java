@@ -11,6 +11,9 @@ import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
 import org.adridadou.ethereum.values.SoliditySource;
 
+import de.kueken.ethereum.party.EthereumInstance;
+import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
+
 import de.kueken.ethereum.party.members.*;
 
 
@@ -21,17 +24,6 @@ import de.kueken.ethereum.party.members.*;
  *
  */
 public class MembersDeployer {
-
-	public class DeployDuo<EA,C>{
-		public EA contractAddress;
-		public C constractInstance;
-		
-		public DeployDuo(EA contractAddress, C constractInstance) {
-			super();
-			this.contractAddress = contractAddress;
-			this.constractInstance = constractInstance;
-		}
-	}
 
 	private EthereumFacade ethereum;
 	private SoliditySource contractSource;
@@ -88,9 +80,9 @@ public class MembersDeployer {
 	 * @param sender the sender address
 	 * @return the contract interface and the deployed address
 	 */
-	public DeployDuo<CompletableFuture<EthAddress>, MemberRegistry> createMemberRegistry(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
+	public DeployDuo<MemberRegistry> createMemberRegistry(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> address = deployMemberRegistry(sender);
-		return new DeployDuo<CompletableFuture<EthAddress>, MemberRegistry>(address, createMemberRegistry(sender, address.get()));
+		return new EthereumInstance.DeployDuo<MemberRegistry>(address.get(), createMemberRegistryProxy(sender, address.get()));
 	}
 
 	/**
@@ -100,7 +92,7 @@ public class MembersDeployer {
 	 * @param address the address of the contract
 	 * @return the contract interface
 	 */
-	public MemberRegistry createMemberRegistry(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
+	public MemberRegistry createMemberRegistryProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
 		MemberRegistry memberregistry = ethereum
         .createContractProxy(contractSource, "MemberRegistry", address, sender, MemberRegistry.class);
 		return memberregistry;
@@ -123,9 +115,9 @@ public class MembersDeployer {
 	 * @param sender the sender address
 	 * @return the contract interface and the deployed address
 	 */
-	public DeployDuo<CompletableFuture<EthAddress>, MemberAware> createMemberAware(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
+	public DeployDuo<MemberAware> createMemberAware(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> address = deployMemberAware(sender);
-		return new DeployDuo<CompletableFuture<EthAddress>, MemberAware>(address, createMemberAware(sender, address.get()));
+		return new EthereumInstance.DeployDuo<MemberAware>(address.get(), createMemberAwareProxy(sender, address.get()));
 	}
 
 	/**
@@ -135,7 +127,7 @@ public class MembersDeployer {
 	 * @param address the address of the contract
 	 * @return the contract interface
 	 */
-	public MemberAware createMemberAware(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
+	public MemberAware createMemberAwareProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
 		MemberAware memberaware = ethereum
         .createContractProxy(contractSource, "MemberAware", address, sender, MemberAware.class);
 		return memberaware;

@@ -31,9 +31,11 @@ import org.ethereum.crypto.ECKey;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.spongycastle.util.encoders.Hex;
 
 import de.kueken.ethereum.party.EthereumInstance;
-
+import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
+import de.kueken.ethereum.party.deployer.PartyDeployer;
 // Start of user code OrganTest.customImports
 import de.kueken.ethereum.party.deployer.PublishingDeployer;
 import java.io.IOException;
@@ -52,7 +54,8 @@ public class OrganTest extends ManageableTest{
 	private EthAddress fixtureAddress;
 	private SoliditySource contractSource;
 	// Start of user code OrganTest.attributes
-	//TODO: implement
+	private PartyDeployer partyDeployer;
+	private PublishingDeployer publishingDeployer;
 	// End of user code
 
 	/**
@@ -73,10 +76,10 @@ public class OrganTest extends ManageableTest{
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
 		String property = System.getProperty("EthereumFacadeProvider");
-		if(property==null) property="";
+		if(property!=null) 
 		if (property.equalsIgnoreCase("rpc")|| property.equalsIgnoreCase("ropsten") || property.equalsIgnoreCase("InfuraRopsten")) {
 				SecureKey key2 = new FileSecureKey(new File("/home/urs/.ethereum/testnet/keystore/UTC--2015-12-15T13-55-38.006995319Z--ba7b29b63c00dff8614f8d8a6bf34e94e853b2d3"));
-				EthAccount decode = key2.decode("n");
+				EthAccount decode = key2.decode(System.getProperty("key"));
 				sender = decode;
 				String senderAddressS = sender.getAddress().withLeading0x();
 				System.out.println(senderAddressS+"->"+ethereum.getBalance(decode));
@@ -85,8 +88,17 @@ public class OrganTest extends ManageableTest{
 			}else if (property.equalsIgnoreCase("private")){
 				sender = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100000L)));
 			}
+		
+		if(sender==null)// the account for the standalone blockchain
+			sender = new EthAccount(
+					ECKey.fromPrivate(Hex.decode("3ec771c31cac8c0dba77a69e503765701d3c2bb62435888d4ffa38fed60c445c")));
+
+			
+		partyDeployer = new PartyDeployer(ethereum,"/mix/combine.json",false);
+		publishingDeployer = new PublishingDeployer(ethereum,"/mix/combine.json",false);
+
 //        File contractSrc = new File(this.getClass().getResource("/mix/party.sol").toURI());
-        File contractSrc = new File(this.getClass().getResource("/contracts.json").toURI());
+        File contractSrc = new File(this.getClass().getResource("/mix/combine.json").toURI());
         contractSource = SoliditySource.fromRawJson(contractSrc);
         
         createFixture();
@@ -161,6 +173,10 @@ public class OrganTest extends ManageableTest{
 
 		fixture.createFunction(ethAddress.withLeading0x(), "hash");
 		assertEquals(1, fixture.lastFunctionId().intValue());
+		
+		String organFunctionAddress = fixture.getOrganFunction(0);
+		
+		
 		//End of user code
 	}
 	/**
@@ -172,9 +188,11 @@ public class OrganTest extends ManageableTest{
 	public void testInitalizeOrgan() throws Exception {
 		//Start of user code testInitalizeOrgan
 		assertFalse(fixture.isActive());
+		assertEquals("0x", fixture.getOrganBlog());
 		initOrgan();
 		fixture.initalizeOrgan();
 		assertTrue(fixture.isActive());
+		assertNotEquals("0x", fixture.getOrganBlog());
 		
 		//End of user code
 	}
@@ -188,11 +206,15 @@ public class OrganTest extends ManageableTest{
 		//Start of user code testPublishFunctionMessage_uint_string_string_string
 		initOrgan();
 		fixture.initalizeOrgan();
+		fixture.createFunction("Function 0", "hash");
+
+		assertEquals(1, fixture.lastFunctionId().intValue());
+		
 		
 		String message= "";
 		String hash="";
 		String er="";
-		fixture.publishFunctionMessage(1, message, hash, er);
+		fixture.publishFunctionMessage(0, message, hash, er);
 		
 		
 		//End of user code
@@ -229,9 +251,10 @@ public class OrganTest extends ManageableTest{
 	@Test
 	public void testGetOrganBlog() throws Exception {
 		//Start of user code testGetOrganBlog
-		assertNull(fixture.getOrganBlog());
-		initOrgan();		
-		assertNotNull(fixture.getOrganBlog());
+		assertEquals("0x", fixture.getOrganBlog());
+		initOrgan();
+		fixture.initalizeOrgan();
+		assertNotEquals("0x", fixture.getOrganBlog());
 		
 		//End of user code
 	}
@@ -246,7 +269,13 @@ public class OrganTest extends ManageableTest{
 		initOrgan();
 		assertEquals(0, fixture.lastFunctionId().intValue());
 		String organAddress="";
-		fixture.addOrganFunction(organAddress, "name");
+		EthAddress ethAddress = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L))).getAddress();
+
+		DeployDuo<OrganFunction> organFunction = partyDeployer.createOrganFunction(sender, "ss", "cc");
+		
+		organFunction.constractInstance.addManager(fixtureAddress.withLeading0x());
+		
+		fixture.addOrganFunction(organFunction.contractAddress.withLeading0x(), "name");
 		assertEquals(1, fixture.lastFunctionId().intValue());
 		//End of user code
 	}
@@ -269,12 +298,10 @@ public class OrganTest extends ManageableTest{
 	 * @throws ExecutionException
 	 */
 	private void initOrgan() throws IOException, InterruptedException, ExecutionException {
-		PublishingDeployer publishingDeployer = new PublishingDeployer(ethereum,"/mix/combine.json",false);
-
-		CompletableFuture<EthAddress> deployBlogRegistry = publishingDeployer.deployBlogRegistry(sender);
-		BlogRegistry blogRegistry = publishingDeployer.createBlogRegistry(sender, deployBlogRegistry.get());
-		String blogRegistryAddress = deployBlogRegistry.get().withLeading0x();
-		fixture.setBlogRegistry(deployBlogRegistry.get().withLeading0x());
+		DeployDuo<BlogRegistry> registry = publishingDeployer.createBlogRegistry(sender);
+		
+		fixture.setBlogRegistry(registry.contractAddress.withLeading0x());
+		registry.constractInstance.addManager(fixtureAddress.withLeading0x());
 	}
 
 	//End of user code

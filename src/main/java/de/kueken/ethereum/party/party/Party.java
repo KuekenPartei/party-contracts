@@ -28,9 +28,9 @@ public interface Party extends Manageable{
 	
 	Boolean managers(String key);
 	
-	String[] organs(Integer key);	
+	String organs(Integer key);	
 	
-	String[] subDivisions(Integer key);	
+	String subDivisions(Integer key);	
 
 	
 	void createOrgan(String organName);
@@ -59,5 +59,6 @@ public interface Party extends Manageable{
 	void setBlogregistry (String aBlogregistry);
 
 	//Start of user code additional_methods
+	void setName(String aName);
 	//End of user code
 }

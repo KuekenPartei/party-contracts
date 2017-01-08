@@ -31,13 +31,13 @@ import org.ethereum.crypto.ECKey;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.spongycastle.util.encoders.Hex;
 
 import de.kueken.ethereum.party.EthereumInstance;
 
 // Start of user code PartyTest.customImports
 import de.kueken.ethereum.party.deployer.MembersDeployer;
 import de.kueken.ethereum.party.deployer.PartyDeployer;
-import de.kueken.ethereum.party.deployer.PartyDeployer.DeployDuo;
 import de.kueken.ethereum.party.deployer.PublishingDeployer;
 import java.io.IOException;
 
@@ -85,7 +85,7 @@ public class PartyTest extends ManageableTest{
 		if(property==null) property="";
 		if (property.equalsIgnoreCase("rpc")|| property.equalsIgnoreCase("ropsten") || property.equalsIgnoreCase("InfuraRopsten")) {
 				SecureKey key2 = new FileSecureKey(new File("/home/urs/.ethereum/testnet/keystore/UTC--2015-12-15T13-55-38.006995319Z--ba7b29b63c00dff8614f8d8a6bf34e94e853b2d3"));
-				EthAccount decode = key2.decode("n");
+				EthAccount decode = key2.decode(System.getProperty("key"));
 				sender = decode;
 				String senderAddressS = sender.getAddress().withLeading0x();
 				System.out.println(senderAddressS+"->"+ethereum.getBalance(decode));
@@ -94,6 +94,11 @@ public class PartyTest extends ManageableTest{
 			}else if (property.equalsIgnoreCase("private")){
 				sender = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100000L)));
 			}
+		
+		if(sender==null)// the account for the standalone blockchain
+			sender = new EthAccount(
+					ECKey.fromPrivate(Hex.decode("3ec771c31cac8c0dba77a69e503765701d3c2bb62435888d4ffa38fed60c445c")));
+
 //        File contractSrc = new File(this.getClass().getResource("/mix/party.sol").toURI());
         File contractSrc = new File(this.getClass().getResource("/mix/combine.json").toURI());
         contractSource = SoliditySource.fromRawJson(contractSrc);
@@ -114,32 +119,12 @@ public class PartyTest extends ManageableTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-//		ethereum = EthereumInstance.getInstance().getEthereum();
-//        CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "Party", sender
-//				);
-//        fixtureAddress = address.get();
-//        fixture = ethereum.createContractProxy(contractSource, "Party", address.get(), sender, Party.class);
 
-		
-		String _name = "_name";
-		String _memberRegistry = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L))).getAddress().withLeading0x();
-		String _blogRegistry = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100002L))).getAddress().withLeading0x();
-
-        CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "Party", sender
-				, _name, _memberRegistry, _blogRegistry);
+        CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "Party", sender);
         fixture = ethereum
                 .createContractProxy(contractSource, "Party", address.get(), sender, Party.class);
         fixtureAddress = address.get();
-		
-//		PartyDeployer partyDeployer = new PartyDeployer(ethereum,"/mix/combine.json",false);
-//		MembersDeployer membersDeployer = new MembersDeployer(ethereum, "/mix/combine.json",false);
-//		PublishingDeployer publishingDeployer = new PublishingDeployer(ethereum,"/mix/combine.json",false);
-//		
-//		CompletableFuture<EthAddress> deployBlogRegistry = publishingDeployer.deployBlogRegistry(sender);
-//		BlogRegistry blogRegistry = publishingDeployer.createBlogRegistry(sender, deployBlogRegistry.get());
-//		String blogRegistryAddress = deployBlogRegistry.get().withLeading0x();
-
-        		
+		        		
         setFixture(fixture);
 		//End of user code
 	}
@@ -157,19 +142,14 @@ public class PartyTest extends ManageableTest{
 	@Test
 	public void testConstructor_string_address_address() throws Exception {
 		//Start of user code testConstructor_string_address_address
-		//TODO: Set the constructor args
-		String _name = "_name";
-		String _memberRegistry = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L))).getAddress().withLeading0x();
-		String _blogRegistry = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100002L))).getAddress().withLeading0x();
 
-        CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "Party", sender
-				, _name, _memberRegistry, _blogRegistry);
+        CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "Party", sender);
         fixture = ethereum
                 .createContractProxy(contractSource, "Party", address.get(), sender, Party.class);
 
 		assertEquals(1,fixture.mangerCount().intValue());
 		assertTrue(fixture.isManager(EthAddress.of(senderAddressS).withLeading0x()));
-		assertEquals(_name, fixture.name());
+		//assertEquals(_name, fixture.name());
 
 		//End of user code
 	}
@@ -185,8 +165,20 @@ public class PartyTest extends ManageableTest{
 		//Start of user code testCreateOrgan_string
 		assertEquals(0, fixture.organCount().intValue());
 		initParty();
-		fixture.createOrgan("organ name");
+		String organName = "organ name";
+		fixture.createOrgan(organName);
 		assertEquals(1, fixture.organCount().intValue());
+		String organAd = fixture.organs(0);
+		System.out.println(organAd);
+		
+		
+		Organ organ = partyDeployer.createOrganProxy(sender, EthAddress.of(organAd));
+		assertEquals(organName, organ.organName());
+		
+		assertTrue(organ.isManager(fixtureAddress.withLeading0x()));
+//		assertTrue(organ.isManager(sender.getAddress().withLeading0x()));
+		
+		
 		//End of user code
 	}
 	/**
@@ -207,7 +199,7 @@ public class PartyTest extends ManageableTest{
 		initParty();
 		
 		CompletableFuture<EthAddress> deployOrgan = partyDeployer.deployOrgan(sender);
-		Organ organ = partyDeployer.createOrgan(sender,deployOrgan.get());
+		Organ organ = partyDeployer.createOrganProxy(sender,deployOrgan.get());
 		String organAddress = deployOrgan.get().withLeading0x();
 		
 		fixture.addOrgan(deployOrgan.get().withLeading0x());
@@ -230,10 +222,10 @@ public class PartyTest extends ManageableTest{
 		String _name="subdivision";
 		String _memberRegistry = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(100001L))).withLeading0x();
 		String _blogRegistry = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(100002L))).withLeading0x();
-		DeployDuo<CompletableFuture<EthAddress>, Party> subDivision = partyDeployer.createParty(sender, _name,_memberRegistry,_blogRegistry);
+		de.kueken.ethereum.party.EthereumInstance.DeployDuo<Party> subDivision = partyDeployer.createParty(sender, _name,_memberRegistry,_blogRegistry);
 		subDivision.constractInstance.addManager(fixtureAddress.withLeading0x());
 		
-		fixture.addSubDivision(subDivision.contractAddress.get().withLeading0x());
+		fixture.addSubDivision(subDivision.contractAddress.withLeading0x());
 		assertEquals(1, fixture.subDivisionCount().intValue());
 
 		//End of user code
@@ -251,11 +243,11 @@ public class PartyTest extends ManageableTest{
 		String _name="subdivision";
 		String _memberRegistry=EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(100001L))).withLeading0x();
 		String _blogRegistry=EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(100002L))).withLeading0x();
-		DeployDuo<CompletableFuture<EthAddress>, Party> subDivision = partyDeployer.createParty(sender, _name,_memberRegistry,_blogRegistry);
+		de.kueken.ethereum.party.EthereumInstance.DeployDuo<Party> subDivision = partyDeployer.createParty(sender, _name,_memberRegistry,_blogRegistry);
 		subDivision.constractInstance.addManager(fixtureAddress.withLeading0x());
 		
 		
-		fixture.addSubDivision(subDivision.contractAddress.get().withLeading0x());
+		fixture.addSubDivision(subDivision.contractAddress.withLeading0x());
 		assertEquals(1, fixture.subDivisionCount().intValue());
 
 		
@@ -273,10 +265,11 @@ public class PartyTest extends ManageableTest{
 	 */
 	private void initParty() throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> deployBlogRegistry = publishingDeployer.deployBlogRegistry(sender);
-		BlogRegistry blogRegistry = publishingDeployer.createBlogRegistry(sender, deployBlogRegistry.get());
+		BlogRegistry blogRegistry = publishingDeployer.createBlogRegistryProxy(sender, deployBlogRegistry.get());
 		String blogRegistryAddress = deployBlogRegistry.get().withLeading0x();
 		
 		fixture.setBlogregistry(deployBlogRegistry.get().withLeading0x());
+		blogRegistry.addManager(fixtureAddress.withLeading0x());
 	}
 
 	//End of user code

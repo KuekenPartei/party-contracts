@@ -3,19 +3,17 @@ package de.kueken.ethereum.party.publishing;
 import static org.junit.Assert.*;
 
 import de.kueken.ethereum.party.basics.*;
-
+import de.kueken.ethereum.party.deployer.PublishingDeployer;
 import de.kueken.ethereum.party.publishing.BlogRegistry.*;
 
 
 import java.io.File;
-import java.lang.reflect.Type;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.stream.*;
 import java.math.*;
 
 import org.adridadou.ethereum.EthereumFacade;
-import org.adridadou.ethereum.converters.output.OutputTypeConverter;
 import org.adridadou.ethereum.keystore.*;
 import org.adridadou.ethereum.provider.MainEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.RopstenEthereumFacadeProvider;
@@ -34,7 +32,8 @@ import org.junit.Test;
 import de.kueken.ethereum.party.EthereumInstance;
 
 // Start of user code BlogRegistryTest.customImports
-
+import java.lang.reflect.Type;
+import org.adridadou.ethereum.converters.output.OutputTypeConverter;
 // End of user code
 
 
@@ -50,7 +49,7 @@ public class BlogRegistryTest extends ManageableTest{
 	private EthAddress fixtureAddress;
 	private SoliditySource contractSource;
 	// Start of user code BlogRegistryTest.attributes
-	//TODO: implement
+	private PublishingDeployer publishingDeployer;
 	// End of user code
 
 	/**
@@ -60,6 +59,8 @@ public class BlogRegistryTest extends ManageableTest{
 	@BeforeClass
 	public static void setup() {
 		ethereum = EthereumInstance.getInstance().getEthereum();
+//		if(sender==null)
+//			sender = new EthAccount(ECKey.)  EthAddress.of("5db10750e8caff27f906b41c71b3471057dd2004");
 
 	}
 
@@ -71,6 +72,8 @@ public class BlogRegistryTest extends ManageableTest{
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
 
+		publishingDeployer = new PublishingDeployer(ethereum,"/mix/combine.json",false);
+		
 		File contractSrc = new File(this.getClass().getResource("/mix/combine.json").toURI());
 		contractSource = SoliditySource.fromRawJson(contractSrc);
         createFixture();
@@ -84,36 +87,6 @@ public class BlogRegistryTest extends ManageableTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-		List<OutputTypeConverter> handlers= new ArrayList<OutputTypeConverter>();
-		handlers.add(new OutputTypeConverter() {
-			
-			public boolean isOfType(Class<?> cls) {
-				return EthAddress.class==cls;
-			}
-			
-			public Object convert(Object obj, Type genericType) {
-				if (obj instanceof EthAddress) {
-					EthAddress ea = (EthAddress) obj;
-					return ea.withLeading0x();
-				}
-				return null;
-			}
-		});
-		
-		handlers.add(new OutputTypeConverter() {
-			    public boolean isOfType(Class<?> cls) {
-			        return String.class.equals(cls);
-			    }
-
-			    public String convert(Object obj, Type type) {
-			    	if(obj.getClass().isArray())
-			    		return EthAddress.of((byte[]) obj).withLeading0x();
-			    	else	
-			        return obj.toString();
-
-			    }
-		});
-		ethereum.addOutputHandlers(handlers);
 		
         CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "BlogRegistry", sender);
         fixtureAddress = address.get();
@@ -140,13 +113,29 @@ public class BlogRegistryTest extends ManageableTest{
 		//Start of user code testRegisterBlog_string
 		
 		assertEquals(0, fixture.blogCount().intValue());		
-		fixture.registerBlog("ttt");
+		String _name = "blogname1";
+		fixture.registerBlog(_name);
 		assertEquals(1, fixture.blogCount().intValue());	
 		String blogAddress = fixture.blogs(0);
-//		EthAddress of = EthAddress.of(blogAddress);
 		System.out.println(blogAddress  );
+		ShortBlog shortBlog = publishingDeployer.createShortBlogProxy(sender, EthAddress.of(blogAddress));
+		
+		System.out.println("blogName: "+  shortBlog.name()+ ""+info(shortBlog));
+		assertEquals(_name, shortBlog.name());
+		
+		assertEquals(0, shortBlog.messageCount().intValue());
+		String message="message";
+		String hash="hash";
+		String er="external resource";
+		shortBlog.sendMessage(message, hash, er);
+		assertEquals(1, shortBlog.messageCount().intValue());
+		System.out.println("blogName: "+  shortBlog.name()+ ""+info(shortBlog));
+
 		//End of user code
 	}
-	//Start of user code customTests    
+	//Start of user code customTests   
+	protected String info(ShortBlog memberRegistry) {
+		return super.info(memberRegistry) + " entries: "+memberRegistry.messageCount();
+	}
 	//End of user code
 }

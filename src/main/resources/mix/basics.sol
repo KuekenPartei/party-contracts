@@ -78,10 +78,10 @@ contract Manageable {
 	mapping (address=>bool)public managers;
 	// Start of user code Manageable.attributes
 	// End of user code
-	
+	  
 	modifier onlyManager
 	{
-	    if (!canAccess()) throw;
+	    if (!managers[msg.sender]) throw;
 	    _;
 	}
 	

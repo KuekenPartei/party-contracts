@@ -9,7 +9,6 @@ import de.kueken.ethereum.party.voting.*;
 
 import de.kueken.ethereum.party.party.FoundationConference.*;
 
-
 import java.io.File;
 import java.util.*;
 import java.util.concurrent.*;
@@ -38,12 +37,11 @@ import de.kueken.ethereum.party.EthereumInstance;
 
 // End of user code
 
-
 /**
  * Test for the FoundationConference contract.
  *
  */
-public class FoundationConferenceTest extends ConferenceTest{
+public class FoundationConferenceTest extends ConferenceTest {
 	private static EthereumFacade ethereum;
 	private static EthAccount sender;
 
@@ -51,11 +49,11 @@ public class FoundationConferenceTest extends ConferenceTest{
 	private EthAddress fixtureAddress;
 	private SoliditySource contractSource;
 	// Start of user code FoundationConferenceTest.attributes
-	//TODO: implement
+	// TODO: implement
 	// End of user code
 
 	/**
-	 * Setup up the blockchain. Add the 'EthereumFacadeProvider' property to use 
+	 * Setup up the blockchain. Add the 'EthereumFacadeProvider' property to use
 	 * another block chain implemenation or network.
 	 */
 	@BeforeClass
@@ -66,45 +64,56 @@ public class FoundationConferenceTest extends ConferenceTest{
 
 	/**
 	 * Read the contract from the file and deploys the contract code.
+	 * 
 	 * @throws Exception
 	 */
 	@Before
 	public void prepareTest() throws Exception {
-		//Start of user code prepareTest
+		// Start of user code prepareTest
 		String property = System.getProperty("EthereumFacadeProvider");
-		if(property==null) property="";
-		if (property.equalsIgnoreCase("rpc")|| property.equalsIgnoreCase("ropsten") || property.equalsIgnoreCase("InfuraRopsten")) {
-				SecureKey key2 = new FileSecureKey(new File("/home/urs/.ethereum/testnet/keystore/UTC--2015-12-15T13-55-38.006995319Z--ba7b29b63c00dff8614f8d8a6bf34e94e853b2d3"));
-				EthAccount decode = key2.decode("n");
-				sender = decode;
-				String senderAddressS = sender.getAddress().withLeading0x();
-				System.out.println(senderAddressS+"->"+ethereum.getBalance(decode));
-				
+		if (property == null)
+			property = "";
+		if (property.equalsIgnoreCase("rpc") || property.equalsIgnoreCase("ropsten")
+				|| property.equalsIgnoreCase("InfuraRopsten")) {
+			SecureKey key2 = new FileSecureKey(new File(
+					"/home/urs/.ethereum/testnet/keystore/UTC--2015-12-15T13-55-38.006995319Z--ba7b29b63c00dff8614f8d8a6bf34e94e853b2d3"));
+			EthAccount decode = key2.decode(System.getProperty("key"));
+			sender = decode;
+			String senderAddressS = sender.getAddress().withLeading0x();
+			System.out.println(senderAddressS + "->" + ethereum.getBalance(decode));
 
-			}else if (property.equalsIgnoreCase("private")){
-				sender = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100000L)));
-			}
-//        File contractSrc = new File(this.getClass().getResource("/mix/party.sol").toURI());
-        File contractSrc = new File(this.getClass().getResource("/mix/combine.json").toURI());
-        contractSource = SoliditySource.fromRawJson(contractSrc);
+		} else if (property.equalsIgnoreCase("private")) {
+			sender = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100000L)));
+		}
+		// File contractSrc = new
+		// File(this.getClass().getResource("/mix/party.sol").toURI());
 
-//        File contractSrc = new File(this.getClass().getResource("/mix/party.sol").toURI());
-//        contractSource = SoliditySource.from(contractSrc);
-		//End of user code
+		File contractSrc = new File(this.getClass().getResource("/mix/combine.json").toURI());
+		contractSource = SoliditySource.fromRawJson(contractSrc);
+		createFixture();
+		// File contractSrc = new
+		// File(this.getClass().getResource("/mix/combine.json").toURI());
+		// contractSource = SoliditySource.fromRawJson(contractSrc);
+
+		// File contractSrc = new
+		// File(this.getClass().getResource("/mix/party.sol").toURI());
+		// contractSource = SoliditySource.from(contractSrc);
+		// End of user code
 	}
-
 
 	/**
 	 * Create a new fixture by deploying the contract source.
+	 * 
 	 * @throws Exception
 	 */
 	protected void createFixture() throws Exception {
-		//Start of user code createFixture
-        CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "FoundationConference", sender);
-        fixtureAddress = address.get();
-        fixture = ethereum
-                .createContractProxy(contractSource, "FoundationConference", address.get(), sender, FoundationConference.class);
-		//End of user code
+		// Start of user code createFixture
+		CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "FoundationConference",
+				sender);
+		fixtureAddress = address.get();
+		setFixture(ethereum.createContractProxy(contractSource, "FoundationConference", address.get(), sender,
+				FoundationConference.class));
+		// End of user code
 	}
 
 	protected void setFixture(FoundationConference f) {
@@ -112,9 +121,6 @@ public class FoundationConferenceTest extends ConferenceTest{
 		super.setFixture(f);
 	}
 
-
-
-
-	//Start of user code customTests    
-	//End of user code
+	// Start of user code customTests
+	// End of user code
 }

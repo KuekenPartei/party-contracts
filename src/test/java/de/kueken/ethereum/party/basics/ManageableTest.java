@@ -29,6 +29,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.kueken.ethereum.party.EthereumInstance;
+import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
 
 // Start of user code ManageableTest.customImports
 
@@ -126,7 +127,7 @@ public class ManageableTest{
 	@Test
 	public void testAddManager_address() throws Exception {
 		//Start of user code testAddManager_address
-		createFixture();
+
 		assertEquals(1,fixture.mangerCount().intValue());
 		
 		EthAddress ethAddress = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L))).getAddress();
@@ -172,5 +173,12 @@ public class ManageableTest{
 		//End of user code
 	}
 	//Start of user code customTests    
+	
+	protected String info(Manageable memberRegistry) {
+		return "  manager:"
+				+ memberRegistry.mangerCount() + " "
+				+ memberRegistry.isManager(senderAddressS);
+	}
+
 	//End of user code
 }

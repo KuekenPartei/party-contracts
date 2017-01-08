@@ -77,7 +77,7 @@ public class KUEKeNPartyTest extends PartyTest{
 				|| property.equalsIgnoreCase("InfuraRopsten")) {
 			SecureKey key2 = new FileSecureKey(new File(
 					"/home/urs/.ethereum/testnet/keystore/UTC--2015-12-15T13-55-38.006995319Z--ba7b29b63c00dff8614f8d8a6bf34e94e853b2d3"));
-			EthAccount decode = key2.decode("n");
+			EthAccount decode = key2.decode(System.getProperty("key"));
 			sender = decode;
 			String senderAddressS = sender.getAddress().withLeading0x();
 			System.out.println(senderAddressS + "->" + ethereum.getBalance(decode));
