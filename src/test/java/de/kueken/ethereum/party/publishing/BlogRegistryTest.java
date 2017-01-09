@@ -3,7 +3,7 @@ package de.kueken.ethereum.party.publishing;
 import static org.junit.Assert.*;
 
 import de.kueken.ethereum.party.basics.*;
-import de.kueken.ethereum.party.deployer.PublishingDeployer;
+
 import de.kueken.ethereum.party.publishing.BlogRegistry.*;
 
 
@@ -34,6 +34,8 @@ import de.kueken.ethereum.party.EthereumInstance;
 // Start of user code BlogRegistryTest.customImports
 import java.lang.reflect.Type;
 import org.adridadou.ethereum.converters.output.OutputTypeConverter;
+import de.kueken.ethereum.party.deployer.PublishingDeployer;
+
 // End of user code
 
 
@@ -59,8 +61,6 @@ public class BlogRegistryTest extends ManageableTest{
 	@BeforeClass
 	public static void setup() {
 		ethereum = EthereumInstance.getInstance().getEthereum();
-//		if(sender==null)
-//			sender = new EthAccount(ECKey.)  EthAddress.of("5db10750e8caff27f906b41c71b3471057dd2004");
 
 	}
 

@@ -102,12 +102,9 @@ public class PartyDeployer {
 	 * Deploys a 'Party' on the blockchain.
 	 *  
 	 * @param sender the sender address
-	 * @param _name The name of the party or division.
-	 * @param _memberRegistry 
-	 * @param _blogRegistry 
 	 * @return the address of the deployed contract
 	 */
-	public CompletableFuture<EthAddress> deployParty(EthAccount sender, String _name, String _memberRegistry, String _blogRegistry) {
+	public CompletableFuture<EthAddress> deployParty(EthAccount sender) {
 		CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "Party", sender);
 		return address;
 	}
@@ -116,13 +113,10 @@ public class PartyDeployer {
 	 * Deploys a 'Party' on the blockchain and wrapps the contcat proxy.
 	 *  
 	 * @param sender the sender address
-	 * @param _name The name of the party or division.
-	 * @param _memberRegistry 
-	 * @param _blogRegistry 
-	 * @return the contract interface
+	 * @return the contract interface and the deployed address
 	 */
-	public DeployDuo<Party> createParty(EthAccount sender, String _name, String _memberRegistry, String _blogRegistry) throws IOException, InterruptedException, ExecutionException {
-		CompletableFuture<EthAddress> address = deployParty(sender, _name, _memberRegistry, _blogRegistry);
+	public DeployDuo<Party> createParty(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
+		CompletableFuture<EthAddress> address = deployParty(sender);
 		return new EthereumInstance.DeployDuo<Party>(address.get(), createPartyProxy(sender, address.get()));
 	}
 

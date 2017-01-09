@@ -4,6 +4,11 @@ import java.util.concurrent.CompletableFuture;
 import org.adridadou.ethereum.values.EthAddress;
 import de.kueken.ethereum.party.members.*;
 
+//Start of user code customized_imports
+
+//End of user code
+
+
 /**
 * A simple ballot for voting on alternatives.
 **/

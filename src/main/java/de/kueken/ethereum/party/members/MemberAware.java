@@ -4,6 +4,11 @@ import java.util.concurrent.CompletableFuture;
 import org.adridadou.ethereum.values.EthAddress;
 import de.kueken.ethereum.party.basics.*;
 
+//Start of user code customized_imports
+
+//End of user code
+
+
 /**
 * The basic class to provide access to the member registry.
 **/

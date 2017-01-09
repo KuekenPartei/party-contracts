@@ -3,6 +3,11 @@ package de.kueken.ethereum.party.basics;
 import java.util.concurrent.CompletableFuture;
 import org.adridadou.ethereum.values.EthAddress;
 
+//Start of user code customized_imports
+
+//End of user code
+
+
 /**
 * A basic class to introduce an access control.
 * All registered manager can access.

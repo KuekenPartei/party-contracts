@@ -1,0 +1,323 @@
+
+======= AccessRegistry =======
+
+======= Ballot =======
+Gas estimation:
+construction:
+   [???] + 151600 = [???]
+external:
+   proposals(uint256):	478
+   ballotName():	[???]
+   chairperson():	341
+   winningProposal():	[???]
+   voteFor(uint256):	200
+   giveRightToVote(address):	222
+   voters(address):	714
+   delegateTo(address):	266
+internal:
+
+======= BasicBallot =======
+
+======= BlogRegistry =======
+Gas estimation:
+construction:
+   42677 + 860000 = 902677
+external:
+   addManager(address):	42392
+   mangerCount():	246
+   blogs(uint256):	413
+   registerBlog(string):	[???]
+   removeManager(address):	42465
+   blogCount():	334
+   isManager(address):	516
+   managers(address):	462
+internal:
+
+======= Conference =======
+Gas estimation:
+construction:
+   43743 + 1857400 = 1901143
+external:
+   setOrganName(string):	[???]
+   getLastBallot():	439
+   addOrganFunction(address,string):	[???]
+   lastFunctionId():	290
+   getOrganBlog():	397
+   organName():	[???]
+   isActive():	405
+   addManager(address):	42546
+   date():	400
+   accreditationMember(address):	[???]
+   mangerCount():	444
+   createBallot(string,bytes32[]):	[???]
+   accreditatedMembers():	488
+   setBlogRegistry(address):	20504
+   setMemberRegistry(address):	20537
+   publishFunctionMessage(uint256,string,string,string):	[???]
+   getOrganName():	[???]
+   memberRegistry():	671
+   createFunction(string,string):	[???]
+   removeManager(address):	42795
+   blogRegistry():	737
+   ballotCount():	686
+   initalizeOrgan():	[???]
+   changeMember(uint256,address):	[???]
+   publishMessage(string,string,string):	[???]
+   isManager(address):	935
+   getOrganFunction(uint256):	947
+   managers(address):	902
+internal:
+
+======= FoundationConference =======
+Gas estimation:
+construction:
+   43750 + 1866000 = 1909750
+external:
+   setOrganName(string):	[???]
+   getLastBallot():	439
+   addOrganFunction(address,string):	[???]
+   lastFunctionId():	290
+   getOrganBlog():	397
+   organName():	[???]
+   isActive():	405
+   addManager(address):	42546
+   date():	400
+   accreditationMember(address):	[???]
+   mangerCount():	444
+   createBallot(string,bytes32[]):	[???]
+   accreditatedMembers():	488
+   setBlogRegistry(address):	20504
+   setMemberRegistry(address):	20537
+   publishFunctionMessage(uint256,string,string,string):	[???]
+   getOrganName():	[???]
+   memberRegistry():	671
+   createFunction(string,string):	[???]
+   removeManager(address):	42795
+   blogRegistry():	737
+   ballotCount():	686
+   initalizeOrgan():	[???]
+   changeMember(uint256,address):	[???]
+   publishMessage(string,string,string):	[???]
+   isManager(address):	935
+   getOrganFunction(uint256):	947
+   managers(address):	902
+internal:
+
+======= KUEKeNParty =======
+Gas estimation:
+construction:
+   [???] + 2493600 = [???]
+external:
+   setBlogregistry(address):	20218
+   removeSubDivision(uint256):	166
+   name():	[???]
+   organCount():	290
+   addManager(address):	42480
+   mangerCount():	334
+   subDivisions(uint256):	501
+   organs(uint256):	523
+   addSubDivision(address):	40589
+   parent():	495
+   setMemberRegistry(address):	20449
+   memberRegistry():	539
+   removeManager(address):	42641
+   getMemberRegistry():	569
+   subDivisionCount():	532
+   setName(string):	[???]
+   addOrgan(address):	[???]
+   constitutionHash():	[???]
+   boostrapParty(address,address):	[???]
+   createOrgan(string):	[???]
+   bootstrap2():	[???]
+   blogregistry():	759
+   isManager(address):	868
+   managers(address):	814
+internal:
+
+======= Manageable =======
+Gas estimation:
+construction:
+   41952 + 125800 = 167752
+external:
+   addManager(address):	42374
+   mangerCount():	228
+   removeManager(address):	42403
+   isManager(address):	432
+   managers(address):	378
+internal:
+   canAccess():	[???]
+
+======= MemberAware =======
+Gas estimation:
+construction:
+   57 + 30400 = 30457
+external:
+   setMemberRegistry(address):	20170
+   memberRegistry():	243
+internal:
+   isMember(address):	[???]
+
+======= MemberRegistry =======
+Gas estimation:
+construction:
+   42413 + 596000 = 638413
+external:
+   changeMemberAddress(uint256,address):	[???]
+   unregisterMember(uint256):	40901
+   getMemberData(address):	[???]
+   addManager(address):	42458
+   addMember(string,address):	[???]
+   isActiveMember(address):	514
+   mangerCount():	356
+   activeMemberCount():	378
+   publishMemberEvent(address,uint256):	344
+   getMemberAddress(uint256):	395
+   memberAddress(address):	[???]
+   getMemberCount():	452
+   isMember(address):	668
+   partyMembers(uint256):	[???]
+   removeManager(address):	42685
+   partyMemberCount():	554
+   isManager(address):	737
+   managers(address):	682
+internal:
+
+======= MessagePublisher =======
+
+======= Multiowned =======
+Gas estimation:
+construction:
+   [???] + 261800 = [???]
+external:
+   removeOwner(address):	[???]
+   m_owners(uint256):	288
+   isOwner(address):	244
+   m_pending(bytes32):	531
+   m_numOwners():	312
+   addOwner(address):	[???]
+   m_required():	356
+   revoke(bytes32):	286
+   changeRequirement(uint256):	[???]
+   hasConfirmed(bytes32,address):	364
+   m_ownerIndex(uint256):	516
+   c_maxOwners():	416
+   changeOwner(address,address):	[???]
+   m_pendingIndex(uint256):	662
+internal:
+   confirmAndCheck(bytes32):	[???]
+   reorganizeOwners():	[???]
+   clearPending():	[???]
+
+======= Organ =======
+Gas estimation:
+construction:
+   43650 + 1774200 = 1817850
+external:
+   setOrganName(string):	[???]
+   getLastBallot():	439
+   addOrganFunction(address,string):	[???]
+   lastFunctionId():	290
+   getOrganBlog():	397
+   organName():	[???]
+   isActive():	405
+   addManager(address):	42546
+   mangerCount():	400
+   createBallot(string,bytes32[]):	[???]
+   setBlogRegistry(address):	20438
+   setMemberRegistry(address):	20471
+   publishFunctionMessage(uint256,string,string,string):	[???]
+   getOrganName():	[???]
+   memberRegistry():	605
+   createFunction(string,string):	[???]
+   removeManager(address):	42729
+   blogRegistry():	671
+   ballotCount():	620
+   initalizeOrgan():	[???]
+   changeMember(uint256,address):	[???]
+   publishMessage(string,string,string):	[???]
+   isManager(address):	869
+   getOrganFunction(uint256):	881
+   managers(address):	836
+internal:
+
+======= OrganFunction =======
+Gas estimation:
+construction:
+   [???] + 430200 = [???]
+external:
+   lastMemberChanged():	224
+   addManager(address):	42414
+   setCurrentMember(address):	20431
+   mangerCount():	290
+   lastConstitutionHashChanged():	312
+   publisher():	407
+   removeManager(address):	42509
+   id():	378
+   constitutionHash():	[???]
+   setPublisher(address):	20585
+   getFunctioName():	[???]
+   functionName():	[???]
+   publishMessage(string,string,string):	[???]
+   currentMember():	583
+   isManager(address):	692
+   managers(address):	638
+internal:
+
+======= Owned =======
+Gas estimation:
+construction:
+   20189 + 57800 = 77989
+external:
+   kill():	303
+   getOwner():	426
+   owner():	323
+   changeOwner(address):	20373
+internal:
+
+======= Party =======
+Gas estimation:
+construction:
+   44319 + 2366400 = 2410719
+external:
+   setBlogregistry(address):	20218
+   removeSubDivision(uint256):	166
+   name():	[???]
+   organCount():	290
+   addManager(address):	42480
+   mangerCount():	334
+   subDivisions(uint256):	501
+   organs(uint256):	523
+   addSubDivision(address):	40589
+   parent():	495
+   setMemberRegistry(address):	20449
+   memberRegistry():	539
+   removeManager(address):	42641
+   getMemberRegistry():	569
+   subDivisionCount():	532
+   setName(string):	[???]
+   addOrgan(address):	[???]
+   constitutionHash():	[???]
+   createOrgan(string):	[???]
+   blogregistry():	715
+   isManager(address):	824
+   managers(address):	770
+internal:
+
+======= PublicBallot =======
+
+======= ShortBlog =======
+Gas estimation:
+construction:
+   [???] + 535000 = [???]
+external:
+   name():	[???]
+   messages(uint256):	[???]
+   sendMessage(string,string,string):	[???]
+   addManager(address):	42458
+   messageCount():	312
+   lastMessageDate():	334
+   mangerCount():	356
+   removeManager(address):	42531
+   isManager(address):	560
+   managers(address):	506
+internal:

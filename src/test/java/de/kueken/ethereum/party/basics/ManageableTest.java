@@ -29,7 +29,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.kueken.ethereum.party.EthereumInstance;
-import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
 
 // Start of user code ManageableTest.customImports
 

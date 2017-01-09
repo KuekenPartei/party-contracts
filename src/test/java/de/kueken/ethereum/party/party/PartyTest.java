@@ -31,15 +31,16 @@ import org.ethereum.crypto.ECKey;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.spongycastle.util.encoders.Hex;
 
 import de.kueken.ethereum.party.EthereumInstance;
 
 // Start of user code PartyTest.customImports
+import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
 import de.kueken.ethereum.party.deployer.MembersDeployer;
 import de.kueken.ethereum.party.deployer.PartyDeployer;
 import de.kueken.ethereum.party.deployer.PublishingDeployer;
 import java.io.IOException;
+import org.spongycastle.util.encoders.Hex;
 
 // End of user code
 
@@ -135,24 +136,6 @@ public class PartyTest extends ManageableTest{
 	}
 
 
-	/**
-	 * Test the constructor for the Party contract.
-	 * @throws Exception
-	 */
-	@Test
-	public void testConstructor_string_address_address() throws Exception {
-		//Start of user code testConstructor_string_address_address
-
-        CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "Party", sender);
-        fixture = ethereum
-                .createContractProxy(contractSource, "Party", address.get(), sender, Party.class);
-
-		assertEquals(1,fixture.mangerCount().intValue());
-		assertTrue(fixture.isManager(EthAddress.of(senderAddressS).withLeading0x()));
-		//assertEquals(_name, fixture.name());
-
-		//End of user code
-	}
 
 
 	/**
@@ -222,7 +205,7 @@ public class PartyTest extends ManageableTest{
 		String _name="subdivision";
 		String _memberRegistry = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(100001L))).withLeading0x();
 		String _blogRegistry = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(100002L))).withLeading0x();
-		de.kueken.ethereum.party.EthereumInstance.DeployDuo<Party> subDivision = partyDeployer.createParty(sender, _name,_memberRegistry,_blogRegistry);
+		de.kueken.ethereum.party.EthereumInstance.DeployDuo<Party> subDivision = partyDeployer.createParty(sender);
 		subDivision.constractInstance.addManager(fixtureAddress.withLeading0x());
 		
 		fixture.addSubDivision(subDivision.contractAddress.withLeading0x());
@@ -243,7 +226,7 @@ public class PartyTest extends ManageableTest{
 		String _name="subdivision";
 		String _memberRegistry=EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(100001L))).withLeading0x();
 		String _blogRegistry=EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(100002L))).withLeading0x();
-		de.kueken.ethereum.party.EthereumInstance.DeployDuo<Party> subDivision = partyDeployer.createParty(sender, _name,_memberRegistry,_blogRegistry);
+		DeployDuo<Party> subDivision = partyDeployer.createParty(sender);
 		subDivision.constractInstance.addManager(fixtureAddress.withLeading0x());
 		
 		

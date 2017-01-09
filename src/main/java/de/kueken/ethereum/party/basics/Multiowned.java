@@ -3,6 +3,11 @@ package de.kueken.ethereum.party.basics;
 import java.util.concurrent.CompletableFuture;
 import org.adridadou.ethereum.values.EthAddress;
 
+//Start of user code customized_imports
+
+//End of user code
+
+
 
 public interface Multiowned{
 	/**

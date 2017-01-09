@@ -24,7 +24,6 @@ import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
 import org.adridadou.ethereum.values.SoliditySource;
 import org.adridadou.ethereum.values.config.ChainId;
-import org.adridadou.exception.EthereumApiException;
 import org.ethereum.crypto.ECKey;
 import org.junit.Before;
 import org.junit.BeforeClass;

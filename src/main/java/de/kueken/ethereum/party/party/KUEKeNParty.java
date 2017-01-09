@@ -7,6 +7,11 @@ import de.kueken.ethereum.party.members.*;
 import de.kueken.ethereum.party.publishing.*;
 import de.kueken.ethereum.party.voting.*;
 
+//Start of user code customized_imports
+
+//End of user code
+
+
 /**
 * An actual party.
 * The KUEKen party.

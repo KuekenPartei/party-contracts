@@ -9,6 +9,7 @@ import de.kueken.ethereum.party.voting.*;
 
 import de.kueken.ethereum.party.party.FoundationConference.*;
 
+
 import java.io.File;
 import java.util.*;
 import java.util.concurrent.*;
@@ -37,11 +38,12 @@ import de.kueken.ethereum.party.EthereumInstance;
 
 // End of user code
 
+
 /**
  * Test for the FoundationConference contract.
  *
  */
-public class FoundationConferenceTest extends ConferenceTest {
+public class FoundationConferenceTest extends ConferenceTest{
 	private static EthereumFacade ethereum;
 	private static EthAccount sender;
 
@@ -53,7 +55,7 @@ public class FoundationConferenceTest extends ConferenceTest {
 	// End of user code
 
 	/**
-	 * Setup up the blockchain. Add the 'EthereumFacadeProvider' property to use
+	 * Setup up the blockchain. Add the 'EthereumFacadeProvider' property to use 
 	 * another block chain implemenation or network.
 	 */
 	@BeforeClass
@@ -64,12 +66,11 @@ public class FoundationConferenceTest extends ConferenceTest {
 
 	/**
 	 * Read the contract from the file and deploys the contract code.
-	 * 
 	 * @throws Exception
 	 */
 	@Before
 	public void prepareTest() throws Exception {
-		// Start of user code prepareTest
+		//Start of user code prepareTest
 		String property = System.getProperty("EthereumFacadeProvider");
 		if (property == null)
 			property = "";
@@ -101,13 +102,13 @@ public class FoundationConferenceTest extends ConferenceTest {
 		// End of user code
 	}
 
+
 	/**
 	 * Create a new fixture by deploying the contract source.
-	 * 
 	 * @throws Exception
 	 */
 	protected void createFixture() throws Exception {
-		// Start of user code createFixture
+		//Start of user code createFixture
 		CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "FoundationConference",
 				sender);
 		fixtureAddress = address.get();
@@ -121,6 +122,9 @@ public class FoundationConferenceTest extends ConferenceTest {
 		super.setFixture(f);
 	}
 
-	// Start of user code customTests
+
+
+
+	//Start of user code customTests
 	// End of user code
 }

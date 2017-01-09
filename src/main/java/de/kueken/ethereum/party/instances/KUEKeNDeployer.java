@@ -197,8 +197,7 @@ public class KUEKeNDeployer {
 		if (party != null)
 			party.constractInstance = partyDeployer.createPartyProxy(sender, party.contractAddress);
 		else
-			party = partyDeployer.createParty(sender, aName, "0xba7b29b63c00dff8614f8d8a6bf34e94e853b2d3",
-					"0xba7b29b63c00dff8614f8d8a6bf34e94e853b2d3");
+			party = partyDeployer.createParty(sender);
 		System.out.println(info(party));
 
 		doAndWait(new DoAndWaitOneTime() {
@@ -306,10 +305,10 @@ public class KUEKeNDeployer {
 						EthAddress.of("0x6bd090228360e8404087b2834bd686cd544b7f0a"), null);
 				blogRegistry = new DeployDuo<BlogRegistry>(EthAddress.of("0x02da9e7b2ff471dab8e437393f4268b23be8f260"),
 						null);
-				party = new DeployDuo<Party>(EthAddress.of("0x261449ddf702b9e93b690e1aaf825a7b89a503c9"), null);
+				party = new DeployDuo<Party>(EthAddress.of("0x2f8e329caa45a2eb52c77a2a83cb004e1ed3e645"), null);
 				foundationConference = new DeployDuo<FoundationConference>(
-						EthAddress.of("0x8024dc202025997e61f05df28ba9f1a38dbb0470"), null);
-				buvo = new DeployDuo<Organ>(EthAddress.of("0xe2bff8ed57c0b1b161ae91bde71cf6bb184fb944"), null);
+						EthAddress.of("0x27836f03e28c118fe232df379bb32f4f649ad9a1"), null);
+				buvo = new DeployDuo<Organ>(EthAddress.of("0x63b6967f7b26de28bbe39af070b697a07dbfb351"), null);
 
 				millis = 2000L;
 			} catch (Exception e) {

@@ -4,6 +4,11 @@ import java.util.concurrent.CompletableFuture;
 import org.adridadou.ethereum.values.EthAddress;
 import de.kueken.ethereum.party.basics.*;
 
+//Start of user code customized_imports
+
+//End of user code
+
+
 /**
 * Holds the members and their states.
 * Also the contract to manage these member states.

@@ -31,13 +31,14 @@ import org.ethereum.crypto.ECKey;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.spongycastle.util.encoders.Hex;
 
 import de.kueken.ethereum.party.EthereumInstance;
+
+// Start of user code OrganTest.customImports
 import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
 import de.kueken.ethereum.party.deployer.PartyDeployer;
-// Start of user code OrganTest.customImports
 import de.kueken.ethereum.party.deployer.PublishingDeployer;
+import org.spongycastle.util.encoders.Hex;
 import java.io.IOException;
 // End of user code
 

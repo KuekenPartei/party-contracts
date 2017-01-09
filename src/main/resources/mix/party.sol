@@ -201,7 +201,7 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 /*
 * A basic party contract.
 */
-contract Party is Manageable {
+contract Party is Manageable { 
 
 	string public name;
 	MemberRegistry public memberRegistry;
