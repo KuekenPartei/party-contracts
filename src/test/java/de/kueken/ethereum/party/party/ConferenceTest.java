@@ -57,15 +57,15 @@ public class ConferenceTest extends OrganTest{
 	//TODO: implement
 	// End of user code
 
-	/**
-	 * Setup up the blockchain. Add the 'EthereumFacadeProvider' property to use 
-	 * another block chain implemenation or network.
-	 */
-	@BeforeClass
-	public static void setup() {
-		ethereum = EthereumInstance.getInstance().getEthereum();
-
-	}
+//	/**
+//	 * Setup up the blockchain. Add the 'EthereumFacadeProvider' property to use 
+//	 * another block chain implemenation or network.
+//	 */
+//	@BeforeClass
+//	public static void setup() {
+//		ethereum = EthereumInstance.getInstance().getEthereum();
+//
+//	}
 
 	/**
 	 * Read the contract from the file and deploys the contract code.
