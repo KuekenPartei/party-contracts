@@ -3,6 +3,8 @@ package de.kueken.ethereum.party.party;
 import static org.junit.Assert.*;
 
 import de.kueken.ethereum.party.basics.*;
+import de.kueken.ethereum.party.deployer.PartyDeployer;
+import de.kueken.ethereum.party.deployer.PublishingDeployer;
 import de.kueken.ethereum.party.members.*;
 import de.kueken.ethereum.party.publishing.*;
 import de.kueken.ethereum.party.voting.*;
@@ -31,6 +33,7 @@ import org.ethereum.crypto.ECKey;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.spongycastle.util.encoders.Hex;
 
 import de.kueken.ethereum.party.EthereumInstance;
 
@@ -44,12 +47,12 @@ import de.kueken.ethereum.party.EthereumInstance;
  *
  */
 public class ConferenceTest extends OrganTest{
-	private static EthereumFacade ethereum;
-	private static EthAccount sender;
+//	private static EthereumFacade ethereum;
+//	private static EthAccount sender;
 
 	private Conference fixture;
-	private EthAddress fixtureAddress;
-	private SoliditySource contractSource;
+//	private EthAddress fixtureAddress;
+//	private SoliditySource contractSource;
 	// Start of user code ConferenceTest.attributes
 	//TODO: implement
 	// End of user code
@@ -71,10 +74,21 @@ public class ConferenceTest extends OrganTest{
 	@Before
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
-
-	       File contractSrc = new File(this.getClass().getResource("/mix/combine.json").toURI());
-	        contractSource = SoliditySource.fromRawJson(contractSrc);
-	        createFixture();
+super.prepareTest();
+//		partyDeployer = new PartyDeployer(ethereum,"/mix/combine.json",false);
+//		publishingDeployer = new PublishingDeployer(ethereum,"/mix/combine.json",false);
+//
+////		
+////		if(sender==null)// the account for the standalone blockchain
+////			sender = new EthAccount(
+////					ECKey.fromPrivate(Hex.decode("3ec771c31cac8c0dba77a69e503765701d3c2bb62435888d4ffa38fed60c445c")));
+////
+////
+////	       File contractSrc = new File(this.getClass().getResource("/mix/combine.json").toURI());
+////	        contractSource = SoliditySource.fromRawJson(contractSrc);
+//
+//		initTest();
+//		createFixture();
 //        File contractSrc = new File(this.getClass().getResource("/mix/party.sol").toURI());
 //        contractSource = SoliditySource.from(contractSrc);
 		//End of user code

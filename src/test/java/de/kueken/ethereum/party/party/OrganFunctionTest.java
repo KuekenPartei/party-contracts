@@ -44,12 +44,12 @@ import de.kueken.ethereum.party.EthereumInstance;
  *
  */
 public class OrganFunctionTest extends ManageableTest{
-	private static EthereumFacade ethereum;
-	private static EthAccount sender;
+//	private static EthereumFacade ethereum;
+//	private static EthAccount sender;
 
 	private OrganFunction fixture;
-	private EthAddress fixtureAddress;
-	private SoliditySource contractSource;
+//	private EthAddress fixtureAddress;
+//	private SoliditySource contractSource;
 	// Start of user code OrganFunctionTest.attributes
 	//TODO: implement
 	// End of user code

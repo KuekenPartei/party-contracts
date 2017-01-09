@@ -28,6 +28,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import de.kueken.ethereum.party.AbstractContractTest;
 import de.kueken.ethereum.party.EthereumInstance;
 
 // Start of user code ManageableTest.customImports
@@ -39,26 +40,26 @@ import de.kueken.ethereum.party.EthereumInstance;
  * Test for the Manageable contract.
  *
  */
-public class ManageableTest{
-	private static EthereumFacade ethereum;
-	private static EthAccount sender;
+public class ManageableTest extends AbstractContractTest{
+//	private static EthereumFacade ethereum;
+//	private static EthAccount sender;
 
 	private Manageable fixture;
-	private EthAddress fixtureAddress;
-	private SoliditySource contractSource;
+	
+//	private SoliditySource contractSource;
 	// Start of user code ManageableTest.attributes
 	private String senderAddressS = "5db10750e8caff27f906b41c71b3471057dd2004";
 	// End of user code
 
-	/**
-	 * Setup up the blockchain. Add the 'EthereumFacadeProvider' property to use 
-	 * another block chain implemenation or network.
-	 */
-	@BeforeClass
-	public static void setup() {
-		ethereum = EthereumInstance.getInstance().getEthereum();
-
-	}
+//	/**
+//	 * Setup up the blockchain. Add the 'EthereumFacadeProvider' property to use 
+//	 * another block chain implemenation or network.
+//	 */
+//	@BeforeClass
+//	public static void setup() {
+//		ethereum = EthereumInstance.getInstance().getEthereum();
+//
+//	}
 
 	/**
 	 * Read the contract from the file and deploys the contract code.
@@ -67,9 +68,9 @@ public class ManageableTest{
 	@Before
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
-
-        File contractSrc = new File(this.getClass().getResource("/mix/basics.sol").toURI());
-        contractSource = SoliditySource.from(contractSrc);
+		initTest();
+//        File contractSrc = new File(this.getClass().getResource("/mix/basics.sol").toURI());
+//        contractSource = SoliditySource.from(contractSrc);
 //        File contractSrc = new File(this.getClass().getResource("/contracts.json").toURI());
 //        contractSource = SoliditySource.fromRawJson(contractSrc);
         createFixture();
@@ -144,15 +145,16 @@ public class ManageableTest{
 	@Test
 	public void testRemoveManager_address() throws Exception {
 		//Start of user code testRemoveManager_address
-//		createFixture();
-		EthAddress ethAddress = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L))).getAddress();
-		fixture.addManager(ethAddress.toString());
-		
-		assertTrue(fixture.isManager(ethAddress.toString()));
-		
-		fixture.removeManager(ethAddress.toString());
 		assertEquals(1, fixture.mangerCount().intValue());
-		assertFalse(fixture.isManager(ethAddress.toString()));
+		EthAddress ethAddress = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L))).getAddress();
+		fixture.addManager(ethAddress.withLeading0x());
+		assertEquals(2, fixture.mangerCount().intValue());
+		
+		assertTrue(fixture.isManager(ethAddress.withLeading0x()));
+		
+		fixture.removeManager(ethAddress.withLeading0x());
+		assertEquals(1, fixture.mangerCount().intValue());
+		assertFalse(fixture.isManager(ethAddress.withLeading0x()));
 		
 		//End of user code
 	}

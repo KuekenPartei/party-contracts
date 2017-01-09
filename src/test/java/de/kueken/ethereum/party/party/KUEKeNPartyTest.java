@@ -44,12 +44,12 @@ import de.kueken.ethereum.party.EthereumInstance;
  *
  */
 public class KUEKeNPartyTest extends PartyTest{
-	private static EthereumFacade ethereum;
-	private static EthAccount sender;
-
+//	private static EthereumFacade ethereum;
+//	private static EthAccount sender;
+//
 	private KUEKeNParty fixture;
-	private EthAddress fixtureAddress;
-	private SoliditySource contractSource;
+//	private EthAddress fixtureAddress;
+//	private SoliditySource contractSource;
 	// Start of user code KUEKeNPartyTest.attributes
 	private String userAddress;
 	// End of user code
@@ -71,24 +71,26 @@ public class KUEKeNPartyTest extends PartyTest{
 	@Before
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
-		String property = System.getProperty("EthereumFacadeProvider");
-		if(property!=null)
-		if (property.equalsIgnoreCase("rpc") || property.equalsIgnoreCase("ropsten")
-				|| property.equalsIgnoreCase("InfuraRopsten")) {
-			SecureKey key2 = new FileSecureKey(new File(
-					"/home/urs/.ethereum/testnet/keystore/UTC--2015-12-15T13-55-38.006995319Z--ba7b29b63c00dff8614f8d8a6bf34e94e853b2d3"));
-			EthAccount decode = key2.decode(System.getProperty("key"));
-			sender = decode;
-			String senderAddressS = sender.getAddress().withLeading0x();
-			System.out.println(senderAddressS + "->" + ethereum.getBalance(decode));
-		}else if (property.equalsIgnoreCase("private")){
-			EthAccount user = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L)));
-			userAddress = user.getAddress().withLeading0x();
-			sender = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100000L)));
-		}
-		File contractSrc = new File(this.getClass().getResource("/contracts.json").toURI());
-		contractSource = SoliditySource.fromRawJson(contractSrc);
+//		String property = System.getProperty("EthereumFacadeProvider");
+//		if(property!=null)
+//		if (property.equalsIgnoreCase("rpc") || property.equalsIgnoreCase("ropsten")
+//				|| property.equalsIgnoreCase("InfuraRopsten")) {
+//			SecureKey key2 = new FileSecureKey(new File(
+//					"/home/urs/.ethereum/testnet/keystore/UTC--2015-12-15T13-55-38.006995319Z--ba7b29b63c00dff8614f8d8a6bf34e94e853b2d3"));
+//			EthAccount decode = key2.decode(System.getProperty("key"));
+//			sender = decode;
+//			String senderAddressS = sender.getAddress().withLeading0x();
+//			System.out.println(senderAddressS + "->" + ethereum.getBalance(decode));
+//		}else if (property.equalsIgnoreCase("private")){
+//			EthAccount user = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L)));
+//			userAddress = user.getAddress().withLeading0x();
+//			sender = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100000L)));
+//		}
+//		File contractSrc = new File(this.getClass().getResource("/contracts.json").toURI());
+//		contractSource = SoliditySource.fromRawJson(contractSrc);
 
+		initTest();
+		
 //        File contractSrc = new File(this.getClass().getResource("/mix/members.sol").toURI());
 //        contractSource = SoliditySource.from(contractSrc);
 		createFixture();
