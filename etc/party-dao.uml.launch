@@ -22,11 +22,11 @@
 <stringAttribute key="CONTRACT_FILE_HEADER" value="/*&#10;*&#10;*(c) 2016 KUEKeN&#10;* Urs Zeidler&#10;*&#10;*/"/>
 <booleanAttribute key="GENERATE_ABI" value="false"/>
 <stringAttribute key="GENERATE_ABI_TARGET" value="/party-contracts/mix/abi"/>
-<booleanAttribute key="GENERATE_CONTRACT_FILES" value="false"/>
+<booleanAttribute key="GENERATE_CONTRACT_FILES" value="true"/>
 <booleanAttribute key="GENERATE_HTML" value="false"/>
 <booleanAttribute key="GENERATE_JAVA_INTERFACE" value="true"/>
-<booleanAttribute key="GENERATE_JAVA_NONBLOCKING" value="false"/>
-<booleanAttribute key="GENERATE_JAVA_TESTS" value="true"/>
+<booleanAttribute key="GENERATE_JAVA_NONBLOCKING" value="true"/>
+<booleanAttribute key="GENERATE_JAVA_TESTS" value="false"/>
 <booleanAttribute key="GENERATE_JS_CONTROLLER" value="false"/>
 <stringAttribute key="GENERATE_JS_CONTROLLER_TARGET" value="/party-contracts/src/test/resources/mix/js"/>
 <booleanAttribute key="GENERATE_JS_TEST_CONTROLLER" value="false"/>
@@ -45,10 +45,10 @@
 <stringAttribute key="GENERATION_JAVA_INTERFACE_PACKAGE_PREFIX" value="de.kueken.ethereum.party"/>
 <stringAttribute key="GENERATION_JAVA_INTERFACE_TARGET" value="/party-contracts/src/main/java"/>
 <stringAttribute key="GENERATION_JAVA_TEST_TARGET" value="/party-contracts/src/test/java"/>
-<stringAttribute key="GENERATION_TARGET" value="/party-contracts/src/test/resources/mix"/>
+<stringAttribute key="GENERATION_TARGET" value="/party-contracts/src/main/resources/mix"/>
 <stringAttribute key="GENERATION_TARGET_DOC" value="/party-contracts/doc"/>
 <stringAttribute key="JS_FILE_HEADER" value="// file header"/>
 <booleanAttribute key="enable_version" value="true"/>
 <stringAttribute key="modelUri" value="/party-contracts/model/party-dao.uml"/>
-<stringAttribute key="version_pragma" value="pragma solidity ^0.4.0;"/>
+<stringAttribute key="version_pragma" value="pragma solidity ^0.4.1;"/>
 </launchConfiguration>

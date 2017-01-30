@@ -15,7 +15,7 @@ import de.kueken.ethereum.party.members.*;
 public interface PublicBallot extends BasicBallot{
 
 	
-	void castVote(Integer _voteFor);
+	java.util.concurrent.CompletableFuture<Void> castVote(Integer _voteFor);
 
 
 	//Start of user code additional_methods

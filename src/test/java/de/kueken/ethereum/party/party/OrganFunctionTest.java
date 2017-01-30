@@ -18,11 +18,7 @@ import java.math.*;
 
 import org.adridadou.ethereum.EthereumFacade;
 import org.adridadou.ethereum.keystore.*;
-import org.adridadou.ethereum.provider.MainEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.RopstenEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.GenericRpcEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.StandaloneEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.TestnetEthereumFacadeProvider;
+import org.adridadou.ethereum.values.CompiledContract;
 import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
 import org.adridadou.ethereum.values.SoliditySource;
@@ -32,6 +28,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import de.kueken.ethereum.party.AbstractContractTest;
 import de.kueken.ethereum.party.EthereumInstance;
 
 // Start of user code OrganFunctionTest.customImports
@@ -44,24 +41,15 @@ import de.kueken.ethereum.party.EthereumInstance;
  *
  */
 public class OrganFunctionTest extends ManageableTest{
-//	private static EthereumFacade ethereum;
-//	private static EthAccount sender;
 
 	private OrganFunction fixture;
-//	private EthAddress fixtureAddress;
-//	private SoliditySource contractSource;
 	// Start of user code OrganFunctionTest.attributes
 	//TODO: implement
 	// End of user code
 
-	/**
-	 * Setup up the blockchain. Add the 'EthereumFacadeProvider' property to use 
-	 * another block chain implemenation or network.
-	 */
-	@BeforeClass
-	public static void setup() {
-		ethereum = EthereumInstance.getInstance().getEthereum();
-
+	@Override
+	protected String getContractName() {
+		return "OrganFunction";
 	}
 
 	/**
@@ -71,28 +59,9 @@ public class OrganFunctionTest extends ManageableTest{
 	@Before
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
-		String property = System.getProperty("EthereumFacadeProvider");
-		if(property==null) property="";
-		if (property.equalsIgnoreCase("rpc")|| property.equalsIgnoreCase("ropsten") || property.equalsIgnoreCase("InfuraRopsten")) {
-				SecureKey key2 = new FileSecureKey(new File("/home/urs/.ethereum/testnet/keystore/UTC--2015-12-15T13-55-38.006995319Z--ba7b29b63c00dff8614f8d8a6bf34e94e853b2d3"));
-				EthAccount decode = key2.decode(System.getProperty("key"));
-				sender = decode;
-				String senderAddressS = sender.getAddress().withLeading0x();
-				System.out.println(senderAddressS+"->"+ethereum.getBalance(decode));
-				
-
-			}else if (property.equalsIgnoreCase("private")){
-				sender = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100000L)));
-			}
-	       File contractSrc = new File(this.getClass().getResource("/mix/combine.json").toURI());
-	        contractSource = SoliditySource.fromRawJson(contractSrc);
-	       createFixture();
-//        File contractSrc = new File(this.getClass().getResource("/mix/party.sol").toURI());
-//        File contractSrc = new File(this.getClass().getResource("/mix/combine.json").toURI());
-//        contractSource = SoliditySource.fromRawJson(contractSrc);
-
-//        File contractSrc = new File(this.getClass().getResource("/mix/party.sol").toURI());
-//        contractSource = SoliditySource.from(contractSrc);
+        File contractSrc = new File(this.getClass().getResource("/mix/party.sol").toURI());
+        contractSource = SoliditySource.from(contractSrc);
+		createFixture();
 		//End of user code
 	}
 
@@ -103,44 +72,21 @@ public class OrganFunctionTest extends ManageableTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
+//		CompiledContract compiledContract = ethereum.compile(contractSource, getContractName());
+		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
 		//TODO: set the constructor args
 		String _name = "_name";
 		String _ch = "_ch";
-
-        CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "OrganFunction", sender
+        CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender
 				, _name, _ch);
         fixtureAddress = address.get();
-        setFixture(ethereum
-                .createContractProxy(contractSource, "OrganFunction", address.get(), sender, OrganFunction.class));
-        
-        
+		setFixture(ethereum.createContractProxy(compiledContract, fixtureAddress, sender, OrganFunction.class));
 		//End of user code
 	}
 
 	protected void setFixture(OrganFunction f) {
 		this.fixture = f;
 		super.setFixture(f);
-	}
-
-
-	/**
-	 * Test the constructor for the OrganFunction contract.
-	 * @throws Exception
-	 */
-	@Test
-	public void testConstructor_string_string() throws Exception {
-		//Start of user code testConstructor_string_string
-		//TODO: Set the constructor args
-		String _name = "_name";
-		String _ch = "_ch";
-
-        CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "OrganFunction", sender
-				, _name, _ch);
-        fixture = ethereum
-                .createContractProxy(contractSource, "OrganFunction", address.get(), sender, OrganFunction.class);
-
-		//TODO: test the constructor
-		//End of user code
 	}
 
 

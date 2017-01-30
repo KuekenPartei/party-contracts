@@ -3,6 +3,9 @@ package de.kueken.ethereum.party.party;
 import static org.junit.Assert.*;
 
 import de.kueken.ethereum.party.basics.*;
+import de.kueken.ethereum.party.deployer.MembersDeployer;
+import de.kueken.ethereum.party.deployer.PartyDeployer;
+import de.kueken.ethereum.party.deployer.PublishingDeployer;
 import de.kueken.ethereum.party.members.*;
 import de.kueken.ethereum.party.publishing.*;
 import de.kueken.ethereum.party.voting.*;
@@ -18,11 +21,7 @@ import java.math.*;
 
 import org.adridadou.ethereum.EthereumFacade;
 import org.adridadou.ethereum.keystore.*;
-import org.adridadou.ethereum.provider.MainEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.RopstenEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.GenericRpcEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.StandaloneEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.TestnetEthereumFacadeProvider;
+import org.adridadou.ethereum.values.CompiledContract;
 import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
 import org.adridadou.ethereum.values.SoliditySource;
@@ -32,6 +31,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import de.kueken.ethereum.party.AbstractContractTest;
 import de.kueken.ethereum.party.EthereumInstance;
 
 // Start of user code KUEKeNPartyTest.customImports
@@ -44,24 +44,15 @@ import de.kueken.ethereum.party.EthereumInstance;
  *
  */
 public class KUEKeNPartyTest extends PartyTest{
-//	private static EthereumFacade ethereum;
-//	private static EthAccount sender;
-//
+
 	private KUEKeNParty fixture;
-//	private EthAddress fixtureAddress;
-//	private SoliditySource contractSource;
 	// Start of user code KUEKeNPartyTest.attributes
 	private String userAddress;
 	// End of user code
 
-	/**
-	 * Setup up the blockchain. Add the 'EthereumFacadeProvider' property to use 
-	 * another block chain implemenation or network.
-	 */
-	@BeforeClass
-	public static void setup() {
-		ethereum = EthereumInstance.getInstance().getEthereum();
-
+	@Override
+	protected String getContractName() {
+		return "KUEKeNParty";
 	}
 
 	/**
@@ -90,6 +81,9 @@ public class KUEKeNPartyTest extends PartyTest{
 //		contractSource = SoliditySource.fromRawJson(contractSrc);
 
 		initTest();
+		partyDeployer = new PartyDeployer(ethereum,"/mix/combine.json",true);
+		membersDeployer = new MembersDeployer(ethereum, "/mix/combine.json",true);
+		publishingDeployer = new PublishingDeployer(ethereum,"/mix/combine.json",true);
 		
 //        File contractSrc = new File(this.getClass().getResource("/mix/members.sol").toURI());
 //        contractSource = SoliditySource.from(contractSrc);
@@ -104,36 +98,21 @@ public class KUEKeNPartyTest extends PartyTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-        CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "KUEKeNParty", sender);
+//		CompiledContract compiledContract = ethereum.compile(contractSource, getContractName());
+		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
+
+		//TODO: set the constructor args
+		String _name = "_name";
+        CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender
+				, _name);
         fixtureAddress = address.get();
-        fixture = ethereum
-                .createContractProxy(contractSource, "KUEKeNParty", address.get(), sender, KUEKeNParty.class);
+		setFixture(ethereum.createContractProxy(compiledContract, fixtureAddress, sender, KUEKeNParty.class));
 		//End of user code
 	}
 
 	protected void setFixture(KUEKeNParty f) {
 		this.fixture = f;
 		super.setFixture(f);
-	}
-
-
-	/**
-	 * Test the constructor for the KUEKeNParty contract.
-	 * @throws Exception
-	 */
-	@Test
-	public void testConstructor_string() throws Exception {
-		//Start of user code testConstructor_string
-		//TODO: Set the constructor args
-		String _name = "_name";
-
-        CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "KUEKeNParty", sender
-				, _name);
-        fixture = ethereum
-                .createContractProxy(contractSource, "KUEKeNParty", address.get(), sender, KUEKeNParty.class);
-
-		//TODO: test the constructor
-		//End of user code
 	}
 
 

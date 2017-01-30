@@ -16,9 +16,9 @@ public interface Owned{
 	
 	java.util.concurrent.CompletableFuture<String> getOwner();
 	
-	void changeOwner(String newOwner);
+	java.util.concurrent.CompletableFuture<Void> changeOwner(String newOwner);
 	
-	void kill();
+	java.util.concurrent.CompletableFuture<Void> kill();
 
 	//Start of user code additional_methods
 

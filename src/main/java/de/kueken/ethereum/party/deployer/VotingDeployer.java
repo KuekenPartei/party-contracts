@@ -1,15 +1,22 @@
 package de.kueken.ethereum.party.deployer;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import org.adridadou.ethereum.EthereumFacade;
+import org.adridadou.ethereum.values.CompiledContract;
 import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
 import org.adridadou.ethereum.values.SoliditySource;
+import org.apache.commons.io.IOUtils;
+import org.ethereum.solidity.compiler.CompilationResult;
+import org.ethereum.solidity.compiler.CompilationResult.ContractMetadata;
+
 
 import de.kueken.ethereum.party.EthereumInstance;
 import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
@@ -27,37 +34,63 @@ public class VotingDeployer {
 
 	private EthereumFacade ethereum;
 	private SoliditySource contractSource;
-	private static String filename = "/mix/voting.sol";
+	private CompilationResult compiledContracts;
+	private static String filename = "/main/resources/mix/voting.sol";
 
+	/**
+	 * Create an instance of the deployer with the default contract code file.
+	 * 
+	 * @param ethereum
+	 */
 	public VotingDeployer(EthereumFacade ethereum) {
-		this(ethereum,filename, true);
+		this(ethereum,filename,false);
 	}
 
-	public VotingDeployer(EthereumFacade ethereum, String contractSourceFile, boolean plain) {
+	/**
+	 * Create an instance of the deployer.
+	 * 
+	 * @param ethereum
+	 * @param contractSourceFile
+	 * @param compiled is the source code already compiled
+	 */
+	public VotingDeployer(EthereumFacade ethereum, String contractSourceFile, boolean compiled) {
 		this.ethereum = ethereum;
 		try {
-			if(plain)
+			if (!compiled)
 				contractSource = SoliditySource.from(new File(this.getClass().getResource(contractSourceFile).toURI()));
-			else
-				contractSource = SoliditySource.fromRawJson(new File(this.getClass().getResource(contractSourceFile).toURI()));
-				
+			else {
+				File file = new File(this.getClass().getResource(contractSourceFile).toURI());
+				String rawJson = IOUtils.toString(new FileInputStream(file), EthereumFacade.CHARSET);
+				compiledContracts = CompilationResult.parse(rawJson);
+			}
 		} catch (URISyntaxException e) {
+			throw new IllegalArgumentException(e);
+		} catch (FileNotFoundException e) {
 			throw new IllegalArgumentException(e);
 		} catch (IOException e) {
 			throw new IllegalArgumentException(e);
 		}
 	}
 
-	public VotingDeployer(EthereumFacade ethereum, File contractSourceFile, boolean plain) {
+	/**
+	 * Create an instance of the deployer.
+	 * 
+	 * @param ethereum
+	 * @param contractSourceFile
+	 */
+	public VotingDeployer(EthereumFacade ethereum, File contractSourceFile, boolean compiled) {
 		this.ethereum = ethereum;
-		try {
-			if(plain)
-				contractSource = SoliditySource.from(contractSourceFile);
-			else
-				contractSource = SoliditySource.fromRawJson(contractSourceFile);
-				
-		} catch (IOException e) {
-			throw new IllegalArgumentException(e);
+		if (!compiled)
+			contractSource = SoliditySource.from(contractSourceFile);
+		else {
+			try {
+				String rawJson = IOUtils.toString(new FileInputStream(contractSourceFile), EthereumFacade.CHARSET);
+				compiledContracts = CompilationResult.parse(rawJson);
+			} catch (FileNotFoundException e) {
+				throw new IllegalArgumentException(e);
+			} catch (IOException e) {
+				throw new IllegalArgumentException(e);
+			}
 		}
 	}
 
@@ -65,14 +98,27 @@ public class VotingDeployer {
 
 	/**
 	 * Deploys a 'Ballot' on the blockchain.
-	 *  
-	 * @param sender the sender address
+	 * 
+	 * @param sender
+	 *            the sender address
 	 * @return the address of the deployed contract
 	 */
 	public CompletableFuture<EthAddress> deployBallot(EthAccount sender) {
-		CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "Ballot", sender);
+		CompiledContract compiledContract = null;
+		if (compiledContracts == null)
+			compiledContract = ethereum.compile(contractSource, "Ballot");
+		else {
+			ContractMetadata contractMetadata = compiledContracts.contracts.get("Ballot");
+			if (contractMetadata == null)
+				throw new IllegalArgumentException("Contract code for 'Ballot' not found");
+
+			compiledContract = CompiledContract.from(null, "Ballot", contractMetadata);
+		}
+		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
 		return address;
 	}
+
+
 
 	/**
 	 * Deploys a 'Ballot' on the blockchain and wrapps the contcat proxy.
@@ -93,24 +139,46 @@ public class VotingDeployer {
 	 * @return the contract interface
 	 */
 	public Ballot createBallotProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
-		Ballot ballot = ethereum
-        .createContractProxy(contractSource, "Ballot", address, sender, Ballot.class);
+		CompiledContract compiledContract = null;
+		if (compiledContracts == null)
+			compiledContract = ethereum.compile(contractSource, "Ballot");
+		else {
+			ContractMetadata contractMetadata = compiledContracts.contracts.get("Ballot");
+			if (contractMetadata == null)
+				throw new IllegalArgumentException("Contract code for 'Ballot' not found");
+
+			compiledContract = CompiledContract.from(null, "Ballot", contractMetadata);
+		}
+		Ballot ballot = ethereum.createContractProxy(compiledContract, address, sender, Ballot.class);
 		return ballot;
 	}
 
 	/**
 	 * Deploys a 'BasicBallot' on the blockchain.
-	 *  
-	 * @param sender the sender address
+	 * 
+	 * @param sender
+	 *            the sender address
 	 * @param _registry 
 	 * @param _name 
 	 * @param _hash 
 	 * @return the address of the deployed contract
 	 */
 	public CompletableFuture<EthAddress> deployBasicBallot(EthAccount sender, String _registry, String _name, String _hash) {
-		CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "BasicBallot", sender, _registry, _name, _hash);
+		CompiledContract compiledContract = null;
+		if (compiledContracts == null)
+			compiledContract = ethereum.compile(contractSource, "BasicBallot");
+		else {
+			ContractMetadata contractMetadata = compiledContracts.contracts.get("BasicBallot");
+			if (contractMetadata == null)
+				throw new IllegalArgumentException("Contract code for Organ not found");
+
+			compiledContract = CompiledContract.from(null, "BasicBallot", contractMetadata);
+		}
+		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender, _registry, _name, _hash);
 		return address;
 	}
+
+
 
 	/**
 	 * Deploys a 'BasicBallot' on the blockchain and wrapps the contcat proxy.
@@ -134,21 +202,43 @@ public class VotingDeployer {
 	 * @return the contract interface
 	 */
 	public BasicBallot createBasicBallotProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
-		BasicBallot basicballot = ethereum
-        .createContractProxy(contractSource, "BasicBallot", address, sender, BasicBallot.class);
+		CompiledContract compiledContract = null;
+		if (compiledContracts == null)
+			compiledContract = ethereum.compile(contractSource, "BasicBallot");
+		else {
+			ContractMetadata contractMetadata = compiledContracts.contracts.get("BasicBallot");
+			if (contractMetadata == null)
+				throw new IllegalArgumentException("Contract code for 'BasicBallot' not found");
+
+			compiledContract = CompiledContract.from(null, "BasicBallot", contractMetadata);
+		}
+		BasicBallot basicballot = ethereum.createContractProxy(compiledContract, address, sender, BasicBallot.class);
 		return basicballot;
 	}
 
 	/**
 	 * Deploys a 'PublicBallot' on the blockchain.
-	 *  
-	 * @param sender the sender address
+	 * 
+	 * @param sender
+	 *            the sender address
 	 * @return the address of the deployed contract
 	 */
 	public CompletableFuture<EthAddress> deployPublicBallot(EthAccount sender) {
-		CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "PublicBallot", sender);
+		CompiledContract compiledContract = null;
+		if (compiledContracts == null)
+			compiledContract = ethereum.compile(contractSource, "PublicBallot");
+		else {
+			ContractMetadata contractMetadata = compiledContracts.contracts.get("PublicBallot");
+			if (contractMetadata == null)
+				throw new IllegalArgumentException("Contract code for 'PublicBallot' not found");
+
+			compiledContract = CompiledContract.from(null, "PublicBallot", contractMetadata);
+		}
+		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
 		return address;
 	}
+
+
 
 	/**
 	 * Deploys a 'PublicBallot' on the blockchain and wrapps the contcat proxy.
@@ -169,8 +259,17 @@ public class VotingDeployer {
 	 * @return the contract interface
 	 */
 	public PublicBallot createPublicBallotProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
-		PublicBallot publicballot = ethereum
-        .createContractProxy(contractSource, "PublicBallot", address, sender, PublicBallot.class);
+		CompiledContract compiledContract = null;
+		if (compiledContracts == null)
+			compiledContract = ethereum.compile(contractSource, "PublicBallot");
+		else {
+			ContractMetadata contractMetadata = compiledContracts.contracts.get("PublicBallot");
+			if (contractMetadata == null)
+				throw new IllegalArgumentException("Contract code for 'PublicBallot' not found");
+
+			compiledContract = CompiledContract.from(null, "PublicBallot", contractMetadata);
+		}
+		PublicBallot publicballot = ethereum.createContractProxy(compiledContract, address, sender, PublicBallot.class);
 		return publicballot;
 	}
 

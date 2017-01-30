@@ -4,7 +4,7 @@
 * Urs Zeidler
 *
 */
-pragma solidity ^0.4.0;
+pragma solidity ^0.4.1;
 /*
 * Collection of basic functionalities.
 */
@@ -78,10 +78,10 @@ contract Manageable {
 	mapping (address=>bool)public managers;
 	// Start of user code Manageable.attributes
 	// End of user code
-	  
+	
 	modifier onlyManager
 	{
-	    if (!managers[msg.sender]) throw;
+	    if (!canAccess()) throw;
 	    _;
 	}
 	

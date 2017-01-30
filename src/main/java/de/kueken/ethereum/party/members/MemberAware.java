@@ -17,7 +17,7 @@ public interface MemberAware{
 	String memberRegistry();
 
 
-	void setMemberRegistry (String aMemberRegistry);
+	java.util.concurrent.CompletableFuture<Void> setMemberRegistry (String aMemberRegistry);
 
 	//Start of user code additional_methods
 

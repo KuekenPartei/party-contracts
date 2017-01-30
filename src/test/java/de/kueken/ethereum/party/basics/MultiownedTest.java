@@ -14,11 +14,7 @@ import java.math.*;
 
 import org.adridadou.ethereum.EthereumFacade;
 import org.adridadou.ethereum.keystore.*;
-import org.adridadou.ethereum.provider.MainEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.RopstenEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.GenericRpcEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.StandaloneEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.TestnetEthereumFacadeProvider;
+import org.adridadou.ethereum.values.CompiledContract;
 import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
 import org.adridadou.ethereum.values.SoliditySource;
@@ -28,6 +24,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import de.kueken.ethereum.party.AbstractContractTest;
 import de.kueken.ethereum.party.EthereumInstance;
 
 // Start of user code MultiownedTest.customImports
@@ -39,25 +36,16 @@ import de.kueken.ethereum.party.EthereumInstance;
  * Test for the Multiowned contract.
  *
  */
-public class MultiownedTest{
-	private static EthereumFacade ethereum;
-	private static EthAccount sender;
+public class MultiownedTest extends AbstractContractTest{
 
 	private Multiowned fixture;
-	private EthAddress fixtureAddress;
-	private SoliditySource contractSource;
 	// Start of user code MultiownedTest.attributes
 	//TODO: implement
 	// End of user code
 
-	/**
-	 * Setup up the blockchain. Add the 'EthereumFacadeProvider' property to use 
-	 * another block chain implemenation or network.
-	 */
-	@BeforeClass
-	public static void setup() {
-		ethereum = EthereumInstance.getInstance().getEthereum();
-
+	@Override
+	protected String getContractName() {
+		return "Multiowned";
 	}
 
 	/**
@@ -80,18 +68,16 @@ public class MultiownedTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-        CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "Multiowned", sender);
+		CompiledContract compiledContract = ethereum.compile(contractSource, getContractName());
+		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
         fixtureAddress = address.get();
-        fixture = ethereum
-                .createContractProxy(contractSource, "Multiowned", address.get(), sender, Multiowned.class);
+		setFixture(ethereum.createContractProxy(compiledContract, fixtureAddress, sender, Multiowned.class));
 		//End of user code
 	}
 
 	protected void setFixture(Multiowned f) {
 		this.fixture = f;
 	}
-
-
 
 
 	/**

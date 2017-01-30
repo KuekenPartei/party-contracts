@@ -24,7 +24,7 @@ public interface Conference extends Organ{
 	Boolean managers(String key);
 
 	
-	void accreditationMember(String _address);
+	java.util.concurrent.CompletableFuture<Void> accreditationMember(String _address);
 
 	//Start of user code additional_methods
 

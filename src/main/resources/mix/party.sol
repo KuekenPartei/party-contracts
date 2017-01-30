@@ -4,13 +4,13 @@
 * Urs Zeidler
 *
 */
-pragma solidity ^0.4.0;
+pragma solidity ^0.4.1;
 
 import "./basics.sol";
 import "./members.sol";
 import "./publishing.sol";
 import "./voting.sol";
- 
+
 /*
 * An organ is part of the party, defined in the constitution.
 * It is populated by functions party members.
@@ -179,8 +179,8 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 		//End of user code
 	}
 	
-	// getOrganName
-	function getOrganName() returns(string) {
+	// getOrganName getter for the field organName
+	function getOrganName() constant returns(string) {
 		return organName;
 	}
 	// setOrganName
@@ -201,7 +201,7 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 /*
 * A basic party contract.
 */
-contract Party is Manageable { 
+contract Party is Manageable {
 
 	string public name;
 	MemberRegistry public memberRegistry;
@@ -222,21 +222,7 @@ contract Party is Manageable {
 	event OrganChanged(Organ _organ,uint _changeType);
 	
 	
-//	event DivisionChanged(address divisionAddress,address changer,uint state);
-	
-//	/*
-//	* Construct a new party or division.
-//	* 
-//	* _name -The name of the party or division.
-//	*/
-//	function Party() public  {
-//		//Start of user code Party.constructor.Party_string
-//	    managers[msg.sender] = true;
-//		mangerCount++;
-////		//End of user code
-//	}
-
-	
+	event DivisionChanged(address divisionAddress,address changer,uint state);
 	
 	
 	
@@ -244,7 +230,7 @@ contract Party is Manageable {
 		//Start of user code Party.function.createOrgan_string
 		Organ o = new Organ();
 		o.setOrganName(organName);
-//		blogregistry.addManager(o);
+		blogregistry.addManager(o);
 		o.setBlogRegistry(blogregistry);
 		o.setMemberRegistry(memberRegistry);	
 //		o.initalizeOrgan();	
@@ -263,7 +249,7 @@ contract Party is Manageable {
 	function addOrgan(address _organ) public  onlyManager()  {
 		//Start of user code Party.function.addOrgan_address
 		Organ o = Organ(_organ);
-		blogregistry.addManager(o);
+		blogregistry.addManager(_organ);
 		o.setBlogRegistry(blogregistry);
 		o.setMemberRegistry(memberRegistry);	
 		o.initalizeOrgan();	
@@ -309,8 +295,8 @@ contract Party is Manageable {
 		//End of user code
 	}
 	
-	// getMemberRegistry
-	function getMemberRegistry() returns(MemberRegistry) {
+	// getMemberRegistry getter for the field memberRegistry
+	function getMemberRegistry() constant returns(MemberRegistry) {
 		return memberRegistry;
 	}
 	// setMemberRegistry
@@ -328,8 +314,15 @@ contract Party is Manageable {
 	/**
 	*  setName
 	*/
-	function setName(string aName) public {
+	function setName(string aName) public onlyManager{
 		name = aName; 
+	}
+	
+	/**
+	*  setParent
+	*/
+	function setParent(address _parent) public onlyManager{
+		parent = Party(_parent); 
 	}
 	// End of user code
 }

@@ -36,7 +36,7 @@ public interface Multiowned{
 	* @param _owners -
 	* @param _required -
 	**/
-	void Multiowned(String[] _owners,Integer _required);
+	java.util.concurrent.CompletableFuture<Void> Multiowned(String[] _owners,Integer _required);
 	
 	java.util.concurrent.CompletableFuture<Boolean> isOwner(String _addr);
 	

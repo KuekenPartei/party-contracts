@@ -1,26 +1,36 @@
 package de.kueken.ethereum.party;
 
-//Start of user code customizedImports
+import static org.adridadou.ethereum.provider.PrivateNetworkConfig.config;
+
 
 import java.math.BigInteger;
+
+//Start of user code customizedImports
+
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.adridadou.ethereum.EthereumFacade;
-import org.adridadou.ethereum.provider.GenericRpcEthereumFacadeProvider;
+import org.adridadou.ethereum.blockchain.BlockchainConfig;
+import org.adridadou.ethereum.blockchain.BlockchainConfig.Builder;
+import org.adridadou.ethereum.converters.output.OutputTypeHandler;
+import org.adridadou.ethereum.provider.EthereumFacadeProvider;
+import org.adridadou.ethereum.provider.EthereumFacadeRpcProvider;
+import org.adridadou.ethereum.provider.EthereumJConfigs;
+import org.adridadou.ethereum.provider.InfuraMainEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.InfuraRopstenEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.MainEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.PrivateEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.PrivateNetworkConfig;
-import org.adridadou.ethereum.provider.RopstenEthereumFacadeProvider;
 import org.adridadou.ethereum.provider.StandaloneEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.TestnetEthereumFacadeProvider;
 import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
 import org.adridadou.ethereum.values.EthValue;
 import org.adridadou.ethereum.values.config.ChainId;
 import org.adridadou.ethereum.values.config.InfuraKey;
 import org.ethereum.crypto.ECKey;
+
+import com.google.common.collect.Lists;
+
 
 //End of user code
 
@@ -38,12 +48,12 @@ public class EthereumInstance{
 
 	public static class DeployDuo<C>{
 		public EthAddress contractAddress;
-		public C constractInstance;
+		public C contractInstance;
 		
-		public DeployDuo(EthAddress contractAddress, C constractInstance) {
+		public DeployDuo(EthAddress contractAddress, C contractInstance) {
 			super();
 			this.contractAddress = contractAddress;
-			this.constractInstance = constractInstance;
+			this.contractInstance = contractInstance;
 		}
 	}
 
@@ -64,6 +74,7 @@ public class EthereumInstance{
 		try {
 			if (instance == null) {
 				instance = new EthereumInstance();
+//				instance.getEthereum().addOutputHandlers(Lists.asList(new OutputTypeHandler()));
 			}
 		} finally {
 			instanceLock.unlock();
@@ -88,31 +99,53 @@ public class EthereumInstance{
 		String property = System.getProperty("EthereumFacadeProvider");
 		if(property!=null){
 			if (property.equalsIgnoreCase("main")) {
-				ethereum = new MainEthereumFacadeProvider().create();
+				Builder mainNet = EthereumJConfigs.mainNet();				
+				//Start of user code for setup the main chain
+				//End of user code
+				ethereum = EthereumFacadeProvider.forNetwork(mainNet).create();
 			}else if (property.equalsIgnoreCase("test")) {
-				ethereum = new TestnetEthereumFacadeProvider().create();
+				Builder testnet = EthereumJConfigs.etherCampTestnet();
+				//Start of user code for setup the test chain
+				//End of user code
+				ethereum = EthereumFacadeProvider.forNetwork(testnet).create();
 			}else if (property.equalsIgnoreCase("ropsten")) {
-				ethereum = new RopstenEthereumFacadeProvider().create();
+				Builder ropsten = EthereumJConfigs.ropsten();
+				//Start of user code for setup the ropsten chain
+				
+				//End of user code
+				ethereum = EthereumFacadeProvider.forNetwork(ropsten).create();
 			}else if (property.equalsIgnoreCase("InfuraRopsten")) {
-				InfuraRopstenEthereumFacadeProvider ethereumFacadeProvider = new InfuraRopstenEthereumFacadeProvider();
 				String apiKey = System.getProperty("apiKey");
-				ethereum = ethereumFacadeProvider.create(new InfuraKey(apiKey));
+				ethereum = InfuraRopstenEthereumFacadeProvider.create(new InfuraKey(apiKey));
+			}else if (property.equalsIgnoreCase("InfuraMain")) {
+				String apiKey = System.getProperty("apiKey");
+				ethereum = new InfuraMainEthereumFacadeProvider().create(new InfuraKey(apiKey));
 			}else if (property.equalsIgnoreCase("rpc")) {
-				GenericRpcEthereumFacadeProvider rcp = new GenericRpcEthereumFacadeProvider();
+				EthereumFacadeRpcProvider rcp = new EthereumFacadeRpcProvider();
 				String url = System.getProperty("rpc-url");
 				String chainId = System.getProperty("chain-id");
 				ethereum = rcp.create(url, new ChainId((byte) Integer.parseInt(chainId)));
 			}else if (property.equalsIgnoreCase("private")){
-				PrivateEthereumFacadeProvider provider = new PrivateEthereumFacadeProvider();
-				PrivateNetworkConfig config = PrivateNetworkConfig.config();
-				//Start of user code setup the chain
-				config.reset(true);
-				config.initialBalance(new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100000L))), EthValue.ether(10));
+				PrivateNetworkConfig config = config();
+				//Start of user code for setup the private chain
+//				sender = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100000L)));
+				config
+                .reset(true)
+                .initialBalance(new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100000L))), EthValue.ether(10L))
+                ;
+				
+//                .initialBalance(mainAccount, ether(10));
 				//End of user code
-				ethereum = provider.create(config);
+				ethereum = new PrivateEthereumFacadeProvider().create(config);
+			}else if (property.equalsIgnoreCase("custom")){
+				Builder config = BlockchainConfig.builder();
+				//Start of user code for setup the custom chain
+				//End of user code
+				ethereum = EthereumFacadeProvider.forNetwork(config).create();
 			}
-		}else{
-			ethereum = new StandaloneEthereumFacadeProvider().create();
+		}
+		if(ethereum==null){
+			ethereum = StandaloneEthereumFacadeProvider.create();
 		}
 	}
 

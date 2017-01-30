@@ -4,7 +4,7 @@
 * Urs Zeidler
 *
 */
-pragma solidity ^0.4.0;
+pragma solidity ^0.4.1;
 /*
 * (c) Urs Zeidler 2016
 * Contains the member contracts.

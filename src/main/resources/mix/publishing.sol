@@ -4,7 +4,7 @@
 * Urs Zeidler
 *
 */
-pragma solidity ^0.4.0;
+pragma solidity ^0.4.1;
 
 import "./basics.sol";
 

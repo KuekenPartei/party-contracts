@@ -15,11 +15,7 @@ import java.math.*;
 
 import org.adridadou.ethereum.EthereumFacade;
 import org.adridadou.ethereum.keystore.*;
-import org.adridadou.ethereum.provider.MainEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.RopstenEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.GenericRpcEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.StandaloneEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.TestnetEthereumFacadeProvider;
+import org.adridadou.ethereum.values.CompiledContract;
 import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
 import org.adridadou.ethereum.values.SoliditySource;
@@ -29,6 +25,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import de.kueken.ethereum.party.AbstractContractTest;
 import de.kueken.ethereum.party.EthereumInstance;
 
 // Start of user code MemberRegistryTest.customImports
@@ -41,24 +38,15 @@ import de.kueken.ethereum.party.EthereumInstance;
  *
  */
 public class MemberRegistryTest extends ManageableTest{
-//	private static EthereumFacade ethereum;
-//	private static EthAccount sender;
 
 	private MemberRegistry fixture;
-//	private EthAddress fixtureAddress;
-//	private SoliditySource contractSource;
 	// Start of user code MemberRegistryTest.attributes
 	private String senderAddressS = "5db10750e8caff27f906b41c71b3471057dd2004";
 	// End of user code
 
-	/**
-	 * Setup up the blockchain. Add the 'EthereumFacadeProvider' property to use 
-	 * another block chain implemenation or network.
-	 */
-	@BeforeClass
-	public static void setup() {
-		ethereum = EthereumInstance.getInstance().getEthereum();
-
+	@Override
+	protected String getContractName() {
+		return "MemberRegistry";
 	}
 
 	/**
@@ -101,19 +89,17 @@ public class MemberRegistryTest extends ManageableTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-		CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "MemberRegistry", sender);
-		fixtureAddress = address.get();
-		setFixture(ethereum.createContractProxy(contractSource, "MemberRegistry", address.get(), sender,
-				MemberRegistry.class));
-		// End of user code
+		CompiledContract compiledContract = ethereum.compile(contractSource, getContractName());
+		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
+        fixtureAddress = address.get();
+		setFixture(ethereum.createContractProxy(compiledContract, fixtureAddress, sender, MemberRegistry.class));
+		//End of user code
 	}
 
 	protected void setFixture(MemberRegistry f) {
 		this.fixture = f;
 		super.setFixture(f);
 	}
-
-
 
 
 	/**
@@ -253,7 +239,7 @@ public class MemberRegistryTest extends ManageableTest{
 		// End of user code
 	}
 	//Start of user code customTests
-	@Override
+	
 	public void testConstructor() throws Exception {
 		assertEquals(0, fixture.activeMemberCount().intValue());
 		assertEquals(0, fixture.partyMemberCount().intValue());

@@ -37,7 +37,7 @@ public interface Organ extends Manageable,MemberAware{
 	* @param hash -The hash of the message.
 	* @param er -The external resource of the message.
 	**/
-	void publishMessage(String message,String hash,String er);
+	java.util.concurrent.CompletableFuture<Void> publishMessage(String message,String hash,String er);
 
 	/**
 	* Change the member of the function.
@@ -45,16 +45,16 @@ public interface Organ extends Manageable,MemberAware{
 	* @param _id -
 	* @param _address -
 	**/
-	void changeMember(Integer _id,String _address);
+	java.util.concurrent.CompletableFuture<Void> changeMember(Integer _id,String _address);
 	/**
 	* Create a function of this organ.
 	* 
 	* @param _functionName -The name of the organ function.
 	* @param _constittiutionHash -
 	**/
-	void createFunction(String _functionName,String _constittiutionHash);
+	java.util.concurrent.CompletableFuture<Void> createFunction(String _functionName,String _constittiutionHash);
 	
-	void initalizeOrgan();
+	java.util.concurrent.CompletableFuture<Void> initalizeOrgan();
 	/**
 	* Publish a message at a function blog.
 	* 
@@ -63,7 +63,7 @@ public interface Organ extends Manageable,MemberAware{
 	* @param hash -
 	* @param er -
 	**/
-	void publishFunctionMessage(Integer id,String message,String hash,String er);
+	java.util.concurrent.CompletableFuture<Void> publishFunctionMessage(Integer id,String message,String hash,String er);
 	/**
 	* Creates a new ballot for this organ.
 	* 
@@ -78,15 +78,15 @@ public interface Organ extends Manageable,MemberAware{
 	
 	String getOrganBlog();
 	
-	void addOrganFunction(String _of,String _name);
+	java.util.concurrent.CompletableFuture<Void> addOrganFunction(String _of,String _name);
 	
 	String getOrganFunction(Integer _id);
 
 	String getOrganName();
 
-	void setOrganName (String aOrganName);
+	java.util.concurrent.CompletableFuture<Void> setOrganName (String aOrganName);
 
-	void setBlogRegistry (String aBlogRegistry);
+	java.util.concurrent.CompletableFuture<Void> setBlogRegistry (String aBlogRegistry);
 
 	//Start of user code additional_methods
 	//End of user code

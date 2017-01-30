@@ -7,11 +7,12 @@ if (contracts===undefined) {
 	contracts['Organ'] = {};
 	contracts['KUEKeNParty'] = {};
 	
-	contracts['BlogRegistry'].address = "0x53c41987f5eee9b43f4bdccf4b93fd28bd71ae17";
-	contracts['MemberRegistry'].address = "0x9c479c9858efc4a27d395cd8f57f110930802be6";
-	contracts['FoundationConference'].address = "0x139d97c582d5ddd7f7f279737e6b50cf17fbf5ba";
-	contracts['Organ'].address = "0x336251ff8dc29a3716a8804cecea89928b18ad57";
-	contracts['KUEKeNParty'].address = "0xdc11a1c77ef071e050a798654e363f1e229a08f6";
+	contracts = {};
+	contracts['BlogRegistry'].address = "0xd7e3649d79346758cc13df39cbb7df963d9ac78f";
+	contracts['MemberRegistry'].address = "0x804e378522da3b8af8c9d483ed25f8585819e5f5";
+	contracts['FoundationConference'].address = "0x7207ced184dfb1f3c237687cd98f422bb07febdf";
+	contracts['Organ'].address = "0xb869a8a6143d0a3e5fe4bcb3e1a5e2897584aca4";
+	contracts['KUEKeNParty'].address = "0xe146a805b81c10024deea79c472b09ddcd49c886";
 	
 	
 	// init the contracts

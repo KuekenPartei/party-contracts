@@ -14,3 +14,10 @@ Sun Dec 11 17:45:12 CET 2016
 Start of user code KUEKeNParty.constructor.KUEKeNParty
 		//TODO: implement
 		//End of user code
+
+Thu Jan 26 23:28:28 CET 2017
+================================================================================
+Start of user code Party.constructor.Party_string
+//	    managers[msg.sender] = true;
+//		mangerCount++;
+////		//End of user code

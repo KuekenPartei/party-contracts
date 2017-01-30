@@ -31,11 +31,11 @@ public interface BasicBallot{
 	String ballotHash();
 
 	
-	void addProposal(String _name,String _hash,String _url,String _member);
+	java.util.concurrent.CompletableFuture<Void> addProposal(String _name,String _hash,String _url,String _member);
 	
-	void castVote(Integer _voteFor);
+	java.util.concurrent.CompletableFuture<Void> castVote(Integer _voteFor);
 	
-	void startBallot();
+	java.util.concurrent.CompletableFuture<Void> startBallot();
 
 	//Start of user code additional_methods
 

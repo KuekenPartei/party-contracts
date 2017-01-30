@@ -19,13 +19,13 @@ public interface Ballot{
 	String ballotName();
 
 	
-	void Ballot(String name,Byte[][] proposalNames);
+	java.util.concurrent.CompletableFuture<Void> Ballot(String name,Byte[][] proposalNames);
 	
-	void giveRightToVote(String voter);
+	java.util.concurrent.CompletableFuture<Void> giveRightToVote(String voter);
 	
-	void delegateTo(String to);
+	java.util.concurrent.CompletableFuture<Void> delegateTo(String to);
 	
-	void voteFor(Integer proposal);
+	java.util.concurrent.CompletableFuture<Void> voteFor(Integer proposal);
 	
 	java.util.concurrent.CompletableFuture<Integer> winningProposal();
 

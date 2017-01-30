@@ -15,11 +15,7 @@ import java.math.*;
 
 import org.adridadou.ethereum.EthereumFacade;
 import org.adridadou.ethereum.keystore.*;
-import org.adridadou.ethereum.provider.MainEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.RopstenEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.GenericRpcEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.StandaloneEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.TestnetEthereumFacadeProvider;
+import org.adridadou.ethereum.values.CompiledContract;
 import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
 import org.adridadou.ethereum.values.SoliditySource;
@@ -29,6 +25,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import de.kueken.ethereum.party.AbstractContractTest;
 import de.kueken.ethereum.party.EthereumInstance;
 
 // Start of user code ShortBlogTest.customImports
@@ -42,24 +39,15 @@ import org.adridadou.exception.EthereumApiException;
  *
  */
 public class ShortBlogTest extends ManageableTest{
-	private static EthereumFacade ethereum;
-	private static EthAccount sender;
 
 	private ShortBlog fixture;
-	private EthAddress fixtureAddress;
-	private SoliditySource contractSource;
 	// Start of user code ShortBlogTest.attributes
 	private String senderAddressS = "5db10750e8caff27f906b41c71b3471057dd2004";
 	// End of user code
 
-	/**
-	 * Setup up the blockchain. Add the 'EthereumFacadeProvider' property to use 
-	 * another block chain implemenation or network.
-	 */
-	@BeforeClass
-	public static void setup() {
-		ethereum = EthereumInstance.getInstance().getEthereum();
-
+	@Override
+	protected String getContractName() {
+		return "ShortBlog";
 	}
 
 	/**
@@ -69,11 +57,10 @@ public class ShortBlogTest extends ManageableTest{
 	@Before
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
-
-		File contractSrc = new File(this.getClass().getResource("/mix/combine.json").toURI());
-		contractSource = SoliditySource.fromRawJson(contractSrc);
+        File contractSrc = new File(this.getClass().getResource("/mix/publishing.sol").toURI());
+        contractSource = SoliditySource.from(contractSrc);
 		createFixture();
-		// End of user code
+		//End of user code
 	}
 
 
@@ -83,35 +70,19 @@ public class ShortBlogTest extends ManageableTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
+		CompiledContract compiledContract = ethereum.compile(contractSource, getContractName());
+		//TODO: set the constructor args
 		String _name = "_name";
-
-		CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "ShortBlog", sender, _name);
-		fixtureAddress = address.get();
-		setFixture(ethereum.createContractProxy(contractSource, "ShortBlog", address.get(), sender, ShortBlog.class));
-		// End of user code
+        CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender
+				, _name);
+        fixtureAddress = address.get();
+		setFixture(ethereum.createContractProxy(compiledContract, fixtureAddress, sender, ShortBlog.class));
+		//End of user code
 	}
 
 	protected void setFixture(ShortBlog f) {
 		this.fixture = f;
 		super.setFixture(f);
-	}
-
-
-	/**
-	 * Test the constructor for the ShortBlog contract.
-	 * @throws Exception
-	 */
-	@Test
-	public void testConstructor_string() throws Exception {
-		//Start of user code testConstructor_string
-		String _name = "_name";
-
-		CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "ShortBlog", sender, _name);
-		fixture = ethereum.createContractProxy(contractSource, "ShortBlog", address.get(), sender, ShortBlog.class);
-
-		assertEquals(_name, fixture.name());
-		assertEquals(0, fixture.messageCount().intValue());
-		// End of user code
 	}
 
 

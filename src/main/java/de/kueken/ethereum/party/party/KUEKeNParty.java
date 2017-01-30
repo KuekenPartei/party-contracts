@@ -25,7 +25,7 @@ public interface KUEKeNParty extends Party{
 	String subDivisions(Integer key);	
 
 	
-	void boostrapParty(String fc,String br);
+	java.util.concurrent.CompletableFuture<Void> boostrapParty(String fc,String br);
 
 	//Start of user code additional_methods
 

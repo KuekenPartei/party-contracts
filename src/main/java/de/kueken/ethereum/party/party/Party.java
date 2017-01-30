@@ -38,13 +38,13 @@ public interface Party extends Manageable{
 	String subDivisions(Integer key);	
 
 	
-	void createOrgan(String organName);
+	java.util.concurrent.CompletableFuture<Void> createOrgan(String organName);
 	/**
 	* Adds an organ to the party.
 	* 
 	* @param _organ -
 	**/
-	void addOrgan(String _organ);
+	java.util.concurrent.CompletableFuture<Void> addOrgan(String _organ);
 	/**
 	* Add a subdivision of this party, the contrains are:
 	* the party must be a mananger of the subdivision
@@ -53,17 +53,18 @@ public interface Party extends Manageable{
 	* 
 	* @param _subDivision -
 	**/
-	void addSubDivision(String _subDivision);
+	java.util.concurrent.CompletableFuture<Void> addSubDivision(String _subDivision);
 	
-	void removeSubDivision(Integer _divisionId);
+	java.util.concurrent.CompletableFuture<Void> removeSubDivision(Integer _divisionId);
 
 	String getMemberRegistry();
 
-	void setMemberRegistry (String aMemberRegistry);
+	java.util.concurrent.CompletableFuture<Void> setMemberRegistry (String aMemberRegistry);
 
-	void setBlogregistry (String aBlogregistry);
+	java.util.concurrent.CompletableFuture<Void> setBlogregistry (String aBlogregistry);
 
 	//Start of user code additional_methods
-	void setName(String aName);
+	java.util.concurrent.CompletableFuture<Void> setName(String aName);
+	java.util.concurrent.CompletableFuture<Void> setParent(String aName);
 	//End of user code
 }

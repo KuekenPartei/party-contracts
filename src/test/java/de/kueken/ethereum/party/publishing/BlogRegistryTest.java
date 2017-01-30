@@ -15,11 +15,7 @@ import java.math.*;
 
 import org.adridadou.ethereum.EthereumFacade;
 import org.adridadou.ethereum.keystore.*;
-import org.adridadou.ethereum.provider.MainEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.RopstenEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.GenericRpcEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.StandaloneEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.TestnetEthereumFacadeProvider;
+import org.adridadou.ethereum.values.CompiledContract;
 import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
 import org.adridadou.ethereum.values.SoliditySource;
@@ -29,6 +25,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import de.kueken.ethereum.party.AbstractContractTest;
 import de.kueken.ethereum.party.EthereumInstance;
 
 // Start of user code BlogRegistryTest.customImports
@@ -44,24 +41,15 @@ import de.kueken.ethereum.party.deployer.PublishingDeployer;
  *
  */
 public class BlogRegistryTest extends ManageableTest{
-	private static EthereumFacade ethereum;
-	private static EthAccount sender;
 
 	private BlogRegistry fixture;
-	private EthAddress fixtureAddress;
-	private SoliditySource contractSource;
 	// Start of user code BlogRegistryTest.attributes
 	private PublishingDeployer publishingDeployer;
 	// End of user code
 
-	/**
-	 * Setup up the blockchain. Add the 'EthereumFacadeProvider' property to use 
-	 * another block chain implemenation or network.
-	 */
-	@BeforeClass
-	public static void setup() {
-		ethereum = EthereumInstance.getInstance().getEthereum();
-
+	@Override
+	protected String getContractName() {
+		return "BlogRegistry";
 	}
 
 	/**
@@ -72,10 +60,10 @@ public class BlogRegistryTest extends ManageableTest{
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
 
-		publishingDeployer = new PublishingDeployer(ethereum,"/mix/combine.json",false);
+		publishingDeployer = new PublishingDeployer(ethereum,"/mix/combine.json",true);
 		
 		File contractSrc = new File(this.getClass().getResource("/mix/combine.json").toURI());
-		contractSource = SoliditySource.fromRawJson(contractSrc);
+//		contractSource = SoliditySource.fromRawJson(contractSrc);
         createFixture();
 		//End of user code
 	}
@@ -87,11 +75,10 @@ public class BlogRegistryTest extends ManageableTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-		
-        CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "BlogRegistry", sender);
+		CompiledContract compiledContract = ethereum.compile(contractSource, getContractName());
+		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
         fixtureAddress = address.get();
-        setFixture(ethereum
-                .createContractProxy(contractSource, "BlogRegistry", address.get(), sender, BlogRegistry.class));
+		setFixture(ethereum.createContractProxy(compiledContract, fixtureAddress, sender, BlogRegistry.class));
 		//End of user code
 	}
 
@@ -99,8 +86,6 @@ public class BlogRegistryTest extends ManageableTest{
 		this.fixture = f;
 		super.setFixture(f);
 	}
-
-
 
 
 	/**

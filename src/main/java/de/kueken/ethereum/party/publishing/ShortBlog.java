@@ -29,7 +29,7 @@ public interface ShortBlog extends Manageable{
 	* @param hash -The hash of the external source.
 	* @param er -The link to the message.
 	**/
-	void sendMessage(String message,String hash,String er);
+	java.util.concurrent.CompletableFuture<Void> sendMessage(String message,String hash,String er);
 
 	//Start of user code additional_methods
 

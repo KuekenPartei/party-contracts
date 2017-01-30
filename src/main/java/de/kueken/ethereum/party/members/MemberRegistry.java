@@ -49,13 +49,13 @@ public interface MemberRegistry extends Manageable{
 	* @param name -
 	* @param _memberAddress -
 	**/
-	void addMember(String name,String _memberAddress);
+	java.util.concurrent.CompletableFuture<Void> addMember(String name,String _memberAddress);
 	/**
 	* set the memberstate to inactive
 	* 
 	* @param id -
 	**/
-	void unregisterMember(Integer id);
+	java.util.concurrent.CompletableFuture<Void> unregisterMember(Integer id);
 	/**
 	* Check if the given adress is a registed active member.
 	* 
@@ -70,11 +70,11 @@ public interface MemberRegistry extends Manageable{
 	* @param id -
 	* @param _newMemberAddress -
 	**/
-	void changeMemberAddress(Integer id,String _newMemberAddress);
+	java.util.concurrent.CompletableFuture<Void> changeMemberAddress(Integer id,String _newMemberAddress);
 	
 	ReturnGetMemberData_string_uint getMemberData(String _address);
 	
-	void publishMemberEvent(String mAddress,Integer eventType);
+	java.util.concurrent.CompletableFuture<Void> publishMemberEvent(String mAddress,Integer eventType);
 
 	//Start of user code additional_methods
 

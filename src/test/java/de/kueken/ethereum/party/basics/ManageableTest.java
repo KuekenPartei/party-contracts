@@ -14,11 +14,7 @@ import java.math.*;
 
 import org.adridadou.ethereum.EthereumFacade;
 import org.adridadou.ethereum.keystore.*;
-import org.adridadou.ethereum.provider.MainEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.RopstenEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.GenericRpcEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.StandaloneEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.TestnetEthereumFacadeProvider;
+import org.adridadou.ethereum.values.CompiledContract;
 import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
 import org.adridadou.ethereum.values.SoliditySource;
@@ -41,25 +37,16 @@ import de.kueken.ethereum.party.EthereumInstance;
  *
  */
 public class ManageableTest extends AbstractContractTest{
-//	private static EthereumFacade ethereum;
-//	private static EthAccount sender;
 
 	private Manageable fixture;
-	
-//	private SoliditySource contractSource;
 	// Start of user code ManageableTest.attributes
 	private String senderAddressS = "5db10750e8caff27f906b41c71b3471057dd2004";
 	// End of user code
 
-//	/**
-//	 * Setup up the blockchain. Add the 'EthereumFacadeProvider' property to use 
-//	 * another block chain implemenation or network.
-//	 */
-//	@BeforeClass
-//	public static void setup() {
-//		ethereum = EthereumInstance.getInstance().getEthereum();
-//
-//	}
+	@Override
+	protected String getContractName() {
+		return "Manageable";
+	}
 
 	/**
 	 * Read the contract from the file and deploys the contract code.
@@ -84,38 +71,15 @@ public class ManageableTest extends AbstractContractTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-		//TODO: set the constructor args
-
-        CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "Manageable", sender
-				);
+		CompiledContract compiledContract = ethereum.compile(contractSource, getContractName());
+		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
         fixtureAddress = address.get();
-        setFixture(ethereum
-                .createContractProxy(contractSource, "Manageable", address.get(), sender, Manageable.class));
+		setFixture(ethereum.createContractProxy(compiledContract, fixtureAddress, sender, Manageable.class));
 		//End of user code
 	}
 
 	protected void setFixture(Manageable f) {
 		this.fixture = f;
-	}
-
-
-	/**
-	 * Test the constructor for the Manageable contract.
-	 * @throws Exception
-	 */
-	@Test
-	public void testConstructor() throws Exception {
-		//Start of user code testConstructor
-		if(contractSource==null)
-			return;
-        CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "Manageable", sender
-				);
-        fixture = ethereum
-                .createContractProxy(contractSource, "Manageable", address.get(), sender, Manageable.class);
-
-		assertEquals(1, fixture.mangerCount().intValue());
-		assertTrue(fixture.isManager(senderAddressS));
-		//End of user code
 	}
 
 
@@ -131,7 +95,7 @@ public class ManageableTest extends AbstractContractTest{
 		assertEquals(1,fixture.mangerCount().intValue());
 		
 		EthAddress ethAddress = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L))).getAddress();
-		fixture.addManager(ethAddress.toString());
+		fixture.addManager(ethAddress.toString()).get();
 		assertEquals(2,fixture.mangerCount().intValue());
 		
 		
@@ -147,12 +111,12 @@ public class ManageableTest extends AbstractContractTest{
 		//Start of user code testRemoveManager_address
 		assertEquals(1, fixture.mangerCount().intValue());
 		EthAddress ethAddress = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L))).getAddress();
-		fixture.addManager(ethAddress.withLeading0x());
+		fixture.addManager(ethAddress.withLeading0x()).get();
 		assertEquals(2, fixture.mangerCount().intValue());
 		
 		assertTrue(fixture.isManager(ethAddress.withLeading0x()));
 		
-		fixture.removeManager(ethAddress.withLeading0x());
+		fixture.removeManager(ethAddress.withLeading0x()).get();
 		assertEquals(1, fixture.mangerCount().intValue());
 		assertFalse(fixture.isManager(ethAddress.withLeading0x()));
 		
@@ -168,7 +132,7 @@ public class ManageableTest extends AbstractContractTest{
 		//Start of user code testIsManager_address
 //		createFixture();
 		EthAddress ethAddress = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L))).getAddress();
-		fixture.addManager(ethAddress.toString());
+		fixture.addManager(ethAddress.toString()).get();
 		
 		assertTrue(fixture.isManager(ethAddress.toString()));
 		//End of user code

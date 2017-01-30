@@ -42,14 +42,14 @@ public interface OrganFunction extends Manageable{
 	* @param hash -The hash of the message.
 	* @param er -The external resource of the message.
 	**/
-	void publishMessage(String message,String hash,String er);
+	java.util.concurrent.CompletableFuture<Void> publishMessage(String message,String hash,String er);
 
 	
 	String getFunctioName();
 
-	void setCurrentMember (String aCurrentMember);
+	java.util.concurrent.CompletableFuture<Void> setCurrentMember (String aCurrentMember);
 
-	void setPublisher (String aPublisher);
+	java.util.concurrent.CompletableFuture<Void> setPublisher (String aPublisher);
 
 	//Start of user code additional_methods
 

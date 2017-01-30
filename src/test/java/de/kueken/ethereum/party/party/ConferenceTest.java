@@ -3,8 +3,6 @@ package de.kueken.ethereum.party.party;
 import static org.junit.Assert.*;
 
 import de.kueken.ethereum.party.basics.*;
-import de.kueken.ethereum.party.deployer.PartyDeployer;
-import de.kueken.ethereum.party.deployer.PublishingDeployer;
 import de.kueken.ethereum.party.members.*;
 import de.kueken.ethereum.party.publishing.*;
 import de.kueken.ethereum.party.voting.*;
@@ -20,11 +18,7 @@ import java.math.*;
 
 import org.adridadou.ethereum.EthereumFacade;
 import org.adridadou.ethereum.keystore.*;
-import org.adridadou.ethereum.provider.MainEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.RopstenEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.GenericRpcEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.StandaloneEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.TestnetEthereumFacadeProvider;
+import org.adridadou.ethereum.values.CompiledContract;
 import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
 import org.adridadou.ethereum.values.SoliditySource;
@@ -33,8 +27,8 @@ import org.ethereum.crypto.ECKey;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.spongycastle.util.encoders.Hex;
 
+import de.kueken.ethereum.party.AbstractContractTest;
 import de.kueken.ethereum.party.EthereumInstance;
 
 // Start of user code ConferenceTest.customImports
@@ -47,25 +41,16 @@ import de.kueken.ethereum.party.EthereumInstance;
  *
  */
 public class ConferenceTest extends OrganTest{
-//	private static EthereumFacade ethereum;
-//	private static EthAccount sender;
 
 	private Conference fixture;
-//	private EthAddress fixtureAddress;
-//	private SoliditySource contractSource;
 	// Start of user code ConferenceTest.attributes
 	//TODO: implement
 	// End of user code
 
-//	/**
-//	 * Setup up the blockchain. Add the 'EthereumFacadeProvider' property to use 
-//	 * another block chain implemenation or network.
-//	 */
-//	@BeforeClass
-//	public static void setup() {
-//		ethereum = EthereumInstance.getInstance().getEthereum();
-//
-//	}
+	@Override
+	protected String getContractName() {
+		return "Conference";
+	}
 
 	/**
 	 * Read the contract from the file and deploys the contract code.
@@ -101,10 +86,11 @@ super.prepareTest();
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-        CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "Conference", sender);
+//		CompiledContract compiledContract = ethereum.compile(contractSource, getContractName());
+		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
+		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
         fixtureAddress = address.get();
-        setFixture(ethereum
-                .createContractProxy(contractSource, "Conference", address.get(), sender, Conference.class));
+		setFixture(ethereum.createContractProxy(compiledContract, fixtureAddress, sender, Conference.class));
 		//End of user code
 	}
 
@@ -112,8 +98,6 @@ super.prepareTest();
 		this.fixture = f;
 		super.setFixture(f);
 	}
-
-
 
 
 	/**

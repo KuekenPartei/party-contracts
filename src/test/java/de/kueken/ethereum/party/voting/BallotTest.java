@@ -15,11 +15,7 @@ import java.math.*;
 
 import org.adridadou.ethereum.EthereumFacade;
 import org.adridadou.ethereum.keystore.*;
-import org.adridadou.ethereum.provider.MainEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.RopstenEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.GenericRpcEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.StandaloneEthereumFacadeProvider;
-import org.adridadou.ethereum.provider.TestnetEthereumFacadeProvider;
+import org.adridadou.ethereum.values.CompiledContract;
 import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
 import org.adridadou.ethereum.values.SoliditySource;
@@ -29,6 +25,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import de.kueken.ethereum.party.AbstractContractTest;
 import de.kueken.ethereum.party.EthereumInstance;
 
 // Start of user code BallotTest.customImports
@@ -40,25 +37,16 @@ import de.kueken.ethereum.party.EthereumInstance;
  * Test for the Ballot contract.
  *
  */
-public class BallotTest{
-	private static EthereumFacade ethereum;
-	private static EthAccount sender;
+public class BallotTest extends AbstractContractTest{
 
 	private Ballot fixture;
-	private EthAddress fixtureAddress;
-	private SoliditySource contractSource;
 	// Start of user code BallotTest.attributes
 	//TODO: implement
 	// End of user code
 
-	/**
-	 * Setup up the blockchain. Add the 'EthereumFacadeProvider' property to use 
-	 * another block chain implemenation or network.
-	 */
-	@BeforeClass
-	public static void setup() {
-		ethereum = EthereumInstance.getInstance().getEthereum();
-
+	@Override
+	protected String getContractName() {
+		return "Ballot";
 	}
 
 	/**
@@ -81,18 +69,16 @@ public class BallotTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-        CompletableFuture<EthAddress> address = ethereum.publishContract(contractSource, "Ballot", sender);
+		CompiledContract compiledContract = ethereum.compile(contractSource, getContractName());
+		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
         fixtureAddress = address.get();
-        fixture = ethereum
-                .createContractProxy(contractSource, "Ballot", address.get(), sender, Ballot.class);
+		setFixture(ethereum.createContractProxy(compiledContract, fixtureAddress, sender, Ballot.class));
 		//End of user code
 	}
 
 	protected void setFixture(Ballot f) {
 		this.fixture = f;
 	}
-
-
 
 
 	/**

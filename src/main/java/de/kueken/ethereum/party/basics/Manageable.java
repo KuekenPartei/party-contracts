@@ -20,9 +20,9 @@ public interface Manageable{
 	Boolean managers(String key);
 
 	
-	void addManager(String _newManagerAddress);
+	java.util.concurrent.CompletableFuture<Void> addManager(String _newManagerAddress);
 	
-	void removeManager(String _managerAddress);
+	java.util.concurrent.CompletableFuture<Void> removeManager(String _managerAddress);
 	
 	Boolean isManager(String _managerAddress);
 
