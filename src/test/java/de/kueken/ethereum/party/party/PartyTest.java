@@ -39,6 +39,8 @@ import de.kueken.ethereum.party.deployer.PublishingDeployer;
 import java.io.IOException;
 import org.spongycastle.util.encoders.Hex;
 
+import com.fasterxml.jackson.core.sym.Name;
+
 // End of user code
 
 
@@ -95,7 +97,6 @@ public class PartyTest extends ManageableTest{
 		partyDeployer = new PartyDeployer(ethereum,"/mix/combine.json",true);
 		membersDeployer = new MembersDeployer(ethereum, "/mix/combine.json",true);
 		publishingDeployer = new PublishingDeployer(ethereum,"/mix/combine.json",true);
-
         
         createFixture();
 		//End of user code
@@ -137,22 +138,22 @@ public class PartyTest extends ManageableTest{
 		String organName = "organ name";
 		fixture.createOrgan(organName).get();
 		assertEquals(1, fixture.organCount().intValue());
-		String organAd = fixture.organs(0);
+		EthAddress organAd = fixture.organs(0);
 		System.out.println(organAd);
 		
 		
-		Organ organ = partyDeployer.createOrganProxy(sender, EthAddress.of(organAd));
+		Organ organ = partyDeployer.createOrganProxy(sender, organAd);
 		assertEquals(organName, organ.organName());
 		
-		assertTrue(organ.isManager(fixtureAddress.withLeading0x()));
+		assertTrue(organ.isManager(fixtureAddress));
 //		assertTrue(organ.isManager(sender.getAddress().withLeading0x()));
 		
 		
 		//End of user code
 	}
 	/**
-	 * Test method for  addOrgan(String _organ).
-	 * see {@link Party#addOrgan( String)}
+	 * Test method for  addOrgan(org.adridadou.ethereum.values.EthAddress _organ).
+	 * see {@link Party#addOrgan( org.adridadou.ethereum.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test
@@ -171,7 +172,7 @@ public class PartyTest extends ManageableTest{
 		Organ organ = partyDeployer.createOrganProxy(sender,deployOrgan.get());
 		String organAddress = deployOrgan.get().withLeading0x();
 		
-		fixture.addOrgan(deployOrgan.get().withLeading0x()).get();
+		fixture.addOrgan(deployOrgan.get()).get();
 		assertEquals(1, fixture.organCount().intValue());
 	
 		
@@ -179,8 +180,8 @@ public class PartyTest extends ManageableTest{
 		//End of user code
 	}
 	/**
-	 * Test method for  addSubDivision(String _subDivision).
-	 * see {@link Party#addSubDivision( String)}
+	 * Test method for  addSubDivision(org.adridadou.ethereum.values.EthAddress _subDivision).
+	 * see {@link Party#addSubDivision( org.adridadou.ethereum.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test
@@ -192,9 +193,9 @@ public class PartyTest extends ManageableTest{
 		String _memberRegistry = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(100001L))).withLeading0x();
 		String _blogRegistry = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(100002L))).withLeading0x();
 		de.kueken.ethereum.party.EthereumInstance.DeployDuo<Party> subDivision = partyDeployer.createParty(sender);
-		subDivision.contractInstance.addManager(fixtureAddress.withLeading0x());
+		subDivision.contractInstance.addManager(fixtureAddress);
 		
-		fixture.addSubDivision(subDivision.contractAddress.withLeading0x()).get();
+		fixture.addSubDivision(subDivision.contractAddress).get();
 		assertEquals(1, fixture.subDivisionCount().intValue());
 
 		//End of user code
@@ -213,10 +214,10 @@ public class PartyTest extends ManageableTest{
 		String _memberRegistry=EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(100001L))).withLeading0x();
 		String _blogRegistry=EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(100002L))).withLeading0x();
 		DeployDuo<Party> subDivision = partyDeployer.createParty(sender);
-		subDivision.contractInstance.addManager(fixtureAddress.withLeading0x());
+		subDivision.contractInstance.addManager(fixtureAddress);
 		
 		
-		fixture.addSubDivision(subDivision.contractAddress.withLeading0x()).get();
+		fixture.addSubDivision(subDivision.contractAddress).get();
 		assertEquals(1, fixture.subDivisionCount().intValue());
 
 		
@@ -225,6 +226,17 @@ public class PartyTest extends ManageableTest{
 		//End of user code
 	}
 	//Start of user code customTests    
+	/**
+	 * Test method for  isManager(String _managerAddress).
+	 * see {@link Manageable#isManager( String)}
+	 * @throws Exception
+	 */
+	@Test
+	public void testSetName() throws Exception {
+		String aName="test name";
+		fixture.setName(aName).get();
+		assertEquals(aName, fixture.name());
+	}
 	
 	
 	/**
@@ -237,9 +249,8 @@ public class PartyTest extends ManageableTest{
 		BlogRegistry blogRegistry = publishingDeployer.createBlogRegistryProxy(sender, deployBlogRegistry.get());
 		String blogRegistryAddress = deployBlogRegistry.get().withLeading0x();
 		
-		fixture.setBlogregistry(deployBlogRegistry.get().withLeading0x());
-		blogRegistry.addManager(fixtureAddress.withLeading0x());
-	}
-
+		fixture.setBlogregistry(deployBlogRegistry.get());
+		blogRegistry.addManager(fixtureAddress);
+}
 	//End of user code
 }

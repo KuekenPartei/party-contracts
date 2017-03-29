@@ -18,7 +18,7 @@ import de.kueken.ethereum.party.voting.*;
 **/
 public interface FoundationConference extends Conference{
 	
-	Boolean managers(String key);
+	Boolean managers(org.adridadou.ethereum.values.EthAddress key);
 
 
 	//Start of user code additional_methods

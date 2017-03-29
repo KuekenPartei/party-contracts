@@ -72,9 +72,9 @@ public class BasicBallotTest extends AbstractContractTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-		CompiledContract compiledContract = ethereum.compile(contractSource, getContractName());
+		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
 		//TODO: set the constructor args
-		String _registry = "0x0";
+		EthAddress _registry = EthAddress.empty();
 		String _name = "_name";
 		String _hash = "_hash";
         CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender
@@ -90,8 +90,8 @@ public class BasicBallotTest extends AbstractContractTest{
 
 
 	/**
-	 * Test method for  addProposal(String _name,String _hash,String _url,String _member).
-	 * see {@link BasicBallot#addProposal( String, String, String, String)}
+	 * Test method for  addProposal(String _name,String _hash,String _url,org.adridadou.ethereum.values.EthAddress _member).
+	 * see {@link BasicBallot#addProposal( String, String, String, org.adridadou.ethereum.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test

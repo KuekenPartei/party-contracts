@@ -14,10 +14,10 @@ import de.kueken.ethereum.party.basics.*;
 **/
 public interface MemberAware{
 	
-	String memberRegistry();
+	org.adridadou.ethereum.values.EthAddress memberRegistry();
 
 
-	java.util.concurrent.CompletableFuture<Void> setMemberRegistry (String aMemberRegistry);
+	java.util.concurrent.CompletableFuture<Void> setMemberRegistry (org.adridadou.ethereum.values.EthAddress aMemberRegistry);
 
 	//Start of user code additional_methods
 

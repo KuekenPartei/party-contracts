@@ -19,23 +19,23 @@ public interface Party extends Manageable{
 	
 	String name();
 	
-	String memberRegistry();
+	org.adridadou.ethereum.values.EthAddress memberRegistry();
 	
 	String constitutionHash();
 	
 	Integer organCount();
 	
-	String blogregistry();
+	org.adridadou.ethereum.values.EthAddress blogregistry();
 	
-	String parent();
+	org.adridadou.ethereum.values.EthAddress parent();
 	
 	Integer subDivisionCount();
 	
-	Boolean managers(String key);
+	Boolean managers(org.adridadou.ethereum.values.EthAddress key);
 	
-	String organs(Integer key);	
+	org.adridadou.ethereum.values.EthAddress organs(Integer key);	
 	
-	String subDivisions(Integer key);	
+	org.adridadou.ethereum.values.EthAddress subDivisions(Integer key);	
 
 	
 	java.util.concurrent.CompletableFuture<Void> createOrgan(String organName);
@@ -44,7 +44,7 @@ public interface Party extends Manageable{
 	* 
 	* @param _organ -
 	**/
-	java.util.concurrent.CompletableFuture<Void> addOrgan(String _organ);
+	java.util.concurrent.CompletableFuture<Void> addOrgan(org.adridadou.ethereum.values.EthAddress _organ);
 	/**
 	* Add a subdivision of this party, the contrains are:
 	* the party must be a mananger of the subdivision
@@ -53,15 +53,15 @@ public interface Party extends Manageable{
 	* 
 	* @param _subDivision -
 	**/
-	java.util.concurrent.CompletableFuture<Void> addSubDivision(String _subDivision);
+	java.util.concurrent.CompletableFuture<Void> addSubDivision(org.adridadou.ethereum.values.EthAddress _subDivision);
 	
 	java.util.concurrent.CompletableFuture<Void> removeSubDivision(Integer _divisionId);
 
-	String getMemberRegistry();
+	org.adridadou.ethereum.values.EthAddress getMemberRegistry();
 
-	java.util.concurrent.CompletableFuture<Void> setMemberRegistry (String aMemberRegistry);
+	java.util.concurrent.CompletableFuture<Void> setMemberRegistry (org.adridadou.ethereum.values.EthAddress aMemberRegistry);
 
-	java.util.concurrent.CompletableFuture<Void> setBlogregistry (String aBlogregistry);
+	java.util.concurrent.CompletableFuture<Void> setBlogregistry (org.adridadou.ethereum.values.EthAddress aBlogregistry);
 
 	//Start of user code additional_methods
 	java.util.concurrent.CompletableFuture<Void> setName(String aName);

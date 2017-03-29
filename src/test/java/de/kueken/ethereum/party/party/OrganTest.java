@@ -114,8 +114,8 @@ public class OrganTest extends ManageableTest{
 		//End of user code
 	}
 	/**
-	 * Test method for  changeMember(Integer _id,String _address).
-	 * see {@link Organ#changeMember( Integer, String)}
+	 * Test method for  changeMember(Integer _id,org.adridadou.ethereum.values.EthAddress _address).
+	 * see {@link Organ#changeMember( Integer, org.adridadou.ethereum.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test
@@ -138,10 +138,10 @@ public class OrganTest extends ManageableTest{
 		
 		EthAddress ethAddress = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L))).getAddress();
 
-		fixture.createFunction(ethAddress.withLeading0x(), "hash");
+		fixture.createFunction(ethAddress.withLeading0x(), "hash").get();
 		assertEquals(1, fixture.lastFunctionId().intValue());
 		
-		String organFunctionAddress = fixture.getOrganFunction(0);
+		EthAddress organFunctionAddress = fixture.getOrganFunction(0);
 		
 		
 		//End of user code
@@ -155,11 +155,12 @@ public class OrganTest extends ManageableTest{
 	public void testInitalizeOrgan() throws Exception {
 		//Start of user code testInitalizeOrgan
 		assertFalse(fixture.isActive());
-		assertEquals("0x", fixture.getOrganBlog());
+		EthAddress expected = EthAddress.empty();
+		assertEquals(expected, fixture.getOrganBlog());
 		initOrgan();
-		fixture.initalizeOrgan();
+		fixture.initalizeOrgan().get();
 		assertTrue(fixture.isActive());
-		assertNotEquals("0x", fixture.getOrganBlog());
+		assertNotEquals(expected, fixture.getOrganBlog());
 		
 		//End of user code
 	}
@@ -173,7 +174,7 @@ public class OrganTest extends ManageableTest{
 		//Start of user code testPublishFunctionMessage_uint_string_string_string
 		initOrgan();
 		fixture.initalizeOrgan();
-		fixture.createFunction("Function 0", "hash");
+		fixture.createFunction("Function 0", "hash").get();
 
 		assertEquals(1, fixture.lastFunctionId().intValue());
 		
@@ -218,16 +219,16 @@ public class OrganTest extends ManageableTest{
 	@Test
 	public void testGetOrganBlog() throws Exception {
 		//Start of user code testGetOrganBlog
-		assertEquals("0x", fixture.getOrganBlog());
+		assertEquals(EthAddress.empty(), fixture.getOrganBlog());
 		initOrgan();
-		fixture.initalizeOrgan();
-		assertNotEquals("0x", fixture.getOrganBlog());
+		fixture.initalizeOrgan().get();
+		assertNotEquals(EthAddress.empty(), fixture.getOrganBlog());
 		
 		//End of user code
 	}
 	/**
-	 * Test method for  addOrganFunction(String _of,String _name).
-	 * see {@link Organ#addOrganFunction( String, String)}
+	 * Test method for  addOrganFunction(org.adridadou.ethereum.values.EthAddress _of,String _name).
+	 * see {@link Organ#addOrganFunction( org.adridadou.ethereum.values.EthAddress, String)}
 	 * @throws Exception
 	 */
 	@Test
@@ -240,9 +241,9 @@ public class OrganTest extends ManageableTest{
 
 		DeployDuo<OrganFunction> organFunction = partyDeployer.createOrganFunction(sender, "ss", "cc");
 		
-		organFunction.contractInstance.addManager(fixtureAddress.withLeading0x());
+		organFunction.contractInstance.addManager(fixtureAddress).get();
 		
-		fixture.addOrganFunction(organFunction.contractAddress.withLeading0x(), "name");
+		fixture.addOrganFunction(organFunction.contractAddress, "name").get();
 		assertEquals(1, fixture.lastFunctionId().intValue());
 		//End of user code
 	}
@@ -267,8 +268,8 @@ public class OrganTest extends ManageableTest{
 	private void initOrgan() throws IOException, InterruptedException, ExecutionException {
 		DeployDuo<BlogRegistry> registry = publishingDeployer.createBlogRegistry(sender);
 		
-		fixture.setBlogRegistry(registry.contractAddress.withLeading0x());
-		registry.contractInstance.addManager(fixtureAddress.withLeading0x());
+		fixture.setBlogRegistry(registry.contractAddress).get();
+		registry.contractInstance.addManager(fixtureAddress).get();
 	}
 
 	//End of user code

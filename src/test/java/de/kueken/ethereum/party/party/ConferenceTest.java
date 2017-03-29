@@ -101,8 +101,8 @@ super.prepareTest();
 
 
 	/**
-	 * Test method for  accreditationMember(String _address).
-	 * see {@link Conference#accreditationMember( String)}
+	 * Test method for  accreditationMember(org.adridadou.ethereum.values.EthAddress _address).
+	 * see {@link Conference#accreditationMember( org.adridadou.ethereum.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test

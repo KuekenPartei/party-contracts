@@ -89,7 +89,7 @@ public class MemberRegistryTest extends ManageableTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-		CompiledContract compiledContract = ethereum.compile(contractSource, getContractName());
+		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
         fixtureAddress = address.get();
 		setFixture(ethereum.createContractProxy(compiledContract, fixtureAddress, sender, MemberRegistry.class));
@@ -103,8 +103,8 @@ public class MemberRegistryTest extends ManageableTest{
 
 
 	/**
-	 * Test method for  isMember(String _memberAdress).
-	 * see {@link MemberRegistry#isMember( String)}
+	 * Test method for  isMember(org.adridadou.ethereum.values.EthAddress _memberAdress).
+	 * see {@link MemberRegistry#isMember( org.adridadou.ethereum.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test
@@ -133,24 +133,25 @@ public class MemberRegistryTest extends ManageableTest{
 	public void testGetMemberCount() throws Exception {
 		//Start of user code testGetMemberCount
 		assertEquals(0, fixture.getMemberCount().intValue());
-		fixture.addMember("test1", "0x0001");
+		EthAddress address = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
+		fixture.addMember("test1", address).get();
 		assertEquals(1, fixture.getMemberCount().intValue());
-		fixture.unregisterMember(0);
+		fixture.unregisterMember(0).get();
 		assertEquals(0, fixture.getMemberCount().intValue());
 		// End of user code
 	}
 	/**
-	 * Test method for  addMember(String name,String _memberAddress).
-	 * see {@link MemberRegistry#addMember( String, String)}
+	 * Test method for  addMember(String name,org.adridadou.ethereum.values.EthAddress _memberAddress).
+	 * see {@link MemberRegistry#addMember( String, org.adridadou.ethereum.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test
 	public void testAddMember_string_address() throws Exception {
 		//Start of user code testAddMember_string_address
 		assertEquals(0, fixture.getMemberCount().intValue());
-		fixture.addMember("test1", "0x0001");
+		fixture.addMember("test1", EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)))).get();
 		assertEquals(1, fixture.getMemberCount().intValue());
-		fixture.addMember("test2", "0x0002");
+		fixture.addMember("test2", EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1001L)))).get();
 		assertEquals(2, fixture.getMemberCount().intValue());
 		// End of user code
 	}
@@ -162,21 +163,22 @@ public class MemberRegistryTest extends ManageableTest{
 	@Test
 	public void testUnregisterMember_uint() throws Exception {
 		//Start of user code testUnregisterMember_uint
+		EthAddress address = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
 		assertEquals(0, fixture.getMemberCount().intValue());
-		fixture.addMember("test1", "0x0001");
+		fixture.addMember("test1", address).get();
 		assertEquals(1, fixture.getMemberCount().intValue());
-		fixture.addMember("test2", "0x0002");
+		fixture.addMember("test2", EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1001L)))).get();
 		assertEquals(2, fixture.getMemberCount().intValue());
 
-		fixture.unregisterMember(1);
+		fixture.unregisterMember(1).get();
 		assertEquals(1, fixture.getMemberCount().intValue());
 		assertEquals(1, fixture.activeMemberCount().intValue());
 		assertEquals(2, fixture.partyMemberCount().intValue());
 		// End of user code
 	}
 	/**
-	 * Test method for  isActiveMember(String _memberAdress).
-	 * see {@link MemberRegistry#isActiveMember( String)}
+	 * Test method for  isActiveMember(org.adridadou.ethereum.values.EthAddress _memberAdress).
+	 * see {@link MemberRegistry#isActiveMember( org.adridadou.ethereum.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test
@@ -186,38 +188,39 @@ public class MemberRegistryTest extends ManageableTest{
 		// End of user code
 	}
 	/**
-	 * Test method for  changeMemberAddress(Integer id,String _newMemberAddress).
-	 * see {@link MemberRegistry#changeMemberAddress( Integer, String)}
+	 * Test method for  changeMemberAddress(Integer id,org.adridadou.ethereum.values.EthAddress _newMemberAddress).
+	 * see {@link MemberRegistry#changeMemberAddress( Integer, org.adridadou.ethereum.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test
 	public void testChangeMemberAddress_uint_address() throws Exception {
 		//Start of user code testChangeMemberAddress_uint_address
-		String _memberAdress = "0x02";
+		EthAddress _memberAdress = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
 		assertFalse(fixture.isActiveMember(_memberAdress));
-		fixture.addMember("Test1", _memberAdress);
+		fixture.addMember("Test1", _memberAdress).get();
 		assertTrue(fixture.isActiveMember(_memberAdress));
 		ReturnGetMemberData_string_uint memberData = fixture.getMemberData(_memberAdress);
 		assertEquals(0, memberData.getId().intValue());
 		assertEquals("Test1", memberData.getName());
 
-		fixture.changeMemberAddress(memberData.getId(), "0x03");
+		EthAddress newAddress = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1001L)));
+		fixture.changeMemberAddress(memberData.getId(), newAddress).get();
 		// Assert.assertFalse(fixture.isActiveMember(_memberAdress));
-		assertTrue(fixture.isActiveMember("0x03"));
+		assertTrue(fixture.isActiveMember(newAddress));
 
 		// End of user code
 	}
 	/**
-	 * Test method for  getMemberData(String _address).
-	 * see {@link MemberRegistry#getMemberData( String)}
+	 * Test method for  getMemberData(org.adridadou.ethereum.values.EthAddress _address).
+	 * see {@link MemberRegistry#getMemberData( org.adridadou.ethereum.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test
 	public void testGetMemberData_address() throws Exception {
 		//Start of user code testGetMemberData_address
-		String _memberAdress = "0x02";
+		EthAddress _memberAdress = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
 		assertFalse(fixture.isActiveMember(_memberAdress));
-		fixture.addMember("Test1", _memberAdress);
+		fixture.addMember("Test1", _memberAdress).get();
 		assertTrue(fixture.isActiveMember(_memberAdress));
 		ReturnGetMemberData_string_uint memberData = fixture.getMemberData(_memberAdress);
 		assertEquals(0, memberData.getId().intValue());
@@ -225,14 +228,14 @@ public class MemberRegistryTest extends ManageableTest{
 		// End of user code
 	}
 	/**
-	 * Test method for  publishMemberEvent(String mAddress,Integer eventType).
-	 * see {@link MemberRegistry#publishMemberEvent( String, Integer)}
+	 * Test method for  publishMemberEvent(org.adridadou.ethereum.values.EthAddress mAddress,Integer eventType).
+	 * see {@link MemberRegistry#publishMemberEvent( org.adridadou.ethereum.values.EthAddress, Integer)}
 	 * @throws Exception
 	 */
 	@Test
 	public void testPublishMemberEvent_address_uint() throws Exception {
 		//Start of user code testPublishMemberEvent_address_uint
-		String _memberAdress = "0x02";
+		EthAddress _memberAdress = EthAddress.of("0x02");
 		assertFalse(fixture.isActiveMember(_memberAdress));
 		fixture.addMember("Test1", _memberAdress);
 		fixture.publishMemberEvent(_memberAdress, 0);

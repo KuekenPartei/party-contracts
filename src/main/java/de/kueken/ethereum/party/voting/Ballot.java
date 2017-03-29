@@ -14,16 +14,20 @@ import de.kueken.ethereum.party.members.*;
 **/
 public interface Ballot{
 	
-	String chairperson();
+	org.adridadou.ethereum.values.EthAddress chairperson();
+	
+	BallotProposal[] proposals();
 	
 	String ballotName();
+	
+	BallotVoter voters(org.adridadou.ethereum.values.EthAddress key);	
 
 	
 	java.util.concurrent.CompletableFuture<Void> Ballot(String name,Byte[][] proposalNames);
 	
-	java.util.concurrent.CompletableFuture<Void> giveRightToVote(String voter);
+	java.util.concurrent.CompletableFuture<Void> giveRightToVote(org.adridadou.ethereum.values.EthAddress voter);
 	
-	java.util.concurrent.CompletableFuture<Void> delegateTo(String to);
+	java.util.concurrent.CompletableFuture<Void> delegateTo(org.adridadou.ethereum.values.EthAddress to);
 	
 	java.util.concurrent.CompletableFuture<Void> voteFor(Integer proposal);
 	

@@ -11,12 +11,12 @@ import org.adridadou.ethereum.values.EthAddress;
 
 public interface Owned{
 	
-	String owner();
+	org.adridadou.ethereum.values.EthAddress owner();
 
 	
-	java.util.concurrent.CompletableFuture<String> getOwner();
+	java.util.concurrent.CompletableFuture<org.adridadou.ethereum.values.EthAddress> getOwner();
 	
-	java.util.concurrent.CompletableFuture<Void> changeOwner(String newOwner);
+	java.util.concurrent.CompletableFuture<Void> changeOwner(org.adridadou.ethereum.values.EthAddress newOwner);
 	
 	java.util.concurrent.CompletableFuture<Void> kill();
 

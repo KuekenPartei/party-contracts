@@ -6,10 +6,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URISyntaxException;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import org.adridadou.ethereum.EthereumFacade;
-import org.adridadou.ethereum.keystore.AccountProvider;
-import org.adridadou.ethereum.keystore.SecureKey;
 import org.adridadou.ethereum.values.CompiledContract;
 import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
@@ -22,7 +22,8 @@ import org.junit.BeforeClass;
 import org.spongycastle.util.encoders.Hex;
 
 // Start of user code AbstractContractTest.customImports
-//TODO: add custom imports
+import org.adridadou.ethereum.keystore.AccountProvider;
+import org.adridadou.ethereum.keystore.SecureKey;
 // End of user code
 
 /**
@@ -32,8 +33,8 @@ import org.spongycastle.util.encoders.Hex;
 public abstract class AbstractContractTest {
 
 	protected static EthereumFacade ethereum;
-	protected EthAccount sender;
-	protected EthAddress senderAddress;
+	protected static EthAccount sender;
+	protected static EthAddress senderAddress;
 
 	protected EthAddress fixtureAddress;
 	protected SoliditySource contractSource;
@@ -48,20 +49,21 @@ public abstract class AbstractContractTest {
 	/**
 	 * Setup up the blockchain. Add the 'EthereumFacadeProvider' property to use 
 	 * another block chain implementation or network.
+	 * @throws Exception 
 	 */
 	@BeforeClass
-	public static void setup() {
+	public static void setup() throws Exception{
 		ethereum = EthereumInstance.getInstance().getEthereum();
-
+		initTest();
 	}
 
-	protected void initTest() throws Exception {
+	protected static void initTest() throws Exception {
 		// Start of user code AbstractContractTest.initTest
 
 		String property = System.getProperty("EthereumFacadeProvider");
 		if (property != null)
 			if (property.equalsIgnoreCase("ropsten") || property.equalsIgnoreCase("InfuraRopsten")) {
-				SecureKey a = AccountProvider.from(new File("/home/urs/.ethereum/testnet/keystore/UTC--2015-12-15T13-55-38.006995319Z--ba7b29b63c00dff8614f8d8a6bf34e94e853b2d3"));
+				SecureKey a = AccountProvider.fromKeystore(new File("/home/urs/.ethereum/testnet/keystore/UTC--2015-12-15T13-55-38.006995319Z--ba7b29b63c00dff8614f8d8a6bf34e94e853b2d3"));
 				sender =a.decode("n");
 				senderAddress = sender.getAddress();
 			
@@ -98,6 +100,24 @@ public abstract class AbstractContractTest {
 		ContractMetadata contractMetadata = result.contracts.get(getContractName());
 		return CompiledContract.from(contractSource, getContractName(), contractMetadata);
 	}
+
+	/**
+	 * Returns the compiled contract from the 'contractSource'. The name is
+	 * defined in the concrete test case.
+	 * 
+	 * @return the compiled contract
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public CompiledContract getCompiledContract() throws InterruptedException, ExecutionException {
+		Map<String, CompiledContract> map = ethereum.compile(contractSource).get();
+		CompiledContract contract = map.get(getContractName());
+		if (contract == null)
+			throw new IllegalArgumentException(
+					"The contract '" + getContractName() + "' is not present is the map of contracts:" + map);
+		return contract;
+	}
+
 	// Start of user code AbstractContractTest.customMethods
 	//TODO: add custom attributes
 	// End of user code

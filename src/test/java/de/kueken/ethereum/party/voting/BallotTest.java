@@ -69,7 +69,7 @@ public class BallotTest extends AbstractContractTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-		CompiledContract compiledContract = ethereum.compile(contractSource, getContractName());
+		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
         fixtureAddress = address.get();
 		setFixture(ethereum.createContractProxy(compiledContract, fixtureAddress, sender, Ballot.class));
@@ -94,8 +94,8 @@ public class BallotTest extends AbstractContractTest{
 		//End of user code
 	}
 	/**
-	 * Test method for  giveRightToVote(String voter).
-	 * see {@link Ballot#giveRightToVote( String)}
+	 * Test method for  giveRightToVote(org.adridadou.ethereum.values.EthAddress voter).
+	 * see {@link Ballot#giveRightToVote( org.adridadou.ethereum.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test
@@ -106,8 +106,8 @@ public class BallotTest extends AbstractContractTest{
 		//End of user code
 	}
 	/**
-	 * Test method for  delegateTo(String to).
-	 * see {@link Ballot#delegateTo( String)}
+	 * Test method for  delegateTo(org.adridadou.ethereum.values.EthAddress to).
+	 * see {@link Ballot#delegateTo( org.adridadou.ethereum.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test

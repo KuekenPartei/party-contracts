@@ -19,7 +19,7 @@ import de.kueken.ethereum.party.voting.*;
 **/
 public interface OrganFunction extends Manageable{
 	
-	String currentMember();
+	org.adridadou.ethereum.values.EthAddress currentMember();
 	
 	String functionName();
 	
@@ -31,9 +31,9 @@ public interface OrganFunction extends Manageable{
 	
 	Integer lastConstitutionHashChanged();
 	
-	String publisher();
+	org.adridadou.ethereum.values.EthAddress publisher();
 	
-	Boolean managers(String key);
+	Boolean managers(org.adridadou.ethereum.values.EthAddress key);
 
 	/**
 	* Publish the message to the blog.
@@ -47,9 +47,9 @@ public interface OrganFunction extends Manageable{
 	
 	String getFunctioName();
 
-	java.util.concurrent.CompletableFuture<Void> setCurrentMember (String aCurrentMember);
+	java.util.concurrent.CompletableFuture<Void> setCurrentMember (org.adridadou.ethereum.values.EthAddress aCurrentMember);
 
-	java.util.concurrent.CompletableFuture<Void> setPublisher (String aPublisher);
+	java.util.concurrent.CompletableFuture<Void> setPublisher (org.adridadou.ethereum.values.EthAddress aPublisher);
 
 	//Start of user code additional_methods
 

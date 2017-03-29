@@ -183,12 +183,12 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 	function getOrganName() constant returns(string) {
 		return organName;
 	}
-	// setOrganName
+	// setOrganName setter for the field organName
 	function setOrganName (string aOrganName) {
 		organName = aOrganName;
 	}
 	
-	// setBlogRegistry
+	// setBlogRegistry setter for the field blogRegistry
 	function setBlogRegistry (address aBlogRegistry) {
 		blogRegistry = BlogRegistry(aBlogRegistry);
 	}
@@ -299,12 +299,12 @@ contract Party is Manageable {
 	function getMemberRegistry() constant returns(MemberRegistry) {
 		return memberRegistry;
 	}
-	// setMemberRegistry
+	// setMemberRegistry setter for the field memberRegistry
 	function setMemberRegistry (address aMemberRegistry) {
 		memberRegistry = MemberRegistry(aMemberRegistry);
 	}
 	
-	// setBlogregistry
+	// setBlogregistry setter for the field blogregistry
 	function setBlogregistry (address aBlogregistry) {
 		blogregistry = BlogRegistry(aBlogregistry);
 	}
@@ -315,7 +315,7 @@ contract Party is Manageable {
 	*  setName
 	*/
 	function setName(string aName) public onlyManager{
-		name = aName; 
+		name = aName;
 	}
 	
 	/**
@@ -479,12 +479,12 @@ contract OrganFunction is Manageable,MessagePublisher {
 		//End of user code
 	}
 	
-	// setCurrentMember
+	// setCurrentMember setter for the field currentMember
 	function setCurrentMember (address aCurrentMember) onlyManager() {
 		currentMember = aCurrentMember;
 	}
 	
-	// setPublisher
+	// setPublisher setter for the field publisher
 	function setPublisher (address aPublisher) onlyManager() {
 		publisher = ShortBlog(aPublisher);
 	}

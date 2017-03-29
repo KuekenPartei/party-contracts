@@ -82,7 +82,7 @@ contract MemberRegistry is AccessRegistry,Manageable {
 	
 	function getMemberAddress(uint id) public   constant returns (address _address) {
 		//Start of user code MemberRegistry.function.getMemberAddress_uint
-		//TODO: implement
+		return partyMembers[id].member;
 		//End of user code
 	}
 	
@@ -118,7 +118,7 @@ contract MemberRegistry is AccessRegistry,Manageable {
 		activeMemberCount++;			
 		
 		Member m = memberAddress[_memberAddress]; 
-//		MemberEvent(_memberAddress,EventType.memberStateChanged,m.id,m.name,m.state);
+		MemberEvent(_memberAddress,EventType.memberStateChanged,m.id,m.name,m.state);
 		//End of user code
 	}
 	
@@ -141,7 +141,8 @@ contract MemberRegistry is AccessRegistry,Manageable {
 		
 		
 		Member m = partyMembers[id];
-//		MemberEvent(m.member,EventType.memberStateChanged,m.id,m.name,m.state);
+		delete memberAddress[m.member];
+		MemberEvent(m.member,EventType.memberStateChanged,m.id,m.name,m.state);
 		//End of user code
 	}
 	
@@ -229,7 +230,7 @@ contract MemberAware {
 		//End of user code
 	}
 	
-	// setMemberRegistry
+	// setMemberRegistry setter for the field memberRegistry
 	function setMemberRegistry (address aMemberRegistry) {
 		memberRegistry = MemberRegistry(aMemberRegistry);
 	}

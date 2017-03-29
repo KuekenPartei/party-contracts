@@ -17,14 +17,14 @@ public interface Manageable{
 	
 	Integer mangerCount();
 	
-	Boolean managers(String key);
+	Boolean managers(org.adridadou.ethereum.values.EthAddress key);
 
 	
-	java.util.concurrent.CompletableFuture<Void> addManager(String _newManagerAddress);
+	java.util.concurrent.CompletableFuture<Void> addManager(org.adridadou.ethereum.values.EthAddress _newManagerAddress);
 	
-	java.util.concurrent.CompletableFuture<Void> removeManager(String _managerAddress);
+	java.util.concurrent.CompletableFuture<Void> removeManager(org.adridadou.ethereum.values.EthAddress _managerAddress);
 	
-	Boolean isManager(String _managerAddress);
+	Boolean isManager(org.adridadou.ethereum.values.EthAddress _managerAddress);
 
 	//Start of user code additional_methods
 

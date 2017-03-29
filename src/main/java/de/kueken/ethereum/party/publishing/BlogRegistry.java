@@ -16,9 +16,9 @@ public interface BlogRegistry extends Manageable{
 	
 	Integer blogCount();
 	
-	String blogs(Integer key);
+	org.adridadou.ethereum.values.EthAddress blogs(Integer key);
 	
-	Boolean managers(String key);
+	Boolean managers(org.adridadou.ethereum.values.EthAddress key);
 
 	/**
 	* Register a blog under a name.
@@ -28,7 +28,7 @@ public interface BlogRegistry extends Manageable{
 	* @return
 	*  -
 	**/
-	java.util.concurrent.CompletableFuture<String> registerBlog(String _name);
+	java.util.concurrent.CompletableFuture<org.adridadou.ethereum.values.EthAddress> registerBlog(String _name);
 
 	//Start of user code additional_methods
 

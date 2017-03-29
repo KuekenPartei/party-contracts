@@ -1,10 +1,12 @@
 package de.kueken.ethereum.party.deployer;
 
+import rx.Observable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -35,7 +37,7 @@ public class PartyDeployer {
 	private EthereumFacade ethereum;
 	private SoliditySource contractSource;
 	private CompilationResult compiledContracts;
-	private static String filename = "/main/resources/mix/party.sol";
+	private static String filename = "/mix/party.sol";
 
 	/**
 	 * Create an instance of the deployer with the default contract code file.
@@ -55,21 +57,7 @@ public class PartyDeployer {
 	 */
 	public PartyDeployer(EthereumFacade ethereum, String contractSourceFile, boolean compiled) {
 		this.ethereum = ethereum;
-		try {
-			if (!compiled)
-				contractSource = SoliditySource.from(new File(this.getClass().getResource(contractSourceFile).toURI()));
-			else {
-				File file = new File(this.getClass().getResource(contractSourceFile).toURI());
-				String rawJson = IOUtils.toString(new FileInputStream(file), EthereumFacade.CHARSET);
-				compiledContracts = CompilationResult.parse(rawJson);
-			}
-		} catch (URISyntaxException e) {
-			throw new IllegalArgumentException(e);
-		} catch (FileNotFoundException e) {
-			throw new IllegalArgumentException(e);
-		} catch (IOException e) {
-			throw new IllegalArgumentException(e);
-		}
+		setContractSource(contractSourceFile, compiled);
 	}
 
 	/**
@@ -94,6 +82,25 @@ public class PartyDeployer {
 		}
 	}
 
+	/**
+	 * Change the contract source.
+	 * 
+	 * @param contractSourceFile
+	 * @param compiled
+	 */
+	public void setContractSource(String contractSourceFile, boolean compiled) {
+		try {
+			if (!compiled) {
+				contractSource = SoliditySource.from(this.getClass().getResourceAsStream(contractSourceFile));
+			} else {
+				String rawJson = IOUtils.toString(this.getClass().getResourceAsStream(contractSourceFile),
+						EthereumFacade.CHARSET);
+				compiledContracts = CompilationResult.parse(rawJson);
+			}
+		} catch (IOException e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
 
 
 	/**
@@ -102,22 +109,14 @@ public class PartyDeployer {
 	 * @param sender
 	 *            the sender address
 	 * @return the address of the deployed contract
+	 * @throws InterruptedException
+	 * @throws ExecutionException
 	 */
-	public CompletableFuture<EthAddress> deployOrgan(EthAccount sender) {
-		CompiledContract compiledContract = null;
-		if (compiledContracts == null)
-			compiledContract = ethereum.compile(contractSource, "Organ");
-		else {
-			ContractMetadata contractMetadata = compiledContracts.contracts.get("Organ");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for 'Organ' not found");
-
-			compiledContract = CompiledContract.from(null, "Organ", contractMetadata);
-		}
+	public CompletableFuture<EthAddress> deployOrgan(EthAccount sender) throws InterruptedException, ExecutionException{
+		CompiledContract compiledContract = compiledContractOrgan();
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
 		return address;
 	}
-
 
 
 	/**
@@ -139,19 +138,55 @@ public class PartyDeployer {
 	 * @return the contract interface
 	 */
 	public Organ createOrganProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
-		CompiledContract compiledContract = null;
-		if (compiledContracts == null)
-			compiledContract = ethereum.compile(contractSource, "Organ");
-		else {
-			ContractMetadata contractMetadata = compiledContracts.contracts.get("Organ");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for 'Organ' not found");
-
-			compiledContract = CompiledContract.from(null, "Organ", contractMetadata);
-		}
+		CompiledContract compiledContract = compiledContractOrgan();
 		Organ organ = ethereum.createContractProxy(compiledContract, address, sender, Organ.class);
 		return organ;
 	}
+
+	/**
+	 * Return the compiled contract for the contract 'Organ', when in source the contract code is compiled.
+	 * @return the compiled contract for 'Organ'.
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public CompiledContract compiledContractOrgan() throws InterruptedException, ExecutionException {
+		CompiledContract compiledContract = null;
+		if (compiledContracts == null){
+			Map<String, CompiledContract> contracts = ethereum.compile(contractSource).get();
+			compiledContract = contracts.get("Organ");
+		} else {
+			ContractMetadata contractMetadata = compiledContracts.contracts.get("Organ");
+			if (contractMetadata == null)
+				throw new IllegalArgumentException("Contract code for 'Organ' not found");
+			compiledContract = CompiledContract.from(null, "Organ", contractMetadata);
+		}
+		return compiledContract;
+	}
+	/**
+	 * 
+	 * @param address
+	 * @return
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public Observable<EventFunctionMemberChange_address_uint_address> observeEventFunctionMemberChange_address_uint_address(EthAddress address) throws InterruptedException, ExecutionException {
+		CompiledContract compiledContract = compiledContractOrgan();
+		Observable<EventFunctionMemberChange_address_uint_address> observeEvents = ethereum.observeEvents(compiledContract.getAbi(), address, "FunctionMemberChange", EventFunctionMemberChange_address_uint_address.class);
+		return observeEvents;
+	}
+	/**
+	 * 
+	 * @param address
+	 * @return
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public Observable<EventFunctionChange_uint_OrganFunction> observeEventFunctionChange_uint_OrganFunction(EthAddress address) throws InterruptedException, ExecutionException {
+		CompiledContract compiledContract = compiledContractOrgan();
+		Observable<EventFunctionChange_uint_OrganFunction> observeEvents = ethereum.observeEvents(compiledContract.getAbi(), address, "FunctionChange", EventFunctionChange_uint_OrganFunction.class);
+		return observeEvents;
+	}
+
 
 	/**
 	 * Deploys a 'Party' on the blockchain.
@@ -159,22 +194,14 @@ public class PartyDeployer {
 	 * @param sender
 	 *            the sender address
 	 * @return the address of the deployed contract
+	 * @throws InterruptedException
+	 * @throws ExecutionException
 	 */
-	public CompletableFuture<EthAddress> deployParty(EthAccount sender) {
-		CompiledContract compiledContract = null;
-		if (compiledContracts == null)
-			compiledContract = ethereum.compile(contractSource, "Party");
-		else {
-			ContractMetadata contractMetadata = compiledContracts.contracts.get("Party");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for 'Party' not found");
-
-			compiledContract = CompiledContract.from(null, "Party", contractMetadata);
-		}
+	public CompletableFuture<EthAddress> deployParty(EthAccount sender) throws InterruptedException, ExecutionException{
+		CompiledContract compiledContract = compiledContractParty();
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
 		return address;
 	}
-
 
 
 	/**
@@ -196,19 +223,67 @@ public class PartyDeployer {
 	 * @return the contract interface
 	 */
 	public Party createPartyProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
-		CompiledContract compiledContract = null;
-		if (compiledContracts == null)
-			compiledContract = ethereum.compile(contractSource, "Party");
-		else {
-			ContractMetadata contractMetadata = compiledContracts.contracts.get("Party");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for 'Party' not found");
-
-			compiledContract = CompiledContract.from(null, "Party", contractMetadata);
-		}
+		CompiledContract compiledContract = compiledContractParty();
 		Party party = ethereum.createContractProxy(compiledContract, address, sender, Party.class);
 		return party;
 	}
+
+	/**
+	 * Return the compiled contract for the contract 'Party', when in source the contract code is compiled.
+	 * @return the compiled contract for 'Party'.
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public CompiledContract compiledContractParty() throws InterruptedException, ExecutionException {
+		CompiledContract compiledContract = null;
+		if (compiledContracts == null){
+			Map<String, CompiledContract> contracts = ethereum.compile(contractSource).get();
+			compiledContract = contracts.get("Party");
+		} else {
+			ContractMetadata contractMetadata = compiledContracts.contracts.get("Party");
+			if (contractMetadata == null)
+				throw new IllegalArgumentException("Contract code for 'Party' not found");
+			compiledContract = CompiledContract.from(null, "Party", contractMetadata);
+		}
+		return compiledContract;
+	}
+	/**
+	 * 
+	 * @param address
+	 * @return
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public Observable<EventConstiutionChange> observeEventConstiutionChange(EthAddress address) throws InterruptedException, ExecutionException {
+		CompiledContract compiledContract = compiledContractParty();
+		Observable<EventConstiutionChange> observeEvents = ethereum.observeEvents(compiledContract.getAbi(), address, "ConstiutionChange", EventConstiutionChange.class);
+		return observeEvents;
+	}
+	/**
+	 * 
+	 * @param address
+	 * @return
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public Observable<EventOrganChanged_Organ_uint> observeEventOrganChanged_Organ_uint(EthAddress address) throws InterruptedException, ExecutionException {
+		CompiledContract compiledContract = compiledContractParty();
+		Observable<EventOrganChanged_Organ_uint> observeEvents = ethereum.observeEvents(compiledContract.getAbi(), address, "OrganChanged", EventOrganChanged_Organ_uint.class);
+		return observeEvents;
+	}
+	/**
+	 * 
+	 * @param address
+	 * @return
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public Observable<EventDivisionChanged_address_address_uint> observeEventDivisionChanged_address_address_uint(EthAddress address) throws InterruptedException, ExecutionException {
+		CompiledContract compiledContract = compiledContractParty();
+		Observable<EventDivisionChanged_address_address_uint> observeEvents = ethereum.observeEvents(compiledContract.getAbi(), address, "DivisionChanged", EventDivisionChanged_address_address_uint.class);
+		return observeEvents;
+	}
+
 
 	/**
 	 * Deploys a 'KUEKeNParty' on the blockchain.
@@ -217,23 +292,14 @@ public class PartyDeployer {
 	 *            the sender address
 	 * @param _name The name of the party or division.
 	 * @return the address of the deployed contract
+	 * @throws InterruptedException
+	 * @throws ExecutionException
 	 */
-	public CompletableFuture<EthAddress> deployKUEKeNParty(EthAccount sender, String _name) {
-		CompiledContract compiledContract = null;
-		if (compiledContracts == null)
-			compiledContract = ethereum.compile(contractSource, "KUEKeNParty");
-		else {
-			ContractMetadata contractMetadata = compiledContracts.contracts.get("KUEKeNParty");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for Organ not found");
-
-			compiledContract = CompiledContract.from(null, "KUEKeNParty", contractMetadata);
-		}
+	public CompletableFuture<EthAddress> deployKUEKeNParty(EthAccount sender, String _name) throws InterruptedException, ExecutionException {
+		CompiledContract compiledContract = compiledContractKUEKeNParty();
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender, _name);
 		return address;
 	}
-
-
 
 	/**
 	 * Deploys a 'KUEKeNParty' on the blockchain and wrapps the contcat proxy.
@@ -255,19 +321,31 @@ public class PartyDeployer {
 	 * @return the contract interface
 	 */
 	public KUEKeNParty createKUEKeNPartyProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
-		CompiledContract compiledContract = null;
-		if (compiledContracts == null)
-			compiledContract = ethereum.compile(contractSource, "KUEKeNParty");
-		else {
-			ContractMetadata contractMetadata = compiledContracts.contracts.get("KUEKeNParty");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for 'KUEKeNParty' not found");
-
-			compiledContract = CompiledContract.from(null, "KUEKeNParty", contractMetadata);
-		}
+		CompiledContract compiledContract = compiledContractKUEKeNParty();
 		KUEKeNParty kuekenparty = ethereum.createContractProxy(compiledContract, address, sender, KUEKeNParty.class);
 		return kuekenparty;
 	}
+
+	/**
+	 * Return the compiled contract for the contract 'KUEKeNParty', when in source the contract code is compiled.
+	 * @return the compiled contract for 'KUEKeNParty'.
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public CompiledContract compiledContractKUEKeNParty() throws InterruptedException, ExecutionException {
+		CompiledContract compiledContract = null;
+		if (compiledContracts == null){
+			Map<String, CompiledContract> contracts = ethereum.compile(contractSource).get();
+			compiledContract = contracts.get("KUEKeNParty");
+		} else {
+			ContractMetadata contractMetadata = compiledContracts.contracts.get("KUEKeNParty");
+			if (contractMetadata == null)
+				throw new IllegalArgumentException("Contract code for 'KUEKeNParty' not found");
+			compiledContract = CompiledContract.from(null, "KUEKeNParty", contractMetadata);
+		}
+		return compiledContract;
+	}
+
 
 	/**
 	 * Deploys a 'Conference' on the blockchain.
@@ -275,22 +353,14 @@ public class PartyDeployer {
 	 * @param sender
 	 *            the sender address
 	 * @return the address of the deployed contract
+	 * @throws InterruptedException
+	 * @throws ExecutionException
 	 */
-	public CompletableFuture<EthAddress> deployConference(EthAccount sender) {
-		CompiledContract compiledContract = null;
-		if (compiledContracts == null)
-			compiledContract = ethereum.compile(contractSource, "Conference");
-		else {
-			ContractMetadata contractMetadata = compiledContracts.contracts.get("Conference");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for 'Conference' not found");
-
-			compiledContract = CompiledContract.from(null, "Conference", contractMetadata);
-		}
+	public CompletableFuture<EthAddress> deployConference(EthAccount sender) throws InterruptedException, ExecutionException{
+		CompiledContract compiledContract = compiledContractConference();
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
 		return address;
 	}
-
 
 
 	/**
@@ -312,19 +382,43 @@ public class PartyDeployer {
 	 * @return the contract interface
 	 */
 	public Conference createConferenceProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
-		CompiledContract compiledContract = null;
-		if (compiledContracts == null)
-			compiledContract = ethereum.compile(contractSource, "Conference");
-		else {
-			ContractMetadata contractMetadata = compiledContracts.contracts.get("Conference");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for 'Conference' not found");
-
-			compiledContract = CompiledContract.from(null, "Conference", contractMetadata);
-		}
+		CompiledContract compiledContract = compiledContractConference();
 		Conference conference = ethereum.createContractProxy(compiledContract, address, sender, Conference.class);
 		return conference;
 	}
+
+	/**
+	 * Return the compiled contract for the contract 'Conference', when in source the contract code is compiled.
+	 * @return the compiled contract for 'Conference'.
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public CompiledContract compiledContractConference() throws InterruptedException, ExecutionException {
+		CompiledContract compiledContract = null;
+		if (compiledContracts == null){
+			Map<String, CompiledContract> contracts = ethereum.compile(contractSource).get();
+			compiledContract = contracts.get("Conference");
+		} else {
+			ContractMetadata contractMetadata = compiledContracts.contracts.get("Conference");
+			if (contractMetadata == null)
+				throw new IllegalArgumentException("Contract code for 'Conference' not found");
+			compiledContract = CompiledContract.from(null, "Conference", contractMetadata);
+		}
+		return compiledContract;
+	}
+	/**
+	 * 
+	 * @param address
+	 * @return
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public Observable<EventMemberAccreditated_uint_string_address> observeEventMemberAccreditated_uint_string_address(EthAddress address) throws InterruptedException, ExecutionException {
+		CompiledContract compiledContract = compiledContractConference();
+		Observable<EventMemberAccreditated_uint_string_address> observeEvents = ethereum.observeEvents(compiledContract.getAbi(), address, "MemberAccreditated", EventMemberAccreditated_uint_string_address.class);
+		return observeEvents;
+	}
+
 
 	/**
 	 * Deploys a 'FoundationConference' on the blockchain.
@@ -332,22 +426,14 @@ public class PartyDeployer {
 	 * @param sender
 	 *            the sender address
 	 * @return the address of the deployed contract
+	 * @throws InterruptedException
+	 * @throws ExecutionException
 	 */
-	public CompletableFuture<EthAddress> deployFoundationConference(EthAccount sender) {
-		CompiledContract compiledContract = null;
-		if (compiledContracts == null)
-			compiledContract = ethereum.compile(contractSource, "FoundationConference");
-		else {
-			ContractMetadata contractMetadata = compiledContracts.contracts.get("FoundationConference");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for 'FoundationConference' not found");
-
-			compiledContract = CompiledContract.from(null, "FoundationConference", contractMetadata);
-		}
+	public CompletableFuture<EthAddress> deployFoundationConference(EthAccount sender) throws InterruptedException, ExecutionException{
+		CompiledContract compiledContract = compiledContractFoundationConference();
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
 		return address;
 	}
-
 
 
 	/**
@@ -369,19 +455,31 @@ public class PartyDeployer {
 	 * @return the contract interface
 	 */
 	public FoundationConference createFoundationConferenceProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
-		CompiledContract compiledContract = null;
-		if (compiledContracts == null)
-			compiledContract = ethereum.compile(contractSource, "FoundationConference");
-		else {
-			ContractMetadata contractMetadata = compiledContracts.contracts.get("FoundationConference");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for 'FoundationConference' not found");
-
-			compiledContract = CompiledContract.from(null, "FoundationConference", contractMetadata);
-		}
+		CompiledContract compiledContract = compiledContractFoundationConference();
 		FoundationConference foundationconference = ethereum.createContractProxy(compiledContract, address, sender, FoundationConference.class);
 		return foundationconference;
 	}
+
+	/**
+	 * Return the compiled contract for the contract 'FoundationConference', when in source the contract code is compiled.
+	 * @return the compiled contract for 'FoundationConference'.
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public CompiledContract compiledContractFoundationConference() throws InterruptedException, ExecutionException {
+		CompiledContract compiledContract = null;
+		if (compiledContracts == null){
+			Map<String, CompiledContract> contracts = ethereum.compile(contractSource).get();
+			compiledContract = contracts.get("FoundationConference");
+		} else {
+			ContractMetadata contractMetadata = compiledContracts.contracts.get("FoundationConference");
+			if (contractMetadata == null)
+				throw new IllegalArgumentException("Contract code for 'FoundationConference' not found");
+			compiledContract = CompiledContract.from(null, "FoundationConference", contractMetadata);
+		}
+		return compiledContract;
+	}
+
 
 	/**
 	 * Deploys a 'OrganFunction' on the blockchain.
@@ -391,23 +489,14 @@ public class PartyDeployer {
 	 * @param _name 
 	 * @param _ch 
 	 * @return the address of the deployed contract
+	 * @throws InterruptedException
+	 * @throws ExecutionException
 	 */
-	public CompletableFuture<EthAddress> deployOrganFunction(EthAccount sender, String _name, String _ch) {
-		CompiledContract compiledContract = null;
-		if (compiledContracts == null)
-			compiledContract = ethereum.compile(contractSource, "OrganFunction");
-		else {
-			ContractMetadata contractMetadata = compiledContracts.contracts.get("OrganFunction");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for Organ not found");
-
-			compiledContract = CompiledContract.from(null, "OrganFunction", contractMetadata);
-		}
+	public CompletableFuture<EthAddress> deployOrganFunction(EthAccount sender, String _name, String _ch) throws InterruptedException, ExecutionException {
+		CompiledContract compiledContract = compiledContractOrganFunction();
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender, _name, _ch);
 		return address;
 	}
-
-
 
 	/**
 	 * Deploys a 'OrganFunction' on the blockchain and wrapps the contcat proxy.
@@ -430,18 +519,30 @@ public class PartyDeployer {
 	 * @return the contract interface
 	 */
 	public OrganFunction createOrganFunctionProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
-		CompiledContract compiledContract = null;
-		if (compiledContracts == null)
-			compiledContract = ethereum.compile(contractSource, "OrganFunction");
-		else {
-			ContractMetadata contractMetadata = compiledContracts.contracts.get("OrganFunction");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for 'OrganFunction' not found");
-
-			compiledContract = CompiledContract.from(null, "OrganFunction", contractMetadata);
-		}
+		CompiledContract compiledContract = compiledContractOrganFunction();
 		OrganFunction organfunction = ethereum.createContractProxy(compiledContract, address, sender, OrganFunction.class);
 		return organfunction;
 	}
+
+	/**
+	 * Return the compiled contract for the contract 'OrganFunction', when in source the contract code is compiled.
+	 * @return the compiled contract for 'OrganFunction'.
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public CompiledContract compiledContractOrganFunction() throws InterruptedException, ExecutionException {
+		CompiledContract compiledContract = null;
+		if (compiledContracts == null){
+			Map<String, CompiledContract> contracts = ethereum.compile(contractSource).get();
+			compiledContract = contracts.get("OrganFunction");
+		} else {
+			ContractMetadata contractMetadata = compiledContracts.contracts.get("OrganFunction");
+			if (contractMetadata == null)
+				throw new IllegalArgumentException("Contract code for 'OrganFunction' not found");
+			compiledContract = CompiledContract.from(null, "OrganFunction", contractMetadata);
+		}
+		return compiledContract;
+	}
+
 
 }

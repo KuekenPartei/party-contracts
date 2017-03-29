@@ -20,7 +20,9 @@ public interface ShortBlog extends Manageable{
 	
 	String name();
 	
-	Boolean managers(String key);
+	Boolean managers(org.adridadou.ethereum.values.EthAddress key);
+	
+	ShortBlogMessage messages(Integer key);
 
 	/**
 	* Send a message to the blog,

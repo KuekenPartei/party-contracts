@@ -22,13 +22,13 @@ public interface Organ extends Manageable,MemberAware{
 	
 	Integer lastFunctionId();
 	
-	String blogRegistry();
+	org.adridadou.ethereum.values.EthAddress blogRegistry();
 	
 	Boolean isActive();
 	
 	Integer ballotCount();
 	
-	Boolean managers(String key);
+	Boolean managers(org.adridadou.ethereum.values.EthAddress key);
 
 	/**
 	* Publish the message to the blog.
@@ -45,7 +45,7 @@ public interface Organ extends Manageable,MemberAware{
 	* @param _id -
 	* @param _address -
 	**/
-	java.util.concurrent.CompletableFuture<Void> changeMember(Integer _id,String _address);
+	java.util.concurrent.CompletableFuture<Void> changeMember(Integer _id,org.adridadou.ethereum.values.EthAddress _address);
 	/**
 	* Create a function of this organ.
 	* 
@@ -74,19 +74,19 @@ public interface Organ extends Manageable,MemberAware{
 	**/
 	java.util.concurrent.CompletableFuture<Integer> createBallot(String name,Byte[][] proposalNames);
 	
-	String getLastBallot();
+	org.adridadou.ethereum.values.EthAddress getLastBallot();
 	
-	String getOrganBlog();
+	org.adridadou.ethereum.values.EthAddress getOrganBlog();
 	
-	java.util.concurrent.CompletableFuture<Void> addOrganFunction(String _of,String _name);
+	java.util.concurrent.CompletableFuture<Void> addOrganFunction(org.adridadou.ethereum.values.EthAddress _of,String _name);
 	
-	String getOrganFunction(Integer _id);
+	org.adridadou.ethereum.values.EthAddress getOrganFunction(Integer _id);
 
 	String getOrganName();
 
 	java.util.concurrent.CompletableFuture<Void> setOrganName (String aOrganName);
 
-	java.util.concurrent.CompletableFuture<Void> setBlogRegistry (String aBlogRegistry);
+	java.util.concurrent.CompletableFuture<Void> setBlogRegistry (org.adridadou.ethereum.values.EthAddress aBlogRegistry);
 
 	//Start of user code additional_methods
 	//End of user code

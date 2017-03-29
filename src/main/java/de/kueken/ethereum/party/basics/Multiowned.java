@@ -28,6 +28,8 @@ public interface Multiowned{
 	* index on the list of owners to allow reverse lookup
 	**/
 	Integer m_ownerIndex(Integer key);
+	
+	MultiownedPendingState m_pending(Byte[] key);	
 
 	/**
 	* Constructor is given number of sigs required to do protected "onlymanyowners" transactions
@@ -36,11 +38,11 @@ public interface Multiowned{
 	* @param _owners -
 	* @param _required -
 	**/
-	java.util.concurrent.CompletableFuture<Void> Multiowned(String[] _owners,Integer _required);
+	java.util.concurrent.CompletableFuture<Void> Multiowned(org.adridadou.ethereum.values.EthAddress[] _owners,Integer _required);
 	
-	java.util.concurrent.CompletableFuture<Boolean> isOwner(String _addr);
+	java.util.concurrent.CompletableFuture<Boolean> isOwner(org.adridadou.ethereum.values.EthAddress _addr);
 	
-	Boolean hasConfirmed(Byte[] _operation,String _owner);
+	Boolean hasConfirmed(Byte[] _operation,org.adridadou.ethereum.values.EthAddress _owner);
 
 	//Start of user code additional_methods
 

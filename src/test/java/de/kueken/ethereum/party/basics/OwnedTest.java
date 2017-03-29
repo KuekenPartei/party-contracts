@@ -68,7 +68,7 @@ public class OwnedTest extends AbstractContractTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-		CompiledContract compiledContract = ethereum.compile(contractSource, getContractName());
+		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
         fixtureAddress = address.get();
 		setFixture(ethereum.createContractProxy(compiledContract, fixtureAddress, sender, Owned.class));
@@ -93,8 +93,8 @@ public class OwnedTest extends AbstractContractTest{
 		//End of user code
 	}
 	/**
-	 * Test method for  changeOwner(String newOwner).
-	 * see {@link Owned#changeOwner( String)}
+	 * Test method for  changeOwner(org.adridadou.ethereum.values.EthAddress newOwner).
+	 * see {@link Owned#changeOwner( org.adridadou.ethereum.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test

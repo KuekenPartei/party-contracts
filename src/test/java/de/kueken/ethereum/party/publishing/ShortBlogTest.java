@@ -70,7 +70,7 @@ public class ShortBlogTest extends ManageableTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-		CompiledContract compiledContract = ethereum.compile(contractSource, getContractName());
+		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
 		//TODO: set the constructor args
 		String _name = "_name";
         CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender
@@ -95,7 +95,7 @@ public class ShortBlogTest extends ManageableTest{
 	public void testSendMessage_string_string_string() throws Exception {
 		//Start of user code testSendMessage_string_string_string
 		assertEquals(0, fixture.messageCount().intValue());
-		fixture.sendMessage("test1", "h1", "er1");
+		fixture.sendMessage("test1", "h1", "er1").get();
 		assertEquals(1, fixture.messageCount().intValue());
 		Integer lastMessageDate = fixture.lastMessageDate();
 
@@ -113,18 +113,18 @@ public class ShortBlogTest extends ManageableTest{
 	public void testSendMessage_No_Manager() throws Exception {
 
 		assertEquals(0, fixture.messageCount().intValue());
-		fixture.sendMessage("test1", "h1", "er1");
+		fixture.sendMessage("test1", "h1", "er1").get();
 		assertEquals(1, fixture.messageCount().intValue());
 
-		fixture.addManager(EthAddress.of(ECKey.fromPrivate(java.math.BigInteger.valueOf(100002L))).withLeading0x());
+		fixture.addManager(EthAddress.of(ECKey.fromPrivate(java.math.BigInteger.valueOf(100002L)))).get();
 		assertEquals(2, fixture.mangerCount().intValue());
-		fixture.removeManager(EthAddress.of(senderAddressS).withLeading0x());
+		fixture.removeManager(sender.getAddress()).get();
 		assertEquals(1, fixture.mangerCount().intValue());
 
 		try {
-			fixture.sendMessage("test1", "h1", "er1");
+			fixture.sendMessage("test1", "h1", "er1").get();
 			fail("Thow exception");
-		} catch (EthereumApiException e) {
+		} catch (Exception e) {
 		}
 		assertEquals(1, fixture.messageCount().intValue());
 

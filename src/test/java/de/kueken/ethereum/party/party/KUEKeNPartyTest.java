@@ -3,9 +3,6 @@ package de.kueken.ethereum.party.party;
 import static org.junit.Assert.*;
 
 import de.kueken.ethereum.party.basics.*;
-import de.kueken.ethereum.party.deployer.MembersDeployer;
-import de.kueken.ethereum.party.deployer.PartyDeployer;
-import de.kueken.ethereum.party.deployer.PublishingDeployer;
 import de.kueken.ethereum.party.members.*;
 import de.kueken.ethereum.party.publishing.*;
 import de.kueken.ethereum.party.voting.*;
@@ -35,6 +32,9 @@ import de.kueken.ethereum.party.AbstractContractTest;
 import de.kueken.ethereum.party.EthereumInstance;
 
 // Start of user code KUEKeNPartyTest.customImports
+import de.kueken.ethereum.party.deployer.MembersDeployer;
+import de.kueken.ethereum.party.deployer.PartyDeployer;
+import de.kueken.ethereum.party.deployer.PublishingDeployer;
 
 // End of user code
 
@@ -117,8 +117,8 @@ public class KUEKeNPartyTest extends PartyTest{
 
 
 	/**
-	 * Test method for  boostrapParty(String fc,String br).
-	 * see {@link KUEKeNParty#boostrapParty( String, String)}
+	 * Test method for  boostrapParty(org.adridadou.ethereum.values.EthAddress fc,org.adridadou.ethereum.values.EthAddress br).
+	 * see {@link KUEKeNParty#boostrapParty( org.adridadou.ethereum.values.EthAddress, org.adridadou.ethereum.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test

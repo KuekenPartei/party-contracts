@@ -13,6 +13,8 @@ import de.kueken.ethereum.party.members.*;
 * A public votes are counted by the events.
 **/
 public interface PublicBallot extends BasicBallot{
+	
+	BasicBallotBallotProposal proposals(Integer key);	
 
 	
 	java.util.concurrent.CompletableFuture<Void> castVote(Integer _voteFor);

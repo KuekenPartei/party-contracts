@@ -75,7 +75,7 @@ public class BlogRegistryTest extends ManageableTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-		CompiledContract compiledContract = ethereum.compile(contractSource, getContractName());
+		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
         fixtureAddress = address.get();
 		setFixture(ethereum.createContractProxy(compiledContract, fixtureAddress, sender, BlogRegistry.class));
@@ -99,11 +99,11 @@ public class BlogRegistryTest extends ManageableTest{
 		
 		assertEquals(0, fixture.blogCount().intValue());		
 		String _name = "blogname1";
-		fixture.registerBlog(_name);
+		fixture.registerBlog(_name).get();
 		assertEquals(1, fixture.blogCount().intValue());	
-		String blogAddress = fixture.blogs(0);
+		EthAddress blogAddress = fixture.blogs(0);
 		System.out.println(blogAddress  );
-		ShortBlog shortBlog = publishingDeployer.createShortBlogProxy(sender, EthAddress.of(blogAddress));
+		ShortBlog shortBlog = publishingDeployer.createShortBlogProxy(sender, blogAddress);
 		
 		System.out.println("blogName: "+  shortBlog.name()+ ""+info(shortBlog));
 		assertEquals(_name, shortBlog.name());
@@ -112,7 +112,7 @@ public class BlogRegistryTest extends ManageableTest{
 		String message="message";
 		String hash="hash";
 		String er="external resource";
-		shortBlog.sendMessage(message, hash, er);
+		shortBlog.sendMessage(message, hash, er).get();
 		assertEquals(1, shortBlog.messageCount().intValue());
 		System.out.println("blogName: "+  shortBlog.name()+ ""+info(shortBlog));
 

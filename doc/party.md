@@ -148,7 +148,6 @@ _function|OrganFunction||
 ## contract: Party
 
     overview:
-	constructor Party(string _name)
 	function createOrgan(string organName) public  
 	function addOrgan(address _organ) public  onlyManager() 
 	function addSubDivision(address _subDivision) public  
@@ -174,15 +173,6 @@ blogregistry|BlogRegistry|public||
 parent|Party|public||
 subDivisionCount|uint|public||
 -
-
-#### Party.Party(string _name) public  
-
-Construct a new party or division.
-
-
-name|type|doc
-----|----|----
-_name|string|The name of the party or division.
 
 #### Party.createOrgan(string organName) public  
 

@@ -68,7 +68,7 @@ public class MultiownedTest extends AbstractContractTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-		CompiledContract compiledContract = ethereum.compile(contractSource, getContractName());
+		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
         fixtureAddress = address.get();
 		setFixture(ethereum.createContractProxy(compiledContract, fixtureAddress, sender, Multiowned.class));
@@ -81,8 +81,8 @@ public class MultiownedTest extends AbstractContractTest{
 
 
 	/**
-	 * Test method for  Multiowned(String[] _owners,Integer _required).
-	 * see {@link Multiowned#Multiowned( String[], Integer)}
+	 * Test method for  Multiowned(org.adridadou.ethereum.values.EthAddress[] _owners,Integer _required).
+	 * see {@link Multiowned#Multiowned( org.adridadou.ethereum.values.EthAddress[], Integer)}
 	 * @throws Exception
 	 */
 	@Test
@@ -93,8 +93,8 @@ public class MultiownedTest extends AbstractContractTest{
 		//End of user code
 	}
 	/**
-	 * Test method for  isOwner(String _addr).
-	 * see {@link Multiowned#isOwner( String)}
+	 * Test method for  isOwner(org.adridadou.ethereum.values.EthAddress _addr).
+	 * see {@link Multiowned#isOwner( org.adridadou.ethereum.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test
@@ -105,8 +105,8 @@ public class MultiownedTest extends AbstractContractTest{
 		//End of user code
 	}
 	/**
-	 * Test method for  hasConfirmed(Byte[] _operation,String _owner).
-	 * see {@link Multiowned#hasConfirmed( Byte[], String)}
+	 * Test method for  hasConfirmed(Byte[] _operation,org.adridadou.ethereum.values.EthAddress _owner).
+	 * see {@link Multiowned#hasConfirmed( Byte[], org.adridadou.ethereum.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test

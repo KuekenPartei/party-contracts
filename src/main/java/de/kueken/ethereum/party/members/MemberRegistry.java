@@ -22,7 +22,11 @@ public interface MemberRegistry extends Manageable{
 	
 	Integer activeMemberCount();
 	
-	Boolean managers(String key);
+	Boolean managers(org.adridadou.ethereum.values.EthAddress key);
+	
+	MemberRegistryMember partyMembers(Integer key);
+	
+	MemberRegistryMember memberAddress(org.adridadou.ethereum.values.EthAddress key);
 
 	/**
 	* Check if the given adress is a registed active member.
@@ -31,10 +35,10 @@ public interface MemberRegistry extends Manageable{
 	* @return
 	*  -
 	**/
-	Boolean isMember(String _memberAdress);
+	Boolean isMember(org.adridadou.ethereum.values.EthAddress _memberAdress);
 
 	
-	String getMemberAddress(Integer id);
+	org.adridadou.ethereum.values.EthAddress getMemberAddress(Integer id);
 
 	/**
 	* get the number of active members
@@ -49,7 +53,7 @@ public interface MemberRegistry extends Manageable{
 	* @param name -
 	* @param _memberAddress -
 	**/
-	java.util.concurrent.CompletableFuture<Void> addMember(String name,String _memberAddress);
+	java.util.concurrent.CompletableFuture<Void> addMember(String name,org.adridadou.ethereum.values.EthAddress _memberAddress);
 	/**
 	* set the memberstate to inactive
 	* 
@@ -63,18 +67,18 @@ public interface MemberRegistry extends Manageable{
 	* @return
 	*  -
 	**/
-	Boolean isActiveMember(String _memberAdress);
+	Boolean isActiveMember(org.adridadou.ethereum.values.EthAddress _memberAdress);
 	/**
 	* Changes the address of the member.
 	* 
 	* @param id -
 	* @param _newMemberAddress -
 	**/
-	java.util.concurrent.CompletableFuture<Void> changeMemberAddress(Integer id,String _newMemberAddress);
+	java.util.concurrent.CompletableFuture<Void> changeMemberAddress(Integer id,org.adridadou.ethereum.values.EthAddress _newMemberAddress);
 	
-	ReturnGetMemberData_string_uint getMemberData(String _address);
+	ReturnGetMemberData_string_uint getMemberData(org.adridadou.ethereum.values.EthAddress _address);
 	
-	java.util.concurrent.CompletableFuture<Void> publishMemberEvent(String mAddress,Integer eventType);
+	java.util.concurrent.CompletableFuture<Void> publishMemberEvent(org.adridadou.ethereum.values.EthAddress mAddress,Integer eventType);
 
 	//Start of user code additional_methods
 

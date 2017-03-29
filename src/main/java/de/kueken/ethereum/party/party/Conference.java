@@ -21,10 +21,10 @@ public interface Conference extends Organ{
 	
 	Integer date();
 	
-	Boolean managers(String key);
+	Boolean managers(org.adridadou.ethereum.values.EthAddress key);
 
 	
-	java.util.concurrent.CompletableFuture<Void> accreditationMember(String _address);
+	java.util.concurrent.CompletableFuture<Void> accreditationMember(org.adridadou.ethereum.values.EthAddress _address);
 
 	//Start of user code additional_methods
 

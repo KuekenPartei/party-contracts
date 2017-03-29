@@ -1,10 +1,12 @@
 package de.kueken.ethereum.party.deployer;
 
+import rx.Observable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -35,7 +37,7 @@ public class MembersDeployer {
 	private EthereumFacade ethereum;
 	private SoliditySource contractSource;
 	private CompilationResult compiledContracts;
-	private static String filename = "/main/resources/mix/members.sol";
+	private static String filename = "/mix/members.sol";
 
 	/**
 	 * Create an instance of the deployer with the default contract code file.
@@ -55,21 +57,7 @@ public class MembersDeployer {
 	 */
 	public MembersDeployer(EthereumFacade ethereum, String contractSourceFile, boolean compiled) {
 		this.ethereum = ethereum;
-		try {
-			if (!compiled)
-				contractSource = SoliditySource.from(new File(this.getClass().getResource(contractSourceFile).toURI()));
-			else {
-				File file = new File(this.getClass().getResource(contractSourceFile).toURI());
-				String rawJson = IOUtils.toString(new FileInputStream(file), EthereumFacade.CHARSET);
-				compiledContracts = CompilationResult.parse(rawJson);
-			}
-		} catch (URISyntaxException e) {
-			throw new IllegalArgumentException(e);
-		} catch (FileNotFoundException e) {
-			throw new IllegalArgumentException(e);
-		} catch (IOException e) {
-			throw new IllegalArgumentException(e);
-		}
+		setContractSource(contractSourceFile, compiled);
 	}
 
 	/**
@@ -94,6 +82,25 @@ public class MembersDeployer {
 		}
 	}
 
+	/**
+	 * Change the contract source.
+	 * 
+	 * @param contractSourceFile
+	 * @param compiled
+	 */
+	public void setContractSource(String contractSourceFile, boolean compiled) {
+		try {
+			if (!compiled) {
+				contractSource = SoliditySource.from(this.getClass().getResourceAsStream(contractSourceFile));
+			} else {
+				String rawJson = IOUtils.toString(this.getClass().getResourceAsStream(contractSourceFile),
+						EthereumFacade.CHARSET);
+				compiledContracts = CompilationResult.parse(rawJson);
+			}
+		} catch (IOException e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
 
 
 	/**
@@ -102,22 +109,14 @@ public class MembersDeployer {
 	 * @param sender
 	 *            the sender address
 	 * @return the address of the deployed contract
+	 * @throws InterruptedException
+	 * @throws ExecutionException
 	 */
-	public CompletableFuture<EthAddress> deployMemberRegistry(EthAccount sender) {
-		CompiledContract compiledContract = null;
-		if (compiledContracts == null)
-			compiledContract = ethereum.compile(contractSource, "MemberRegistry");
-		else {
-			ContractMetadata contractMetadata = compiledContracts.contracts.get("MemberRegistry");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for 'MemberRegistry' not found");
-
-			compiledContract = CompiledContract.from(null, "MemberRegistry", contractMetadata);
-		}
+	public CompletableFuture<EthAddress> deployMemberRegistry(EthAccount sender) throws InterruptedException, ExecutionException{
+		CompiledContract compiledContract = compiledContractMemberRegistry();
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
 		return address;
 	}
-
 
 
 	/**
@@ -139,19 +138,43 @@ public class MembersDeployer {
 	 * @return the contract interface
 	 */
 	public MemberRegistry createMemberRegistryProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
-		CompiledContract compiledContract = null;
-		if (compiledContracts == null)
-			compiledContract = ethereum.compile(contractSource, "MemberRegistry");
-		else {
-			ContractMetadata contractMetadata = compiledContracts.contracts.get("MemberRegistry");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for 'MemberRegistry' not found");
-
-			compiledContract = CompiledContract.from(null, "MemberRegistry", contractMetadata);
-		}
+		CompiledContract compiledContract = compiledContractMemberRegistry();
 		MemberRegistry memberregistry = ethereum.createContractProxy(compiledContract, address, sender, MemberRegistry.class);
 		return memberregistry;
 	}
+
+	/**
+	 * Return the compiled contract for the contract 'MemberRegistry', when in source the contract code is compiled.
+	 * @return the compiled contract for 'MemberRegistry'.
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public CompiledContract compiledContractMemberRegistry() throws InterruptedException, ExecutionException {
+		CompiledContract compiledContract = null;
+		if (compiledContracts == null){
+			Map<String, CompiledContract> contracts = ethereum.compile(contractSource).get();
+			compiledContract = contracts.get("MemberRegistry");
+		} else {
+			ContractMetadata contractMetadata = compiledContracts.contracts.get("MemberRegistry");
+			if (contractMetadata == null)
+				throw new IllegalArgumentException("Contract code for 'MemberRegistry' not found");
+			compiledContract = CompiledContract.from(null, "MemberRegistry", contractMetadata);
+		}
+		return compiledContract;
+	}
+	/**
+	 * 
+	 * @param address
+	 * @return
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public Observable<EventMemberEvent_address_EventType_uint_string_MemberState> observeEventMemberEvent_address_EventType_uint_string_MemberState(EthAddress address) throws InterruptedException, ExecutionException {
+		CompiledContract compiledContract = compiledContractMemberRegistry();
+		Observable<EventMemberEvent_address_EventType_uint_string_MemberState> observeEvents = ethereum.observeEvents(compiledContract.getAbi(), address, "MemberEvent", EventMemberEvent_address_EventType_uint_string_MemberState.class);
+		return observeEvents;
+	}
+
 
 	/**
 	 * Deploys a 'MemberAware' on the blockchain.
@@ -159,22 +182,14 @@ public class MembersDeployer {
 	 * @param sender
 	 *            the sender address
 	 * @return the address of the deployed contract
+	 * @throws InterruptedException
+	 * @throws ExecutionException
 	 */
-	public CompletableFuture<EthAddress> deployMemberAware(EthAccount sender) {
-		CompiledContract compiledContract = null;
-		if (compiledContracts == null)
-			compiledContract = ethereum.compile(contractSource, "MemberAware");
-		else {
-			ContractMetadata contractMetadata = compiledContracts.contracts.get("MemberAware");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for 'MemberAware' not found");
-
-			compiledContract = CompiledContract.from(null, "MemberAware", contractMetadata);
-		}
+	public CompletableFuture<EthAddress> deployMemberAware(EthAccount sender) throws InterruptedException, ExecutionException{
+		CompiledContract compiledContract = compiledContractMemberAware();
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
 		return address;
 	}
-
 
 
 	/**
@@ -196,18 +211,30 @@ public class MembersDeployer {
 	 * @return the contract interface
 	 */
 	public MemberAware createMemberAwareProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
-		CompiledContract compiledContract = null;
-		if (compiledContracts == null)
-			compiledContract = ethereum.compile(contractSource, "MemberAware");
-		else {
-			ContractMetadata contractMetadata = compiledContracts.contracts.get("MemberAware");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for 'MemberAware' not found");
-
-			compiledContract = CompiledContract.from(null, "MemberAware", contractMetadata);
-		}
+		CompiledContract compiledContract = compiledContractMemberAware();
 		MemberAware memberaware = ethereum.createContractProxy(compiledContract, address, sender, MemberAware.class);
 		return memberaware;
 	}
+
+	/**
+	 * Return the compiled contract for the contract 'MemberAware', when in source the contract code is compiled.
+	 * @return the compiled contract for 'MemberAware'.
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public CompiledContract compiledContractMemberAware() throws InterruptedException, ExecutionException {
+		CompiledContract compiledContract = null;
+		if (compiledContracts == null){
+			Map<String, CompiledContract> contracts = ethereum.compile(contractSource).get();
+			compiledContract = contracts.get("MemberAware");
+		} else {
+			ContractMetadata contractMetadata = compiledContracts.contracts.get("MemberAware");
+			if (contractMetadata == null)
+				throw new IllegalArgumentException("Contract code for 'MemberAware' not found");
+			compiledContract = CompiledContract.from(null, "MemberAware", contractMetadata);
+		}
+		return compiledContract;
+	}
+
 
 }

@@ -1,10 +1,12 @@
 package de.kueken.ethereum.party.deployer;
 
+import rx.Observable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -35,7 +37,7 @@ public class PublishingDeployer {
 	private EthereumFacade ethereum;
 	private SoliditySource contractSource;
 	private CompilationResult compiledContracts;
-	private static String filename = "/main/resources/mix/publishing.sol";
+	private static String filename = "/mix/publishing.sol";
 
 	/**
 	 * Create an instance of the deployer with the default contract code file.
@@ -55,21 +57,7 @@ public class PublishingDeployer {
 	 */
 	public PublishingDeployer(EthereumFacade ethereum, String contractSourceFile, boolean compiled) {
 		this.ethereum = ethereum;
-		try {
-			if (!compiled)
-				contractSource = SoliditySource.from(new File(this.getClass().getResource(contractSourceFile).toURI()));
-			else {
-				File file = new File(this.getClass().getResource(contractSourceFile).toURI());
-				String rawJson = IOUtils.toString(new FileInputStream(file), EthereumFacade.CHARSET);
-				compiledContracts = CompilationResult.parse(rawJson);
-			}
-		} catch (URISyntaxException e) {
-			throw new IllegalArgumentException(e);
-		} catch (FileNotFoundException e) {
-			throw new IllegalArgumentException(e);
-		} catch (IOException e) {
-			throw new IllegalArgumentException(e);
-		}
+		setContractSource(contractSourceFile, compiled);
 	}
 
 	/**
@@ -94,6 +82,25 @@ public class PublishingDeployer {
 		}
 	}
 
+	/**
+	 * Change the contract source.
+	 * 
+	 * @param contractSourceFile
+	 * @param compiled
+	 */
+	public void setContractSource(String contractSourceFile, boolean compiled) {
+		try {
+			if (!compiled) {
+				contractSource = SoliditySource.from(this.getClass().getResourceAsStream(contractSourceFile));
+			} else {
+				String rawJson = IOUtils.toString(this.getClass().getResourceAsStream(contractSourceFile),
+						EthereumFacade.CHARSET);
+				compiledContracts = CompilationResult.parse(rawJson);
+			}
+		} catch (IOException e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
 
 
 	/**
@@ -103,23 +110,14 @@ public class PublishingDeployer {
 	 *            the sender address
 	 * @param _name 
 	 * @return the address of the deployed contract
+	 * @throws InterruptedException
+	 * @throws ExecutionException
 	 */
-	public CompletableFuture<EthAddress> deployShortBlog(EthAccount sender, String _name) {
-		CompiledContract compiledContract = null;
-		if (compiledContracts == null)
-			compiledContract = ethereum.compile(contractSource, "ShortBlog");
-		else {
-			ContractMetadata contractMetadata = compiledContracts.contracts.get("ShortBlog");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for Organ not found");
-
-			compiledContract = CompiledContract.from(null, "ShortBlog", contractMetadata);
-		}
+	public CompletableFuture<EthAddress> deployShortBlog(EthAccount sender, String _name) throws InterruptedException, ExecutionException {
+		CompiledContract compiledContract = compiledContractShortBlog();
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender, _name);
 		return address;
 	}
-
-
 
 	/**
 	 * Deploys a 'ShortBlog' on the blockchain and wrapps the contcat proxy.
@@ -141,19 +139,43 @@ public class PublishingDeployer {
 	 * @return the contract interface
 	 */
 	public ShortBlog createShortBlogProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
-		CompiledContract compiledContract = null;
-		if (compiledContracts == null)
-			compiledContract = ethereum.compile(contractSource, "ShortBlog");
-		else {
-			ContractMetadata contractMetadata = compiledContracts.contracts.get("ShortBlog");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for 'ShortBlog' not found");
-
-			compiledContract = CompiledContract.from(null, "ShortBlog", contractMetadata);
-		}
+		CompiledContract compiledContract = compiledContractShortBlog();
 		ShortBlog shortblog = ethereum.createContractProxy(compiledContract, address, sender, ShortBlog.class);
 		return shortblog;
 	}
+
+	/**
+	 * Return the compiled contract for the contract 'ShortBlog', when in source the contract code is compiled.
+	 * @return the compiled contract for 'ShortBlog'.
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public CompiledContract compiledContractShortBlog() throws InterruptedException, ExecutionException {
+		CompiledContract compiledContract = null;
+		if (compiledContracts == null){
+			Map<String, CompiledContract> contracts = ethereum.compile(contractSource).get();
+			compiledContract = contracts.get("ShortBlog");
+		} else {
+			ContractMetadata contractMetadata = compiledContracts.contracts.get("ShortBlog");
+			if (contractMetadata == null)
+				throw new IllegalArgumentException("Contract code for 'ShortBlog' not found");
+			compiledContract = CompiledContract.from(null, "ShortBlog", contractMetadata);
+		}
+		return compiledContract;
+	}
+	/**
+	 * 
+	 * @param address
+	 * @return
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public Observable<EventNewMessage_string_uint_address_string_string> observeEventNewMessage_string_uint_address_string_string(EthAddress address) throws InterruptedException, ExecutionException {
+		CompiledContract compiledContract = compiledContractShortBlog();
+		Observable<EventNewMessage_string_uint_address_string_string> observeEvents = ethereum.observeEvents(compiledContract.getAbi(), address, "NewMessage", EventNewMessage_string_uint_address_string_string.class);
+		return observeEvents;
+	}
+
 
 	/**
 	 * Deploys a 'BlogRegistry' on the blockchain.
@@ -161,22 +183,14 @@ public class PublishingDeployer {
 	 * @param sender
 	 *            the sender address
 	 * @return the address of the deployed contract
+	 * @throws InterruptedException
+	 * @throws ExecutionException
 	 */
-	public CompletableFuture<EthAddress> deployBlogRegistry(EthAccount sender) {
-		CompiledContract compiledContract = null;
-		if (compiledContracts == null)
-			compiledContract = ethereum.compile(contractSource, "BlogRegistry");
-		else {
-			ContractMetadata contractMetadata = compiledContracts.contracts.get("BlogRegistry");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for 'BlogRegistry' not found");
-
-			compiledContract = CompiledContract.from(null, "BlogRegistry", contractMetadata);
-		}
+	public CompletableFuture<EthAddress> deployBlogRegistry(EthAccount sender) throws InterruptedException, ExecutionException{
+		CompiledContract compiledContract = compiledContractBlogRegistry();
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
 		return address;
 	}
-
 
 
 	/**
@@ -198,18 +212,42 @@ public class PublishingDeployer {
 	 * @return the contract interface
 	 */
 	public BlogRegistry createBlogRegistryProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
-		CompiledContract compiledContract = null;
-		if (compiledContracts == null)
-			compiledContract = ethereum.compile(contractSource, "BlogRegistry");
-		else {
-			ContractMetadata contractMetadata = compiledContracts.contracts.get("BlogRegistry");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for 'BlogRegistry' not found");
-
-			compiledContract = CompiledContract.from(null, "BlogRegistry", contractMetadata);
-		}
+		CompiledContract compiledContract = compiledContractBlogRegistry();
 		BlogRegistry blogregistry = ethereum.createContractProxy(compiledContract, address, sender, BlogRegistry.class);
 		return blogregistry;
 	}
+
+	/**
+	 * Return the compiled contract for the contract 'BlogRegistry', when in source the contract code is compiled.
+	 * @return the compiled contract for 'BlogRegistry'.
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public CompiledContract compiledContractBlogRegistry() throws InterruptedException, ExecutionException {
+		CompiledContract compiledContract = null;
+		if (compiledContracts == null){
+			Map<String, CompiledContract> contracts = ethereum.compile(contractSource).get();
+			compiledContract = contracts.get("BlogRegistry");
+		} else {
+			ContractMetadata contractMetadata = compiledContracts.contracts.get("BlogRegistry");
+			if (contractMetadata == null)
+				throw new IllegalArgumentException("Contract code for 'BlogRegistry' not found");
+			compiledContract = CompiledContract.from(null, "BlogRegistry", contractMetadata);
+		}
+		return compiledContract;
+	}
+	/**
+	 * 
+	 * @param address
+	 * @return
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public Observable<EventNewBlog_uint_string_address> observeEventNewBlog_uint_string_address(EthAddress address) throws InterruptedException, ExecutionException {
+		CompiledContract compiledContract = compiledContractBlogRegistry();
+		Observable<EventNewBlog_uint_string_address> observeEvents = ethereum.observeEvents(compiledContract.getAbi(), address, "NewBlog", EventNewBlog_uint_string_address.class);
+		return observeEvents;
+	}
+
 
 }
