@@ -55,9 +55,8 @@ public class OwnedTest extends AbstractContractTest{
 	@Before
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
-
-        File contractSrc = new File(this.getClass().getResource("/mix/basics.sol").toURI());
-        contractSource = SoliditySource.from(contractSrc);
+		initTest();
+        createFixture();
 		//End of user code
 	}
 
@@ -88,8 +87,7 @@ public class OwnedTest extends AbstractContractTest{
 	@Test
 	public void testGetOwner() throws Exception {
 		//Start of user code testGetOwner
-		//TODO: implement this
-		fail("not implemented");
+		assertEquals(sender.getAddress(), fixture.owner());
 		//End of user code
 	}
 	/**
@@ -100,8 +98,9 @@ public class OwnedTest extends AbstractContractTest{
 	@Test
 	public void testChangeOwner_address() throws Exception {
 		//Start of user code testChangeOwner_address
-		//TODO: implement this
-		fail("not implemented");
+		assertEquals(sender.getAddress(), fixture.owner());
+		fixture.changeOwner(fixtureAddress).get();
+		assertEquals(fixtureAddress, fixture.owner());
 		//End of user code
 	}
 	/**

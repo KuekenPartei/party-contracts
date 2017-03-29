@@ -179,7 +179,9 @@ contract PublicBallot is BasicBallot {
 		//End of user code
 	}
 	// Start of user code PublicBallot.operations
-	//TODO: implement
+	function PublicBallot(address _registry,string _name,string _hash) BasicBallot(_registry,_name,_hash) public   {
+		
+	}
 	// End of user code
 }
 

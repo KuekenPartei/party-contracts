@@ -3,7 +3,7 @@ package de.kueken.ethereum.party.voting;
 import static org.junit.Assert.*;
 
 import de.kueken.ethereum.party.members.*;
-
+import de.kueken.ethereum.party.voting.BasicBallot.BallotState;
 import de.kueken.ethereum.party.voting.PublicBallot.*;
 
 
@@ -27,6 +27,8 @@ import org.junit.Test;
 
 import de.kueken.ethereum.party.AbstractContractTest;
 import de.kueken.ethereum.party.EthereumInstance;
+import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
+import de.kueken.ethereum.party.deployer.MembersDeployer;
 
 // Start of user code PublicBallotTest.customImports
 
@@ -58,9 +60,7 @@ public class PublicBallotTest extends BasicBallotTest{
 	@Before
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
-
-        File contractSrc = new File(this.getClass().getResource("/mix/voting.sol").toURI());
-        contractSource = SoliditySource.from(contractSrc);
+		membersDeployer = new MembersDeployer(ethereum,"/mix/combine.json",true);
 		createFixture();
 		//End of user code
 	}
@@ -73,7 +73,13 @@ public class PublicBallotTest extends BasicBallotTest{
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
 		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
-		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
+		DeployDuo<MemberRegistry> registry = membersDeployer.createMemberRegistry(sender);
+
+		EthAddress _registry = registry.contractAddress;
+		String _name = "_name";
+		String _hash = "_hash";
+        CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender
+				, _registry, _name, _hash);
         fixtureAddress = address.get();
 		setFixture(ethereum.createContractProxy(compiledContract, fixtureAddress, sender, PublicBallot.class));
 		//End of user code
@@ -97,5 +103,8 @@ public class PublicBallotTest extends BasicBallotTest{
 		//End of user code
 	}
 	//Start of user code customTests    
+	
+	
+
 	//End of user code
 }

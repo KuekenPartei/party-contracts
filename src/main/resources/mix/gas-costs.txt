@@ -306,6 +306,22 @@ external:
 internal:
 
 ======= PublicBallot =======
+Gas estimation:
+construction:
+   [???] + 472000 = [???]
+external:
+   proposals(uint256):	[???]
+   ballotStart():	264
+   ballotName():	[???]
+   ballotState():	349
+   ballotEnd():	330
+   castVote(uint256):	370
+   startBallot():	40463
+   ballotHash():	[???]
+   addProposal(string,string,string,address):	[???]
+   accessregistry():	513
+   proposalCount():	462
+internal:
 
 ======= ShortBlog =======
 Gas estimation:

@@ -42,6 +42,9 @@ public class MemberRegistryTest extends ManageableTest{
 	private MemberRegistry fixture;
 	// Start of user code MemberRegistryTest.attributes
 	private String senderAddressS = "5db10750e8caff27f906b41c71b3471057dd2004";
+	
+	private EthAddress member1 = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
+	private EthAddress member2 = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1001L)));
 	// End of user code
 
 	@Override
@@ -110,7 +113,11 @@ public class MemberRegistryTest extends ManageableTest{
 	@Test
 	public void testIsMember_address() throws Exception {
 		//Start of user code testIsMember_address
-		fail("not implemented");// TODO: implement this
+		assertEquals(0, fixture.getMemberCount().intValue());
+		fixture.addMember("test1", member1).get();
+		assertTrue(fixture.isActiveMember(member1));
+		fixture.unregisterMember(0).get();
+		assertFalse(fixture.isActiveMember(member1));
 		// End of user code
 	}
 	/**
@@ -121,7 +128,9 @@ public class MemberRegistryTest extends ManageableTest{
 	@Test
 	public void testGetMemberAddress_uint() throws Exception {
 		//Start of user code testGetMemberAddress_uint
-		fail("not implemented");// TODO: implement this
+		assertEquals(0, fixture.getMemberCount().intValue());
+		fixture.addMember("test1", member1).get();
+		assertTrue(fixture.isActiveMember(member1));
 		// End of user code
 	}
 	/**
@@ -133,8 +142,7 @@ public class MemberRegistryTest extends ManageableTest{
 	public void testGetMemberCount() throws Exception {
 		//Start of user code testGetMemberCount
 		assertEquals(0, fixture.getMemberCount().intValue());
-		EthAddress address = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
-		fixture.addMember("test1", address).get();
+		fixture.addMember("test1", member1).get();
 		assertEquals(1, fixture.getMemberCount().intValue());
 		fixture.unregisterMember(0).get();
 		assertEquals(0, fixture.getMemberCount().intValue());
@@ -149,7 +157,7 @@ public class MemberRegistryTest extends ManageableTest{
 	public void testAddMember_string_address() throws Exception {
 		//Start of user code testAddMember_string_address
 		assertEquals(0, fixture.getMemberCount().intValue());
-		fixture.addMember("test1", EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)))).get();
+		fixture.addMember("test1", member1).get();
 		assertEquals(1, fixture.getMemberCount().intValue());
 		fixture.addMember("test2", EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1001L)))).get();
 		assertEquals(2, fixture.getMemberCount().intValue());
@@ -184,7 +192,9 @@ public class MemberRegistryTest extends ManageableTest{
 	@Test
 	public void testIsActiveMember_address() throws Exception {
 		//Start of user code testIsActiveMember_address
-		fail("not implemented");// TODO: implement this
+		assertEquals(0, fixture.getMemberCount().intValue());
+		fixture.addMember("test1", member1).get();
+		assertTrue(fixture.isActiveMember(member1));
 		// End of user code
 	}
 	/**

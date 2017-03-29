@@ -3,6 +3,8 @@ package de.kueken.ethereum.party.party;
 import static org.junit.Assert.*;
 
 import de.kueken.ethereum.party.basics.*;
+import de.kueken.ethereum.party.deployer.MembersDeployer;
+import de.kueken.ethereum.party.deployer.PublishingDeployer;
 import de.kueken.ethereum.party.members.*;
 import de.kueken.ethereum.party.publishing.*;
 import de.kueken.ethereum.party.voting.*;
@@ -30,6 +32,7 @@ import org.junit.Test;
 
 import de.kueken.ethereum.party.AbstractContractTest;
 import de.kueken.ethereum.party.EthereumInstance;
+import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
 
 // Start of user code ConferenceTest.customImports
 
@@ -44,7 +47,8 @@ public class ConferenceTest extends OrganTest{
 
 	private Conference fixture;
 	// Start of user code ConferenceTest.attributes
-	//TODO: implement
+	private EthAddress member1 = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
+	private EthAddress member2 = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1001L)));
 	// End of user code
 
 	@Override
@@ -59,24 +63,7 @@ public class ConferenceTest extends OrganTest{
 	@Before
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
-super.prepareTest();
-//		partyDeployer = new PartyDeployer(ethereum,"/mix/combine.json",false);
-//		publishingDeployer = new PublishingDeployer(ethereum,"/mix/combine.json",false);
-//
-////		
-////		if(sender==null)// the account for the standalone blockchain
-////			sender = new EthAccount(
-////					ECKey.fromPrivate(Hex.decode("3ec771c31cac8c0dba77a69e503765701d3c2bb62435888d4ffa38fed60c445c")));
-////
-////
-////	       File contractSrc = new File(this.getClass().getResource("/mix/combine.json").toURI());
-////	        contractSource = SoliditySource.fromRawJson(contractSrc);
-//
-//		initTest();
-//		createFixture();
-//        File contractSrc = new File(this.getClass().getResource("/mix/party.sol").toURI());
-//        contractSource = SoliditySource.from(contractSrc);
-		//End of user code
+		super.prepareTest();
 	}
 
 
@@ -108,8 +95,15 @@ super.prepareTest();
 	@Test
 	public void testAccreditationMember_address() throws Exception {
 		//Start of user code testAccreditationMember_address
-		//TODO: implement this
-		fail("not implemented");
+		DeployDuo<MemberRegistry> memberRegistry = membersDeployer.createMemberRegistry(sender);
+		memberRegistry.contractInstance.addMember("Test", member1).get();
+		assertEquals(0, fixture.accreditatedMembers().intValue());
+		fixture.setMemberRegistry(memberRegistry.contractAddress).get();
+		assertTrue(memberRegistry.contractInstance.isActiveMember(member1));
+		
+		
+		fixture.accreditationMember(member1).get();
+		assertEquals(1, fixture.accreditatedMembers().intValue());
 		//End of user code
 	}
 	//Start of user code customTests    

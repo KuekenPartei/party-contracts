@@ -27,6 +27,8 @@ import org.junit.Test;
 
 import de.kueken.ethereum.party.AbstractContractTest;
 import de.kueken.ethereum.party.EthereumInstance;
+import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
+import de.kueken.ethereum.party.deployer.MembersDeployer;
 
 // Start of user code BasicBallotTest.customImports
 
@@ -41,9 +43,8 @@ public class BasicBallotTest extends AbstractContractTest{
 
 	private BasicBallot fixture;
 	// Start of user code BasicBallotTest.attributes
-	//TODO: add custom attributes
-	//for the blockchain proxy the sender is hard coded
-	private String senderAddress = "5db10750e8caff27f906b41c71b3471057dd2004";
+	protected MembersDeployer membersDeployer;
+
 	// End of user code
 
 	@Override
@@ -58,9 +59,7 @@ public class BasicBallotTest extends AbstractContractTest{
 	@Before
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
-
-        File contractSrc = new File(this.getClass().getResource("/mix/voting.sol").toURI());
-        contractSource = SoliditySource.from(contractSrc);
+		membersDeployer = new MembersDeployer(ethereum,"/mix/combine.json",true);
 		createFixture();
 		//End of user code
 	}
@@ -73,8 +72,9 @@ public class BasicBallotTest extends AbstractContractTest{
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
 		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
-		//TODO: set the constructor args
-		EthAddress _registry = EthAddress.empty();
+		
+		DeployDuo<MemberRegistry> registry = membersDeployer.createMemberRegistry(sender);
+		EthAddress _registry = registry.contractAddress;
 		String _name = "_name";
 		String _hash = "_hash";
         CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender
@@ -97,7 +97,19 @@ public class BasicBallotTest extends AbstractContractTest{
 	@Test
 	public void testAddProposal_string_string_string_address() throws Exception {
 		//Start of user code testAddProposal_string_string_string_address
-		fail("not implemented");//TODO: implement this
+		String _name= "name";
+		String _hash = "hash";
+		String _url = "url";
+		EthAddress _member = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
+		assertEquals(0, fixture.proposalCount().intValue());
+		fixture.addProposal(_name, _hash, _url, _member).get();
+		assertEquals(1, fixture.proposalCount().intValue());
+		
+		BasicBallotBallotProposal proposals = fixture.proposals(0);
+		assertEquals(_name, proposals.getName());
+		assertEquals(_hash, proposals.getHash());
+		assertEquals(_url, proposals.getUrl());
+		assertEquals(_member, proposals.getMember());
 		//End of user code
 	}
 	/**
@@ -119,9 +131,19 @@ public class BasicBallotTest extends AbstractContractTest{
 	@Test
 	public void testStartBallot() throws Exception {
 		//Start of user code testStartBallot
-		fail("not implemented");//TODO: implement this
+		assertEquals(BallotState.ballotCreated, fixture.ballotState());
+		fixture.startBallot().get();
+		assertEquals(BallotState.ballotStarted, fixture.ballotState());
 		//End of user code
 	}
-	//Start of user code customTests    
+	//Start of user code customTests  
+
+	@Test
+	public void testConstructor() throws Exception {
+		assertEquals("_name", fixture.ballotName());
+		assertEquals("_hash", fixture.ballotHash());
+		assertEquals(BallotState.ballotCreated, fixture.ballotState());
+	}
+
 	//End of user code
 }

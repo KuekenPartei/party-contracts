@@ -51,6 +51,7 @@ public class OrganTest extends ManageableTest{
 	// Start of user code OrganTest.attributes
 	protected PartyDeployer partyDeployer;
 	protected PublishingDeployer publishingDeployer;
+	protected MembersDeployer membersDeployer;
 	// End of user code
 
 	@Override
@@ -68,7 +69,7 @@ public class OrganTest extends ManageableTest{
 		initTest();
 		partyDeployer = new PartyDeployer(ethereum,"/mix/combine.json",true);
 		publishingDeployer = new PublishingDeployer(ethereum,"/mix/combine.json",true);
-
+		membersDeployer = new MembersDeployer(ethereum,"/mix/combine.json",true);
         File contractSrc = new File(this.getClass().getResource("/mix/party.sol").toURI());
         contractSource = SoliditySource.from(contractSrc);
 		createFixture();

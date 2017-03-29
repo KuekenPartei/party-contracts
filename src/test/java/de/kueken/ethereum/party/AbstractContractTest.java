@@ -65,19 +65,17 @@ public abstract class AbstractContractTest {
 			if (property.equalsIgnoreCase("ropsten") || property.equalsIgnoreCase("InfuraRopsten")) {
 				SecureKey a = AccountProvider.fromKeystore(new File("/home/urs/.ethereum/testnet/keystore/UTC--2015-12-15T13-55-38.006995319Z--ba7b29b63c00dff8614f8d8a6bf34e94e853b2d3"));
 				sender =a.decode("n");
-				senderAddress = sender.getAddress();
 			
 
 			} else if (property.equalsIgnoreCase("private")) {
 				sender = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100000L)));
-				senderAddress = sender.getAddress();
 			}
 
 		if (sender == null){// the account for the standalone blockchain
 			sender = new EthAccount(
 					ECKey.fromPrivate(Hex.decode("3ec771c31cac8c0dba77a69e503765701d3c2bb62435888d4ffa38fed60c445c")));
-			senderAddress = sender.getAddress();
 		}
+		senderAddress = sender.getAddress();
 		// End of user code
 	}
 
