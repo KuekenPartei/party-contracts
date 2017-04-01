@@ -56,8 +56,6 @@ public class MemberAwareTest extends AbstractContractTest{
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
 
-        File contractSrc = new File(this.getClass().getResource("/mix/members.sol").toURI());
-        contractSource = SoliditySource.from(contractSrc);
 		//End of user code
 	}
 

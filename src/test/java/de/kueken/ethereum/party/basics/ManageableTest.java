@@ -48,12 +48,6 @@ public class ManageableTest extends AbstractContractTest{
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
 		initTest();
-		// File contractSrc = new
-		// File(this.getClass().getResource("/mix/basics.sol").toURI());
-		// contractSource = SoliditySource.from(contractSrc);
-		// File contractSrc = new
-		// File(this.getClass().getResource("/contracts.json").toURI());
-		// contractSource = SoliditySource.fromRawJson(contractSrc);
 		createFixture();
 		// End of user code
 	}

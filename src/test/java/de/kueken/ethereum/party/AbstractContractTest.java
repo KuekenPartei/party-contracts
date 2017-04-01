@@ -68,11 +68,11 @@ public abstract class AbstractContractTest {
 	protected static void initTest() throws Exception {
 		// Start of user code AbstractContractTest.initTest
 
-		String property = System.getProperty("EthereumFacadeProvider");
+		String property = System.getProperty(EthereumInstance.PROP_ETHEREUM_FACADE_PROVIDER);
 		if (property != null)
 			if (property.equalsIgnoreCase("ropsten") || property.equalsIgnoreCase("InfuraRopsten")) {
 				SecureKey a = AccountProvider.fromKeystore(new File("/home/urs/.ethereum/testnet/keystore/UTC--2015-12-15T13-55-38.006995319Z--ba7b29b63c00dff8614f8d8a6bf34e94e853b2d3"));
-				sender =a.decode("n");
+				sender =a.decode(System.getProperty("pass"));
 			
 
 			} else if (property.equalsIgnoreCase("private")) {

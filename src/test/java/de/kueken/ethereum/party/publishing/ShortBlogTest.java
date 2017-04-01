@@ -56,8 +56,6 @@ public class ShortBlogTest extends ManageableTest{
 	@Before
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
-        File contractSrc = new File(this.getClass().getResource("/mix/publishing.sol").toURI());
-        contractSource = SoliditySource.from(contractSrc);
 		createFixture();
 		//End of user code
 	}

@@ -58,11 +58,7 @@ public class BlogRegistryTest extends ManageableTest{
 	@Before
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
-
 		publishingDeployer = new PublishingDeployer(ethereum,"/mix/combine.json",true);
-		
-		File contractSrc = new File(this.getClass().getResource("/mix/combine.json").toURI());
-//		contractSource = SoliditySource.fromRawJson(contractSrc);
         createFixture();
 		//End of user code
 	}

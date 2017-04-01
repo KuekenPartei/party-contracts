@@ -55,9 +55,7 @@ public class BallotTest extends AbstractContractTest{
 	@Before
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
-
-        File contractSrc = new File(this.getClass().getResource("/mix/voting.sol").toURI());
-        contractSource = SoliditySource.from(contractSrc);
+//        createFixture();
 		//End of user code
 	}
 
