@@ -133,21 +133,24 @@ public class PartyTest extends ManageableTest{
 	public void testAddOrgan_address() throws Exception {
 		//Start of user code testAddOrgan_address
 		assertEquals(0, fixture.organCount().intValue());
-		
-//		
-//		PartyDeployer partyDeployer = new PartyDeployer(ethereum,"/mix/combine.json",false);
-//		MembersDeployer membersDeployer = new MembersDeployer(ethereum, "/mix/combine.json",false);
-//		PublishingDeployer publishingDeployer = new PublishingDeployer(ethereum,"/mix/combine.json",false);
-		
+
 		initParty();
 		
 		CompletableFuture<EthAddress> deployOrgan = partyDeployer.deployOrgan(sender);
 		Organ organ = partyDeployer.createOrganProxy(sender,deployOrgan.get());
-		String organAddress = deployOrgan.get().withLeading0x();
+		String aOrganName = "OrganName";
+		organ.setOrganName(aOrganName).get();
+		assertFalse(organ.isActive());
 		
 		fixture.addOrgan(deployOrgan.get()).get();
 		assertEquals(1, fixture.organCount().intValue());
 	
+		EthAddress address = fixture.organs(0);
+		Organ organ2 = partyDeployer.createOrganProxy(sender, address);
+		
+		assertTrue(organ.isActive());
+		assertEquals(deployOrgan.get(), address);
+		assertEquals(aOrganName, organ2.organName());
 		
 		
 		//End of user code
@@ -162,11 +165,15 @@ public class PartyTest extends ManageableTest{
 		//Start of user code testAddSubDivision_address
 		assertEquals(0, fixture.subDivisionCount().intValue());
 		
+		initParty();
+		
 		String _name="subdivision";
 		String _memberRegistry = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(100001L))).withLeading0x();
 		String _blogRegistry = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(100002L))).withLeading0x();
 		de.kueken.ethereum.party.EthereumInstance.DeployDuo<Party> subDivision = partyDeployer.createParty(sender);
-		subDivision.contractInstance.addManager(fixtureAddress);
+		subDivision.contractInstance.addManager(fixtureAddress).get();
+		subDivision.contractInstance.setName(_name).get();
+		
 		
 		fixture.addSubDivision(subDivision.contractAddress).get();
 		assertEquals(1, fixture.subDivisionCount().intValue());
@@ -181,18 +188,7 @@ public class PartyTest extends ManageableTest{
 	@Test
 	public void testRemoveSubDivision_uint() throws Exception {
 		//Start of user code testRemoveSubDivision_uint
-		assertEquals(0, fixture.subDivisionCount().intValue());
-		
-		String _name="subdivision";
-		String _memberRegistry=EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(100001L))).withLeading0x();
-		String _blogRegistry=EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(100002L))).withLeading0x();
-		DeployDuo<Party> subDivision = partyDeployer.createParty(sender);
-		subDivision.contractInstance.addManager(fixtureAddress);
-		
-		
-		fixture.addSubDivision(subDivision.contractAddress).get();
-		assertEquals(1, fixture.subDivisionCount().intValue());
-
+		testAddSubDivision_address();
 		
 		fixture.removeSubDivision(0);
 		assertEquals(1, fixture.subDivisionCount().intValue());
@@ -220,7 +216,6 @@ public class PartyTest extends ManageableTest{
 	private void initParty() throws IOException, InterruptedException, ExecutionException {
 		CompletableFuture<EthAddress> deployBlogRegistry = publishingDeployer.deployBlogRegistry(sender);
 		BlogRegistry blogRegistry = publishingDeployer.createBlogRegistryProxy(sender, deployBlogRegistry.get());
-		String blogRegistryAddress = deployBlogRegistry.get().withLeading0x();
 		
 		fixture.setBlogregistry(deployBlogRegistry.get());
 		blogRegistry.addManager(fixtureAddress);

@@ -22,7 +22,7 @@
 	function createFunction(string _functionName,string _constittiutionHash) public  onlyManager() 
 	function initalizeOrgan() public  
 	function publishFunctionMessage(uint id,string message,string hash,string er) public  
-	function createBallot(string name,bytes32[] proposalNames) public  returns (uint )
+	function createBallot(uint ballotType,address _registry,string _name,string _hash) public  returns (uint )
 	function getLastBallot() public   constant returns (address )
 	function getOrganBlog() public   constant returns (address )
 	function addOrganFunction(address _of,string _name) public  
@@ -48,6 +48,7 @@ blogRegistry|BlogRegistry|public||
 isActive|bool|public||
 organBlog|ShortBlog|protected||
 ballotCount|uint|public||
+ballotFactory|BallotFactory|public||
 -
 
 #### Organ.changeMember(uint _id,address _address) public  onlyManager() 
@@ -86,15 +87,17 @@ message|string|in|
 hash|string|in|
 er|string|in|
 
-#### Organ.createBallot(string name,bytes32[] proposalNames) public  returns (uint )
+#### Organ.createBallot(uint ballotType,address _registry,string _name,string _hash) public  returns (uint )
 
 Creates a new ballot for this organ.
 
 
 name|type|direction|doc
 ----|----|----|----
-name|string|in|
-proposalNames|bytes32|in|
+ballotType|uint|in|
+_registry|address|in|The member registry for the voting.
+_name|string|in|The name of the ballot.
+_hash|string|in|The hash of the actual text.
 |uint|return|
 
 #### Organ.getLastBallot() public   constant returns (address )

@@ -28,6 +28,8 @@ public interface Organ extends Manageable,MemberAware{
 	
 	Integer ballotCount();
 	
+	org.adridadou.ethereum.values.EthAddress ballotFactory();
+	
 	Boolean managers(org.adridadou.ethereum.values.EthAddress key);
 
 	/**
@@ -67,12 +69,14 @@ public interface Organ extends Manageable,MemberAware{
 	/**
 	* Creates a new ballot for this organ.
 	* 
-	* @param name -
-	* @param proposalNames -
+	* @param ballotType -
+	* @param _registry -The member registry for the voting.
+	* @param _name -The name of the ballot.
+	* @param _hash -The hash of the actual text.
 	* @return
 	*  -
 	**/
-	java.util.concurrent.CompletableFuture<Integer> createBallot(String name,Byte[][] proposalNames);
+	java.util.concurrent.CompletableFuture<Integer> createBallot(Integer ballotType,org.adridadou.ethereum.values.EthAddress _registry,String _name,String _hash);
 	
 	org.adridadou.ethereum.values.EthAddress getLastBallot();
 	
@@ -87,6 +91,8 @@ public interface Organ extends Manageable,MemberAware{
 	java.util.concurrent.CompletableFuture<Void> setOrganName (String aOrganName);
 
 	java.util.concurrent.CompletableFuture<Void> setBlogRegistry (org.adridadou.ethereum.values.EthAddress aBlogRegistry);
+
+	java.util.concurrent.CompletableFuture<Void> setBallotFactory (org.adridadou.ethereum.values.EthAddress aBallotFactory);
 
 	//Start of user code additional_methods
 	//End of user code

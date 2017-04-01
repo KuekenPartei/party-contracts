@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 @Suite.SuiteClasses({
 BallotTest.class
 ,PublicBallotTest.class
+,BallotFactoryTest.class
 //Start of user code customTests    
 //End of user code
 })

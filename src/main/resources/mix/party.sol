@@ -23,7 +23,8 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 	bool public isActive;
 	ShortBlog internal organBlog;
 	uint public ballotCount;
-	mapping (uint=>Ballot)private ballots;
+	BallotFactory public ballotFactory;
+	mapping (uint=>BasicBallot)private ballots;
 	mapping (uint=>OrganFunction)internal organFunctions;
 	// Start of user code Organ.attributes
 	// End of user code
@@ -128,17 +129,19 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 	/*
 	* Creates a new ballot for this organ.
 	* 
-	* name -
-	* proposalNames -
+	* ballotType -
+	* _registry -The member registry for the voting.
+	* _name -The name of the ballot.
+	* _hash -The hash of the actual text.
 	* returns
 	*  -
 	*/
-	function createBallot(string name,bytes32[] proposalNames) public  returns (uint ) {
-		//Start of user code Organ.function.createBallot_string_bytes32
+	function createBallot(uint ballotType,address _registry,string _name,string _hash) public  returns (uint ) {
+		//Start of user code Organ.function.createBallot_uint_address_string_string
+		
 		ballotCount++;
-		Ballot b = new Ballot(name,proposalNames);
-		ballots[ballotCount] = b;
-		return ballotCount;
+		ballots[ballotCount] = ballotFactory.create(ballotType,this,_name,_hash);
+		
 		//End of user code
 	}
 	
@@ -193,6 +196,11 @@ contract Organ is Manageable,MemberAware,MessagePublisher {
 		blogRegistry = BlogRegistry(aBlogRegistry);
 	}
 	
+	// setBallotFactory setter for the field ballotFactory
+	function setBallotFactory (address aBallotFactory) onlyManager() {
+		ballotFactory = BallotFactory(aBallotFactory);
+	}
+	
 	// Start of user code Organ.operations
 	//TODO: implement 
 	// End of user code
@@ -208,7 +216,7 @@ contract Party is Manageable {
 	string public constitutionHash;
 	uint public organCount;
 	BlogRegistry public blogregistry;
-	Party public parent;
+	address public parent;
 	uint public subDivisionCount;
 	mapping (uint=>Organ)public organs;
 	mapping (uint=>Party)public subDivisions;
@@ -233,7 +241,7 @@ contract Party is Manageable {
 		blogregistry.addManager(o);
 		o.setBlogRegistry(blogregistry);
 		o.setMemberRegistry(memberRegistry);	
-//		o.initalizeOrgan();	
+		o.initalizeOrgan();	
 		organs[organCount] = o;
 		OrganChanged(o,1);
 		organCount++; 
@@ -272,14 +280,15 @@ contract Party is Manageable {
 		//Start of user code Party.function.addSubDivision_address
 		Party p = Party(_subDivision);
 		//check the constrains
-//		if(!p.isManager(this)) throw;
+		if(!p.isManager(this)) throw;
 //		if(p.blogregistry()!=blogregistry) throw;
 //		if(p.memberRegistry()!=memberRegistry) throw;
 //		if(p.parent()!= this) throw;
 		//TODO; a foundation conference should be done
 		
+		p.setParent(this);
 		subDivisions[subDivisionCount] = p;
-//		DivisionChanged(p,msg.sender,1);
+		DivisionChanged(p,msg.sender,1);
 		subDivisionCount++;
 		
 		
@@ -291,7 +300,8 @@ contract Party is Manageable {
 	function removeSubDivision(uint _divisionId) public   {
 		//Start of user code Party.function.removeSubDivision_uint
 		Party p = subDivisions[_divisionId];
-//		DivisionChanged(p,msg.sender,0);
+		p.setParent(0x0);
+		DivisionChanged(p,msg.sender,0);
 		//End of user code
 	}
 	

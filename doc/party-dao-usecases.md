@@ -6,10 +6,10 @@
 
 |Actor name|use cases|doc|
 |---|---|---|
-|memberManager|addMember, unregisterMember, changeMemberAddress||
-|manager|addManager, removeManager||
+|memberManager|addMember, changeMemberAddress, unregisterMember||
 |contract|canAccess||
 |contact|isActiveMember||
+|manager|removeManager, addManager||
 
 
 ## use cases
@@ -19,32 +19,32 @@
 
 used by: contract
 
-### addManager
-
-
-used by: manager
-
 ### addMember
 
 
 used by: memberManager
-
-### unregisterMember
-
-
-used by: memberManager
-
-### isActiveMember
-
-
-used by: contact
 
 ### removeManager
 
 
 used by: manager
 
+### isActiveMember
+
+
+used by: contact
+
+### addManager
+
+
+used by: manager
+
 ### changeMemberAddress
+
+
+used by: memberManager
+
+### unregisterMember
 
 
 used by: memberManager

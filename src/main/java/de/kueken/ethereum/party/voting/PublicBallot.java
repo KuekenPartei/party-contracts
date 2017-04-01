@@ -15,6 +15,8 @@ import de.kueken.ethereum.party.members.*;
 public interface PublicBallot extends BasicBallot{
 	
 	BasicBallotBallotProposal proposals(Integer key);	
+	
+	Integer votesCasted(org.adridadou.ethereum.values.EthAddress key);	
 
 	
 	java.util.concurrent.CompletableFuture<Void> castVote(Integer _voteFor);

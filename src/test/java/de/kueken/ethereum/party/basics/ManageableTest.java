@@ -123,7 +123,6 @@ public class ManageableTest extends AbstractContractTest{
 	@Test
 	public void testIsManager_address() throws Exception {
 		//Start of user code testIsManager_address
-		// createFixture();
 		EthAddress ethAddress = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L))).getAddress();
 		fixture.addManager(ethAddress).get();
 
@@ -132,6 +131,13 @@ public class ManageableTest extends AbstractContractTest{
 	}
 	//Start of user code customTests
 
+	@Test
+	public void testConstructor() throws Exception {
+		
+		assertEquals(1, fixture.mangerCount().intValue());
+		assertTrue(fixture.isManager(sender.getAddress()));
+	}
+	
 	protected String info(Manageable memberRegistry) {
 		return "  manager:" + memberRegistry.mangerCount() + " " + memberRegistry.isManager(sender.getAddress());
 	}

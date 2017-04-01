@@ -110,8 +110,14 @@ public class PublicBallotTest extends BasicBallotTest{
 		fixture.addProposal(_name, _hash, _url, _member).get();
 		assertEquals(2, fixture.proposalCount().intValue());
 		
+		assertEquals(BallotState.ballotCreated, fixture.ballotState());
+		fixture.startBallot().get();
+		assertEquals(BallotState.ballotStarted, fixture.ballotState());
+
+		assertEquals(0,fixture.voteCount().intValue());
 		fixture.castVote(0).get();
-		BasicBallotBallotProposal proposals = fixture.proposals(0);
+		assertEquals(1,fixture.voteCount().intValue());
+		assertEquals(1, fixture.votesCasted(sender.getAddress()).intValue());  
 		//End of user code
 	}
 	//Start of user code customTests    
@@ -134,6 +140,32 @@ public class PublicBallotTest extends BasicBallotTest{
 		ballot.addProposal(_name, _hash, _url, account1.getAddress()).get();
 	}
 
+	@Test(expected=ExecutionException.class)
+	public void testCastVoteAgain() throws Exception {
+		registry.contractInstance.addMember("Sender", sender.getAddress()).get();
+
+		String _name= "name";
+		String _hash = "hash";
+		String _url = "url";
+		EthAddress _member = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
+		assertEquals(0, fixture.proposalCount().intValue());
+		fixture.addProposal(_name, _hash, _url, _member).get();
+		assertEquals(1, fixture.proposalCount().intValue());
+
+		fixture.addProposal(_name, _hash, _url, _member).get();
+		assertEquals(2, fixture.proposalCount().intValue());
+		
+		assertEquals(BallotState.ballotCreated, fixture.ballotState());
+		fixture.startBallot().get();
+		assertEquals(BallotState.ballotStarted, fixture.ballotState());
+
+		assertEquals(0,fixture.voteCount().intValue());
+		fixture.castVote(0).get();
+		assertEquals(1,fixture.voteCount().intValue());
+		assertEquals(1, fixture.votesCasted(sender.getAddress()).intValue());  
+		
+		fixture.castVote(0).get();
+	}
 
 	//End of user code
 }

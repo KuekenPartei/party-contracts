@@ -484,7 +484,7 @@ It is populated by functions party members.</body>
           <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_LedxoKKuEeWvY9GWZZMftw"/>
         </ownedAttribute>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_pnh2IB9hEea0ndjKa8R1Fg" name="organBlog" visibility="protected" type="_4pPWAO82EeWU3MNrGPvZNA"/>
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_xlrWACJiEeaS_4eQUjWtCw" name="ballots" visibility="private" type="_cZbJwCJZEeaS_4eQUjWtCw"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_xlrWACJiEeaS_4eQUjWtCw" name="ballots" visibility="private" type="_EusKcLoSEeamf53lO-3DRQ"/>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_FACc8CJjEeaS_4eQUjWtCw" name="ballotCount">
           <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
         </ownedAttribute>
@@ -492,6 +492,7 @@ It is populated by functions party members.</body>
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="__F4T8JXXEeaCN_-XsTGglw" value="1"/>
           <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__F7-UJXXEeaCN_-XsTGglw" value="*"/>
         </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_OjmTEBclEeeDH9oGcr8kKg" name="ballotFactory" type="_rGTJcBcjEeeDH9oGcr8kKg"/>
         <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_pettUCWAEeapTNf89Lwepg" client="_YVNoUB82Eea0ndjKa8R1Fg" supplier="_qJN2cCGcEeaIoZ3vQYCn_Q" contract="_qJN2cCGcEeaIoZ3vQYCn_Q"/>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_SqQPoB9BEea0ndjKa8R1Fg" name="FunctionMemberChange">
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_QIytkB9DEea0ndjKa8R1Fg" name="oldMember">
@@ -557,13 +558,28 @@ It is populated by functions party members.</body>
           <ownedComment xmi:type="uml:Comment" xmi:id="_wP0PICKKEeaF8a6hSTN_zw">
             <body>Creates a new ballot for this organ.</body>
           </ownedComment>
-          <ownedParameter xmi:type="uml:Parameter" xmi:id="_TNOCcSJlEeaS_4eQUjWtCw" name="name">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_TNOCciJlEeaS_4eQUjWtCw" name="ballotType">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_TNOCcyJlEeaS_4eQUjWtCw" value="1"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_TNOCdCJlEeaS_4eQUjWtCw" value="1"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_zp0iUBcmEeeDH9oGcr8kKg" name="_registry">
+            <ownedComment xmi:type="uml:Comment" xmi:id="_zp0iURcmEeeDH9oGcr8kKg">
+              <body>The member registry for the voting.</body>
+            </ownedComment>
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_zp4MsBcmEeeDH9oGcr8kKg" name="_name">
+            <ownedComment xmi:type="uml:Comment" xmi:id="_zp4MsRcmEeeDH9oGcr8kKg">
+              <body>The name of the ballot.</body>
+            </ownedComment>
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
           </ownedParameter>
-          <ownedParameter xmi:type="uml:Parameter" xmi:id="_TNOCciJlEeaS_4eQUjWtCw" name="proposalNames">
-            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_x7cwUKMvEeWyXvjE6XZ9yw"/>
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_TNOCcyJlEeaS_4eQUjWtCw"/>
-            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_TNOCdCJlEeaS_4eQUjWtCw" value="*"/>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_zp5a0BcmEeeDH9oGcr8kKg" name="_hash">
+            <ownedComment xmi:type="uml:Comment" xmi:id="_zp5a0RcmEeeDH9oGcr8kKg">
+              <body>The hash of the actual text.</body>
+            </ownedComment>
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
           </ownedParameter>
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_bF1kgCJlEeaS_4eQUjWtCw" direction="return">
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
@@ -1086,14 +1102,32 @@ Collects the proposals and manages the state.</body>
           <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
         </ownedAttribute>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_NyY-kLodEeamf53lO-3DRQ" name="proposals" type="_Gezq8LoXEeamf53lO-3DRQ"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_E20GsBcPEeeP---htmLqsA" name="voteCount">
+          <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_MDPRIBcPEeeP---htmLqsA" name="votesCasted">
+          <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+        </ownedAttribute>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_82jh0LoXEeamf53lO-3DRQ" name="BasicBallot">
+          <ownedComment xmi:type="uml:Comment" xmi:id="_RsN0YBcmEeeDH9oGcr8kKg">
+            <body>Creates the ballot in the state created.</body>
+          </ownedComment>
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_HgLy8LoYEeamf53lO-3DRQ" name="_registry">
+            <ownedComment xmi:type="uml:Comment" xmi:id="__4BE4BcjEeeDH9oGcr8kKg">
+              <body>The member registry for the voting.</body>
+            </ownedComment>
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
           </ownedParameter>
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_ylJ7wLodEeamf53lO-3DRQ" name="_name">
+            <ownedComment xmi:type="uml:Comment" xmi:id="_EEfsYBckEeeDH9oGcr8kKg">
+              <body>The name of the ballot.</body>
+            </ownedComment>
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
           </ownedParameter>
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_0xPY0LodEeamf53lO-3DRQ" name="_hash">
+            <ownedComment xmi:type="uml:Comment" xmi:id="_MH_owBckEeeDH9oGcr8kKg">
+              <body>The hash of the actual text.</body>
+            </ownedComment>
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
           </ownedParameter>
         </ownedOperation>
@@ -1157,6 +1191,41 @@ Collects the proposals and manages the state.</body>
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_TIv2sBbMEeenPpohncIvbw" name="sender">
             <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
           </ownedParameter>
+        </ownedOperation>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_rGTJcBcjEeeDH9oGcr8kKg" name="BallotFactory">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_xRCNYBcjEeeDH9oGcr8kKg">
+          <body>Creates the ballots.</body>
+        </ownedComment>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_0X_-UBcjEeeDH9oGcr8kKg" name="create">
+          <ownedComment xmi:type="uml:Comment" xmi:id="_WLUc8BcmEeeDH9oGcr8kKg">
+            <body>Creates a new ballot.</body>
+          </ownedComment>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_VlcaoBckEeeDH9oGcr8kKg" name="ballotType">
+            <ownedComment xmi:type="uml:Comment" xmi:id="_VlcaoRckEeeDH9oGcr8kKg">
+              <body>0 - public vote</body>
+            </ownedComment>
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_QNllIBckEeeDH9oGcr8kKg" name="_registry">
+            <ownedComment xmi:type="uml:Comment" xmi:id="_QNmMMBckEeeDH9oGcr8kKg">
+              <body>The member registry for the voting.</body>
+            </ownedComment>
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_QNnaUBckEeeDH9oGcr8kKg" name="_name">
+            <ownedComment xmi:type="uml:Comment" xmi:id="_QNnaURckEeeDH9oGcr8kKg">
+              <body>The name of the ballot.</body>
+            </ownedComment>
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_QNoocBckEeeDH9oGcr8kKg" name="_hash">
+            <ownedComment xmi:type="uml:Comment" xmi:id="_QNoocRckEeeDH9oGcr8kKg">
+              <body>The hash of the actual text.</body>
+            </ownedComment>
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_W0LXkKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_d0ijABckEeeDH9oGcr8kKg" name="ballot" type="_EusKcLoSEeamf53lO-3DRQ" direction="return"/>
         </ownedOperation>
       </packagedElement>
     </packagedElement>
@@ -1360,4 +1429,12 @@ Collects the proposals and manages the state.</body>
   <Contracts:Function xmi:id="_5D-GMBbLEeenPpohncIvbw" base_Operation="_1Z8rgBbLEeenPpohncIvbw">
     <modifiers xmi:type="Contracts:Modifier" xmi:id="_Dv8gsBbMEeenPpohncIvbw" parameter="BallotState.ballotStarted" modifier="_9aNzELoYEeamf53lO-3DRQ"/>
   </Contracts:Function>
+  <Contracts:KeyMapping xmi:id="_bYm4oBcPEeeP---htmLqsA" base_Property="_MDPRIBcPEeeP---htmLqsA">
+    <key xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+  </Contracts:KeyMapping>
+  <Contracts:Contract xmi:id="_u0zbgBcjEeeDH9oGcr8kKg" base_Class="_rGTJcBcjEeeDH9oGcr8kKg"/>
+  <Contracts:Function xmi:id="_lbhigBckEeeDH9oGcr8kKg" base_Operation="_0X_-UBcjEeeDH9oGcr8kKg"/>
+  <Contracts:GetterSetter xmi:id="_TziisBclEeeDH9oGcr8kKg" getter="false" base_Property="_OjmTEBclEeeDH9oGcr8kKg">
+    <modifiers xmi:type="Contracts:Modifier" xmi:id="_YOJFwBclEeeDH9oGcr8kKg" parameter="" modifier="_8DcOwM2GEeWqGaV8xrZGjQ"/>
+  </Contracts:GetterSetter>
 </xmi:XMI>

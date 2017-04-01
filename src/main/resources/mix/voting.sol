@@ -106,7 +106,9 @@ contract BasicBallot {
 	uint public proposalCount;
 	string public ballotName;
 	string public ballotHash;
+	uint public voteCount;
 	mapping (uint=>BallotProposal)public proposals;
+	mapping (address=>uint)public votesCasted;
 	// Start of user code BasicBallot.attributes
 	//TODO: implement
 	// End of user code
@@ -124,7 +126,13 @@ contract BasicBallot {
 	    _;
 	}
 	
-	
+	/*
+	* Creates the ballot in the state created.
+	* 
+	* _registry -The member registry for the voting.
+	* _name -The name of the ballot.
+	* _hash -The hash of the actual text.
+	*/
 	function BasicBallot(address _registry,string _name,string _hash) public   {
 		//Start of user code BasicBallot.constructor.BasicBallot_address_string_string
 		accessregistry = AccessRegistry(_registry);
@@ -191,13 +199,50 @@ contract PublicBallot is BasicBallot {
 	
 	function castVote(uint _voteFor) public  onlyMember inState(BallotState.ballotStarted)  {
 		//Start of user code PublicBallot.function.castVote_uint
-		//TODO: implement
+		if(_voteFor >= proposalCount) throw;
+		if(voteCount>=accessregistry.getMemberCount()) throw;
+		if(votesCasted[msg.sender]!=0) throw;
+		
+		VotedCasted(_voteFor,msg.sender);
+		voteCount++;
+		votesCasted[msg.sender] = voteCount;
 		//End of user code
 	}
 	// Start of user code PublicBallot.operations
 	function PublicBallot(address _registry,string _name,string _hash) BasicBallot(_registry,_name,_hash) public   {
 		
 	}
+	// End of user code
+}
+
+/*
+* Creates the ballots.
+*/
+contract BallotFactory {
+
+	// Start of user code BallotFactory.attributes
+	//TODO: implement
+	// End of user code
+	
+	
+	/*
+	* Creates a new ballot.
+	* 
+	* ballotType -0 - public vote
+	* _registry -The member registry for the voting.
+	* _name -The name of the ballot.
+	* _hash -The hash of the actual text.
+	* returns
+	* ballot -
+	*/
+	function create(uint ballotType,address _registry,string _name,string _hash) public  returns (BasicBallot ballot) {
+		//Start of user code BallotFactory.function.create_uint_address_string_string
+		ballot =  new PublicBallot(this,_name,_hash);
+		//End of user code
+	}
+	
+	// Start of user code BallotFactory.operations
+	//TODO: implement
 	// End of user code
 }
 

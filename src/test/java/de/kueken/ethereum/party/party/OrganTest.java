@@ -23,6 +23,10 @@ import de.kueken.ethereum.party.deployer.MembersDeployer;
 import de.kueken.ethereum.party.deployer.VotingDeployer;
 import de.kueken.ethereum.party.members.MemberRegistry;
 import de.kueken.ethereum.party.publishing.BlogRegistry;
+import de.kueken.ethereum.party.publishing.ShortBlog;
+import de.kueken.ethereum.party.publishing.ShortBlogMessage;
+import de.kueken.ethereum.party.voting.BallotFactory;
+import de.kueken.ethereum.party.voting.BasicBallot;
 import de.kueken.ethereum.party.voting.BasicBallot.BallotState;
 import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
 import de.kueken.ethereum.party.deployer.MembersDeployer;
@@ -45,6 +49,7 @@ public class OrganTest extends ManageableTest{
 	protected PartyDeployer partyDeployer;
 	protected PublishingDeployer publishingDeployer;
 	protected MembersDeployer membersDeployer;
+	protected VotingDeployer votingDeployer;
 	// End of user code
 
 	@Override
@@ -68,8 +73,7 @@ public class OrganTest extends ManageableTest{
 		partyDeployer = new PartyDeployer(ethereum,"/mix/combine.json",true);
 		publishingDeployer = new PublishingDeployer(ethereum,"/mix/combine.json",true);
 		membersDeployer = new MembersDeployer(ethereum,"/mix/combine.json",true);
-        File contractSrc = new File(this.getClass().getResource("/mix/party.sol").toURI());
-        contractSource = SoliditySource.from(contractSrc);
+		votingDeployer = new VotingDeployer(ethereum,"/mix/combine.json",true);
 		createFixture();
 		//End of user code
 	}
@@ -104,12 +108,23 @@ public class OrganTest extends ManageableTest{
 	public void testPublishMessage_string_string_string() throws Exception {
 		//Start of user code testPublishMessage_string_string_string
 		initOrgan();
-		fixture.initalizeOrgan();
+		fixture.initalizeOrgan().get();
+		EthAddress address = fixture.getOrganBlog();
+		ShortBlog shortBlog = publishingDeployer.createShortBlogProxy(sender, address);
+
+		String message="message";
+		String hash="hash";
+		String er="er";
+		fixture.publishMessage(message, hash, er).get();
 		
-		String message="";
-		String hash="";
-		String er="";
-		fixture.publishMessage(message, hash, er);
+		assertEquals(1, shortBlog.messageCount().intValue());
+		ShortBlogMessage messages = shortBlog.messages(0);
+		assertEquals(message, messages.getMessage());
+		assertEquals(hash, messages.getHashValue());
+		assertEquals(er, messages.getExternalResource());
+		assertEquals(0, messages.getId().intValue());
+		
+		
 		//End of user code
 	}
 	/**
@@ -120,8 +135,33 @@ public class OrganTest extends ManageableTest{
 	@Test
 	public void testChangeMember_uint_address() throws Exception {
 		//Start of user code testChangeMember_uint_address
-		//TODO: implement this
-		fail("not implemented");
+		assertEquals(0, fixture.lastFunctionId().intValue());
+		initOrgan();
+		fixture.initalizeOrgan().get();
+		EthAddress address = fixture.getOrganBlog();
+		ShortBlog shortBlog = publishingDeployer.createShortBlogProxy(sender, address);
+
+		
+		String functionName = "Test function";
+		fixture.createFunction(functionName, "hash").get();
+		assertEquals(1, fixture.lastFunctionId().intValue());
+		
+		EthAddress organFunctionAddress = fixture.getOrganFunction(0);
+		OrganFunction organFunction = partyDeployer.createOrganFunctionProxy(sender, organFunctionAddress);
+		assertEquals(functionName, organFunction.functionName());  
+		assertEquals("hash", organFunction.constitutionHash());  
+		assertEquals(EthAddress.empty(), organFunction.currentMember());
+		
+		Integer messageCount = shortBlog.messageCount();
+		fixture.changeMember(0, sender.getAddress()).get();
+		assertEquals(sender.getAddress(), organFunction.currentMember());
+		assertEquals(messageCount+1, shortBlog.messageCount().intValue());
+		
+		
+		EthAddress ethAddress = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L))).getAddress();
+		fixture.changeMember(0, ethAddress).get();
+		assertEquals(ethAddress, organFunction.currentMember());
+		assertEquals(messageCount+2, shortBlog.messageCount().intValue());
 		//End of user code
 	}
 	/**
@@ -174,28 +214,51 @@ public class OrganTest extends ManageableTest{
 		initOrgan();
 		fixture.initalizeOrgan();
 		fixture.createFunction("Function 0", "hash").get();
-
 		assertEquals(1, fixture.lastFunctionId().intValue());
 		
+		EthAddress address = fixture.getOrganFunction(0);
+		OrganFunction organFunction = partyDeployer.createOrganFunctionProxy(sender, address);
+		EthAddress publisherAddress = organFunction.publisher();
+		ShortBlog shortBlog = publishingDeployer.createShortBlogProxy(sender, publisherAddress);
+		assertEquals(0, shortBlog.messageCount().intValue());
 		
-		String message= "";
-		String hash="";
-		String er="";
-		fixture.publishFunctionMessage(0, message, hash, er);
+		String message= "message";
+		String hash="hash";
+		String er="er";
+		fixture.publishFunctionMessage(0, message, hash, er).get();
+		assertEquals(1, shortBlog.messageCount().intValue());
 		
+		ShortBlogMessage messages = shortBlog.messages(0);
+		assertEquals(message, messages.getMessage());
+		assertEquals(hash, messages.getHashValue());
+		assertEquals(er, messages.getExternalResource());
 		
 		//End of user code
 	}
 	/**
-	 * Test method for  createBallot(String name,Byte[][] proposalNames).
-	 * see {@link Organ#createBallot( String, Byte[][])}
+	 * Test method for  createBallot(Integer ballotType,org.adridadou.ethereum.values.EthAddress _registry,String _name,String _hash).
+	 * see {@link Organ#createBallot( Integer, org.adridadou.ethereum.values.EthAddress, String, String)}
 	 * @throws Exception
 	 */
 	@Test
-	public void testCreateBallot_string_bytes32() throws Exception {
-		//Start of user code testCreateBallot_string_bytes32
-		//TODO: implement this
-		fail("not implemented");
+	public void testCreateBallot_uint_address_string_string() throws Exception {
+		//Start of user code testCreateBallot_uint_address_string_string
+		
+		DeployDuo<BallotFactory> ballotFactory = votingDeployer.createBallotFactory(sender);
+		
+		fixture.setBallotFactory(ballotFactory.contractAddress).get();
+		assertEquals(0, fixture.ballotCount().intValue());
+
+		String _name="ballot name";
+		String _hash= "hash";
+		fixture.createBallot(0, EthAddress.empty(), _name, _hash).get();
+		
+		assertEquals(1, fixture.ballotCount().intValue());
+		EthAddress lastBallot = fixture.getLastBallot();
+		BasicBallot basicBallot = votingDeployer.createBasicBallotProxy(sender, lastBallot);
+		
+	    assertEquals(_name, basicBallot.ballotName());
+	    assertEquals(_hash, basicBallot.ballotHash());
 		//End of user code
 	}
 	/**
@@ -206,8 +269,12 @@ public class OrganTest extends ManageableTest{
 	@Test
 	public void testGetLastBallot() throws Exception {
 		//Start of user code testGetLastBallot
-		//TODO: implement this
-		fail("not implemented");
+		assertEquals(EthAddress.empty(), fixture.getLastBallot());
+		testCreateBallot_uint_address_string_string();
+		EthAddress address = fixture.getLastBallot();
+		BasicBallot basicBallot = votingDeployer.createBasicBallotProxy(sender, address);
+		
+		assertEquals(BasicBallot.BallotState.ballotCreated, basicBallot.ballotState());
 		//End of user code
 	}
 	/**
@@ -234,16 +301,26 @@ public class OrganTest extends ManageableTest{
 	public void testAddOrganFunction_address_string() throws Exception {
 		//Start of user code testAddOrganFunction_address_string
 		initOrgan();
+		BlogRegistry blogRegistry = publishingDeployer.createBlogRegistryProxy(sender,  fixture.blogRegistry());
 		assertEquals(0, fixture.lastFunctionId().intValue());
-		String organAddress="";
-		EthAddress ethAddress = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L))).getAddress();
-
-		DeployDuo<OrganFunction> organFunction = partyDeployer.createOrganFunction(sender, "ss", "cc");
+		assertEquals(0, blogRegistry.blogCount().intValue());
 		
+		String _name = "name";
+		DeployDuo<OrganFunction> organFunction = partyDeployer.createOrganFunction(sender, _name, "hash");
 		organFunction.contractInstance.addManager(fixtureAddress).get();
 		
-		fixture.addOrganFunction(organFunction.contractAddress, "name").get();
+		fixture.addOrganFunction(organFunction.contractAddress, _name).get();
 		assertEquals(1, fixture.lastFunctionId().intValue());
+		EthAddress address = fixture.getOrganFunction(0);
+		OrganFunction function = partyDeployer.createOrganFunctionProxy(sender, address);
+		assertEquals(_name, function.functionName());
+		assertEquals("hash", function.constitutionHash());
+		assertEquals(EthAddress.empty(), function.currentMember());
+		
+		assertEquals(1, blogRegistry.blogCount().intValue());
+		EthAddress blog = blogRegistry.blogs(0);
+		ShortBlog shortBlog = publishingDeployer.createShortBlogProxy(sender, blog);
+		assertEquals(_name, shortBlog.name());
 		//End of user code
 	}
 	/**
@@ -254,11 +331,37 @@ public class OrganTest extends ManageableTest{
 	@Test
 	public void testGetOrganFunction_uint() throws Exception {
 		//Start of user code testGetOrganFunction_uint
-		//TODO: implement this
-		fail("not implemented");
+		assertEquals(0, fixture.lastFunctionId().intValue());
+		initOrgan();
+
+		String functionName = "Test function";
+		fixture.createFunction(functionName, "hash").get();
+		assertEquals(1, fixture.lastFunctionId().intValue());
+		
+		EthAddress organFunctionAddress = fixture.getOrganFunction(0);
+		OrganFunction organFunction = partyDeployer.createOrganFunctionProxy(sender, organFunctionAddress);
+		assertEquals(functionName, organFunction.functionName());  
+		assertEquals("hash", organFunction.constitutionHash());  
+		assertEquals(EthAddress.empty(), organFunction.currentMember());
+		
 		//End of user code
 	}
 	//Start of user code customTests    
+	
+	@Override
+	@Test
+	public void testConstructor() throws Exception {
+		super.testConstructor();
+		
+		assertEquals(EthAddress.empty(), fixture.blogRegistry());
+		assertFalse(fixture.isActive());
+		assertEquals(0, fixture.ballotCount().intValue());
+		assertEquals(0, fixture.lastFunctionId().intValue());
+		assertEquals(0, fixture.ballotCount().intValue());
+
+	}
+
+	
 	/**
 	 * @throws IOException
 	 * @throws InterruptedException

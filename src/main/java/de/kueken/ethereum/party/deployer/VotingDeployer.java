@@ -182,9 +182,9 @@ public class VotingDeployer {
 	 * 
 	 * @param sender
 	 *            the sender address
-	 * @param _registry 
-	 * @param _name 
-	 * @param _hash 
+	 * @param _registry The member registry for the voting.
+	 * @param _name The name of the ballot.
+	 * @param _hash The hash of the actual text.
 	 * @return the address of the deployed contract
 	 * @throws InterruptedException
 	 * @throws ExecutionException
@@ -199,9 +199,9 @@ public class VotingDeployer {
 	 * Deploys a 'BasicBallot' on the blockchain and wrapps the contcat proxy.
 	 *  
 	 * @param sender the sender address
-	 * @param _registry 
-	 * @param _name 
-	 * @param _hash 
+	 * @param _registry The member registry for the voting.
+	 * @param _name The name of the ballot.
+	 * @param _hash The hash of the actual text.
 	 * @return the contract interface
 	 */
 	public DeployDuo<BasicBallot> createBasicBallot(EthAccount sender, org.adridadou.ethereum.values.EthAddress _registry, String _name, String _hash) throws IOException, InterruptedException, ExecutionException {
@@ -339,6 +339,80 @@ public class VotingDeployer {
 		CompiledContract compiledContract = compiledContractPublicBallot();
 		Observable<EventVotedCasted_uint_address> observeEvents = ethereum.observeEvents(compiledContract.getAbi(), address, "VotedCasted", EventVotedCasted_uint_address.class);
 		return observeEvents;
+	}
+
+
+	/**
+	 * Deploys a 'BallotFactory' on the blockchain.
+	 * 
+	 * @param sender
+	 *            the sender address
+	 * @return the address of the deployed contract
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public CompletableFuture<EthAddress> deployBallotFactory(EthAccount sender) throws InterruptedException, ExecutionException{
+		CompiledContract compiledContract = compiledContractBallotFactory();
+		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
+		return address;
+	}
+
+
+	/**
+	 * Deploys a 'BallotFactory' on the blockchain and wrapps the contcat proxy.
+	 *  
+	 * @param sender the sender address
+	 * @return the contract interface and the deployed address
+	 */
+	public DeployDuo<BallotFactory> createBallotFactory(EthAccount sender) throws IOException, InterruptedException, ExecutionException {
+		CompletableFuture<EthAddress> address = deployBallotFactory(sender);
+		return new EthereumInstance.DeployDuo<BallotFactory>(address.get(), createBallotFactoryProxy(sender, address.get()));
+	}
+
+	/**
+	 * Create a proxy for a deployed 'BallotFactory' contract.
+	 *  
+	 * @param sender the sender address
+	 * @param address the address of the contract
+	 * @return the contract interface
+	 */
+	public BallotFactory createBallotFactoryProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
+		CompiledContract compiledContract = compiledContractBallotFactory();
+		BallotFactory ballotfactory = ethereum.createContractProxy(compiledContract, address, sender, BallotFactory.class);
+		return ballotfactory;
+	}
+
+	/**
+	 * Return the compiled contract for the contract 'BallotFactory', when in source the contract code is compiled.
+	 * @return the compiled contract for 'BallotFactory'.
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public CompiledContract compiledContractBallotFactory() throws InterruptedException, ExecutionException {
+		CompiledContract compiledContract = null;
+		if (compiledContracts == null){
+			Map<String, CompiledContract> contracts = ethereum.compile(contractSource).get();
+			compiledContract = contracts.get("BallotFactory");
+			if (compiledContract == null) {
+				Optional<String> optional = contracts.keySet().stream().filter(s -> s.endsWith("voting.sol:BallotFactory"))
+						.findFirst();
+				if (optional.isPresent())
+					compiledContract = contracts.get(optional.get());
+			}
+		} else {
+			ContractMetadata contractMetadata = compiledContracts.contracts.get("BallotFactory");
+			if (contractMetadata == null) {
+				Optional<String> optional = compiledContracts.contracts.keySet().stream()
+						.filter(s -> s.endsWith("voting.sol:BallotFactory")).findFirst();
+				if (optional.isPresent())
+					contractMetadata = compiledContracts.contracts.get(optional.get());
+			}
+			compiledContract = CompiledContract.from(null, "BallotFactory", contractMetadata);
+		}
+		if(compiledContract == null)
+			throw new IllegalArgumentException("Contract code for 'BallotFactory' not found");
+
+		return compiledContract;
 	}
 
 

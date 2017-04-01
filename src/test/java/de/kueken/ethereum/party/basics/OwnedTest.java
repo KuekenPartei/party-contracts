@@ -10,6 +10,7 @@ import java.util.concurrent.CompletableFuture;
 import org.adridadou.ethereum.values.CompiledContract;
 import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
+import org.adridadou.ethereum.values.SmartContractByteCode;
 import org.ethereum.crypto.ECKey;
 import org.junit.Before;
 import org.junit.Test;
@@ -104,8 +105,11 @@ public class OwnedTest extends AbstractContractTest{
 	@Test
 	public void testKill() throws Exception {
 		//Start of user code testKill
-		//TODO: implement this
-		fail("not implemented");
+		assertFalse(ethereum.getCode(fixtureAddress).toString().isEmpty());
+		fixture.kill().get();
+		SmartContractByteCode code = ethereum.getCode(fixtureAddress);
+		assertTrue(ethereum.getCode(fixtureAddress).toString().isEmpty());
+		
 		//End of user code
 	}
 	//Start of user code customTests    

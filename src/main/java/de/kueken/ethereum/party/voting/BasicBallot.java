@@ -30,7 +30,11 @@ public interface BasicBallot{
 	
 	String ballotHash();
 	
+	Integer voteCount();
+	
 	BasicBallotBallotProposal proposals(Integer key);	
+	
+	Integer votesCasted(org.adridadou.ethereum.values.EthAddress key);	
 
 	
 	java.util.concurrent.CompletableFuture<Void> addProposal(String _name,String _hash,String _url,org.adridadou.ethereum.values.EthAddress _member);

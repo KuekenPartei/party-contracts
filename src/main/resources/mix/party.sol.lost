@@ -21,3 +21,18 @@ Start of user code Party.constructor.Party_string
 //	    managers[msg.sender] = true;
 //		mangerCount++;
 ////		//End of user code
+
+Sat Apr 01 23:48:30 CEST 2017
+================================================================================
+Start of user code Organ.function.createBallot_string_bytes32
+		ballotCount++;
+		Ballot b = new Ballot(name,proposalNames);
+		ballots[ballotCount] = b;
+		return ballotCount;
+		//End of user code
+
+Sun Apr 02 00:02:40 CEST 2017
+================================================================================
+Start of user code Organ.function.createBallot_string_uint
+		ballotFactory.create(ballotType,name,"");
+		//End of user code

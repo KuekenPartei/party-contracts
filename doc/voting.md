@@ -7,6 +7,8 @@
 
 * [PublicBallot](#contract-publicballot)
 
+* [BallotFactory](#contract-ballotfactory)
+
 
 ## contract: Ballot
 
@@ -148,16 +150,19 @@ ballotState|BallotState|public||
 proposalCount|uint|public||
 ballotName|string|public||
 ballotHash|string|public||
+voteCount|uint|public||
 -
 
 #### BasicBallot.BasicBallot(address _registry,string _name,string _hash) public  
 
+Creates the ballot in the state created.
+
 
 name|type|doc
 ----|----|----
-_registry|address|
-_name|string|
-_hash|string|
+_registry|address|The member registry for the voting.
+_name|string|The name of the ballot.
+_hash|string|The hash of the actual text.
 
 #### BasicBallot.addProposal(string _name,string _hash,string _url,address _member) public  onlyMember inState(BallotState.ballotCreated) 
 
@@ -206,5 +211,32 @@ name|type|indexed|doc
 ----|----|----|----
 proposal|uint||
 sender|address||
+
+
+## contract: BallotFactory
+
+    overview:
+	function create(uint ballotType,address _registry,string _name,string _hash) public  returns (BasicBallot ballot)
+
+
+
+Creates the ballots.
+
+
+
+-
+
+#### BallotFactory.create(uint ballotType,address _registry,string _name,string _hash) public  returns (BasicBallot ballot)
+
+Creates a new ballot.
+
+
+name|type|direction|doc
+----|----|----|----
+ballotType|uint|in|0 - public vote
+_registry|address|in|The member registry for the voting.
+_name|string|in|The name of the ballot.
+_hash|string|in|The hash of the actual text.
+ballot|BasicBallot|return|
 
 
