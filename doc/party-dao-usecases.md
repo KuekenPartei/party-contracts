@@ -6,46 +6,46 @@
 
 |Actor name|use cases|doc|
 |---|---|---|
-|manager|removeManager, addManager||
 |contract|canAccess||
-|memberManager|addMember, changeMemberAddress, unregisterMember||
 |contact|isActiveMember||
+|manager|addManager, removeManager||
+|memberManager|unregisterMember, changeMemberAddress, addMember||
 
 
 ## use cases
-
-### addMember
-
-
-used by: memberManager
-
-### removeManager
-
-
-used by: manager
-
-### canAccess
-
-
-used by: contract
-
-### changeMemberAddress
-
-
-used by: memberManager
 
 ### unregisterMember
 
 
 used by: memberManager
 
-### isActiveMember
+### changeMemberAddress
 
 
-used by: contact
+used by: memberManager
 
 ### addManager
 
 
 used by: manager
+
+### removeManager
+
+
+used by: manager
+
+### isActiveMember
+
+
+used by: contact
+
+### addMember
+
+
+used by: memberManager
+
+### canAccess
+
+
+used by: contract
 

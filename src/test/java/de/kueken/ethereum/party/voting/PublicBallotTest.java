@@ -3,6 +3,7 @@ package de.kueken.ethereum.party.voting;
 import static org.junit.Assert.*;
 
 import de.kueken.ethereum.party.members.*;
+
 import de.kueken.ethereum.party.voting.PublicBallot.*;
 
 

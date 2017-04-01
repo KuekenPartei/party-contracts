@@ -30,6 +30,7 @@ import org.junit.Test;
 
 import de.kueken.ethereum.party.AbstractContractTest;
 import de.kueken.ethereum.party.EthereumInstance;
+
 // Start of user code OrganFunctionTest.customImports
 import de.kueken.ethereum.party.deployer.PublishingDeployer;
 import de.kueken.ethereum.party.EthereumInstance.DeployDuo;

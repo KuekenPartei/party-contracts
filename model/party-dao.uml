@@ -1065,7 +1065,7 @@ Collects the proposals and manages the state.</body>
         <ownedRule xmi:type="uml:Constraint" xmi:id="_9aNzELoYEeamf53lO-3DRQ" name="inState">
           <specification xmi:type="uml:LiteralString" xmi:id="_iJc7ILoZEeamf53lO-3DRQ" value="if (ballotState!=_ballotState) throw;&#xA;"/>
         </ownedRule>
-        <ownedRule xmi:type="uml:Constraint" xmi:id="_dmnEEBbJEeenPpohncIvbw" name="onlyMember" constrainedElement="_mjS7ILoXEeamf53lO-3DRQ _TAEWoLoYEeamf53lO-3DRQ _amj0oLodEeamf53lO-3DRQ">
+        <ownedRule xmi:type="uml:Constraint" xmi:id="_dmnEEBbJEeenPpohncIvbw" name="onlyMember" constrainedElement="_mjS7ILoXEeamf53lO-3DRQ _TAEWoLoYEeamf53lO-3DRQ _amj0oLodEeamf53lO-3DRQ _1Z8rgBbLEeenPpohncIvbw">
           <specification xmi:type="uml:LiteralString" xmi:id="_dmwOABbJEeenPpohncIvbw" name="constraintSpec" value="if(!accessregistry.isMember(msg.sender)) throw;"/>
         </ownedRule>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_P2r1wLoWEeamf53lO-3DRQ" name="accessregistry" type="_d30SYLoPEeamf53lO-3DRQ" aggregation="shared" association="_P2iEwLoWEeamf53lO-3DRQ"/>
@@ -1117,6 +1117,7 @@ Collects the proposals and manages the state.</body>
           </ownedParameter>
         </ownedOperation>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_amj0oLodEeamf53lO-3DRQ" name="startBallot"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_1Z8rgBbLEeenPpohncIvbw" name="stopBallot"/>
         <nestedClassifier xmi:type="uml:Enumeration" xmi:id="_ob-wgLoWEeamf53lO-3DRQ" name="BallotState">
           <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_tUafELoWEeamf53lO-3DRQ" name="NULL"/>
           <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_urxTkLoWEeamf53lO-3DRQ" name="ballotCreated"/>
@@ -1149,7 +1150,14 @@ Collects the proposals and manages the state.</body>
           <body>A public votes are counted by the events.</body>
         </ownedComment>
         <generalization xmi:type="uml:Generalization" xmi:id="_iN1AoLogEeamf53lO-3DRQ" general="_EusKcLoSEeamf53lO-3DRQ"/>
-        <ownedOperation xmi:type="uml:Operation" xmi:id="_0dfPALogEeamf53lO-3DRQ" name="VotedCasted"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_0dfPALogEeamf53lO-3DRQ" name="VotedCasted">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_PuzfYBbMEeenPpohncIvbw" name="proposal">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_TIv2sBbMEeenPpohncIvbw" name="sender">
+            <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_bcZf4KKsEeWvY9GWZZMftw"/>
+          </ownedParameter>
+        </ownedOperation>
       </packagedElement>
     </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_TmqI0M2EEeWqGaV8xrZGjQ">
@@ -1349,4 +1357,7 @@ Collects the proposals and manages the state.</body>
   <Contracts:Function xmi:id="_umKzIL7-EeaXm-1aKivBzQ" base_Operation="_qkZm0L7-EeaXm-1aKivBzQ"/>
   <Contracts:Event xmi:id="_tuHUUL7_EeaXm-1aKivBzQ" base_Operation="_k6XmwL7_EeaXm-1aKivBzQ"/>
   <Contracts:Constructor xmi:id="_EMXqEL8AEeaXm-1aKivBzQ" base_Operation="_j6IgMB86Eea0ndjKa8R1Fg"/>
+  <Contracts:Function xmi:id="_5D-GMBbLEeenPpohncIvbw" base_Operation="_1Z8rgBbLEeenPpohncIvbw">
+    <modifiers xmi:type="Contracts:Modifier" xmi:id="_Dv8gsBbMEeenPpohncIvbw" parameter="BallotState.ballotStarted" modifier="_9aNzELoYEeamf53lO-3DRQ"/>
+  </Contracts:Function>
 </xmi:XMI>

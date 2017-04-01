@@ -103,6 +103,7 @@ winningProposal|uint|return|
 	function addProposal(string _name,string _hash,string _url,address _member) public  onlyMember inState(BallotState.ballotCreated) 
 	function castVote(uint _voteFor) public  onlyMember inState(BallotState.ballotStarted) 
 	function startBallot() public  onlyMember inState(BallotState.ballotCreated) 
+	function stopBallot() public  onlyMember inState(BallotState.ballotStarted) 
 
 
 
@@ -179,6 +180,10 @@ _voteFor|uint|in|
 
 
 
+#### BasicBallot.stopBallot() public  onlyMember inState(BallotState.ballotStarted) 
+
+
+
 
 ## contract: PublicBallot
 
@@ -197,5 +202,9 @@ A public votes are counted by the events.
 #### event VotedCasted
 
 
+name|type|indexed|doc
+----|----|----|----
+proposal|uint||
+sender|address||
 
 

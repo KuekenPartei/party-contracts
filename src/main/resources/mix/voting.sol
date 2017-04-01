@@ -161,6 +161,15 @@ contract BasicBallot {
 		//End of user code
 	}
 	
+	
+	
+	function stopBallot() public  onlyMember inState(BallotState.ballotStarted)  {
+		//Start of user code BasicBallot.function.stopBallot
+		ballotState = BallotState.ballotEnded;
+		ballotEnd = now;
+		//End of user code
+	}
+	
 	// Start of user code BasicBallot.operations
 	//TODO: implement
 	// End of user code
@@ -176,7 +185,7 @@ contract PublicBallot is BasicBallot {
 	// End of user code
 	
 	
-	event VotedCasted();
+	event VotedCasted(uint proposal,address sender);
 	
 	
 	

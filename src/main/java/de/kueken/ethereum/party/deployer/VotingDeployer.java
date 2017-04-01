@@ -296,9 +296,9 @@ public class VotingDeployer {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public Observable<EventVotedCasted> observeEventVotedCasted(EthAddress address) throws InterruptedException, ExecutionException {
+	public Observable<EventVotedCasted_uint_address> observeEventVotedCasted_uint_address(EthAddress address) throws InterruptedException, ExecutionException {
 		CompiledContract compiledContract = compiledContractPublicBallot();
-		Observable<EventVotedCasted> observeEvents = ethereum.observeEvents(compiledContract.getAbi(), address, "VotedCasted", EventVotedCasted.class);
+		Observable<EventVotedCasted_uint_address> observeEvents = ethereum.observeEvents(compiledContract.getAbi(), address, "VotedCasted", EventVotedCasted_uint_address.class);
 		return observeEvents;
 	}
 

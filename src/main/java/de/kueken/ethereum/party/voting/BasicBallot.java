@@ -38,6 +38,8 @@ public interface BasicBallot{
 	java.util.concurrent.CompletableFuture<Void> castVote(Integer _voteFor);
 	
 	java.util.concurrent.CompletableFuture<Void> startBallot();
+	
+	java.util.concurrent.CompletableFuture<Void> stopBallot();
 
 	//Start of user code additional_methods
 

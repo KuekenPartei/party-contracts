@@ -62,6 +62,7 @@ public class ConferenceTest extends OrganTest{
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
 		super.prepareTest();
+		// End of user code
 	}
 
 
@@ -71,7 +72,6 @@ public class ConferenceTest extends OrganTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-//		CompiledContract compiledContract = ethereum.compile(contractSource, getContractName());
 		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
         fixtureAddress = address.get();

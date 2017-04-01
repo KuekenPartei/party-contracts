@@ -308,19 +308,20 @@ internal:
 ======= PublicBallot =======
 Gas estimation:
 construction:
-   [???] + 698000 = [???]
+   [???] + 766200 = [???]
 external:
    proposals(uint256):	[???]
    ballotStart():	251
+   stopBallot():	[???]
    ballotName():	[???]
-   ballotState():	359
-   ballotEnd():	317
+   ballotState():	381
+   ballotEnd():	339
    castVote(uint256):	[???]
    startBallot():	[???]
    ballotHash():	[???]
    addProposal(string,string,string,address):	[???]
-   accessregistry():	475
-   proposalCount():	449
+   accessregistry():	497
+   proposalCount():	471
 internal:
 
 ======= ShortBlog =======

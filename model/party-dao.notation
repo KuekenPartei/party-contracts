@@ -3446,6 +3446,10 @@
           <element xmi:type="uml:Operation" href="party-dao.uml#_amj0oLodEeamf53lO-3DRQ"/>
           <layoutConstraint xmi:type="notation:Location" xmi:id="_am39sbodEeamf53lO-3DRQ"/>
         </children>
+        <children xmi:type="notation:Shape" xmi:id="_1auHkBbLEeenPpohncIvbw" type="Operation_ClassOperationLabel">
+          <element xmi:type="uml:Operation" href="party-dao.uml#_1Z8rgBbLEeenPpohncIvbw"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_1auHkRbLEeenPpohncIvbw"/>
+        </children>
         <styles xmi:type="notation:TitleStyle" xmi:id="_EvVDproSEeamf53lO-3DRQ"/>
         <styles xmi:type="notation:SortingStyle" xmi:id="_EvVDp7oSEeamf53lO-3DRQ"/>
         <styles xmi:type="notation:FilteringStyle" xmi:id="_EvVDqLoSEeamf53lO-3DRQ"/>
@@ -3511,7 +3515,7 @@
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dUw__7ogEeamf53lO-3DRQ"/>
       </children>
       <element xmi:type="uml:Class" href="party-dao.uml#_dUX-YLogEeamf53lO-3DRQ"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dUwY4bogEeamf53lO-3DRQ" x="723" y="458"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dUwY4bogEeamf53lO-3DRQ" x="723" y="458" width="281"/>
     </children>
     <children xmi:type="notation:Shape" xmi:id="_zced9LogEeamf53lO-3DRQ" type="StereotypeComment">
       <styles xmi:type="notation:TitleStyle" xmi:id="_zced9bogEeamf53lO-3DRQ"/>
