@@ -3,7 +3,6 @@ package de.kueken.ethereum.party.voting;
 import static org.junit.Assert.*;
 
 import de.kueken.ethereum.party.members.*;
-import de.kueken.ethereum.party.voting.BasicBallot.BallotState;
 import de.kueken.ethereum.party.voting.PublicBallot.*;
 
 
@@ -27,10 +26,11 @@ import org.junit.Test;
 
 import de.kueken.ethereum.party.AbstractContractTest;
 import de.kueken.ethereum.party.EthereumInstance;
-import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
-import de.kueken.ethereum.party.deployer.MembersDeployer;
 
 // Start of user code PublicBallotTest.customImports
+import de.kueken.ethereum.party.deployer.MembersDeployer;
+import de.kueken.ethereum.party.deployer.VotingDeployer;
+import de.kueken.ethereum.party.voting.BasicBallot.BallotState;
 
 // End of user code
 
@@ -60,6 +60,7 @@ public class PublicBallotTest extends BasicBallotTest{
 	@Before
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
+		votingDeployer = new VotingDeployer(ethereum,"/mix/combine.json",true);
 		membersDeployer = new MembersDeployer(ethereum,"/mix/combine.json",true);
 		createFixture();
 		//End of user code
@@ -73,7 +74,7 @@ public class PublicBallotTest extends BasicBallotTest{
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
 		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
-		DeployDuo<MemberRegistry> registry = membersDeployer.createMemberRegistry(sender);
+		registry = membersDeployer.createMemberRegistry(sender);
 
 		EthAddress _registry = registry.contractAddress;
 		String _name = "_name";
@@ -104,7 +105,24 @@ public class PublicBallotTest extends BasicBallotTest{
 	}
 	//Start of user code customTests    
 	
-	
+	@Test(expected=ExecutionException.class)
+	public void testStartBallotAddProposalNoneMember() throws Exception {
+		assertEquals(BallotState.ballotCreated, fixture.ballotState());
+		registry.contractInstance.addMember("Sender", sender.getAddress()).get();
+
+		
+		String _name= "name";
+		String _hash = "hash";
+		String _url = "url";
+		assertEquals(0, fixture.proposalCount().intValue());
+		fixture.addProposal(_name, _hash, _url, sender.getAddress()).get();
+		assertEquals(1, fixture.proposalCount().intValue());
+
+		EthAccount account1 = AccountProvider.fromECKey(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
+		PublicBallot ballot = votingDeployer.createPublicBallotProxy(account1, fixtureAddress);
+		ballot.addProposal(_name, _hash, _url, account1.getAddress()).get();
+	}
+
 
 	//End of user code
 }

@@ -1065,6 +1065,9 @@ Collects the proposals and manages the state.</body>
         <ownedRule xmi:type="uml:Constraint" xmi:id="_9aNzELoYEeamf53lO-3DRQ" name="inState">
           <specification xmi:type="uml:LiteralString" xmi:id="_iJc7ILoZEeamf53lO-3DRQ" value="if (ballotState!=_ballotState) throw;&#xA;"/>
         </ownedRule>
+        <ownedRule xmi:type="uml:Constraint" xmi:id="_dmnEEBbJEeenPpohncIvbw" name="onlyMember" constrainedElement="_mjS7ILoXEeamf53lO-3DRQ _TAEWoLoYEeamf53lO-3DRQ _amj0oLodEeamf53lO-3DRQ">
+          <specification xmi:type="uml:LiteralString" xmi:id="_dmwOABbJEeenPpohncIvbw" name="constraintSpec" value="if(!accessregistry.isMember(msg.sender)) throw;"/>
+        </ownedRule>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_P2r1wLoWEeamf53lO-3DRQ" name="accessregistry" type="_d30SYLoPEeamf53lO-3DRQ" aggregation="shared" association="_P2iEwLoWEeamf53lO-3DRQ"/>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_c26x4LoWEeamf53lO-3DRQ" name="ballotStart">
           <type xmi:type="uml:DataType" href="pathmap://UML_LIBRARIES/solidity_types.uml#_Z66fAKKsEeWvY9GWZZMftw"/>

@@ -118,6 +118,12 @@ contract BasicBallot {
 	    _;
 	}
 	
+	modifier onlyMember
+	{
+	    if(!accessregistry.isMember(msg.sender)) throw;
+	    _;
+	}
+	
 	
 	function BasicBallot(address _registry,string _name,string _hash) public   {
 		//Start of user code BasicBallot.constructor.BasicBallot_address_string_string
@@ -130,8 +136,9 @@ contract BasicBallot {
 	
 	
 	
-	function addProposal(string _name,string _hash,string _url,address _member) public  inState(BallotState.ballotCreated)  {
+	function addProposal(string _name,string _hash,string _url,address _member) public  onlyMember inState(BallotState.ballotCreated)  {
 		//Start of user code BasicBallot.function.addProposal_string_string_string_address
+		
 		BallotProposal proposal = proposals[proposalCount];
 		proposal.name = _name;
 		proposal.hash = _hash;
@@ -143,11 +150,11 @@ contract BasicBallot {
 	
 	
 	
-	function castVote(uint _voteFor) public  inState(BallotState.ballotStarted) ;
+	function castVote(uint _voteFor) public  onlyMember inState(BallotState.ballotStarted) ;
 	
 	
 	
-	function startBallot() public  inState(BallotState.ballotCreated)  {
+	function startBallot() public  onlyMember inState(BallotState.ballotCreated)  {
 		//Start of user code BasicBallot.function.startBallot
 		ballotState = BallotState.ballotStarted;
 		ballotStart = now;
@@ -173,7 +180,7 @@ contract PublicBallot is BasicBallot {
 	
 	
 	
-	function castVote(uint _voteFor) public  inState(BallotState.ballotStarted)  {
+	function castVote(uint _voteFor) public  onlyMember inState(BallotState.ballotStarted)  {
 		//Start of user code PublicBallot.function.castVote_uint
 		//TODO: implement
 		//End of user code

@@ -27,10 +27,10 @@ import org.junit.Test;
 
 import de.kueken.ethereum.party.AbstractContractTest;
 import de.kueken.ethereum.party.EthereumInstance;
+// Start of user code BasicBallotTest.customImports
 import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
 import de.kueken.ethereum.party.deployer.MembersDeployer;
-
-// Start of user code BasicBallotTest.customImports
+import de.kueken.ethereum.party.deployer.VotingDeployer;
 
 // End of user code
 
@@ -44,6 +44,8 @@ public class BasicBallotTest extends AbstractContractTest{
 	private BasicBallot fixture;
 	// Start of user code BasicBallotTest.attributes
 	protected MembersDeployer membersDeployer;
+	protected DeployDuo<MemberRegistry> registry;
+	protected VotingDeployer votingDeployer;
 
 	// End of user code
 
@@ -60,6 +62,7 @@ public class BasicBallotTest extends AbstractContractTest{
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
 		membersDeployer = new MembersDeployer(ethereum,"/mix/combine.json",true);
+		votingDeployer = new VotingDeployer(ethereum,"/mix/combine.json",true);
 		createFixture();
 		//End of user code
 	}
@@ -73,7 +76,7 @@ public class BasicBallotTest extends AbstractContractTest{
 		//Start of user code createFixture
 		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
 		
-		DeployDuo<MemberRegistry> registry = membersDeployer.createMemberRegistry(sender);
+		registry = membersDeployer.createMemberRegistry(sender);
 		EthAddress _registry = registry.contractAddress;
 		String _name = "_name";
 		String _hash = "_hash";
@@ -97,6 +100,8 @@ public class BasicBallotTest extends AbstractContractTest{
 	@Test
 	public void testAddProposal_string_string_string_address() throws Exception {
 		//Start of user code testAddProposal_string_string_string_address
+		registry.contractInstance.addMember("Sender", sender.getAddress()).get();
+
 		String _name= "name";
 		String _hash = "hash";
 		String _url = "url";
@@ -123,6 +128,7 @@ public class BasicBallotTest extends AbstractContractTest{
 		fail("not implemented");//TODO: implement this
 		//End of user code
 	}
+	
 	/**
 	 * Test method for  startBallot().
 	 * see {@link BasicBallot#startBallot()}
@@ -132,6 +138,8 @@ public class BasicBallotTest extends AbstractContractTest{
 	public void testStartBallot() throws Exception {
 		//Start of user code testStartBallot
 		assertEquals(BallotState.ballotCreated, fixture.ballotState());
+		registry.contractInstance.addMember("Sender", sender.getAddress()).get();
+
 		fixture.startBallot().get();
 		assertEquals(BallotState.ballotStarted, fixture.ballotState());
 		//End of user code
@@ -145,5 +153,46 @@ public class BasicBallotTest extends AbstractContractTest{
 		assertEquals(BallotState.ballotCreated, fixture.ballotState());
 	}
 
+	@Test(expected=ExecutionException.class)
+	public void testStartBallotAgain() throws Exception {
+		assertEquals(BallotState.ballotCreated, fixture.ballotState());
+		fixture.startBallot().get();
+		assertEquals(BallotState.ballotStarted, fixture.ballotState());
+		fixture.startBallot().get();
+	}
+
+	@Test(expected=ExecutionException.class)
+	public void testStartBallotAddProposal() throws Exception {
+		assertEquals(BallotState.ballotCreated, fixture.ballotState());
+		registry.contractInstance.addMember("Sender", sender.getAddress()).get();
+
+		
+		String _name= "name";
+		String _hash = "hash";
+		String _url = "url";
+		EthAddress _member = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
+		assertEquals(0, fixture.proposalCount().intValue());
+		fixture.addProposal(_name, _hash, _url, _member).get();
+		assertEquals(1, fixture.proposalCount().intValue());
+
+		fixture.startBallot().get();
+		assertEquals(BallotState.ballotStarted, fixture.ballotState());
+		fixture.addProposal("name1", _hash, _url, _member).get();
+	}
+
+	/**
+	 * Test method for  startBallot().
+	 * see {@link BasicBallot#startBallot()}
+	 * @throws Exception
+	 */
+	@Test(expected=ExecutionException.class)
+	public void testStartBallotNoneMember() throws Exception {
+		assertEquals(BallotState.ballotCreated, fixture.ballotState());
+		fixture.startBallot().get();
+		assertEquals(BallotState.ballotStarted, fixture.ballotState());
+	}
+
+	
+	
 	//End of user code
 }

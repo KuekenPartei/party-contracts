@@ -1,0 +1,19 @@
+
+Sat Apr 01 12:57:57 CEST 2017
+================================================================================
+Start of user code for setup the private chain
+			config.reset(true)
+			.initialBalance(new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100000L))),
+					EthValue.ether(10L));
+
+			// End of user code
+Start of user code for setup the custom chain
+			// End of user code
+Start of user code for setup the test chain
+			// End of user code
+Start of user code for setup the main chain
+			// End of user code
+Start of user code for setup the ropsten chain
+			// End of user code
+Start of user code for setup the standalone chain
+			// End of user code

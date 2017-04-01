@@ -100,9 +100,9 @@ winningProposal|uint|return|
 
     overview:
 	constructor BasicBallot(address _registry,string _name,string _hash)
-	function addProposal(string _name,string _hash,string _url,address _member) public  inState(BallotState.ballotCreated) 
-	function castVote(uint _voteFor) public  inState(BallotState.ballotStarted) 
-	function startBallot() public  inState(BallotState.ballotCreated) 
+	function addProposal(string _name,string _hash,string _url,address _member) public  onlyMember inState(BallotState.ballotCreated) 
+	function castVote(uint _voteFor) public  onlyMember inState(BallotState.ballotStarted) 
+	function startBallot() public  onlyMember inState(BallotState.ballotCreated) 
 
 
 
@@ -158,7 +158,7 @@ _registry|address|
 _name|string|
 _hash|string|
 
-#### BasicBallot.addProposal(string _name,string _hash,string _url,address _member) public  inState(BallotState.ballotCreated) 
+#### BasicBallot.addProposal(string _name,string _hash,string _url,address _member) public  onlyMember inState(BallotState.ballotCreated) 
 
 
 name|type|direction|doc
@@ -168,14 +168,14 @@ _hash|string|in|
 _url|string|in|
 _member|address|in|
 
-#### BasicBallot.castVote(uint _voteFor) public  inState(BallotState.ballotStarted) 
+#### BasicBallot.castVote(uint _voteFor) public  onlyMember inState(BallotState.ballotStarted) 
 
 
 name|type|direction|doc
 ----|----|----|----
 _voteFor|uint|in|
 
-#### BasicBallot.startBallot() public  inState(BallotState.ballotCreated) 
+#### BasicBallot.startBallot() public  onlyMember inState(BallotState.ballotCreated) 
 
 
 
@@ -183,7 +183,7 @@ _voteFor|uint|in|
 ## contract: PublicBallot
 
     overview:
-	abstract function castVote(uint _voteFor) public  inState(BallotState.ballotStarted) 
+	abstract function castVote(uint _voteFor) public  onlyMember inState(BallotState.ballotStarted) 
 
 inherites: [BasicBallot](#contract-basicballot)
 

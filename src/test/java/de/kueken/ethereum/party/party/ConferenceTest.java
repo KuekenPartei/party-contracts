@@ -3,8 +3,6 @@ package de.kueken.ethereum.party.party;
 import static org.junit.Assert.*;
 
 import de.kueken.ethereum.party.basics.*;
-import de.kueken.ethereum.party.deployer.MembersDeployer;
-import de.kueken.ethereum.party.deployer.PublishingDeployer;
 import de.kueken.ethereum.party.members.*;
 import de.kueken.ethereum.party.publishing.*;
 import de.kueken.ethereum.party.voting.*;
@@ -32,9 +30,9 @@ import org.junit.Test;
 
 import de.kueken.ethereum.party.AbstractContractTest;
 import de.kueken.ethereum.party.EthereumInstance;
-import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
 
 // Start of user code ConferenceTest.customImports
+import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
 
 // End of user code
 
@@ -80,6 +78,7 @@ public class ConferenceTest extends OrganTest{
 		setFixture(ethereum.createContractProxy(compiledContract, fixtureAddress, sender, Conference.class));
 		//End of user code
 	}
+
 
 	protected void setFixture(Conference f) {
 		this.fixture = f;

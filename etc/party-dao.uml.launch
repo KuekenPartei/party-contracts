@@ -50,8 +50,8 @@
 <stringAttribute key="GENERATION_TARGET" value="/party-contracts/src/main/resources/mix"/>
 <stringAttribute key="GENERATION_TARGET_DOC" value="/party-contracts/doc"/>
 <stringAttribute key="JS_FILE_HEADER" value="// file header"/>
-<booleanAttribute key="de.urszeidler.eclipse.solidity.generation.example.useCaseDoc" value="false"/>
-<stringAttribute key="de.urszeidler.eclipse.solidity.generation.example.usecaseDocTarget" value="doc"/>
+<booleanAttribute key="de.urszeidler.eclipse.solidity.generation.example.useCaseDoc" value="true"/>
+<stringAttribute key="de.urszeidler.eclipse.solidity.generation.example.usecaseDocTarget" value="/party-contracts/doc"/>
 <booleanAttribute key="enable_version" value="true"/>
 <stringAttribute key="modelUri" value="/party-contracts/model/party-dao.uml"/>
 <stringAttribute key="version_pragma" value="pragma solidity ^0.4.1;"/>
