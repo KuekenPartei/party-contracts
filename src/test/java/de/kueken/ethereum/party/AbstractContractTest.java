@@ -41,7 +41,6 @@ public abstract class AbstractContractTest {
 	protected SoliditySource contractSource;
 
 	// Start of user code AbstractContractTest.customFields
-	//TODO: add custom attributes
 	// End of user code
 
 	/**
@@ -129,6 +128,5 @@ public abstract class AbstractContractTest {
 	}
 
 	// Start of user code AbstractContractTest.customMethods
-	//TODO: add custom attributes
 	// End of user code
 }
