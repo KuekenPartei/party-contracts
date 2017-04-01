@@ -1,33 +1,21 @@
 package de.kueken.ethereum.party.basics;
 
+// Start of user code MultiownedTest.customImports
 import static org.junit.Assert.*;
 
-
-import de.kueken.ethereum.party.basics.Multiowned.*;
-
-
 import java.io.File;
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.stream.*;
-import java.math.*;
+import java.math.BigInteger;
+import java.util.concurrent.CompletableFuture;
 
-import org.adridadou.ethereum.EthereumFacade;
-import org.adridadou.ethereum.keystore.*;
 import org.adridadou.ethereum.values.CompiledContract;
 import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
 import org.adridadou.ethereum.values.SoliditySource;
-import org.adridadou.ethereum.values.config.ChainId;
 import org.ethereum.crypto.ECKey;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.kueken.ethereum.party.AbstractContractTest;
-import de.kueken.ethereum.party.EthereumInstance;
-
-// Start of user code MultiownedTest.customImports
 
 // End of user code
 
@@ -38,6 +26,7 @@ import de.kueken.ethereum.party.EthereumInstance;
  */
 public class MultiownedTest extends AbstractContractTest{
 
+ 
 	private Multiowned fixture;
 	// Start of user code MultiownedTest.attributes
 	//TODO: implement
@@ -46,6 +35,11 @@ public class MultiownedTest extends AbstractContractTest{
 	@Override
 	protected String getContractName() {
 		return "Multiowned";
+	}
+
+	@Override
+	protected String getQuallifiedContractName() {
+		return "basics.sol:Multiowned";
 	}
 
 	/**

@@ -1,39 +1,27 @@
 package de.kueken.ethereum.party.party;
 
+// Start of user code ConferenceTest.customImports
 import static org.junit.Assert.*;
 
-import de.kueken.ethereum.party.basics.*;
-import de.kueken.ethereum.party.members.*;
-import de.kueken.ethereum.party.publishing.*;
-import de.kueken.ethereum.party.voting.*;
-
-import de.kueken.ethereum.party.party.Conference.*;
-
-
 import java.io.File;
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.stream.*;
-import java.math.*;
+import java.math.BigInteger;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
-import org.adridadou.ethereum.EthereumFacade;
-import org.adridadou.ethereum.keystore.*;
 import org.adridadou.ethereum.values.CompiledContract;
-import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
 import org.adridadou.ethereum.values.SoliditySource;
-import org.adridadou.ethereum.values.config.ChainId;
 import org.ethereum.crypto.ECKey;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.kueken.ethereum.party.AbstractContractTest;
-import de.kueken.ethereum.party.EthereumInstance;
-
-// Start of user code ConferenceTest.customImports
 import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
-
+import de.kueken.ethereum.party.basics.ManageableTest;
+import de.kueken.ethereum.party.deployer.MembersDeployer;
+import de.kueken.ethereum.party.deployer.VotingDeployer;
+import de.kueken.ethereum.party.members.MemberRegistry;
+import de.kueken.ethereum.party.voting.BasicBallot.BallotState;
 // End of user code
 
 
@@ -43,6 +31,7 @@ import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
  */
 public class ConferenceTest extends OrganTest{
 
+ 
 	private Conference fixture;
 	// Start of user code ConferenceTest.attributes
 	private EthAddress member1 = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
@@ -52,6 +41,11 @@ public class ConferenceTest extends OrganTest{
 	@Override
 	protected String getContractName() {
 		return "Conference";
+	}
+
+	@Override
+	protected String getQuallifiedContractName() {
+		return "party.sol:Conference";
 	}
 
 	/**
@@ -78,7 +72,6 @@ public class ConferenceTest extends OrganTest{
 		setFixture(ethereum.createContractProxy(compiledContract, fixtureAddress, sender, Conference.class));
 		//End of user code
 	}
-
 
 	protected void setFixture(Conference f) {
 		this.fixture = f;

@@ -1,33 +1,20 @@
 package de.kueken.ethereum.party.basics;
 
+// Start of user code OwnedTest.customImports
 import static org.junit.Assert.*;
 
-
-import de.kueken.ethereum.party.basics.Owned.*;
-
-
 import java.io.File;
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.stream.*;
-import java.math.*;
+import java.math.BigInteger;
+import java.util.concurrent.CompletableFuture;
 
-import org.adridadou.ethereum.EthereumFacade;
-import org.adridadou.ethereum.keystore.*;
 import org.adridadou.ethereum.values.CompiledContract;
 import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
-import org.adridadou.ethereum.values.SoliditySource;
-import org.adridadou.ethereum.values.config.ChainId;
 import org.ethereum.crypto.ECKey;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.kueken.ethereum.party.AbstractContractTest;
-import de.kueken.ethereum.party.EthereumInstance;
-
-// Start of user code OwnedTest.customImports
 
 // End of user code
 
@@ -38,6 +25,7 @@ import de.kueken.ethereum.party.EthereumInstance;
  */
 public class OwnedTest extends AbstractContractTest{
 
+ 
 	private Owned fixture;
 	// Start of user code OwnedTest.attributes
 	//TODO: implement
@@ -46,6 +34,11 @@ public class OwnedTest extends AbstractContractTest{
 	@Override
 	protected String getContractName() {
 		return "Owned";
+	}
+
+	@Override
+	protected String getQuallifiedContractName() {
+		return "basics.sol:Owned";
 	}
 
 	/**

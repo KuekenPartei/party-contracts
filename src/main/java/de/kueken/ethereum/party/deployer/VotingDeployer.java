@@ -5,8 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -154,12 +154,25 @@ public class VotingDeployer {
 		if (compiledContracts == null){
 			Map<String, CompiledContract> contracts = ethereum.compile(contractSource).get();
 			compiledContract = contracts.get("Ballot");
+			if (compiledContract == null) {
+				Optional<String> optional = contracts.keySet().stream().filter(s -> s.endsWith("voting.sol:Ballot"))
+						.findFirst();
+				if (optional.isPresent())
+					compiledContract = contracts.get(optional.get());
+			}
 		} else {
 			ContractMetadata contractMetadata = compiledContracts.contracts.get("Ballot");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for 'Ballot' not found");
+			if (contractMetadata == null) {
+				Optional<String> optional = compiledContracts.contracts.keySet().stream()
+						.filter(s -> s.endsWith("voting.sol:Ballot")).findFirst();
+				if (optional.isPresent())
+					contractMetadata = compiledContracts.contracts.get(optional.get());
+			}
 			compiledContract = CompiledContract.from(null, "Ballot", contractMetadata);
 		}
+		if(compiledContract == null)
+			throw new IllegalArgumentException("Contract code for 'Ballot' not found");
+
 		return compiledContract;
 	}
 
@@ -220,12 +233,25 @@ public class VotingDeployer {
 		if (compiledContracts == null){
 			Map<String, CompiledContract> contracts = ethereum.compile(contractSource).get();
 			compiledContract = contracts.get("BasicBallot");
+			if (compiledContract == null) {
+				Optional<String> optional = contracts.keySet().stream().filter(s -> s.endsWith("voting.sol:BasicBallot"))
+						.findFirst();
+				if (optional.isPresent())
+					compiledContract = contracts.get(optional.get());
+			}
 		} else {
 			ContractMetadata contractMetadata = compiledContracts.contracts.get("BasicBallot");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for 'BasicBallot' not found");
+			if (contractMetadata == null) {
+				Optional<String> optional = compiledContracts.contracts.keySet().stream()
+						.filter(s -> s.endsWith("voting.sol:BasicBallot")).findFirst();
+				if (optional.isPresent())
+					contractMetadata = compiledContracts.contracts.get(optional.get());
+			}
 			compiledContract = CompiledContract.from(null, "BasicBallot", contractMetadata);
 		}
+		if(compiledContract == null)
+			throw new IllegalArgumentException("Contract code for 'BasicBallot' not found");
+
 		return compiledContract;
 	}
 
@@ -281,12 +307,25 @@ public class VotingDeployer {
 		if (compiledContracts == null){
 			Map<String, CompiledContract> contracts = ethereum.compile(contractSource).get();
 			compiledContract = contracts.get("PublicBallot");
+			if (compiledContract == null) {
+				Optional<String> optional = contracts.keySet().stream().filter(s -> s.endsWith("voting.sol:PublicBallot"))
+						.findFirst();
+				if (optional.isPresent())
+					compiledContract = contracts.get(optional.get());
+			}
 		} else {
 			ContractMetadata contractMetadata = compiledContracts.contracts.get("PublicBallot");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for 'PublicBallot' not found");
+			if (contractMetadata == null) {
+				Optional<String> optional = compiledContracts.contracts.keySet().stream()
+						.filter(s -> s.endsWith("voting.sol:PublicBallot")).findFirst();
+				if (optional.isPresent())
+					contractMetadata = compiledContracts.contracts.get(optional.get());
+			}
 			compiledContract = CompiledContract.from(null, "PublicBallot", contractMetadata);
 		}
+		if(compiledContract == null)
+			throw new IllegalArgumentException("Contract code for 'PublicBallot' not found");
+
 		return compiledContract;
 	}
 	/**

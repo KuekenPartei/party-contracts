@@ -1,37 +1,25 @@
 package de.kueken.ethereum.party.voting;
 
-import static org.junit.Assert.*;
+// Start of user code BasicBallotTest.customImports
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
-import de.kueken.ethereum.party.members.*;
+import java.math.BigInteger;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
-import de.kueken.ethereum.party.voting.BasicBallot.*;
-
-
-import java.io.File;
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.stream.*;
-import java.math.*;
-
-import org.adridadou.ethereum.EthereumFacade;
-import org.adridadou.ethereum.keystore.*;
 import org.adridadou.ethereum.values.CompiledContract;
-import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
-import org.adridadou.ethereum.values.SoliditySource;
-import org.adridadou.ethereum.values.config.ChainId;
 import org.ethereum.crypto.ECKey;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.kueken.ethereum.party.AbstractContractTest;
-import de.kueken.ethereum.party.EthereumInstance;
-
-// Start of user code BasicBallotTest.customImports
 import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
 import de.kueken.ethereum.party.deployer.MembersDeployer;
 import de.kueken.ethereum.party.deployer.VotingDeployer;
+import de.kueken.ethereum.party.members.MemberRegistry;
+import de.kueken.ethereum.party.voting.BasicBallot.BallotState;
 
 // End of user code
 
@@ -40,8 +28,9 @@ import de.kueken.ethereum.party.deployer.VotingDeployer;
  * Test for the BasicBallot contract.
  *
  */
-public class BasicBallotTest extends AbstractContractTest{
+public  abstract class BasicBallotTest extends AbstractContractTest{
 
+ 
 	private BasicBallot fixture;
 	// Start of user code BasicBallotTest.attributes
 	protected MembersDeployer membersDeployer;
@@ -53,6 +42,11 @@ public class BasicBallotTest extends AbstractContractTest{
 	@Override
 	protected String getContractName() {
 		return "BasicBallot";
+	}
+
+	@Override
+	protected String getQuallifiedContractName() {
+		return "voting.sol:BasicBallot";
 	}
 
 	/**

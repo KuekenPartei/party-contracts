@@ -5,8 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -154,12 +154,25 @@ public class BasicsDeployer {
 		if (compiledContracts == null){
 			Map<String, CompiledContract> contracts = ethereum.compile(contractSource).get();
 			compiledContract = contracts.get("Owned");
+			if (compiledContract == null) {
+				Optional<String> optional = contracts.keySet().stream().filter(s -> s.endsWith("basics.sol:Owned"))
+						.findFirst();
+				if (optional.isPresent())
+					compiledContract = contracts.get(optional.get());
+			}
 		} else {
 			ContractMetadata contractMetadata = compiledContracts.contracts.get("Owned");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for 'Owned' not found");
+			if (contractMetadata == null) {
+				Optional<String> optional = compiledContracts.contracts.keySet().stream()
+						.filter(s -> s.endsWith("basics.sol:Owned")).findFirst();
+				if (optional.isPresent())
+					contractMetadata = compiledContracts.contracts.get(optional.get());
+			}
 			compiledContract = CompiledContract.from(null, "Owned", contractMetadata);
 		}
+		if(compiledContract == null)
+			throw new IllegalArgumentException("Contract code for 'Owned' not found");
+
 		return compiledContract;
 	}
 
@@ -214,12 +227,25 @@ public class BasicsDeployer {
 		if (compiledContracts == null){
 			Map<String, CompiledContract> contracts = ethereum.compile(contractSource).get();
 			compiledContract = contracts.get("Manageable");
+			if (compiledContract == null) {
+				Optional<String> optional = contracts.keySet().stream().filter(s -> s.endsWith("basics.sol:Manageable"))
+						.findFirst();
+				if (optional.isPresent())
+					compiledContract = contracts.get(optional.get());
+			}
 		} else {
 			ContractMetadata contractMetadata = compiledContracts.contracts.get("Manageable");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for 'Manageable' not found");
+			if (contractMetadata == null) {
+				Optional<String> optional = compiledContracts.contracts.keySet().stream()
+						.filter(s -> s.endsWith("basics.sol:Manageable")).findFirst();
+				if (optional.isPresent())
+					contractMetadata = compiledContracts.contracts.get(optional.get());
+			}
 			compiledContract = CompiledContract.from(null, "Manageable", contractMetadata);
 		}
+		if(compiledContract == null)
+			throw new IllegalArgumentException("Contract code for 'Manageable' not found");
+
 		return compiledContract;
 	}
 	/**
@@ -287,12 +313,25 @@ public class BasicsDeployer {
 		if (compiledContracts == null){
 			Map<String, CompiledContract> contracts = ethereum.compile(contractSource).get();
 			compiledContract = contracts.get("Multiowned");
+			if (compiledContract == null) {
+				Optional<String> optional = contracts.keySet().stream().filter(s -> s.endsWith("basics.sol:Multiowned"))
+						.findFirst();
+				if (optional.isPresent())
+					compiledContract = contracts.get(optional.get());
+			}
 		} else {
 			ContractMetadata contractMetadata = compiledContracts.contracts.get("Multiowned");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for 'Multiowned' not found");
+			if (contractMetadata == null) {
+				Optional<String> optional = compiledContracts.contracts.keySet().stream()
+						.filter(s -> s.endsWith("basics.sol:Multiowned")).findFirst();
+				if (optional.isPresent())
+					contractMetadata = compiledContracts.contracts.get(optional.get());
+			}
 			compiledContract = CompiledContract.from(null, "Multiowned", contractMetadata);
 		}
+		if(compiledContract == null)
+			throw new IllegalArgumentException("Contract code for 'Multiowned' not found");
+
 		return compiledContract;
 	}
 	/**

@@ -1,36 +1,5 @@
 package de.kueken.ethereum.party.party;
 
-import static org.junit.Assert.*;
-
-import de.kueken.ethereum.party.basics.*;
-import de.kueken.ethereum.party.members.*;
-import de.kueken.ethereum.party.publishing.*;
-import de.kueken.ethereum.party.voting.*;
-
-import de.kueken.ethereum.party.party.Party.*;
-
-
-import java.io.File;
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.stream.*;
-import java.math.*;
-
-import org.adridadou.ethereum.EthereumFacade;
-import org.adridadou.ethereum.keystore.*;
-import org.adridadou.ethereum.values.CompiledContract;
-import org.adridadou.ethereum.values.EthAccount;
-import org.adridadou.ethereum.values.EthAddress;
-import org.adridadou.ethereum.values.SoliditySource;
-import org.adridadou.ethereum.values.config.ChainId;
-import org.ethereum.crypto.ECKey;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import de.kueken.ethereum.party.AbstractContractTest;
-import de.kueken.ethereum.party.EthereumInstance;
-
 // Start of user code PartyTest.customImports
 import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
 import de.kueken.ethereum.party.deployer.MembersDeployer;
@@ -40,6 +9,28 @@ import java.io.IOException;
 import org.spongycastle.util.encoders.Hex;
 
 import com.fasterxml.jackson.core.sym.Name;
+import static org.junit.Assert.*;
+
+import java.io.File;
+import java.math.BigInteger;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
+import org.adridadou.ethereum.values.CompiledContract;
+import org.adridadou.ethereum.values.EthAddress;
+import org.adridadou.ethereum.values.SoliditySource;
+import org.ethereum.crypto.ECKey;
+import org.junit.Before;
+import org.junit.Test;
+
+import de.kueken.ethereum.party.AbstractContractTest;
+import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
+import de.kueken.ethereum.party.basics.ManageableTest;
+import de.kueken.ethereum.party.deployer.MembersDeployer;
+import de.kueken.ethereum.party.deployer.VotingDeployer;
+import de.kueken.ethereum.party.members.MemberRegistry;
+import de.kueken.ethereum.party.publishing.BlogRegistry;
+import de.kueken.ethereum.party.voting.BasicBallot.BallotState;
 
 // End of user code
 
@@ -50,6 +41,7 @@ import com.fasterxml.jackson.core.sym.Name;
  */
 public class PartyTest extends ManageableTest{
 
+ 
 	private Party fixture;
 	// Start of user code PartyTest.attributes
 //	private String senderAddressS = "5db10750e8caff27f906b41c71b3471057dd2004";
@@ -63,6 +55,11 @@ public class PartyTest extends ManageableTest{
 	@Override
 	protected String getContractName() {
 		return "Party";
+	}
+
+	@Override
+	protected String getQuallifiedContractName() {
+		return "party.sol:Party";
 	}
 
 	/**

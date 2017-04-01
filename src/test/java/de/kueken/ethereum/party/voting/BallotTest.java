@@ -1,34 +1,27 @@
 package de.kueken.ethereum.party.voting;
 
-import static org.junit.Assert.*;
-
-import de.kueken.ethereum.party.members.*;
-
-import de.kueken.ethereum.party.voting.Ballot.*;
-
+// Start of user code BallotTest.customImports
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.io.File;
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.stream.*;
-import java.math.*;
+import java.math.BigInteger;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
-import org.adridadou.ethereum.EthereumFacade;
-import org.adridadou.ethereum.keystore.*;
 import org.adridadou.ethereum.values.CompiledContract;
-import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
 import org.adridadou.ethereum.values.SoliditySource;
-import org.adridadou.ethereum.values.config.ChainId;
 import org.ethereum.crypto.ECKey;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.kueken.ethereum.party.AbstractContractTest;
-import de.kueken.ethereum.party.EthereumInstance;
-
-// Start of user code BallotTest.customImports
+import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
+import de.kueken.ethereum.party.deployer.MembersDeployer;
+import de.kueken.ethereum.party.deployer.VotingDeployer;
+import de.kueken.ethereum.party.members.MemberRegistry;
+import de.kueken.ethereum.party.voting.BasicBallot.BallotState;
 
 // End of user code
 
@@ -39,6 +32,7 @@ import de.kueken.ethereum.party.EthereumInstance;
  */
 public class BallotTest extends AbstractContractTest{
 
+ 
 	private Ballot fixture;
 	// Start of user code BallotTest.attributes
 	//TODO: implement
@@ -47,6 +41,11 @@ public class BallotTest extends AbstractContractTest{
 	@Override
 	protected String getContractName() {
 		return "Ballot";
+	}
+
+	@Override
+	protected String getQuallifiedContractName() {
+		return "voting.sol:Ballot";
 	}
 
 	/**

@@ -5,8 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -154,12 +154,25 @@ public class MembersDeployer {
 		if (compiledContracts == null){
 			Map<String, CompiledContract> contracts = ethereum.compile(contractSource).get();
 			compiledContract = contracts.get("MemberRegistry");
+			if (compiledContract == null) {
+				Optional<String> optional = contracts.keySet().stream().filter(s -> s.endsWith("members.sol:MemberRegistry"))
+						.findFirst();
+				if (optional.isPresent())
+					compiledContract = contracts.get(optional.get());
+			}
 		} else {
 			ContractMetadata contractMetadata = compiledContracts.contracts.get("MemberRegistry");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for 'MemberRegistry' not found");
+			if (contractMetadata == null) {
+				Optional<String> optional = compiledContracts.contracts.keySet().stream()
+						.filter(s -> s.endsWith("members.sol:MemberRegistry")).findFirst();
+				if (optional.isPresent())
+					contractMetadata = compiledContracts.contracts.get(optional.get());
+			}
 			compiledContract = CompiledContract.from(null, "MemberRegistry", contractMetadata);
 		}
+		if(compiledContract == null)
+			throw new IllegalArgumentException("Contract code for 'MemberRegistry' not found");
+
 		return compiledContract;
 	}
 	/**
@@ -227,12 +240,25 @@ public class MembersDeployer {
 		if (compiledContracts == null){
 			Map<String, CompiledContract> contracts = ethereum.compile(contractSource).get();
 			compiledContract = contracts.get("MemberAware");
+			if (compiledContract == null) {
+				Optional<String> optional = contracts.keySet().stream().filter(s -> s.endsWith("members.sol:MemberAware"))
+						.findFirst();
+				if (optional.isPresent())
+					compiledContract = contracts.get(optional.get());
+			}
 		} else {
 			ContractMetadata contractMetadata = compiledContracts.contracts.get("MemberAware");
-			if (contractMetadata == null)
-				throw new IllegalArgumentException("Contract code for 'MemberAware' not found");
+			if (contractMetadata == null) {
+				Optional<String> optional = compiledContracts.contracts.keySet().stream()
+						.filter(s -> s.endsWith("members.sol:MemberAware")).findFirst();
+				if (optional.isPresent())
+					contractMetadata = compiledContracts.contracts.get(optional.get());
+			}
 			compiledContract = CompiledContract.from(null, "MemberAware", contractMetadata);
 		}
+		if(compiledContract == null)
+			throw new IllegalArgumentException("Contract code for 'MemberAware' not found");
+
 		return compiledContract;
 	}
 

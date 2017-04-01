@@ -1,37 +1,30 @@
 package de.kueken.ethereum.party.publishing;
 
-import static org.junit.Assert.*;
-
-import de.kueken.ethereum.party.basics.*;
-
-import de.kueken.ethereum.party.publishing.BlogRegistry.*;
-
-
-import java.io.File;
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.stream.*;
-import java.math.*;
-
-import org.adridadou.ethereum.EthereumFacade;
-import org.adridadou.ethereum.keystore.*;
-import org.adridadou.ethereum.values.CompiledContract;
-import org.adridadou.ethereum.values.EthAccount;
-import org.adridadou.ethereum.values.EthAddress;
-import org.adridadou.ethereum.values.SoliditySource;
-import org.adridadou.ethereum.values.config.ChainId;
-import org.ethereum.crypto.ECKey;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import de.kueken.ethereum.party.AbstractContractTest;
-import de.kueken.ethereum.party.EthereumInstance;
-
 // Start of user code BlogRegistryTest.customImports
 import java.lang.reflect.Type;
 import org.adridadou.ethereum.converters.output.OutputTypeConverter;
 import de.kueken.ethereum.party.deployer.PublishingDeployer;
+import static org.junit.Assert.*;
+
+import java.io.File;
+import java.math.BigInteger;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
+import org.adridadou.ethereum.values.CompiledContract;
+import org.adridadou.ethereum.values.EthAddress;
+import org.adridadou.ethereum.values.SoliditySource;
+import org.ethereum.crypto.ECKey;
+import org.junit.Before;
+import org.junit.Test;
+
+import de.kueken.ethereum.party.AbstractContractTest;
+import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
+import de.kueken.ethereum.party.basics.ManageableTest;
+import de.kueken.ethereum.party.deployer.MembersDeployer;
+import de.kueken.ethereum.party.deployer.VotingDeployer;
+import de.kueken.ethereum.party.members.MemberRegistry;
+import de.kueken.ethereum.party.voting.BasicBallot.BallotState;
 
 // End of user code
 
@@ -42,6 +35,7 @@ import de.kueken.ethereum.party.deployer.PublishingDeployer;
  */
 public class BlogRegistryTest extends ManageableTest{
 
+ 
 	private BlogRegistry fixture;
 	// Start of user code BlogRegistryTest.attributes
 	private PublishingDeployer publishingDeployer;
@@ -50,6 +44,11 @@ public class BlogRegistryTest extends ManageableTest{
 	@Override
 	protected String getContractName() {
 		return "BlogRegistry";
+	}
+
+	@Override
+	protected String getQuallifiedContractName() {
+		return "publishing.sol:BlogRegistry";
 	}
 
 	/**

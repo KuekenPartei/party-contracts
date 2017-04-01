@@ -114,7 +114,7 @@ public class EthereumInstance{
 			ethereum = EthereumFacadeProvider.forNetwork(mainNet).create();
 		} else if (EI_TEST.equalsIgnoreCase(property)) {
 			BlockchainConfig.Builder testnet = EthereumJConfigs.etherCampTestnet();
-			// Start of user code for setup the test chain
+			//Start of user code for setup the test chain
 			// End of user code
 			ethereum = EthereumFacadeProvider.forNetwork(testnet).create();
 		} else if (EI_ROPSTEN.equalsIgnoreCase(property)) {
@@ -148,7 +148,6 @@ public class EthereumInstance{
 			// End of user code
 			ethereum = EthereumFacadeProvider.forNetwork(config).create();
 		}
-		// take the standalone for all other cases
 		if (ethereum == null) {
 			TestConfig.Builder builder = TestConfig.builder();
 			// Start of user code for setup the standalone chain

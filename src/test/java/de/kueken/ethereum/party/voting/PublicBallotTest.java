@@ -1,36 +1,26 @@
 package de.kueken.ethereum.party.voting;
 
-import static org.junit.Assert.*;
+// Start of user code PublicBallotTest.customImports
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
-import de.kueken.ethereum.party.members.*;
+import java.math.BigInteger;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
-import de.kueken.ethereum.party.voting.PublicBallot.*;
-
-
-import java.io.File;
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.stream.*;
-import java.math.*;
-
-import org.adridadou.ethereum.EthereumFacade;
-import org.adridadou.ethereum.keystore.*;
+import org.adridadou.ethereum.keystore.AccountProvider;
 import org.adridadou.ethereum.values.CompiledContract;
 import org.adridadou.ethereum.values.EthAccount;
 import org.adridadou.ethereum.values.EthAddress;
-import org.adridadou.ethereum.values.SoliditySource;
-import org.adridadou.ethereum.values.config.ChainId;
 import org.ethereum.crypto.ECKey;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.kueken.ethereum.party.AbstractContractTest;
-import de.kueken.ethereum.party.EthereumInstance;
-
-// Start of user code PublicBallotTest.customImports
+import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
 import de.kueken.ethereum.party.deployer.MembersDeployer;
 import de.kueken.ethereum.party.deployer.VotingDeployer;
+import de.kueken.ethereum.party.members.MemberRegistry;
 import de.kueken.ethereum.party.voting.BasicBallot.BallotState;
 
 // End of user code
@@ -42,6 +32,7 @@ import de.kueken.ethereum.party.voting.BasicBallot.BallotState;
  */
 public class PublicBallotTest extends BasicBallotTest{
 
+ 
 	private PublicBallot fixture;
 	// Start of user code PublicBallotTest.attributes
 	//TODO: add custom attributes
@@ -52,6 +43,11 @@ public class PublicBallotTest extends BasicBallotTest{
 	@Override
 	protected String getContractName() {
 		return "PublicBallot";
+	}
+
+	@Override
+	protected String getQuallifiedContractName() {
+		return "voting.sol:PublicBallot";
 	}
 
 	/**
@@ -101,7 +97,21 @@ public class PublicBallotTest extends BasicBallotTest{
 	@Test
 	public void testCastVote_uint() throws Exception {
 		//Start of user code testCastVote_uint
-		fail("not implemented");//TODO: implement this
+		registry.contractInstance.addMember("Sender", sender.getAddress()).get();
+
+		String _name= "name";
+		String _hash = "hash";
+		String _url = "url";
+		EthAddress _member = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
+		assertEquals(0, fixture.proposalCount().intValue());
+		fixture.addProposal(_name, _hash, _url, _member).get();
+		assertEquals(1, fixture.proposalCount().intValue());
+
+		fixture.addProposal(_name, _hash, _url, _member).get();
+		assertEquals(2, fixture.proposalCount().intValue());
+		
+		fixture.castVote(0).get();
+		BasicBallotBallotProposal proposals = fixture.proposals(0);
 		//End of user code
 	}
 	//Start of user code customTests    
