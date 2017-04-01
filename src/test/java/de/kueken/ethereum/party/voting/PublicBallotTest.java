@@ -167,5 +167,26 @@ public class PublicBallotTest extends BasicBallotTest{
 		fixture.castVote(0).get();
 	}
 
+	@Test(expected=ExecutionException.class)
+	public void testCastVoteNotStarted() throws Exception {
+		registry.contractInstance.addMember("Sender", sender.getAddress()).get();
+
+		String _name= "name";
+		String _hash = "hash";
+		String _url = "url";
+		EthAddress _member = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
+		assertEquals(0, fixture.proposalCount().intValue());
+		fixture.addProposal(_name, _hash, _url, _member).get();
+		assertEquals(1, fixture.proposalCount().intValue());
+
+		fixture.addProposal(_name, _hash, _url, _member).get();
+		assertEquals(2, fixture.proposalCount().intValue());
+		
+		assertEquals(BallotState.ballotCreated, fixture.ballotState());
+
+		assertEquals(0,fixture.voteCount().intValue());
+		fixture.castVote(0).get();
+	}
+
 	//End of user code
 }
