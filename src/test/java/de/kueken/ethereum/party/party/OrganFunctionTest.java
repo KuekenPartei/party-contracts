@@ -58,10 +58,7 @@ public class OrganFunctionTest extends ManageableTest{
 	@Before
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
-        File contractSrc = new File(this.getClass().getResource("/mix/party.sol").toURI());
-        contractSource = SoliditySource.from(contractSrc);
 		publishingDeployer = new PublishingDeployer(ethereum,"/mix/combine.json",true);
-
 		createFixture();
 		//End of user code
 	}
