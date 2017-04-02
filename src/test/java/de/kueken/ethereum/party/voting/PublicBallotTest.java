@@ -37,7 +37,7 @@ public class PublicBallotTest extends BasicBallotTest{
 	// Start of user code PublicBallotTest.attributes
 	//TODO: add custom attributes
 	//for the blockchain proxy the sender is hard coded
-	private String senderAddress = "5db10750e8caff27f906b41c71b3471057dd2004";
+//	private String senderAddress = "5db10750e8caff27f906b41c71b3471057dd2004";
 	// End of user code
 
 	@Override

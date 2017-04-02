@@ -138,7 +138,12 @@ public class EthereumInstance{
 			// Start of user code for setup the private chain
 			config.reset(true)
 			.initialBalance(new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100000L))),
-					EthValue.ether(10L));
+					EthValue.ether(10L))
+			.initialBalance(new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(1000L))), EthValue.ether(10L))
+			.initialBalance(new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(1001L))), EthValue.ether(10L))
+			.initialBalance(new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L))),  EthValue.ether(10L))
+			.initialBalance(new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100002L))),  EthValue.ether(10L))
+			;
 
 			// End of user code
 			ethereum = new PrivateEthereumFacadeProvider().create(config);

@@ -187,7 +187,6 @@ public  abstract class BasicBallotTest extends AbstractContractTest{
 		assertEquals(BallotState.ballotEnded, fixture.ballotState());
 
 		fixture.stopBallot().get();
-		assertEquals(BallotState.ballotEnded, fixture.ballotState());
 	}
 
 	
@@ -214,7 +213,6 @@ public  abstract class BasicBallotTest extends AbstractContractTest{
 	public void testStartBallotNoneMember() throws Exception {
 		assertEquals(BallotState.ballotCreated, fixture.ballotState());
 		fixture.startBallot().get();
-		assertEquals(BallotState.ballotStarted, fixture.ballotState());
 	}
 
 	@Test(expected=ExecutionException.class)
