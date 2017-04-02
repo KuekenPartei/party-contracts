@@ -109,6 +109,7 @@ public class OrganTest extends ManageableTest{
 	@Test
 	public void testPublishMessage_string_string_string() throws Exception {
 		//Start of user code testPublishMessage_string_string_string
+		System.out.println("testPublishMessage_string_string_string");
 		initOrgan();
 		fixture.initalizeOrgan().get();
 		EthAddress address = fixture.getOrganBlog();
@@ -137,6 +138,7 @@ public class OrganTest extends ManageableTest{
 	@Test
 	public void testChangeMember_uint_address() throws Exception {
 		//Start of user code testChangeMember_uint_address
+		System.out.println("testChangeMember_uint_address");
 		assertEquals(0, fixture.lastFunctionId().intValue());
 		initOrgan();
 		fixture.initalizeOrgan().get();
@@ -174,6 +176,7 @@ public class OrganTest extends ManageableTest{
 	@Test
 	public void testCreateFunction_string_string() throws Exception {
 		//Start of user code testCreateFunction_string_string
+		System.out.println("testCreateFunction_string_string");
 		assertEquals(0, fixture.lastFunctionId().intValue());
 		initOrgan();
 		
@@ -195,6 +198,7 @@ public class OrganTest extends ManageableTest{
 	@Test
 	public void testInitalizeOrgan() throws Exception {
 		//Start of user code testInitalizeOrgan
+		System.out.println("testInitalizeOrgan");
 		assertFalse(fixture.isActive());
 		EthAddress expected = EthAddress.empty();
 		assertEquals(expected, fixture.getOrganBlog());
@@ -246,6 +250,7 @@ public class OrganTest extends ManageableTest{
 	@Test
 	public void testCreateBallot_uint_address_string_string() throws Exception {
 		//Start of user code testCreateBallot_uint_address_string_string
+		System.out.println("testCreateBallot_uint_address_string_string");
 		
 		DeployDuo<BallotFactory> ballotFactory = votingDeployer.createBallotFactory(sender);
 		
@@ -272,6 +277,7 @@ public class OrganTest extends ManageableTest{
 	@Test
 	public void testGetLastBallot() throws Exception {
 		//Start of user code testGetLastBallot
+		System.out.println("testGetLastBallot");
 		assertEquals(EthAddress.empty(), fixture.getLastBallot());
 		testCreateBallot_uint_address_string_string();
 		EthAddress address = fixture.getLastBallot();
@@ -288,6 +294,7 @@ public class OrganTest extends ManageableTest{
 	@Test
 	public void testGetOrganBlog() throws Exception {
 		//Start of user code testGetOrganBlog
+		System.out.println("testGetLastBallot");
 		assertEquals(EthAddress.empty(), fixture.getOrganBlog());
 		initOrgan();
 		fixture.initalizeOrgan().get();
@@ -303,6 +310,7 @@ public class OrganTest extends ManageableTest{
 	@Test
 	public void testAddOrganFunction_address_string() throws Exception {
 		//Start of user code testAddOrganFunction_address_string
+		System.out.println("testAddOrganFunction_address_string");
 		initOrgan();
 		BlogRegistry blogRegistry = publishingDeployer.createBlogRegistryProxy(sender,  fixture.blogRegistry());
 		assertEquals(0, fixture.lastFunctionId().intValue());
@@ -334,6 +342,7 @@ public class OrganTest extends ManageableTest{
 	@Test
 	public void testGetOrganFunction_uint() throws Exception {
 		//Start of user code testGetOrganFunction_uint
+		System.out.println("testGetOrganFunction_uint");
 		assertEquals(0, fixture.lastFunctionId().intValue());
 		initOrgan();
 
@@ -354,6 +363,7 @@ public class OrganTest extends ManageableTest{
 	@Override
 	@Test
 	public void testConstructor() throws Exception {
+		System.out.println("testConstructor");
 		super.testConstructor();
 		
 		assertEquals(EthAddress.empty(), fixture.blogRegistry());
@@ -371,6 +381,8 @@ public class OrganTest extends ManageableTest{
 	 * @throws ExecutionException
 	 */
 	private void initOrgan() throws IOException, InterruptedException, ExecutionException {
+		System.out.println("initOrgan");
+
 		DeployDuo<BlogRegistry> registry = publishingDeployer.createBlogRegistry(sender);
 		
 		fixture.setBlogRegistry(registry.contractAddress).get();
