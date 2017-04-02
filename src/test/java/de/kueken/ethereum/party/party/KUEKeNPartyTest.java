@@ -75,7 +75,7 @@ public class KUEKeNPartyTest extends PartyTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-//		CompiledContract compiledContract = ethereum.compile(contractSource, getContractName());
+		System.out.println("create fixture:"+getQuallifiedContractName());
 		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
 
 		//TODO: set the constructor args

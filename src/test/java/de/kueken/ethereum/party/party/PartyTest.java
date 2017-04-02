@@ -86,6 +86,7 @@ public class PartyTest extends ManageableTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
+		System.out.println("create fixture:"+getQuallifiedContractName());
 		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
         fixtureAddress = address.get();
@@ -134,8 +135,8 @@ public class PartyTest extends ManageableTest{
 	@Test
 	public void testAddOrgan_address() throws Exception {
 		//Start of user code testAddOrgan_address
-		assertEquals(0, fixture.organCount().intValue());
 		System.out.println("testAddOrgan_address");
+		assertEquals(0, fixture.organCount().intValue());
 		initParty();
 		
 		CompletableFuture<EthAddress> deployOrgan = partyDeployer.deployOrgan(sender);
@@ -165,8 +166,8 @@ public class PartyTest extends ManageableTest{
 	@Test
 	public void testAddSubDivision_address() throws Exception {
 		//Start of user code testAddSubDivision_address
-		assertEquals(0, fixture.subDivisionCount().intValue());
 		System.out.println("testAddSubDivision_address");
+		assertEquals(0, fixture.subDivisionCount().intValue());
 		initParty();
 		
 		String _name="subdivision";
@@ -217,6 +218,7 @@ public class PartyTest extends ManageableTest{
 	 * @throws ExecutionException
 	 */
 	private void initParty() throws IOException, InterruptedException, ExecutionException {
+		System.out.println("init Party");
 		CompletableFuture<EthAddress> deployBlogRegistry = publishingDeployer.deployBlogRegistry(sender);
 		BlogRegistry blogRegistry = publishingDeployer.createBlogRegistryProxy(sender, deployBlogRegistry.get());
 		

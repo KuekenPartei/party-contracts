@@ -87,6 +87,7 @@ public class OrganTest extends ManageableTest{
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
 //		CompiledContract compiledContract = ethereum.compile(contractSource, getContractName());
+		System.out.println("create fixture:"+getQuallifiedContractName());
 		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
         fixtureAddress = address.get();
