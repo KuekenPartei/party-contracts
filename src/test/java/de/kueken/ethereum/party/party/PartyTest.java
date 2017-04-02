@@ -135,7 +135,7 @@ public class PartyTest extends ManageableTest{
 	public void testAddOrgan_address() throws Exception {
 		//Start of user code testAddOrgan_address
 		assertEquals(0, fixture.organCount().intValue());
-
+		System.out.println("testAddOrgan_address");
 		initParty();
 		
 		CompletableFuture<EthAddress> deployOrgan = partyDeployer.deployOrgan(sender);
@@ -166,7 +166,7 @@ public class PartyTest extends ManageableTest{
 	public void testAddSubDivision_address() throws Exception {
 		//Start of user code testAddSubDivision_address
 		assertEquals(0, fixture.subDivisionCount().intValue());
-		
+		System.out.println("testAddSubDivision_address");
 		initParty();
 		
 		String _name="subdivision";
@@ -190,6 +190,7 @@ public class PartyTest extends ManageableTest{
 	@Test
 	public void testRemoveSubDivision_uint() throws Exception {
 		//Start of user code testRemoveSubDivision_uint
+		System.out.println("testRemoveSubDivision_uint");
 		testAddSubDivision_address();
 		
 		fixture.removeSubDivision(0);
