@@ -96,6 +96,7 @@ public class OrganFunctionTest extends ManageableTest{
 	@Test
 	public void testPublishMessage_string_string_string() throws Exception {
 		//Start of user code testPublishMessage_string_string_string
+		System.out.println("testPublishMessage_string_string_string");
 		DeployDuo<ShortBlog> aPublisher = publishingDeployer.createShortBlog(sender, "OrganFunction");
 		fixture.setPublisher(aPublisher.contractAddress).get();
 		assertEquals(0, aPublisher.contractInstance.messageCount().intValue());
@@ -116,6 +117,7 @@ public class OrganFunctionTest extends ManageableTest{
 	@Test
 	public void testGetFunctioName() throws Exception {
 		//Start of user code testGetFunctioName
+		System.out.println("testGetFunctioName");
 		assertEquals("_name", fixture.getFunctioName());
 		//End of user code
 	}
@@ -123,6 +125,7 @@ public class OrganFunctionTest extends ManageableTest{
 
 	@Test
 	public void testConstructor() throws Exception {
+		System.out.println("testConstructor");
 		String _name = "_name";
 		String _ch = "_ch";
 		
