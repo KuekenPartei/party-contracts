@@ -211,6 +211,7 @@ public class OrganTest extends ManageableTest{
 	@Test
 	public void testPublishFunctionMessage_uint_string_string_string() throws Exception {
 		//Start of user code testPublishFunctionMessage_uint_string_string_string
+		fail("Do later.");
 		initOrgan();
 		fixture.initalizeOrgan();
 		fixture.createFunction("Function 0", "hash").get();

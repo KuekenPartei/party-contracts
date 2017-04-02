@@ -106,6 +106,7 @@ public class PartyTest extends ManageableTest{
 	@Test
 	public void testCreateOrgan_string() throws Exception {
 		//Start of user code testCreateOrgan_string
+		fail("do later");
 		assertEquals(0, fixture.organCount().intValue());
 		initParty();
 		String organName = "organ name";
