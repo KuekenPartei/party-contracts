@@ -71,7 +71,7 @@ public class OrganFunctionTest extends ManageableTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-//		CompiledContract compiledContract = ethereum.compile(contractSource, getContractName());
+		System.out.println("create fixture:"+getQuallifiedContractName());
 		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
 		String _name = "_name";
 		String _ch = "_ch";
