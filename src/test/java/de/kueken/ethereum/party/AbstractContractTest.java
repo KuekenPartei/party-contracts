@@ -83,7 +83,8 @@ public abstract class AbstractContractTest {
 					ECKey.fromPrivate(Hex.decode("3ec771c31cac8c0dba77a69e503765701d3c2bb62435888d4ffa38fed60c445c")));
 		}
 		senderAddress = sender.getAddress();
-		// End of user code
+		ethereum.events().observeBlocks().subscribe(s-> System.out.println("New Block: "+s));
+		ethereum.events().observeTransactions().subscribe(ev->System.out.println("Transaction: "+ev));		// End of user code
 	}
 
 	/**
