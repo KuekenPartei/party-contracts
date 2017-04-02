@@ -21,6 +21,7 @@ import de.kueken.ethereum.party.AbstractContractTest;
 import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
 import de.kueken.ethereum.party.basics.ManageableTest;
 import de.kueken.ethereum.party.deployer.MembersDeployer;
+import de.kueken.ethereum.party.deployer.PartyDeployers;
 import de.kueken.ethereum.party.deployer.VotingDeployer;
 import de.kueken.ethereum.party.members.MemberRegistry;
 import de.kueken.ethereum.party.publishing.ShortBlog;
@@ -58,7 +59,7 @@ public class OrganFunctionTest extends ManageableTest{
 	@Before
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
-		publishingDeployer = new PublishingDeployer(ethereum,"/mix/combine.json",true);
+		publishingDeployer = PartyDeployers.PUBLISHINGDEPLOYER;// new PublishingDeployer(ethereum,"/mix/combine.json",true);
 		createFixture();
 		//End of user code
 	}

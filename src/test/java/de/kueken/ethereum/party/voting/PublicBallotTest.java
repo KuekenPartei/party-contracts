@@ -19,6 +19,7 @@ import org.junit.Test;
 import de.kueken.ethereum.party.AbstractContractTest;
 import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
 import de.kueken.ethereum.party.deployer.MembersDeployer;
+import de.kueken.ethereum.party.deployer.PartyDeployers;
 import de.kueken.ethereum.party.deployer.VotingDeployer;
 import de.kueken.ethereum.party.members.MemberRegistry;
 import de.kueken.ethereum.party.voting.BasicBallot.BallotState;
@@ -57,8 +58,8 @@ public class PublicBallotTest extends BasicBallotTest{
 	@Before
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
-		votingDeployer = new VotingDeployer(ethereum,"/mix/combine.json",true);
-		membersDeployer = new MembersDeployer(ethereum,"/mix/combine.json",true);
+		votingDeployer = PartyDeployers.VOTINGDEPLOYER;// new VotingDeployer(ethereum,"/mix/combine.json",true);
+		membersDeployer = PartyDeployers.MEMBERSDEPLOYER;// new MembersDeployer(ethereum,"/mix/combine.json",true);
 		createFixture();
 		//End of user code
 	}

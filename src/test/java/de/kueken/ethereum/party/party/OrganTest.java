@@ -31,6 +31,7 @@ import de.kueken.ethereum.party.voting.BasicBallot.BallotState;
 import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
 import de.kueken.ethereum.party.deployer.MembersDeployer;
 import de.kueken.ethereum.party.deployer.PartyDeployer;
+import de.kueken.ethereum.party.deployer.PartyDeployers;
 import de.kueken.ethereum.party.deployer.PublishingDeployer;
 import org.spongycastle.util.encoders.Hex;
 import java.io.IOException;
@@ -70,10 +71,10 @@ public class OrganTest extends ManageableTest{
 	public void prepareTest() throws Exception {
 		//Start of user code prepareTest
 		initTest();
-		partyDeployer = new PartyDeployer(ethereum,"/mix/combine.json",true);
-		publishingDeployer = new PublishingDeployer(ethereum,"/mix/combine.json",true);
-		membersDeployer = new MembersDeployer(ethereum,"/mix/combine.json",true);
-		votingDeployer = new VotingDeployer(ethereum,"/mix/combine.json",true);
+		partyDeployer = PartyDeployers.PARTYDEPLOYER;// new PartyDeployer(ethereum,"/mix/combine.json",true);
+		publishingDeployer = PartyDeployers.PUBLISHINGDEPLOYER; //new PublishingDeployer(ethereum,"/mix/combine.json",true);
+		membersDeployer = PartyDeployers.MEMBERSDEPLOYER;// new MembersDeployer(ethereum,"/mix/combine.json",true);
+		votingDeployer = PartyDeployers.VOTINGDEPLOYER;//new VotingDeployer(ethereum,"/mix/combine.json",true);
 		createFixture();
 		//End of user code
 	}
