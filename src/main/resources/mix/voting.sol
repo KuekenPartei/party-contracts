@@ -237,7 +237,7 @@ contract BallotFactory {
 	*/
 	function create(uint ballotType,address _registry,string _name,string _hash) public  returns (BasicBallot ballot) {
 		//Start of user code BallotFactory.function.create_uint_address_string_string
-		ballot =  new PublicBallot(this,_name,_hash);
+		ballot =  new PublicBallot(_registry,_name,_hash);
 		//End of user code
 	}
 	

@@ -189,5 +189,71 @@ public class PublicBallotTest extends BasicBallotTest{
 		fixture.castVote(0).get();
 	}
 
+	@Test
+	public void testCastVote_Several() throws Exception {
+		EthAccount acount_1 = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L)));
+		registry.contractInstance.addMember("Sender", sender.getAddress()).get();
+		registry.contractInstance.addMember("Sender1", acount_1.getAddress()).get();
+//		EthAccount acount_2 = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100002L)));
+		
+		String _name= "name";
+		String _hash = "hash";
+		String _url = "url";
+		EthAddress _member = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
+		assertEquals(0, fixture.proposalCount().intValue());
+		fixture.addProposal(_name, _hash, _url, _member).get();
+		assertEquals(1, fixture.proposalCount().intValue());
+
+		fixture.addProposal(_name, _hash, _url, _member).get();
+		assertEquals(2, fixture.proposalCount().intValue());
+		
+		assertEquals(BallotState.ballotCreated, fixture.ballotState());
+		fixture.startBallot().get();
+		assertEquals(BallotState.ballotStarted, fixture.ballotState());
+
+		assertEquals(0,fixture.voteCount().intValue());
+		fixture.castVote(0).get();
+		assertEquals(1,fixture.voteCount().intValue());
+		assertEquals(1, fixture.votesCasted(sender.getAddress()).intValue());  
+		
+		PublicBallot ballotProxy = votingDeployer.createPublicBallotProxy(acount_1, fixtureAddress);
+		ballotProxy.castVote(1).get();
+		assertEquals(2,fixture.voteCount().intValue());
+		assertEquals(2, fixture.votesCasted(acount_1.getAddress()).intValue());  
+		
+	}
+	
+	@Test(expected=ExecutionException.class)
+	public void testCastVote_NoMember() throws Exception {
+		EthAccount acount_1 = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L)));
+//		registry.contractInstance.addMember("Sender", sender.getAddress()).get();
+//		registry.contractInstance.addMember("Sender1", acount_1.getAddress()).get();
+//		EthAccount acount_2 = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100002L)));
+		
+		String _name= "name";
+		String _hash = "hash";
+		String _url = "url";
+		EthAddress _member = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
+		assertEquals(0, fixture.proposalCount().intValue());
+		fixture.addProposal(_name, _hash, _url, _member).get();
+		assertEquals(1, fixture.proposalCount().intValue());
+
+		fixture.addProposal(_name, _hash, _url, _member).get();
+		assertEquals(2, fixture.proposalCount().intValue());
+		
+		assertEquals(BallotState.ballotCreated, fixture.ballotState());
+		fixture.startBallot().get();
+		assertEquals(BallotState.ballotStarted, fixture.ballotState());
+
+		assertEquals(0,fixture.voteCount().intValue());
+		fixture.castVote(0).get();
+		assertEquals(1,fixture.voteCount().intValue());
+		assertEquals(1, fixture.votesCasted(sender.getAddress()).intValue());  
+		
+		PublicBallot ballotProxy = votingDeployer.createPublicBallotProxy(acount_1, fixtureAddress);
+		ballotProxy.castVote(1).get();
+		
+	}
+
 	//End of user code
 }

@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
@@ -42,6 +43,7 @@ public abstract class AbstractContractTest {
 
 	// Start of user code AbstractContractTest.customFields
 	private static boolean evensRegistered = false;
+	private static Map<String,CompiledContract> contracts = new HashMap<String, CompiledContract>();
 	// End of user code
 
 	/**
@@ -84,11 +86,11 @@ public abstract class AbstractContractTest {
 					ECKey.fromPrivate(Hex.decode("3ec771c31cac8c0dba77a69e503765701d3c2bb62435888d4ffa38fed60c445c")));
 		}
 		senderAddress = sender.getAddress();
-		if(!evensRegistered){
-		ethereum.events().observeBlocks().subscribe(s-> System.out.println("New Block: "+s));
-		ethereum.events().observeTransactions().subscribe(ev->System.out.println("Transaction: "+ev));	
-		evensRegistered = true;
-		}
+//		if(!evensRegistered){
+//		ethereum.events().observeBlocks().subscribe(s-> System.out.println("New Block: "+s));
+//		ethereum.events().observeTransactions().subscribe(ev->System.out.println("Transaction: "+ev));	
+//		evensRegistered = true;
+//		}
 		// End of user code
 	}
 
@@ -102,6 +104,10 @@ public abstract class AbstractContractTest {
 	 * @throws IOException
 	 */
 	protected CompiledContract getCompiledContract(String filePath) throws URISyntaxException, FileNotFoundException, IOException {
+		CompiledContract compiledContract = contracts.get(getQuallifiedContractName());
+		if(compiledContract!=null)
+			return compiledContract;
+
 		File file = new File(this.getClass().getResource(filePath).toURI());
 		String rawJson = IOUtils.toString(new FileInputStream(file), EthereumFacade.CHARSET);
 		CompilationResult result = CompilationResult.parse(rawJson);
@@ -113,7 +119,9 @@ public abstract class AbstractContractTest {
 			if (optional.isPresent())
 				contractMetadata = result.contracts.get(optional.get());
 		}
-		return CompiledContract.from(contractSource, getContractName(), contractMetadata);
+		compiledContract = CompiledContract.from(contractSource, getContractName(), contractMetadata);
+		contracts.put(getQuallifiedContractName(), compiledContract);
+		return compiledContract;
 	}
 
 	/**

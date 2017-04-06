@@ -92,11 +92,20 @@ public class ShortBlogTest extends ManageableTest{
 	public void testSendMessage_string_string_string() throws Exception {
 		//Start of user code testSendMessage_string_string_string
 		assertEquals(0, fixture.messageCount().intValue());
-		fixture.sendMessage("test1", "h1", "er1").get();
+		String message = "test1";
+		String hash = "h1";
+		String er = "er1";
+
+		fixture.sendMessage(message, hash, er).get();
 		assertEquals(1, fixture.messageCount().intValue());
 		Integer lastMessageDate = fixture.lastMessageDate();
 
 		System.out.println("-->" + lastMessageDate);
+		ShortBlogMessage messages = fixture.messages(0);
+		assertEquals(message, messages.getMessage());
+		assertEquals(hash, messages.getHashValue());
+		assertEquals(er, messages.getExternalResource());
+
 		// End of user code
 	}
 	//Start of user code customTests
@@ -126,5 +135,40 @@ public class ShortBlogTest extends ManageableTest{
 		assertEquals(1, fixture.messageCount().intValue());
 
 	}
+	
+	/**
+	 * Test method for  sendMessage(String message,String hash,String er).
+	 * see {@link ShortBlog#sendMessage( String, String, String)}
+	 * @throws Exception
+	 */
+	@Test
+	public void testSendMessage_Often() throws Exception {
+		assertEquals(0, fixture.messageCount().intValue());
+		String message = "test1";
+		String hash = "h1";
+		String er = "er1";
+		fixture.sendMessage(message, hash, er).get();
+		assertEquals(1, fixture.messageCount().intValue());
+		ShortBlogMessage messages = fixture.messages(0);
+		assertEquals(message, messages.getMessage());
+		assertEquals(hash, messages.getHashValue());
+		assertEquals(er, messages.getExternalResource());
+		
+		Integer lastMessageDate = fixture.lastMessageDate();
+		System.out.println("-->" + lastMessageDate);
+		
+		message = "message1";
+		hash = "hash1";
+		er = "external resource 1";
+		fixture.sendMessage(message, hash, er).get();
+		assertEquals(2, fixture.messageCount().intValue());
+		messages = fixture.messages(1);
+		assertEquals(message, messages.getMessage());
+		assertEquals(hash, messages.getHashValue());
+		assertEquals(er, messages.getExternalResource());
+		
+		assertTrue(lastMessageDate<fixture.lastMessageDate());
+	}
+
 	// End of user code
 }

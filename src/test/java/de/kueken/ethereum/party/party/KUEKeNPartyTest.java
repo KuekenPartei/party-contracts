@@ -101,8 +101,11 @@ public class KUEKeNPartyTest extends PartyTest{
 	@Test
 	public void testBoostrapParty_address_address() throws Exception {
 		//Start of user code testBoostrapParty_address_address
-		//TODO: implement this
-		fail("not implemented");
+		DeployDuo<FoundationConference> foundationConference = partyDeployer.createFoundationConference(sender);
+		DeployDuo<MemberRegistry> memberRegistry = membersDeployer.createMemberRegistry(sender);
+		fixture.boostrapParty(foundationConference.contractAddress, memberRegistry.contractAddress).get();
+		
+		assertEquals(memberRegistry.contractAddress, fixture.memberRegistry());
 		//End of user code
 	}
 	//Start of user code customTests    

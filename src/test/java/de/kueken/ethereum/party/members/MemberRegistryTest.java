@@ -8,6 +8,7 @@ import java.math.BigInteger;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+import org.adridadou.ethereum.keystore.AccountProvider;
 import org.adridadou.ethereum.values.CompiledContract;
 import org.adridadou.ethereum.values.EthAddress;
 import org.adridadou.ethereum.values.SoliditySource;
@@ -136,8 +137,19 @@ public class MemberRegistryTest extends ManageableTest{
 		assertEquals(0, fixture.getMemberCount().intValue());
 		fixture.addMember("test1", member1).get();
 		assertEquals(1, fixture.getMemberCount().intValue());
-		fixture.addMember("test2", EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1001L)))).get();
+		assertEquals(1, fixture.activeMemberCount().intValue());
+		ReturnGetMemberData_string_uint memberData = fixture.getMemberData(member1);
+		assertEquals("test1", memberData.getName());
+		assertEquals(0, memberData.getId().intValue());
+		
+		
+		fixture.addMember("test2", member2).get();
+		assertEquals(2, fixture.activeMemberCount().intValue());
 		assertEquals(2, fixture.getMemberCount().intValue());
+		memberData = fixture.getMemberData(member2);
+		assertEquals("test2", memberData.getName());
+		assertEquals(1, memberData.getId().intValue());
+		
 		// End of user code
 	}
 	/**
@@ -192,9 +204,9 @@ public class MemberRegistryTest extends ManageableTest{
 
 		EthAddress newAddress = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1001L)));
 		fixture.changeMemberAddress(memberData.getId(), newAddress).get();
-		// Assert.assertFalse(fixture.isActiveMember(_memberAdress));
 		assertTrue(fixture.isActiveMember(newAddress));
-
+		assertFalse(fixture.isActiveMember(_memberAdress));
+		
 		// End of user code
 	}
 	/**
@@ -225,10 +237,26 @@ public class MemberRegistryTest extends ManageableTest{
 		EthAddress _memberAdress = EthAddress.of("0x02");
 		assertFalse(fixture.isActiveMember(_memberAdress));
 		fixture.addMember("Test1", _memberAdress);
-		fixture.publishMemberEvent(_memberAdress, 0);
+		fixture.publishMemberEvent(_memberAdress, 0).get();
 		// End of user code
 	}
 	//Start of user code customTests
+	
+	@Test(expected=ExecutionException.class)
+	public void testAddMember_NoManager() throws Exception {
+		assertEquals(0, fixture.getMemberCount().intValue());
+		fixture.addMember("test1", member1).get();
+		assertEquals(1, fixture.getMemberCount().intValue());
+		assertEquals(1, fixture.activeMemberCount().intValue());
+		ReturnGetMemberData_string_uint memberData = fixture.getMemberData(member1);
+		assertEquals("test1", memberData.getName());
+		assertEquals(0, memberData.getId().intValue());
+		
+		MembersDeployer deployer = new MembersDeployer(ethereum,"/mix/combine.json",true);
+		MemberRegistry memberRegistry = deployer.createMemberRegistryProxy(AccountProvider.fromECKey(ECKey.fromPrivate(BigInteger.valueOf(1001L))), fixtureAddress);
+		memberRegistry.addMember("test2", member2).get();
+	}
+
 	
 	public void testConstructor() throws Exception {
 		assertEquals(0, fixture.activeMemberCount().intValue());

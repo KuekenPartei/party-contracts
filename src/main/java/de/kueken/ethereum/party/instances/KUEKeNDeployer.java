@@ -49,37 +49,6 @@ import de.kueken.ethereum.party.publishing.ShortBlog;
  */
 public class KUEKeNDeployer {
 
-	// private class PartyStruct {
-	// private DeployDuo<Party> parentParty;
-	// private DeployDuo<Party> party;
-	// private DeployDuo<FoundationConference> foundationConference;
-	// private List<DeployDuo<Organ>> organs;
-	// private Map<Organ, List<DeployDuo<OrganFunction>>> functions;
-	//
-	// }
-	//
-	// private static class PartyConfig {
-	// String partyName;
-	// List<OrganConfig> organs;
-	// }
-	//
-	// enum OrganType {
-	// fc, o, c
-	// };
-	//
-	// private class OrganConfig {
-	// String organName;
-	// OrganType type;
-	// List<String> organFunctions;
-	// }
-	//
-	// private class PartyNames {
-	// private DeployDuo<Party> parentParty;
-	// private String partyName;
-	// private String foundationConferenceName;
-	// private List<String> organNames;
-	//
-	// }
 
 	private final class SetNameAndWaitOneTime implements DoAndWaitOneTime {
 		private final String organName;
@@ -118,6 +87,8 @@ public class KUEKeNDeployer {
 	private long millis;
 	private DeployDuo<Organ> internalCourt;
 	private BigInteger startBalance;
+
+	
 
 	/**
 	 * @param args
@@ -296,19 +267,13 @@ public class KUEKeNDeployer {
 		return options;
 	}
 
-	private void reportDeployment() {
+	public void reportDeployment() throws IOException, InterruptedException, ExecutionException {
 		System.out.println("\nDeployment done.\n");
 
 		partyInfo(party);
 		System.out.println("Party " + info(party));
-		System.out.println("\nfc name: " + foundationConference.contractInstance.getOrganName());
-		System.out.println("fc: " + info(foundationConference));
-		System.out.println("fc functions: " + foundationConference.contractInstance.lastFunctionId() + " short blog: "
-				+ foundationConference.contractInstance.blogRegistry());
-		System.out.println("\nbuvo name: " + buvo.contractInstance.getOrganName());
-		System.out.println(info(buvo));
-		System.out.println("buvo functions: " + buvo.contractInstance.lastFunctionId() + " short blog: "
-				+ buvo.contractInstance.blogRegistry());
+		printOrganInfo(foundationConference.contractInstance);
+		printOrganInfo(buvo.contractInstance);
 
 		System.out.println("blog registry: " + info(blogRegistry));
 		System.out.println("blog count: " + blogRegistry.contractInstance.blogCount());
@@ -316,7 +281,7 @@ public class KUEKeNDeployer {
 			EthAddress blogs = blogRegistry.contractInstance.blogs(i);
 			try {
 				ShortBlog shortBlog = publishingDeployer.createShortBlogProxy(sender, blogs);
-				System.out.println(shortBlog.name() + " " + i);
+				System.out.println("  "+shortBlog.name() + " " + i);
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (InterruptedException e) {
@@ -345,6 +310,26 @@ public class KUEKeNDeployer {
 	}
 
 	/**
+	 * @param organ 
+	 * @throws ExecutionException 
+	 * @throws InterruptedException 
+	 * @throws IOException 
+	 * 
+	 */
+	private void printOrganInfo(Organ organ) throws IOException, InterruptedException, ExecutionException {
+		System.out.println("\nname: " + organ.getOrganName());
+		System.out.println(": " + info(foundationConference));
+		System.out.println("functions: " + organ.lastFunctionId() + " short blog: "
+				+ organ.blogRegistry());
+		for (int i = 0; i < organ.lastFunctionId(); i++) {
+			EthAddress ethAddress = organ.getOrganFunction(i);
+			OrganFunction organFunction = partyDeployer.createOrganFunctionProxy(sender, ethAddress);
+			System.out.println("  "+organFunction.functionName()+"  "+organFunction.id()+" current member: "+organFunction.currentMember());
+			
+		}
+	}
+
+	/**
 	 * @param party
 	 */
 	private void partyInfo(DeployDuo<Party> party) {
@@ -360,28 +345,8 @@ public class KUEKeNDeployer {
 
 	}
 
-	private void deployBundesPartei(String aName) throws IOException, InterruptedException, ExecutionException {
+	public void deployBundesPartei(String aName) throws IOException, InterruptedException, ExecutionException {
 		System.out.println("deploy member registry");
-		// if (party != null) {
-		// party.contractInstance = partyDeployer.createPartyProxy(sender,
-		// party.contractAddress);
-		//
-		// memberRegistry = new
-		// DeployDuo<MemberRegistry>(EthAddress.of(party.contractInstance.memberRegistry()),
-		// null);
-		// blogRegistry = new
-		// DeployDuo<BlogRegistry>(EthAddress.of(party.contractInstance.blogregistry()),
-		// null);
-		// foundationConference = new
-		// DeployDuo<FoundationConference>(EthAddress.of(party.contractInstance.organs(0)),
-		// null);
-		// buvo = new
-		// DeployDuo<Organ>(EthAddress.of(party.contractInstance.organs(1)),
-		// null);
-		// internalCourt = new
-		// DeployDuo<Organ>(EthAddress.of(party.contractInstance.organs(2)),
-		// null);
-		// }
 
 		if (memberRegistry != null)
 			memberRegistry.contractInstance = membersDeployer.createMemberRegistryProxy(sender,
@@ -444,13 +409,16 @@ public class KUEKeNDeployer {
 		doAndWait(new DoAndWaitOneTime() {
 
 			public boolean isDone() {
-				System.out.println(
-						buvo2.contractAddress.withLeading0x() + "-->" + buvo2.contractInstance.getOrganFunction(index));
 				return buvo2.contractInstance.lastFunctionId() > index;
 			}
 
 			public void doIt() {
-				buvo2.contractInstance.createFunction(name, _constittiutionHash);
+				try {
+					buvo2.contractInstance.createFunction(name, _constittiutionHash).get();
+				} catch (InterruptedException | ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			}
 		});
@@ -482,7 +450,7 @@ public class KUEKeNDeployer {
 			public boolean isDone() {
 				System.out.println(deployParty.contractAddress.withLeading0x() + "-->"
 						+ party.contractInstance.subDivisions(index));
-				return deployParty.contractAddress.withLeading0x()
+				return deployParty.contractAddress
 						.equals(deployParty.contractInstance.subDivisions(index))
 						|| deployParty.contractAddress.toString().equals(party.contractInstance.subDivisions(index));
 			}
@@ -499,15 +467,22 @@ public class KUEKeNDeployer {
 		doAndWait(new DoAndWaitOneTime() {
 
 			public boolean isDone() {
-				System.out.println(
-						"-->" + party.contractInstance.organs(index) + " = " + organ.contractAddress.toString());
+				EthAddress organs = party.contractInstance.organs(index);
 
-				return organ.contractAddress.withLeading0x().equals(party.contractInstance.organs(index))
-						|| organ.contractAddress.toString().equals(party.contractInstance.organs(index));
+				return organ.contractAddress.equals(organs)
+						|| organ.contractAddress.toString().equals(organs);
 			}
 
-			public void doIt() {
-				party.contractInstance.addOrgan(organ.contractAddress);
+			public void doIt(){
+				try {
+					party.contractInstance.addOrgan(organ.contractAddress).get();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			}
 		});
@@ -578,20 +553,16 @@ public class KUEKeNDeployer {
 		doAndWait(new DoAndWaitOneTime() {
 
 			public boolean isDone() {
-//				try {
-					return aName.equals(party2.contractInstance.name()) 
-//							|| aName.equals(new String(
-//							org.apache.commons.codec.binary.Hex.decodeHex(party2.contractInstance.name().toCharArray()))
-//									.trim());
-							;
-//				} catch (DecoderException e) {
-//					e.printStackTrace();
-//				}
-//				return false;
+					return aName.equals(party2.contractInstance.name());
 			}
 
 			public void doIt() {
-				party2.contractInstance.setName(aName);
+				try {
+					party2.contractInstance.setName(aName).get();
+				} catch (InterruptedException | ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 	}
@@ -606,12 +577,16 @@ public class KUEKeNDeployer {
 		doAndWait(new DoAndWaitOneTime() {
 
 			public boolean isDone() {
-				return !("0x".equals(party2.contractInstance.memberRegistry())
-						|| "0000000000000000000000000000000000000000".equals(party2.contractInstance.memberRegistry()));
+				return memberRegistry.contractAddress.equals(party2.contractInstance.memberRegistry());
 			}
 
 			public void doIt() {
-				party2.contractInstance.setMemberRegistry(memberRegistry.contractAddress);
+				try {
+					party2.contractInstance.setMemberRegistry(memberRegistry.contractAddress).get();
+				} catch (InterruptedException | ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			}
 		});
@@ -627,12 +602,19 @@ public class KUEKeNDeployer {
 		doAndWait(new DoAndWaitOneTime() {
 
 			public boolean isDone() {
-				return !("0x".equals(party2.contractInstance.blogregistry())
-						|| "0000000000000000000000000000000000000000".equals(party2.contractInstance.blogregistry()));
+				return (blogRegistry.contractAddress.equals(party2.contractInstance.blogregistry()));
 			}
 
 			public void doIt() {
-				party2.contractInstance.setBlogregistry(blogRegistry.contractAddress);
+				try {
+					party2.contractInstance.setBlogregistry(blogRegistry.contractAddress).get();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			}
 		});
@@ -651,7 +633,15 @@ public class KUEKeNDeployer {
 			}
 
 			public void doIt() {
-				organ.contractInstance.initalizeOrgan();
+				try {
+					organ.contractInstance.initalizeOrgan().get();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		System.out.println("initalize done: " + organ.contractInstance.getOrganName() + " isActive: "
@@ -690,7 +680,12 @@ public class KUEKeNDeployer {
 			}
 
 			public void doIt() {
-				m.addManager(a);
+				try {
+					m.addManager(a).get();
+				} catch (InterruptedException | ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		System.out.println("manager added:" + info(new DeployDuo<Manageable>(a, m)));
@@ -719,6 +714,9 @@ public class KUEKeNDeployer {
 			millis = 1L;
 		}
 
+		initDeloyer();
+
+		
 		try {
 			if (pathname != null && !pathname.isEmpty() && sender == null) {
 				sender = unlockAccount(pathname, pass);
@@ -729,10 +727,6 @@ public class KUEKeNDeployer {
 			e.printStackTrace();
 			return;
 		}
-
-		partyDeployer = new PartyDeployer(ethereum, "/mix/combine.json", true);
-		membersDeployer = new MembersDeployer(ethereum, "/mix/combine.json", true);
-		publishingDeployer = new PublishingDeployer(ethereum, "/mix/combine.json", true);
 
 		if (party != null) {
 			party.contractInstance = partyDeployer.createPartyProxy(sender, party.contractAddress);
@@ -749,6 +743,15 @@ public class KUEKeNDeployer {
 			internalCourt = new DeployDuo<Organ>(party.contractInstance.organs(2), null);
 		}
 
+	}
+
+	/**
+	 * 
+	 */
+	public void initDeloyer() {
+		partyDeployer = new PartyDeployer(ethereum, "/mix/combine.json", true);
+		membersDeployer = new MembersDeployer(ethereum, "/mix/combine.json", true);
+		publishingDeployer = new PublishingDeployer(ethereum, "/mix/combine.json", true);
 	}
 
 	/**
@@ -773,12 +776,30 @@ public class KUEKeNDeployer {
 			action.doIt();
 			while (!action.isDone() && timeOut++ < 200)
 				synchronized (this) {
+					System.out.print(".");
 					wait(millis);
 				}
 			// Thread.sleep(millis);
 		}
 		if (timeOut >= 200)
 			System.out.println("Timeout:" + action);
+	}
+
+	public DeployDuo<Party> getParty() {
+		return party;
+	}
+
+	public void setSender(EthAccount sender) {
+		this.sender = sender;
+	}
+
+
+	public void setEthereum(EthereumFacade ethereum) {
+		this.ethereum = ethereum;
+	}
+
+	public void setMillis(long millis) {
+		this.millis = millis;
 	}
 
 }

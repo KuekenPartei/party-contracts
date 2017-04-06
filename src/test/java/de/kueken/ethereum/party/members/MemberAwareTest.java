@@ -1,8 +1,7 @@
 package de.kueken.ethereum.party.members;
 
 // Start of user code MemberAwareTest.customImports
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.math.BigInteger;
@@ -79,5 +78,9 @@ public class MemberAwareTest extends AbstractContractTest{
 
 
 	//Start of user code customTests    
+	@Test
+	public void testName() throws Exception {
+		fail();
+	}
 	//End of user code
 }

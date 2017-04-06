@@ -111,10 +111,46 @@ public class BlogRegistryTest extends ManageableTest{
 		shortBlog.sendMessage(message, hash, er).get();
 		assertEquals(1, shortBlog.messageCount().intValue());
 		System.out.println("blogName: "+  shortBlog.name()+ ""+info(shortBlog));
+		
+		ShortBlogMessage messages = shortBlog.messages(0);
+		assertEquals(message, messages.getMessage());
+		assertEquals(hash, messages.getHashValue());
+		assertEquals(er, messages.getExternalResource());
 
 		//End of user code
 	}
 	//Start of user code customTests   
+
+	@Test
+	public void testRegisterBlog_Often() throws Exception {
+		testRegisterBlog_string();
+		assertEquals(1, fixture.blogCount().intValue());		
+		String _name = "blogname2";
+		fixture.registerBlog(_name).get();
+		assertEquals(2, fixture.blogCount().intValue());	
+		EthAddress blogAddress = fixture.blogs(1);
+		System.out.println(blogAddress  );
+		ShortBlog shortBlog = publishingDeployer.createShortBlogProxy(sender, blogAddress);
+		
+		System.out.println("blogName: "+  shortBlog.name()+ ""+info(shortBlog));
+		assertEquals(_name, shortBlog.name());
+		
+		assertEquals(0, shortBlog.messageCount().intValue());
+		String message="message1";
+		String hash="hash1";
+		String er="external resource1";
+		shortBlog.sendMessage(message, hash, er).get();
+		assertEquals(1, shortBlog.messageCount().intValue());
+		System.out.println("blogName: "+  shortBlog.name()+ ""+info(shortBlog));
+
+		ShortBlogMessage messages = shortBlog.messages(0);
+		assertEquals(message, messages.getMessage());
+		assertEquals(hash, messages.getHashValue());
+		assertEquals(er, messages.getExternalResource());
+
+	}
+
+	
 	protected String info(ShortBlog memberRegistry) {
 		return super.info(memberRegistry) + " entries: "+memberRegistry.messageCount();
 	}

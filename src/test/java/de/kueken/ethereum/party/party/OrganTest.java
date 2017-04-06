@@ -47,6 +47,8 @@ public class OrganTest extends ManageableTest{
  
 	private Organ fixture;
 	// Start of user code OrganTest.attributes
+	private static final EthAccount ACOUNT_1 = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L)));
+	private static final EthAccount ACOUNT_2 = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100002L)));
 	protected PartyDeployer partyDeployer;
 	protected PublishingDeployer publishingDeployer;
 	protected MembersDeployer membersDeployer;
@@ -162,7 +164,7 @@ public class OrganTest extends ManageableTest{
 		assertEquals(messageCount+1, shortBlog.messageCount().intValue());
 		
 		
-		EthAddress ethAddress = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L))).getAddress();
+		EthAddress ethAddress = ACOUNT_1.getAddress();
 		fixture.changeMember(0, ethAddress).get();
 		assertEquals(ethAddress, organFunction.currentMember());
 		assertEquals(messageCount+2, shortBlog.messageCount().intValue());
@@ -180,14 +182,27 @@ public class OrganTest extends ManageableTest{
 		assertEquals(0, fixture.lastFunctionId().intValue());
 		initOrgan();
 		
-		EthAddress ethAddress = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L))).getAddress();
-
-		fixture.createFunction(ethAddress.withLeading0x(), "hash").get();
+		String _functionName = "name";
+		String _constittiutionHash = "hash";
+		fixture.createFunction(_functionName, _constittiutionHash).get();
 		assertEquals(1, fixture.lastFunctionId().intValue());
 		
 		EthAddress organFunctionAddress = fixture.getOrganFunction(0);
+		OrganFunction organFunction = partyDeployer.createOrganFunctionProxy(sender, organFunctionAddress);
+
+		assertEquals(_functionName, organFunction.functionName());
+		assertEquals(_constittiutionHash, organFunction.constitutionHash());
 		
+		_functionName = "name1";
+		_constittiutionHash = "hash1";
+		fixture.createFunction(_functionName, _constittiutionHash).get();
+		assertEquals(2, fixture.lastFunctionId().intValue());
 		
+		organFunctionAddress = fixture.getOrganFunction(1);
+		organFunction = partyDeployer.createOrganFunctionProxy(sender, organFunctionAddress);
+
+		assertEquals(_functionName, organFunction.functionName());
+		assertEquals(_constittiutionHash, organFunction.constitutionHash());
 		//End of user code
 	}
 	/**
@@ -259,7 +274,8 @@ public class OrganTest extends ManageableTest{
 
 		String _name="ballot name";
 		String _hash= "hash";
-		fixture.createBallot(0, EthAddress.empty(), _name, _hash).get();
+		int ballotType = 0;
+		fixture.createBallot(ballotType, EthAddress.empty(), _name, _hash).get();
 		
 		assertEquals(1, fixture.ballotCount().intValue());
 		EthAddress lastBallot = fixture.getLastBallot();
@@ -374,6 +390,29 @@ public class OrganTest extends ManageableTest{
 
 	}
 
+	@Test
+	public void testIsFunctionMember() throws Exception {
+		System.out.println("testIsFunctionMember");
+		
+		assertEquals(0, fixture.lastFunctionId().intValue());
+		initOrgan();
+
+		String functionName = "Test function";
+		fixture.createFunction(functionName, "hash").get();
+		assertEquals(1, fixture.lastFunctionId().intValue());
+		
+		EthAddress organFunctionAddress = fixture.getOrganFunction(0);
+		OrganFunction organFunction = partyDeployer.createOrganFunctionProxy(sender, organFunctionAddress);
+		assertEquals(functionName, organFunction.functionName());  
+		assertEquals("hash", organFunction.constitutionHash());  
+		assertEquals(EthAddress.empty(), organFunction.currentMember());
+		
+		assertNotEquals(EthAddress.empty(), organFunction.publisher());  
+		
+	}
+
+
+
 	
 	/**
 	 * @throws IOException
@@ -383,8 +422,7 @@ public class OrganTest extends ManageableTest{
 	private void initOrgan() throws IOException, InterruptedException, ExecutionException {
 		System.out.println("initOrgan");
 
-		DeployDuo<BlogRegistry> registry = publishingDeployer.createBlogRegistry(sender);
-		
+		DeployDuo<BlogRegistry> registry = publishingDeployer.createBlogRegistry(sender);		
 		fixture.setBlogRegistry(registry.contractAddress).get();
 		registry.contractInstance.addManager(fixtureAddress).get();
 	}

@@ -45,11 +45,10 @@ public class PartyTest extends ManageableTest{
  
 	private Party fixture;
 	// Start of user code PartyTest.attributes
-//	private String senderAddressS = "5db10750e8caff27f906b41c71b3471057dd2004";
-//	private EthAddress senderAddress = EthAddress.of(senderAddressS);
 	protected PartyDeployer partyDeployer;
 	protected MembersDeployer membersDeployer;
 	protected PublishingDeployer publishingDeployer;
+	private BlogRegistry blogRegistry;
 	
 	// End of user code
 
@@ -154,7 +153,7 @@ public class PartyTest extends ManageableTest{
 		assertTrue(organ.isActive());
 		assertEquals(deployOrgan.get(), address);
 		assertEquals(aOrganName, organ2.organName());
-		
+		assertTrue(blogRegistry.isManager(address));
 		
 		//End of user code
 	}
@@ -220,10 +219,10 @@ public class PartyTest extends ManageableTest{
 	private void initParty() throws IOException, InterruptedException, ExecutionException {
 		System.out.println("init Party");
 		CompletableFuture<EthAddress> deployBlogRegistry = publishingDeployer.deployBlogRegistry(sender);
-		BlogRegistry blogRegistry = publishingDeployer.createBlogRegistryProxy(sender, deployBlogRegistry.get());
+		blogRegistry = publishingDeployer.createBlogRegistryProxy(sender, deployBlogRegistry.get());
 		
 		fixture.setBlogregistry(deployBlogRegistry.get());
-		blogRegistry.addManager(fixtureAddress);
+		blogRegistry.addManager(fixtureAddress).get();
 }
 	//End of user code
 }

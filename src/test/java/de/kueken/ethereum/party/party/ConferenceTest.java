@@ -97,6 +97,8 @@ public class ConferenceTest extends OrganTest{
 		
 		fixture.accreditationMember(member1).get();
 		assertEquals(1, fixture.accreditatedMembers().intValue());
+		assertEquals(1, fixture.accreditatedMembers().intValue());
+		
 		//End of user code
 	}
 	//Start of user code customTests    
