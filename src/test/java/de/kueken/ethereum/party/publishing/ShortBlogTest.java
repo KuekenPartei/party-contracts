@@ -1,28 +1,19 @@
 package de.kueken.ethereum.party.publishing;
 
 // Start of user code ShortBlogTest.customImports
-import org.adridadou.exception.EthereumApiException;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-import java.io.File;
-import java.math.BigInteger;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
-import org.adridadou.ethereum.values.CompiledContract;
-import org.adridadou.ethereum.values.EthAddress;
-import org.adridadou.ethereum.values.SoliditySource;
-import org.ethereum.crypto.ECKey;
+import org.adridadou.ethereum.propeller.keystore.AccountProvider;
+import org.adridadou.ethereum.propeller.solidity.SolidityContractDetails;
+import org.adridadou.ethereum.propeller.values.EthAddress;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.kueken.ethereum.party.AbstractContractTest;
-import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
 import de.kueken.ethereum.party.basics.ManageableTest;
-import de.kueken.ethereum.party.deployer.MembersDeployer;
-import de.kueken.ethereum.party.deployer.VotingDeployer;
-import de.kueken.ethereum.party.members.MemberRegistry;
-import de.kueken.ethereum.party.voting.BasicBallot.BallotState;
 
 // End of user code
 
@@ -36,7 +27,7 @@ public class ShortBlogTest extends ManageableTest{
  
 	private ShortBlog fixture;
 	// Start of user code ShortBlogTest.attributes
-	private String senderAddressS = "5db10750e8caff27f906b41c71b3471057dd2004";
+//	private String senderAddressS = "5db10750e8caff27f906b41c71b3471057dd2004";
 	// End of user code
 
 	@Override
@@ -67,7 +58,7 @@ public class ShortBlogTest extends ManageableTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
+		SolidityContractDetails compiledContract = getCompiledContract("/mix/combine.json");
 		//TODO: set the constructor args
 		String _name = "_name";
         CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender
@@ -122,7 +113,7 @@ public class ShortBlogTest extends ManageableTest{
 		fixture.sendMessage("test1", "h1", "er1").get();
 		assertEquals(1, fixture.messageCount().intValue());
 
-		fixture.addManager(EthAddress.of(ECKey.fromPrivate(java.math.BigInteger.valueOf(100002L)))).get();
+		fixture.addManager(AccountProvider.fromPrivateKey((java.math.BigInteger.valueOf(100002L))).getAddress()).get();
 		assertEquals(2, fixture.mangerCount().intValue());
 		fixture.removeManager(sender.getAddress()).get();
 		assertEquals(1, fixture.mangerCount().intValue());

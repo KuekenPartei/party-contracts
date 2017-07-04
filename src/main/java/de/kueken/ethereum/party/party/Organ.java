@@ -1,11 +1,7 @@
 package de.kueken.ethereum.party.party;
 
-import java.util.concurrent.CompletableFuture;
-import org.adridadou.ethereum.values.EthAddress;
-import de.kueken.ethereum.party.basics.*;
-import de.kueken.ethereum.party.members.*;
-import de.kueken.ethereum.party.publishing.*;
-import de.kueken.ethereum.party.voting.*;
+import de.kueken.ethereum.party.basics.Manageable;
+import de.kueken.ethereum.party.members.MemberAware;
 
 //Start of user code customized_imports
 
@@ -22,15 +18,15 @@ public interface Organ extends Manageable,MemberAware{
 	
 	Integer lastFunctionId();
 	
-	org.adridadou.ethereum.values.EthAddress blogRegistry();
+	org.adridadou.ethereum.propeller.values.EthAddress blogRegistry();
 	
 	Boolean isActive();
 	
 	Integer ballotCount();
 	
-	org.adridadou.ethereum.values.EthAddress ballotFactory();
+	org.adridadou.ethereum.propeller.values.EthAddress ballotFactory();
 	
-	Boolean managers(org.adridadou.ethereum.values.EthAddress key);
+	Boolean managers(org.adridadou.ethereum.propeller.values.EthAddress key);
 
 	/**
 	* Publish the message to the blog.
@@ -47,7 +43,7 @@ public interface Organ extends Manageable,MemberAware{
 	* @param _id -
 	* @param _address -
 	**/
-	java.util.concurrent.CompletableFuture<Void> changeMember(Integer _id,org.adridadou.ethereum.values.EthAddress _address);
+	java.util.concurrent.CompletableFuture<Void> changeMember(Integer _id,org.adridadou.ethereum.propeller.values.EthAddress _address);
 	/**
 	* Create a function of this organ.
 	* 
@@ -76,23 +72,23 @@ public interface Organ extends Manageable,MemberAware{
 	* @return
 	*  -
 	**/
-	java.util.concurrent.CompletableFuture<Integer> createBallot(Integer ballotType,org.adridadou.ethereum.values.EthAddress _registry,String _name,String _hash);
+	java.util.concurrent.CompletableFuture<Integer> createBallot(Integer ballotType,org.adridadou.ethereum.propeller.values.EthAddress _registry,String _name,String _hash);
 	
-	org.adridadou.ethereum.values.EthAddress getLastBallot();
+	org.adridadou.ethereum.propeller.values.EthAddress getLastBallot();
 	
-	org.adridadou.ethereum.values.EthAddress getOrganBlog();
+	org.adridadou.ethereum.propeller.values.EthAddress getOrganBlog();
 	
-	java.util.concurrent.CompletableFuture<Void> addOrganFunction(org.adridadou.ethereum.values.EthAddress _of,String _name);
+	java.util.concurrent.CompletableFuture<Void> addOrganFunction(org.adridadou.ethereum.propeller.values.EthAddress _of,String _name);
 	
-	org.adridadou.ethereum.values.EthAddress getOrganFunction(Integer _id);
+	org.adridadou.ethereum.propeller.values.EthAddress getOrganFunction(Integer _id);
 
 	String getOrganName();
 
 	java.util.concurrent.CompletableFuture<Void> setOrganName (String aOrganName);
 
-	java.util.concurrent.CompletableFuture<Void> setBlogRegistry (org.adridadou.ethereum.values.EthAddress aBlogRegistry);
+	java.util.concurrent.CompletableFuture<Void> setBlogRegistry (org.adridadou.ethereum.propeller.values.EthAddress aBlogRegistry);
 
-	java.util.concurrent.CompletableFuture<Void> setBallotFactory (org.adridadou.ethereum.values.EthAddress aBallotFactory);
+	java.util.concurrent.CompletableFuture<Void> setBallotFactory (org.adridadou.ethereum.propeller.values.EthAddress aBallotFactory);
 
 	//Start of user code additional_methods
 	//End of user code

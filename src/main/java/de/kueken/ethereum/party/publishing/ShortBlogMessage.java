@@ -1,7 +1,5 @@
 package de.kueken.ethereum.party.publishing;
 
-import de.kueken.ethereum.party.publishing.ShortBlog.*;
-
 /**
  * The dataholder for the struct ShortBlogMessage.
  *
@@ -10,12 +8,12 @@ public class ShortBlogMessage{
 	private String message;
 	private Integer date;
 	private Integer id;
-	private org.adridadou.ethereum.values.EthAddress sender;
+	private org.adridadou.ethereum.propeller.values.EthAddress sender;
 	private Integer blockNumber;
 	private String hashValue;
 	private String externalResource;
 
-	public ShortBlogMessage(String message,Integer date,Integer id,org.adridadou.ethereum.values.EthAddress sender,Integer blockNumber,String hashValue,String externalResource) {
+	public ShortBlogMessage(String message,Integer date,Integer id,org.adridadou.ethereum.propeller.values.EthAddress sender,Integer blockNumber,String hashValue,String externalResource) {
 		super();
 		this.message = message;
 		this.date = date;
@@ -54,7 +52,7 @@ public class ShortBlogMessage{
 	 * Getter for sender.
 	 * @return
 	 */
-	public org.adridadou.ethereum.values.EthAddress getSender(){
+	public org.adridadou.ethereum.propeller.values.EthAddress getSender(){
 		return sender;
 	}
 

@@ -1,8 +1,6 @@
 package de.kueken.ethereum.party.publishing;
 
-import java.util.concurrent.CompletableFuture;
-import org.adridadou.ethereum.values.EthAddress;
-import de.kueken.ethereum.party.basics.*;
+import de.kueken.ethereum.party.basics.Manageable;
 
 //Start of user code customized_imports
 
@@ -20,7 +18,7 @@ public interface ShortBlog extends Manageable{
 	
 	String name();
 	
-	Boolean managers(org.adridadou.ethereum.values.EthAddress key);
+	Boolean managers(org.adridadou.ethereum.propeller.values.EthAddress key);
 	
 	ShortBlogMessage messages(Integer key);
 

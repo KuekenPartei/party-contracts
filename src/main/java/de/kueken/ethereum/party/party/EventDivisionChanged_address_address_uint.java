@@ -1,17 +1,15 @@
 package de.kueken.ethereum.party.party;
 
-import de.kueken.ethereum.party.party.Party.*;
-
 /**
- * The Event Objects for the event DivisionChanged(org.adridadou.ethereum.values.EthAddress divisionAddress,org.adridadou.ethereum.values.EthAddress changer,Integer state).
+ * The Event Objects for the event DivisionChanged(org.adridadou.ethereum.propeller.values.EthAddress divisionAddress,org.adridadou.ethereum.propeller.values.EthAddress changer,Integer state).
  *
  */
 public class EventDivisionChanged_address_address_uint{
-	private org.adridadou.ethereum.values.EthAddress divisionAddress;
-	private org.adridadou.ethereum.values.EthAddress changer;
+	private org.adridadou.ethereum.propeller.values.EthAddress divisionAddress;
+	private org.adridadou.ethereum.propeller.values.EthAddress changer;
 	private Integer state;
 
-	public EventDivisionChanged_address_address_uint(org.adridadou.ethereum.values.EthAddress divisionAddress,org.adridadou.ethereum.values.EthAddress changer,Integer state) {
+	public EventDivisionChanged_address_address_uint(org.adridadou.ethereum.propeller.values.EthAddress divisionAddress,org.adridadou.ethereum.propeller.values.EthAddress changer,Integer state) {
 		super();
 		this.divisionAddress = divisionAddress;
 		this.changer = changer;
@@ -22,7 +20,7 @@ public class EventDivisionChanged_address_address_uint{
 	 * Getter for divisionAddress.
 	 * @return
 	 */
-	public org.adridadou.ethereum.values.EthAddress getDivisionAddress(){
+	public org.adridadou.ethereum.propeller.values.EthAddress getDivisionAddress(){
 		return divisionAddress;
 	}
 
@@ -30,7 +28,7 @@ public class EventDivisionChanged_address_address_uint{
 	 * Getter for changer.
 	 * @return
 	 */
-	public org.adridadou.ethereum.values.EthAddress getChanger(){
+	public org.adridadou.ethereum.propeller.values.EthAddress getChanger(){
 		return changer;
 	}
 

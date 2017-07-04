@@ -1,7 +1,5 @@
 package de.kueken.ethereum.party.voting;
 
-import de.kueken.ethereum.party.voting.Ballot.*;
-
 /**
  * The dataholder for the struct BallotVoter.
  *
@@ -9,10 +7,10 @@ import de.kueken.ethereum.party.voting.Ballot.*;
 public class BallotVoter{
 	private Integer weight;
 	private Boolean voted;
-	private org.adridadou.ethereum.values.EthAddress delegate;
+	private org.adridadou.ethereum.propeller.values.EthAddress delegate;
 	private Integer vote;
 
-	public BallotVoter(Integer weight,Boolean voted,org.adridadou.ethereum.values.EthAddress delegate,Integer vote) {
+	public BallotVoter(Integer weight,Boolean voted,org.adridadou.ethereum.propeller.values.EthAddress delegate,Integer vote) {
 		super();
 		this.weight = weight;
 		this.voted = voted;
@@ -40,7 +38,7 @@ public class BallotVoter{
 	 * Getter for delegate.
 	 * @return
 	 */
-	public org.adridadou.ethereum.values.EthAddress getDelegate(){
+	public org.adridadou.ethereum.propeller.values.EthAddress getDelegate(){
 		return delegate;
 	}
 

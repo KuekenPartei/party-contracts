@@ -1,17 +1,15 @@
 package de.kueken.ethereum.party.party;
 
-import de.kueken.ethereum.party.party.Organ.*;
-
 /**
- * The Event Objects for the event FunctionMemberChange(org.adridadou.ethereum.values.EthAddress oldMember,Integer functionId,org.adridadou.ethereum.values.EthAddress newMember).
+ * The Event Objects for the event FunctionMemberChange(org.adridadou.ethereum.propeller.values.EthAddress oldMember,Integer functionId,org.adridadou.ethereum.propeller.values.EthAddress newMember).
  *
  */
 public class EventFunctionMemberChange_address_uint_address{
-	private org.adridadou.ethereum.values.EthAddress oldMember;
+	private org.adridadou.ethereum.propeller.values.EthAddress oldMember;
 	private Integer functionId;
-	private org.adridadou.ethereum.values.EthAddress newMember;
+	private org.adridadou.ethereum.propeller.values.EthAddress newMember;
 
-	public EventFunctionMemberChange_address_uint_address(org.adridadou.ethereum.values.EthAddress oldMember,Integer functionId,org.adridadou.ethereum.values.EthAddress newMember) {
+	public EventFunctionMemberChange_address_uint_address(org.adridadou.ethereum.propeller.values.EthAddress oldMember,Integer functionId,org.adridadou.ethereum.propeller.values.EthAddress newMember) {
 		super();
 		this.oldMember = oldMember;
 		this.functionId = functionId;
@@ -22,7 +20,7 @@ public class EventFunctionMemberChange_address_uint_address{
 	 * Getter for oldMember.
 	 * @return
 	 */
-	public org.adridadou.ethereum.values.EthAddress getOldMember(){
+	public org.adridadou.ethereum.propeller.values.EthAddress getOldMember(){
 		return oldMember;
 	}
 
@@ -38,7 +36,7 @@ public class EventFunctionMemberChange_address_uint_address{
 	 * Getter for newMember.
 	 * @return
 	 */
-	public org.adridadou.ethereum.values.EthAddress getNewMember(){
+	public org.adridadou.ethereum.propeller.values.EthAddress getNewMember(){
 		return newMember;
 	}
 

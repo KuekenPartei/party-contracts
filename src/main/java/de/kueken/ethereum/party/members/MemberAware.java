@@ -1,9 +1,5 @@
 package de.kueken.ethereum.party.members;
 
-import java.util.concurrent.CompletableFuture;
-import org.adridadou.ethereum.values.EthAddress;
-import de.kueken.ethereum.party.basics.*;
-
 //Start of user code customized_imports
 
 //End of user code
@@ -14,10 +10,10 @@ import de.kueken.ethereum.party.basics.*;
 **/
 public interface MemberAware{
 	
-	org.adridadou.ethereum.values.EthAddress memberRegistry();
+	org.adridadou.ethereum.propeller.values.EthAddress memberRegistry();
 
 
-	java.util.concurrent.CompletableFuture<Void> setMemberRegistry (org.adridadou.ethereum.values.EthAddress aMemberRegistry);
+	java.util.concurrent.CompletableFuture<Void> setMemberRegistry (org.adridadou.ethereum.propeller.values.EthAddress aMemberRegistry);
 
 	//Start of user code additional_methods
 

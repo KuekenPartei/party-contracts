@@ -1,15 +1,13 @@
 package de.kueken.ethereum.party.basics;
 
-import de.kueken.ethereum.party.basics.Multiowned.*;
-
 /**
- * The Event Objects for the event OwnerRemoved(org.adridadou.ethereum.values.EthAddress oldOwner).
+ * The Event Objects for the event OwnerRemoved(org.adridadou.ethereum.propeller.values.EthAddress oldOwner).
  *
  */
 public class EventOwnerRemoved_address{
-	private org.adridadou.ethereum.values.EthAddress oldOwner;
+	private org.adridadou.ethereum.propeller.values.EthAddress oldOwner;
 
-	public EventOwnerRemoved_address(org.adridadou.ethereum.values.EthAddress oldOwner) {
+	public EventOwnerRemoved_address(org.adridadou.ethereum.propeller.values.EthAddress oldOwner) {
 		super();
 		this.oldOwner = oldOwner;
 	}
@@ -18,7 +16,7 @@ public class EventOwnerRemoved_address{
 	 * Getter for oldOwner.
 	 * @return
 	 */
-	public org.adridadou.ethereum.values.EthAddress getOldOwner(){
+	public org.adridadou.ethereum.propeller.values.EthAddress getOldOwner(){
 		return oldOwner;
 	}
 

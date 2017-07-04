@@ -2,26 +2,19 @@ package de.kueken.ethereum.party.voting;
 
 // Start of user code PublicBallotTest.customImports
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.math.BigInteger;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import org.adridadou.ethereum.keystore.AccountProvider;
-import org.adridadou.ethereum.values.CompiledContract;
-import org.adridadou.ethereum.values.EthAccount;
-import org.adridadou.ethereum.values.EthAddress;
-import org.ethereum.crypto.ECKey;
+import org.adridadou.ethereum.propeller.keystore.AccountProvider;
+import org.adridadou.ethereum.propeller.solidity.SolidityContractDetails;
+import org.adridadou.ethereum.propeller.values.EthAccount;
+import org.adridadou.ethereum.propeller.values.EthAddress;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.kueken.ethereum.party.AbstractContractTest;
-import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
-import de.kueken.ethereum.party.deployer.MembersDeployer;
 import de.kueken.ethereum.party.deployer.PartyDeployers;
-import de.kueken.ethereum.party.deployer.VotingDeployer;
-import de.kueken.ethereum.party.members.MemberRegistry;
 import de.kueken.ethereum.party.voting.BasicBallot.BallotState;
 
 // End of user code
@@ -71,7 +64,7 @@ public class PublicBallotTest extends BasicBallotTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
+		SolidityContractDetails compiledContract = getCompiledContract("/mix/combine.json");
 		registry = membersDeployer.createMemberRegistry(sender);
 
 		EthAddress _registry = registry.contractAddress;
@@ -103,7 +96,7 @@ public class PublicBallotTest extends BasicBallotTest{
 		String _name= "name";
 		String _hash = "hash";
 		String _url = "url";
-		EthAddress _member = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
+		EthAddress _member = AccountProvider.fromPrivateKey((BigInteger.valueOf(1000L))).getAddress();
 		assertEquals(0, fixture.proposalCount().intValue());
 		fixture.addProposal(_name, _hash, _url, _member).get();
 		assertEquals(1, fixture.proposalCount().intValue());
@@ -136,7 +129,7 @@ public class PublicBallotTest extends BasicBallotTest{
 		fixture.addProposal(_name, _hash, _url, sender.getAddress()).get();
 		assertEquals(1, fixture.proposalCount().intValue());
 
-		EthAccount account1 = AccountProvider.fromECKey(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
+		EthAccount account1 = AccountProvider.fromPrivateKey((BigInteger.valueOf(1000L)));
 		PublicBallot ballot = votingDeployer.createPublicBallotProxy(account1, fixtureAddress);
 		ballot.addProposal(_name, _hash, _url, account1.getAddress()).get();
 	}
@@ -148,7 +141,7 @@ public class PublicBallotTest extends BasicBallotTest{
 		String _name= "name";
 		String _hash = "hash";
 		String _url = "url";
-		EthAddress _member = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
+		EthAddress _member = AccountProvider.fromPrivateKey((BigInteger.valueOf(1000L))).getAddress();
 		assertEquals(0, fixture.proposalCount().intValue());
 		fixture.addProposal(_name, _hash, _url, _member).get();
 		assertEquals(1, fixture.proposalCount().intValue());
@@ -175,7 +168,7 @@ public class PublicBallotTest extends BasicBallotTest{
 		String _name= "name";
 		String _hash = "hash";
 		String _url = "url";
-		EthAddress _member = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
+		EthAddress _member = AccountProvider.fromPrivateKey((BigInteger.valueOf(1000L))).getAddress();
 		assertEquals(0, fixture.proposalCount().intValue());
 		fixture.addProposal(_name, _hash, _url, _member).get();
 		assertEquals(1, fixture.proposalCount().intValue());
@@ -191,7 +184,7 @@ public class PublicBallotTest extends BasicBallotTest{
 
 	@Test
 	public void testCastVote_Several() throws Exception {
-		EthAccount acount_1 = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L)));
+		EthAccount acount_1 = AccountProvider.fromPrivateKey((BigInteger.valueOf(100001L)));
 		registry.contractInstance.addMember("Sender", sender.getAddress()).get();
 		registry.contractInstance.addMember("Sender1", acount_1.getAddress()).get();
 //		EthAccount acount_2 = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100002L)));
@@ -199,7 +192,7 @@ public class PublicBallotTest extends BasicBallotTest{
 		String _name= "name";
 		String _hash = "hash";
 		String _url = "url";
-		EthAddress _member = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
+		EthAddress _member = AccountProvider.fromPrivateKey((BigInteger.valueOf(1000L))).getAddress();
 		assertEquals(0, fixture.proposalCount().intValue());
 		fixture.addProposal(_name, _hash, _url, _member).get();
 		assertEquals(1, fixture.proposalCount().intValue());
@@ -225,7 +218,7 @@ public class PublicBallotTest extends BasicBallotTest{
 	
 	@Test(expected=ExecutionException.class)
 	public void testCastVote_NoMember() throws Exception {
-		EthAccount acount_1 = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L)));
+		EthAccount acount_1 = AccountProvider.fromPrivateKey((BigInteger.valueOf(100001L)));
 //		registry.contractInstance.addMember("Sender", sender.getAddress()).get();
 //		registry.contractInstance.addMember("Sender1", acount_1.getAddress()).get();
 //		EthAccount acount_2 = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100002L)));
@@ -233,7 +226,7 @@ public class PublicBallotTest extends BasicBallotTest{
 		String _name= "name";
 		String _hash = "hash";
 		String _url = "url";
-		EthAddress _member = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
+		EthAddress _member = AccountProvider.fromPrivateKey((BigInteger.valueOf(1000L))).getAddress();
 		assertEquals(0, fixture.proposalCount().intValue());
 		fixture.addProposal(_name, _hash, _url, _member).get();
 		assertEquals(1, fixture.proposalCount().intValue());

@@ -1,11 +1,9 @@
 package de.kueken.ethereum.party.members;
 
-import de.kueken.ethereum.party.members.MemberRegistry.*;
-
 /**
- * The return value for the function getMemberData(org.adridadou.ethereum.values.EthAddress _address).
+ * The return value for the function getMemberData(org.adridadou.ethereum.propeller.values.EthAddress _address).
  *
- * see {@link MemberRegistry#getMemberData( org.adridadou.ethereum.values.EthAddress)}
+ * see {@link MemberRegistry#getMemberData( org.adridadou.ethereum.propeller.values.EthAddress)}
  */
 public class ReturnGetMemberData_string_uint{
 	private String name;

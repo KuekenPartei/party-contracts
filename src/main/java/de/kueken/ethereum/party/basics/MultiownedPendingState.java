@@ -1,7 +1,5 @@
 package de.kueken.ethereum.party.basics;
 
-import de.kueken.ethereum.party.basics.Multiowned.*;
-
 /**
  * The dataholder for the struct MultiownedPendingState.
  *

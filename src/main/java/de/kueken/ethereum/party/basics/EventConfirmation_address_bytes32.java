@@ -1,16 +1,14 @@
 package de.kueken.ethereum.party.basics;
 
-import de.kueken.ethereum.party.basics.Multiowned.*;
-
 /**
- * The Event Objects for the event Confirmation(org.adridadou.ethereum.values.EthAddress owner,Byte[] operation).
+ * The Event Objects for the event Confirmation(org.adridadou.ethereum.propeller.values.EthAddress owner,Byte[] operation).
  *
  */
 public class EventConfirmation_address_bytes32{
-	private org.adridadou.ethereum.values.EthAddress owner;
+	private org.adridadou.ethereum.propeller.values.EthAddress owner;
 	private Byte[] operation;
 
-	public EventConfirmation_address_bytes32(org.adridadou.ethereum.values.EthAddress owner,Byte[] operation) {
+	public EventConfirmation_address_bytes32(org.adridadou.ethereum.propeller.values.EthAddress owner,Byte[] operation) {
 		super();
 		this.owner = owner;
 		this.operation = operation;
@@ -20,7 +18,7 @@ public class EventConfirmation_address_bytes32{
 	 * Getter for owner.
 	 * @return
 	 */
-	public org.adridadou.ethereum.values.EthAddress getOwner(){
+	public org.adridadou.ethereum.propeller.values.EthAddress getOwner(){
 		return owner;
 	}
 

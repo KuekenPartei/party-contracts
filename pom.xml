@@ -5,11 +5,22 @@
   <version>0.0.1-SNAPSHOT</version>
   
   	  <dependencies>
-	  	<dependency>
-	  		<groupId>org.adridadou</groupId>
-	  		<artifactId>eth-contract-api</artifactId>
-	  		<version>0.16</version>
-	  	</dependency>
+<!-- 	  	<dependency> -->
+<!-- 	  		<groupId>org.adridadou</groupId> -->
+<!-- 	  		<artifactId>eth-contract-api</artifactId> -->
+<!-- 	  		<version>0.16</version> -->
+<!-- 	  	</dependency> -->
+		<dependency>
+			<groupId>org.adridadou</groupId>
+			<artifactId>eth-propeller-ethj</artifactId>
+			<version>0.12</version>
+		</dependency>
+		<dependency>
+			<groupId>org.adridadou</groupId>
+			<artifactId>eth-propeller-web3j</artifactId>
+			<version>0.12</version>
+		</dependency>
+
 	    <dependency>
 	        <groupId>junit</groupId>
 	        <artifactId>junit</artifactId>

@@ -1,9 +1,5 @@
 package de.kueken.ethereum.party.voting;
 
-import java.util.concurrent.CompletableFuture;
-import org.adridadou.ethereum.values.EthAddress;
-import de.kueken.ethereum.party.members.*;
-
 //Start of user code customized_imports
 
 //End of user code
@@ -16,7 +12,7 @@ import de.kueken.ethereum.party.members.*;
 public interface BasicBallot{
     enum BallotState { NULL,ballotCreated,ballotStarted,ballotEnded }
 	
-	org.adridadou.ethereum.values.EthAddress accessregistry();
+	org.adridadou.ethereum.propeller.values.EthAddress accessregistry();
 	
 	Integer ballotStart();
 	
@@ -34,10 +30,10 @@ public interface BasicBallot{
 	
 	BasicBallotBallotProposal proposals(Integer key);	
 	
-	Integer votesCasted(org.adridadou.ethereum.values.EthAddress key);	
+	Integer votesCasted(org.adridadou.ethereum.propeller.values.EthAddress key);	
 
 	
-	java.util.concurrent.CompletableFuture<Void> addProposal(String _name,String _hash,String _url,org.adridadou.ethereum.values.EthAddress _member);
+	java.util.concurrent.CompletableFuture<Void> addProposal(String _name,String _hash,String _url,org.adridadou.ethereum.propeller.values.EthAddress _member);
 	
 	java.util.concurrent.CompletableFuture<Void> castVote(Integer _voteFor);
 	

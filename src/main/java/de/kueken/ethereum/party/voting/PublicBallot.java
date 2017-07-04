@@ -1,9 +1,5 @@
 package de.kueken.ethereum.party.voting;
 
-import java.util.concurrent.CompletableFuture;
-import org.adridadou.ethereum.values.EthAddress;
-import de.kueken.ethereum.party.members.*;
-
 //Start of user code customized_imports
 
 //End of user code
@@ -16,7 +12,7 @@ public interface PublicBallot extends BasicBallot{
 	
 	BasicBallotBallotProposal proposals(Integer key);	
 	
-	Integer votesCasted(org.adridadou.ethereum.values.EthAddress key);	
+	Integer votesCasted(org.adridadou.ethereum.propeller.values.EthAddress key);	
 
 	
 	java.util.concurrent.CompletableFuture<Void> castVote(Integer _voteFor);

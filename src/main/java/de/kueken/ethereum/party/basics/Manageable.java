@@ -1,8 +1,5 @@
 package de.kueken.ethereum.party.basics;
 
-import java.util.concurrent.CompletableFuture;
-import org.adridadou.ethereum.values.EthAddress;
-
 //Start of user code customized_imports
 
 //End of user code
@@ -17,14 +14,14 @@ public interface Manageable{
 	
 	Integer mangerCount();
 	
-	Boolean managers(org.adridadou.ethereum.values.EthAddress key);
+	Boolean managers(org.adridadou.ethereum.propeller.values.EthAddress key);
 
 	
-	java.util.concurrent.CompletableFuture<Void> addManager(org.adridadou.ethereum.values.EthAddress _newManagerAddress);
+	java.util.concurrent.CompletableFuture<Void> addManager(org.adridadou.ethereum.propeller.values.EthAddress _newManagerAddress);
 	
-	java.util.concurrent.CompletableFuture<Void> removeManager(org.adridadou.ethereum.values.EthAddress _managerAddress);
+	java.util.concurrent.CompletableFuture<Void> removeManager(org.adridadou.ethereum.propeller.values.EthAddress _managerAddress);
 	
-	Boolean isManager(org.adridadou.ethereum.values.EthAddress _managerAddress);
+	Boolean isManager(org.adridadou.ethereum.propeller.values.EthAddress _managerAddress);
 
 	//Start of user code additional_methods
 

@@ -1,28 +1,20 @@
 package de.kueken.ethereum.party.party;
 
 // Start of user code ConferenceTest.customImports
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-import java.io.File;
 import java.math.BigInteger;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
-import org.adridadou.ethereum.values.CompiledContract;
-import org.adridadou.ethereum.values.EthAddress;
-import org.adridadou.ethereum.values.SoliditySource;
-import org.ethereum.crypto.ECKey;
+import org.adridadou.ethereum.propeller.keystore.AccountProvider;
+import org.adridadou.ethereum.propeller.solidity.SolidityContractDetails;
+import org.adridadou.ethereum.propeller.values.EthAddress;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.kueken.ethereum.party.AbstractContractTest;
 import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
-import de.kueken.ethereum.party.basics.ManageableTest;
-import de.kueken.ethereum.party.deployer.MembersDeployer;
-import de.kueken.ethereum.party.deployer.VotingDeployer;
 import de.kueken.ethereum.party.members.MemberRegistry;
-import de.kueken.ethereum.party.voting.BasicBallot.BallotState;
-// End of user code
 
 
 /**
@@ -34,8 +26,8 @@ public class ConferenceTest extends OrganTest{
  
 	private Conference fixture;
 	// Start of user code ConferenceTest.attributes
-	private EthAddress member1 = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
-	private EthAddress member2 = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1001L)));
+	private EthAddress member1 = AccountProvider.fromPrivateKey((BigInteger.valueOf(1000L))).getAddress();
+	private EthAddress member2 = AccountProvider.fromPrivateKey((BigInteger.valueOf(1001L))).getAddress();
 	// End of user code
 
 	@Override
@@ -67,7 +59,7 @@ public class ConferenceTest extends OrganTest{
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
 		System.out.println("create fixture:"+getQuallifiedContractName());
-		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
+		SolidityContractDetails compiledContract = getCompiledContract("/mix/combine.json");
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
         fixtureAddress = address.get();
 		setFixture(ethereum.createContractProxy(compiledContract, fixtureAddress, sender, Conference.class));
@@ -81,8 +73,8 @@ public class ConferenceTest extends OrganTest{
 
 
 	/**
-	 * Test method for  accreditationMember(org.adridadou.ethereum.values.EthAddress _address).
-	 * see {@link Conference#accreditationMember( org.adridadou.ethereum.values.EthAddress)}
+	 * Test method for  accreditationMember(org.adridadou.ethereum.propeller.values.EthAddress _address).
+	 * see {@link Conference#accreditationMember( org.adridadou.ethereum.propeller.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test

@@ -1,17 +1,14 @@
 package de.kueken.ethereum.party.basics;
 
 // Start of user code MultiownedTest.customImports
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 import java.io.File;
-import java.math.BigInteger;
 import java.util.concurrent.CompletableFuture;
 
-import org.adridadou.ethereum.values.CompiledContract;
-import org.adridadou.ethereum.values.EthAccount;
-import org.adridadou.ethereum.values.EthAddress;
-import org.adridadou.ethereum.values.SoliditySource;
-import org.ethereum.crypto.ECKey;
+import org.adridadou.ethereum.propeller.solidity.SolidityContractDetails;
+import org.adridadou.ethereum.propeller.values.EthAddress;
+import org.adridadou.ethereum.propeller.values.SoliditySource;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -62,7 +59,7 @@ public class MultiownedTest extends AbstractContractTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
+		SolidityContractDetails compiledContract = getCompiledContract("/mix/combine.json");
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
         fixtureAddress = address.get();
 		setFixture(ethereum.createContractProxy(compiledContract, fixtureAddress, sender, Multiowned.class));
@@ -75,8 +72,8 @@ public class MultiownedTest extends AbstractContractTest{
 
 
 	/**
-	 * Test method for  Multiowned(org.adridadou.ethereum.values.EthAddress[] _owners,Integer _required).
-	 * see {@link Multiowned#Multiowned( org.adridadou.ethereum.values.EthAddress[], Integer)}
+	 * Test method for  Multiowned(org.adridadou.ethereum.propeller.values.EthAddress[] _owners,Integer _required).
+	 * see {@link Multiowned#Multiowned( org.adridadou.ethereum.propeller.values.EthAddress[], Integer)}
 	 * @throws Exception
 	 */
 	@Test
@@ -87,8 +84,8 @@ public class MultiownedTest extends AbstractContractTest{
 		//End of user code
 	}
 	/**
-	 * Test method for  isOwner(org.adridadou.ethereum.values.EthAddress _addr).
-	 * see {@link Multiowned#isOwner( org.adridadou.ethereum.values.EthAddress)}
+	 * Test method for  isOwner(org.adridadou.ethereum.propeller.values.EthAddress _addr).
+	 * see {@link Multiowned#isOwner( org.adridadou.ethereum.propeller.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test
@@ -99,8 +96,8 @@ public class MultiownedTest extends AbstractContractTest{
 		//End of user code
 	}
 	/**
-	 * Test method for  hasConfirmed(Byte[] _operation,org.adridadou.ethereum.values.EthAddress _owner).
-	 * see {@link Multiowned#hasConfirmed( Byte[], org.adridadou.ethereum.values.EthAddress)}
+	 * Test method for  hasConfirmed(Byte[] _operation,org.adridadou.ethereum.propeller.values.EthAddress _owner).
+	 * see {@link Multiowned#hasConfirmed( Byte[], org.adridadou.ethereum.propeller.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test

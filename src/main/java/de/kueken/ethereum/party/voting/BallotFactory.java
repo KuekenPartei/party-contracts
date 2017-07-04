@@ -1,9 +1,5 @@
 package de.kueken.ethereum.party.voting;
 
-import java.util.concurrent.CompletableFuture;
-import org.adridadou.ethereum.values.EthAddress;
-import de.kueken.ethereum.party.members.*;
-
 //Start of user code customized_imports
 
 //End of user code
@@ -24,7 +20,7 @@ public interface BallotFactory{
 	* @return
 	* ballot -
 	**/
-	java.util.concurrent.CompletableFuture<org.adridadou.ethereum.values.EthAddress> create(Integer ballotType,org.adridadou.ethereum.values.EthAddress _registry,String _name,String _hash);
+	java.util.concurrent.CompletableFuture<org.adridadou.ethereum.propeller.values.EthAddress> create(Integer ballotType,org.adridadou.ethereum.propeller.values.EthAddress _registry,String _name,String _hash);
 
 	//Start of user code additional_methods
 

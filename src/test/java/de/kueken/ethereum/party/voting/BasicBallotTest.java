@@ -8,9 +8,9 @@ import java.math.BigInteger;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import org.adridadou.ethereum.values.CompiledContract;
-import org.adridadou.ethereum.values.EthAddress;
-import org.ethereum.crypto.ECKey;
+import org.adridadou.ethereum.propeller.keystore.AccountProvider;
+import org.adridadou.ethereum.propeller.solidity.SolidityContractDetails;
+import org.adridadou.ethereum.propeller.values.EthAddress;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -70,7 +70,7 @@ public  abstract class BasicBallotTest extends AbstractContractTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
+		SolidityContractDetails compiledContract = getCompiledContract("/mix/combine.json");
 		
 		registry = membersDeployer.createMemberRegistry(sender);
 		EthAddress _registry = registry.contractAddress;
@@ -89,8 +89,8 @@ public  abstract class BasicBallotTest extends AbstractContractTest{
 
 
 	/**
-	 * Test method for  addProposal(String _name,String _hash,String _url,org.adridadou.ethereum.values.EthAddress _member).
-	 * see {@link BasicBallot#addProposal( String, String, String, org.adridadou.ethereum.values.EthAddress)}
+	 * Test method for  addProposal(String _name,String _hash,String _url,org.adridadou.ethereum.propeller.values.EthAddress _member).
+	 * see {@link BasicBallot#addProposal( String, String, String, org.adridadou.ethereum.propeller.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test
@@ -101,7 +101,7 @@ public  abstract class BasicBallotTest extends AbstractContractTest{
 		String _name= "name";
 		String _hash = "hash";
 		String _url = "url";
-		EthAddress _member = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
+		EthAddress _member = AccountProvider.fromPrivateKey((BigInteger.valueOf(1000L))).getAddress();
 		assertEquals(0, fixture.proposalCount().intValue());
 		fixture.addProposal(_name, _hash, _url, _member).get();
 		assertEquals(1, fixture.proposalCount().intValue());
@@ -200,7 +200,7 @@ public  abstract class BasicBallotTest extends AbstractContractTest{
 		String _name= "name";
 		String _hash = "hash";
 		String _url = "url";
-		EthAddress _member = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
+		EthAddress _member = AccountProvider.fromPrivateKey((BigInteger.valueOf(1000L))).getAddress();
 		assertEquals(0, fixture.proposalCount().intValue());
 		fixture.addProposal(_name, _hash, _url, _member).get();
 		assertEquals(1, fixture.proposalCount().intValue());
@@ -225,7 +225,7 @@ public  abstract class BasicBallotTest extends AbstractContractTest{
 		String _name= "name";
 		String _hash = "hash";
 		String _url = "url";
-		EthAddress _member = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
+		EthAddress _member = AccountProvider.fromPrivateKey((BigInteger.valueOf(1000L))).getAddress();
 		assertEquals(0, fixture.proposalCount().intValue());
 		fixture.addProposal(_name, _hash, _url, _member).get();
 		assertEquals(1, fixture.proposalCount().intValue());

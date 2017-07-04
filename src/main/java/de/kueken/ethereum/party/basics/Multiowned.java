@@ -1,8 +1,5 @@
 package de.kueken.ethereum.party.basics;
 
-import java.util.concurrent.CompletableFuture;
-import org.adridadou.ethereum.values.EthAddress;
-
 //Start of user code customized_imports
 
 //End of user code
@@ -38,11 +35,11 @@ public interface Multiowned{
 	* @param _owners -
 	* @param _required -
 	**/
-	java.util.concurrent.CompletableFuture<Void> Multiowned(org.adridadou.ethereum.values.EthAddress[] _owners,Integer _required);
+	java.util.concurrent.CompletableFuture<Void> Multiowned(org.adridadou.ethereum.propeller.values.EthAddress[] _owners,Integer _required);
 	
-	java.util.concurrent.CompletableFuture<Boolean> isOwner(org.adridadou.ethereum.values.EthAddress _addr);
+	java.util.concurrent.CompletableFuture<Boolean> isOwner(org.adridadou.ethereum.propeller.values.EthAddress _addr);
 	
-	Boolean hasConfirmed(Byte[] _operation,org.adridadou.ethereum.values.EthAddress _owner);
+	Boolean hasConfirmed(Byte[] _operation,org.adridadou.ethereum.propeller.values.EthAddress _owner);
 
 	//Start of user code additional_methods
 

@@ -1,19 +1,17 @@
 package de.kueken.ethereum.party.publishing;
 
-import de.kueken.ethereum.party.publishing.ShortBlog.*;
-
 /**
- * The Event Objects for the event NewMessage(String message,Integer messageId,org.adridadou.ethereum.values.EthAddress messageSender,String messageHashValue,String externalResource).
+ * The Event Objects for the event NewMessage(String message,Integer messageId,org.adridadou.ethereum.propeller.values.EthAddress messageSender,String messageHashValue,String externalResource).
  *
  */
 public class EventNewMessage_string_uint_address_string_string{
 	private String message;
 	private Integer messageId;
-	private org.adridadou.ethereum.values.EthAddress messageSender;
+	private org.adridadou.ethereum.propeller.values.EthAddress messageSender;
 	private String messageHashValue;
 	private String externalResource;
 
-	public EventNewMessage_string_uint_address_string_string(String message,Integer messageId,org.adridadou.ethereum.values.EthAddress messageSender,String messageHashValue,String externalResource) {
+	public EventNewMessage_string_uint_address_string_string(String message,Integer messageId,org.adridadou.ethereum.propeller.values.EthAddress messageSender,String messageHashValue,String externalResource) {
 		super();
 		this.message = message;
 		this.messageId = messageId;
@@ -42,7 +40,7 @@ public class EventNewMessage_string_uint_address_string_string{
 	 * Getter for messageSender.
 	 * @return
 	 */
-	public org.adridadou.ethereum.values.EthAddress getMessageSender(){
+	public org.adridadou.ethereum.propeller.values.EthAddress getMessageSender(){
 		return messageSender;
 	}
 

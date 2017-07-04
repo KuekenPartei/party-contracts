@@ -1,358 +1,348 @@
 
-======= AccessRegistry =======
-
-======= Ballot =======
+======= /home/urszeidler/git/party-contracts/src/main/resources/mix/basics.sol:Manageable =======
 Gas estimation:
 construction:
-   [???] + 186800 = [???]
+   42727 + 270800 = 313527
 external:
-   proposals(uint256):	494
-   ballotName():	[???]
-   chairperson():	359
-   winningProposal():	[???]
-   voteFor(uint256):	238
-   giveRightToVote(address):	295
-   voters(address):	770
-   delegateTo(address):	339
+   addManager(address):	43312
+   isManager(address):	653
+   managers(address):	606
+   mangerCount():	387
+   removeManager(address):	43356
 internal:
+   canAccess():	355
 
-======= BallotFactory =======
+======= /home/urszeidler/git/party-contracts/src/main/resources/mix/basics.sol:Multiowned =======
 Gas estimation:
 construction:
-   888 + 860400 = 861288
+   infinite + 468400 = infinite
 external:
-   create(uint256,address,string,string):	[???]
+   addOwner(address):	infinite
+   c_maxOwners():	425
+   changeOwner(address,address):	infinite
+   changeRequirement(uint256):	infinite
+   hasConfirmed(bytes32,address):	474
+   isOwner(address):	285
+   m_numOwners():	471
+   m_ownerIndex(uint256):	713
+   m_owners(uint256):	488
+   m_pending(bytes32):	1046
+   m_pendingIndex(uint256):	1024
+   m_required():	515
+   removeOwner(address):	infinite
+   revoke(bytes32):	325
 internal:
-
-======= BasicBallot =======
-
-======= BlogRegistry =======
-Gas estimation:
-construction:
-   42846 + 971000 = 1013846
-external:
-   addManager(address):	42480
-   mangerCount():	264
-   blogs(uint256):	431
-   registerBlog(string):	[???]
-   removeManager(address):	42553
-   blogCount():	352
-   isManager(address):	569
-   managers(address):	515
-internal:
-
-======= Conference =======
-Gas estimation:
-construction:
-   44125 + 2146400 = 2190525
-external:
-   setOrganName(string):	[???]
-   getLastBallot():	457
-   addOrganFunction(address,string):	[???]
-   lastFunctionId():	308
-   getOrganBlog():	404
-   organName():	[???]
-   isActive():	420
-   addManager(address):	42634
-   date():	418
-   setBallotFactory(address):	20732
-   accreditationMember(address):	[???]
-   mangerCount():	484
-   accreditatedMembers():	506
-   setBlogRegistry(address):	20609
-   setMemberRegistry(address):	20631
-   publishFunctionMessage(uint256,string,string,string):	[???]
-   getOrganName():	[???]
-   memberRegistry():	689
-   createFunction(string,string):	[???]
-   removeManager(address):	42883
-   blogRegistry():	755
-   ballotCount():	704
-   initalizeOrgan():	[???]
-   createBallot(uint256,address,string,string):	[???]
-   changeMember(uint256,address):	[???]
-   ballotFactory():	865
-   publishMessage(string,string,string):	[???]
-   isManager(address):	1031
-   getOrganFunction(uint256):	1009
-   managers(address):	999
-internal:
-
-======= FoundationConference =======
-Gas estimation:
-construction:
-   44132 + 2156200 = 2200332
-external:
-   setOrganName(string):	[???]
-   getLastBallot():	457
-   addOrganFunction(address,string):	[???]
-   lastFunctionId():	308
-   getOrganBlog():	404
-   organName():	[???]
-   isActive():	420
-   addManager(address):	42634
-   date():	418
-   setBallotFactory(address):	20732
-   accreditationMember(address):	[???]
-   mangerCount():	484
-   accreditatedMembers():	506
-   setBlogRegistry(address):	20609
-   setMemberRegistry(address):	20631
-   publishFunctionMessage(uint256,string,string,string):	[???]
-   getOrganName():	[???]
-   memberRegistry():	689
-   createFunction(string,string):	[???]
-   removeManager(address):	42883
-   blogRegistry():	755
-   ballotCount():	704
-   initalizeOrgan():	[???]
-   createBallot(uint256,address,string,string):	[???]
-   changeMember(uint256,address):	[???]
-   ballotFactory():	865
-   publishMessage(string,string,string):	[???]
-   isManager(address):	1031
-   getOrganFunction(uint256):	1009
-   managers(address):	999
-internal:
-
-======= KUEKeNParty =======
-Gas estimation:
-construction:
-   [???] + 3056600 = [???]
-external:
-   setBlogregistry(address):	20323
-   removeSubDivision(uint256):	[???]
-   name():	[???]
-   organCount():	308
-   setParent(address):	20622
-   addManager(address):	42590
-   mangerCount():	374
-   subDivisions(uint256):	541
-   organs(uint256):	563
-   addSubDivision(address):	[???]
-   parent():	535
-   setMemberRegistry(address):	20565
-   memberRegistry():	579
-   removeManager(address):	42751
-   getMemberRegistry():	624
-   subDivisionCount():	572
-   setName(string):	[???]
-   addOrgan(address):	[???]
-   constitutionHash():	[???]
-   boostrapParty(address,address):	[???]
-   createOrgan(string):	[???]
-   bootstrap2():	[???]
-   blogregistry():	799
-   isManager(address):	943
-   managers(address):	889
-internal:
-
-======= Manageable =======
-Gas estimation:
-construction:
-   42049 + 152400 = 194449
-external:
-   addManager(address):	42462
-   mangerCount():	246
-   removeManager(address):	42491
-   isManager(address):	485
-   managers(address):	431
-internal:
-   canAccess():	181
-
-======= MemberAware =======
-Gas estimation:
-construction:
-   85 + 41800 = 41885
-external:
-   setMemberRegistry(address):	20276
-   memberRegistry():	319
-internal:
-   isMember(address):	[???]
-
-======= MemberRegistry =======
-Gas estimation:
-construction:
-   42773 + 901800 = 944573
-external:
-   changeMemberAddress(uint256,address):	[???]
-   unregisterMember(uint256):	[???]
-   getMemberData(address):	[???]
-   addManager(address):	42546
-   addMember(string,address):	[???]
-   isActiveMember(address):	591
-   mangerCount():	374
-   activeMemberCount():	396
-   publishMemberEvent(address,uint256):	478
-   getMemberAddress(uint256):	597
-   memberAddress(address):	[???]
-   getMemberCount():	485
-   isMember(address):	745
-   partyMembers(uint256):	[???]
-   removeManager(address):	42773
-   partyMemberCount():	572
-   isManager(address):	789
-   managers(address):	735
-internal:
-
-======= MessagePublisher =======
-
-======= Multiowned =======
-Gas estimation:
-construction:
-   [???] + 344600 = [???]
-external:
-   removeOwner(address):	[???]
-   m_owners(uint256):	312
-   isOwner(address):	289
-   m_pending(bytes32):	552
-   m_numOwners():	330
-   addOwner(address):	[???]
-   m_required():	374
-   revoke(bytes32):	304
-   changeRequirement(uint256):	[???]
-   hasConfirmed(bytes32,address):	451
-   m_ownerIndex(uint256):	534
-   c_maxOwners():	434
-   changeOwner(address,address):	[???]
-   m_pendingIndex(uint256):	680
-internal:
+   clearPending():	infinite
    confirmAndCheck(bytes32):	21
-   reorganizeOwners():	[???]
-   clearPending():	[???]
+   reorganizeOwners():	infinite
 
-======= Organ =======
+======= /home/urszeidler/git/party-contracts/src/main/resources/mix/basics.sol:Owned =======
 Gas estimation:
 construction:
-   44001 + 2035800 = 2079801
+   20484 + 174000 = 194484
 external:
-   setOrganName(string):	[???]
-   getLastBallot():	457
-   addOrganFunction(address,string):	[???]
-   lastFunctionId():	308
-   getOrganBlog():	404
-   organName():	[???]
-   isActive():	420
-   addManager(address):	42634
-   setBallotFactory(address):	20710
-   mangerCount():	440
-   setBlogRegistry(address):	20543
-   setMemberRegistry(address):	20565
-   publishFunctionMessage(uint256,string,string,string):	[???]
-   getOrganName():	[???]
-   memberRegistry():	623
-   createFunction(string,string):	[???]
-   removeManager(address):	42817
-   blogRegistry():	689
-   ballotCount():	638
-   initalizeOrgan():	[???]
-   createBallot(uint256,address,string,string):	[???]
-   changeMember(uint256,address):	[???]
-   ballotFactory():	799
-   publishMessage(string,string,string):	[???]
-   isManager(address):	965
-   getOrganFunction(uint256):	943
-   managers(address):	933
-internal:
+   changeOwner(address):	20760
+   getOwner():	721
+   kill():	30619
+   owner():	457
 
-======= OrganFunction =======
+======= /home/urszeidler/git/party-contracts/src/main/resources/mix/members.sol:AccessRegistry =======
+Gas estimation:
+
+======= /home/urszeidler/git/party-contracts/src/main/resources/mix/members.sol:MemberAware =======
 Gas estimation:
 construction:
-   [???] + 563800 = [???]
+   119 + 72800 = 72919
 external:
-   lastMemberChanged():	242
-   addManager(address):	42502
-   setCurrentMember(address):	20549
-   mangerCount():	308
-   lastConstitutionHashChanged():	330
-   publisher():	425
-   removeManager(address):	42597
-   id():	396
-   constitutionHash():	[???]
-   setPublisher(address):	20703
-   getFunctioName():	[???]
-   functionName():	[???]
-   publishMessage(string,string,string):	[???]
-   currentMember():	601
-   isManager(address):	745
-   managers(address):	691
+   memberRegistry():	435
+   setMemberRegistry(address):	20417
 internal:
+   isMember(address):	infinite
 
-======= Owned =======
+======= /home/urszeidler/git/party-contracts/src/main/resources/mix/members.sol:MemberRegistry =======
 Gas estimation:
 construction:
-   20260 + 82800 = 103060
+   43786 + 1332000 = 1375786
 external:
-   kill():	321
-   getOwner():	445
-   owner():	341
-   changeOwner(address):	20462
-internal:
+   activeMemberCount():	537
+   addManager(address):	43396
+   addMember(string,address):	infinite
+   changeMemberAddress(uint256,address):	infinite
+   getMemberAddress(uint256):	761
+   getMemberCount():	634
+   getMemberData(address):	infinite
+   isActiveMember(address):	799
+   isManager(address):	957
+   isMember(address):	953
+   managers(address):	910
+   mangerCount():	515
+   memberAddress(address):	infinite
+   partyMemberCount():	713
+   partyMembers(uint256):	infinite
+   publishMemberEvent(address,uint256):	473
+   removeManager(address):	43638
+   unregisterMember(uint256):	infinite
 
-======= Party =======
+======= /home/urszeidler/git/party-contracts/src/main/resources/mix/party.sol:Conference =======
 Gas estimation:
 construction:
-   45038 + 2924200 = 2969238
+   45659 + 2971000 = 3016659
 external:
-   setBlogregistry(address):	20323
-   removeSubDivision(uint256):	[???]
-   name():	[???]
-   organCount():	308
-   setParent(address):	20622
-   addManager(address):	42590
-   mangerCount():	374
-   subDivisions(uint256):	541
-   organs(uint256):	563
-   addSubDivision(address):	[???]
-   parent():	535
-   setMemberRegistry(address):	20565
-   memberRegistry():	579
-   removeManager(address):	42751
-   getMemberRegistry():	624
-   subDivisionCount():	572
-   setName(string):	[???]
-   addOrgan(address):	[???]
-   constitutionHash():	[???]
-   createOrgan(string):	[???]
-   blogregistry():	755
-   isManager(address):	899
-   managers(address):	845
-internal:
+   accreditatedMembers():	647
+   accreditationMember(address):	infinite
+   addManager(address):	43484
+   addOrganFunction(address,string):	infinite
+   ballotCount():	845
+   ballotFactory():	981
+   blogRegistry():	871
+   changeMember(uint256,address):	infinite
+   createBallot(uint256,address,string,string):	infinite
+   createFunction(string,string):	infinite
+   date():	559
+   getLastBallot():	740
+   getOrganBlog():	528
+   getOrganFunction(uint256):	1173
+   getOrganName():	infinite
+   initalizeOrgan():	infinite
+   isActive():	613
+   isManager(address):	1199
+   lastFunctionId():	449
+   managers(address):	1174
+   mangerCount():	625
+   memberRegistry():	805
+   organName():	infinite
+   publishFunctionMessage(uint256,string,string,string):	infinite
+   publishMessage(string,string,string):	infinite
+   removeManager(address):	43748
+   setBallotFactory(address):	21018
+   setBlogRegistry(address):	20721
+   setMemberRegistry(address):	20743
+   setOrganName(string):	infinite
 
-======= PublicBallot =======
+======= /home/urszeidler/git/party-contracts/src/main/resources/mix/party.sol:FoundationConference =======
 Gas estimation:
 construction:
-   [???] + 654600 = [???]
+   45667 + 2979000 = 3024667
 external:
-   proposals(uint256):	[???]
-   ballotStart():	264
-   votesCasted(address):	393
-   stopBallot():	[???]
-   ballotName():	[???]
-   ballotState():	393
-   ballotEnd():	374
-   castVote(uint256):	[???]
-   startBallot():	[???]
-   ballotHash():	[???]
-   addProposal(string,string,string,address):	[???]
-   accessregistry():	557
-   voteCount():	506
-   proposalCount():	528
-internal:
+   accreditatedMembers():	647
+   accreditationMember(address):	infinite
+   addManager(address):	43484
+   addOrganFunction(address,string):	infinite
+   ballotCount():	845
+   ballotFactory():	981
+   blogRegistry():	871
+   changeMember(uint256,address):	infinite
+   createBallot(uint256,address,string,string):	infinite
+   createFunction(string,string):	infinite
+   date():	559
+   getLastBallot():	740
+   getOrganBlog():	528
+   getOrganFunction(uint256):	1173
+   getOrganName():	infinite
+   initalizeOrgan():	infinite
+   isActive():	613
+   isManager(address):	1199
+   lastFunctionId():	449
+   managers(address):	1174
+   mangerCount():	625
+   memberRegistry():	805
+   organName():	infinite
+   publishFunctionMessage(uint256,string,string,string):	infinite
+   publishMessage(string,string,string):	infinite
+   removeManager(address):	43748
+   setBallotFactory(address):	21018
+   setBlogRegistry(address):	20721
+   setMemberRegistry(address):	20743
+   setOrganName(string):	infinite
 
-======= ShortBlog =======
+======= /home/urszeidler/git/party-contracts/src/main/resources/mix/party.sol:KUEKeNParty =======
 Gas estimation:
 construction:
-   [???] + 596800 = [???]
+   infinite + 4524800 = infinite
 external:
-   name():	[???]
-   messages(uint256):	[???]
-   sendMessage(string,string,string):	[???]
-   addManager(address):	42546
-   messageCount():	330
-   lastMessageDate():	352
-   mangerCount():	374
-   removeManager(address):	42619
-   isManager(address):	613
-   managers(address):	559
-internal:
+   addManager(address):	43440
+   addOrgan(address):	infinite
+   addSubDivision(address):	infinite
+   blogregistry():	915
+   boostrapParty(address,address):	infinite
+   bootstrap2():	infinite
+   constitutionHash():	infinite
+   createOrgan(string):	infinite
+   getMemberRegistry():	748
+   isManager(address):	1111
+   managers(address):	1064
+   mangerCount():	515
+   memberRegistry():	695
+   name():	infinite
+   organCount():	449
+   organs(uint256):	706
+   parent():	651
+   removeManager(address):	43616
+   removeSubDivision(uint256):	infinite
+   setBlogregistry(address):	20435
+   setMemberRegistry(address):	20677
+   setName(string):	infinite
+   setParent(address):	20908
+   subDivisionCount():	713
+   subDivisions(uint256):	684
+
+======= /home/urszeidler/git/party-contracts/src/main/resources/mix/party.sol:Organ =======
+Gas estimation:
+construction:
+   45449 + 2802000 = 2847449
+external:
+   addManager(address):	43484
+   addOrganFunction(address,string):	infinite
+   ballotCount():	779
+   ballotFactory():	915
+   blogRegistry():	805
+   changeMember(uint256,address):	infinite
+   createBallot(uint256,address,string,string):	infinite
+   createFunction(string,string):	infinite
+   getLastBallot():	740
+   getOrganBlog():	528
+   getOrganFunction(uint256):	1107
+   getOrganName():	infinite
+   initalizeOrgan():	infinite
+   isActive():	613
+   isManager(address):	1133
+   lastFunctionId():	449
+   managers(address):	1108
+   mangerCount():	581
+   memberRegistry():	739
+   organName():	infinite
+   publishFunctionMessage(uint256,string,string,string):	infinite
+   publishMessage(string,string,string):	infinite
+   removeManager(address):	43682
+   setBallotFactory(address):	20996
+   setBlogRegistry(address):	20655
+   setMemberRegistry(address):	20677
+   setOrganName(string):	infinite
+
+======= /home/urszeidler/git/party-contracts/src/main/resources/mix/party.sol:OrganFunction =======
+Gas estimation:
+construction:
+   infinite + 762600 = infinite
+external:
+   addManager(address):	43352
+   constitutionHash():	infinite
+   currentMember():	717
+   functionName():	infinite
+   getFunctioName():	infinite
+   id():	537
+   isManager(address):	913
+   lastConstitutionHashChanged():	471
+   lastMemberChanged():	383
+   managers(address):	866
+   mangerCount():	449
+   publishMessage(string,string,string):	infinite
+   publisher():	541
+   removeManager(address):	43462
+   setCurrentMember(address):	20864
+   setPublisher(address):	21018
+
+======= /home/urszeidler/git/party-contracts/src/main/resources/mix/party.sol:Party =======
+Gas estimation:
+construction:
+   47361 + 4298600 = 4345961
+external:
+   addManager(address):	43440
+   addOrgan(address):	infinite
+   addSubDivision(address):	infinite
+   blogregistry():	871
+   constitutionHash():	infinite
+   createOrgan(string):	infinite
+   getMemberRegistry():	748
+   isManager(address):	1067
+   managers(address):	1020
+   mangerCount():	515
+   memberRegistry():	695
+   name():	infinite
+   organCount():	449
+   organs(uint256):	706
+   parent():	651
+   removeManager(address):	43616
+   removeSubDivision(uint256):	infinite
+   setBlogregistry(address):	20435
+   setMemberRegistry(address):	20677
+   setName(string):	infinite
+   setParent(address):	20908
+   subDivisionCount():	713
+   subDivisions(uint256):	684
+
+======= /home/urszeidler/git/party-contracts/src/main/resources/mix/publishing.sol:BlogRegistry =======
+Gas estimation:
+construction:
+   43759 + 1308600 = 1352359
+external:
+   addManager(address):	43330
+   blogCount():	493
+   blogs(uint256):	574
+   isManager(address):	737
+   managers(address):	690
+   mangerCount():	405
+   registerBlog(string):	infinite
+   removeManager(address):	43418
+
+======= /home/urszeidler/git/party-contracts/src/main/resources/mix/publishing.sol:MessagePublisher =======
+Gas estimation:
+
+======= /home/urszeidler/git/party-contracts/src/main/resources/mix/publishing.sol:ShortBlog =======
+Gas estimation:
+construction:
+   infinite + 725800 = infinite
+external:
+   addManager(address):	43396
+   isManager(address):	781
+   lastMessageDate():	493
+   managers(address):	734
+   mangerCount():	515
+   messageCount():	471
+   messages(uint256):	infinite
+   name():	infinite
+   removeManager(address):	43484
+   sendMessage(string,string,string):	infinite
+
+======= /home/urszeidler/git/party-contracts/src/main/resources/mix/voting.sol:Ballot =======
+Gas estimation:
+construction:
+   infinite + 261600 = infinite
+external:
+   ballotName():	infinite
+   chairperson():	475
+   delegateTo(address):	322
+   giveRightToVote(address):	278
+   proposals(uint256):	992
+   voteFor(uint256):	250
+   voters(address):	1487
+   winningProposal():	infinite
+
+======= /home/urszeidler/git/party-contracts/src/main/resources/mix/voting.sol:BallotFactory =======
+Gas estimation:
+construction:
+   1136 + 1095600 = 1096736
+external:
+   create(uint256,address,string,string):	infinite
+
+======= /home/urszeidler/git/party-contracts/src/main/resources/mix/voting.sol:BasicBallot =======
+Gas estimation:
+
+======= /home/urszeidler/git/party-contracts/src/main/resources/mix/voting.sol:PublicBallot =======
+Gas estimation:
+construction:
+   infinite + 869800 = infinite
+external:
+   accessregistry():	673
+   addProposal(string,string,string,address):	infinite
+   ballotEnd():	515
+   ballotHash():	infinite
+   ballotName():	infinite
+   ballotStart():	405
+   ballotState():	561
+   castVote(uint256):	infinite
+   proposalCount():	669
+   proposals(uint256):	infinite
+   startBallot():	infinite
+   stopBallot():	infinite
+   voteCount():	647
+   votesCasted(address):	543

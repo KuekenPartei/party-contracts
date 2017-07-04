@@ -1,37 +1,26 @@
 package de.kueken.ethereum.party.party;
 
-// Start of user code PartyTest.customImports
-import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
+import org.adridadou.ethereum.propeller.solidity.SolidityContractDetails;
+import org.adridadou.ethereum.propeller.values.EthAddress;
+import org.junit.Before;
+import org.junit.Test;
+
+import de.kueken.ethereum.party.basics.Manageable;
+import de.kueken.ethereum.party.basics.ManageableTest;
 import de.kueken.ethereum.party.deployer.MembersDeployer;
 import de.kueken.ethereum.party.deployer.PartyDeployer;
 import de.kueken.ethereum.party.deployer.PartyDeployers;
 import de.kueken.ethereum.party.deployer.PublishingDeployer;
-import java.io.IOException;
-import org.spongycastle.util.encoders.Hex;
-
-import com.fasterxml.jackson.core.sym.Name;
-import static org.junit.Assert.*;
-
-import java.io.File;
-import java.math.BigInteger;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-
-import org.adridadou.ethereum.values.CompiledContract;
-import org.adridadou.ethereum.values.EthAddress;
-import org.adridadou.ethereum.values.SoliditySource;
-import org.ethereum.crypto.ECKey;
-import org.junit.Before;
-import org.junit.Test;
-
-import de.kueken.ethereum.party.AbstractContractTest;
-import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
-import de.kueken.ethereum.party.basics.ManageableTest;
-import de.kueken.ethereum.party.deployer.MembersDeployer;
-import de.kueken.ethereum.party.deployer.VotingDeployer;
-import de.kueken.ethereum.party.members.MemberRegistry;
 import de.kueken.ethereum.party.publishing.BlogRegistry;
-import de.kueken.ethereum.party.voting.BasicBallot.BallotState;
 
 // End of user code
 
@@ -86,7 +75,7 @@ public class PartyTest extends ManageableTest{
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
 		System.out.println("create fixture:"+getQuallifiedContractName());
-		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
+		SolidityContractDetails compiledContract = getCompiledContract("/mix/combine.json");
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
         fixtureAddress = address.get();
 		setFixture(ethereum.createContractProxy(compiledContract, fixtureAddress, sender, Party.class));
@@ -127,8 +116,8 @@ public class PartyTest extends ManageableTest{
 		//End of user code
 	}
 	/**
-	 * Test method for  addOrgan(org.adridadou.ethereum.values.EthAddress _organ).
-	 * see {@link Party#addOrgan( org.adridadou.ethereum.values.EthAddress)}
+	 * Test method for  addOrgan(org.adridadou.ethereum.propeller.values.EthAddress _organ).
+	 * see {@link Party#addOrgan( org.adridadou.ethereum.propeller.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test
@@ -158,8 +147,8 @@ public class PartyTest extends ManageableTest{
 		//End of user code
 	}
 	/**
-	 * Test method for  addSubDivision(org.adridadou.ethereum.values.EthAddress _subDivision).
-	 * see {@link Party#addSubDivision( org.adridadou.ethereum.values.EthAddress)}
+	 * Test method for  addSubDivision(org.adridadou.ethereum.propeller.values.EthAddress _subDivision).
+	 * see {@link Party#addSubDivision( org.adridadou.ethereum.propeller.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test
@@ -170,8 +159,8 @@ public class PartyTest extends ManageableTest{
 		initParty();
 		
 		String _name="subdivision";
-		String _memberRegistry = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(100001L))).withLeading0x();
-		String _blogRegistry = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(100002L))).withLeading0x();
+//		String _memberRegistry = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(100001L))).withLeading0x();
+//		String _blogRegistry = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(100002L))).withLeading0x();
 		de.kueken.ethereum.party.EthereumInstance.DeployDuo<Party> subDivision = partyDeployer.createParty(sender);
 		subDivision.contractInstance.addManager(fixtureAddress).get();
 		subDivision.contractInstance.setName(_name).get();

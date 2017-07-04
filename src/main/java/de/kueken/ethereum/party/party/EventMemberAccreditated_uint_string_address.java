@@ -1,17 +1,15 @@
 package de.kueken.ethereum.party.party;
 
-import de.kueken.ethereum.party.party.Conference.*;
-
 /**
- * The Event Objects for the event MemberAccreditated(Integer memberId,String memberName,org.adridadou.ethereum.values.EthAddress memberAddress).
+ * The Event Objects for the event MemberAccreditated(Integer memberId,String memberName,org.adridadou.ethereum.propeller.values.EthAddress memberAddress).
  *
  */
 public class EventMemberAccreditated_uint_string_address{
 	private Integer memberId;
 	private String memberName;
-	private org.adridadou.ethereum.values.EthAddress memberAddress;
+	private org.adridadou.ethereum.propeller.values.EthAddress memberAddress;
 
-	public EventMemberAccreditated_uint_string_address(Integer memberId,String memberName,org.adridadou.ethereum.values.EthAddress memberAddress) {
+	public EventMemberAccreditated_uint_string_address(Integer memberId,String memberName,org.adridadou.ethereum.propeller.values.EthAddress memberAddress) {
 		super();
 		this.memberId = memberId;
 		this.memberName = memberName;
@@ -38,7 +36,7 @@ public class EventMemberAccreditated_uint_string_address{
 	 * Getter for memberAddress.
 	 * @return
 	 */
-	public org.adridadou.ethereum.values.EthAddress getMemberAddress(){
+	public org.adridadou.ethereum.propeller.values.EthAddress getMemberAddress(){
 		return memberAddress;
 	}
 

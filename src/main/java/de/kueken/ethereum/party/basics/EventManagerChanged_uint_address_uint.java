@@ -1,17 +1,15 @@
 package de.kueken.ethereum.party.basics;
 
-import de.kueken.ethereum.party.basics.Manageable.*;
-
 /**
- * The Event Objects for the event ManagerChanged(Integer _state,org.adridadou.ethereum.values.EthAddress _address,Integer _managerCount).
+ * The Event Objects for the event ManagerChanged(Integer _state,org.adridadou.ethereum.propeller.values.EthAddress _address,Integer _managerCount).
  *
  */
 public class EventManagerChanged_uint_address_uint{
 	private Integer _state;
-	private org.adridadou.ethereum.values.EthAddress _address;
+	private org.adridadou.ethereum.propeller.values.EthAddress _address;
 	private Integer _managerCount;
 
-	public EventManagerChanged_uint_address_uint(Integer _state,org.adridadou.ethereum.values.EthAddress _address,Integer _managerCount) {
+	public EventManagerChanged_uint_address_uint(Integer _state,org.adridadou.ethereum.propeller.values.EthAddress _address,Integer _managerCount) {
 		super();
 		this._state = _state;
 		this._address = _address;
@@ -30,7 +28,7 @@ public class EventManagerChanged_uint_address_uint{
 	 * Getter for _address.
 	 * @return
 	 */
-	public org.adridadou.ethereum.values.EthAddress get_address(){
+	public org.adridadou.ethereum.propeller.values.EthAddress get_address(){
 		return _address;
 	}
 

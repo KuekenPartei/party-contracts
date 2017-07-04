@@ -1,28 +1,22 @@
 package de.kueken.ethereum.party.members;
 
 // Start of user code MemberRegistryTest.customImports
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import java.io.File;
 import java.math.BigInteger;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import org.adridadou.ethereum.keystore.AccountProvider;
-import org.adridadou.ethereum.values.CompiledContract;
-import org.adridadou.ethereum.values.EthAddress;
-import org.adridadou.ethereum.values.SoliditySource;
-import org.ethereum.crypto.ECKey;
+import org.adridadou.ethereum.propeller.keystore.AccountProvider;
+import org.adridadou.ethereum.propeller.solidity.SolidityContractDetails;
+import org.adridadou.ethereum.propeller.values.EthAddress;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.kueken.ethereum.party.AbstractContractTest;
-import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
 import de.kueken.ethereum.party.basics.ManageableTest;
 import de.kueken.ethereum.party.deployer.MembersDeployer;
-import de.kueken.ethereum.party.deployer.VotingDeployer;
-import de.kueken.ethereum.party.members.MemberRegistry;
-import de.kueken.ethereum.party.voting.BasicBallot.BallotState;
 
 // End of user code
 
@@ -36,10 +30,10 @@ public class MemberRegistryTest extends ManageableTest{
  
 	private MemberRegistry fixture;
 	// Start of user code MemberRegistryTest.attributes
-	private String senderAddressS = "5db10750e8caff27f906b41c71b3471057dd2004";
+//	private String senderAddressS = "5db10750e8caff27f906b41c71b3471057dd2004";
 	
-	private EthAddress member1 = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
-	private EthAddress member2 = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1001L)));
+	private EthAddress member1 = AccountProvider.fromPrivateKey((BigInteger.valueOf(1000L))).getAddress();
+	private EthAddress member2 = AccountProvider.fromPrivateKey((BigInteger.valueOf(1001L))).getAddress();
 	// End of user code
 
 	@Override
@@ -70,7 +64,7 @@ public class MemberRegistryTest extends ManageableTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
+		SolidityContractDetails compiledContract = getCompiledContract("/mix/combine.json");
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
         fixtureAddress = address.get();
 		setFixture(ethereum.createContractProxy(compiledContract, fixtureAddress, sender, MemberRegistry.class));
@@ -84,8 +78,8 @@ public class MemberRegistryTest extends ManageableTest{
 
 
 	/**
-	 * Test method for  isMember(org.adridadou.ethereum.values.EthAddress _memberAdress).
-	 * see {@link MemberRegistry#isMember( org.adridadou.ethereum.values.EthAddress)}
+	 * Test method for  isMember(org.adridadou.ethereum.propeller.values.EthAddress _memberAdress).
+	 * see {@link MemberRegistry#isMember( org.adridadou.ethereum.propeller.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test
@@ -127,8 +121,8 @@ public class MemberRegistryTest extends ManageableTest{
 		// End of user code
 	}
 	/**
-	 * Test method for  addMember(String name,org.adridadou.ethereum.values.EthAddress _memberAddress).
-	 * see {@link MemberRegistry#addMember( String, org.adridadou.ethereum.values.EthAddress)}
+	 * Test method for  addMember(String name,org.adridadou.ethereum.propeller.values.EthAddress _memberAddress).
+	 * see {@link MemberRegistry#addMember( String, org.adridadou.ethereum.propeller.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test
@@ -160,11 +154,11 @@ public class MemberRegistryTest extends ManageableTest{
 	@Test
 	public void testUnregisterMember_uint() throws Exception {
 		//Start of user code testUnregisterMember_uint
-		EthAddress address = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
+		EthAddress address = AccountProvider.fromPrivateKey((BigInteger.valueOf(1000L))).getAddress();
 		assertEquals(0, fixture.getMemberCount().intValue());
 		fixture.addMember("test1", address).get();
 		assertEquals(1, fixture.getMemberCount().intValue());
-		fixture.addMember("test2", EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1001L)))).get();
+		fixture.addMember("test2", AccountProvider.fromPrivateKey((BigInteger.valueOf(1001L))).getAddress()).get();
 		assertEquals(2, fixture.getMemberCount().intValue());
 
 		fixture.unregisterMember(1).get();
@@ -174,8 +168,8 @@ public class MemberRegistryTest extends ManageableTest{
 		// End of user code
 	}
 	/**
-	 * Test method for  isActiveMember(org.adridadou.ethereum.values.EthAddress _memberAdress).
-	 * see {@link MemberRegistry#isActiveMember( org.adridadou.ethereum.values.EthAddress)}
+	 * Test method for  isActiveMember(org.adridadou.ethereum.propeller.values.EthAddress _memberAdress).
+	 * see {@link MemberRegistry#isActiveMember( org.adridadou.ethereum.propeller.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test
@@ -187,14 +181,14 @@ public class MemberRegistryTest extends ManageableTest{
 		// End of user code
 	}
 	/**
-	 * Test method for  changeMemberAddress(Integer id,org.adridadou.ethereum.values.EthAddress _newMemberAddress).
-	 * see {@link MemberRegistry#changeMemberAddress( Integer, org.adridadou.ethereum.values.EthAddress)}
+	 * Test method for  changeMemberAddress(Integer id,org.adridadou.ethereum.propeller.values.EthAddress _newMemberAddress).
+	 * see {@link MemberRegistry#changeMemberAddress( Integer, org.adridadou.ethereum.propeller.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test
 	public void testChangeMemberAddress_uint_address() throws Exception {
 		//Start of user code testChangeMemberAddress_uint_address
-		EthAddress _memberAdress = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
+		EthAddress _memberAdress = AccountProvider.fromPrivateKey((BigInteger.valueOf(1000L))).getAddress();
 		assertFalse(fixture.isActiveMember(_memberAdress));
 		fixture.addMember("Test1", _memberAdress).get();
 		assertTrue(fixture.isActiveMember(_memberAdress));
@@ -202,7 +196,7 @@ public class MemberRegistryTest extends ManageableTest{
 		assertEquals(0, memberData.getId().intValue());
 		assertEquals("Test1", memberData.getName());
 
-		EthAddress newAddress = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1001L)));
+		EthAddress newAddress = AccountProvider.fromPrivateKey((BigInteger.valueOf(1001L))).getAddress();
 		fixture.changeMemberAddress(memberData.getId(), newAddress).get();
 		assertTrue(fixture.isActiveMember(newAddress));
 		assertFalse(fixture.isActiveMember(_memberAdress));
@@ -210,14 +204,14 @@ public class MemberRegistryTest extends ManageableTest{
 		// End of user code
 	}
 	/**
-	 * Test method for  getMemberData(org.adridadou.ethereum.values.EthAddress _address).
-	 * see {@link MemberRegistry#getMemberData( org.adridadou.ethereum.values.EthAddress)}
+	 * Test method for  getMemberData(org.adridadou.ethereum.propeller.values.EthAddress _address).
+	 * see {@link MemberRegistry#getMemberData( org.adridadou.ethereum.propeller.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test
 	public void testGetMemberData_address() throws Exception {
 		//Start of user code testGetMemberData_address
-		EthAddress _memberAdress = EthAddress.of(ECKey.fromPrivate(BigInteger.valueOf(1000L)));
+		EthAddress _memberAdress = AccountProvider.fromPrivateKey((BigInteger.valueOf(1000L))).getAddress();
 		assertFalse(fixture.isActiveMember(_memberAdress));
 		fixture.addMember("Test1", _memberAdress).get();
 		assertTrue(fixture.isActiveMember(_memberAdress));
@@ -227,8 +221,8 @@ public class MemberRegistryTest extends ManageableTest{
 		// End of user code
 	}
 	/**
-	 * Test method for  publishMemberEvent(org.adridadou.ethereum.values.EthAddress mAddress,Integer eventType).
-	 * see {@link MemberRegistry#publishMemberEvent( org.adridadou.ethereum.values.EthAddress, Integer)}
+	 * Test method for  publishMemberEvent(org.adridadou.ethereum.propeller.values.EthAddress mAddress,Integer eventType).
+	 * see {@link MemberRegistry#publishMemberEvent( org.adridadou.ethereum.propeller.values.EthAddress, Integer)}
 	 * @throws Exception
 	 */
 	@Test
@@ -253,7 +247,7 @@ public class MemberRegistryTest extends ManageableTest{
 		assertEquals(0, memberData.getId().intValue());
 		
 		MembersDeployer deployer = new MembersDeployer(ethereum,"/mix/combine.json",true);
-		MemberRegistry memberRegistry = deployer.createMemberRegistryProxy(AccountProvider.fromECKey(ECKey.fromPrivate(BigInteger.valueOf(1001L))), fixtureAddress);
+		MemberRegistry memberRegistry = deployer.createMemberRegistryProxy(AccountProvider.fromPrivateKey((BigInteger.valueOf(1001L))), fixtureAddress);
 		memberRegistry.addMember("test2", member2).get();
 	}
 

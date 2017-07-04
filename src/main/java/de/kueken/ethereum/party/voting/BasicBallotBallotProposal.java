@@ -1,7 +1,5 @@
 package de.kueken.ethereum.party.voting;
 
-import de.kueken.ethereum.party.voting.BasicBallot.*;
-
 /**
  * The dataholder for the struct BasicBallotBallotProposal.
  *
@@ -10,9 +8,9 @@ public class BasicBallotBallotProposal{
 	private String name;
 	private String hash;
 	private String url;
-	private org.adridadou.ethereum.values.EthAddress member;
+	private org.adridadou.ethereum.propeller.values.EthAddress member;
 
-	public BasicBallotBallotProposal(String name,String hash,String url,org.adridadou.ethereum.values.EthAddress member) {
+	public BasicBallotBallotProposal(String name,String hash,String url,org.adridadou.ethereum.propeller.values.EthAddress member) {
 		super();
 		this.name = name;
 		this.hash = hash;
@@ -48,7 +46,7 @@ public class BasicBallotBallotProposal{
 	 * Getter for member.
 	 * @return
 	 */
-	public org.adridadou.ethereum.values.EthAddress getMember(){
+	public org.adridadou.ethereum.propeller.values.EthAddress getMember(){
 		return member;
 	}
 

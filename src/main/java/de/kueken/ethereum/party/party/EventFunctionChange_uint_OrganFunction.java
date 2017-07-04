@@ -1,16 +1,14 @@
 package de.kueken.ethereum.party.party;
 
-import de.kueken.ethereum.party.party.Organ.*;
-
 /**
- * The Event Objects for the event FunctionChange(Integer _type,org.adridadou.ethereum.values.EthAddress _function).
+ * The Event Objects for the event FunctionChange(Integer _type,org.adridadou.ethereum.propeller.values.EthAddress _function).
  *
  */
 public class EventFunctionChange_uint_OrganFunction{
 	private Integer _type;
-	private org.adridadou.ethereum.values.EthAddress _function;
+	private org.adridadou.ethereum.propeller.values.EthAddress _function;
 
-	public EventFunctionChange_uint_OrganFunction(Integer _type,org.adridadou.ethereum.values.EthAddress _function) {
+	public EventFunctionChange_uint_OrganFunction(Integer _type,org.adridadou.ethereum.propeller.values.EthAddress _function) {
 		super();
 		this._type = _type;
 		this._function = _function;
@@ -28,7 +26,7 @@ public class EventFunctionChange_uint_OrganFunction{
 	 * Getter for _function.
 	 * @return
 	 */
-	public org.adridadou.ethereum.values.EthAddress get_function(){
+	public org.adridadou.ethereum.propeller.values.EthAddress get_function(){
 		return _function;
 	}
 

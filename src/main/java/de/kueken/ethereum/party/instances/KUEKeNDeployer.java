@@ -6,16 +6,15 @@ package de.kueken.ethereum.party.instances;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import org.adridadou.ethereum.EthereumFacade;
-import org.adridadou.ethereum.keystore.FileSecureKey;
-import org.adridadou.ethereum.keystore.SecureKey;
-import org.adridadou.ethereum.values.EthAccount;
-import org.adridadou.ethereum.values.EthAddress;
-import org.adridadou.ethereum.values.EthValue;
+import org.adridadou.ethereum.propeller.EthereumFacade;
+import org.adridadou.ethereum.propeller.keystore.AccountProvider;
+import org.adridadou.ethereum.propeller.keystore.FileSecureKey;
+import org.adridadou.ethereum.propeller.keystore.SecureKey;
+import org.adridadou.ethereum.propeller.values.EthAccount;
+import org.adridadou.ethereum.propeller.values.EthAddress;
+import org.adridadou.ethereum.propeller.values.EthValue;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -24,9 +23,6 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.apache.commons.codec.DecoderException;
-import org.ethereum.crypto.ECKey;
-import org.ethereum.samples.SendTransaction;
 import org.spongycastle.util.encoders.Hex;
 
 import de.kueken.ethereum.party.EthereumInstance;
@@ -438,7 +434,7 @@ public class KUEKeNDeployer {
 				}
 
 				public void doIt() {
-					deployParty.contractInstance.setParent(parentParty.contractAddress.withLeading0x());
+					deployParty.contractInstance.setParent(parentParty.contractAddress);
 
 				}
 			});
@@ -709,8 +705,7 @@ public class KUEKeNDeployer {
 
 			millis = 2000L;
 		} else {
-			sender = new EthAccount(
-					ECKey.fromPrivate(Hex.decode("3ec771c31cac8c0dba77a69e503765701d3c2bb62435888d4ffa38fed60c445c")));
+			sender = AccountProvider.fromPrivateKey((Hex.decode("3ec771c31cac8c0dba77a69e503765701d3c2bb62435888d4ffa38fed60c445c")));
 			millis = 1L;
 		}
 

@@ -1,17 +1,14 @@
 package de.kueken.ethereum.party.basics;
 
 // Start of user code OwnedTest.customImports
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import java.io.File;
-import java.math.BigInteger;
 import java.util.concurrent.CompletableFuture;
 
-import org.adridadou.ethereum.values.CompiledContract;
-import org.adridadou.ethereum.values.EthAccount;
-import org.adridadou.ethereum.values.EthAddress;
-import org.adridadou.ethereum.values.SmartContractByteCode;
-import org.ethereum.crypto.ECKey;
+import org.adridadou.ethereum.propeller.solidity.SolidityContractDetails;
+import org.adridadou.ethereum.propeller.values.EthAddress;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -61,7 +58,7 @@ public class OwnedTest extends AbstractContractTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
+		SolidityContractDetails compiledContract = getCompiledContract("/mix/combine.json");
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
         fixtureAddress = address.get();
 		setFixture(ethereum.createContractProxy(compiledContract, fixtureAddress, sender, Owned.class));
@@ -85,8 +82,8 @@ public class OwnedTest extends AbstractContractTest{
 		//End of user code
 	}
 	/**
-	 * Test method for  changeOwner(org.adridadou.ethereum.values.EthAddress newOwner).
-	 * see {@link Owned#changeOwner( org.adridadou.ethereum.values.EthAddress)}
+	 * Test method for  changeOwner(org.adridadou.ethereum.propeller.values.EthAddress newOwner).
+	 * see {@link Owned#changeOwner( org.adridadou.ethereum.propeller.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test
@@ -107,7 +104,7 @@ public class OwnedTest extends AbstractContractTest{
 		//Start of user code testKill
 		assertFalse(ethereum.getCode(fixtureAddress).toString().isEmpty());
 		fixture.kill().get();
-		SmartContractByteCode code = ethereum.getCode(fixtureAddress);
+//		SmartContractByteCode code = ethereum.getCode(fixtureAddress);
 		assertTrue(ethereum.getCode(fixtureAddress).toString().isEmpty());
 		
 		//End of user code

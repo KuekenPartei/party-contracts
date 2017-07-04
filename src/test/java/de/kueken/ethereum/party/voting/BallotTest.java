@@ -1,27 +1,15 @@
 package de.kueken.ethereum.party.voting;
 
-// Start of user code BallotTest.customImports
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import java.io.File;
-import java.math.BigInteger;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
-import org.adridadou.ethereum.values.CompiledContract;
-import org.adridadou.ethereum.values.EthAddress;
-import org.adridadou.ethereum.values.SoliditySource;
-import org.ethereum.crypto.ECKey;
+import org.adridadou.ethereum.propeller.solidity.SolidityContractDetails;
+import org.adridadou.ethereum.propeller.values.EthAddress;
 import org.junit.Before;
 import org.junit.Test;
 
 import de.kueken.ethereum.party.AbstractContractTest;
-import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
-import de.kueken.ethereum.party.deployer.MembersDeployer;
-import de.kueken.ethereum.party.deployer.VotingDeployer;
-import de.kueken.ethereum.party.members.MemberRegistry;
-import de.kueken.ethereum.party.voting.BasicBallot.BallotState;
 
 // End of user code
 
@@ -66,7 +54,7 @@ public class BallotTest extends AbstractContractTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
+		SolidityContractDetails compiledContract = getCompiledContract("/mix/combine.json");
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
         fixtureAddress = address.get();
 		setFixture(ethereum.createContractProxy(compiledContract, fixtureAddress, sender, Ballot.class));
@@ -91,8 +79,8 @@ public class BallotTest extends AbstractContractTest{
 		//End of user code
 	}
 	/**
-	 * Test method for  giveRightToVote(org.adridadou.ethereum.values.EthAddress voter).
-	 * see {@link Ballot#giveRightToVote( org.adridadou.ethereum.values.EthAddress)}
+	 * Test method for  giveRightToVote(org.adridadou.ethereum.propeller.values.EthAddress voter).
+	 * see {@link Ballot#giveRightToVote( org.adridadou.ethereum.propeller.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test
@@ -103,8 +91,8 @@ public class BallotTest extends AbstractContractTest{
 		//End of user code
 	}
 	/**
-	 * Test method for  delegateTo(org.adridadou.ethereum.values.EthAddress to).
-	 * see {@link Ballot#delegateTo( org.adridadou.ethereum.values.EthAddress)}
+	 * Test method for  delegateTo(org.adridadou.ethereum.propeller.values.EthAddress to).
+	 * see {@link Ballot#delegateTo( org.adridadou.ethereum.propeller.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test

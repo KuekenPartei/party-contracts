@@ -1,12 +1,5 @@
 package de.kueken.ethereum.party.party;
 
-import java.util.concurrent.CompletableFuture;
-import org.adridadou.ethereum.values.EthAddress;
-import de.kueken.ethereum.party.basics.*;
-import de.kueken.ethereum.party.members.*;
-import de.kueken.ethereum.party.publishing.*;
-import de.kueken.ethereum.party.voting.*;
-
 //Start of user code customized_imports
 
 //End of user code
@@ -18,7 +11,7 @@ import de.kueken.ethereum.party.voting.*;
 **/
 public interface FoundationConference extends Conference{
 	
-	Boolean managers(org.adridadou.ethereum.values.EthAddress key);
+	Boolean managers(org.adridadou.ethereum.propeller.values.EthAddress key);
 
 
 	//Start of user code additional_methods

@@ -1,16 +1,14 @@
 package de.kueken.ethereum.party.voting;
 
-import de.kueken.ethereum.party.voting.PublicBallot.*;
-
 /**
- * The Event Objects for the event VotedCasted(Integer proposal,org.adridadou.ethereum.values.EthAddress sender).
+ * The Event Objects for the event VotedCasted(Integer proposal,org.adridadou.ethereum.propeller.values.EthAddress sender).
  *
  */
 public class EventVotedCasted_uint_address{
 	private Integer proposal;
-	private org.adridadou.ethereum.values.EthAddress sender;
+	private org.adridadou.ethereum.propeller.values.EthAddress sender;
 
-	public EventVotedCasted_uint_address(Integer proposal,org.adridadou.ethereum.values.EthAddress sender) {
+	public EventVotedCasted_uint_address(Integer proposal,org.adridadou.ethereum.propeller.values.EthAddress sender) {
 		super();
 		this.proposal = proposal;
 		this.sender = sender;
@@ -28,7 +26,7 @@ public class EventVotedCasted_uint_address{
 	 * Getter for sender.
 	 * @return
 	 */
-	public org.adridadou.ethereum.values.EthAddress getSender(){
+	public org.adridadou.ethereum.propeller.values.EthAddress getSender(){
 		return sender;
 	}
 

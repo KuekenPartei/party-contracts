@@ -1,31 +1,20 @@
 package de.kueken.ethereum.party.party;
 
-// Start of user code OrganFunctionTest.customImports
-import de.kueken.ethereum.party.deployer.PublishingDeployer;
-import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import java.io.File;
-import java.math.BigInteger;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
-import org.adridadou.ethereum.values.CompiledContract;
-import org.adridadou.ethereum.values.EthAddress;
-import org.adridadou.ethereum.values.SoliditySource;
-import org.ethereum.crypto.ECKey;
+import org.adridadou.ethereum.propeller.solidity.SolidityContractDetails;
+import org.adridadou.ethereum.propeller.values.EthAddress;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.kueken.ethereum.party.AbstractContractTest;
 import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
 import de.kueken.ethereum.party.basics.ManageableTest;
-import de.kueken.ethereum.party.deployer.MembersDeployer;
 import de.kueken.ethereum.party.deployer.PartyDeployers;
-import de.kueken.ethereum.party.deployer.VotingDeployer;
-import de.kueken.ethereum.party.members.MemberRegistry;
+// Start of user code OrganFunctionTest.customImports
+import de.kueken.ethereum.party.deployer.PublishingDeployer;
 import de.kueken.ethereum.party.publishing.ShortBlog;
-import de.kueken.ethereum.party.voting.BasicBallot.BallotState;
 
 // End of user code
 
@@ -72,7 +61,7 @@ public class OrganFunctionTest extends ManageableTest{
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
 		System.out.println("create fixture:"+getQuallifiedContractName());
-		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
+		SolidityContractDetails compiledContract = getCompiledContract("/mix/combine.json");
 		String _name = "_name";
 		String _ch = "_ch";
         CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender

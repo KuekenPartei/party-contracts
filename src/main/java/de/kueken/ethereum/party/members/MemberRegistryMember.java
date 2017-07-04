@@ -1,6 +1,6 @@
 package de.kueken.ethereum.party.members;
 
-import de.kueken.ethereum.party.members.MemberRegistry.*;
+import de.kueken.ethereum.party.members.MemberRegistry.MemberState;
 
 /**
  * The dataholder for the struct MemberRegistryMember.
@@ -9,10 +9,10 @@ import de.kueken.ethereum.party.members.MemberRegistry.*;
 public class MemberRegistryMember{
 	private String name;
 	private Integer id;
-	private org.adridadou.ethereum.values.EthAddress member;
+	private org.adridadou.ethereum.propeller.values.EthAddress member;
 	private MemberState state;
 
-	public MemberRegistryMember(String name,Integer id,org.adridadou.ethereum.values.EthAddress member,MemberState state) {
+	public MemberRegistryMember(String name,Integer id,org.adridadou.ethereum.propeller.values.EthAddress member,MemberState state) {
 		super();
 		this.name = name;
 		this.id = id;
@@ -40,7 +40,7 @@ public class MemberRegistryMember{
 	 * Getter for member.
 	 * @return
 	 */
-	public org.adridadou.ethereum.values.EthAddress getMember(){
+	public org.adridadou.ethereum.propeller.values.EthAddress getMember(){
 		return member;
 	}
 

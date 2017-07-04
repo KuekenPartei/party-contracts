@@ -1,34 +1,16 @@
 package de.kueken.ethereum.party.voting;
 
 // Start of user code BallotFactoryTest.customImports
+import static org.junit.Assert.assertEquals;
 
-import static org.junit.Assert.*;
+import java.util.concurrent.CompletableFuture;
 
-import de.kueken.ethereum.party.members.*;
-
-import de.kueken.ethereum.party.voting.BallotFactory.*;
-
-
-import java.io.File;
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.stream.*;
-import java.math.*;
-
-import org.adridadou.ethereum.EthereumFacade;
-import org.adridadou.ethereum.keystore.*;
-import org.adridadou.ethereum.values.CompiledContract;
-import org.adridadou.ethereum.values.EthAccount;
-import org.adridadou.ethereum.values.EthAddress;
-import org.adridadou.ethereum.values.SoliditySource;
-import org.adridadou.ethereum.values.config.ChainId;
-import org.ethereum.crypto.ECKey;
+import org.adridadou.ethereum.propeller.solidity.SolidityContractDetails;
+import org.adridadou.ethereum.propeller.values.EthAddress;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.kueken.ethereum.party.AbstractContractTest;
-import de.kueken.ethereum.party.EthereumInstance;
 import de.kueken.ethereum.party.deployer.VotingDeployer;
 
 // End of user code
@@ -75,7 +57,7 @@ public class BallotFactoryTest extends AbstractContractTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
+		SolidityContractDetails compiledContract = getCompiledContract("/mix/combine.json");
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
         fixtureAddress = address.get();
 		setFixture(ethereum.createContractProxy(compiledContract, fixtureAddress, sender, BallotFactory.class));
@@ -88,8 +70,8 @@ public class BallotFactoryTest extends AbstractContractTest{
 
 
 	/**
-	 * Test method for  create(Integer ballotType,org.adridadou.ethereum.values.EthAddress _registry,String _name,String _hash).
-	 * see {@link BallotFactory#create( Integer, org.adridadou.ethereum.values.EthAddress, String, String)}
+	 * Test method for  create(Integer ballotType,org.adridadou.ethereum.propeller.values.EthAddress _registry,String _name,String _hash).
+	 * see {@link BallotFactory#create( Integer, org.adridadou.ethereum.propeller.values.EthAddress, String, String)}
 	 * @throws Exception
 	 */
 	@Test

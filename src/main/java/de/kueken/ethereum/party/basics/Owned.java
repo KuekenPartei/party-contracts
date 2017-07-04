@@ -1,8 +1,5 @@
 package de.kueken.ethereum.party.basics;
 
-import java.util.concurrent.CompletableFuture;
-import org.adridadou.ethereum.values.EthAddress;
-
 //Start of user code customized_imports
 
 //End of user code
@@ -11,12 +8,12 @@ import org.adridadou.ethereum.values.EthAddress;
 
 public interface Owned{
 	
-	org.adridadou.ethereum.values.EthAddress owner();
+	org.adridadou.ethereum.propeller.values.EthAddress owner();
 
 	
-	java.util.concurrent.CompletableFuture<org.adridadou.ethereum.values.EthAddress> getOwner();
+	java.util.concurrent.CompletableFuture<org.adridadou.ethereum.propeller.values.EthAddress> getOwner();
 	
-	java.util.concurrent.CompletableFuture<Void> changeOwner(org.adridadou.ethereum.values.EthAddress newOwner);
+	java.util.concurrent.CompletableFuture<Void> changeOwner(org.adridadou.ethereum.propeller.values.EthAddress newOwner);
 	
 	java.util.concurrent.CompletableFuture<Void> kill();
 

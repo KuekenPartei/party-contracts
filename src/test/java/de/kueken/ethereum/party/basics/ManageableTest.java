@@ -1,15 +1,16 @@
 package de.kueken.ethereum.party.basics;
 
 // Start of user code ManageableTest.customImports
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigInteger;
 import java.util.concurrent.CompletableFuture;
 
-import org.adridadou.ethereum.values.CompiledContract;
-import org.adridadou.ethereum.values.EthAccount;
-import org.adridadou.ethereum.values.EthAddress;
-import org.ethereum.crypto.ECKey;
+import org.adridadou.ethereum.propeller.keystore.AccountProvider;
+import org.adridadou.ethereum.propeller.solidity.SolidityContractDetails;
+import org.adridadou.ethereum.propeller.values.EthAddress;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,7 +28,7 @@ public class ManageableTest extends AbstractContractTest{
  
 	private Manageable fixture;
 	// Start of user code ManageableTest.attributes
-	private String senderAddressS = "5db10750e8caff27f906b41c71b3471057dd2004";
+//	private String senderAddressS = "5db10750e8caff27f906b41c71b3471057dd2004";
 	// End of user code
 
 	@Override
@@ -59,7 +60,7 @@ public class ManageableTest extends AbstractContractTest{
 	 */
 	protected void createFixture() throws Exception {
 		//Start of user code createFixture
-		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
+		SolidityContractDetails compiledContract = getCompiledContract("/mix/combine.json");
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
 		fixtureAddress = address.get();
 		setFixture(ethereum.createContractProxy(compiledContract, fixtureAddress, sender, Manageable.class));
@@ -72,8 +73,8 @@ public class ManageableTest extends AbstractContractTest{
 
 
 	/**
-	 * Test method for  addManager(org.adridadou.ethereum.values.EthAddress _newManagerAddress).
-	 * see {@link Manageable#addManager( org.adridadou.ethereum.values.EthAddress)}
+	 * Test method for  addManager(org.adridadou.ethereum.propeller.values.EthAddress _newManagerAddress).
+	 * see {@link Manageable#addManager( org.adridadou.ethereum.propeller.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test
@@ -82,22 +83,22 @@ public class ManageableTest extends AbstractContractTest{
 
 		assertEquals(1, fixture.mangerCount().intValue());
 
-		EthAddress ethAddress = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L))).getAddress();
+		EthAddress ethAddress = AccountProvider.fromPrivateKey((BigInteger.valueOf(100001L))).getAddress();
 		fixture.addManager(ethAddress).get();
 		assertEquals(2, fixture.mangerCount().intValue());
 
 		// End of user code
 	}
 	/**
-	 * Test method for  removeManager(org.adridadou.ethereum.values.EthAddress _managerAddress).
-	 * see {@link Manageable#removeManager( org.adridadou.ethereum.values.EthAddress)}
+	 * Test method for  removeManager(org.adridadou.ethereum.propeller.values.EthAddress _managerAddress).
+	 * see {@link Manageable#removeManager( org.adridadou.ethereum.propeller.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test
 	public void testRemoveManager_address() throws Exception {
 		//Start of user code testRemoveManager_address
 		assertEquals(1, fixture.mangerCount().intValue());
-		EthAddress ethAddress = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L))).getAddress();
+		EthAddress ethAddress = AccountProvider.fromPrivateKey((BigInteger.valueOf(100001L))).getAddress();
 		fixture.addManager(ethAddress).get();
 		assertEquals(2, fixture.mangerCount().intValue());
 
@@ -110,14 +111,14 @@ public class ManageableTest extends AbstractContractTest{
 		// End of user code
 	}
 	/**
-	 * Test method for  isManager(org.adridadou.ethereum.values.EthAddress _managerAddress).
-	 * see {@link Manageable#isManager( org.adridadou.ethereum.values.EthAddress)}
+	 * Test method for  isManager(org.adridadou.ethereum.propeller.values.EthAddress _managerAddress).
+	 * see {@link Manageable#isManager( org.adridadou.ethereum.propeller.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test
 	public void testIsManager_address() throws Exception {
 		//Start of user code testIsManager_address
-		EthAddress ethAddress = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L))).getAddress();
+		EthAddress ethAddress = AccountProvider.fromPrivateKey((BigInteger.valueOf(100001L))).getAddress();
 		fixture.addManager(ethAddress).get();
 
 		assertTrue(fixture.isManager(ethAddress));

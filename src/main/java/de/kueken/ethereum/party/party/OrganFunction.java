@@ -1,11 +1,6 @@
 package de.kueken.ethereum.party.party;
 
-import java.util.concurrent.CompletableFuture;
-import org.adridadou.ethereum.values.EthAddress;
-import de.kueken.ethereum.party.basics.*;
-import de.kueken.ethereum.party.members.*;
-import de.kueken.ethereum.party.publishing.*;
-import de.kueken.ethereum.party.voting.*;
+import de.kueken.ethereum.party.basics.Manageable;
 
 //Start of user code customized_imports
 
@@ -19,7 +14,7 @@ import de.kueken.ethereum.party.voting.*;
 **/
 public interface OrganFunction extends Manageable{
 	
-	org.adridadou.ethereum.values.EthAddress currentMember();
+	org.adridadou.ethereum.propeller.values.EthAddress currentMember();
 	
 	String functionName();
 	
@@ -31,9 +26,9 @@ public interface OrganFunction extends Manageable{
 	
 	Integer lastConstitutionHashChanged();
 	
-	org.adridadou.ethereum.values.EthAddress publisher();
+	org.adridadou.ethereum.propeller.values.EthAddress publisher();
 	
-	Boolean managers(org.adridadou.ethereum.values.EthAddress key);
+	Boolean managers(org.adridadou.ethereum.propeller.values.EthAddress key);
 
 	/**
 	* Publish the message to the blog.
@@ -47,9 +42,9 @@ public interface OrganFunction extends Manageable{
 	
 	String getFunctioName();
 
-	java.util.concurrent.CompletableFuture<Void> setCurrentMember (org.adridadou.ethereum.values.EthAddress aCurrentMember);
+	java.util.concurrent.CompletableFuture<Void> setCurrentMember (org.adridadou.ethereum.propeller.values.EthAddress aCurrentMember);
 
-	java.util.concurrent.CompletableFuture<Void> setPublisher (org.adridadou.ethereum.values.EthAddress aPublisher);
+	java.util.concurrent.CompletableFuture<Void> setPublisher (org.adridadou.ethereum.propeller.values.EthAddress aPublisher);
 
 	//Start of user code additional_methods
 

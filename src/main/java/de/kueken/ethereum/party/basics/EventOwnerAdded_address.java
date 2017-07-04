@@ -1,15 +1,13 @@
 package de.kueken.ethereum.party.basics;
 
-import de.kueken.ethereum.party.basics.Multiowned.*;
-
 /**
- * The Event Objects for the event OwnerAdded(org.adridadou.ethereum.values.EthAddress newOwner).
+ * The Event Objects for the event OwnerAdded(org.adridadou.ethereum.propeller.values.EthAddress newOwner).
  *
  */
 public class EventOwnerAdded_address{
-	private org.adridadou.ethereum.values.EthAddress newOwner;
+	private org.adridadou.ethereum.propeller.values.EthAddress newOwner;
 
-	public EventOwnerAdded_address(org.adridadou.ethereum.values.EthAddress newOwner) {
+	public EventOwnerAdded_address(org.adridadou.ethereum.propeller.values.EthAddress newOwner) {
 		super();
 		this.newOwner = newOwner;
 	}
@@ -18,7 +16,7 @@ public class EventOwnerAdded_address{
 	 * Getter for newOwner.
 	 * @return
 	 */
-	public org.adridadou.ethereum.values.EthAddress getNewOwner(){
+	public org.adridadou.ethereum.propeller.values.EthAddress getNewOwner(){
 		return newOwner;
 	}
 

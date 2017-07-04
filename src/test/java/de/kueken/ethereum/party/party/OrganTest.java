@@ -1,41 +1,37 @@
 package de.kueken.ethereum.party.party;
 
 // Start of user code OrganTest.customImports
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-import java.io.File;
+import java.io.IOException;
+// End of user code
 import java.math.BigInteger;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import org.adridadou.ethereum.values.CompiledContract;
-import org.adridadou.ethereum.values.EthAccount;
-import org.adridadou.ethereum.values.EthAddress;
-import org.adridadou.ethereum.values.SoliditySource;
-import org.ethereum.crypto.ECKey;
+import org.adridadou.ethereum.propeller.keystore.AccountProvider;
+import org.adridadou.ethereum.propeller.solidity.SolidityContractDetails;
+import org.adridadou.ethereum.propeller.values.EthAccount;
+import org.adridadou.ethereum.propeller.values.EthAddress;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.kueken.ethereum.party.AbstractContractTest;
 import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
 import de.kueken.ethereum.party.basics.ManageableTest;
 import de.kueken.ethereum.party.deployer.MembersDeployer;
+import de.kueken.ethereum.party.deployer.PartyDeployer;
+import de.kueken.ethereum.party.deployer.PartyDeployers;
+import de.kueken.ethereum.party.deployer.PublishingDeployer;
 import de.kueken.ethereum.party.deployer.VotingDeployer;
-import de.kueken.ethereum.party.members.MemberRegistry;
 import de.kueken.ethereum.party.publishing.BlogRegistry;
 import de.kueken.ethereum.party.publishing.ShortBlog;
 import de.kueken.ethereum.party.publishing.ShortBlogMessage;
 import de.kueken.ethereum.party.voting.BallotFactory;
 import de.kueken.ethereum.party.voting.BasicBallot;
-import de.kueken.ethereum.party.voting.BasicBallot.BallotState;
-import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
-import de.kueken.ethereum.party.deployer.MembersDeployer;
-import de.kueken.ethereum.party.deployer.PartyDeployer;
-import de.kueken.ethereum.party.deployer.PartyDeployers;
-import de.kueken.ethereum.party.deployer.PublishingDeployer;
-import org.spongycastle.util.encoders.Hex;
-import java.io.IOException;
-// End of user code
 
 
 /**
@@ -47,8 +43,8 @@ public class OrganTest extends ManageableTest{
  
 	private Organ fixture;
 	// Start of user code OrganTest.attributes
-	private static final EthAccount ACOUNT_1 = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100001L)));
-	private static final EthAccount ACOUNT_2 = new EthAccount(ECKey.fromPrivate(BigInteger.valueOf(100002L)));
+	private static final EthAccount ACOUNT_1 = AccountProvider.fromPrivateKey((BigInteger.valueOf(100001L)));
+	private static final EthAccount ACOUNT_2 = AccountProvider.fromPrivateKey((BigInteger.valueOf(100002L)));
 	protected PartyDeployer partyDeployer;
 	protected PublishingDeployer publishingDeployer;
 	protected MembersDeployer membersDeployer;
@@ -90,7 +86,7 @@ public class OrganTest extends ManageableTest{
 		//Start of user code createFixture
 //		CompiledContract compiledContract = ethereum.compile(contractSource, getContractName());
 		System.out.println("create fixture:"+getQuallifiedContractName());
-		CompiledContract compiledContract = getCompiledContract("/mix/combine.json");
+		SolidityContractDetails compiledContract = getCompiledContract("/mix/combine.json");
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
         fixtureAddress = address.get();
 		setFixture(ethereum.createContractProxy(compiledContract, fixtureAddress, sender, Organ.class));
@@ -133,8 +129,8 @@ public class OrganTest extends ManageableTest{
 		//End of user code
 	}
 	/**
-	 * Test method for  changeMember(Integer _id,org.adridadou.ethereum.values.EthAddress _address).
-	 * see {@link Organ#changeMember( Integer, org.adridadou.ethereum.values.EthAddress)}
+	 * Test method for  changeMember(Integer _id,org.adridadou.ethereum.propeller.values.EthAddress _address).
+	 * see {@link Organ#changeMember( Integer, org.adridadou.ethereum.propeller.values.EthAddress)}
 	 * @throws Exception
 	 */
 	@Test
@@ -258,8 +254,8 @@ public class OrganTest extends ManageableTest{
 		//End of user code
 	}
 	/**
-	 * Test method for  createBallot(Integer ballotType,org.adridadou.ethereum.values.EthAddress _registry,String _name,String _hash).
-	 * see {@link Organ#createBallot( Integer, org.adridadou.ethereum.values.EthAddress, String, String)}
+	 * Test method for  createBallot(Integer ballotType,org.adridadou.ethereum.propeller.values.EthAddress _registry,String _name,String _hash).
+	 * see {@link Organ#createBallot( Integer, org.adridadou.ethereum.propeller.values.EthAddress, String, String)}
 	 * @throws Exception
 	 */
 	@Test
@@ -319,8 +315,8 @@ public class OrganTest extends ManageableTest{
 		//End of user code
 	}
 	/**
-	 * Test method for  addOrganFunction(org.adridadou.ethereum.values.EthAddress _of,String _name).
-	 * see {@link Organ#addOrganFunction( org.adridadou.ethereum.values.EthAddress, String)}
+	 * Test method for  addOrganFunction(org.adridadou.ethereum.propeller.values.EthAddress _of,String _name).
+	 * see {@link Organ#addOrganFunction( org.adridadou.ethereum.propeller.values.EthAddress, String)}
 	 * @throws Exception
 	 */
 	@Test

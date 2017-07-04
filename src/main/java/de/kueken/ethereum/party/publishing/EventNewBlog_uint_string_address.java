@@ -1,17 +1,15 @@
 package de.kueken.ethereum.party.publishing;
 
-import de.kueken.ethereum.party.publishing.BlogRegistry.*;
-
 /**
- * The Event Objects for the event NewBlog(Integer index,String name,org.adridadou.ethereum.values.EthAddress blogAddress).
+ * The Event Objects for the event NewBlog(Integer index,String name,org.adridadou.ethereum.propeller.values.EthAddress blogAddress).
  *
  */
 public class EventNewBlog_uint_string_address{
 	private Integer index;
 	private String name;
-	private org.adridadou.ethereum.values.EthAddress blogAddress;
+	private org.adridadou.ethereum.propeller.values.EthAddress blogAddress;
 
-	public EventNewBlog_uint_string_address(Integer index,String name,org.adridadou.ethereum.values.EthAddress blogAddress) {
+	public EventNewBlog_uint_string_address(Integer index,String name,org.adridadou.ethereum.propeller.values.EthAddress blogAddress) {
 		super();
 		this.index = index;
 		this.name = name;
@@ -38,7 +36,7 @@ public class EventNewBlog_uint_string_address{
 	 * Getter for blogAddress.
 	 * @return
 	 */
-	public org.adridadou.ethereum.values.EthAddress getBlogAddress(){
+	public org.adridadou.ethereum.propeller.values.EthAddress getBlogAddress(){
 		return blogAddress;
 	}
 

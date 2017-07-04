@@ -1,7 +1,5 @@
 package de.kueken.ethereum.party.party;
 
-import de.kueken.ethereum.party.party.Party.*;
-
 /**
  * The Event Objects for the event ConstiutionChange().
  *

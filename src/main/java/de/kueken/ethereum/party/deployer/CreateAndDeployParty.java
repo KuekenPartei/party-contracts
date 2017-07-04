@@ -3,14 +3,6 @@
  */
 package de.kueken.ethereum.party.deployer;
 
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
-
-import org.adridadou.ethereum.EthereumFacade;
-import org.adridadou.ethereum.values.EthAccount;
-
-import de.kueken.ethereum.party.members.MemberRegistry;
-
 /**
  * @author urs
  *

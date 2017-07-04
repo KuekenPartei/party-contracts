@@ -216,7 +216,7 @@ contract Party is Manageable {
 	string public constitutionHash;
 	uint public organCount;
 	BlogRegistry public blogregistry;
-	address public parent;
+	Party public parent;
 	uint public subDivisionCount;
 	mapping (uint=>Organ)public organs;
 	mapping (uint=>Party)public subDivisions;
@@ -285,12 +285,11 @@ contract Party is Manageable {
 //		if(p.memberRegistry()!=memberRegistry) throw;
 //		if(p.parent()!= this) throw;
 		//TODO; a foundation conference should be done
-		
+
 		p.setParent(this);
 		subDivisions[subDivisionCount] = p;
 		DivisionChanged(p,msg.sender,1);
 		subDivisionCount++;
-		
 		
 		//End of user code
 	}

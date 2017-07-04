@@ -1,31 +1,40 @@
 package de.kueken.ethereum.party.deployer;
 
-import rx.Observable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import org.adridadou.ethereum.EthereumFacade;
-import org.adridadou.ethereum.values.CompiledContract;
-import org.adridadou.ethereum.values.EthAccount;
-import org.adridadou.ethereum.values.EthAddress;
-import org.adridadou.ethereum.values.SoliditySource;
+import org.adridadou.ethereum.propeller.EthereumFacade;
+import org.adridadou.ethereum.propeller.solidity.SolidityContractDetails;
+import org.adridadou.ethereum.propeller.solidity.SolidityEvent;
+import org.adridadou.ethereum.propeller.values.EthAccount;
+import org.adridadou.ethereum.propeller.values.EthAddress;
+import org.adridadou.ethereum.propeller.values.SoliditySource;
+import org.adridadou.ethereum.propeller.values.SoliditySourceFile;
 import org.apache.commons.io.IOUtils;
 import org.ethereum.solidity.compiler.CompilationResult;
 import org.ethereum.solidity.compiler.CompilationResult.ContractMetadata;
 
-
 import de.kueken.ethereum.party.EthereumInstance;
 import de.kueken.ethereum.party.EthereumInstance.DeployDuo;
-
-import de.kueken.ethereum.party.basics.*;
-
-
+import de.kueken.ethereum.party.basics.EventConfirmation_address_bytes32;
+import de.kueken.ethereum.party.basics.EventManagerChanged_uint_address_uint;
+import de.kueken.ethereum.party.basics.EventOwnerAdded_address;
+import de.kueken.ethereum.party.basics.EventOwnerChanged_address_address;
+import de.kueken.ethereum.party.basics.EventOwnerRemoved_address;
+import de.kueken.ethereum.party.basics.EventRequirementChanged_uint;
+import de.kueken.ethereum.party.basics.EventRevoke_address_bytes32;
+import de.kueken.ethereum.party.basics.Manageable;
+import de.kueken.ethereum.party.basics.Multiowned;
+import de.kueken.ethereum.party.basics.Owned;
+import rx.Observable;
 
 
 /**
@@ -35,8 +44,9 @@ import de.kueken.ethereum.party.basics.*;
 public class BasicsDeployer {
 
 	private EthereumFacade ethereum;
-	private SoliditySource contractSource;
+	private SoliditySourceFile contractSource;
 	private CompilationResult compiledContracts;
+	private Map<String, SolidityContractDetails> contracts = new HashMap<>();
 	private static String filename = "/mix/basics.sol";
 
 	/**
@@ -91,13 +101,14 @@ public class BasicsDeployer {
 	public void setContractSource(String contractSourceFile, boolean compiled) {
 		try {
 			if (!compiled) {
-				contractSource = SoliditySource.from(this.getClass().getResourceAsStream(contractSourceFile));
+		        File contractSrc = new File(this.getClass().getResource(contractSourceFile).toURI());
+				contractSource = SoliditySource.from(contractSrc);
 			} else {
 				String rawJson = IOUtils.toString(this.getClass().getResourceAsStream(contractSourceFile),
 						EthereumFacade.CHARSET);
 				compiledContracts = CompilationResult.parse(rawJson);
 			}
-		} catch (IOException e) {
+		} catch (IOException | URISyntaxException e) {
 			throw new IllegalArgumentException(e);
 		}
 	}
@@ -113,14 +124,14 @@ public class BasicsDeployer {
 	 * @throws ExecutionException
 	 */
 	public CompletableFuture<EthAddress> deployOwned(EthAccount sender) throws InterruptedException, ExecutionException{
-		CompiledContract compiledContract = compiledContractOwned();
+		SolidityContractDetails compiledContract = compiledContractOwned();
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
 		return address;
 	}
 
 
 	/**
-	 * Deploys a 'Owned' on the blockchain and wrapps the contcat proxy.
+	 * Deploys a 'Owned' on the blockchain and wrapps the contract proxy.
 	 *  
 	 * @param sender the sender address
 	 * @return the contract interface and the deployed address
@@ -138,44 +149,22 @@ public class BasicsDeployer {
 	 * @return the contract interface
 	 */
 	public Owned createOwnedProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
-		CompiledContract compiledContract = compiledContractOwned();
+		SolidityContractDetails compiledContract = compiledContractOwned();
 		Owned owned = ethereum.createContractProxy(compiledContract, address, sender, Owned.class);
 		return owned;
 	}
 
 	/**
-	 * Return the compiled contract for the contract 'Owned', when in source the contract code is compiled.
+	 * Return the compiled contract for the contract 'Owned', when in source the contract code gets compiled.
 	 * @return the compiled contract for 'Owned'.
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public CompiledContract compiledContractOwned() throws InterruptedException, ExecutionException {
-		CompiledContract compiledContract = null;
-		if (compiledContracts == null){
-			Map<String, CompiledContract> contracts = ethereum.compile(contractSource).get();
-			compiledContract = contracts.get("Owned");
-			if (compiledContract == null) {
-				Optional<String> optional = contracts.keySet().stream().filter(s -> s.endsWith("basics.sol:Owned"))
-						.findFirst();
-				if (optional.isPresent())
-					compiledContract = contracts.get(optional.get());
-			}
-		} else {
-			ContractMetadata contractMetadata = compiledContracts.contracts.get("Owned");
-			if (contractMetadata == null) {
-				Optional<String> optional = compiledContracts.contracts.keySet().stream()
-						.filter(s -> s.endsWith("basics.sol:Owned")).findFirst();
-				if (optional.isPresent())
-					contractMetadata = compiledContracts.contracts.get(optional.get());
-			}
-			compiledContract = CompiledContract.from(null, "Owned", contractMetadata);
-		}
-		if(compiledContract == null)
-			throw new IllegalArgumentException("Contract code for 'Owned' not found");
-
-		return compiledContract;
+	public SolidityContractDetails compiledContractOwned() throws InterruptedException, ExecutionException {
+		String contractName = "Owned";
+		String quallifiedName = "basics.sol:Owned";
+		return getCompiledContract(contractName, quallifiedName);
 	}
-
 
 	/**
 	 * Deploys a 'Manageable' on the blockchain.
@@ -187,13 +176,13 @@ public class BasicsDeployer {
 	 * @throws ExecutionException
 	 */
 	public CompletableFuture<EthAddress> deployManageable(EthAccount sender) throws InterruptedException, ExecutionException {
-		CompiledContract compiledContract = compiledContractManageable();
+		SolidityContractDetails compiledContract = compiledContractManageable();
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
 		return address;
 	}
 
 	/**
-	 * Deploys a 'Manageable' on the blockchain and wrapps the contcat proxy.
+	 * Deploys a 'Manageable' on the blockchain and wrapps the contract proxy.
 	 *  
 	 * @param sender the sender address
 	 * @return the contract interface
@@ -211,56 +200,40 @@ public class BasicsDeployer {
 	 * @return the contract interface
 	 */
 	public Manageable createManageableProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
-		CompiledContract compiledContract = compiledContractManageable();
+		SolidityContractDetails compiledContract = compiledContractManageable();
 		Manageable manageable = ethereum.createContractProxy(compiledContract, address, sender, Manageable.class);
 		return manageable;
 	}
 
 	/**
-	 * Return the compiled contract for the contract 'Manageable', when in source the contract code is compiled.
+	 * Return the compiled contract for the contract 'Manageable', when in source the contract code gets compiled.
 	 * @return the compiled contract for 'Manageable'.
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public CompiledContract compiledContractManageable() throws InterruptedException, ExecutionException {
-		CompiledContract compiledContract = null;
-		if (compiledContracts == null){
-			Map<String, CompiledContract> contracts = ethereum.compile(contractSource).get();
-			compiledContract = contracts.get("Manageable");
-			if (compiledContract == null) {
-				Optional<String> optional = contracts.keySet().stream().filter(s -> s.endsWith("basics.sol:Manageable"))
-						.findFirst();
-				if (optional.isPresent())
-					compiledContract = contracts.get(optional.get());
-			}
-		} else {
-			ContractMetadata contractMetadata = compiledContracts.contracts.get("Manageable");
-			if (contractMetadata == null) {
-				Optional<String> optional = compiledContracts.contracts.keySet().stream()
-						.filter(s -> s.endsWith("basics.sol:Manageable")).findFirst();
-				if (optional.isPresent())
-					contractMetadata = compiledContracts.contracts.get(optional.get());
-			}
-			compiledContract = CompiledContract.from(null, "Manageable", contractMetadata);
-		}
-		if(compiledContract == null)
-			throw new IllegalArgumentException("Contract code for 'Manageable' not found");
-
-		return compiledContract;
+	public SolidityContractDetails compiledContractManageable() throws InterruptedException, ExecutionException {
+		String contractName = "Manageable";
+		String quallifiedName = "basics.sol:Manageable";
+		return getCompiledContract(contractName, quallifiedName);
 	}
+
 	/**
-	 * 
+	 *  Create an observable for the event ManagerChanged of the contract Manageable
+	 *  deployed at the given address.
+	 *
 	 * @param address
 	 * @return
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
 	public Observable<EventManagerChanged_uint_address_uint> observeEventManagerChanged_uint_address_uint(EthAddress address) throws InterruptedException, ExecutionException {
-		CompiledContract compiledContract = compiledContractManageable();
-		Observable<EventManagerChanged_uint_address_uint> observeEvents = ethereum.observeEvents(compiledContract.getAbi(), address, "ManagerChanged", EventManagerChanged_uint_address_uint.class);
-		return observeEvents;
+		SolidityContractDetails compiledContract = compiledContractManageable();
+		Optional<SolidityEvent<EventManagerChanged_uint_address_uint>> eventDefinition = ethereum.findEventDefinition(compiledContract, "ManagerChanged", EventManagerChanged_uint_address_uint.class);
+		if(!eventDefinition.isPresent())
+			throw new IllegalArgumentException("Event 'ManagerChanged' not found in contract definition."); 
+			
+		return ethereum.observeEvents(eventDefinition.get(), address);
 	}
-
 
 	/**
 	 * Deploys a 'Multiowned' on the blockchain.
@@ -272,14 +245,14 @@ public class BasicsDeployer {
 	 * @throws ExecutionException
 	 */
 	public CompletableFuture<EthAddress> deployMultiowned(EthAccount sender) throws InterruptedException, ExecutionException{
-		CompiledContract compiledContract = compiledContractMultiowned();
+		SolidityContractDetails compiledContract = compiledContractMultiowned();
 		CompletableFuture<EthAddress> address = ethereum.publishContract(compiledContract, sender);
 		return address;
 	}
 
 
 	/**
-	 * Deploys a 'Multiowned' on the blockchain and wrapps the contcat proxy.
+	 * Deploys a 'Multiowned' on the blockchain and wrapps the contract proxy.
 	 *  
 	 * @param sender the sender address
 	 * @return the contract interface and the deployed address
@@ -297,115 +270,176 @@ public class BasicsDeployer {
 	 * @return the contract interface
 	 */
 	public Multiowned createMultiownedProxy(EthAccount sender, EthAddress address) throws IOException, InterruptedException, ExecutionException {
-		CompiledContract compiledContract = compiledContractMultiowned();
+		SolidityContractDetails compiledContract = compiledContractMultiowned();
 		Multiowned multiowned = ethereum.createContractProxy(compiledContract, address, sender, Multiowned.class);
 		return multiowned;
 	}
 
 	/**
-	 * Return the compiled contract for the contract 'Multiowned', when in source the contract code is compiled.
+	 * Return the compiled contract for the contract 'Multiowned', when in source the contract code gets compiled.
 	 * @return the compiled contract for 'Multiowned'.
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public CompiledContract compiledContractMultiowned() throws InterruptedException, ExecutionException {
-		CompiledContract compiledContract = null;
-		if (compiledContracts == null){
-			Map<String, CompiledContract> contracts = ethereum.compile(contractSource).get();
-			compiledContract = contracts.get("Multiowned");
-			if (compiledContract == null) {
-				Optional<String> optional = contracts.keySet().stream().filter(s -> s.endsWith("basics.sol:Multiowned"))
-						.findFirst();
-				if (optional.isPresent())
-					compiledContract = contracts.get(optional.get());
-			}
-		} else {
-			ContractMetadata contractMetadata = compiledContracts.contracts.get("Multiowned");
-			if (contractMetadata == null) {
-				Optional<String> optional = compiledContracts.contracts.keySet().stream()
-						.filter(s -> s.endsWith("basics.sol:Multiowned")).findFirst();
-				if (optional.isPresent())
-					contractMetadata = compiledContracts.contracts.get(optional.get());
-			}
-			compiledContract = CompiledContract.from(null, "Multiowned", contractMetadata);
-		}
-		if(compiledContract == null)
-			throw new IllegalArgumentException("Contract code for 'Multiowned' not found");
-
-		return compiledContract;
+	public SolidityContractDetails compiledContractMultiowned() throws InterruptedException, ExecutionException {
+		String contractName = "Multiowned";
+		String quallifiedName = "basics.sol:Multiowned";
+		return getCompiledContract(contractName, quallifiedName);
 	}
+
 	/**
-	 * 
+	 *  Create an observable for the event Confirmation of the contract Multiowned
+	 *  deployed at the given address.
+	 *
 	 * @param address
 	 * @return
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
 	public Observable<EventConfirmation_address_bytes32> observeEventConfirmation_address_bytes32(EthAddress address) throws InterruptedException, ExecutionException {
-		CompiledContract compiledContract = compiledContractMultiowned();
-		Observable<EventConfirmation_address_bytes32> observeEvents = ethereum.observeEvents(compiledContract.getAbi(), address, "Confirmation", EventConfirmation_address_bytes32.class);
-		return observeEvents;
+		SolidityContractDetails compiledContract = compiledContractMultiowned();
+		Optional<SolidityEvent<EventConfirmation_address_bytes32>> eventDefinition = ethereum.findEventDefinition(compiledContract, "Confirmation", EventConfirmation_address_bytes32.class);
+		if(!eventDefinition.isPresent())
+			throw new IllegalArgumentException("Event 'Confirmation' not found in contract definition."); 
+			
+		return ethereum.observeEvents(eventDefinition.get(), address);
 	}
+
 	/**
-	 * 
+	 *  Create an observable for the event Revoke of the contract Multiowned
+	 *  deployed at the given address.
+	 *
 	 * @param address
 	 * @return
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
 	public Observable<EventRevoke_address_bytes32> observeEventRevoke_address_bytes32(EthAddress address) throws InterruptedException, ExecutionException {
-		CompiledContract compiledContract = compiledContractMultiowned();
-		Observable<EventRevoke_address_bytes32> observeEvents = ethereum.observeEvents(compiledContract.getAbi(), address, "Revoke", EventRevoke_address_bytes32.class);
-		return observeEvents;
+		SolidityContractDetails compiledContract = compiledContractMultiowned();
+		Optional<SolidityEvent<EventRevoke_address_bytes32>> eventDefinition = ethereum.findEventDefinition(compiledContract, "Revoke", EventRevoke_address_bytes32.class);
+		if(!eventDefinition.isPresent())
+			throw new IllegalArgumentException("Event 'Revoke' not found in contract definition."); 
+			
+		return ethereum.observeEvents(eventDefinition.get(), address);
 	}
+
 	/**
-	 * 
+	 *  Create an observable for the event OwnerChanged of the contract Multiowned
+	 *  deployed at the given address.
+	 *
 	 * @param address
 	 * @return
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
 	public Observable<EventOwnerChanged_address_address> observeEventOwnerChanged_address_address(EthAddress address) throws InterruptedException, ExecutionException {
-		CompiledContract compiledContract = compiledContractMultiowned();
-		Observable<EventOwnerChanged_address_address> observeEvents = ethereum.observeEvents(compiledContract.getAbi(), address, "OwnerChanged", EventOwnerChanged_address_address.class);
-		return observeEvents;
+		SolidityContractDetails compiledContract = compiledContractMultiowned();
+		Optional<SolidityEvent<EventOwnerChanged_address_address>> eventDefinition = ethereum.findEventDefinition(compiledContract, "OwnerChanged", EventOwnerChanged_address_address.class);
+		if(!eventDefinition.isPresent())
+			throw new IllegalArgumentException("Event 'OwnerChanged' not found in contract definition."); 
+			
+		return ethereum.observeEvents(eventDefinition.get(), address);
 	}
+
 	/**
-	 * 
+	 *  Create an observable for the event OwnerAdded of the contract Multiowned
+	 *  deployed at the given address.
+	 *
 	 * @param address
 	 * @return
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
 	public Observable<EventOwnerAdded_address> observeEventOwnerAdded_address(EthAddress address) throws InterruptedException, ExecutionException {
-		CompiledContract compiledContract = compiledContractMultiowned();
-		Observable<EventOwnerAdded_address> observeEvents = ethereum.observeEvents(compiledContract.getAbi(), address, "OwnerAdded", EventOwnerAdded_address.class);
-		return observeEvents;
+		SolidityContractDetails compiledContract = compiledContractMultiowned();
+		Optional<SolidityEvent<EventOwnerAdded_address>> eventDefinition = ethereum.findEventDefinition(compiledContract, "OwnerAdded", EventOwnerAdded_address.class);
+		if(!eventDefinition.isPresent())
+			throw new IllegalArgumentException("Event 'OwnerAdded' not found in contract definition."); 
+			
+		return ethereum.observeEvents(eventDefinition.get(), address);
 	}
+
 	/**
-	 * 
+	 *  Create an observable for the event OwnerRemoved of the contract Multiowned
+	 *  deployed at the given address.
+	 *
 	 * @param address
 	 * @return
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
 	public Observable<EventOwnerRemoved_address> observeEventOwnerRemoved_address(EthAddress address) throws InterruptedException, ExecutionException {
-		CompiledContract compiledContract = compiledContractMultiowned();
-		Observable<EventOwnerRemoved_address> observeEvents = ethereum.observeEvents(compiledContract.getAbi(), address, "OwnerRemoved", EventOwnerRemoved_address.class);
-		return observeEvents;
+		SolidityContractDetails compiledContract = compiledContractMultiowned();
+		Optional<SolidityEvent<EventOwnerRemoved_address>> eventDefinition = ethereum.findEventDefinition(compiledContract, "OwnerRemoved", EventOwnerRemoved_address.class);
+		if(!eventDefinition.isPresent())
+			throw new IllegalArgumentException("Event 'OwnerRemoved' not found in contract definition."); 
+			
+		return ethereum.observeEvents(eventDefinition.get(), address);
 	}
+
 	/**
-	 * 
+	 *  Create an observable for the event RequirementChanged of the contract Multiowned
+	 *  deployed at the given address.
+	 *
 	 * @param address
 	 * @return
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
 	public Observable<EventRequirementChanged_uint> observeEventRequirementChanged_uint(EthAddress address) throws InterruptedException, ExecutionException {
-		CompiledContract compiledContract = compiledContractMultiowned();
-		Observable<EventRequirementChanged_uint> observeEvents = ethereum.observeEvents(compiledContract.getAbi(), address, "RequirementChanged", EventRequirementChanged_uint.class);
-		return observeEvents;
+		SolidityContractDetails compiledContract = compiledContractMultiowned();
+		Optional<SolidityEvent<EventRequirementChanged_uint>> eventDefinition = ethereum.findEventDefinition(compiledContract, "RequirementChanged", EventRequirementChanged_uint.class);
+		if(!eventDefinition.isPresent())
+			throw new IllegalArgumentException("Event 'RequirementChanged' not found in contract definition."); 
+			
+		return ethereum.observeEvents(eventDefinition.get(), address);
 	}
 
+	/**
+	 * Get the compiled contract by name or qualified name.
+	 * @param contractName
+	 * @param qualifiedName
+	 * @return
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public SolidityContractDetails getCompiledContract(String contractName, String qualifiedName)
+			throws InterruptedException, ExecutionException {
+		SolidityContractDetails compiledContract = contracts.get(qualifiedName == null ? contractName : qualifiedName);
+		if (compiledContract != null)
+			return compiledContract;
 
+		if (compiledContracts == null) {
+			org.adridadou.ethereum.propeller.solidity.CompilationResult compilationResult = ethereum
+					.compile(contractSource);
+			Optional<SolidityContractDetails> contract = compilationResult.findContract(contractName);
+			if (contract.isPresent()) {
+				compiledContract = contract.get();
+			} else {
+				contract = compilationResult.findContract(qualifiedName);
+				if (contract.isPresent())
+					compiledContract = contract.get();
+			}
+		} else {
+			ContractMetadata contractMetadata = compiledContracts.contracts.get(contractName);
+			if (contractMetadata == null) {
+				if (qualifiedName == null || qualifiedName.isEmpty())
+					throw new IllegalArgumentException("Qualified name must not be null or empty.");
+
+				Optional<String> optional = compiledContracts.contracts.keySet().stream()
+						.filter(s -> s.endsWith(qualifiedName)).findFirst();
+				if (optional.isPresent()) {
+					contractMetadata = compiledContracts.contracts.get(optional.get());
+				}
+			}
+			compiledContract = new SolidityContractDetails(contractMetadata.abi, contractMetadata.bin,
+					contractMetadata.metadata);
+		}
+		if (compiledContract == null)
+			throw new IllegalArgumentException(
+					"Contract code for '" + contractName + "/" + qualifiedName + "' not found");
+
+		contracts.put(qualifiedName == null ? contractName : qualifiedName, compiledContract);
+		return compiledContract;
+	}
 }

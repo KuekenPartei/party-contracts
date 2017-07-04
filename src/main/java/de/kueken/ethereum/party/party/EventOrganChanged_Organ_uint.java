@@ -1,16 +1,14 @@
 package de.kueken.ethereum.party.party;
 
-import de.kueken.ethereum.party.party.Party.*;
-
 /**
- * The Event Objects for the event OrganChanged(org.adridadou.ethereum.values.EthAddress _organ,Integer _changeType).
+ * The Event Objects for the event OrganChanged(org.adridadou.ethereum.propeller.values.EthAddress _organ,Integer _changeType).
  *
  */
 public class EventOrganChanged_Organ_uint{
-	private org.adridadou.ethereum.values.EthAddress _organ;
+	private org.adridadou.ethereum.propeller.values.EthAddress _organ;
 	private Integer _changeType;
 
-	public EventOrganChanged_Organ_uint(org.adridadou.ethereum.values.EthAddress _organ,Integer _changeType) {
+	public EventOrganChanged_Organ_uint(org.adridadou.ethereum.propeller.values.EthAddress _organ,Integer _changeType) {
 		super();
 		this._organ = _organ;
 		this._changeType = _changeType;
@@ -20,7 +18,7 @@ public class EventOrganChanged_Organ_uint{
 	 * Getter for _organ.
 	 * @return
 	 */
-	public org.adridadou.ethereum.values.EthAddress get_organ(){
+	public org.adridadou.ethereum.propeller.values.EthAddress get_organ(){
 		return _organ;
 	}
 

@@ -1,7 +1,5 @@
 package de.kueken.ethereum.party.voting;
 
-import de.kueken.ethereum.party.voting.Ballot.*;
-
 /**
  * The dataholder for the struct BallotProposal.
  *

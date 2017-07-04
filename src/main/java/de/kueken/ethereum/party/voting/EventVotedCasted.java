@@ -1,7 +1,5 @@
 package de.kueken.ethereum.party.voting;
 
-import de.kueken.ethereum.party.voting.PublicBallot.*;
-
 /**
  * The Event Objects for the event VotedCasted().
  *

@@ -1,16 +1,14 @@
 package de.kueken.ethereum.party.basics;
 
-import de.kueken.ethereum.party.basics.Multiowned.*;
-
 /**
- * The Event Objects for the event OwnerChanged(org.adridadou.ethereum.values.EthAddress oldOwner,org.adridadou.ethereum.values.EthAddress newOwner).
+ * The Event Objects for the event OwnerChanged(org.adridadou.ethereum.propeller.values.EthAddress oldOwner,org.adridadou.ethereum.propeller.values.EthAddress newOwner).
  *
  */
 public class EventOwnerChanged_address_address{
-	private org.adridadou.ethereum.values.EthAddress oldOwner;
-	private org.adridadou.ethereum.values.EthAddress newOwner;
+	private org.adridadou.ethereum.propeller.values.EthAddress oldOwner;
+	private org.adridadou.ethereum.propeller.values.EthAddress newOwner;
 
-	public EventOwnerChanged_address_address(org.adridadou.ethereum.values.EthAddress oldOwner,org.adridadou.ethereum.values.EthAddress newOwner) {
+	public EventOwnerChanged_address_address(org.adridadou.ethereum.propeller.values.EthAddress oldOwner,org.adridadou.ethereum.propeller.values.EthAddress newOwner) {
 		super();
 		this.oldOwner = oldOwner;
 		this.newOwner = newOwner;
@@ -20,7 +18,7 @@ public class EventOwnerChanged_address_address{
 	 * Getter for oldOwner.
 	 * @return
 	 */
-	public org.adridadou.ethereum.values.EthAddress getOldOwner(){
+	public org.adridadou.ethereum.propeller.values.EthAddress getOldOwner(){
 		return oldOwner;
 	}
 
@@ -28,7 +26,7 @@ public class EventOwnerChanged_address_address{
 	 * Getter for newOwner.
 	 * @return
 	 */
-	public org.adridadou.ethereum.values.EthAddress getNewOwner(){
+	public org.adridadou.ethereum.propeller.values.EthAddress getNewOwner(){
 		return newOwner;
 	}
 

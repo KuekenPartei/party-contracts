@@ -1,19 +1,20 @@
 package de.kueken.ethereum.party.members;
 
-import de.kueken.ethereum.party.members.MemberRegistry.*;
+import de.kueken.ethereum.party.members.MemberRegistry.EventType;
+import de.kueken.ethereum.party.members.MemberRegistry.MemberState;
 
 /**
- * The Event Objects for the event MemberEvent(org.adridadou.ethereum.values.EthAddress mAddress,EventType eType,Integer id,String name,MemberState memberState).
+ * The Event Objects for the event MemberEvent(org.adridadou.ethereum.propeller.values.EthAddress mAddress,EventType eType,Integer id,String name,MemberState memberState).
  *
  */
 public class EventMemberEvent_address_EventType_uint_string_MemberState{
-	private org.adridadou.ethereum.values.EthAddress mAddress;
+	private org.adridadou.ethereum.propeller.values.EthAddress mAddress;
 	private EventType eType;
 	private Integer id;
 	private String name;
 	private MemberState memberState;
 
-	public EventMemberEvent_address_EventType_uint_string_MemberState(org.adridadou.ethereum.values.EthAddress mAddress,EventType eType,Integer id,String name,MemberState memberState) {
+	public EventMemberEvent_address_EventType_uint_string_MemberState(org.adridadou.ethereum.propeller.values.EthAddress mAddress,EventType eType,Integer id,String name,MemberState memberState) {
 		super();
 		this.mAddress = mAddress;
 		this.eType = eType;
@@ -26,7 +27,7 @@ public class EventMemberEvent_address_EventType_uint_string_MemberState{
 	 * Getter for mAddress.
 	 * @return
 	 */
-	public org.adridadou.ethereum.values.EthAddress getMAddress(){
+	public org.adridadou.ethereum.propeller.values.EthAddress getMAddress(){
 		return mAddress;
 	}
 
