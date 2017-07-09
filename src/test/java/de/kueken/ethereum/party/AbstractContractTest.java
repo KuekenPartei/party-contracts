@@ -43,27 +43,29 @@ public abstract class AbstractContractTest {
 	protected SoliditySourceFile contractSource;
 
 	// Start of user code AbstractContractTest.customFields
-//	private static boolean evensRegistered = false;
-//	private static Map<String,CompiledContract> contracts = new HashMap<String, CompiledContract>();
+	// private static boolean evensRegistered = false;
+	// private static Map<String,CompiledContract> contracts = new
+	// HashMap<String, CompiledContract>();
 	// End of user code
 
 	/**
 	 * @return the basic contract name
 	 */
 	protected abstract String getContractName();
-	
+
 	/**
 	 * @return the contract file together with the contract name
 	 */
 	protected abstract String getQuallifiedContractName();
 
 	/**
-	 * Setup up the blockchain. Add the 'EthereumFacadeProvider' property to use 
+	 * Setup up the blockchain. Add the 'EthereumFacadeProvider' property to use
 	 * another block chain implementation or network.
-	 * @throws Exception 
+	 * 
+	 * @throws Exception
 	 */
 	@BeforeClass
-	public static void setup() throws Exception{
+	public static void setup() throws Exception {
 		ethereum = EthereumInstance.getInstance().getEthereum();
 		initTest();
 	}
@@ -74,44 +76,56 @@ public abstract class AbstractContractTest {
 		String property = System.getProperty(EthereumInstance.PROP_ETHEREUM_FACADE_PROVIDER);
 		if (property != null)
 			if (property.equalsIgnoreCase("ropsten") || property.equalsIgnoreCase("InfuraRopsten")) {
-				SecureKey a = AccountProvider.fromKeystore(new File("/home/urs/.ethereum/testnet/keystore/UTC--2015-12-15T13-55-38.006995319Z--ba7b29b63c00dff8614f8d8a6bf34e94e853b2d3"));
-				sender =a.decode(System.getProperty("pass"));
-			
+				SecureKey a = AccountProvider.fromKeystore(new File(
+						"/home/urs/.ethereum/testnet/keystore/UTC--2015-12-15T13-55-38.006995319Z--ba7b29b63c00dff8614f8d8a6bf34e94e853b2d3"));
+				sender = a.decode(System.getProperty("pass"));
 
 			} else if (property.equalsIgnoreCase("private")) {
 				sender = AccountProvider.fromPrivateKey((BigInteger.valueOf(100000L)));
+			} else if (EthereumInstance.ALL_TESTNET.contains(property)
+					|| EthereumInstance.EI_RPC.equalsIgnoreCase(property)) {
+				SecureKey a = AccountProvider.fromKeystore(new File(System.getProperty("keyFile")));
+				String password = System.getProperty("keyPass");
+				if (password == null)
+					password = "";
+				sender = a.decode(password);
+				senderAddress = sender.getAddress();
+
 			}
 
-		if (sender == null){// the account for the standalone blockchain
-			sender = AccountProvider.fromPrivateKey((Hex.decode("3ec771c31cac8c0dba77a69e503765701d3c2bb62435888d4ffa38fed60c445c")));
+		if (sender == null) {// the account for the standalone blockchain
+			sender = AccountProvider
+					.fromPrivateKey((Hex.decode("3ec771c31cac8c0dba77a69e503765701d3c2bb62435888d4ffa38fed60c445c")));
 		}
 		senderAddress = sender.getAddress();
-//		if(!evensRegistered){
-//		ethereum.events().observeBlocks().subscribe(s-> System.out.println("New Block: "+s));
-//		ethereum.events().observeTransactions().subscribe(ev->System.out.println("Transaction: "+ev));	
-//		evensRegistered = true;
-//		}
+		// if(!evensRegistered){
+		ethereum.events().observeBlocks().subscribe(s -> System.out.println("New Block: " + s));
+		ethereum.events().observeTransactions().subscribe(ev -> System.out.println("Transaction: " + ev));
+		// evensRegistered = true;
+		// }
 		// End of user code
 	}
 
 	/**
 	 * Returns the already compiled contact.
 	 * 
-	 * @param filePath the filename and path of the combined json
+	 * @param filePath
+	 *            the filename and path of the combined json
 	 * @return the contract data (bin, abi)
 	 * @throws URISyntaxException
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	protected SolidityContractDetails getCompiledContract(String filePath) throws URISyntaxException, FileNotFoundException, IOException {
+	protected SolidityContractDetails getCompiledContract(String filePath)
+			throws URISyntaxException, FileNotFoundException, IOException {
 		SolidityContractDetails compiledContract = contracts.get(getQuallifiedContractName());
-		if(compiledContract!=null)
+		if (compiledContract != null)
 			return compiledContract;
 
 		File file = new File(this.getClass().getResource(filePath).toURI());
 		String rawJson = IOUtils.toString(new FileInputStream(file), EthereumFacade.CHARSET);
 		CompilationResult result = CompilationResult.parse(rawJson);
-		
+
 		ContractMetadata contractMetadata = result.contracts.get(getContractName());
 		if (contractMetadata == null) {
 			Optional<String> optional = result.contracts.keySet().stream()
@@ -119,7 +133,7 @@ public abstract class AbstractContractTest {
 			if (optional.isPresent())
 				contractMetadata = result.contracts.get(optional.get());
 		}
-		compiledContract =  new SolidityContractDetails(contractMetadata.abi, contractMetadata.bin,
+		compiledContract = new SolidityContractDetails(contractMetadata.abi, contractMetadata.bin,
 				contractMetadata.metadata);
 
 		contracts.put(getQuallifiedContractName(), compiledContract);
@@ -145,8 +159,8 @@ public abstract class AbstractContractTest {
 			if (contract.isPresent())
 				return contract.get();
 		}
-		throw new IllegalArgumentException(
-					"The contract '" + getContractName() + "' is not present is the map of contracts:" + compilationResult.getContracts());
+		throw new IllegalArgumentException("The contract '" + getContractName()
+				+ "' is not present is the map of contracts:" + compilationResult.getContracts());
 	}
 
 	// Start of user code AbstractContractTest.customMethods

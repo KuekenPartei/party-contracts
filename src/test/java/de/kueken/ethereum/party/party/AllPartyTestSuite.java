@@ -11,7 +11,8 @@ OrganTest.class
 ,ConferenceTest.class
 ,FoundationConferenceTest.class
 ,OrganFunctionTest.class
-//Start of user code customTests    
+//Start of user code customTests  
+,de.kueken.ethereum.party.deployer.KUEKeNDeployerTest.class
 //End of user code
 })
 public class AllPartyTestSuite {
